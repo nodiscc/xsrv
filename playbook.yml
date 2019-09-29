@@ -1,0 +1,3 @@
+- hosts: my.example.org
+  roles:
+    - common
