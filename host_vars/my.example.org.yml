@@ -1,0 +1,8 @@
+### configuration variables for my.example.org
+
+# administrator/sudo account on the server
+ansible_ssh_user: "CHANGEME"
+# 'sudo' password for this user
+ansible_sudo_pass: "CHANGEME"
+# SSH port used to contact the server (only if you changed it or NATed a different port than 22)
+#ansible_ssh_port: '22'
