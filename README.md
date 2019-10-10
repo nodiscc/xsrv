@@ -1,10 +1,10 @@
 ```
-░▐░▌░┏━┓┏━┓╻ ╻
-░░╳░░┗━┓┣┳┛┃┏┛
-░▐░▌░┗━┛╹┗╸┗┛ 
+  ╻ ╻┏━┓┏━┓╻ ╻
+░░╺╋╸┗━┓┣┳┛┃┏┛
+  ╹ ╹┗━┛╹┗╸┗┛ 
 ```
 
-Run your own network services, on a server you control. Communication, collaboration, organization, file storage, transfer, sharing and synchronization, automation, development, multimedia, IT infrastructure, and more.
+Run your own network services, on a server you control. Self-hosted communication, collaboration systems, file storage, transfer, sharing and synchronization, automation, development, multimedia, IT infrastructure, and more.
 
 This ansible playbook lets you quickly and reliably install and manage various network services and applications on a personal server, or more.
 
@@ -55,20 +55,37 @@ The _controller_ machine will be used for remote administration and deployment. 
 
 ### Initial configuration/deployment
 
-- Clone the playbook and enter the playbook directory (all ansible commands must be run from this directory):
-
 ```bash
+# Clone the playbook
 git clone -b 1.0 https://gitlab.com/nodiscc/xsrv
+
+# Enter the playbook directory. All ansible commands must be run from this directory
 cd xsrv
+
+# copy the example inventory file
+cp examples/inventory.example.yml inventory.yml
+
+# copy the example playbook file
+cp examples/playbook.example.yml playbook.yml
+
+# copy the example host configuration variables file
+# the filename must match your actual server hostname (FQDN)
+cp examples/my.example.org.yml host_vars/myserver.example.org.yml
 ```
 
-- Edit the inventory file (`inventory.yml`): replace `my.example.org` with your actual server hostname (FQDN)
-- Edit the playbook file (`playbook.yml`). Replace `my.example.org` with your actual server hostname. **Enable any roles you want to install.**
-- Rename the host's configuration file to match your server's hostname: `mv host_vars/my.example.org.yml host_vars/my.real.org.yml`, edit this file and set required configration variables.
-- Download roles: `ansible-galaxy install -f -r requirements.yml`
-- Run server deployment:  `ansible-playbook playbook.yml`
+- Edit `inventory.yml` and replace `my.example.org` with your actual server hostname (FQDN):
+- Edit `playbook.yml`, replace `my.example.org` with your actual server FQDN, enable (uncomment) any roles you want to install
+- Edit `host_vars/myserver.example.org`, and set the required variables (labeled `CHANGEME`)
 
-After the deployment completes, your server is ready to use.
+```bash
+# Download roles
+ansible-galaxy install -f -r requirements.yml
+
+# Deploy the playbook to the server
+ansible-playbook playbook.yml
+```
+
+After the deployment completes, your services are ready to use. Read each [role](#roles)'s documentation for tips on how to use your services.
 
 
 ## Configuration
@@ -77,7 +94,7 @@ After the deployment completes, your server is ready to use.
 - **Configuration:** The default configuration will work out of the box. If you need to change any details, put any configuration variable and its new value in your host configuration file (). To list available role variables and their defaults, read `defaults/main.yml` in each [role](#roles): `
 find ./ -wholename "*defaults/main.yml" | xargs cat | less`
 
-After any changes to configuration/roles, apply changes to the host:
+**After any changes to configuration/roles**, apply changes to the host:
 
 ```bash
 source ~/ansible-venv/bin/activate # required if ansible is installed in a virtualenv
@@ -112,4 +129,4 @@ Security upgrades for Debian packages are applied automatically, daily. To upgra
 
 ### License
 
-GNU GPLv3
+[GNU GPLv3](LICENSE)
