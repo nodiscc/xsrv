@@ -6,7 +6,7 @@
 - Select `Advanced > Graphical advanced install`.
 - Follow the installation procedure, using the following options:
   - IP address/gateway/DNS server: Refer to [#network](#network) above
-  - Allow root (administrator) login (set a strong password), do not create an additional user account yet
+  - Allow root (administrator) login, set a strong password and store it someplace safe like a Keepass database, do not create an additional user account yet
   - Any disk partitioning scheme is OK, but prefer a separate `/var` with as much space as possible for user data. 10-15GB should be enough for the root filesystem partition. Setup LVM if possible. Setup RAID if to increase availability (RAID is not a backup)
   - When asked, only install `Standard system utilities` and `SSH server`
 - Finish installation, reboot, login as `root` and run:
