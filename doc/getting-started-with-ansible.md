@@ -29,6 +29,7 @@ As text files, ansible playbooks allow you to track and manage configuration cha
 - [Examples](#examples)
   - [Adding a new host](#adding-a-new-host)
 - [Building your own roles](#building-your-own-roles)
+- [Using multiple environments](#using-multiple-environments)
 
 <!-- /MarkdownTOC -->
 
@@ -261,5 +262,9 @@ inventory = inventory.yml
 - Create/edit `host_vars/host3.example.org.yml` and define configuration variables for this host. At the very least define `ansible_ssh_user` and/or `ansible_become_pass` if you don't want to have to type the sudo password every time.
 
 ## Building your own roles
+
+TODO
+
+## Using multiple environments
 
 TODO

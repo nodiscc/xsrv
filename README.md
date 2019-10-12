@@ -14,10 +14,9 @@ The following components (_roles_) are available:
 
 - [common](https://gitlab.com/nodiscc/ansible-xsrv-common) - base server components (SSH, automatic updates, users, hostname, networking, kernel, time/date...)
 
-<!-- TODO demo video -->
+<!-- TODO demo screencast -->
 
-
-------------
+**Table of contents**
 
 <!-- MarkdownTOC -->
 
@@ -25,13 +24,17 @@ The following components (_roles_) are available:
   - [Preparing the server](#preparing-the-server)
   - [Preparing the ansible controller](#preparing-the-ansible-controller)
   - [Initial configuration/deployment](#initial-configurationdeployment)
+- [Usage](#usage)
 - [Configuration](#configuration)
 - [Maintenance](#maintenance)
   - [Backups](#backups)
   - [Updates](#updates)
-  - [License](#license)
+  - [Testing/reverting updates](#testingreverting-updates)
+- [License](#license)
 
 <!-- /MarkdownTOC -->
+
+------------
 
 
 ## Installation
@@ -85,7 +88,12 @@ ansible-galaxy install -f -r requirements.yml
 ansible-playbook playbook.yml
 ```
 
-After the deployment completes, your services are ready to use. Read each [role](#roles)'s documentation for tips on how to use your services.
+After the deployment completes, your services are ready to use.
+
+
+## Usage
+
+Read each [role](#roles)'s documentation for tips on how to use your services.
 
 
 ## Configuration
@@ -104,12 +112,13 @@ ansible-playbook playbook.yml
 
 At this time, uninstalling roles is not supported - components must be removed manually, or a new server must be deployed and data restored from backups.
 
-Read [getting started with ansible](doc/getting-started-with-ansible.md) for details on configuring and building ansible playbooks and roles.
+Read [getting started with ansible](doc/getting-started-with-ansible.md) for details on configuration and creation of playbooks and roles.
 
 
 ## Maintenance
 
 Self-hosting places your services and data under your own responsibility (uptime, backups, security...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
+
 
 ### Backups
 
@@ -118,15 +127,23 @@ See the [backup role](https://gitlab.com/nodiscc/ansible-xsrv-backup#documentati
 
 ### Updates
 
-Security upgrades for Debian packages are applied automatically, daily. To upgrade software installed from other sources (web applications):
+Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to thier latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
 
 - Download latest backups from the server and/or do a snapshot of the VM.
-- Read the [release notes](CHANGELOG.md). Update your configuration if needed.
+- Read the [release notes](CHANGELOG.md). Update configuration variables if needed.
 - Update the playbook to the latest release: `git remote update && git checkout $version`
 - Update roles: `ansible-galaxy -f -r requirements.yml`
 - Run server deployment:  `ansible-playbook playbook.yml`
 
 
-### License
+### Testing/reverting updates
+
+- Restore previous configuration variables (tracking inventory/playbook/host_vars in a private git repository make this easier). Roll back roles to their previous versions (`git checkout $previous_version && ansible-galaxy -f -r requirements.yml`).
+- Restore the previous snapshot of the VM and/or restore data from the backups
+
+For professional/production systems, running the playbook and evaluating changes against a [testing environment](doc/getting-started-with-ansible.md#using-multiple-environments) first is recommended.
+
+
+## License
 
 [GNU GPLv3](LICENSE)
