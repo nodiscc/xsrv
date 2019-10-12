@@ -110,9 +110,12 @@ ansible-galaxy install -f -r requirements.yml
 ansible-playbook playbook.yml
 ```
 
-At this time, uninstalling roles is not supported - components must be removed manually, or a new server must be deployed and data restored from backups.
-
 Read [getting started with ansible](doc/getting-started-with-ansible.md) for details on configuration and creation of playbooks and roles.
+
+**Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups.
+
+**Tracking configuration in git:** Default [.gitignore](.gitignore) patterns are here to ensure that you do not push your configuration, public keys and secrets to a public Git service. If you have a private git server, you can comment out ignore patterns in [.gitignore](.gitignore) to start tracking your configuration changes in git. Check that the git remote is *actually* set to your private git server. Secrets and sensitive information should still be stored encrypted in the repository, using [ansible-vault](doc/getting-started-with-ansible.md#ansible-vault) or another method.
+
 
 
 ## Maintenance

@@ -1,0 +1,17 @@
+# do not track host configuration variables in git
+host_vars/*
+
+# do not track secrets in git
+secrets/*
+
+# do not track public certificates/keys in git
+public/*
+
+# do not track local copies of backups in git
+backups/*
+
+# force tracking of READMEs
+!host_vars/README.md
+!secrets/README.md
+!public/README.md
+!backups/README.md
