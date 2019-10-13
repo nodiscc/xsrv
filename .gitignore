@@ -1,3 +1,7 @@
+# do not track the invrentory and playbook in git
+inventory.yml
+playbook.yml
+
 # do not track host configuration variables in git
 host_vars/*
 
@@ -8,6 +12,7 @@ secrets/*
 public/*
 
 # do not track local copies of backups in git
+# (there is no reason to comment this out)
 backups/*
 
 # force tracking of READMEs
