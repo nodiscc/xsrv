@@ -1,6 +1,6 @@
 #### Hardware
 
-The server machine can be a physical computer (server-grade, desktop/laptop, small factor board/barebone), or a [virtual Machine](https://en.wikipedia.org/wiki/Virtualization) on your  personal computer, at a VPS provider, or a dedicated/hardware hypervisor.
+The server machine can be a physical computer (server-grade, desktop/laptop, small factor board/barebone), or a [virtual Machine](https://en.wikipedia.org/wiki/Virtualization) on your personal computer, at a VPS provider, or a dedicated/hardware hypervisor.
 
 Virtualization software includes [virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) (Linux), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) (Linux/OSX/Windows), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) (dedicated hypervisor).
 
