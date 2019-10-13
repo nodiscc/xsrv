@@ -20,3 +20,6 @@ backups/*
 !secrets/README.md
 !public/README.md
 !backups/README.md
+
+# do not track roles downloaded by ansible-galaxy
+roles/common/
