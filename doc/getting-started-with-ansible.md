@@ -294,7 +294,8 @@ TODO
 - https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html
 - https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 - https://docs.ansible.com/ansible/latest/user_guide/vault.html
-- https://en.wikipedia.org/wiki/Ansible_(software)
+- https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html
+
 
 ------------------------
 
@@ -335,23 +336,22 @@ TODO
 
 ------------
 
-- https://docs.ansible.com/ansible/latest/plugins/plugins.html
 - https://docs.ansible.com/ansible/latest/plugins/action.html
 - https://docs.ansible.com/ansible/latest/plugins/cache.html
 - https://docs.ansible.com/ansible/latest/plugins/callback.html
 - https://docs.ansible.com/ansible/latest/plugins/connection.html
+- https://docs.ansible.com/ansible/latest/plugins/connection/paramiko_ssh.html
+- https://docs.ansible.com/ansible/latest/plugins/connection/ssh.html
 - https://docs.ansible.com/ansible/latest/plugins/inventory.html
+- https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
 - https://docs.ansible.com/ansible/latest/plugins/lookup.html
 - https://docs.ansible.com/ansible/latest/plugins/lookup/password.html
-- https://docs.ansible.com/ansible/latest/plugins/connection.html
 - https://docs.ansible.com/ansible/latest/plugins/plugins.html
 - https://docs.ansible.com/ansible/latest/plugins/shell.html
 - https://docs.ansible.com/ansible/latest/plugins/strategy.html
 - https://docs.ansible.com/ansible/latest/plugins/vars.html
 - https://docs.ansible.com/ansible/latest/user_guide/plugin_filtering_config.html
-- https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
-- https://docs.ansible.com/ansible/latest/plugins/connection/ssh.html
-- https://docs.ansible.com/ansible/latest/plugins/connection/paramiko_ssh.html
+
 
 -----------
 
@@ -426,7 +426,6 @@ TODO
 - https://blog.confirm.ch/deploying-ssl-private-keys-with-ansible/
 - https://blog.zwindler.fr/2019/07/22/proxmox-en-5-min-ansible-tinc/
 - https://devops.stackexchange.com/questions/3123/creating-ansible-host-vars-and-group-vars-files-dynamically
-- https://docs.ansible.com/ansible/latest/plugins/lookup/password.html
 - https://github.com/ansible/ansible-lint
 - https://github.com/ansible/ansible/
 - https://github.com/ansible/awx
@@ -449,3 +448,4 @@ TODO
 - https://www.ansible.com/products/awx-project/faq
 - https://www.digitalocean.com/community/tutorials/how-to-manage-multistage-environments-with-ansible
 - https://yamllint.readthedocs.io/en/stable/configuration.html
+- - https://en.wikipedia.org/wiki/Ansible_(software)
