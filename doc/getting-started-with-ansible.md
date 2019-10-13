@@ -30,6 +30,7 @@ As text files, ansible playbooks allow you to track and manage configuration cha
   - [Adding a new host](#adding-a-new-host)
 - [Building your own roles](#building-your-own-roles)
 - [Using multiple environments](#using-multiple-environments)
+- [Ansible documentation](#ansible-documentation)
 
 <!-- /MarkdownTOC -->
 
@@ -268,3 +269,183 @@ TODO
 ## Using multiple environments
 
 TODO
+
+## Ansible documentation
+
+- https://docs.ansible.com/ansible-tower/latest/html/userguide/main_menu.html
+- https://docs.ansible.com/ansible/devel/user_guide/playbooks_reuse.html
+- https://docs.ansible.com/ansible/devel/user_guide/playbooks_reuse_includes.html
+- https://docs.ansible.com/ansible/latest/installation_guide/intro_configuration.html
+- https://docs.ansible.com/ansible/latest/playbooks_loops.html
+- https://docs.ansible.com/ansible/latest/plugins/lookup/subelements.html
+- https://docs.ansible.com/ansible/latest/reference_appendices/config.html
+- https://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html
+- https://docs.ansible.com/ansible/latest/reference_appendices/test_strategies.html
+- https://docs.ansible.com/ansible/latest/scenario_guides/guide_docker.html
+- https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html
+- https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_checkmode.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_error_handling.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters_ipaddr.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_lookups.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+- https://docs.ansible.com/ansible/latest/user_guide/vault.html
+- https://en.wikipedia.org/wiki/Ansible_(software)
+
+------------------------
+
+- https://stackoverflow.com/questions/46593974/ansible-include-a-file-if-it-exists-and-do-nothing-if-it-doesnt#47062902
+
+```jinja2
+{% for tool in tools %}
+   {% set template = 'tools/' + tool.name + '/pbr.j2' %}
+   {% include template ignore missing %}
+{% endfor %}
+```
+
+
+-----------
+
+- https://en.wikipedia.org/wiki/Idempotence
+- https://stackoverflow.com/questions/29275576/ansible-how-to-check-files-is-changed-in-shell-command
+- https://knpuniversity.com/screencast/ansible/idempotency-changed-when
+- https://raymii.org/s/tutorials/Ansible_-_Only-do-something-if-another-action-changed.html
+
+```yaml
+# idempotence for the 'command/shell' ansible modules
+- name: run a command, never report 'changed'
+  command: /usr/bin/something
+  changed_when: False
+
+- name: run a command, don't report 'changed' when a specific string is present in stdout
+  command: /usr/bin/something
+  register: my_command_result
+  changed_when: "not my_command_result.search('already exists. Skipped')"
+
+- name: only run this task if the previous task reports 'changed'
+  service:
+    name: example
+    state: restarted
+  when: my_command_result.changed
+```
+
+------------
+
+- https://docs.ansible.com/ansible/latest/plugins/plugins.html
+- https://docs.ansible.com/ansible/latest/plugins/action.html
+- https://docs.ansible.com/ansible/latest/plugins/cache.html
+- https://docs.ansible.com/ansible/latest/plugins/callback.html
+- https://docs.ansible.com/ansible/latest/plugins/connection.html
+- https://docs.ansible.com/ansible/latest/plugins/inventory.html
+- https://docs.ansible.com/ansible/latest/plugins/lookup.html
+- https://docs.ansible.com/ansible/latest/plugins/lookup/password.html
+- https://docs.ansible.com/ansible/latest/plugins/connection.html
+- https://docs.ansible.com/ansible/latest/plugins/plugins.html
+- https://docs.ansible.com/ansible/latest/plugins/shell.html
+- https://docs.ansible.com/ansible/latest/plugins/strategy.html
+- https://docs.ansible.com/ansible/latest/plugins/vars.html
+- https://docs.ansible.com/ansible/latest/user_guide/plugin_filtering_config.html
+- https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+- https://docs.ansible.com/ansible/latest/plugins/connection/ssh.html
+- https://docs.ansible.com/ansible/latest/plugins/connection/paramiko_ssh.html
+
+-----------
+
+- https://docs.ansible.com/ansible/latest/modules/list_of_all_modules.html
+- https://docs.ansible.com/ansible/latest/modules/list_of_network_modules.html
+- https://docs.ansible.com/ansible/latest/modules/list_of_notification_modules.html
+- https://docs.ansible.com/ansible/latest/modules/acl_module.html
+- https://docs.ansible.com/ansible/latest/modules/apt_module.html
+- https://docs.ansible.com/ansible/latest/modules/archive_module.html
+- https://docs.ansible.com/ansible/latest/modules/assemble_module.html
+- https://docs.ansible.com/ansible/latest/modules/assert_module.html
+- https://docs.ansible.com/ansible/latest/modules/at_module.html
+- https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
+- https://docs.ansible.com/ansible/latest/modules/blockinfile_module.html
+- https://docs.ansible.com/ansible/latest/modules/command_module.html
+- https://docs.ansible.com/ansible/latest/modules/copy_module.html
+- https://docs.ansible.com/ansible/latest/modules/cron_module.html
+- https://docs.ansible.com/ansible/latest/modules/debug_module.html
+- https://docs.ansible.com/ansible/latest/modules/expect_module.html
+- https://docs.ansible.com/ansible/latest/modules/fail_module.html
+- https://docs.ansible.com/ansible/latest/modules/fetch_module.html
+- https://docs.ansible.com/ansible/latest/modules/file_module.html
+- https://docs.ansible.com/ansible/latest/modules/filesystem_module.html
+- https://docs.ansible.com/ansible/latest/modules/find_module.html
+- https://docs.ansible.com/ansible/latest/modules/firewalld_module.html
+- https://docs.ansible.com/ansible/latest/modules/git_module.html
+- https://docs.ansible.com/ansible/latest/modules/group_module.html
+- https://docs.ansible.com/ansible/latest/modules/import_playbook_module.html
+- https://docs.ansible.com/ansible/latest/modules/import_tasks_module.html
+- https://docs.ansible.com/ansible/latest/modules/include_module.html
+- https://docs.ansible.com/ansible/latest/modules/include_tasks_module.html
+- https://docs.ansible.com/ansible/latest/modules/ini_file_module.html
+- https://docs.ansible.com/ansible/latest/modules/iptables_module.html
+- https://docs.ansible.com/ansible/latest/modules/jabber_module.html
+- https://docs.ansible.com/ansible/latest/modules/ldap_attr_module.html
+- https://docs.ansible.com/ansible/latest/modules/ldap_entry_module.html
+- https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
+- https://docs.ansible.com/ansible/latest/modules/lvg_module.html
+- https://docs.ansible.com/ansible/latest/modules/lvol_module.html
+- https://docs.ansible.com/ansible/latest/modules/mail_module.html
+- https://docs.ansible.com/ansible/latest/modules/meta_module.html
+- https://docs.ansible.com/ansible/latest/modules/mount_module.html
+- https://docs.ansible.com/ansible/latest/modules/mysql_user_module.html
+- https://docs.ansible.com/ansible/latest/modules/patch_module.html
+- https://docs.ansible.com/ansible/latest/modules/pause_module.html
+- https://docs.ansible.com/ansible/latest/modules/pip_module.html
+- https://docs.ansible.com/ansible/latest/modules/raw_module.html
+- https://docs.ansible.com/ansible/latest/modules/replace_module.html
+- https://docs.ansible.com/ansible/latest/modules/script_module.html
+- https://docs.ansible.com/ansible/latest/modules/selinux_module.html
+- https://docs.ansible.com/ansible/latest/modules/service_module.html
+- https://docs.ansible.com/ansible/latest/modules/set_fact_module.html
+- https://docs.ansible.com/ansible/latest/modules/setup_module.html extensible with facter, ohai (puppet/ruby), filtering, can save facts to files
+- https://docs.ansible.com/ansible/latest/modules/shell_module.html
+- https://docs.ansible.com/ansible/latest/modules/slurp_module.html
+- https://docs.ansible.com/ansible/latest/modules/stat_module.html
+- https://docs.ansible.com/ansible/latest/modules/synchronize_module.html
+- https://docs.ansible.com/ansible/latest/modules/systemd_module.html
+- https://docs.ansible.com/ansible/latest/modules/template_module.html
+- https://docs.ansible.com/ansible/latest/modules/ufw_module.html
+- https://docs.ansible.com/ansible/latest/modules/unarchive_module.html
+- https://docs.ansible.com/ansible/latest/modules/user_module.html
+- https://docs.ansible.com/ansible/latest/modules/wait_for_module.html
+- https://docs.ansible.com/ansible/latest/modules/xattr_module.html
+
+-------
+
+- [Ansible cheatsheet](https://gist.github.com/AdamOssenford/344ffe76db0a52e9051a)
+- [Secrets with Ansible: Ansible Vault and GPG](https://benincosa.com/?p=3235)
+- https://adamj.eu/tech/2015/05/18/making-ansible-a-bit-faster/ - profiling plugin, pipelining, controlpersist
+- https://blog.confirm.ch/calling-ansible-handlers-based-on-os-distributions/
+- https://blog.confirm.ch/deploying-ssl-private-keys-with-ansible/
+- https://blog.zwindler.fr/2019/07/22/proxmox-en-5-min-ansible-tinc/
+- https://devops.stackexchange.com/questions/3123/creating-ansible-host-vars-and-group-vars-files-dynamically
+- https://docs.ansible.com/ansible/latest/plugins/lookup/password.html
+- https://github.com/ansible/ansible-lint
+- https://github.com/ansible/ansible/
+- https://github.com/ansible/awx
+- https://github.com/debops/debops/
+- https://github.com/geerlingguy?tab=repositories
+- https://github.com/sovereign/sovereign
+- https://medium.com/@jezhalford/ansible-custom-facts-1e1d1bf65db8
+- https://opensource.com/article/17/6/ansible-postgresql-operations
+- https://opensource.com/article/18/7/sysadmin-tasks-ansible
+- https://serverascode.com/2015/01/27/ansible-custom-facts.html
+- https://serverfault.com/questions/875247/whats-the-difference-between-include-tasks-and-import-tasks
+- https://stackoverflow.com/questions/22649333/ansible-notify-handlers-in-another-role
+- https://stackoverflow.com/questions/29127560/whats-the-difference-between-defaults-and-vars-in-an-ansible-role
+- https://stackoverflow.com/questions/30119973/how-to-run-a-task-when-variable-is-undefined-in-ansible
+- https://stackoverflow.com/questions/33837679/copy-files-from-one-server-to-another-using-ansible
+- https://stackoverflow.com/questions/33931610/ansible-handler-notify-vs-register
+- https://stackoverflow.com/questions/35083756/ansible-set-variable-only-if-undefined
+- https://stackoverflow.com/questions/35654286/how-check-a-file-exists-in-ansible
+- https://stackoverflow.com/questions/47244834/how-to-join-a-list-of-strings-in-ansible
+- https://www.ansible.com/products/awx-project/faq
+- https://www.digitalocean.com/community/tutorials/how-to-manage-multistage-environments-with-ansible
+- https://yamllint.readthedocs.io/en/stable/configuration.html
