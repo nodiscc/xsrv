@@ -296,44 +296,6 @@ TODO
 - https://docs.ansible.com/ansible/latest/user_guide/vault.html
 - https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html
 
-
-------------------------
-
-- https://stackoverflow.com/questions/46593974/ansible-include-a-file-if-it-exists-and-do-nothing-if-it-doesnt#47062902
-
-```jinja2
-{% for tool in tools %}
-   {% set template = 'tools/' + tool.name + '/pbr.j2' %}
-   {% include template ignore missing %}
-{% endfor %}
-```
-
-
------------
-
-- https://en.wikipedia.org/wiki/Idempotence
-- https://stackoverflow.com/questions/29275576/ansible-how-to-check-files-is-changed-in-shell-command
-- https://knpuniversity.com/screencast/ansible/idempotency-changed-when
-- https://raymii.org/s/tutorials/Ansible_-_Only-do-something-if-another-action-changed.html
-
-```yaml
-# idempotence for the 'command/shell' ansible modules
-- name: run a command, never report 'changed'
-  command: /usr/bin/something
-  changed_when: False
-
-- name: run a command, don't report 'changed' when a specific string is present in stdout
-  command: /usr/bin/something
-  register: my_command_result
-  changed_when: "not my_command_result.search('already exists. Skipped')"
-
-- name: only run this task if the previous task reports 'changed'
-  service:
-    name: example
-    state: restarted
-  when: my_command_result.changed
-```
-
 ------------
 
 - https://docs.ansible.com/ansible/latest/plugins/action.html
@@ -404,7 +366,7 @@ TODO
 - https://docs.ansible.com/ansible/latest/modules/selinux_module.html
 - https://docs.ansible.com/ansible/latest/modules/service_module.html
 - https://docs.ansible.com/ansible/latest/modules/set_fact_module.html
-- https://docs.ansible.com/ansible/latest/modules/setup_module.html extensible with facter, ohai (puppet/ruby), filtering, can save facts to files
+- https://docs.ansible.com/ansible/latest/modules/setup_module.html extensible with facter/ohai, filtering, can save facts to files
 - https://docs.ansible.com/ansible/latest/modules/shell_module.html
 - https://docs.ansible.com/ansible/latest/modules/slurp_module.html
 - https://docs.ansible.com/ansible/latest/modules/stat_module.html
@@ -419,13 +381,14 @@ TODO
 
 -------
 
-- [Ansible cheatsheet](https://gist.github.com/AdamOssenford/344ffe76db0a52e9051a)
-- [Secrets with Ansible: Ansible Vault and GPG](https://benincosa.com/?p=3235)
 - https://adamj.eu/tech/2015/05/18/making-ansible-a-bit-faster/ - profiling plugin, pipelining, controlpersist
+- https://benincosa.com/?p=3235 - Secrets with Ansible: Ansible Vault and GPG
 - https://blog.confirm.ch/calling-ansible-handlers-based-on-os-distributions/
 - https://blog.confirm.ch/deploying-ssl-private-keys-with-ansible/
 - https://blog.zwindler.fr/2019/07/22/proxmox-en-5-min-ansible-tinc/
 - https://devops.stackexchange.com/questions/3123/creating-ansible-host-vars-and-group-vars-files-dynamically
+- https://en.wikipedia.org/wiki/Ansible_(software)
+- https://gist.github.com/AdamOssenford/344ffe76db0a52e9051a - Ansible cheatsheet
 - https://github.com/ansible/ansible-lint
 - https://github.com/ansible/ansible/
 - https://github.com/ansible/awx
@@ -447,5 +410,42 @@ TODO
 - https://stackoverflow.com/questions/47244834/how-to-join-a-list-of-strings-in-ansible
 - https://www.ansible.com/products/awx-project/faq
 - https://www.digitalocean.com/community/tutorials/how-to-manage-multistage-environments-with-ansible
+- https://www.jeffgeerling.com/blog/2018/testing-your-ansible-roles-molecule
 - https://yamllint.readthedocs.io/en/stable/configuration.html
-- - https://en.wikipedia.org/wiki/Ansible_(software)
+
+------------------------
+
+- https://stackoverflow.com/questions/46593974/ansible-include-a-file-if-it-exists-and-do-nothing-if-it-doesnt#47062902
+
+```jinja2
+{% for tool in tools %}
+   {% set template = 'tools/' + tool.name + '/pbr.j2' %}
+   {% include template ignore missing %}
+{% endfor %}
+```
+
+
+-----------
+
+- https://en.wikipedia.org/wiki/Idempotence
+- https://stackoverflow.com/questions/29275576/ansible-how-to-check-files-is-changed-in-shell-command
+- https://knpuniversity.com/screencast/ansible/idempotency-changed-when
+- https://raymii.org/s/tutorials/Ansible_-_Only-do-something-if-another-action-changed.html
+
+```yaml
+# idempotence for the 'command/shell' ansible modules
+- name: run a command, never report 'changed'
+  command: /usr/bin/something
+  changed_when: False
+
+- name: run a command, don't report 'changed' when a specific string is present in stdout
+  command: /usr/bin/something
+  register: my_command_result
+  changed_when: "not my_command_result.search('already exists. Skipped')"
+
+- name: only run this task if the previous task reports 'changed'
+  service:
+    name: example
+    state: restarted
+  when: my_command_result.changed
+```
