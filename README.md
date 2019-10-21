@@ -13,6 +13,7 @@ This ansible playbook lets you quickly and reliably install and manage various n
 The following components (_roles_) are available:
 
 - [common](https://gitlab.com/nodiscc/ansible-xsrv-common) - base server components (SSH, automatic updates, users, hostname, networking, kernel, time/date...)
+- [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) - incremental backup service (local and remote backups)
 
 <!-- TODO demo screencast -->
 
