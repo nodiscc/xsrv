@@ -2,3 +2,4 @@
   roles:
     - common
     - backup
+    - monitoring
