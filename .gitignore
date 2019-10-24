@@ -24,3 +24,4 @@ backups/*
 # do not track roles downloaded by ansible-galaxy
 roles/common/
 roles/backup/
+roles/monitoring/
