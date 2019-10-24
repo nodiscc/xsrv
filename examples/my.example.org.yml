@@ -18,3 +18,40 @@ setup_msmtp: no
 #msmtp_username: "CHANGEME"
 #msmtp_password: "CHANGEME"
 #msmtp_admin_email: "CHANGEME"
+
+##### FIREWALL/FAIL2BAN #####
+
+# Firewall rules - traffic to/from the local machine
+firehol_networks:
+  - name: "lan"
+    src: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12" # match traffic to/from any RFC1918 private address
+    interface: "any" # to/from any network interface
+    allow_input: # allow incoming connections for these service/ports, and source address:
+      - { name: "ssh", src: "any" } # always allow SSH on port 22 from LAN (anti lock-out rule)
+      # - { name: "multicast", src: "any" } # Avahi/MDNS service announcement
+      # - { name: "samba", src: "any" } # Samba CIFS/SMB file sharing server
+    allow_output: # allow outgoing connections to these service/ports, and destination address:
+      - { name: "dhcp", dst: "any" } # required for automatic IP address configuration using DHCP
+      - { name: "ping", dst: "any" } # allow ping to LAN, not required but nice to have
+      # - { name: "dns", dst: "any" } # required for name resolution if the DNS server is on the LAN
+    policy: "RETURN" # if none of the allow_input/output rules match, check the traffic against next chain (use DROP to drop it)
+
+  - name: "internet"
+    src: "any" # traffic to/from any other IP address
+    interface: "any" # to/from any network interface
+    allow_input:
+      - { name: "ssh", src: "any" } # allow SSH on default port 22 from anywhere
+      - { name: "ping", src: "any" } # allow ping from everywhere, not required but nice to have
+      - { name: "netdata", src: "any" } # Netdata monitoring dashboard, custom service, see below
+      # - { name: "http", src: "any" } # Required for web servers (apache/nginx/proxy/...)
+      # - { name: "https", src: "any" } # Required for web servers (apache/nginx/proxy/...)
+      # - { name: "mumble", src: "any" } # Required for mumble VoIP server
+      # - { name: "sshcustom" src: "any" } # SSH server on custom port, see below
+    allow_output:
+      - { name: "dns", dst: "any" } # required for DNS name resolution
+      - { name: "ntp", dst: "any" } # required for time/date synchronization
+      - { name: "http", dst: "any" } # required for automatic upgrades/APT package management, most applications
+      - { name: "https", dst: "any" } # required for automatic upgrades/APT package management, most applications
+      - { name: "submission", dst: "any" } # Required for outgoing mail over port 587 (SMTP submission)
+      # - { name: "all", dst: "any" } # allow ALL outgoing connections, to any port. Required by some applications (diagnostic/scanning machines, peer-to-peer)
+    policy: "RETURN" # if none of the allow_input/output rules match, pass it to the default chain/policy (DROP)
