@@ -357,6 +357,9 @@ TODO
 - https://docs.ansible.com/ansible/latest/modules/meta_module.html
 - https://docs.ansible.com/ansible/latest/modules/mount_module.html
 - https://docs.ansible.com/ansible/latest/modules/mysql_user_module.html
+- https://docs.ansible.com/ansible/latest/modules/openssl_privatekey_module.html
+- https://docs.ansible.com/ansible/latest/modules/openssl_certificate_module.html
+- https://docs.ansible.com/ansible/latest/modules/openssl_csr_module.html
 - https://docs.ansible.com/ansible/latest/modules/patch_module.html
 - https://docs.ansible.com/ansible/latest/modules/pause_module.html
 - https://docs.ansible.com/ansible/latest/modules/pip_module.html
@@ -400,18 +403,24 @@ TODO
 - https://opensource.com/article/18/7/sysadmin-tasks-ansible
 - https://serverascode.com/2015/01/27/ansible-custom-facts.html
 - https://serverfault.com/questions/875247/whats-the-difference-between-include-tasks-and-import-tasks
+- https://stackoverflow.com/questions/21870083/specify-sudo-password-for-ansible
 - https://stackoverflow.com/questions/22649333/ansible-notify-handlers-in-another-role
+- https://stackoverflow.com/questions/28080145/check-if-a-list-contains-an-item-in-ansible
+- https://stackoverflow.com/questions/28778738/ansible-mode-755-for-directories-and-644-for-files-recursively
 - https://stackoverflow.com/questions/29127560/whats-the-difference-between-defaults-and-vars-in-an-ansible-role
 - https://stackoverflow.com/questions/30119973/how-to-run-a-task-when-variable-is-undefined-in-ansible
+- https://stackoverflow.com/questions/31731756/ansible-and-changed-when-based-on-stdout-value
 - https://stackoverflow.com/questions/33837679/copy-files-from-one-server-to-another-using-ansible
 - https://stackoverflow.com/questions/33931610/ansible-handler-notify-vs-register
 - https://stackoverflow.com/questions/35083756/ansible-set-variable-only-if-undefined
 - https://stackoverflow.com/questions/35654286/how-check-a-file-exists-in-ansible
 - https://stackoverflow.com/questions/47244834/how-to-join-a-list-of-strings-in-ansible
+- https://utux.fr/index.php?article141/ansible-vault
 - https://www.ansible.com/products/awx-project/faq
 - https://www.digitalocean.com/community/tutorials/how-to-manage-multistage-environments-with-ansible
 - https://www.jeffgeerling.com/blog/2018/testing-your-ansible-roles-molecule
 - https://yamllint.readthedocs.io/en/stable/configuration.html
+- https://raymii.org/s/tutorials/Ansible_-_Sudo_Safety_and_Sanity_Checks.html
 
 ------------------------
 
