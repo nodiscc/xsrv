@@ -43,8 +43,8 @@ firehol_networks:
       - { name: "ssh", src: "any" } # allow SSH on default port 22 from anywhere
       - { name: "ping", src: "any" } # allow ping from everywhere, not required but nice to have
       - { name: "netdata", src: "any" } # Netdata monitoring dashboard, custom service, see below
-      # - { name: "http", src: "any" } # Required for web servers (apache/nginx/proxy/...)
-      # - { name: "https", src: "any" } # Required for web servers (apache/nginx/proxy/...)
+      - { name: "http", src: "any" } # Required for web servers (apache/nginx/proxy/...)
+      - { name: "https", src: "any" } # Required for web servers (apache/nginx/proxy/...)
       # - { name: "mumble", src: "any" } # Required for mumble VoIP server
       # - { name: "sshcustom" src: "any" } # SSH server on custom port, see below
     allow_output:
