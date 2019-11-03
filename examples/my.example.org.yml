@@ -7,17 +7,6 @@ ansible_sudo_pass: "CHANGEME"
 # SSH port used to contact the server (only if you changed it or NATed a different port than 22)
 #ansible_ssh_port: '22'
 
-##### OUTGOING MAIL #####
-
-# yes/no: install outgoing system mail client/local MTA
-# When msmtp installation is disabled the system will not be able to send status/monitoring e-mails
-setup_msmtp: no
-# If you enable msmtp installation, an outgoing mail relay (SMTP server),
-# authentication username/password destination e-mail address for system mail must be set
-#msmtp_host: "smtp.example.com"
-#msmtp_username: "CHANGEME"
-#msmtp_password: "CHANGEME"
-#msmtp_admin_email: "CHANGEME"
 
 ##### FIREWALL/FAIL2BAN #####
 
