@@ -45,29 +45,4 @@ firehol_networks:
       # - { name: "all", dst: "any" } # allow ALL outgoing connections, to any port. Required by some applications (diagnostic/scanning machines, peer-to-peer)
     policy: "RETURN" # if none of the allow_input/output rules match, pass it to the default chain/policy (DROP)
 
-##### APACHE WEB SERVER #####
 
-# Apache virtualhosts
-# 'servername': domain name  for which the virtualhost will serve requests
-# 'documentroot': document root where files for this virtualhost must be placed
-# 'allow_robots': yes/no: when set to no, crawlers/bots will be disallowed from browsing the site (bad bots will ignore this settings)
-# 'cert_mode':
-#     'selfsigned': a self-signed certificate/private key will be generated/used for this domain
-# 'auto_homepage': yes/no: build a homepage (index.html) with links to installed web applications (based on enabled roles)
-# Example:
-# apache_virtualhosts:
-#   - servername: "www.example.com"
-#     documentroot: "/var/www/app1"
-#     cert_mode: "selfsigned"
-#     allow_robots: yes
-#     auto_homepage: yes
-#   - servername: "www.mysite.org"
-#     documentroot: "/var/www/mysite"
-#     cert_mode: "selfsigned"
-#     allow_robots: no
-#     auto_homepage: yes
-apache_virtualhosts:
-  - servername: "{{ inventory_hostname }}"
-    documentroot: "/var/www/{{ inventory_hostname }}"
-    cert_mode: selfsigned
-    allow_robots: no
