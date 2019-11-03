@@ -1,5 +1,5 @@
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-common
-  version: "1.1.1"
+  version: "1.2"
   name: common
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-backup
@@ -11,5 +11,5 @@
   name: monitoring
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-lamp
-  version: "1.0"
+  version: "1.1"
   name: lamp
