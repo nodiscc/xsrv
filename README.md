@@ -4,9 +4,9 @@
   ╹ ╹┗━┛╹┗╸┗┛ 
 ```
 
-Run your own network services, on a server you control. Self-hosted communication, collaboration systems, file storage, transfer, sharing and synchronization, automation, development, multimedia, IT infrastructure, and more.
+Run your own network services, on a server you control. Self-hosted communication, collaboration systems, file storage, transfer, sharing and synchronization, web publishing, automation, development, multimedia, IT infrastructure, and more.
 
-This ansible playbook lets you quickly and reliably install and manage various network services and applications on a personal server, or more.
+This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on a personal server, or more.
 
 ## Roles
 
@@ -40,7 +40,7 @@ The following components (_roles_) are available:
 
 ## Installation
 
-You will need a server (_host_) to configure, and a remote _controller_ machine from where you will deploy/administrate the server.
+You will need a server (_host_), and a remote _controller_ machine from where you will deploy/administrate the server.
 
 
 ### Preparing the server
@@ -94,13 +94,13 @@ After the deployment completes, your services are ready to use.
 
 ## Usage
 
-Read each [role](#roles)'s documentation for tips on how to use your services.
+Read [roles](#roles) documentation for tips on how to use your services.
 
 
 ## Configuration
 
-- **Add more roles:** to add more [roles](#roles) to your server, uncomment them in [`inventory.yml`](inventory.yml).
-- **Configuration:** The default configuration will work out of the box. If you need to change any details, put any configuration variable and its new value in your host configuration file (). To list available role variables and their defaults, read `defaults/main.yml` in each [role](#roles): `
+- **Add more roles:** to add more roles to your server, uncomment them in [`inventory.yml`](inventory.yml).
+- **Configuration:** The default configuration will work out of the box. If you need to change any details, put any configuration variable and its new value in your host configuration file in `host_vars/`. To list available role variables and their defaults, read `defaults/main.yml` in each [role](#roles): `
 find ./ -wholename "*defaults/main.yml" | xargs cat | less`
 
 **After any changes to configuration/roles**, apply changes to the host:
@@ -131,18 +131,19 @@ See the [backup role](https://gitlab.com/nodiscc/ansible-xsrv-backup#documentati
 
 ### Updates
 
-Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to thier latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
+Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to their latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
 
 - Download latest backups from the server and/or do a snapshot of the VM.
 - Read the [release notes](CHANGELOG.md). Update configuration variables if needed.
-- Update the playbook to the latest release: `git remote update && git checkout $version`
+- Update the playbook to the latest release: `git remote update && git checkout $latest_release`
 - Update roles: `ansible-galaxy -f -r requirements.yml`
-- Run server deployment:  `ansible-playbook playbook.yml`
+- Run the playbook:  `ansible-playbook playbook.yml`
 
 
 ### Testing/reverting updates
 
 - Restore previous configuration variables (tracking inventory/playbook/host_vars in a private git repository make this easier). Roll back roles to their previous versions (`git checkout $previous_version && ansible-galaxy -f -r requirements.yml`).
+- Run the playbook:  `ansible-playbook playbook.yml`
 - Restore the previous snapshot of the VM and/or restore data from the backups
 
 For professional/production systems, running the playbook and evaluating changes against a [testing environment](doc/getting-started-with-ansible.md#using-multiple-environments) first is recommended.
