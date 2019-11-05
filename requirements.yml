@@ -13,3 +13,7 @@
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-lamp
   version: "1.1"
   name: lamp
+
+- src: git+https://gitlab.com/nodiscc/ansible-xsrv-nextcloud
+  version: "1.0"
+  name: nextcloud
