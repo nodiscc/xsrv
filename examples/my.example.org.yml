@@ -7,6 +7,9 @@ ansible_sudo_pass: "CHANGEME"
 # SSH port used to contact the server (only if you changed it or NATed a different port than 22)
 #ansible_ssh_port: '22'
 
+# We setup a global username/password and reuse it as default admin user/password for all applications/services
+xsrv_default_username: "CHANGEME"
+xsrv_default_password: "CHANGEME"
 
 ##### FIREWALL/FAIL2BAN #####
 
@@ -45,4 +48,11 @@ firehol_networks:
       # - { name: "all", dst: "any" } # allow ALL outgoing connections, to any port. Required by some applications (diagnostic/scanning machines, peer-to-peer)
     policy: "RETURN" # if none of the allow_input/output rules match, pass it to the default chain/policy (DROP)
 
+##### NEXTCLOUD #####
 
+# Nextcloud admin username/password
+nextcloud_user: "{{ xsrv_default_username }}"
+nextcloud_password: "{{ xsrv_default_password }}"
+
+# nextcloud database password (random password stored in secrets/)
+nextcloud_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.nextcloud_db_password length=20')}}"
