@@ -26,3 +26,4 @@ roles/common/
 roles/backup/
 roles/monitoring/
 roles/lamp/
+roles/nextcloud/
