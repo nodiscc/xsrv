@@ -16,6 +16,7 @@ The following components (_roles_) are available:
 - [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) - incremental backup service (local and remote backups)
 - [monitoring](https://gitlab.com/nodiscc/ansible-xsrv-monitoring) - lightweight server monitoring system (netdata and additional tools)
 - [lamp](https://gitlab.com/nodiscc/ansible-xsrv-lamp) - Apache web server, PHP interpreter and MariaDB (MySQL) database server
+- [nextcloud](https://gitlab.com/nodiscc/ansible-xsrv-lamp) - File hosting/sharing/synchronization/groupware/"private cloud" service.
 
 <!-- TODO demo screencast -->
 
