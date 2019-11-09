@@ -1,3 +1,5 @@
+---
+
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-common
   version: "1.2"
   name: common
