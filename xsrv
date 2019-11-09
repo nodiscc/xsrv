@@ -36,10 +36,10 @@ function install_ansible() {
     echo "[xsrv] installing git and python3-pip..."
     sudo apt install git python3-pip
     echo "[xsrv] creating virtualenv in $base_dir/.venv/..."
-    python3 --quiet -m venv "$base_dir/.venv/"
+    python3 -m venv "$base_dir/.venv/"
     echo "[xsrv] installing ansible in virtualenv..."
     source "$base_dir/.venv/bin/activate"
-    pip3 install ansible==2.8.0
+    pip3 --quiet install ansible==2.8.0
 }
 
 # initialize the playbook from example files (interactive)

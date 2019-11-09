@@ -61,7 +61,10 @@ git clone -b 1.0 https://gitlab.com/nodiscc/xsrv
 # Enter the playbook directory. All ansible commands must be run from this directory
 cd xsrv
 
-# Install ansible, initialize the playbook and set required confiuration variables
+# Install ansible
+./xsrv install-ansible
+
+# initialize the playbook and set required confiuration variables
 ./xsrv init
 
 # If needed, change the list of enabled roles and/or host configuration variables
