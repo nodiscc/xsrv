@@ -1,0 +1,14 @@
+# configuration file for yamllint
+
+extends: default
+
+ignore: .venv/
+
+rules:
+  line-length: disable
+  braces: disable
+  comments:
+    require-starting-space: no
+  truthy: disable
+  comments:
+    min-spaces-from-content: 1
