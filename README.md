@@ -26,14 +26,13 @@ The following components (_roles_) are available:
 
 - [Installation](#installation)
   - [Preparing the server](#preparing-the-server)
-  - [Preparing the ansible controller](#preparing-the-ansible-controller)
   - [Initial configuration/deployment](#initial-configurationdeployment)
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Maintenance](#maintenance)
   - [Backups](#backups)
   - [Updates](#updates)
-  - [Testing/reverting updates](#testingreverting-updates)
+  - [Other](#other)
 - [License](#license)
 
 <!-- /MarkdownTOC -->
@@ -53,13 +52,6 @@ You will need a server (_host_), and a remote _controller_ machine from where yo
 * [Operating system setup](operating-system.md)
 
 
-### Preparing the ansible controller
-
-The _controller_ machine will be used for remote administration and deployment. It can be any Linux/other machine where ansible and git can be installed (desktop/laptop/server/VM...). It must be able to resolve the server's hostname (using DNS, [hosts file](https://en.wikipedia.org/wiki/Hosts_(file))), and have IP and SSH access to the server (default port `tcp/22`).
-
-- [Ansible installation](doc/ansible-install.md)
-
-
 ### Initial configuration/deployment
 
 ```bash
@@ -69,26 +61,14 @@ git clone -b 1.0 https://gitlab.com/nodiscc/xsrv
 # Enter the playbook directory. All ansible commands must be run from this directory
 cd xsrv
 
-# copy the example inventory file
-cp examples/inventory.example.yml inventory.yml
+# Install ansible, initialize the playbook and set required confiuration variables
+./xsrv init
 
-# copy the example playbook file
-cp examples/playbook.example.yml playbook.yml
+# If needed, change the list of enabled roles and/or host configuration variables
+./xsrv config-playbook
+./xsrv config-host-vars
 
-# copy the example host configuration variables file
-# the filename must match your actual server hostname (FQDN)
-cp examples/my.example.org.yml host_vars/myserver.example.org.yml
-```
-
-- Edit `inventory.yml` and replace `my.example.org` with your actual server hostname (FQDN):
-- Edit `playbook.yml`, replace `my.example.org` with your actual server FQDN, enable (uncomment) any roles you want to install
-- Edit `host_vars/myserver.example.org`, and set the required variables (labeled `CHANGEME`)
-
-```bash
-# Download roles
-ansible-galaxy install -f -r requirements.yml
-
-# Deploy the playbook to the server
+# Run host deployment
 ansible-playbook playbook.yml
 ```
 
@@ -102,24 +82,13 @@ Read [roles](#roles) documentation for tips on how to use your services.
 
 ## Configuration
 
-- **Add more roles:** to add more roles to your server, uncomment them in [`inventory.yml`](inventory.yml).
-- **Configuration:** The default configuration will work out of the box. If you need to change any details, put any configuration variable and its new value in your host configuration file in `host_vars/`. To list available role variables and their defaults, read `defaults/main.yml` in each [role](#roles): `
-find ./ -wholename "*defaults/main.yml" | xargs cat | less`
+- **Add more roles:** to add more roles to your server, uncomment them in `inventory.yml`: `./xsrv config-playbook`
+- **Configuration:** The default configuration will work out of the box.
+  - To show defaults for all configuration variables, review each role](#roles)'s `default/main.yml`: `./xsrv show-defaults`
+  - To review/change configuration details for your host, edit the host's configuration variables in `host_vars/`: `./xsrv config-host-vars`
+  - To override any of the default variables, copy them from role defaults to your host's variables and edit them there.
 
-**After any changes to configuration/roles**, apply changes to the host:
-
-```bash
-source ~/ansible-venv/bin/activate # required if ansible is installed in a virtualenv
-ansible-galaxy install -f -r requirements.yml
-ansible-playbook playbook.yml
-```
-
-Read [getting started with ansible](doc/getting-started-with-ansible.md) for details on configuration and creation of playbooks and roles.
-
-**Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups.
-
-**Tracking configuration in git:** Default [.gitignore](.gitignore) patterns are here to ensure that you do not push your configuration, public keys and secrets to a public Git service. If you have a private git server, you can comment out ignore patterns in [.gitignore](.gitignore) to start tracking your configuration changes in git. Check that the git remote is *actually* set to your private git server. Secrets and sensitive information should still be stored encrypted in the repository, using [ansible-vault](doc/getting-started-with-ansible.md#ansible-vault) or another method.
-
+**After any changes to configuration/roles**, apply changes to the host: `./xsrv deploy`
 
 
 ## Maintenance
@@ -129,8 +98,13 @@ Self-hosting places your services and data under your own responsibility (uptime
 
 ### Backups
 
-See the [backup role](https://gitlab.com/nodiscc/ansible-xsrv-backup#documentation)
+Backups can be configured in the `##### BACKUPS #####` section of your host configuration variables.
 
+To download a copy of the latest backups from the host, to the controller (`backups/` under the playbook directory), run:
+
+```bash
+./xsrv backup-fetch
+```
 
 ### Updates
 
@@ -143,13 +117,21 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 - Run the playbook:  `ansible-playbook playbook.yml`
 
 
-### Testing/reverting updates
+### Other
 
-- Restore previous configuration variables (tracking inventory/playbook/host_vars in a private git repository make this easier). Roll back roles to their previous versions (`git checkout $previous_version && ansible-galaxy -f -r requirements.yml`).
+**Tracking configuration in git:** By default your specific playbook/inventory/host_vars configuration is excluded from git to prevent accidentally pushing you configuration details to a public git repot. See [.gitignore](.gitignore) and disable relevant sections to start tracking your configuration in git.
+
+**Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups.
+
+**For a more in-depth guide on using ansible** directly to manage environments with multiple hosts, write your own playbooks and roles, see [getting started with ansible](doc/getting-started-with-ansible.md).
+
+**Testing/reverting updates:**
+
+- Restore previous configuration variables
+- Roll back roles to their previous versions (`git checkout $previous_version && ansible-galaxy -f -r requirements.yml`).
 - Run the playbook:  `ansible-playbook playbook.yml`
-- Restore the previous snapshot of the VM and/or restore data from the backups
-
-For professional/production systems, running the playbook and evaluating changes against a [testing environment](doc/getting-started-with-ansible.md#using-multiple-environments) first is recommended.
+- Restore data from the last known good backups.
+- For professional/production systems, running the playbook and evaluating changes against a testing environment first is recommended.
 
 
 ## License
