@@ -1,0 +1,10 @@
+---
+
+test:
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y shellcheck
+    - export LC_ALL=C.UTF-8
+    - export LANG=C.UTF-8
+  script:
+    - make tests
