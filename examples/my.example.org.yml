@@ -2,14 +2,14 @@
 
 ### configuration variables for my.example.org
 
-# administrator/sudo account on the server
+# administrator/sudo account on the host
 ansible_ssh_user: "CHANGEME"
 # 'sudo' password for this user
-ansible_sudo_pass: "CHANGEME"
-# SSH port used to contact the server (only if you changed it or NATed a different port than 22)
+ansible_become_pass: "CHANGEME"
+# SSH port used to contact the host
 #ansible_ssh_port: '22'
 
-# We setup a global username/password and reuse it as default admin user/password for all applications/services
+# Default username/password for installed services/applications
 xsrv_default_username: "CHANGEME"
 xsrv_default_password: "CHANGEME"
 
@@ -55,6 +55,5 @@ firehol_networks:
 # Nextcloud admin username/password
 nextcloud_user: "{{ xsrv_default_username }}"
 nextcloud_password: "{{ xsrv_default_password }}"
-
 # nextcloud database password (random password stored in secrets/)
 nextcloud_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.nextcloud_db_password length=20')}}"
