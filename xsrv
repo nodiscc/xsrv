@@ -1,0 +1,124 @@
+#!/bin/bash
+# xsrv command-line wrapper for ansible
+# https://gitlab.com/nodiscc/xsrv
+##############################
+
+# abort on errors
+set -o errexit
+
+# help text
+usage="USAGE: $0 command
+AVAILABLE COMMANDS:
+install-ansible     install ansible in a virtualenv
+init                initialize the playbook from example files
+deploy              deploy the host (run ansible playbook)
+config-host-vars    edit host configuration variables
+config-playbook     edit the playbook (host roles)
+config-inventory    edit hosts inventory
+show-defaults       show roles configuration defaults
+help                show this message
+"
+
+# exit if no command specified
+[[ -z "$1" ]] && echo "$usage" && exit 1
+
+##############################
+# Functions
+
+# Install ansible in a python virtualenv in the playbook directory
+# Pros: does not interact with python system libraries/interpreter, easy to move/uninstall/update
+# Cons: .venv/bin/activate must be sourced to use ansible from the virtualenv
+# Alternative methods:
+# - install from the system package manager (sudo apt install ansible). Pros: easiest. Cons: ansible version must match the playbook/roles requirements
+# - install for the current user (pip3 install --user ansible==2.8.0). Cons: you must add ~/.local/bin/ to your $PATH to use ansible
+# - do *not* use 'sudo pip" install' (may cause conflicts effects with system libraries/unexpected behavior. Unsafe)
+function install_ansible() {
+    echo "[xsrv] installing git and python3-pip..."
+    sudo apt install git python3-pip
+    echo "[xsrv] creating virtualenv in $base_dir/.venv/..."
+    python3 --quiet -m venv "$base_dir/.venv/"
+    echo "[xsrv] installing ansible in virtualenv..."
+    source "$base_dir/.venv/bin/activate"
+    pip3 install ansible==2.8.0
+}
+
+# initialize the playbook from example files (interactive)
+function init() {
+    # abort if any target file exists
+    for file in "$base_dir/playbook.yml" "$base_dir/inventory.yml"; do
+        [[ -e "$file" ]] && echo "[xsrv] ERROR: file $file already exists" && exit 1
+    done
+
+    # read hostname, abort if target vars_file exists
+    read -r -p "[xsrv] hostname of the host to configure: " ansible_hostname
+    host_vars_file="$base_dir/host_vars/$ansible_hostname.yml"
+    [[ -e "$host_vars_file" ]] && echo "[xsrv] ERROR: file $host_vars_file already exists" && exit 1
+
+    # read credentials
+    read -r -p "[xsrv] admin user (member of the sudo group) on the host: " ansible_ssh_user
+    read -r -p "[xsrv] admin password for $ansible_ssh_user: " ansible_become_pass
+    read -r -p "[xsrv] default user name for your services/applications: " xsrv_default_username
+    read -r -p "[xsrv] default password for your services/applications: " xsrv_default_password
+
+    # write files
+    echo "[xsrv] creating host_vars, playbook and inventory file..."
+    cp "$base_dir/examples/my.example.org.yml" "$host_vars_file"
+    cp "$base_dir/examples/playbook.example.yml" "$base_dir/playbook.yml"
+    cp "$base_dir/examples/inventory.example.yml" "$base_dir/inventory.yml"
+    sed -i "s/ansible_ssh_user: \"CHANGEME\"/ansible_ssh_user: \"$ansible_ssh_user\"/g" "$host_vars_file"
+    sed -i "s/ansible_become_pass: \"CHANGEME\"/ansible_become_pass: \"$ansible_become_pass\"/g" "$host_vars_file"
+    sed -i "s/xsrv_default_username: \"CHANGEME\"/xsrv_default_username: \"$xsrv_default_username\"/g" "$host_vars_file"
+    sed -i "s/xsrv_default_password: \"CHANGEME\"/xsrv_default_password: \"$xsrv_default_password\"/g" "$host_vars_file"
+    sed -i "s/my.example.org/$ansible_ssh_user/g" "$base_dir/host_vars/$ansible_hostname.yml"
+    sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/inventory.yml"
+    sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/playbook.yml"
+
+    # download roles
+    echo "[xsrv] downloading roles..."
+    ansible-galaxy install -f -r requirements.yml
+}
+
+# deploy the host (run ansible playbook)
+function deploy() {
+    source "$base_dir/.venv/bin/activate"
+    ansible-playbook playbook.yml
+}
+
+# edit host configuration variables
+function config_host_vars() {
+    $editor "$base_dir/host_vars/*.yml"
+}
+
+# edit the playbook (host roles)
+function config_playbook() {
+    $editor "$base_dir/playbook.yml"
+}
+
+# edit hosts inventory
+function config_inventory() {
+    $editor "$base_dir/inventory.yml"
+}
+
+# show roles configuration defaults
+function show_defaults() {
+    find roles/ -wholename "*defaults/main.yml" -exec cat '{}' \;|less
+}
+
+##############################
+# Main loop
+
+command="$1"
+base_dir=$(realpath "$(dirname "$0")")
+editor="nano"
+
+case "$command" in
+    "install-ansible") install_ansible;;
+    "init") init;;
+    "deploy") deploy;;
+    "config-host-vars" ) config_host_vars;;
+    "config-playbook" ) config_playbook;;
+    "config-inventory" ) config_inventory;;
+    "show-defaults" ) show_defaults;;
+    "help" ) echo "$usage"; exit 0;;
+    *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
+esac
