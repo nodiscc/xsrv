@@ -16,6 +16,7 @@ config-host-vars    edit host configuration variables
 config-playbook     edit the playbook (host roles)
 config-inventory    edit hosts inventory
 show-defaults       show roles configuration defaults
+check               simulate deployment/report items that would be changed
 help                show this message
 "
 
@@ -84,6 +85,12 @@ function deploy() {
     ansible-playbook playbook.yml
 }
 
+# check what changes would be made by running 'deploy' (run ansible in check mode)
+function check() {
+    source "$base_dir/.venv/bin/activate"
+    ansible-playbook --check playbook.yml
+}
+
 # edit host configuration variables
 function config_host_vars() {
     $editor "$base_dir/host_vars/*.yml"
@@ -115,6 +122,7 @@ case "$command" in
     "install-ansible") install_ansible;;
     "init") init;;
     "deploy") deploy;;
+    "check") check;;
     "config-host-vars" ) config_host_vars;;
     "config-playbook" ) config_playbook;;
     "config-inventory" ) config_inventory;;
