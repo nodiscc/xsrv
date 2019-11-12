@@ -49,7 +49,7 @@ You will need a server (_host_), and a remote _controller_ machine from where yo
 
 * [Hardware requirements](doc/hardware.md)
 * [Network setup](doc/network.md)
-* [Operating system setup](operating-system.md)
+* [Operating system setup](doc/operating-system.md)
 
 
 ### Initial configuration/deployment
