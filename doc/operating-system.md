@@ -16,7 +16,7 @@
 apt install python aptitude sudo
 
 # Create a user account for remote administration (replace 'deploy' with the desired account name)
-useradd  --create-home deploy --groups ssh,sudo --shell /bin/bash deploy
+useradd  --create-home --groups ssh,sudo --shell /bin/bash deploy
 
 # test internet connectivity, test DNS resolution
 ping -c1 8.8.8.8
