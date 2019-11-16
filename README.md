@@ -32,7 +32,7 @@ The following components (_roles_) are available:
 - [Maintenance](#maintenance)
   - [Backups](#backups)
   - [Updates](#updates)
-  - [Other](#other)
+  - [Other maintenance](#other-maintenance)
 - [License](#license)
 
 <!-- /MarkdownTOC -->
@@ -120,13 +120,11 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 - Run the playbook:  `ansible-playbook playbook.yml`
 
 
-### Other
+### Other maintenance
 
 **Tracking configuration in git:** By default your specific playbook/inventory/host_vars configuration is excluded from git to prevent accidentally pushing you configuration details to a public git repot. See [.gitignore](.gitignore) and disable relevant sections to start tracking your configuration in git.
 
 **Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups.
-
-**For a more in-depth guide on using ansible** directly to manage environments with multiple hosts, write your own playbooks and roles, see [getting started with ansible](doc/getting-started-with-ansible.md).
 
 **Testing/reverting updates:**
 
