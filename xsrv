@@ -6,6 +6,9 @@
 # abort on errors
 set -o errexit
 
+# uncomment this to debug
+#set -o xtrace
+
 # help text
 usage="USAGE: $0 command
 AVAILABLE COMMANDS:
@@ -17,6 +20,9 @@ config-playbook     edit the playbook (host roles)
 config-inventory    edit hosts inventory
 show-defaults       show roles configuration defaults
 check               simulate deployment/report items that would be changed
+shell               open a SSH shell on the host
+logs                view system logs on the host
+backup-force        force a backup on the host
 help                show this message
 "
 
@@ -111,6 +117,32 @@ function show_defaults() {
     find roles/ -wholename "*defaults/main.yml" -exec cat '{}' \;|less
 }
 
+# extract the host name from the playbook
+function get_ssh_host_name() {
+    playbook_hosts=$(grep "hosts:" playbook.yml)
+    playbook_hosts_num=$(echo "$playbook_hosts" | wc -l)
+    [[ "$playbook_hosts_num" == 1 ]] || $(echo "[xsrv] ERROR: playbook.yml contains more than 1 host ($playbook_hosts_num)"; exit 1)
+    echo "$playbook_hosts" | awk '{print $NF}'
+}
+
+# extract a variable value from host_vars file
+function get_host_var() {
+    host_name="$1"
+    host_var="$2"
+    line=$(grep "${host_var}:" "host_vars/$host_name.yml")
+    value=$(echo "$line" | awk '{print $NF}' | sed "s/['\"]//g")
+    echo "$value"
+}
+
+# open a ssh shell on the host
+function open_ssh_shell() {
+    ssh_command="$1"
+    host_name=$(get_ssh_host_name)
+    ssh_user=$(get_host_var "$host_name" ansible_ssh_user)
+    ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
+    ssh -t -p "$ssh_port" "$ssh_user"@"$host_name" "$ssh_command"
+}
+
 ##############################
 # Main loop
 
@@ -127,6 +159,9 @@ case "$command" in
     "config-playbook" ) config_playbook;;
     "config-inventory" ) config_inventory;;
     "show-defaults" ) show_defaults;;
+    "shell" ) open_ssh_shell "";;
+    "logs" ) open_ssh_shell "sudo lnav";;
+    "backup-force" ) open_ssh_shell "sudo -u rsnapshot rsnapshot daily";;
     "help" ) echo "$usage"; exit 0;;
     *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
 esac
