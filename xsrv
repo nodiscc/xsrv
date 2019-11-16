@@ -122,7 +122,7 @@ function show_defaults() {
 function get_host_name() {
     playbook_hosts=$(grep "hosts:" playbook.yml)
     playbook_hosts_num=$(echo "$playbook_hosts" | wc -l)
-    [[ "$playbook_hosts_num" == 1 ]] || $(echo "[xsrv] ERROR: playbook.yml contains more than 1 host ($playbook_hosts_num)"; exit 1)
+    [[ "$playbook_hosts_num" == 1 ]] || (echo "[xsrv] ERROR: playbook.yml contains more than 1 host ($playbook_hosts_num)"; exit 1)
     echo "$playbook_hosts" | awk '{print $NF}'
 }
 
