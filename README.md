@@ -130,6 +130,7 @@ check               simulate deployment/report items that would be changed
 shell               open a SSH shell on the host
 logs                view system logs on the host
 backup-force        force a backup on the host
+web                 open the hosts main homepage in a web browser
 help                show this message
 ```
 

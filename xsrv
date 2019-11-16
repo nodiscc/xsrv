@@ -23,6 +23,7 @@ check               simulate deployment/report items that would be changed
 shell               open a SSH shell on the host
 logs                view system logs on the host
 backup-force        force a backup on the host
+web                 open the hosts main homepage in a web browser
 help                show this message
 "
 
@@ -118,7 +119,7 @@ function show_defaults() {
 }
 
 # extract the host name from the playbook
-function get_ssh_host_name() {
+function get_host_name() {
     playbook_hosts=$(grep "hosts:" playbook.yml)
     playbook_hosts_num=$(echo "$playbook_hosts" | wc -l)
     [[ "$playbook_hosts_num" == 1 ]] || $(echo "[xsrv] ERROR: playbook.yml contains more than 1 host ($playbook_hosts_num)"; exit 1)
@@ -137,10 +138,16 @@ function get_host_var() {
 # open a ssh shell on the host
 function open_ssh_shell() {
     ssh_command="$1"
-    host_name=$(get_ssh_host_name)
+    host_name=$(get_host_name)
     ssh_user=$(get_host_var "$host_name" ansible_ssh_user)
     ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
     ssh -t -p "$ssh_port" "$ssh_user"@"$host_name" "$ssh_command"
+}
+
+# open the hosts main homepage in a web browser
+function open_homepage() {
+    host_name=$(get_host_name)
+    xdg-open "https://$host_name"
 }
 
 ##############################
@@ -162,6 +169,7 @@ case "$command" in
     "shell" ) open_ssh_shell "";;
     "logs" ) open_ssh_shell "sudo lnav";;
     "backup-force" ) open_ssh_shell "sudo -u rsnapshot rsnapshot daily";;
+    "web" ) open_homepage;;
     "help" ) echo "$usage"; exit 0;;
     *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
 esac
