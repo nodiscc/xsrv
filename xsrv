@@ -94,7 +94,7 @@ function deploy() {
 # check what changes would be made by running 'deploy' (run ansible in check mode)
 function check() {
     source "$base_dir/.venv/bin/activate"
-    ansible-playbook --check playbook.yml
+    ansible-playbook  playbook.yml --check --diff
 }
 
 # edit host configuration variables
