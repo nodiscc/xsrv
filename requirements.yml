@@ -5,7 +5,7 @@
   name: common
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-backup
-  version: "1.0"
+  version: "1.0.1"
   name: backup
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-monitoring
