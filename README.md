@@ -6,7 +6,7 @@
 
 Run your own network services, on a server you control. Self-hosted communication, collaboration systems, file storage, transfer, sharing and synchronization, web publishing, automation, development, multimedia, IT infrastructure, and more.
 
-This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on a personal server, or more.
+This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on a personal or enterprise server. A simple command-line wrapper is provided.
 
 ## Roles
 
@@ -72,7 +72,7 @@ cd xsrv
 ./xsrv config-host-vars
 
 # Run host deployment
-ansible-playbook playbook.yml
+./xsrv deploy
 ```
 
 After the deployment completes, your services are ready to use.
@@ -102,7 +102,11 @@ Read [roles](#roles) documentation for tips on how to use your services.
 ./xsrv config-host-vars
 ```
 
-**After any changes to configuration/roles**, apply changes to the host: `./xsrv deploy`
+**After any changes to configuration/roles**, apply changes to the host: 
+
+```bash
+./xsrv deploy
+```
 
 
 ## Maintenance
