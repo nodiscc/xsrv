@@ -85,11 +85,22 @@ Read [roles](#roles) documentation for tips on how to use your services.
 
 ## Configuration
 
-- **Add more roles:** to add more roles to your server, uncomment them in `inventory.yml`: `./xsrv config-playbook`
-- **Configuration:** The default configuration will work out of the box.
-  - To show defaults for all configuration variables, review each role](#roles)'s `default/main.yml`: `./xsrv show-defaults`
-  - To review/change configuration details for your host, edit the host's configuration variables in `host_vars/`: `./xsrv config-host-vars`
-  - To override any of the default variables, copy them from role defaults to your host's variables and edit them there.
+**Enabling more roles:**
+
+```bash
+# To add more roles to your server, uncomment them in inventory.yml
+./xsrv config-playbook
+```
+**Configuration:** The default configuration should work out of the box.
+
+```bash
+# To show defaults for all configuration variables, review each role's default/main.yml
+./xsrv show-defaults
+
+# To show or edit your host's configuration variables, edit host_vars/my.example.org.yml
+# These variables override the defaults. Copy any default setting you want to change here, and edit its value
+./xsrv config-host-vars
+```
 
 **After any changes to configuration/roles**, apply changes to the host: `./xsrv deploy`
 
@@ -98,12 +109,29 @@ Read [roles](#roles) documentation for tips on how to use your services.
 
 Self-hosting places your services and data under your own responsibility (uptime, backups, security...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
 
+The command-line utility `xsrv` provides easy access to common maintenance/diagnostic tasks:
+
+```bash
+$ ./xsrv help
+USAGE: ./xsrv command
+AVAILABLE COMMANDS:
+install-ansible     install ansible in a virtualenv
+init                initialize the playbook from example files
+deploy              deploy the host (run ansible playbook)
+config-host-vars    edit host configuration variables
+config-playbook     edit the playbook (host roles)
+config-inventory    edit hosts inventory
+show-defaults       show roles configuration defaults
+check               simulate deployment/report items that would be changed
+shell               open a SSH shell on the host
+logs                view system logs on the host
+backup-force        force a backup on the host
+help                show this message
+```
 
 ### Backups
 
-Backups can be configured in the `##### BACKUPS #####` section of your host configuration variables.
-
-To download a copy of the latest backups from the host, to the controller (`backups/` under the playbook directory), run:
+Backups can be configured in the `##### BACKUPS #####` section of your host configuration variables. See the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role. To download a copy of the latest backups from the host, to the controller (`backups/` under the playbook directory), run:
 
 ```bash
 ./xsrv backup-fetch
