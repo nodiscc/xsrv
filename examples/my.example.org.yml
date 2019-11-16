@@ -50,6 +50,27 @@ firehol_networks:
       # - { name: "all", dst: "any" } # allow ALL outgoing connections, to any port. Required by some applications (diagnostic/scanning machines, peer-to-peer)
     policy: "RETURN" # if none of the allow_input/output rules match, pass it to the default chain/policy (DROP)
 
+
+##### RSNAPSHOT BACKUP SERVICE #####
+
+# Commands to run before starting backups (database dumps, application exports...)
+rsnapshot_backup_execs:
+  - '/opt/xsrv/nextcloud-mysql-dump.sh'
+  - '/opt/xsrv/gitea-dump.sh'
+
+# Local files/directories to backup
+rsnapshot_local_backups:
+  - '/var/backups/mysql/nextcloud/'
+  - '/var/backups/gitea/'
+
+# File name patterns to exclude from backups, globally
+rsnapshot_excludes:
+  - '/var/nextcloud/data/updater-*/'
+  - '/var/nextcloud/data/appdata_*/'
+  - '/var/nextcloud/data/*/cache/'
+  - '/var/nextcloud/data/*/thumbnails/'
+  - '/var/nextcloud/data/*/files_trashbin/'
+
 ##### NEXTCLOUD #####
 
 # Nextcloud admin username/password
