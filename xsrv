@@ -141,6 +141,7 @@ function open_ssh_shell() {
     host_name=$(get_host_name)
     ssh_user=$(get_host_var "$host_name" ansible_ssh_user)
     ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
+    # shellcheck disable=SC2029
     ssh -t -p "$ssh_port" "$ssh_user"@"$host_name" "$ssh_command"
 }
 
