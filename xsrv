@@ -145,6 +145,20 @@ function open_ssh_shell() {
     ssh -t -p "$ssh_port" "$ssh_user"@"$host_name" "$ssh_command"
 }
 
+# fetch latest daily backups from the host
+function backup_fetch() {
+    host_name=$(get_ssh_host_name)
+    ssh_user=$(get_host_var "$host_name" ansible_ssh_user)
+    ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
+    local_backup_dir="./data/backups/${host_name}-daily.0.$(date +%Y-%m-%d)"
+    mkdir -p "$local_backup_dir"
+    rsync --hard-links --archive \
+    --compress --partial --progress \
+    --delete --rsh "ssh -p $ssh_port" \
+    "$ssh_user@$host_name:/var/backups/srv01/daily.0" \
+    "$local_backup_dir/"
+}
+
 # open the hosts main homepage in a web browser
 function open_homepage() {
     host_name=$(get_host_name)
@@ -170,6 +184,7 @@ case "$command" in
     "shell" ) open_ssh_shell "";;
     "logs" ) open_ssh_shell "sudo lnav";;
     "backup-force" ) open_ssh_shell "sudo -u rsnapshot rsnapshot daily";;
+    "backup-fetch" ) backup_fetch;;
     "web" ) open_homepage;;
     "help" ) echo "$usage"; exit 0;;
     *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
