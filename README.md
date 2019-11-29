@@ -8,6 +8,8 @@ Run your own network services, on a server you control. Self-hosted communicatio
 
 This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on a personal or enterprise server. A simple command-line wrapper is provided.
 
+[![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
+
 ## Roles
 
 The following components (_roles_) are available:
