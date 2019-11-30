@@ -133,6 +133,7 @@ shell               open a SSH shell on the host
 logs                view system logs on the host
 backup-force        force a backup on the host
 web                 open the hosts main homepage in a web browser
+upgrade             upgrade playbook and roles to latest versions (read the release notes)
 help                show this message
 ```
 
@@ -149,10 +150,10 @@ Backups can be configured in the `##### BACKUPS #####` section of your host conf
 Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to their latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
 
 - Download latest backups from the server and/or do a snapshot of the VM.
-- Read the [release notes](CHANGELOG.md). Update configuration variables if needed.
-- Update the playbook to the latest release: `git remote update && git checkout $latest_release`
-- Update roles: `ansible-galaxy -f -r requirements.yml`
-- Run the playbook:  `ansible-playbook playbook.yml`
+- Read the [release notes](releases), adjust your configuration variables if needed `./xsrv config-host`.
+- Update the playbook to the latest release: `./xsrv upgrade`
+- Run checks and watch out for unwated changes `./xsrv check`
+- Deploy the playbook `./xsrv deploy`
 
 
 ### Other maintenance

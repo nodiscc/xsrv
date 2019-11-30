@@ -24,6 +24,7 @@ shell               open a SSH shell on the host
 logs                view system logs on the host
 backup-force        force a backup on the host
 web                 open the hosts main homepage in a web browser
+upgrade             upgrade playbook and roles to latest versions (read the release notes)
 help                show this message
 "
 
@@ -81,9 +82,7 @@ function init() {
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/inventory.yml"
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/playbook.yml"
 
-    # download roles
-    echo "[xsrv] downloading roles..."
-    ansible-galaxy install -f -r requirements.yml
+    update_roles
 }
 
 # deploy the host (run ansible playbook)
@@ -162,7 +161,21 @@ function backup_fetch() {
 # open the hosts main homepage in a web browser
 function open_homepage() {
     host_name=$(get_host_name)
+    echo "[xsrv] opening https://$host_name ..."
     xdg-open "https://$host_name"
+}
+
+# update roles to latest versions
+function update_roles() {
+    echo "[xsrv] downloading roles..."
+    ansible-galaxy install -f -r requirements.yml
+}
+
+# upgrade the playbook and roles to latest versions
+function upgrade() {
+    echo "[xsrv] updating playbook ..."
+    git pull --ff-only
+    update_roles
 }
 
 ##############################
@@ -186,6 +199,7 @@ case "$command" in
     "backup-force" ) open_ssh_shell "sudo -u rsnapshot rsnapshot daily";;
     "backup-fetch" ) backup_fetch;;
     "web" ) open_homepage;;
+    "upgrade" ) upgrade;;
     "help" ) echo "$usage"; exit 0;;
     *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
 esac
