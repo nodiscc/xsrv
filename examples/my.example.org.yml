@@ -58,8 +58,10 @@ firehol_networks:
       - { name: "http", dst: "any" } # required for automatic upgrades/APT package management, most applications
       - { name: "https", dst: "any" } # required for automatic upgrades/APT package management, most applications
       - { name: "submission", dst: "any" } # Required for outgoing mail over port 587 (SMTP submission)
+      - { name: "imaps", dst: "any" } # Required for nextcloud mail to downloand IMAP mailboxes
       # - { name: "all", dst: "any" } # allow ALL outgoing connections, to any port. Required by some applications (diagnostic/scanning machines, peer-to-peer)
     policy: "RETURN" # if none of the allow_input/output rules match, pass it to the default chain/policy (DROP)
+
 
 
 ##### RSNAPSHOT BACKUP SERVICE #####
