@@ -196,7 +196,7 @@ case "$command" in
     "config-inventory" ) config_inventory;;
     "show-defaults" ) show_defaults;;
     "shell" ) open_ssh_shell "";;
-    "logs" ) open_ssh_shell "sudo lnav";;
+    "logs" ) open_ssh_shell "sudo lnav /var/log/syslog";;
     "backup-force" ) open_ssh_shell "sudo -u rsnapshot rsnapshot daily";;
     "backup-fetch" ) backup_fetch;;
     "web" ) open_homepage;;
