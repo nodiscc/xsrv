@@ -9,9 +9,20 @@ ansible_become_pass: "CHANGEME"
 # SSH port used to contact the host
 #ansible_ssh_port: '22'
 
-# Default username/password for installed services/applications
-xsrv_default_username: "CHANGEME"
-xsrv_default_password: "CHANGEME"
+##### OUTGOING MAIL #####
+
+# yes/no: install outgoing system mail client/local MTA
+# The system will not be able to send status/monitoring e-mails unless this is enabled
+setup_msmtp: no
+
+# System mail relay (SMTP server) to use, and authentication username/password
+# msmtp_host: "smtp.example.com"
+# msmtp_username: "CHANGEME"
+# msmtp_password: "CHANGEME"
+
+# Mail address to send all local mail to
+# msmtp_admin_email: "CHANGEME"
+
 
 ##### FIREWALL/FAIL2BAN #####
 
