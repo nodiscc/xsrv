@@ -28,4 +28,4 @@ ansible_lint: venv galaxy
 # YAML syntax check and linter
 yamllint: venv galaxy
 	source .venv/bin/activate && \
-	find ./ -iname "*.yml" -exec yamllint -c .yamllint '{}' \;
+	find ./ -iname "*.yml" -exec yamllint -c tests/.yamllint '{}' \;
