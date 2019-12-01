@@ -7,7 +7,7 @@ tests: shellcheck ansible_lint yamllint
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
-	pip3 install pylint isort ansible-lint yamllint ansible==2.8.0
+	pip3 install isort ansible-lint yamllint ansible==2.8.0
 
 # download/update roles from ansible-galaxy
 galaxy: venv
