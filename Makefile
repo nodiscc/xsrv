@@ -1,7 +1,7 @@
 #!/usr/bin/env make
 SHELL := '/bin/bash'
 
-tests: shellcheck ansible_lint yamllint
+tests: shellcheck check_jinja2 ansible_lint yamllint
 
 # Install dev tools in virtualenv
 venv:
@@ -29,3 +29,11 @@ ansible_lint: venv galaxy
 yamllint: venv galaxy
 	source .venv/bin/activate && \
 	find ./ -iname "*.yml" -exec yamllint -c tests/.yamllint '{}' \;
+
+check_jinja2: venv galaxy
+	source .venv/bin/activate && \
+	j2_files=$$(find roles/ -name "*.j2") && \
+	for i in $$j2_files; do \
+	echo "[INFO] checking syntax for $$i"; \
+	./tests/check-jinja2.py "$$i"; \
+	done
