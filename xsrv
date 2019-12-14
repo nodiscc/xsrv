@@ -15,7 +15,7 @@ AVAILABLE COMMANDS:
 install-ansible     install ansible in a virtualenv
 init                initialize the playbook from example files
 deploy              deploy the host (run ansible playbook)
-config-host-vars    edit host configuration variables
+config-host         edit host configuration
 config-playbook     edit the playbook (host roles)
 config-inventory    edit hosts inventory
 show-defaults       show roles configuration defaults
@@ -191,7 +191,7 @@ case "$command" in
     "init") init;;
     "deploy") deploy;;
     "check") check;;
-    "config-host-vars" ) config_host_vars;;
+    "config-host" ) config_host_vars;;
     "config-playbook" ) config_playbook;;
     "config-inventory" ) config_inventory;;
     "show-defaults" ) show_defaults;;

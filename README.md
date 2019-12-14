@@ -71,7 +71,7 @@ cd xsrv
 
 # If needed, change the list of enabled roles and/or host configuration variables
 ./xsrv config-playbook
-./xsrv config-host-vars
+./xsrv config-host
 
 # Run host deployment
 ./xsrv deploy
@@ -101,7 +101,7 @@ Read [roles](#roles) documentation for tips on how to use your services.
 
 # To show or edit your host's configuration variables, edit host_vars/my.example.org.yml
 # These variables override the defaults. Copy any default setting you want to change here, and edit its value
-./xsrv config-host-vars
+./xsrv config-host
 ```
 
 **After any changes to configuration/roles**, apply changes to the host: 
@@ -124,7 +124,7 @@ AVAILABLE COMMANDS:
 install-ansible     install ansible in a virtualenv
 init                initialize the playbook from example files
 deploy              deploy the host (run ansible playbook)
-config-host-vars    edit host configuration variables
+config-host    edit host configuration variables
 config-playbook     edit the playbook (host roles)
 config-inventory    edit hosts inventory
 show-defaults       show roles configuration defaults
