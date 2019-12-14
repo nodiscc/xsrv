@@ -99,7 +99,7 @@ function check() {
 
 # edit host configuration variables
 function config_host_vars() {
-    $editor "$base_dir/host_vars/*.yml"
+    $editor "$base_dir"/host_vars/*.yml
 }
 
 # edit the playbook (host roles)
