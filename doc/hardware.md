@@ -4,7 +4,7 @@ The server machine can be a physical computer (server-grade, desktop/laptop, sma
 
 Virtualization software includes [virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) (Linux), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) (Linux/OSX/Windows), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) (dedicated hypervisor).
 
-Resource usage will vary depending on installed roles (read each role's documentation), the number of users, and how much user data you need to store. A minimal configuration for a personal server with 1-10 users:
+Resource usage will vary depending on installed roles (read each role's documentation), the number of users, and how much user data you need to store. A minimal configuration for a personal server with 2-10 users:
 
  - Computer with x86/64 compatible CPU
  - 1024-2048MB+ RAM
