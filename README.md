@@ -82,7 +82,7 @@ After the deployment completes, your services are ready to use.
 
 ## Usage
 
-Read [roles](#roles) documentation for tips on how to use your services.
+See [roles](#roles)
 
 
 ## Configuration
@@ -124,7 +124,7 @@ AVAILABLE COMMANDS:
 install-ansible     install ansible in a virtualenv
 init                initialize the playbook from example files
 deploy              deploy the host (run ansible playbook)
-config-host    edit host configuration variables
+config-host         edit host configuration variables
 config-playbook     edit the playbook (host roles)
 config-inventory    edit hosts inventory
 show-defaults       show roles configuration defaults
