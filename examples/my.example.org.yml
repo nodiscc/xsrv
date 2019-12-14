@@ -2,81 +2,82 @@
 
 ### configuration variables for my.example.org
 
-# administrator/sudo account on the host
+# REQUIRED administrator/sudo account username/password
 ansible_ssh_user: "CHANGEME"
-# 'sudo' password for this user
 ansible_become_pass: "CHANGEME"
-# SSH port used to contact the host
-#ansible_ssh_port: '22'
+# ansible_ssh_port: '22'
+
+# REQUIRED default admin username/password for new services/applications
+xsrv_default_username: "CHANGEME"
+xsrv_default_password: "CHANGEME"
 
 ##### OUTGOING MAIL #####
+# see roles/common/defaults/main.yml
 
-# yes/no: install outgoing system mail client/local MTA
-# The system will not be able to send status/monitoring e-mails unless this is enabled
 setup_msmtp: no
-
-# System mail relay (SMTP server) to use, and authentication username/password
 # msmtp_host: "smtp.example.com"
 # msmtp_username: "CHANGEME"
 # msmtp_password: "CHANGEME"
-
-# Mail address to send all local mail to
 # msmtp_admin_email: "CHANGEME"
 
 
 ##### FIREWALL/FAIL2BAN #####
+# see roles/common/defaults/main.yml
+
+# yes/no: setup firewall and fail2ban
+setup_firewall: yes
+
+# The default configuration assumes a single network interface, connected to both the LAN, and the Internet
+# This works if your server is behind a NAT, or connected to the Internet with a public IP address
 
 # Firewall rules - traffic to/from the local machine
 firehol_networks:
   - name: "lan"
-    src: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12" # match traffic to/from any RFC1918 private address
-    interface: "any" # to/from any network interface
-    allow_input: # allow incoming connections for these service/ports, and source address:
-      - { name: "ssh", src: "any" } # always allow SSH on port 22 from LAN (anti lock-out rule)
-      # - { name: "multicast", src: "any" } # Avahi/MDNS service announcement
-      # - { name: "samba", src: "any" } # Samba CIFS/SMB file sharing server
-    allow_output: # allow outgoing connections to these service/ports, and destination address:
-      - { name: "dhcp", dst: "any" } # required for automatic IP address configuration using DHCP
-      - { name: "ping", dst: "any" } # allow ping to LAN, not required but nice to have
-      # - { name: "dns", dst: "any" } # required for name resolution if the DNS server is on the LAN
-    policy: "RETURN" # if none of the allow_input/output rules match, check the traffic against next chain (use DROP to drop it)
+    src: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12" # to/from private IP addresses
+    interface: "any"
+    allow_input: # incoming connections
+      - { name: "ssh", src: "any" } # ssh from LAN
+      # - { name: "samba", src: "any" } # samba file sharing
+      # - { name: "multicast", src: "any" } # avahi/mdns
+    allow_output: # outgoing connections
+      - { name: "ping", dst: "any" } # nice to have
+      - { name: "dhcp", dst: "any" } # required if dynamic ip addressing
+      # - { name: "dns", dst: "any" } # DNS server on LAN
+    policy: "RETURN" # forward to the next chain if no rule matches (or DROP)
 
   - name: "internet"
-    src: "any" # traffic to/from any other IP address
-    interface: "any" # to/from any network interface
+    src: "any" # to/from any IP address
+    interface: "any"
     allow_input:
-      - { name: "ssh", src: "any" } # allow SSH on default port 22 from anywhere
-      - { name: "ping", src: "any" } # allow ping from everywhere, not required but nice to have
-      - { name: "netdata", src: "any" } # Netdata monitoring dashboard, custom service, see below
-      - { name: "http", src: "any" } # Required for web servers (apache/nginx/proxy/...)
-      - { name: "https", src: "any" } # Required for web servers (apache/nginx/proxy/...)
-      # - { name: "mumble", src: "any" } # Required for mumble VoIP server
-      # - { name: "sshcustom" src: "any" } # SSH server on custom port, see below
+      - { name: "ssh", src: "any" } # ssh from anywhere
+      - { name: "netdata", src: "any" } # monitoring dashboard
+      - { name: "http", src: "any" } # web server
+      - { name: "https", src: "any" } # web server
+      - { name: "ping", src: "any" } # nice to have
+      # - { name: "mumble", src: "any" } # mumble voip server
     allow_output:
-      - { name: "dns", dst: "any" } # required for DNS name resolution
-      - { name: "ntp", dst: "any" } # required for time/date synchronization
-      - { name: "http", dst: "any" } # required for automatic upgrades/APT package management, most applications
-      - { name: "https", dst: "any" } # required for automatic upgrades/APT package management, most applications
-      - { name: "submission", dst: "any" } # Required for outgoing mail over port 587 (SMTP submission)
-      - { name: "imaps", dst: "any" } # Required for nextcloud mail to downloand IMAP mailboxes
-      # - { name: "all", dst: "any" } # allow ALL outgoing connections, to any port. Required by some applications (diagnostic/scanning machines, peer-to-peer)
-    policy: "RETURN" # if none of the allow_input/output rules match, pass it to the default chain/policy (DROP)
-
+      - { name: "dns", dst: "any" } # DNS server on WAN
+      - { name: "ntp", dst: "any" } # time/date synchronization
+      - { name: "http", dst: "any" } # http downloads
+      - { name: "https", dst: "any" } # https downloads
+      # - { name: "submission", dst: "any" } # outgoing mail/port 587
+      # - { name: "submission", dst: "any" } # ssh/git access to anywhere
+      # - { name: "imaps", dst: "any" } # nextcloud mail
+      # - { name: "all", dst: "any" }
+    policy: "RETURN"
 
 
 ##### RSNAPSHOT BACKUP SERVICE #####
+# see roles/backup/default/main.yml
 
-# Commands to run before starting backups (database dumps, application exports...)
 rsnapshot_backup_execs:
   - '/opt/xsrv/nextcloud-mysql-dump.sh'
   - '/opt/xsrv/gitea-dump.sh'
 
-# Local files/directories to backup
 rsnapshot_local_backups:
   - '/var/backups/mysql/nextcloud/'
   - '/var/backups/gitea/'
 
-# File name patterns to exclude from backups, globally
 rsnapshot_excludes:
   - '/var/nextcloud/data/updater-*/'
   - '/var/nextcloud/data/appdata_*/'
@@ -84,10 +85,19 @@ rsnapshot_excludes:
   - '/var/nextcloud/data/*/thumbnails/'
   - '/var/nextcloud/data/*/files_trashbin/'
 
-##### NEXTCLOUD #####
+##### APACHE WEB SERVER #####
+# see roles/lamp/defaults/main.yml
 
-# Nextcloud admin username/password
+apache_virtualhosts:
+  - servername: "{{ inventory_hostname }}"
+    documentroot: "/var/www/{{ inventory_hostname }}"
+    cert_mode: selfsigned # selfsigned/letsencrypt
+    allow_robots: no
+    auto_homepage: yes
+
+
+##### NEXTCLOUD #####
+# see roles/nextcloud/defaults/main.yml
 nextcloud_user: "{{ xsrv_default_username }}"
 nextcloud_password: "{{ xsrv_default_password }}"
-# nextcloud database password (random password stored in secrets/)
 nextcloud_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.nextcloud_db_password length=20')}}"
