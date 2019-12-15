@@ -36,7 +36,6 @@ firehol_networks:
       - { name: "http", src: "any" } # web server access from anywhere
       - { name: "https", src: "any" } # web server access from anywhere
       - { name: "netdata", src: "any" } # monitoring dashboard
-      - { name: "ssh", dst: "any" } # ssh/git access to anywhere
       # - { name: "ping", src: "any" } # allow incoming ICMP pings
       # - { name: "mumble", src: "any" } # mumble voip server
       # - { name: "samba", src: "{{ firehol_lan }}" } # samba file sharing
@@ -53,6 +52,7 @@ firehol_networks:
       - { name: "https", dst: "any" } # outgoing HTTPS requests
       - { name: "ping", dst: "any" } # outgoing ICMP pings
       - { name: "submission", dst: "any" } # outgoing mail/port 587
+      # - { name: "ssh", dst: "any" } # ssh/git-over-ssh access to anywhere
       # - { name: "imaps", dst: "any" } # nextcloud mail
       # - { name: "smtps", dst: "any" } # nextcloud mail
       # - { name: "all", dst: "any" } # allow ALL outgoing connections
