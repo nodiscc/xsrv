@@ -4,9 +4,9 @@
   ╹ ╹┗━┛╹┗╸┗┛ 
 ```
 
-Run your own network services, on a server you control. Self-hosted communication, collaboration systems, file storage, transfer, sharing and synchronization, web publishing, automation, development, multimedia, IT infrastructure, and more.
+Run your own network services, on a server you control.
 
-This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on a personal or enterprise server. A simple command-line wrapper is provided.
+This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on your own servers. A simple command-line wrapper is provided for initial deployment and occasional maintenance tasks.
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
 
@@ -54,16 +54,15 @@ See **[Server preparation](server-preparation.md)**
 ### Initial configuration/deployment
 
 ```bash
-# Clone the playbook
+# clone the playbook
 git clone -b 1.0 https://gitlab.com/nodiscc/xsrv
 
-# Enter the playbook directory. All ansible commands must be run from this directory
+# enter the playbook directory - all commands must be run from this directory
 cd xsrv
 
-# Install ansible
+# install ansible
 ./xsrv install-ansible
-
-# initialize the playbook and set required confiuration variables
+# set required configuration variables
 ./xsrv init
 
 # If needed, change the list of enabled roles and/or host configuration variables
@@ -74,7 +73,7 @@ cd xsrv
 ./xsrv deploy
 ```
 
-After the deployment completes, your services are ready to use.
+After the deployment completes, your services are ready to use. Consult `data/my.example.org.html` for a quick access list.
 
 
 ## Usage
@@ -90,7 +89,8 @@ See [roles](#roles)
 # To add more roles to your server, uncomment them in inventory.yml
 ./xsrv config-playbook
 ```
-**Configuration:** The default configuration should work out of the box.
+
+**Host configuration:** The default configuration should work out of the box for a single server.
 
 ```bash
 # To show defaults for all configuration variables, review each role's default/main.yml
@@ -101,7 +101,7 @@ See [roles](#roles)
 ./xsrv config-host
 ```
 
-**After any changes to configuration/roles**, apply changes to the host: 
+**After any changes to configuration/roles**, apply changes: 
 
 ```bash
 ./xsrv deploy
