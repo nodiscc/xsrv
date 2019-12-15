@@ -22,6 +22,7 @@ show-defaults       show roles configuration defaults
 check               simulate deployment/report items that would be changed
 shell               open a SSH shell on the host
 logs                view system logs on the host
+netstat             view network connections on the host
 backup-force        force a backup on the host
 web                 open the hosts main homepage in a web browser
 upgrade             upgrade playbook and roles to latest versions (read the release notes)
@@ -197,6 +198,7 @@ case "$command" in
     "show-defaults" ) show_defaults;;
     "shell" ) open_ssh_shell "";;
     "logs" ) open_ssh_shell "sudo lnav /var/log/syslog";;
+    "netstat" ) open_ssh_shell "sudo watch -n 2 ss -laptu";;
     "backup-force" ) open_ssh_shell "sudo -u rsnapshot rsnapshot daily";;
     "backup-fetch" ) backup_fetch;;
     "web" ) open_homepage;;
