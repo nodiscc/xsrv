@@ -20,52 +20,45 @@ setup_msmtp: no
 # msmtp_password: "CHANGEME"
 # msmtp_admin_email: "CHANGEME"
 
-
 ##### FIREWALL/FAIL2BAN #####
 # see roles/common/defaults/main.yml
 
-# yes/no: setup firewall and fail2ban
-setup_firewall: yes
+# Alias for LAN IP addresses
+firehol_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
 
-# The default configuration assumes a single network interface, connected to both the LAN, and the Internet
-# This works if your server is behind a NAT, or connected to the Internet with a public IP address
-
-# Firewall rules - traffic to/from the local machine
 firehol_networks:
-  - name: "lan"
-    src: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12" # to/from private IP addresses
+  - name: "global"
+    src: "any"
     interface: "any"
-    allow_input: # incoming connections
-      - { name: "ssh", src: "any" } # ssh from LAN
-      # - { name: "samba", src: "any" } # samba file sharing
-      # - { name: "multicast", src: "any" } # avahi/mdns
-    allow_output: # outgoing connections
-      - { name: "ping", dst: "any" } # nice to have
-      - { name: "dhcp", dst: "any" } # required if dynamic ip addressing
-      # - { name: "dns", dst: "any" } # DNS server on LAN
-    policy: "RETURN" # forward to the next chain if no rule matches (or DROP)
-
-  - name: "internet"
-    src: "any" # to/from any IP address
-    interface: "any"
-    allow_input:
+    policy: "DROP"
+    allow_input: # incoming traffic
       - { name: "ssh", src: "any" } # ssh from anywhere
+      - { name: "http", src: "any" } # web server access from anywhere
+      - { name: "https", src: "any" } # web server access from anywhere
       - { name: "netdata", src: "any" } # monitoring dashboard
-      - { name: "http", src: "any" } # web server
-      - { name: "https", src: "any" } # web server
-      - { name: "ping", src: "any" } # nice to have
+      - { name: "submission", dst: "any" } # outgoing mail/port 587
+      - { name: "ssh", dst: "any" } # ssh/git access to anywhere
+      # - { name: "ping", src: "any" } # allow incoming ICMP pings
       # - { name: "mumble", src: "any" } # mumble voip server
-    allow_output:
-      - { name: "dns", dst: "any" } # DNS server on WAN
+      # - { name: "samba", src: "{{ firehol_lan }}" } # samba file sharing
+      # - { name: "pulseaudio", src: "{{ firehol_lan }}" } # pulseaudio sound server
+      # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
+      # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
+      # - { name: "sshcustom", src: "any" } # SSH server on custom port
+      # - { name: "transmission", src: "any", } # bittorrent peer connections, outgoing requires 'all'
+    allow_output: # outgoing connections
+      - { name: "dns", dst: "any" } # DNS queries to anywhere
       - { name: "ntp", dst: "any" } # time/date synchronization
-      - { name: "http", dst: "any" } # http downloads
-      - { name: "https", dst: "any" } # https downloads
-      # - { name: "submission", dst: "any" } # outgoing mail/port 587
-      # - { name: "submission", dst: "any" } # ssh/git access to anywhere
+      - { name: "dhcp", dst: "{{ firehol_lan }}" } # DHCP requests on LAN
+      - { name: "http", dst: "any" } # outgoing HTTP requests
+      - { name: "https", dst: "any" } # outgoing HTTPS requests
+      - { name: "ping", dst: "any" } # outgoing ICMP pings
       # - { name: "imaps", dst: "any" } # nextcloud mail
-      # - { name: "all", dst: "any" }
-    policy: "RETURN"
+      # - { name: "smtps", dst: "any" } # nextcloud mail
+      # - { name: "all", dst: "any" } # allow ALL outgoing connections
 
+# fail2ban: don't auto-ban IP addresses from these networks
+fail2ban_ignoreip: ['10.0.0.0/8', '192.168.0.0/16', '172.16.0.0/12']
 
 ##### RSNAPSHOT BACKUP SERVICE #####
 # see roles/backup/default/main.yml
