@@ -44,14 +44,17 @@ The following components (_roles_) are available:
 
 ## Installation
 
-You will need a server (_host_), and a remote _controller_ machine from where you will deploy/administrate the server.
+You will need a server (_host_) to run your services, and a _controller_ machine to remotely deploy and administrate the server.
 
 
 ### Preparing the server
 
 See **[Server preparation](server-preparation.md)**
 
+
 ### Initial configuration/deployment
+
+From the _controller_:
 
 ```bash
 # clone the playbook
@@ -93,12 +96,14 @@ See [roles](#roles)
 **Host configuration:** The default configuration should work out of the box for a single server.
 
 ```bash
-# To show defaults for all configuration variables, review each role's default/main.yml
+# To show or edit your host's configuration variables, edit host_vars/my.example.org.yml
+./xsrv config-host
+
+# By default, host variables only override some default values provided by roles.
+# To show role defaults for all variables, review each role's default/main.yml
+# Copy any setting from these defaults to your host variables file, and edit its value.
 ./xsrv show-defaults
 
-# To show or edit your host's configuration variables, edit host_vars/my.example.org.yml
-# These variables override the defaults. Copy any default setting you want to change here, and edit its value
-./xsrv config-host
 ```
 
 **After any changes to configuration/roles**, apply changes: 
@@ -157,16 +162,16 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 
 ### Other maintenance
 
-**Tracking configuration in git:** By default your specific playbook/inventory/host_vars configuration is excluded from git to prevent accidentally pushing you configuration details to a public git repot. See [.gitignore](.gitignore) and disable relevant sections to start tracking your configuration in git.
+**Tracking configuration in git:** By default your specific playbook/inventory/host_vars configuration is excluded from git to prevent accidentally pushing you configuration details to a public git repository. See [.gitignore](.gitignore) and disable relevant sections to start tracking your configuration in git.
 
 **Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups.
 
-**Testing/reverting updates:**
+**Testing/reverting updates:** The easiest way is probably to restore a snapshot from just before the upgrade (if your server is virtualized)
 
 - Restore previous configuration variables
 - Roll back roles to their previous versions (`git checkout $previous_version && ansible-galaxy -f -r requirements.yml`).
 - Run the playbook:  `ansible-playbook playbook.yml`
-- Restore data from the last known good backups.
+- Restore data from the last known good backups (see each role's documentation for restore instructions)
 - For professional/production systems, running the playbook and evaluating changes against a testing environment first is recommended.
 
 
