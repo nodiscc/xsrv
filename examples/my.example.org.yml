@@ -63,20 +63,8 @@ fail2ban_ignoreip: ['10.0.0.0/8', '192.168.0.0/16', '172.16.0.0/12']
 ##### RSNAPSHOT BACKUP SERVICE #####
 # see roles/backup/default/main.yml
 
-rsnapshot_backup_execs:
-  - '/opt/xsrv/nextcloud-mysql-dump.sh'
-  - '/opt/xsrv/gitea-dump.sh'
-
-rsnapshot_local_backups:
-  - '/var/backups/mysql/nextcloud/'
-  - '/var/backups/gitea/'
-
-rsnapshot_excludes:
-  - '/var/nextcloud/data/updater-*/'
-  - '/var/nextcloud/data/appdata_*/'
-  - '/var/nextcloud/data/*/cache/'
-  - '/var/nextcloud/data/*/thumbnails/'
-  - '/var/nextcloud/data/*/files_trashbin/'
+# yes/no: automatically setup backups for https://gitlab.com/nodiscc/xsrv roles enabled on the host
+rsnapshot_autobackup_xsrv_roles: yes
 
 ##### APACHE WEB SERVER #####
 # see roles/lamp/defaults/main.yml
