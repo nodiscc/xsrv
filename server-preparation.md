@@ -60,7 +60,7 @@ This playbook is designed to run against minimal [Debian](https://www.debian.org
   - IP address/gateway/DNS server: Refer to the network setup section above.
   - Allow root (administrator) logins, set a strong password and store it someplace safe like a Keepass database
   - Do not create an additional user account
-  - Any disk partitioning scheme is OK, but prefer a separate `/var` with as much space as possible for user data. 10-15GB should be enough for the root filesystem partition. Setup LVM if possible. Setup RAID if to increase availability (RAID is not a backup)
+  - Any disk partitioning scheme is OK, but prefer a separate `/var` with as much space as possible for user data. 10-15GB should be enough for the root filesystem partition. Setup LVM if possible, setup RAID to increase availability (RAID is not a backup)
   - When asked, only install `Standard system utilities` and `SSH server`
 - Finish Debian installation.
 - From the server console, login as `root` and run:
