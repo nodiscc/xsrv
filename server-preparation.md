@@ -52,17 +52,26 @@ The default **firewall** configuration assumes the server network interface is f
 
 This playbook is designed to run against minimal [Debian](https://www.debian.org/) 10 installations:
 
-- Download the [Debian 10 netinstall image](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.2.0-amd64-netinst.iso)
+- Download a [Debian 10 netinstall image](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/
+)
 - Load the ISO image in your virtual machine's CD drive, or write the image to a 1GB+ USB drive (Linux: [`dd`](https://wiki.archlinux.org/index.php/USB_flash_installation_media#In_GNU.2FLinux), [GNOME disks](https://www.techrepublic.com/article/how-to-create-disk-images-using-gnome-disk/). Windows: [win32diskimager](http://sourceforge.net/projects/win32diskimager/))
 - Boot your server/VM from the Debian installer ISO image/USB.
 - Select `Advanced > Graphical advanced install`.
 - Follow the installation procedure, using the following options:
+  - Set the machine's locale/language to English (`en_US.UTF-8`)
   - IP address/gateway/DNS server: Refer to the network setup section above.
-  - Allow root (administrator) logins, set a strong password and store it someplace safe like a Keepass database
+  - Enable `root` account, set a strong password and store it someplace safe like a Keepass database
   - Do not create an additional user account
-  - Any disk partitioning scheme is OK, but prefer a separate `/var` with as much space as possible for user data. 10-15GB should be enough for the root filesystem partition. Setup LVM if possible, setup RAID to increase availability (RAID is not a backup)
+  - Any disk partitioning scheme is OK, with the following recommendations:
+    - Use LVM if possible. This will greatly facilitate disk management if the need arises.
+    - Create a separate `/var` partition, make it as large as possible (variable data is stored under `/var/`).
+    - 10-15GB should be enough for the root `/` partition.
+    - Add a swap partition with a size of 1.5x your RAM if the RAM is less than 8GB.
+    - Add a swap partition with a size of 2GB if the RAM is more than 8GB.
+    - Setup RAID to increase availability (RAID is not a backup)
+    - `noatime` and `nodiratime` mount options are recommended for better disk performance
   - When asked, only install `Standard system utilities` and `SSH server`
-- Finish Debian installation.
+  - Finish Debian installation.
 - From the server console, login as `root` and run:
 
 ```bash
