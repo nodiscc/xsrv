@@ -67,8 +67,8 @@ function init() {
     [[ -e "$host_vars_file" ]] && echo "[xsrv] ERROR: file $host_vars_file already exists" && exit 1
 
     # read credentials
-    read -r -p "[xsrv] admin user (member of the sudo group) on the host: " ansible_ssh_user
-    read -r -p "[xsrv] admin password for $ansible_ssh_user: " ansible_become_pass
+    read -r -p "[xsrv] admin user (member of the sudo group) on the host: " ansible_user
+    read -r -p "[xsrv] admin password for $ansible_user: " ansible_become_pass
     read -r -p "[xsrv] default user name for your services/applications: " xsrv_default_username
     read -r -p "[xsrv] default password for your services/applications: " xsrv_default_password
 
@@ -77,11 +77,11 @@ function init() {
     cp "$base_dir/examples/my.example.org.yml" "$host_vars_file"
     cp "$base_dir/examples/playbook.example.yml" "$base_dir/playbook.yml"
     cp "$base_dir/examples/inventory.example.yml" "$base_dir/inventory.yml"
-    sed -i "s/ansible_ssh_user: \"CHANGEME\"/ansible_ssh_user: \"$ansible_ssh_user\"/g" "$host_vars_file"
+    sed -i "s/ansible_user: \"CHANGEME\"/ansible_user: \"$ansible_user\"/g" "$host_vars_file"
     sed -i "s/ansible_become_pass: \"CHANGEME\"/ansible_become_pass: \"$ansible_become_pass\"/g" "$host_vars_file"
     sed -i "s/xsrv_default_username: \"CHANGEME\"/xsrv_default_username: \"$xsrv_default_username\"/g" "$host_vars_file"
     sed -i "s/xsrv_default_password: \"CHANGEME\"/xsrv_default_password: \"$xsrv_default_password\"/g" "$host_vars_file"
-    sed -i "s/my.example.org/$ansible_ssh_user/g" "$base_dir/host_vars/$ansible_hostname.yml"
+    sed -i "s/my.example.org/$ansible_user/g" "$base_dir/host_vars/$ansible_hostname.yml"
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/inventory.yml"
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/playbook.yml"
 
@@ -141,7 +141,7 @@ function get_host_var() {
 function open_ssh_shell() {
     ssh_command="$1"
     host_name=$(get_ssh_host_name)
-    ssh_user=$(get_host_var "$host_name" ansible_ssh_user)
+    ssh_user=$(get_host_var "$host_name" ansible_user)
     ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
     # shellcheck disable=SC2029
     ssh -t -p "$ssh_port" "$ssh_user"@"$host_name" "$ssh_command"
@@ -150,7 +150,7 @@ function open_ssh_shell() {
 # fetch latest daily backups from the host
 function backup_fetch() {
     host_name=$(get_ssh_host_name)
-    ssh_user=$(get_host_var "$host_name" ansible_ssh_user)
+    ssh_user=$(get_host_var "$host_name" ansible_user)
     ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
     local_backup_dir="./data/backups/${host_name}-daily.0.$(date +%Y-%m-%d)"
     mkdir -p "$local_backup_dir"

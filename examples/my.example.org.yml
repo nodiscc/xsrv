@@ -3,7 +3,7 @@
 ### configuration variables for my.example.org
 
 # REQUIRED administrator/sudo account username/password
-ansible_ssh_user: "CHANGEME"
+ansible_user: "CHANGEME"
 ansible_become_pass: "CHANGEME"
 # ansible_ssh_port: '22'
 
