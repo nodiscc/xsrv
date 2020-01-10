@@ -121,12 +121,12 @@ The command-line utility `xsrv` provides easy access to common maintenance/diagn
 
 ```bash
 $ ./xsrv help
-USAGE: ./xsrv command
+USAGE: ./xsrv COMMAND
 AVAILABLE COMMANDS:
 install-ansible     install ansible in a virtualenv
 init                initialize the playbook from example files
 deploy              deploy the host (run ansible playbook)
-config-host         edit host configuration variables
+config-host         edit host configuration
 config-playbook     edit the playbook (host roles)
 config-inventory    edit hosts inventory
 show-defaults       show roles configuration defaults
@@ -137,7 +137,9 @@ netstat             view network connections on the host
 backup-force        force a backup on the host
 backup-fetch        fetch latest daily backups from the host
 web                 open the hosts main homepage in a web browser
-upgrade             upgrade playbook and roles to latest versions (read the release notes)
+upgrade             upgrade playbook and roles to latest stable versions (read the release notes)
+upgrade-dev         upgrade playbook and roles to latest development versions
+ansible-playbook    run a raw ansible-playbook command
 help                show this message
 ```
 

@@ -10,7 +10,7 @@ set -o errexit
 #set -o xtrace
 
 # help text
-usage="USAGE: $0 command
+usage="USAGE: $0 COMMAND
 AVAILABLE COMMANDS:
 install-ansible     install ansible in a virtualenv
 init                initialize the playbook from example files
@@ -28,6 +28,7 @@ backup-fetch        fetch latest daily backups from the host
 web                 open the hosts main homepage in a web browser
 upgrade             upgrade playbook and roles to latest stable versions (read the release notes)
 upgrade-dev         upgrade playbook and roles to latest development versions
+ansible-playbook    run a raw ansible-playbook command
 help                show this message
 "
 
@@ -184,6 +185,15 @@ function upgrade() {
     update_roles "$requirements_file"
 }
 
+# run ansible-playbook in a virtualenv
+function run_ansible_playbook() {
+    ansible_playbook_args="$@"
+    echo "[xsrv] running ansible-playbook..."
+    source "$base_dir/.venv/bin/activate"
+    # shellcheck disable=SC2086
+    ansible-playbook $ansible_playbook_args
+}
+
 ##############################
 # Main loop
 
@@ -208,6 +218,7 @@ case "$command" in
     "web" ) open_homepage;;
     "upgrade" ) upgrade requirements.yml;;
     "upgrade-dev" ) upgrade requirements-dev.yml;;
+    "ansible-playbook" ) shift && run_ansible_playbook "$@";;
     "help" ) echo "$usage"; exit 0;;
     *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
 esac
