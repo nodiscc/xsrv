@@ -134,6 +134,7 @@ check               simulate deployment/report items that would be changed
 shell               open a SSH shell on the host
 logs                view system logs on the host
 netstat             view network connections on the host
+disk-usage          analyse disk usage on the host
 backup-force        force a backup on the host
 backup-fetch        fetch latest daily backups from the host
 web                 open the hosts main homepage in a web browser
