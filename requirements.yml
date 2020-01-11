@@ -1,21 +1,21 @@
 ---
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-common
-  version: "1.4"
+  version: "1.5.0"
   name: common
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-backup
-  version: "1.3.0"
+  version: "1.4.0"
   name: backup
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-monitoring
-  version: "1.2"
+  version: "1.2.1"
   name: monitoring
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-lamp
-  version: "1.4"
+  version: "1.5.0"
   name: lamp
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-nextcloud
-  version: "1.0.4"
+  version: "1.1.0"
   name: nextcloud
