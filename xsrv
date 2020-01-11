@@ -215,7 +215,7 @@ case "$command" in
     "logs" ) open_ssh_shell "sudo lnav /var/log/syslog";;
     "netstat" ) open_ssh_shell "sudo watch -n 2 ss -laptu";;
     "disk-usage" ) open_ssh_shell "sudo ncdu /";;
-    "backup-force" ) open_ssh_shell "sudo -u rsnapshot rsnapshot daily";;
+    "backup-force" ) open_ssh_shell "sudo rsnapshot daily";;
     "backup-fetch" ) backup_fetch;;
     "web" ) open_homepage;;
     "upgrade" ) upgrade requirements.yml;;
