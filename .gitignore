@@ -14,7 +14,7 @@ public/*
 !backups/README.md
 
 # do not track local copies of backups in git
-backups/*
+data/backups/
 
 # do not track roles downloaded by ansible-galaxy
 roles/common/
