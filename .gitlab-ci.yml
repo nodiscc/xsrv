@@ -1,5 +1,7 @@
 ---
 
+image: python:3
+
 test:
   before_script:
     - apt-get update -qy
