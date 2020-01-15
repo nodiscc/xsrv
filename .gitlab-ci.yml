@@ -3,7 +3,7 @@
 test:
   before_script:
     - apt-get update -qy
-    - apt-get install -y shellcheck
+    - apt-get install -y shellcheck python3-venv
     - export LC_ALL=C.UTF-8
     - export LANG=C.UTF-8
   script:
