@@ -122,11 +122,9 @@ function show_defaults() {
     find roles/ -wholename "*defaults/main.yml" -exec cat '{}' \;|less
 }
 
-# extract the host name from the playbook
+# extract the first host name from the playbook
 function get_ssh_host_name() {
-    playbook_hosts=$(grep "hosts:" playbook.yml)
-    playbook_hosts_num=$(echo "$playbook_hosts" | wc -l)
-    [[ "$playbook_hosts_num" == 1 ]] || (echo "[xsrv] ERROR: playbook.yml contains more than 1 host ($playbook_hosts_num)"; exit 1)
+    playbook_hosts=$(grep "hosts:" playbook.yml | head -n1)
     echo "$playbook_hosts" | awk '{print $NF}'
 }
 
