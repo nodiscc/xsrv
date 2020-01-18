@@ -8,6 +8,8 @@ ansible_become_pass: "CHANGEME"
 # ansible_ssh_port: '22'
 
 # REQUIRED default admin username/password for new services/applications
+# The default is to use the username/password below for all new applications
+# You can set different values for each application further down this file
 xsrv_default_username: "CHANGEME"
 xsrv_default_password: "CHANGEME"
 
