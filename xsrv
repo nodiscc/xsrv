@@ -53,7 +53,7 @@ function install_ansible() {
     python3 -m venv "$base_dir/.venv/"
     echo "[xsrv] installing ansible in virtualenv..."
     source "$base_dir/.venv/bin/activate"
-    pip3 --quiet install ansible==2.8.0
+    pip3 --quiet install ansible==2.8.8
 }
 
 # initialize the playbook from example files (interactive)
