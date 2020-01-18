@@ -19,3 +19,7 @@
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-nextcloud
   version: "1.1.1"
   name: nextcloud
+
+- src: git+https://gitlab.com/nodiscc/ansible-xsrv-tt-rss
+  version: "1.0"
+  name: tt-rss
