@@ -6,7 +6,7 @@
 
 Run your own network services, on a server you control.
 
-This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on your own servers. A simple command-line wrapper is provided for initial deployment and occasional maintenance tasks.
+This [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) playbook lets you quickly and reliably install and manage various network services and applications on your own servers. A simple [command-line wrapper](#usage-and-maintenance) is provided for initial deployment and occasional maintenance tasks.
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
 
@@ -21,6 +21,8 @@ The following components (_roles_) are available:
 - [nextcloud](https://gitlab.com/nodiscc/ansible-xsrv-nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service.
 - [tt-rss](https://gitlab.com/nodiscc/ansible-xsrv-tt-rss) - Tiny Tiny RSS web feed reader
 
+Check each role's documentation for info on how to use the installed service.
+
 <!-- TODO demo screencast -->
 
 **Table of contents**
@@ -30,12 +32,11 @@ The following components (_roles_) are available:
 - [Installation](#installation)
   - [Preparing the server](#preparing-the-server)
   - [Initial configuration/deployment](#initial-configurationdeployment)
-- [Usage](#usage)
 - [Configuration](#configuration)
-- [Maintenance](#maintenance)
+- [Usage and maintenance](#usage-and-maintenance)
   - [Backups](#backups)
   - [Updates](#updates)
-  - [Other maintenance](#other-maintenance)
+  - [Other](#other)
 - [License](#license)
 
 <!-- /MarkdownTOC -->
@@ -80,10 +81,6 @@ cd xsrv
 After the deployment completes, your services are ready to use. Consult `data/my.example.org.html` for a quick access list.
 
 
-## Usage
-
-See [roles](#roles)
-
 
 ## Configuration
 
@@ -114,9 +111,7 @@ See [roles](#roles)
 ```
 
 
-## Maintenance
-
-Self-hosting places your services and data under your own responsibility (uptime, backups, security...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
+## Usage and maintenance
 
 The command-line utility `xsrv` provides easy access to common maintenance/diagnostic tasks:
 
@@ -147,30 +142,35 @@ help                show this message
 
 ### Backups
 
-Backups can be configured in the `##### BACKUPS #####` section of your host configuration variables. See the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role. To download a copy of the latest backups from the host, to the controller (`backups/` under the playbook directory), run:
+Self-hosting places your services and data under your own responsibility (uptime, backups, security...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
+
+By default all valuable data from installed roles is backed up automatically to a local directory on the server (see the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role). To download a copy of the latest backups from the host, to the controller (`backups/` directory), run:
 
 ```bash
 ./xsrv backup-fetch
 ```
 
+See each role's documentation for information on how to restore backups.
+
+
 ### Updates
 
 Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to their latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
 
-- Download latest backups from the server and/or do a snapshot of the VM.
 - Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases), adjust your configuration variables if needed `./xsrv config-host`.
+- Download latest backups from the server and/or do a snapshot of the VM.
 - Update the playbook to the latest release: `./xsrv upgrade`
-- Run checks and watch out for unwated changes `./xsrv check`
+- Run checks and watch out for unwanted changes `./xsrv check`
 - Deploy the playbook `./xsrv deploy`
 
 
-### Other maintenance
+### Other
 
-**Tracking configuration in git:** By default your specific playbook/inventory/host_vars configuration is excluded from git to prevent accidentally pushing you configuration details to a public git repository. See [.gitignore](.gitignore) and disable relevant sections to start tracking your configuration in git.
+**Tracking configuration in git:** By default your specific playbook/inventory/host_vars configuration is excluded from git to prevent accidentally pushing you configuration details to a public git repository. See [.gitignore](.gitignore) and disable relevant sections to start tracking your configuration in a private git repository. It is recommended to encrypt your [secrets](secrets/README.md) before storing them in git.
 
 **Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups.
 
-**Testing/reverting updates:** The easiest way is probably to restore a snapshot from just before the upgrade (if your server is virtualized)
+**Testing/reverting updates:** The easiest way is probably to restore a snapshot from just before the upgrade.
 
 - Restore previous configuration variables
 - Roll back roles to their previous versions (`git checkout $previous_version && ansible-galaxy -f -r requirements.yml`).
