@@ -8,6 +8,8 @@ ansible_become_pass: "CHANGEME"
 # ansible_ssh_port: '22'
 
 # REQUIRED default admin username/password for new services/applications
+# The default is to use the username/password below for all new applications
+# You can set different values for each application further down this file
 xsrv_default_username: "CHANGEME"
 xsrv_default_password: "CHANGEME"
 
@@ -76,9 +78,12 @@ apache_virtualhosts:
     allow_robots: no
     auto_homepage: yes
 
-
 ##### NEXTCLOUD #####
 # see roles/nextcloud/defaults/main.yml
 nextcloud_user: "{{ xsrv_default_username }}"
 nextcloud_password: "{{ xsrv_default_password }}"
-nextcloud_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.nextcloud_db_password length=20')}}"
+
+##### TT-RSS #####
+# see roles/tt-rss/defaults/main.yml
+tt_rss_user: "{{ xsrv_default_username }}"
+tt_rss_password: "{{ xsrv_default_password }}"
