@@ -70,11 +70,11 @@ cd xsrv
 # set required configuration variables
 ./xsrv init
 
-# If needed, change the list of enabled roles and/or host configuration variables
+# If needed, enable/disable roles, edit configuration variables
 ./xsrv config-playbook
 ./xsrv config-host
 
-# Run host deployment
+# Run deployment/configuration
 ./xsrv deploy
 ```
 
@@ -166,7 +166,7 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 
 ### Other
 
-**Tracking configuration in git:** By default your specific playbook/inventory/host_vars configuration is excluded from git to prevent accidentally pushing you configuration details to a public git repository. See [.gitignore](.gitignore) and disable relevant sections to start tracking your configuration in a private git repository. It is recommended to encrypt your [secrets](secrets/README.md) before storing them in git.
+**Tracking configuration in git:** The playbook, inventory and host configuration files are ignored by git to prevent accidentally pushing sensitive configuration details to a public git repository. Edit [.gitignore](.gitignore) to start tracking your configuration in a private git repository. It is recommended to [encrypt your secrets](secrets/README.md) before storing them in git.
 
 **Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups.
 

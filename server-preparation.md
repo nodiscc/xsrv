@@ -2,9 +2,9 @@
 
 #### Hardware requirements
 
-The server machine can be a physical computer (server-grade, desktop/laptop, small factor board/barebone), or a [virtual Machine](https://en.wikipedia.org/wiki/Virtualization) on your personal computer, at a VPS provider, or a dedicated/hardware hypervisor.
-
-Virtualization software includes [virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) (Linux), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) (Linux/OSX/Windows), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) (dedicated hypervisor).
+The server machine can be:
+ - a physical computer (server machine, repurposed desktop/laptop, small factor board/barebone),
+ - a [virtual Machine](https://en.wikipedia.org/wiki/Virtualization) on your personal computer, at a VPS provider, or a dedicated/hardware hypervisor. Virtualization software includes [virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) (Linux), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) (Linux/OSX/Windows), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) (dedicated hypervisor).
 
 Resource usage will vary depending on installed roles (read each role's documentation), the number of users, and how much user data you need to store. A minimal configuration for a personal server with 2-10 users:
 
@@ -12,11 +12,11 @@ Resource usage will vary depending on installed roles (read each role's document
  - 1024-2048MB+ RAM
  - 40GB-∞ drive space
 
-**Power:** Use low power consumption components. To increase availability, setup the BIOS to reboot after a power loss, setup an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
+**CPU/RAM:** Some roles will require more processing power and memory. Read each role's README before use.
 
 **Storage:** A basic installation without user data requires about `~??GB` of disk space. 40GB+ is a good start to start storing documents, shared files and other data.
 
-**CPU/RAM:** Some roles will require more processing power and memory. Read each role's README before use.
+**Power:** Use low power consumption components. To increase availability, setup the BIOS to reboot after a power loss, setup an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
 
 
 #### Network setup
@@ -27,8 +27,7 @@ If the network interface is in a private network behind a router, during Debian 
 - assign a [static, private IP address](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) (eg `192.168.0.10`) 
 - set the router's IP address as **gateway**
 - set the **DNS server** to either your internal DNS server, your ISP/hoster's DNS server, or a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server)
-
-On the router, setup **NAT (port forwarding)** if you need to access your services from other networks/Internet. You may want to forward the following ports/services to your server's private IP address:
+- setup **NAT (port forwarding)** on the router if you need to access your services from other networks/Internet. You may want to forward the following ports/services to your server's private IP address:
 
 ```
 SSH server:                      TCP 22
@@ -39,16 +38,18 @@ Mumble VoIP server:              TCP/UDP 64738
 
 The server's **hostname ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name))** must be resolvable from the controller and clients, and pointing to the server's IP address. This assumes either:
 
-- A DNS (`A` or `CNAME`) record in the public DNS system - rent a domain name from a [registrar](https://en.wikipedia.org/wiki/Domain_name_registrar), or get a free public DNS subdomain at [freedns.afraid.org](https://freedns.afraid.org/domain/registry/)
+- A DNS (`A` or `CNAME`) record in the public DNS system
+  - rent a domain name from a [registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)
+  - or get a free public DNS subdomain at [freedns.afraid.org](https://freedns.afraid.org/domain/registry/)
 - A [hosts file](https://en.wikipedia.org/wiki/Hosts_(file) entry on clients that need to access the server
 - A DNS record on your private DNS resolver, your clients and controllers must be configured to use this resolver.
 
-The default **firewall** configuration assumes the server network interface is facing both your local network and the Internet.
+The default **firewall** configuration assumes the server has a single network interface, facing both your local network and the Internet.
  - IP networks `192.168.0.0/16`, `10.0.0.0/8`, and `172.16.0.0/12` are considered local networks.
  - To increase security, tighten firewall configuration, use additional network filters, VLANs or other methods to isolate your server from untrusted machines on the network.
 
 
-#### Operating system setup
+#### Debian installation
 
 This playbook is designed to run against minimal [Debian](https://www.debian.org/) 10 installations:
 
@@ -71,7 +72,10 @@ This playbook is designed to run against minimal [Debian](https://www.debian.org
     - `noatime` and `nodiratime` mount options are recommended for better disk performance
   - When asked, only install `Standard system utilities` and `SSH server`
   - Finish Debian installation.
-- From the server console, login as `root` and run:
+
+#### Ansible requirements
+
+From the server console, login as `root` and run:
 
 ```bash
 # Install requirements for remote admin/ansible access
@@ -82,8 +86,9 @@ useradd  --create-home --groups ssh,sudo --shell /bin/bash deploy
 # Set the sudo password for this user account
 passwd deploy
 
-# test internet connectivity, test DNS resolution
+# test internet connectivity
 ping -c1 1.1.1.1
+# test DNS resolution
 getent hosts debian.org
 
 # lock the console
@@ -92,4 +97,4 @@ logout
 
 |      |       |
 |------|-------|
-|  ♦  | At this point, if your server is a virtual machine, it is a good idea to stop the VM and use it as a template. Every time you need to deploy a new server, clone the template, boot the clone, from the console edit the IP address in `/etc/network/interfaces`, `systemctl restart networking`, and set a new root password `passwd root`. |
+|  ♦  | At this point, if your server is a virtual machine, it is a good idea to stop the VM and use it as a template. Every time you need to deploy a new server, clone the template, boot the clone, from the console edit the IP address in `/etc/network/interfaces`, `systemctl restart networking`, and set new passwords `passwd root && passwd deploy`. |
