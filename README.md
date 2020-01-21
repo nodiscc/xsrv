@@ -100,7 +100,7 @@ After the deployment completes, your services are ready to use. Consult `data/my
 # By default, host variables only override some default values provided by roles.
 # To show role defaults for all variables, review each role's default/main.yml
 # Copy any setting from these defaults to your host variables file, and edit its value.
-./xsrv show-defaults
+./xsrv help-defaults
 
 ```
 
@@ -121,11 +121,10 @@ USAGE: ./xsrv COMMAND
 AVAILABLE COMMANDS:
 install-ansible     install ansible in a virtualenv
 init                initialize the playbook from example files
-deploy              deploy the host (run ansible playbook)
+deploy              run deployment/configuration
 config-host         edit host configuration
-config-playbook     edit the playbook (host roles)
-config-inventory    edit hosts inventory
-show-defaults       show roles configuration defaults
+config-playbook     edit the list of roles (playbook)
+config-inventory    edit the list of hosts (inventory)
 check               simulate deployment/report items that would be changed
 shell               open a SSH shell on the host
 logs                view system logs on the host
@@ -137,6 +136,7 @@ web                 open the hosts main homepage in a web browser
 upgrade             upgrade playbook and roles to latest stable versions (read the release notes)
 upgrade-dev         upgrade playbook and roles to latest development versions
 ansible-playbook    run a raw ansible-playbook command
+help-defaults       show roles configuration defaults
 help                show this message
 ```
 
