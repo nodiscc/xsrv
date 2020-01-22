@@ -44,7 +44,7 @@ help                show this message
 # Cons: .venv/bin/activate must be sourced to use ansible from the virtualenv
 # Alternative methods:
 # - install from the system package manager (sudo apt install ansible). Pros: easiest. Cons: ansible version must match the playbook/roles requirements
-# - install for the current user (pip3 install --user ansible==2.8.0). Cons: you must add ~/.local/bin/ to your $PATH to use ansible
+# - install for the current user (pip3 install --user ansible==2.9.3). Cons: you must add ~/.local/bin/ to your $PATH to use ansible
 # - do *not* use 'sudo pip" install' (may cause conflicts effects with system libraries/unexpected behavior. Unsafe)
 function install_ansible() {
     echo "[xsrv] installing git and python3-pip..."
@@ -53,7 +53,7 @@ function install_ansible() {
     python3 -m venv "$base_dir/.venv/"
     echo "[xsrv] installing ansible in virtualenv..."
     source "$base_dir/.venv/bin/activate"
-    pip3 --quiet install ansible==2.8.8
+    pip3 --quiet install ansible==2.9.3
 }
 
 # initialize the playbook from example files (interactive)

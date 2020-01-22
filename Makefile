@@ -7,7 +7,7 @@ tests: shellcheck check_jinja2 ansible_lint yamllint
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
-	pip3 install isort ansible-lint yamllint ansible==2.8.8
+	pip3 install isort ansible-lint yamllint ansible==2.9.3
 
 # download/update roles from ansible-galaxy
 galaxy: venv
