@@ -186,7 +186,7 @@ function upgrade() {
 
 # run ansible-playbook in a virtualenv
 function run_ansible_playbook() {
-    ansible_playbook_args="$@"
+    ansible_playbook_args="$*"
     echo "[xsrv] running ansible-playbook..."
     source "$base_dir/.venv/bin/activate"
     # shellcheck disable=SC2086
