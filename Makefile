@@ -12,6 +12,7 @@ venv:
 # download/update roles from ansible-galaxy
 galaxy: venv
 	source .venv/bin/activate && \
+	chmod -R o-rwX ./ && \
 	ansible-galaxy install -f -r requirements-dev.yml
 
 # Static syntax checker for shell scripts
