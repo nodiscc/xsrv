@@ -23,7 +23,9 @@ shellcheck:
 # Ansible linter
 ansible_lint: venv galaxy
 	source .venv/bin/activate && \
-	ansible-lint srv01-playbook.yml.dist || exit 0
+	cp examples/playbook.example.yml playbook-test.yml && \
+	ansible-lint playbook-test.yml && \
+	rm playbook-test.yml
 
 # YAML syntax check and linter
 yamllint: venv galaxy
