@@ -12,7 +12,7 @@ venv:
 # download/update roles from ansible-galaxy
 galaxy: venv
 	source .venv/bin/activate && \
-	ansible-galaxy install -f -r requirements.yml
+	ansible-galaxy install -f -r requirements-dev.yml
 
 # Static syntax checker for shell scripts
 # install shellcheck before use: sudo apt install shellcheck
