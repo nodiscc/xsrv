@@ -39,5 +39,5 @@ check_jinja2: venv galaxy
 	j2_files=$$(find roles/ -name "*.j2") && \
 	for i in $$j2_files; do \
 	echo "[INFO] checking syntax for $$i"; \
-	./tests/check-jinja2.py "$$i"; \
+	python3 ./tests/check-jinja2.py "$$i"; \
 	done
