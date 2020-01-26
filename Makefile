@@ -11,7 +11,7 @@ venv:
 
 # download/update roles from ansible-galaxy
 galaxy: venv
-	source .venv/bin/activate
+	source .venv/bin/activate && \
 	ansible-galaxy install -f -r requirements.yml
 
 # Static syntax checker for shell scripts
