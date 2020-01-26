@@ -30,7 +30,8 @@ ansible_lint: venv galaxy
 # YAML syntax check and linter
 yamllint: venv galaxy
 	source .venv/bin/activate && \
-	find ./ -iname "*.yml" -exec yamllint -c tests/.yamllint '{}' \;
+	set -o pipefail && \
+	find roles/ examples/ requirements-dev.yml requirements.yml -iname "*.yml" | xargs yamllint -c tests/.yamllint
 
 check_jinja2: venv galaxy
 	source .venv/bin/activate && \
