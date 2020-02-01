@@ -16,7 +16,7 @@ galaxy: venv
 	ansible-galaxy install -f -r requirements-dev.yml
 
 # Static syntax checker for shell scripts
-# install shellcheck before use: sudo apt install shellcheck
+# requirements: sudo apt install shellcheck
 shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
 	shellcheck -e SC1090 xsrv
@@ -41,3 +41,15 @@ check_jinja2: venv galaxy
 	echo "[INFO] checking syntax for $$i"; \
 	python3 ./tests/check-jinja2.py "$$i"; \
 	done
+
+# Update TODO.md by fetching issues from the main gitea instance API
+# requirements: sudo apt install git jq
+#               gitea-cli config defined in ~/.config/gitearc
+update_todo:
+	git clone https://github.com/bashup/gitea-cli gitea-cli
+	rm TODO.md
+	for repo in common backup monitoring lamp nextcloud tt-rss gitea; do \
+	    echo -e "\n### ansible-xsrv-$$repo\n" >> TODO.md; \
+		./gitea-cli/bin/gitea issues xsrv/ansible-xsrv-$$repo | jq -r '.[] | "- #\(.number) - \(.title)"' >> TODO.md; \
+	done
+	rm -rf gitea-cli
