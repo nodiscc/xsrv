@@ -9,7 +9,7 @@
   name: backup
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-monitoring
-  version: "1.3.0"
+  version: "1.4.0"
   name: monitoring
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-lamp
