@@ -13,7 +13,7 @@
   name: monitoring
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-lamp
-  version: "1.6.0"
+  version: "1.7.0"
   name: lamp
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-nextcloud
