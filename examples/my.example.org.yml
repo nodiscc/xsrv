@@ -87,3 +87,9 @@ nextcloud_password: "{{ xsrv_default_password }}"
 # see roles/tt-rss/defaults/main.yml
 tt_rss_user: "{{ xsrv_default_username }}"
 tt_rss_password: "{{ xsrv_default_password }}"
+
+##### GITEA #####
+# see roles/gitea/defaults/main.yml
+gitea_admin_user: "{{ xsrv_default_username }}"
+gitea_admin_password: "{{ xsrv_default_password }}"
+gitea_admin_email: "admin@{{ inventory_hostname }}"

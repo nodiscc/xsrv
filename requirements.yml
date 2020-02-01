@@ -23,3 +23,7 @@
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-tt-rss
   version: "1.0"
   name: tt-rss
+
+- src: git+https://gitlab.com/nodiscc/ansible-xsrv-gitea
+  version: "1.0.0"
+  name: gitea
