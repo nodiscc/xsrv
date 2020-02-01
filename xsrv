@@ -157,7 +157,7 @@ function backup_fetch() {
     rsync --hard-links --archive \
     --compress --partial --progress \
     --delete --rsh "ssh -p $ssh_port" \
-    "$ssh_user@$host_name:/var/backups/srv01/daily.0" \
+    "$ssh_user@$host_name:/var/backups/rsnapshot/daily.0" \
     "$local_backup_dir/"
 }
 
