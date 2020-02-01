@@ -80,7 +80,7 @@ cd xsrv
 ./xsrv deploy
 ```
 
-After the deployment completes, your services are ready to use. Consult `data/my.example.org.html` for a quick access list.
+After the deployment completes, your services are ready to use.
 
 
 
