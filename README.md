@@ -39,6 +39,7 @@ Check each role's documentation for info on how to use the installed service.
   - [Updates](#updates)
   - [Other](#other)
 - [License](#license)
+- [Mirrors](#mirrors)
 
 <!-- /MarkdownTOC -->
 
@@ -183,3 +184,10 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 ## License
 
 [GNU GPLv3](LICENSE)
+
+
+## Mirrors
+
+ - https://github.com/nodiscc/xsrv
+ - https://gitlab.com/nodiscc/xsrv
+ - https://stdout.root.sx/gitea/xsrv/xsrv
