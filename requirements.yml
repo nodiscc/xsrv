@@ -1,7 +1,7 @@
 ---
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-common
-  version: "1.6.0"
+  version: "1.7.0"
   name: common
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-backup
