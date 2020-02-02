@@ -22,8 +22,6 @@ The following components (_roles_) are available:
 - [nextcloud](https://gitlab.com/nodiscc/ansible-xsrv-nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service.
 - [tt-rss](https://gitlab.com/nodiscc/ansible-xsrv-tt-rss) - Tiny Tiny RSS web feed reader
 
-Check each role's documentation for info on how to use the installed service.
-
 <!-- TODO demo screencast -->
 
 **Table of contents**
@@ -96,17 +94,16 @@ After the deployment completes, your services are ready to use.
 **Host configuration:** The default configuration should work out of the box for a single server.
 
 ```bash
-# To show or edit your host's configuration variables, edit host_vars/my.example.org.yml
+# Edit the host's configuration variables
 ./xsrv config-host
 
-# By default, host variables only override some default values provided by roles.
-# To show role defaults for all variables, review each role's default/main.yml
-# Copy any setting from these defaults to your host variables file, and edit its value.
+# Show default values for all configuration variables. To override any default setting,
+# copy it to your host variables file and edit its value there.
 ./xsrv help-defaults
 
 ```
 
-**After any changes to configuration/roles**, apply changes: 
+**After any changes to configuration files**, apply your changes: 
 
 ```bash
 ./xsrv deploy
@@ -146,7 +143,7 @@ help                show this message
 
 Self-hosting places your services and data under your own responsibility (uptime, backups, security...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
 
-By default all valuable data from installed roles is backed up automatically to a local directory on the server (see the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role). To download a copy of the latest backups from the host, to the controller (`backups/` directory), run:
+By default all user data is backed up automatically to a local directory on the server (see the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role). To download a copy of the latest backups from the host, to the controller (`backups/` directory), run:
 
 ```bash
 ./xsrv backup-fetch
@@ -154,12 +151,15 @@ By default all valuable data from installed roles is backed up automatically to 
 
 See each role's documentation for information on how to restore backups.
 
+Once done, do an **off-site backups** of the xsrv directory from the controller.
+
 
 ### Updates
 
 Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to their latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
 
-- Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases), adjust your configuration variables if needed `./xsrv config-host`.
+- Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases)
+- Adjust your configuration variables if needed `./xsrv config-host`.
 - Download latest backups from the server and/or do a snapshot of the VM.
 - Update the playbook to the latest release: `./xsrv upgrade`
 - Run checks and watch out for unwanted changes `./xsrv check`
