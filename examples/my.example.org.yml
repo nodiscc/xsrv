@@ -80,6 +80,8 @@ apache_virtualhosts:
     reverse_proxies:
       - location: "/gitea"
         backend: "http://localhost:3000"
+        response_headers:
+          - 'Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"'
 
 ##### NEXTCLOUD #####
 # see roles/nextcloud/defaults/main.yml
