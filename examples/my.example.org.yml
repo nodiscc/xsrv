@@ -78,10 +78,11 @@ apache_virtualhosts:
     allow_robots: no
     auto_homepage: yes
     reverse_proxies:
-      - location: "/gitea"
+      - name: gitea
+        location: /gitea
         backend: "http://localhost:3000"
         response_headers:
-          - 'Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"'
+          - Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
 
 ##### NEXTCLOUD #####
 # see roles/nextcloud/defaults/main.yml
