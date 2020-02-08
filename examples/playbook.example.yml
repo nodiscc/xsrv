@@ -5,7 +5,7 @@
     - common
     - backup
     - monitoring
-    - lamp
-    - nextcloud
-    - tt-rss
-    - gitea
+    # - lamp
+    # - nextcloud
+    # - tt-rss
+    # - gitea

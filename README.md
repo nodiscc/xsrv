@@ -71,8 +71,12 @@ cd xsrv
 # set required configuration variables
 ./xsrv init
 
-# If needed, enable/disable roles, edit configuration variables
+# Enable additional roles
+# (by default, only basic system configuration roles are enabled)
 ./xsrv config-playbook
+
+# Make changes to host configuration if needed (see #configuration below)
+# The default configuration will work out of the box
 ./xsrv config-host
 
 # Run deployment/configuration
