@@ -39,6 +39,7 @@ The following components (_roles_) are available:
   - [Other](#other)
 - [Issues](#issues)
 - [License](#license)
+- [Changelog](#changelog)
 - [Mirrors](#mirrors)
 
 <!-- /MarkdownTOC -->
@@ -196,6 +197,11 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 ## License
 
 [GNU GPLv3](LICENSE)
+
+
+## Changelog
+
+[CHANGELOG.md](CHANGELOG.md)
 
 
 ## Mirrors
