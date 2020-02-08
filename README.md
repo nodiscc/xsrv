@@ -21,7 +21,7 @@ The following components (_roles_) are available:
 - [lamp](https://gitlab.com/nodiscc/ansible-xsrv-lamp) - Apache web server, PHP interpreter and MariaDB (MySQL) database server
 - [nextcloud](https://gitlab.com/nodiscc/ansible-xsrv-nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service.
 - [tt-rss](https://gitlab.com/nodiscc/ansible-xsrv-tt-rss) - Tiny Tiny RSS web feed reader
-- [gitea](https://gitlab.com/nodiscc/ansible-xsrv-tt-rss) - Gitea self-hosted Git service/software forge
+- [gitea](https://gitlab.com/nodiscc/ansible-xsrv-gitea) - Gitea self-hosted Git service/software forge
 
 <!-- TODO demo screencast -->
 
@@ -35,8 +35,9 @@ The following components (_roles_) are available:
 - [Configuration](#configuration)
 - [Usage and maintenance](#usage-and-maintenance)
   - [Backups](#backups)
-  - [Updates](#updates)
+  - [Upgrades](#upgrades)
   - [Other](#other)
+- [Issues](#issues)
 - [License](#license)
 - [Mirrors](#mirrors)
 
@@ -61,7 +62,8 @@ From the _controller_:
 
 ```bash
 # clone the playbook
-git clone -b 1.0 https://gitlab.com/nodiscc/xsrv
+git clone -b stable https://gitlab.com/nodiscc/xsrv # stable version (releases)
+git clone -b master https://gitlab.com/nodiscc/xsrv # OR development version
 
 # enter the playbook directory - all commands must be run from this directory
 cd xsrv
@@ -159,7 +161,7 @@ See each role's documentation for information on how to restore backups.
 Once done, do an **off-site backups** of the xsrv directory from the controller.
 
 
-### Updates
+### Upgrades
 
 Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to their latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
 
@@ -185,6 +187,11 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 - Restore data from the last known good backups (see each role's documentation for restore instructions)
 - For professional/production systems, running the playbook and evaluating changes against a testing environment first is recommended.
 
+
+## Issues
+
+- https://gitlab.com/nodiscc/xsrv
+- https://stdout.root.sx/gitea/xsrv/xsrv/issues or [TODO.md](TODO.md)
 
 ## License
 
