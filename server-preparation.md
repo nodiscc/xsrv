@@ -46,6 +46,7 @@ The server's **hostname ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_do
 
 The default **firewall** configuration assumes the server has a single network interface, facing both your local network and the Internet.
  - IP networks `192.168.0.0/16`, `10.0.0.0/8`, and `172.16.0.0/12` are considered local networks.
+ - By default services are only accessible from LAN addresses (except SSH which is accessible from anywhere). Switch the `src` parameters to `any` in the firewall configuration if you want to expose your services on the Internet. Doing so greatly increases the risk of automated or targeted attacks on your services.
  - To increase security, tighten firewall configuration, use additional network filters, VLANs or other methods to isolate your server from untrusted machines on the network.
 
 

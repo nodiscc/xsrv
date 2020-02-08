@@ -35,9 +35,9 @@ firehol_networks:
     policy: "DROP"
     allow_input: # incoming traffic
       - { name: "ssh", src: "any" } # ssh from anywhere
-      - { name: "http", src: "any" } # web server access from anywhere
-      - { name: "https", src: "any" } # web server access from anywhere
-      - { name: "netdata", src: "any" } # monitoring dashboard
+      - { name: "http", src: "{{ firehol_lan }}" } # web server access from LAN
+      - { name: "https", src: "{{ firehol_lan }}" } # web server access from LAN
+      - { name: "netdata", src: "{{ firehol_lan }}" } # monitoring dashboard access from LAN
       # - { name: "ping", src: "any" } # allow incoming ICMP pings
       # - { name: "mumble", src: "any" } # mumble voip server
       # - { name: "samba", src: "{{ firehol_lan }}" } # samba file sharing
@@ -45,7 +45,7 @@ firehol_networks:
       # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
       # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
       # - { name: "sshcustom", src: "any" } # SSH server on custom port
-      # - { name: "transmission", src: "any", } # bittorrent peer connections, outgoing requires 'all'
+      # - { name: "transmission", src: "any", } # bittorrent peer connections from anywhere
     allow_output: # outgoing connections
       - { name: "dns", dst: "any" } # DNS queries to anywhere
       - { name: "ntp", dst: "any" } # time/date synchronization
