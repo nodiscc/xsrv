@@ -21,6 +21,7 @@ The following components (_roles_) are available:
 - [lamp](https://gitlab.com/nodiscc/ansible-xsrv-lamp) - Apache web server, PHP interpreter and MariaDB (MySQL) database server
 - [nextcloud](https://gitlab.com/nodiscc/ansible-xsrv-nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service.
 - [tt-rss](https://gitlab.com/nodiscc/ansible-xsrv-tt-rss) - Tiny Tiny RSS web feed reader
+- [gitea](https://gitlab.com/nodiscc/ansible-xsrv-tt-rss) - Gitea self-hosted Git service/software forge
 
 <!-- TODO demo screencast -->
 
