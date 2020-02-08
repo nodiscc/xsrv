@@ -17,7 +17,7 @@
   name: lamp
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-nextcloud
-  version: "1.2.2"
+  version: "1.2.3"
   name: nextcloud
 
 - src: git+https://gitlab.com/nodiscc/ansible-xsrv-tt-rss
