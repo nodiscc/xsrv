@@ -25,6 +25,14 @@ The following components (_roles_) are available:
 
 <!-- TODO demo screencast -->
 
+[![](https://i.imgur.com/E74kJx5.png)](https://gitlab.com/nodiscc/ansible-xsrv-lamp)
+[![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](https://gitlab.com/nodiscc/ansible-xsrv-monitoring)
+[![](https://i.imgur.com/PPVIb6V.png)](https://gitlab.com/nodiscc/ansible-xsrv-nextcloud)
+[![](https://i.imgur.com/UoKs3x1.png)](https://gitlab.com/nodiscc/ansible-xsrv-tt-rss)
+[![](https://i.imgur.com/Rks90zV.png)](https://gitlab.com/nodiscc/ansible-xsrv-gitea)
+
+
+
 **Table of contents**
 
 <!-- MarkdownTOC -->
