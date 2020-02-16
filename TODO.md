@@ -2,19 +2,20 @@
 
 ### xsrv
 
+- #91 - Configure auditd
 - #90 - Shaarli
-- #89 - Add screenshots
-- #88 - Add a CHANGELOG
 - #87 - Flyway
 - #86 - Peertube
 - #85 - add ansible-vault support:
 - #84 - 'make update_todo' does not honor the ?limit=50 parameter
 - #82 - tests: cache gitlab ci dependencies
 - #81 - Mirror neuralnet.xinit.se list of issues to the README of each role
-- #80 - backup-fetch is not working
+- #78 - Adminer role
+- #72 - Proxmox role
 
 ### ansible-xsrv-common
 
+- #40 - Firehol: allow limiting a rule to a single user (owner iptables module)
 - #38 - Syslog: watch more log files
 - #37 - Apply RHEL secure configuration recommendations
 - #36 - Apply STIG recommendations
@@ -24,13 +25,13 @@
 - #31 - Allow configuration of timezone
 - #30 - minimize write access to directories
 - #29 - Check that locale generation works correctly
-- #28 - add molly-guard
 
 ### ansible-xsrv-backup
 
 
 ### ansible-xsrv-monitoring
 
+- #51 - ERROR: Cannot send HTTPS headers to web client
 - #50 - Graph number of packages with upgrades available
 - #49 - add an alert when ntp service is down
 - #48 - Add Mozilla observatory module
@@ -40,10 +41,11 @@
 - #43 - Monitor cron jobs
 - #42 - Setup PSAD (Port Scan Attack Detector)
 - #41 - Monitor rsnapshot backups state
-- #40 - Graph `deborphan --guess-all` reports
 
 ### ansible-xsrv-lamp
 
+- #37 - Letsencrypt: switch to ACMEv2?
+- #36 - Log MariaDB slow queries
 - #35 - homepage: remove SSH and SFTP shortcuts, can be accessed with 'xsrv shell'/'xsrv sftp'
 - #34 - Confine mysqld with AppArmor
 - #33 - Confine apache with AppArmor
@@ -52,8 +54,6 @@
 - #26 - Ability to revoke let's encrypt certs
 - #25 - A+ on Mozilla Security Observatory
 - #24 - [homepage] generate a local homepage on the controller
-- #23 - secure mysql installation
-- #22 - update mysql root password for *all* root accounts
 
 ### ansible-xsrv-nextcloud
 
@@ -78,6 +78,7 @@
 
 ### ansible-xsrv-gitea
 
+- #12 - HTTP 401 on click on a milestone from the global issues list
 - #9 - document how to create a mirror from command line
 - #8 - Confine gitea with AppArmor
 - #5 - Allow using postgresql
