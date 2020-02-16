@@ -154,7 +154,7 @@ function backup_fetch() {
     ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
     local_backup_dir="./data/backups/${host_name}-daily.0.$(date +%Y-%m-%d)"
     mkdir -p "$local_backup_dir"
-    rsync --hard-links --archive \
+    rsync --rsync-path="sudo rsync" --hard-links --archive \
     --compress --partial --progress \
     --delete --rsh "ssh -p $ssh_port" \
     "$ssh_user@$host_name:/var/backups/rsnapshot/daily.0" \
