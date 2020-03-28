@@ -48,7 +48,7 @@ help                show this message
 # - do *not* use 'sudo pip" install' (may cause conflicts effects with system libraries/unexpected behavior. Unsafe)
 function install_ansible() {
     echo "[xsrv] installing git and python3-pip..."
-    sudo apt install git python3-pip
+    sudo apt install git python3-pip python3-venv
     echo "[xsrv] creating virtualenv in $base_dir/.venv/..."
     python3 -m venv "$base_dir/.venv/"
     echo "[xsrv] installing ansible in virtualenv..."
