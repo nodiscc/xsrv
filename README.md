@@ -71,6 +71,9 @@ See **[Server preparation](server-preparation.md)**
 From the _controller_:
 
 ```bash
+# install requirements (example for debian-based systems)
+sudo apt update && sudo apt install git bash python3-pip python3-venv
+
 # clone the playbook
 git clone -b stable https://gitlab.com/nodiscc/xsrv # stable version (releases)
 git clone -b master https://gitlab.com/nodiscc/xsrv # OR development version
