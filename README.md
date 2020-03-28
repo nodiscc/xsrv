@@ -87,7 +87,7 @@ cd xsrv
 
 ## Configuration
 
-**Enabling/disabling roles:** Activate only required roles by uncommenting them in inventory.yml
+**Enabling/disabling roles:** Activate only required roles by uncommenting them in the playbook
 
 ```bash
 ./xsrv config-playbook
@@ -156,9 +156,9 @@ By default all user data is backed up automatically to a local directory on the 
 ./xsrv backup-fetch
 ```
 
-See each role's documentation for information on how to restore backups.
+You can then do an off-line, off-site backup of the `xsrv` directory.
 
-Once done, do an **off-site backups** of the xsrv directory from the controller.
+See each role's documentation for information on how to restore backups.
 
 
 ### Upgrades
