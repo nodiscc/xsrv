@@ -166,8 +166,8 @@ See each role's documentation for information on how to restore backups.
 Security upgrades for Debian packages are applied [automatically/daily](https://gitlab.com/nodiscc/ansible-xsrv-common). To upgrade roles to their latest versions (bugfixes, new features, up-to-date versions of all third-party/web applications...):
 
 - Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases)
-- Adjust your configuration variables if needed `./xsrv config-host`.
-- Download latest backups from the server (`./xsrv backup-fetch`) and/or do a snapshot of the VM.
+- Adjust your configuration variables if needed `./xsrv config-host`
+- Download latest backups from the server (`./xsrv backup-fetch`) and/or do a snapshot of the VM
 - Update the playbook to the latest release: `./xsrv upgrade`
 - Run checks and watch out for unwanted changes `./xsrv check`
 - Deploy the playbook `./xsrv deploy`
