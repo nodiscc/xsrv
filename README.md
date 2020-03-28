@@ -39,8 +39,9 @@ The following components (_roles_) are available:
 
 - [Installation](#installation)
   - [Preparing the server](#preparing-the-server)
-  - [Initial configuration/deployment](#initial-configurationdeployment)
+  - [Preparing the controller](#preparing-the-controller)
 - [Configuration](#configuration)
+- [Deployment](#deployment)
 - [Usage and maintenance](#usage-and-maintenance)
   - [Backups](#backups)
   - [Upgrades](#upgrades)
@@ -65,7 +66,7 @@ You will need a server (_host_) to run your services, and a _controller_ machine
 See **[Server preparation](server-preparation.md)**
 
 
-### Initial configuration/deployment
+### Preparing the controller
 
 From the _controller_:
 
@@ -81,48 +82,38 @@ cd xsrv
 ./xsrv install-ansible
 # set required configuration variables
 ./xsrv init
-
-# Enable additional roles
-# (by default, only basic system configuration roles are enabled)
-./xsrv config-playbook
-
-# Make changes to host configuration if needed (see #configuration below)
-# The default configuration will work out of the box
-./xsrv config-host
-
-# Run deployment/configuration
-./xsrv deploy
 ```
-
-After the deployment completes, your services are ready to use.
-
 
 
 ## Configuration
 
-**Enabling more roles:**
+**Enabling/disabling roles:** Activate only required roles by uncommenting them in inventory.yml
 
 ```bash
-# To add more roles to your server, uncomment them in inventory.yml
 ./xsrv config-playbook
 ```
 
-**Host configuration:** The default configuration should work out of the box for a single server.
+**Host variables:** The default configuration should work out of the box for a single server. To change passwords and/or advanced configuration details, edit the _host variables_ file:
 
 ```bash
-# Edit the host's configuration variables
 ./xsrv config-host
-
-# Show default values for all configuration variables. To override any default setting,
-# copy it to your host variables file and edit its value there.
-./xsrv help-defaults
-
 ```
 
-**After any changes to configuration files**, apply your changes: 
+**Show default configuration values:** Only a subset of configuration variables are present in the host variables file by default. To show all available variables, and their default values:
 
 ```bash
-./xsrv deploy
+./xsrv help-defaults
+```
+
+Simply copy default variables that need to be changed, to your host configuration file, and edit them there.
+
+
+## Deployment
+
+After any changes to configuration files, changes must be applied by running
+
+```bash
+xsrv deploy
 ```
 
 
