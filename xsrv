@@ -87,7 +87,8 @@ function init() {
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/inventory.yml"
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/playbook.yml"
 
-    update_roles
+    update_roles requirements.yml
+    echo "[xsrv] succesffuly initialized"
 }
 
 # deploy the host (run ansible playbook)
