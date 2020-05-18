@@ -31,6 +31,7 @@ upgrade-dev         upgrade playbook and roles to latest development versions
 ansible-playbook    run a raw ansible-playbook command
 help-defaults       show roles configuration defaults
 help                show this message
+deploy my.exmp.org  deploy/configure a list of hosts (for multi-machine playbooks, comma-separated)
 "
 
 # exit if no command specified
@@ -92,7 +93,7 @@ function init() {
 # deploy the host (run ansible playbook)
 function deploy() {
     source "$base_dir/.venv/bin/activate"
-    ansible-playbook playbook.yml
+    ansible-playbook playbook.yml $ansible_args
 }
 
 # check what changes would be made by running 'deploy' (run ansible in check mode)
@@ -202,7 +203,7 @@ editor="nano"
 case "$command" in
     "install-ansible") install_ansible;;
     "init") init;;
-    "deploy") deploy;;
+    "deploy") [[ -n "$2" ]] && ansible_args="--limit $2" || ansible_args=""; deploy;;
     "check") check;;
     "config-host" ) config_host_vars;;
     "config-playbook" ) config_playbook;;
