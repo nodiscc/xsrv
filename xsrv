@@ -41,12 +41,7 @@ deploy my.exmp.org  deploy/configure a list of hosts (for multi-machine playbook
 # Functions
 
 # Install ansible in a python virtualenv in the playbook directory
-# Pros: does not interact with python system libraries/interpreter, easy to move/uninstall/update
-# Cons: .venv/bin/activate must be sourced to use ansible from the virtualenv
-# Alternative methods:
-# - install from the system package manager (sudo apt install ansible). Pros: easiest. Cons: ansible version must match the playbook/roles requirements
-# - install for the current user (pip3 install --user ansible==2.9.3). Cons: you must add ~/.local/bin/ to your $PATH to use ansible
-# - do *not* use 'sudo pip" install' (may cause conflicts effects with system libraries/unexpected behavior. Unsafe)
+# requires python3-pip
 function install_ansible() {
     echo "[xsrv] creating virtualenv in $base_dir/.venv/..."
     python3 -m venv "$base_dir/.venv/"
