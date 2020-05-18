@@ -117,7 +117,7 @@ Simply copy default variables that need to be changed, to your host configuratio
 After any changes to configuration files, changes must be applied by running
 
 ```bash
-xsrv deploy
+./xsrv deploy
 ```
 
 
