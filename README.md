@@ -49,6 +49,7 @@ The following components (_roles_) are available:
 - [Issues](#issues)
 - [License](#license)
 - [Changelog](#changelog)
+- [Similar projects](#similar-projects)
 - [Mirrors](#mirrors)
 
 <!-- /MarkdownTOC -->
@@ -205,6 +206,10 @@ Security upgrades for Debian packages are applied [automatically/daily](https://
 
 [CHANGELOG.md](CHANGELOG.md)
 
+## Similar projects
+
+- https://github.com/progmaticltd/homebox
+- https://github.com/sovereign/sovereign
 
 ## Mirrors
 
