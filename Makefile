@@ -1,7 +1,7 @@
 #!/usr/bin/env make
 SHELL := '/bin/bash'
 
-tests: shellcheck check_jinja2 ansible_lint yamllint
+tests: shellcheck check_jinja2 ansible_syntax_check ansible_lint yamllint
 
 # Install dev tools in virtualenv
 venv:
@@ -20,6 +20,14 @@ galaxy: venv
 shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
 	shellcheck -e SC1090 xsrv
+
+# Playbook syntax check
+ansible_syntax_check: venv galaxy
+	source .venv/bin/activate && \
+	cp examples/playbook.example.yml playbook-test.yml && \
+	echo -e "[all]\nmy.example.org" > inventory-test.yml && \
+	ansible-playbook --syntax-check --inventory inventory-test.yml playbook-test.yml && \
+	rm playbook-test.yml inventory-test.yml
 
 # Ansible linter
 ansible_lint: venv galaxy
