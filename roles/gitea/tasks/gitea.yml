@@ -1,0 +1,245 @@
+---
+
+##### PACKAGES #####
+
+- name: install git
+  apt:
+    package: git
+    state: present
+
+##### DOWNLOADS #####
+
+- name: download gitea binary
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { url: "https://dl.gitea.io/gitea/{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.xz",
+        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.xz" }
+    - { url: "https://dl.gitea.io/gitea/{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.xz.asc",
+        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.xz.asc" }
+    - { url: "https://dl.gitea.io/gitea/{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.xz.sha256",
+        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.xz.sha256" }
+
+# Key from 'gpg --keyserver pgp.mit.edu --recv 7C9E68152594688862D62AF62D9AE806EC1592E2; gpg --export --armor 7C9E68152594688862D62AF62D9AE806EC1592E2'
+- name: copy gitea GPG key
+  copy:
+    src: root_gitea.key
+    dest: /root/gitea.key
+    owner: root
+    group: root
+    mode: 0660
+
+- name: import gitea GPG key
+  command: gpg --import /root/gitea.key
+  register: gitea_import_gpgkey
+  changed_when: "'unchanged: 1' not in gitea_import_gpgkey.stderr"
+
+- name: verify gitea GPG signatures
+  command: gpg --verify /root/gitea-{{ gitea_version }}-linux-amd64.xz.asc /root/gitea-{{ gitea_version }}-linux-amd64.xz
+  changed_when: no
+
+##### USER #####
+
+- name: create gitea group
+  group:
+    name: gitea
+    state: present
+    system: yes
+
+- name: add gitea user
+  user:
+    name: 'gitea'
+    system: yes
+    shell: '/bin/bash'
+    password: "{{ gitea_user_password | password_hash('sha512') }}"
+    comment: 'Gitea user'
+    home: '/home/gitea'
+    groups:
+      - 'gitea'
+      - 'ssh'
+
+##### CONFIGURATION #####
+
+- name: install gitea systemd service/unit file
+  template:
+    src: "etc_systemd_system_gitea.service.j2"
+    dest: "/etc/systemd/system/gitea.service"
+  notify: reload systemd unit files
+
+# reload systemd unit files as soon as possible
+- name: run all notified handlers now
+  meta: flush_handlers
+
+- name: create gitea configuration directory
+  file:
+    state: directory
+    path: '/etc/gitea'
+    owner: root
+    group: root
+    mode: 'u=rwX'
+
+##### MYSQL #####
+
+- name: create gitea mysql database
+  mysql_db:
+    name: gitea
+    state: present
+
+- name: create gitea mysql user
+  mysql_user:
+    name: gitea
+    host: localhost
+    password: "{{ gitea_db_password }}"
+    state: present
+    priv: gitea.*:ALL
+
+###### FAIL2BAN ############
+
+- name: copy gitea fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_gitea.conf.j2
+    dest: /etc/fail2ban/jail.d/gitea.conf
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban
+
+- name: copy fail2ban gitea-auth filter
+  template:
+    src: etc_fail2ban_filter.d_gitea-auth.conf.j2
+    dest: /etc/fail2ban/filter.d/gitea-auth.conf
+  tags: fail2ban
+  notify: reload fail2ban
+
+##### BACKUPS #####
+
+- name: create rsnapshot configuration includes directory
+  file:
+    path: /etc/rsnapshot.d
+    state: directory
+
+- name: copy rsnapshot configuration for gitea backups
+  template:
+    src: etc_rsnapshot.d_gitea.conf.j2
+    dest: /etc/rsnapshot.d/gitea.conf
+
+##### FILES/PERMISSIONS #####
+
+- name: create gitea directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    owner: "root"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    recurse: yes
+  with_items:
+    - { path: "/var/lib/gitea/custom", group: "root", mode: "u=rwX" }
+    - { path: "/var/lib/gitea/public", group: "root", mode: "u=rwX" }
+    - { path: "/var/lib/gitea/data", group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: "/var/lib/gitea/indexers", group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: "/var/lib/gitea/log", group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: '/var/lib/gitea/repos', group: "gitea", mode: "u=rwX,g=rwX" }
+
+# ansible unarchive directory can't extract plain .xz files
+# https://github.com/ansible/ansible-modules-core/issues/3241
+- name: extract gitea binary
+  command: unxz --keep --force "/root/gitea-{{ gitea_version }}-linux-amd64.xz"
+  args:
+    creates: /root/gitea-{{ gitea_version }}-linux-amd64
+
+- name: copy gitea binary
+  copy:
+    src: "/root/gitea-{{ gitea_version }}-linux-amd64"
+    dest: "/usr/local/bin/gitea"
+    mode: 0755
+    remote_src: yes
+    owner: root
+    group: root
+  notify: restart gitea
+
+##### GITEA #####
+
+- name: generate gitea INTERNAL_TOKEN
+  command: gitea generate secret INTERNAL_TOKEN
+  register: gitea_internal_token_generated
+  changed_when: False
+
+- name: set gitea_internal_token variable
+  set_fact:
+    gitea_internal_token: "{{ gitea_internal_token_generated.stdout_lines[0] }}"
+
+- name: generate gitea LFS_JWT_SECRET
+  command: gitea generate secret LFS_JWT_SECRET
+  register: gitea_jwt_secret_generated
+  changed_when: False
+
+- name: set gitea_jwt_secret variable
+  set_fact:
+    gitea_jwt_secret: "{{ gitea_jwt_secret_generated.stdout_lines[0] }}"
+
+- name: copy gitea main configuration file
+  template:
+    src: 'etc_gitea_app.ini'
+    dest: '/etc/gitea/app.ini'
+    owner: root
+    group: gitea
+    mode: '0640' # read only for gitea
+  notify: restart gitea
+
+- name: create gitea database tables
+  become: yes
+  become_user: gitea
+  command: gitea migrate --config /etc/gitea/app.ini
+  args:
+    chdir: "/var/lib/gitea"
+  when: (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized is not defined)
+
+- name: mark gitea database as initialized
+  set_fact:
+    gitea_db_initialized: True
+
+- name: create ansible local facts directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - /etc/ansible/
+    - /etc/ansible/facts.d
+
+- name: update gitea ansible facts file
+  template:
+    src: etc_ansible_facts.d_gitea.fact.j2
+    dest: /etc/ansible/facts.d/gitea.fact
+    mode: 0644
+
+- name: create gitea admin user
+  become: yes
+  become_user: gitea
+  command: gitea admin create-user
+           --username "{{ gitea_admin_user }}"
+           --password "{{ gitea_admin_password }}"
+           --email "{{ gitea_admin_email }}"
+           --admin --config /etc/gitea/app.ini
+  args:
+    chdir: "/var/lib/gitea"
+  register: "gitea_create_user"
+  failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
+  changed_when: "'user already exists' not in gitea_create_user.stdout"
+
+##### SERVICE #####
+
+- name: disable gitea now
+  service:
+    name: gitea
+    state: stopped
+    enabled: no
+  when: not gitea_enable_service
+
+- name: enable gitea now
+  service:
+    name: gitea
+    state: started
+    enabled: yes
+  when: gitea_enable_service

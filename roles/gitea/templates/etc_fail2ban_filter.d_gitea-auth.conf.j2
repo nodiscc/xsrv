@@ -1,0 +1,6 @@
+# fail2ban filter for gitea authentication
+[INCLUDES]
+before = common.conf
+[Definition]
+failregex =  .*Failed authentication attempt for .* from <HOST>
+ignoreregex =

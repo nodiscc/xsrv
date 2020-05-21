@@ -1,0 +1,11 @@
+# fail2ban gitea jails
+
+[gitea-auth]
+# gitea login failures
+enabled  = true
+filter   = gitea-auth
+port     = https,http
+logpath  = /var/lib/gitea/log/gitea.log
+maxretry = 10
+findtime = 3600
+bantime = 900

@@ -1,0 +1,52 @@
+---
+
+##### GITEA SELF-HOSTED GIT SERVICE #####
+
+# REQUIRED username/password/e-mail address for the gitea admin user
+# gitea_admin_user: "CHANGEME"
+# gitea_admin_password: "CHANGEME"
+# gitea_admin_email: "CHANGEME"
+
+# 64 CHARACTER global secret key
+gitea_secret_key: "{{ lookup('password', 'secrets/' + inventory_hostname + '.gitea_secret_key length=64 chars=ascii_letters,digits') }}"
+# password for the gitea SQL database
+gitea_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.gitea_db_password length=20 chars=ascii_letters,digits') }}"
+# password for the local gitea linux user account
+gitea_user_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.gitea_user_password length=20 chars=ascii_letters,digits') }}"
+
+
+# Hostname (FQDN) at which gitea services can be reached
+gitea_fqdn: "{{ inventory_hostname }}"
+# Full public URL at which the gitea web service can be reached
+gitea_root_url: "https://{{ inventory_hostname }}/gitea/"
+
+# Privacy settings
+# last/private/public: Default visibility setting when creating a new repository
+gitea_default_private: "private"
+# true/false: force every new repository to be private
+gitea_force_private: "false"
+# true/false: User must sign in to view anything.
+gitea_require_signin: "true"
+# true/false: Disallow registration, only allow admins to create accounts.
+gitea_disable_registration: "true"
+# true/false: whether the email of the user should be shown in the Explore Users page
+gitea_show_user_email: "false"
+
+# Third party services
+# true/false: disable all third-party/external services/CDNs
+gitea_offline_mode: "true"
+# true/false: disable third-party gravatar service
+gitea_disable_gravatar: "true"
+
+# Other settings
+# global limit of repositories per user, applied at creation time. -1 means no limit
+gitea_user_repo_limit: "-1"
+# true/false: enable/disable gitea REST API
+gitea_enable_api: "false"
+# Gitea version
+# https://github.com/go-gitea/gitea/releases.atom; remove leading v
+gitea_version: '1.10.3'
+# The minimum password length for new Users
+gitea_min_password_length: "10"
+# yes/no: start/stop the gitea service, enable/disable it on boot
+gitea_enable_service: yes

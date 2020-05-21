@@ -1,0 +1,13 @@
+---
+
+- name: restart gitea
+  service:
+    name: gitea
+    state: restarted
+    enabled: yes
+  become: yes
+  when: gitea_enable_service
+
+- name: reload systemd unit files
+  become: yes
+  systemd: daemon_reload=yes
