@@ -1,0 +1,28 @@
+# Fail2ban configuration
+# Default values
+[DEFAULT]
+ignoreip  = 127.0.0.1 {{ ' '.join(fail2ban_ignoreip) }}
+maxretry  = 5
+bantime   = 604800
+destemail = root@localhost
+banaction = iptables-ipset-proto6-allports
+action    = %(action_)s
+
+# Jails
+
+[sshd]
+# openssh server auth failures
+enabled   = true
+maxretry  = 5
+filter    = sshd
+port      = 22
+logpath   = /var/log/auth.log
+bantime   = 604800
+
+[pam-generic]
+# PAM login failures
+enabled   = true
+maxretry  = 5
+filter    = pam-generic
+logpath   = /var/log/auth.log
+bantime   = 604800

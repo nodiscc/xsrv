@@ -1,0 +1,11 @@
+---
+
+##### KERNEL CONFIGURATION #####
+
+- name: copy sysctl configuration
+  template: src='etc_sysctl.d_custom.conf.j2' dest='/etc/sysctl.d/custom.conf'
+  notify: apply sysctl configuration
+
+# apply sysctl configuration as soon as possible
+- name: run all notified handlers now
+  meta: flush_handlers

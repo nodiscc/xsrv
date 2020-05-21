@@ -1,0 +1,9 @@
+# Fail2Ban local configuration file
+# These settings override fail2Ban's default settings in /etc/fail2ban/fail2ban.conf
+# See man jail.conf
+
+[DEFAULT]
+# Options: dbpurgeage
+# Notes.: Sets age at which bans should be purged from the database
+# Values: [ SECONDS ] Default: 86400 (24hours)
+dbpurgeage = 86400

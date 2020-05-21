@@ -1,0 +1,4 @@
+// Never replace changed conffiles modified by the user on upgrades
+Dpkg::Options {
+   "--force-confold";
+}

@@ -1,0 +1,56 @@
+---
+
+#### MINIMIZE INSTALLED SOFTWARE #####
+
+# remove rpcbind/nfs-common since we are not an NFS server
+# remove exim4-base since we use a smarthost
+- name: remove unwanted packages from base installation
+  apt:
+    state: absent
+    package:
+      - snapd
+      # - rpcbind
+      # - nfs-common
+      # - exim4-base
+
+##### ANSIBLE REQUIREMENTS #####
+
+- name: install ansible modules requirements
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - aptitude # apt module
+      - curl # http modules
+      - git # git module
+      - initramfs-tools
+      - unzip # unarchive module
+      - zip # unarchive module
+
+
+##### EXTRA PACKAGES/UTILITIES #####
+
+# nice to have in interactive ssh troublehooting sessions
+- name: install interactive command-line utilities
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - atool # single tool to manipulate all archives/compressed file formats
+      - autojump # jump to frequently used directories
+      - less # a pager like 'more'
+      - pwgen # generate memorable random passwords
+      - secure-delete # securely erase data
+      - tree # show filesystems as a tree
+      - rsync # fast/powerful file transfer utility
+      - locate # maintain and query an index of a directory tree
+  when: setup_cli_utils|bool
+
+# nice to have if monitoring frequently reports the system is running out of entropy
+- name: install haveged entropy source
+  apt:
+    state: present
+    package: haveged
+  when: setup_haveged

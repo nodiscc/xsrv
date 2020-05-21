@@ -1,0 +1,58 @@
+---
+
+##### SSH SERVER #####
+
+- name: create revoked keys file
+  template:
+    src: 'etc_ssh_revoked_keys.j2'
+    dest: '/etc/ssh/revoked_keys'
+    mode: 0600
+    owner: root
+    group: root
+  notify: restart ssh
+
+- name: Add authorized keys
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ item }}"
+  with_file: "{{ ssh_authorized_keys }}"
+
+# SSH configuration only allows users in the ssh group
+- name: ensure the ansible user belongs to the ssh group
+  user:
+    append: yes
+    groups: "ssh"
+    name: "{{ ansible_user }}"
+
+- name: copy sshd configuration
+  template:
+    src: etc_ssh_sshd_config.j2
+    dest: /etc/ssh/sshd_config
+  notify: restart ssh
+
+- name: install openssh server
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - openssh-server
+      - pinentry-curses
+
+# Mitigate logjam attack
+- name: Check if /etc/ssh/moduli contains weak DH parameters
+  shell: awk '$5 < 2048' /etc/ssh/moduli
+  register: sshd_register_moduli
+  changed_when: false
+  check_mode: no
+
+- name: remove all small primes
+  shell: awk '$5 >= 2048' /etc/ssh/moduli > /etc/ssh/moduli.new ;
+         [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
+  notify: restart ssh
+  when: sshd_register_moduli.stdout
+
+# We want SSH configuration applied as soon as possible
+- name: run all notified handlers now
+  meta: flush_handlers

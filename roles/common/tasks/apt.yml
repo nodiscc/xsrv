@@ -1,0 +1,31 @@
+---
+
+##### PACKAGE MANAGEMENT/APT/UPGRADES #####
+
+- name: copy apt sources lists (debian + security + backports)
+  template: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'etc_apt_sources.list.j2', dest: '/etc/apt/sources.list' }
+  when: ansible_distribution == 'Debian'
+
+- name: copy apt config (automatic upgrades, no recommended packages)
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'etc_apt_apt.conf.d_99-no-overwrite-conffiles', dest: '/etc/apt/apt.conf.d/99-no-overwrite-conffiles' }
+    - { src: 'etc_apt_apt.conf.d_99-norecommends', dest: '/etc/apt/apt.conf.d/99-norecommends' }
+    - { src: 'etc_apt_apt.conf.d_50unattended-upgrades', dest: '/etc/apt/apt.conf.d/50unattended-upgrades' }
+  register: apt_config
+  when: ansible_distribution == 'Debian'
+  notify: update apt cache
+
+# update apt cache before trying to install packages
+- name: run all notified handlers
+  meta: flush_handlers
+
+- name: install unattended-upgrades
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - unattended-upgrades

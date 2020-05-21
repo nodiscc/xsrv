@@ -1,0 +1,62 @@
+---
+
+#### FIREWALL/FAIL2BAN #####
+
+- name: ensure ufw is not installed
+  apt:
+    package: ufw
+    state: absent
+
+- name: create firewall/fail2ban configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/etc/systemd/system/fail2ban.service.d/"
+    - "/etc/firehol/"
+    - "/etc/fail2ban/"
+
+- name: copy systemd unit/override files
+  template:
+    src: 'etc_systemd_system_fail2ban.service.d_override.conf.j2'
+    dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
+  notify: reload systemd unit files
+
+# reload systemd unit files before attempting to start/stop the service
+- name: run all notified handlers now
+  meta: flush_handlers
+
+- name: copy firehol configuration
+  template:
+    src: 'etc_firehol_firehol.conf.j2'
+    dest: '/etc/firehol/firehol.conf'
+  notify: restart firewall
+
+- name: copy fail2ban configuration
+  template: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
+    - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
+  notify: reload fail2ban
+
+- name: install firewall/network filtering tools
+  apt:
+    state: present
+    package:
+      - fail2ban
+      - firehol
+      - firehol-tools
+      - ipset
+
+- name: start and enable firehol/fail2ban
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - firehol
+    - fail2ban
+
+# Apply firewall rules as soon as possible
+- name: force all notified handlers to run now
+  meta: flush_handlers

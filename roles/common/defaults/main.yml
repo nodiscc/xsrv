@@ -1,0 +1,176 @@
+---
+
+##### SYSCTL (NETWORKING/MEMORY) #####
+
+# yes/no: update sysctl settings
+setup_sysctl: yes
+
+# yes/no: Enable/disable packet forwarding between network interfaces (routing)
+sysctl_allow_forwarding: no
+
+# yes/no: answer ICMP pings
+sysctl_answer_ping: no
+
+# "swappiness" setting. 100: swap/reclaim RAM aggressively. 0: do not swap unless necessary
+sysctl_vm_swappiness: '10'
+
+# "VFS cache pressure" setting. 100+ : prefer caching memory pages over disk cache
+sysctl_vm_vfs_cache_pressure: '150'
+
+# yes/no: enable/disable creation of core dumps on kernel crashes
+# These are usually not needed and may contain sensitive information
+os_security_kernel_enable_core_dump: no
+
+
+##### PACKAGE MANAGEMENT #####
+
+# yes/no: setup APT sources and preferences
+setup_apt: yes
+
+
+##### SSH SERVER #####
+
+# yes/no: setup/harden SSH server
+setup_ssh: yes
+
+# public SSH key files to authorize on the server for the ansible user
+ssh_authorized_keys: []
+# Example: ['public_keys/john.pub', 'public_keys/jane.pub']
+
+# a list of public keys that are never accepted by the ssh server
+ssh_server_revoked_keys: []
+
+# SFTP server log level (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
+ssh_sftp_loglevel: "ERROR"
+
+# no/local/remote/all: (QUOTED): types of SSH TCP forwarding to allow
+# remote/all is required to use the host as a jumpbox
+ssh_allow_tcp_forwarding: "no"
+
+
+##### FIREWALL/FAIL2BAN #####
+
+# yes/no: setup firewall and fail2ban
+setup_firewall: yes
+
+# Alias for LAN IP addresses
+firehol_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
+
+# Firewall rules
+# By default a single, global network is defined, restrict traffic by IP source/destination in
+# individual rules, or create additional network definitions for more complex setups.
+firehol_networks:
+  - name: "global" # a name for this network definition
+    src: "any" # traffic to/from any IP address
+    interface: "any" # traffic to/from any network interface
+    policy: "DROP" # DROP if no rules match the traffic (DROP/RETURN/ACCEPT)
+    allow_input: # incoming traffic
+      - { name: "ssh", src: "any" } # ssh from anywhere
+      # - { name: "http", src: "any" } # web server access from anywhere
+      # - { name: "https", src: "any" } # web server access from anywhere
+      # - { name: "netdata", src: "any" } # monitoring dashboard
+      # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
+      # - { name: "ping", src: "any" } # allow incoming ICMP pings
+      # - { name: "mumble", src: "any" } # mumble voip server
+      # - { name: "samba", src: "{{ firehol_lan }}" } # samba file sharing
+      # - { name: "pulseaudio", src: "{{ firehol_lan }}" } # pulseaudio sound server
+      # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
+      # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
+      # - { name: "sshcustom", src: "any" } # SSH server on custom port
+      # - { name: "transmission", src: "any", } # bittorrent peer connections, outgoing requires 'all'
+    allow_output: # outgoing connections
+      - { name: "dns", dst: "any" } # DNS queries to anywhere
+      - { name: "ntp", dst: "any" } # time/date synchronization
+      - { name: "dhcp", dst: "{{ firehol_lan }}" } # DHCP requests on LAN
+      - { name: "http", dst: "any" } # outgoing HTTP requests
+      - { name: "https", dst: "any" } # outgoing HTTPS requests
+      - { name: "ping", dst: "any" } # outgoing ICMP pings
+      # - { name: "submission", dst: "any" } # outgoing mail/port 587
+      # - { name: "imaps", dst: "any" } # nextcloud mail
+      # - { name: "smtps", dst: "any" } # nextcloud mail
+      # - { name: "all", dst: "any" } # allow ALL outgoing connections
+
+
+# Router definitions - traffic forwarding between network interfaces
+# Example:
+# firehol_routers:
+#   - name: "docker" # arbitrary name for the router, example for docker
+#     allow_route_to: # forward these services from any interface, to the interface specified
+#       - { name: "http", to_interface: "docker_gwbridge" }
+#       - { name: "https", to_interface: "docker_gwbridge" }
+#       - { name: "git", to_interface: "docker_gwbridge" }
+#     allow_route_from: # forward these services to any interface, from the interface specified
+#       - { name: "any", from_interface: "docker_gwbridge" }
+#       - { name: "any", from_interface: "docker0" }
+firehol_routers: []
+
+# custom services definitions, in addition to https://firehol.org/services/
+firehol_custom_services:
+  - { name: "sshcustom", ports: "tcp/722" } # SSH server on custom port
+  - { name: "mumble", ports: "tcp/64738 udp/64738" } # mumble voip server
+  - { name: "netdata", ports: "tcp/19999" } # netdata monitoring dashboard/API
+  - { name: "mdns", ports: "udp/5353" } # avahi/zeroconf/MDNS/DNS-SD
+  - { name: "pulseaudio", ports: "tcp/4713" } # pulseaudio sound server
+  - { name: "transmission", ports: "tcp/52943", } # bittorrent peer connections, outgoing requires 'all'
+
+# fail2ban: don't auto-ban IP addresses from these networks
+fail2ban_ignoreip: ['10.0.0.0/8', '192.168.0.0/16', '172.16.0.0/12']
+
+
+##### USERS #####
+
+# Additional user accounts to create.
+# Example:
+# extra_users:
+#    - name: "username"
+#      ssh_authorized_keys: [ 'public/username.pub', 'public/someone.pub' ]
+#      password: "lookup('pass', {{ inventory_hostname }} '.username.password')" # required to unlock the account
+#      salt: "lookup('pass', {{ inventory_hostname }} '.username.salt')  # required to unlock the account
+#      home: "/var/lib/username" # user's home directory
+#      system: yes/no # whether the account is a machine or human account
+#      groups: [ "ssh", "rsyncasroot", "sudo" ] # list of groups to add the user to
+#      comment: "Secondary admin" # a description for the account
+linux_users: []
+
+# yes/no: setup a user account to allow backups of this machine from a remote backup server
+# This user account will be able to run 'sudo rsync' without password
+# See https://gitlab.com/nodiscc/ansible-xsrv-backup
+setup_remotebackup_user: no
+
+# Username for the remote backup service
+remotebackup_user: rsnapshot
+
+# Public key file for the remote backup service. The key is displayed during setup of the 'backup' role
+# Example: remotebackup_user_pubkey: 'public_keys/root@my.backup.server'
+remotebackup_user_pubkey: 'CHANGEME'
+
+
+##### OUTGOING MAIL #####
+
+# yes/no: install outgoing system mail client/local MTA
+# The system will not be able to send status/monitoring e-mails unless this is enabled
+setup_msmtp: no
+
+# System mail relay (SMTP server) to use, and authentication username/password
+# msmtp_host: "smtp.example.com"
+# msmtp_username: "CHANGEME"
+# msmtp_password: "CHANGEME"
+
+# Mail address to send all local mail to
+# msmtp_admin_email: "CHANGEME"
+
+# (optional) TLS certificate fingerprint of the SMTP server - use this to accept a self-signed certificate
+# Get the server's certificate fingerprint with:
+# openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
+# msmtp_host_fingerprint: '11:22:33:44:55:66:77:88:99:00:13:37:AA:BB:CC:DD:EE:FF:AD:C2'
+
+
+##### PACKAGES #####
+
+# yes/no: install a basic set of interactive command-line diagnostic/file manipulation/shell utilities
+# see tasks/50utilities.yml for the full list
+setup_cli_utils: yes
+
+# yes/no: installa haveged entropy generator
+# nice to have if the system is frequently running out of entropy
+setup_haveged: no

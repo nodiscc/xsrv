@@ -1,0 +1,116 @@
+---
+
+##### USER ACCOUNTS ####
+
+- name: enable root and current user account logins (local)
+  user: name={{ item }} password_lock=no
+  with_items:
+    - "root"
+    - "{{ ansible_user }}"
+
+- name: copy login.defs (umask and password aging)
+  template:
+    src: etc_login.defs.j2
+    dest: /etc/login.defs
+    mode: 0600
+
+- name: set shadow file owner to root and mode to 0600
+  file:
+    path: /etc/shadow
+    owner: root
+    group: root
+    mode: 0600
+
+- name: create additional user accounts
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment }}"
+    create_home: yes
+    home: "{{ item.home }}"
+    groups: "{{ item.groups }}"
+    append: yes
+    generate_ssh_key: no
+    system: "{{ item.system }}"
+    password: "{{ item.password | password_hash('sha512', item.salt) }}"
+  with_items: "{{ linux_users }}"
+
+- name: authorize SSH keys for additional user accounts
+  authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ lookup('file', item.1) }}"
+  with_subelements:
+    - "{{ linux_users }}"
+    - ssh_authorized_keys
+
+##### REMOTE BACKUP USER #####
+# This user can run 'sudo rsync' without password
+# Only needed if this machine is being backed up from a remote rsnapshot service
+# See https://gitlab.com/nodiscc/ansible-xsrv-backup
+# This is equivalent to root access, but doesn't require enabling SSH root login
+
+- name: create user account for remote backup service
+  user:
+    name: "{{ remotebackup_user }}"
+    comment: "Remote backup service"
+    create_home: yes
+  when: setup_remotebackup_user
+
+- name: allow remote backup service to run 'sudo rsync' without password
+  template:
+    src: etc_sudoers.d_rsync.j2
+    dest: /etc/sudoers.d/rsync
+    mode: 0440
+  when: setup_remotebackup_user
+
+- name: authorize remote backup service SSH key
+  authorized_key:
+    user: "{{ remotebackup_user }}"
+    key: "{{ lookup('file', remotebackup_user_pubkey) }}"
+  when: setup_remotebackup_user
+
+##### PAM #####
+
+- block:
+    - name: configure PAM to prevent core dumps
+      pam_limits:
+        dest: '/etc/security/limits.d/10.hardcore.conf'
+        domain: '*'
+        limit_type: hard
+        limit_item: core
+        value: '0'
+        comment: Prevent core dumps for all users. These are usually not needed and may contain sensitive information
+
+    - name: set 10.hardcore.conf perms to 0400 and root ownership
+      file:
+        path: /etc/security/limits.d/10.hardcore.conf
+        owner: 'root'
+        group: 'root'
+        mode: '0440'
+
+  when: not os_security_kernel_enable_core_dump | bool
+
+- name: remove 10.hardcore.conf config file
+  file:
+    path: /etc/security/limits.d/10.hardcore.conf
+    state: absent
+  when: os_security_kernel_enable_core_dump | bool
+
+# remove libpam-ccreds to disable password caching (prevents connections using cached LDAP credentials, when no connnection to the LDAP server is not available)
+# add libpam-tmpdir to use per-user temporary directories
+- name: install/remove PAM modules
+  apt:
+    state: "{{ item.state }}"
+    package: "{{ item.name }}"
+  with_items:
+    - { name: 'libpam-ccreds', state: 'absent' }
+    - { name: 'libpam-tmpdir', state: 'present' }
+  notify: update pam configuration
+
+# update pam configuration as soon as possible
+- name: force all notified handlers to run now
+  meta: flush_handlers
+
+##### CRON #####
+
+- name: restrict cron jobs creation to root only
+  copy: src=etc_cron.allow dest=/etc/cron.allow

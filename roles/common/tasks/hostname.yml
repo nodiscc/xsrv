@@ -1,0 +1,14 @@
+---
+
+##### HOSTNAME ####
+
+- name: set hostname
+  hostname: name={{ inventory_hostname }}
+
+- name: update /etc/hosts with new hostname
+  lineinfile:
+    dest: '/etc/hosts'
+    line: '{{ item }}	{{ inventory_hostname }}' # noqa 203
+    regexp: '^{{ item }}'
+  with_items:
+    - '127.0.1.1'
