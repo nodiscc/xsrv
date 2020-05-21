@@ -105,6 +105,7 @@
     dest: "{{ item.dest }}"
   with_items:
     - { src: 'opt_netdata_etc_netdata_netdata.conf.j2', dest: '/opt/netdata/etc/netdata/netdata.conf' }
+    - { src: 'opt_netdata_var_lib_netdata_cloud.d_cloud.conf.j2', dest: '/opt/netdata/var/lib/netdata/cloud.d/cloud.conf' }
     - { src: 'opt_netdata_etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/opt/netdata/etc/netdata/.opt-out-from-anonymous-statistics' }
   notify: restart netdata
 
@@ -150,8 +151,13 @@
     dest: '/etc/systemd/system.conf.d/accounting.conf'
   notify: re-execute the systemd manager
 
-- name: install additional netdata modules
-  include: netdata-modules.yml
+- name: create mysql user for netdata (if lamp role is enabled)
+  mysql_user:
+    name: netdata
+    state: present
+    priv: '*.*:USAGE/*.*:REPLICATION CLIENT'
+  no_log: True
+  when: '"lamp" in role_names'
 
 - name: start and enable netdata
   service:

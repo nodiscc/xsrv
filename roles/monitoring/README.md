@@ -4,7 +4,7 @@ monitoring
 This role will install a lightweight monitoring system on a Linux machine:
  - Log aggregation for most services/applications (using [rsyslog](https://en.wikipedia.org/wiki/Rsyslog))
  - [Netdata](https://my-netdata.io/), a real-time, efficient, distributed performance and health monitoring system.
- - (Optional) netdata modules/graphs for [needrestart](https://gitlab.com/nodiscc/netdata-needrestart)
+ - (Optional) netdata modules/graphs for [needrestart](https://gitlab.com/nodiscc/netdata-needrestart), [logcount](https://gitlab.com/nodiscc/netdata-logcount)
  - [lnav](http://lnav.org/) log viewer, [htop](https://hisham.hm/htop/) system monitor/process manager, [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor, [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer
 
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](https://screenshots.debian.net/package/netdata)
@@ -62,7 +62,7 @@ Read [netdata documentation](https://docs.netdata.cloud/) for more info.
 - `Ctrl+R` clear all filters/reset session
 - `?` lnav help
 
-Read [lnav documentation]() for more info.
+Read [lnav documentation](https://lnav.readthedocs.io/) for more info.
 
 ### Other
 

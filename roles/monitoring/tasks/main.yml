@@ -3,8 +3,9 @@
 - include: rsyslog.yml
   become: yes
   tags:
-    - common
+    - monitoring
     - rsyslog
+    - syslog
   when: setup_rsyslog|bool
 
 - include: netdata.yml

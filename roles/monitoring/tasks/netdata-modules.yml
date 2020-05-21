@@ -44,7 +44,7 @@
     src: "/root/netdata-needrestart/etc_apt_apt.conf.d_99needrestart"
     dest: "/etc/apt/apt.conf.d/99needrestart"
 
-- name: copy netdata-needrestart module configuration/alarms
+- name: install netdata-needrestart module/configuration/alarms
   copy:
     remote_src: yes
     src: "{{ item.src }}"
@@ -54,3 +54,58 @@
     - { src: '/root/netdata-needrestart/needrestart.conf', dest: '/opt/netdata/usr/libexec/netdata/python.d/needrestart.conf' }
     - { src: '/root/netdata-needrestart/health.d_needrestart.conf', dest: '/opt/netdata/etc/netdata/health.d/needrestart.conf' }
   notify: restart netdata
+
+### LOGCOUNT ###
+
+- name: install lnav log viewer
+  apt:
+    package: lnav
+    state: present
+
+- name: clone netdata-logcount module
+  git:
+    dest: "/root/netdata-logcount"
+    repo: "{{ netdata_logcount_git_url }}"
+    version: "1.0"
+    accept_hostkey: yes
+    force: yes # discard modified files
+
+- name: create directory for netdata-logcount lnav script
+  file:
+    path: /opt/netdata-logcount/
+    state: directory
+
+- name: copy configuration/lnav script for netdata-logcount
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: 'opt_netdata-logcount_logcount.sql.j2', dest: '/opt/netdata-logcount/logcount.sql' }
+    - { src: 'opt_netdata_etc_netdata_python.d_logcount.conf.j2', dest: '/opt/netdata/etc/netdata/python.d/logcount.conf' }
+    - { src: 'opt_netdata_etc_netdata_health.d_logcount.conf.j2', dest: '/opt/netdata/etc/netdata/health.d/logcount.conf' }
+  notify: restart netdata
+
+- name: install netdata-logcount module
+  copy:
+    remote_src: yes
+    src: "/root/netdata-logcount/logcount.chart.py"
+    dest: "/opt/netdata/usr/libexec/netdata/python.d/logcount.chart.py"
+  notify: restart netdata
+
+- name: add a cron job to refresh the logcount state file
+  cron:
+    cron_file: "/etc/cron.d/logcount"
+    month: "*"
+    day: "*"
+    hour: "*"
+    minute: "*/{{ netdata_logcount_update_interval }}"
+    job: script --return --quiet -c "/usr/bin/lnav -n -f /opt/netdata-logcount/logcount.sql"
+    name: logcount
+    user: root
+
+- name: set read permissions for netdata on /var/run/logcount
+  file:
+    path: /var/run/logcount
+    state: file
+    group: netdata
+    mode: g+r
