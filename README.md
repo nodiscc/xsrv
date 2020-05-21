@@ -126,7 +126,6 @@ After any changes to configuration files, changes must be applied by running
 The command-line utility `xsrv` provides easy access to common maintenance/diagnostic tasks:
 
 ```bash
-$ ./xsrv help
 USAGE: ./xsrv COMMAND
 AVAILABLE COMMANDS:
 install-ansible     install ansible in a virtualenv
@@ -143,11 +142,11 @@ disk-usage          analyse disk usage on the host
 backup-force        force a backup on the host
 backup-fetch        fetch latest daily backups from the host
 web                 open the hosts main homepage in a web browser
-upgrade             upgrade playbook and roles to latest stable versions (read the release notes)
-upgrade-dev         upgrade playbook and roles to latest development versions
+upgrade             upgrade the ansible collection to the latest version
 ansible-playbook    run a raw ansible-playbook command
 help-defaults       show roles configuration defaults
 help                show this message
+deploy my.exmp.org  deploy/configure a list of hosts (for multi-machine playbooks, comma-separated)
 ```
 
 ### Backups

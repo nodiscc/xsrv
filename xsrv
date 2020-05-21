@@ -26,8 +26,7 @@ disk-usage          analyse disk usage on the host
 backup-force        force a backup on the host
 backup-fetch        fetch latest daily backups from the host
 web                 open the hosts main homepage in a web browser
-upgrade             upgrade playbook and roles to latest stable versions (read the release notes)
-upgrade-dev         upgrade playbook and roles to latest development versions
+upgrade             upgrade the ansible collection to the latest version
 ansible-playbook    run a raw ansible-playbook command
 help-defaults       show roles configuration defaults
 help                show this message
@@ -81,7 +80,6 @@ function init() {
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/inventory.yml"
     sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/playbook.yml"
 
-    update_roles requirements.yml
     echo "[xsrv] succesffuly initialized"
 }
 
@@ -163,20 +161,10 @@ function open_homepage() {
     xdg-open "https://$host_name"
 }
 
-# update roles to latest versions
-function update_roles() {
-    requirements_file="$1"
-    echo "[xsrv] downloading roles..."
-    source "$base_dir/.venv/bin/activate"
-    ansible-galaxy install -f -r "$requirements_file"
-}
-
-# upgrade the playbook and roles to latest stable versions
+# upgrade the ansible collection to the latest version
 function upgrade() {
-    requirements_file="$1"
-    echo "[xsrv] updating playbook ..."
-    git pull --ff-only
-    update_roles "$requirements_file"
+    echo "[xsrv] updating repository ..."
+    git pull
 }
 
 # run ansible-playbook in a virtualenv
@@ -211,8 +199,7 @@ case "$command" in
     "backup-force" ) open_ssh_shell "sudo rsnapshot daily";;
     "backup-fetch" ) backup_fetch;;
     "web" ) open_homepage;;
-    "upgrade" ) upgrade requirements.yml;;
-    "upgrade-dev" ) upgrade requirements-dev.yml;;
+    "upgrade" ) upgrade;;
     "ansible-playbook" ) shift && run_ansible_playbook "$@";;
     "help" ) echo "$usage"; exit 0;;
     *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
