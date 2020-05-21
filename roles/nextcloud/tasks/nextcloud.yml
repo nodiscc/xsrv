@@ -1,0 +1,270 @@
+---
+
+##### PACKAGES #####
+
+- name: install required packages for nextcloud
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - php-gmp
+      - php-curl
+      - php-gd
+      - php-imagick
+      - php-intl
+      - php-json
+      - php-ldap
+      - php-sqlite3
+      - php-mbstring
+      - php-xml
+      - php-zip
+      - acl
+  notify: restart apache
+
+
+##### DOWNLOADS #####
+
+- name: download nextcloud zip
+  get_url:
+    url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
+    dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
+
+- name: download nextcloud applications
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { url: 'https://github.com/nextcloud/calendar/releases/download/{{ nextcloud_calendar_version }}/calendar.tar.gz',
+        dest: '/root/nextcloud-calendar-{{ nextcloud_calendar_version }}.tar.gz'}
+    - { url: 'https://github.com/nextcloud/contacts/releases/download/{{ nextcloud_contacts_version }}/contacts.tar.gz',
+        dest: '/root/nextcloud-contacts-{{ nextcloud_contacts_version }}.tar.gz'}
+    - { url: 'https://github.com/nextcloud/tasks/releases/download/{{ nextcloud_tasks_version }}/tasks.tar.gz',
+        dest: '/root/nextcloud-tasks-{{ nextcloud_tasks_version }}.tar.gz'}
+    - { url: 'https://github.com/owncloud/music/releases/download/v{{ nextcloud_music_version }}/music.zip',
+        dest: '/root/music.zip'}
+    - { url: 'https://github.com/nextcloud/notes/releases/download/{{ nextcloud_notes_version }}/notes.tar.gz',
+        dest: '/root/notes.tar.gz'}
+
+
+##### DATABASE #####
+
+- name: create nextcloud mysql database
+  mysql_db:
+    name: "{{ nextcloud_db_name }}"
+    state: present
+    login_password: "{{ mariadb_root_password }}"
+
+# Not idempotent - https://github.com/ansible/ansible/issues/60567
+- name: create nextcloud mysql user
+  mysql_user:
+    name: "{{ nextcloud_db_user }}"
+    host: "{{ nextcloud_db_host }}"
+    password: "{{ nextcloud_db_password }}"
+    state: present
+    priv: "{{ nextcloud_db_name }}.*:ALL"
+    login_password: "{{ mariadb_root_password }}"
+
+
+##### APACHE #####
+
+- name: enable apache2 modules env, dir, mime
+  command: a2enmod {{ item }}
+  with_items:
+    - 'env'
+    - 'dir'
+    - 'mime'
+  args:
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+  notify: restart apache
+
+- name: setup nextcloud content-security-policy
+  template:
+    src: etc_apache2_conf-available_nextcloud-csp.conf.j2
+    dest: /etc/apache2/conf-available/nextcloud-csp.conf
+  notify: restart apache
+
+- name: enable content security policy config
+  command: a2enconf nextcloud-csp
+  args:
+    creates: "/etc/apache2/conf-enabled/nextcloud-csp.conf"
+  notify: restart apache
+
+
+###### FAIL2BAN ##########
+
+- name: copy nextcloud fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_nextcloud.conf.j2
+    dest: /etc/fail2ban/jail.d/nextcloud.conf
+    mode: 0644
+  tags: fail2ban
+  notify: reload fail2ban
+
+- name: copy fail2ban nextcloud-auth filter
+  template:
+    src: etc_fail2ban_filter.d_nextcloud-auth.conf.j2
+    dest: /etc/fail2ban/filter.d/nextcloud-auth.conf
+  tags: fail2ban
+  notify: reload fail2ban
+
+##### BACKUPS #####
+
+- name: create rsnapshot configuration includes directory
+  file:
+    path: /etc/rsnapshot.d
+    state: directory
+
+- name: copy rsnapshot configuration for nextcloud backups
+  template:
+    src: etc_rsnapshot.d_nextcloud.conf.j2
+    dest: /etc/rsnapshot.d/nextcloud.conf
+
+##### FILES IN WEBROOT #####
+
+- name: extract nextcloud zip
+  unarchive:
+    src: "/root/nextcloud-{{ nextcloud_version }}.zip"
+    dest: "{{ nextcloud_install_dir | dirname }}"
+    copy: no
+    owner: www-data
+    group: www-data
+    creates: "{{ nextcloud_install_dir }}/occ"
+
+- name: extract nextcloud applications
+  unarchive:
+    src: "{{ item.archive }}"
+    dest: "{{ item.dest }}"
+    copy: no
+    owner: www-data
+    group: www-data
+  with_items:
+    - { archive: '/root/nextcloud-calendar-{{ nextcloud_calendar_version }}.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'}
+    - { archive: '/root/nextcloud-contacts-{{ nextcloud_contacts_version }}.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'}
+    - { archive: '/root/nextcloud-tasks-{{ nextcloud_tasks_version }}.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'} # Not idempotent
+    - { archive: '/root/music.zip', dest: '{{ nextcloud_install_dir }}/apps/'}
+    - { archive: '/root/notes.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'}
+
+
+###### FILE PERMISSIONS ######
+
+- name: create nextcloud data directory
+  file:
+    path: "/var/nextcloud/data"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0750
+
+# Not idempotent
+- name: set nextcloud files ownership to root:www-data
+  file:
+    path: "{{ nextcloud_install_dir }}"
+    state: directory
+    owner: root
+    group: www-data
+    recurse: yes
+
+# Not idempotent
+- name: ensure files are mode 0640 and directories mode 0750
+  file:
+    path: "{{ nextcloud_install_dir }}"
+    mode: "u=rwX,g=rX"
+    recurse: yes
+
+# Not idempotent
+- name: give nextcloud write access to required directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
+  with_items:
+    - "{{ nextcloud_install_dir }}/apps"
+    - "{{ nextcloud_install_dir }}/config"
+    - "{{ nextcloud_install_dir }}/data"
+    - "{{ nextcloud_install_dir }}/theme"
+    - "{{ nextcloud_install_dir }}/updater"
+    - "{{ nextcloud_install_dir }}/assets"
+    - "{{ nextcloud_data_dir }}"
+
+- name: set execute permission for occ command line tool
+  file:
+    path: "{{ nextcloud_install_dir }}/occ"
+    state: file
+    mode: 0750
+
+
+##### SETUP #####
+
+- name: nextcloud first setup
+  become: True
+  become_user: www-data
+  command: /usr/bin/php occ \
+           maintenance:install \
+           --database="mysql" \
+           --database-name="{{ nextcloud_db_name }}" \
+           --database-table-prefix="{{ nextcloud_db_table_prefix }}" \
+           --database-user="{{ nextcloud_db_user }}" \
+           --database-host="{{ nextcloud_db_host }}" \
+           --database-pass="{{ nextcloud_db_password }}" \
+           --admin-user="{{ nextcloud_user }}" \
+           --admin-pass="{{ nextcloud_password }}"
+           --data-dir="{{ nextcloud_data_dir }}"
+  register: nextcloud_first_setup
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  failed_when: nextcloud_first_setup.rc !=0 and 'Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr
+  changed_when: nextcloud_first_setup.rc == 0
+
+# trashbin_retention_obligation:
+#   auto: keep for 30 days, then delete IF space needed
+#   D, auto: keep at least D+ days, then delete IF space needed
+#   auto, D: max D days, but delete if space needed
+#   D1, D2: keep lat east D1 days and max D2 days
+#   disabled: auto clean disabled
+
+# TODO OPTIMIZE: not idempotent, this task will return changed every time (ignored with noqa 301, occ doesn't report indication of changes)
+- name: set nextcloud domain config.php values
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ config:system:set {{ item.key }} --value="{{ item.value }}" # noqa 301
+  args:
+    chdir: "{{ nextcloud_install_dir }}/"
+  with_items:
+    - { key: "trusted_domains 1", value: "{{ nextcloud_fqdn }}" }
+    - { key: "overwrite.cli.url", value: "https://{{ nextcloud_fqdn }}" }
+    - { key: "datadir", value: "{{ nextcloud_data_dir }}" }
+    - { key: "dbtype", value: "mysql" }
+    - { key: "dbname", value: "{{ nextcloud_db_name }}" }
+    - { key: "dbhost", value: "{{ nextcloud_db_host }}" }
+    - { key: "dbtableprefix", value: "{{ nextcloud_db_table_prefix }}" }
+    - { key: "dbuser", value: "{{ nextcloud_db_user }}" }
+    - { key: "dbpassword", value: "{{ nextcloud_db_password }}" }
+    - { key: "logtimezone", value: "UTC" }
+    - { key: "log_type", value: "syslog" }
+    - { key: "log_authfailip", value: "true" }
+    - { key: "loglevel", value: "2" }
+    - { key: "trashbin_retention_obligation", value: "auto" }
+  no_log: True
+
+- name: run nextcloud upgrade command
+  become: True
+  become_user: www-data
+  command: /usr/bin/php ./occ upgrade
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  register: nextcloud_upgrade
+  changed_when: not 'Nextcloud is already latest version' in nextcloud_upgrade.stdout
+
+# Not idempotent - https://github.com/nextcloud/server/issues/17789
+- name: enable/disable nextcloud applications
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ app:{{ item.state }} {{ item.app }}
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  with_items: "{{ nextcloud_apps }}"
+  register: nextcloud_app_enable_disable
+  changed_when: not 'No such app enabled' in nextcloud_app_enable_disable.stdout

@@ -1,0 +1,6 @@
+---
+
+- include: nextcloud.yml
+  become: yes
+  tags:
+    - nextcloud

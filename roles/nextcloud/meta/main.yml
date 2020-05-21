@@ -1,0 +1,29 @@
+---
+
+galaxy_info:
+  role_name: nextcloud
+  author: nodiscc
+  description: nextcloud private cloud/groupware solution
+  license: GPL-3.0
+  min_ansible_version: 2.8
+  platforms:
+    - name: Debian
+      versions:
+        - 9
+        - 10
+  galaxy_tags:
+    - server
+    - groupware
+    - calendar
+    - synchronization
+    - dropbox
+    - addressbook
+    - contacts
+    - tasks
+    - sharing
+    - agenda
+    - caldav
+    - carddav
+    - webdav
+    - drive
+    - web

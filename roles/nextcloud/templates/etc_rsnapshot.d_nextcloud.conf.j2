@@ -1,0 +1,8 @@
+# rsnapshot configuration for nextcloud backups
+backup_script	/usr/bin/mysqldump --single-transaction -h {{ nextcloud_db_host }} -u root {{ nextcloud_db_name }} > nextcloud.sql	nextcloud_db/
+backup	/var/nextcloud/	localhost/
+exclude	/var/nextcloud/data/updater-*/
+exclude	/var/nextcloud/data/appdata_*/
+exclude	/var/nextcloud/data/*/cache/
+exclude	/var/nextcloud/data/*/thumbnails/
+exclude	/var/nextcloud/data/*/files_trashbin/

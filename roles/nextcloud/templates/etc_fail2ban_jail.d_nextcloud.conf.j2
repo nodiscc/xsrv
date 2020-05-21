@@ -1,0 +1,9 @@
+# fail2ban Nextcloud jails
+
+[nextcloud-auth]
+# Nextcloud login failures
+enabled  = true
+filter   = nextcloud-auth
+port     = https,http
+logpath  = /var/log/syslog
+maxretry = 5

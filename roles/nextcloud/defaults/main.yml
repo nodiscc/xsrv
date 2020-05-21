@@ -1,0 +1,70 @@
+---
+
+##### NEXTCLOUD #####
+
+# Nextcloud admin username/password
+# nextcloud_user: "CHANGEME"
+# nextcloud_password: "CHANGEME"
+
+# Fully Qualified Domain Name for the nextcloud instance
+nextcloud_fqdn: "{{ inventory_hostname }}"
+
+# nextcloud data storage directory
+nextcloud_data_dir: "/var/nextcloud/data"
+
+# nextcloud database credentials
+nextcloud_db_name: "nextcloud"
+nextcloud_db_user: "nextcloud"
+nextcloud_db_table_prefix: "oc_"
+nextcloud_db_host: "localhost"
+nextcloud_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.nextcloud_db_password length=18') }}"
+
+# Nextcloud installation directory (must be under a valid documentroot)
+nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}/nextcloud"
+
+# Nextcloud and applications versions
+# https://github.com/nextcloud/server/releases.atom, remove leading v
+nextcloud_version: '17.0.2'
+# https://github.com/nextcloud/calendar/releases.atom
+nextcloud_calendar_version: 'v2.0.0'
+# https://github.com/nextcloud/contacts/releases.atom
+nextcloud_contacts_version: 'v3.1.7'
+# https://github.com/nextcloud/tasks/releases.atom
+nextcloud_tasks_version: '0.11.3'
+# https://github.com/owncloud/music/releases.atom, remove leading v
+nextcloud_music_version: '0.12.1'
+# https://github.com/nextcloud/notes/releases.atom
+nextcloud_notes_version: 3.1.1
+
+# Nextcloud applications to enable or disable
+nextcloud_apps:
+  - { state: "disable", app: "encryption" }
+  - { state: "disable", app: "files_antivirus" }
+  - { state: "disable", app: "files_versions" }
+  - { state: "disable", app: "news" }
+  - { state: "disable", app: "user_external" }
+  - { state: "disable", app: "recommendations" }
+  - { state: "enable", app: "activity" }
+  - { state: "enable", app: "calendar" }
+  - { state: "enable", app: "comments" }
+  - { state: "enable", app: "contacts" }
+  - { state: "enable", app: "dav" }
+  - { state: "enable", app: "federatedfilesharing" }
+  - { state: "enable", app: "federation" }
+  - { state: "enable", app: "files" }
+  - { state: "enable", app: "files_external" }
+  - { state: "enable", app: "files_pdfviewer" }
+  - { state: "enable", app: "files_sharing" }
+  - { state: "enable", app: "files_trashbin" }
+  - { state: "enable", app: "files_videoplayer" }
+  - { state: "enable", app: "firstrunwizard" }
+  - { state: "enable", app: "gallery" }
+  - { state: "enable", app: "music" }
+  - { state: "enable", app: "notifications" }
+  - { state: "enable", app: "systemtags" }
+  - { state: "enable", app: "tasks" }
+  - { state: "enable", app: "updatenotification" }
+  - { state: "enable", app: "user_ldap" }
+  - { state: "enable", app: "notes" }
+#  - { state: "enable", app: "documents" } #TODO requires download
+#  - { state: "enable", app: "templateeditor" } #TODO requires download

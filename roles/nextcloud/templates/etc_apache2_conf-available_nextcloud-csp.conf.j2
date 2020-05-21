@@ -1,0 +1,4 @@
+<Directory {{ nextcloud_install_dir }} >
+    # Unset system-wide Content-Security-Policy header since Nextcloud provides its own CSP
+    Header always unset Content-Security-Policy
+</Directory>
