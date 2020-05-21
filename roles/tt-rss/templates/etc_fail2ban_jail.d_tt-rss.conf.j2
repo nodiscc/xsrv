@@ -1,0 +1,8 @@
+[tt-rss]
+# Fail2ban jail for tt-rss failed logins
+# LOG_DESTINATION must be set to '' (log to php/webserver error log) in tt-rss config.php
+enabled = true
+filter = tt-rss-auth
+logpath = /var/log/apache2/error.log
+findtime = 600
+maxretry = 3

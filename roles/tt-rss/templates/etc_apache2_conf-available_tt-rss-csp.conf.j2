@@ -1,0 +1,4 @@
+<Directory {{ tt_rss_install_dir }} >
+    Header always unset Content-Security-Policy
+    Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
+</Directory>

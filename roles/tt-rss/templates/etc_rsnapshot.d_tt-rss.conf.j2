@@ -1,0 +1,2 @@
+# rsnapshot configuration for tt-rss backups
+backup_script	/usr/bin/mysqldump --single-transaction -h {{ tt_rss_db_host }} -u root {{ tt_rss_db_name }} > tt-rss.sql	tt-rss_db/

@@ -1,0 +1,37 @@
+---
+
+# tt-rss main user/admin username/password
+# tt_rss_user: "CHANGEME"
+# tt_rss_password: "CHANGEME"
+
+# tt-rss database credentials
+tt_rss_db_host: "localhost"
+tt_rss_db_name: "ttrss"
+tt_rss_db_user: "ttrss"
+tt_rss_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.tt_rss_db_password length=18') }}"
+
+# random 24 string used for encryption of passwords for password-protected feeds
+tt_rss_feed_crypt_key: "{{ lookup('password', 'secrets/' + inventory_hostname + '.tt_rss_feed_crypt_key length=24') }}"
+# random 250 characters string used to salt the password
+tt_rss_password_salt: "{{ lookup('password', 'secrets/' + inventory_hostname + '.tt_rss_password_salt length=250 chars=hexdigits') }}"
+
+# tt-rss installation directory (must be under a valid documentroot)
+tt_rss_install_dir: "/var/www/{{ inventory_hostname }}/tt-rss"
+
+# full public URL of your tt-rss installation
+tt_rss_full_url: "https://{{ inventory_hostname }}/tt-rss/"
+
+# tt-rss version (git revision)
+tt_rss_version: "master"
+
+# true/false (quoted): Allow users to register themselves
+tt_rss_allow_registration: "false"
+
+# Maximum number of users allowed to register accounts
+tt_rss_account_limit: "10"
+
+# yes/no: install additional tt-rss themes
+tt_rss_install_themes: no
+
+# yes/no: install additional tt-rss plugins
+tt_rss_install_plugins: no

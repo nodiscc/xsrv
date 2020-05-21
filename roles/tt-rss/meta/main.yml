@@ -1,0 +1,20 @@
+---
+
+galaxy_info:
+  role_name: tt-rss
+  author: nodiscc
+  description: tiny-tiny-rss (tt-rss) web-based news feed reader
+  license: GPL-3.0
+  min_ansible_version: 2.8
+  platforms:
+    - name: Debian
+      versions:
+        - 9
+        - 10
+  galaxy_tags:
+    - web
+    - rss
+    - atom
+    - news
+    - feed
+    - reader

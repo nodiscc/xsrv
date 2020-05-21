@@ -1,0 +1,6 @@
+---
+
+- include: tt-rss.yml
+  become: yes
+  tags:
+    - tt-rss
