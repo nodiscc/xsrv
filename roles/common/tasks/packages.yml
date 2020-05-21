@@ -48,7 +48,6 @@
       - locate # maintain and query an index of a directory tree
   when: setup_cli_utils|bool
 
-# nice to have if monitoring frequently reports the system is running out of entropy
 - name: install haveged entropy source
   apt:
     state: present

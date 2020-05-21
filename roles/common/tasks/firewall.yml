@@ -30,6 +30,9 @@
   template:
     src: 'etc_firehol_firehol.conf.j2'
     dest: '/etc/firehol/firehol.conf'
+    owner: root
+    group: root
+    mode: 0600
   notify: restart firewall
 
 - name: copy fail2ban configuration

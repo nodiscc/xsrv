@@ -1,5 +1,17 @@
 ---
 
+##### DNS RESOLVER #####
+
+# yes/no: update DNS nameserver settings (resolv.conf)
+setup_dns: no
+
+# list of DNS nameservers IP addresses
+# Example:
+# dns_resolvers:
+#   - "1.1.1.1"
+#   - "1.0.0.1"
+dns_nameservers: []
+
 ##### SYSCTL (NETWORKING/MEMORY) #####
 
 # yes/no: update sysctl settings
@@ -40,7 +52,8 @@ ssh_authorized_keys: []
 # a list of public keys that are never accepted by the ssh server
 ssh_server_revoked_keys: []
 
-# SFTP server log level (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
+# sshd and SFTP server log levels, respecively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
+ssh_log_level: "INFO"
 ssh_sftp_loglevel: "ERROR"
 
 # no/local/remote/all: (QUOTED): types of SSH TCP forwarding to allow
@@ -53,41 +66,43 @@ ssh_allow_tcp_forwarding: "no"
 # yes/no: setup firewall and fail2ban
 setup_firewall: yes
 
-# Alias for LAN IP addresses
-firehol_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
+# alias for LAN addresses (CIDR notation,comma-separated values)
+firehol_alias_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
 
 # Firewall rules
-# By default a single, global network is defined, restrict traffic by IP source/destination in
-# individual rules, or create additional network definitions for more complex setups.
+# By default a single global network chain is defined (traffic on any interface, from any source)
+# Restrict traffic to individual source/destination IPs in earch rule's src/dst value
+# Or create additional network definitions for more complex setups.
 firehol_networks:
   - name: "global" # a name for this rule set
-    src: "any" # traffic to/from these IP addresses
-    interface: "any" # traffic to/from this network interface
-    policy: "RETURN" # pass traffic to the next chain if no rules match (one of DROP/RETURN/ACCEPT/REJECT)
+    src: "any" # traffic to/from any IP address
+    interface: "any" # traffic to/from any network interface
+    policy: "RETURN" # policy to apply for traffic that matches no rules match (one of DROP/RETURN/ACCEPT/REJECT)
     allow_input: # incoming traffic
       - { name: "ssh", src: "any" } # ssh from anywhere
-      # - { name: "http", src: "any" } # web server access from anywhere
-      # - { name: "https", src: "any" } # web server access from anywhere
-      # - { name: "netdata", src: "any" } # monitoring dashboard
-      # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
-      # - { name: "ping", src: "any" } # allow incoming ICMP pings
-      # - { name: "mumble", src: "any" } # mumble voip server
-      # - { name: "samba", src: "{{ firehol_lan }}" } # samba file sharing
-      # - { name: "pulseaudio", src: "{{ firehol_lan }}" } # pulseaudio sound server
-      # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
+      # - { name: "netdata", src: "{{ firehol_alias_lan }}" } # monitoring dashboard
+      # - { name: "http", src: "{{ firehol_alias_lan }}" } # web server
+      # - { name: "https", src: "{{ firehol_alias_lan }}" } # web server
+      # - { name: "mumble", src: "{{ firehol_alias_lan }}" } # mumble voip server
+      # - { name: "ping", src: "{{ firehol_alias_lan }}" } # incoming ICMP pings
+      # - { name: "samba", src: "{{ firehol_alias_lan }}" } # samba file sharing
+      # - { name: "pulseaudio", src: "{{ firehol_alias_lan }}" } # pulseaudio sound server
+      # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src: any
       # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
       # - { name: "sshcustom", src: "any" } # SSH server on custom port
       # - { name: "transmission", src: "any", } # bittorrent peer connections, outgoing requires 'all'
+      # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
     allow_output: # outgoing connections
       - { name: "dns", dst: "any" } # DNS queries to anywhere
       - { name: "ntp", dst: "any" } # time/date synchronization
-      - { name: "dhcp", dst: "{{ firehol_lan }}" } # DHCP requests on LAN
+      - { name: "dhcp", dst: "{{ firehol_alias_lan }}" } # DHCP requests on LAN
       - { name: "http", dst: "any" } # outgoing HTTP requests
       - { name: "https", dst: "any" } # outgoing HTTPS requests
       - { name: "ping", dst: "any" } # outgoing ICMP pings
-      # - { name: "submission", dst: "any" } # outgoing mail/port 587
+      - { name: "submission", dst: "any" } # outgoing mail/port 587
       # - { name: "imaps", dst: "any" } # nextcloud mail
       # - { name: "smtps", dst: "any" } # nextcloud mail
+      # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
       # - { name: "all", dst: "any" } # allow ALL outgoing connections
 
 
@@ -114,36 +129,33 @@ firehol_custom_services:
   - { name: "transmission", ports: "tcp/52943", } # bittorrent peer connections, outgoing requires 'all'
 
 # fail2ban: don't auto-ban IP addresses from these networks
-fail2ban_ignoreip: ['10.0.0.0/8', '192.168.0.0/16', '172.16.0.0/12']
+fail2ban_ignoreip:
+  - '10.0.0.0/8'
+  - '192.168.0.0/16'
+  - '172.16.0.0/12'
 
 
 ##### USERS #####
 
 # Additional user accounts to create.
+# See user module parameters (https://docs.ansible.com/ansible/latest/modules/user_module.html):
+# name, password, comment, create_home, home, groups, append, generate_ssh_key, update_password
+# Additional supported parameters:
+# ssh_authorized_keys: list of public key files to authorize on this account
+# sudo_nopasswd_commands: list of commands the user should be able to run with sudo without password
 # Example:
-# extra_users:
-#    - name: "username"
-#      ssh_authorized_keys: [ 'public/username.pub', 'public/someone.pub' ]
-#      password: "lookup('pass', {{ inventory_hostname }} '.username.password')" # required to unlock the account
-#      salt: "lookup('pass', {{ inventory_hostname }} '.username.salt')  # required to unlock the account
-#      home: "/var/lib/username" # user's home directory
-#      system: yes/no # whether the account is a machine or human account
-#      groups: [ "ssh", "rsyncasroot", "sudo" ] # list of groups to add the user to
-#      comment: "Secondary admin" # a description for the account
+# linux_users:
+#    - name: "remotebackup"
+#      password: "{{ vault_linux_users_remotebackup_password }}"
+#      groups: [ "ssh", "sudo" ]
+#      comment: "limited user account for remote backups"
+#      ssh_authorized_keys: []
+#      sudo_nopasswd_commands: ['/usr/bin/rsync']
 linux_users: []
 
-# yes/no: setup a user account to allow backups of this machine from a remote backup server
-# This user account will be able to run 'sudo rsync' without password
-# See https://gitlab.com/nodiscc/ansible-xsrv-backup
-setup_remotebackup_user: no
-
-# Username for the remote backup service
-remotebackup_user: rsnapshot
-
-# Public key file for the remote backup service. The key is displayed during setup of the 'backup' role
-# Example: remotebackup_user_pubkey: 'public_keys/root@my.backup.server'
-remotebackup_user_pubkey: 'CHANGEME'
-
+# yes/no: allow ansible connecting user to run 'sudo rsync' without password
+# Required to use the ansible synchronize module, and download files generated by the backup role
+ansible_user_allow_sudo_rsync_nopasswd: yes
 
 ##### OUTGOING MAIL #####
 
@@ -151,19 +163,17 @@ remotebackup_user_pubkey: 'CHANGEME'
 # The system will not be able to send status/monitoring e-mails unless this is enabled
 setup_msmtp: no
 
+# If msmtp is enabled, the following values must be set:
 # System mail relay (SMTP server) to use, and authentication username/password
-# msmtp_host: "smtp.example.com"
-# msmtp_username: "CHANGEME"
-# msmtp_password: "CHANGEME"
-
+msmtp_host: "smtp.CHANGEME.org"
+msmtp_username: "CHANGEME"
+msmtp_password: "{{ vault_msmtp_password }}" # CHANGEME
 # Mail address to send all local mail to
-# msmtp_admin_email: "CHANGEME"
+msmtp_admin_email: "CHANGEME@CHANGEME.org"
 
 # (optional) TLS certificate fingerprint of the SMTP server - use this to accept a self-signed certificate
-# Get the server's certificate fingerprint with:
-# openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
+# Get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
 # msmtp_host_fingerprint: '11:22:33:44:55:66:77:88:99:00:13:37:AA:BB:CC:DD:EE:FF:AD:C2'
-
 
 ##### PACKAGES #####
 
@@ -171,6 +181,6 @@ setup_msmtp: no
 # see tasks/50utilities.yml for the full list
 setup_cli_utils: yes
 
-# yes/no: installa haveged entropy generator
-# nice to have if the system is frequently running out of entropy
-setup_haveged: no
+# yes/no: install haveged entropy generator
+# good to have on virtual machines where system is frequently running out of entropy
+setup_haveged: yes

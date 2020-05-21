@@ -4,6 +4,7 @@ common
 This role will install/configure a basic Debian-based server. 
 
 - hostname
+- DNS resolution (`/etc/resolv.conf`)
 - sysctl/kernel settings: networking, swap/memory management, security
 - APT package management, automatic daily security updates
 - NTP date/time synchronization
@@ -15,24 +16,42 @@ This role will install/configure a basic Debian-based server.
 - outgoing mail (through a SMTP relay)
 - basic command-line utilities/diagnostic tools
 - streamlining/Removal of unwanted packages
+- `haveged` random number generator/entropy source for virtual machines
 
 All configuration tasks are optional.
 
 Requirements
 ------------
 
-- Ansible 2.8 or higher on the controller
-- basic Debian GNU/Linux 9/10 installation on host
-- ansible inventory hostname resolves to the host (using DNS, /etc/hosts...)
+- Ansible 2.8 or higher
+- Basic Debian GNU/Linux 9/10 netinstall on host
+- Ansible inventory hostname resolves to the host FQDN (using DNS, /etc/hosts...)
 - SSH server reachable from the controller
-- user account on the host, for which you know the password, member of the `sudo` group
-- the controller SSH key is authorized on this user account (`ssh-copy-id user@host`)
+- User account on the host, member of the `sudo` group, for which you know the password
+- Controller SSH key authorized on this user account (`ssh-copy-id user@host`)
 
 
 Configuration variables
 -----------------------
 
 See [defaults/main.yml](defaults/main.yml)
+
+
+Example playbook
+-----------------
+
+```yaml
+- hosts: my.example.org
+  roles:
+     - common
+  vars:
+    msmtp_host: "smtp.CHANGEME.org"
+    msmtp_username: "CHANGEME"
+    msmtp_admin_email: "CHANGEME@CHANGEME.org"
+
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_msmtp_password: "CHANGEME"
+```
 
 
 Usage
@@ -46,7 +65,7 @@ Usage
 - Force rotation of system logs: `ssh user@my.example.org sudo logrotate -f /etc/logrotate.conf`
 - If running in a KVM virtual machine in libvirt/virt-manager, to share a directory from the hypervisor to the VM: access VM settings in `virt-manager`. Click `Add hardware > Filesystem`, Set Mode: `Mapped`, Source path: `/path/to/the/directory/to/share` (on the hypervisor), Target path: `/exampleshareddirectory` (in the VM), then inside the VM run `sudo apt install 9mount, mount -t 9p /exampleshareddirectory /mnt/example`.
 - Force upgrade of all packages `ssh user@my.example.org 'sudo apt update; sudo apt safe-upgrade'`
-- Backups: nothing to backup. See the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role.
+- Backups: nothing to backup. See the [backup](../backup/README.md) role.
 
 
 License
@@ -58,6 +77,7 @@ References
 -----------------
 
 - https://stdout.root.sx/links/?searchtags=debian
+- https://stdout.root.sx/links/?searchtags=dns
 - https://stdout.root.sx/links/?searchtags=ssh
 - https://stdout.root.sx/links/?searchtags=security
 - https://stdout.root.sx/links/?searchtags=network

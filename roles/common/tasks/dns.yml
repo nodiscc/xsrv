@@ -1,0 +1,14 @@
+---
+
+- name: abort if no dns resolvers have been configured
+  fail:
+    msg: "setup_dns is enabled but no resolvers have been configured"
+  when:
+    - setup_dns|bool
+    - dns_nameservers is defined and (dns_nameservers | length == 0)
+
+
+- name: set DNS resolver settings in /etc/resolv.conf
+  template:
+    src: "etc_resolv.conf.j2"
+    dest: "/etc/resolv.conf"

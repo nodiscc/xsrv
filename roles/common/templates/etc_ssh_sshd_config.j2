@@ -33,7 +33,7 @@ StrictModes yes
 
 # Logging, obsoletes QuietMode and FascistLogging
 SyslogFacility AUTH
-LogLevel INFO
+LogLevel {{ ssh_log_level }}
 
 # Cryptography
 # ------------
@@ -50,9 +50,6 @@ KexAlgorithms diffie-hellman-group-exchange-sha256
 
 # Authentication
 # --------------
-
-# Secure Login directives.
-UsePrivilegeSeparation sandbox
 
 # Don't process environment variables passed by the client
 PermitUserEnvironment no
@@ -110,6 +107,7 @@ ClientAliveCountMax 3
 PermitTunnel no
 
 # Specifies whether TCP forwarding is permitted.
+# Denying it provides no real advantage unless shell access is also denied
 AllowTcpForwarding {{ ssh_allow_tcp_forwarding }}
 
 # Disable agent forwarding, since local agent could be accessed through forwarded connection.
@@ -171,4 +169,8 @@ ForceCommand /usr/local/bin/validate-rsync
 Match Group sftponly
 ForceCommand internal-sftp -l {{ ssh_sftp_loglevel }} -f LOCAL6
 ChrootDirectory %h
+AllowTcpForwarding no
+AllowAgentForwarding no
+GatewayPorts no
+X11Forwarding no
 

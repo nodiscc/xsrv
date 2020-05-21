@@ -2,14 +2,6 @@
 
 ##### OUTGOING SYSTEM MAIL #####
 
-- name: ensure outgoing email credentials/host has been set
-  assert:
-    that:
-      - not msmtp_host == "smtp.example.com"
-      - not msmtp_username == "CHANGEME"
-      - not msmtp_password == "CHANGEME"
-    fail_msg: "Please set configuration variables msmtp_host/username/password or disable msmtp installation"
-
 - name: copy msmtp configuration files
   template:
     src: "{{ item.src }}"

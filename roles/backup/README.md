@@ -47,12 +47,15 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
  - configure the list of hosts, SSH users, ports, paths... in  `rsnapshot_remote_backups` in configuration variables
  - setup a user account on the remote machine, authorize the backup server's `root` SSH key (the key is displayed during setup)
 
-
 ```yaml
-# Example using https://gitlab.com/nodiscc/ansible-xsrv-common/ on the remote host
-setup_remotebackup_user: yes
-remotebackup_user: rsnapshot
-remotebackup_user_pubkey: 'public_keys/root@my.backup.server' # file containing the public key
+# Example using https://gitlab.com/nodiscc/ansible-xsrv-common/
+linux_users:
+   - name: "remotebackup"
+     password: "{{ vault_linux_users_remotebackup_password }}"
+     groups: [ "ssh", "sudo" ]
+     comment: "limited user account for remote backups"
+     ssh_authorized_keys: []
+     sudo_nopasswd_commands: ['/usr/bin/mysqldump']
 ```
 
 

@@ -62,8 +62,7 @@
 - name: display root public SSH key
   debug:
     msg: >
-      Please authorize this key on remote machines backup user accounts
-      (see the https://gitlab.com/nodiscc/ansible-xsrv-common/ role and 'remotebackup_user_pubkey' option:\n
+      Please authorize this key on remote machines backup user accounts:\n
       {{ root_ssh_key.public_key }}
 
 ##### SCHEDULING #####

@@ -6,6 +6,13 @@
     - common
     - hostname
 
+- include: dns.yml
+  become: yes
+  tags:
+    - common
+    - dns
+  when: setup_dns|bool
+
 - include: sysctl.yml
   become: yes
   tags:

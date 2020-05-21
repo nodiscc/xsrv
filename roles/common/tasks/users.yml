@@ -24,14 +24,14 @@
 - name: create additional user accounts
   user:
     name: "{{ item.name }}"
-    comment: "{{ item.comment }}"
-    create_home: yes
-    home: "{{ item.home }}"
-    groups: "{{ item.groups }}"
-    append: yes
-    generate_ssh_key: no
-    system: "{{ item.system }}"
-    password: "{{ item.password | password_hash('sha512', item.salt) }}"
+    comment: "{{ item.comment | default('') }}"
+    create_home: "{{ item.create_home | default(True) }}"
+    home: "{{ item.home | default('/home/' + item.name) }}"
+    groups: "{{ item.groups | default() }}"
+    append: "{{ item.append | default(True) }}"
+    generate_ssh_key: "{{ item.generate_ssh_key | default(True) }}"
+    password: "{{ item.password | password_hash('sha512') }}"
+    update_password: "{{ item.update_password | default('on_create') }}"
   with_items: "{{ linux_users }}"
 
 - name: authorize SSH keys for additional user accounts
@@ -42,31 +42,12 @@
     - "{{ linux_users }}"
     - ssh_authorized_keys
 
-##### REMOTE BACKUP USER #####
-# This user can run 'sudo rsync' without password
-# Only needed if this machine is being backed up from a remote rsnapshot service
-# See https://gitlab.com/nodiscc/ansible-xsrv-backup
-# This is equivalent to root access, but doesn't require enabling SSH root login
-
-- name: create user account for remote backup service
-  user:
-    name: "{{ remotebackup_user }}"
-    comment: "Remote backup service"
-    create_home: yes
-  when: setup_remotebackup_user
-
-- name: allow remote backup service to run 'sudo rsync' without password
+- name: allow users to run specific commands as root without password
   template:
-    src: etc_sudoers.d_rsync.j2
-    dest: /etc/sudoers.d/rsync
+    src: etc_sudoers.d_nopasswd.j2
+    dest: /etc/sudoers.d/nopasswd
     mode: 0440
-  when: setup_remotebackup_user
 
-- name: authorize remote backup service SSH key
-  authorized_key:
-    user: "{{ remotebackup_user }}"
-    key: "{{ lookup('file', remotebackup_user_pubkey) }}"
-  when: setup_remotebackup_user
 
 ##### PAM #####
 
@@ -86,6 +67,7 @@
         owner: 'root'
         group: 'root'
         mode: '0440'
+      when: not ansible_check_mode
 
   when: not os_security_kernel_enable_core_dump | bool
 
