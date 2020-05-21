@@ -1,0 +1,164 @@
+---
+
+##### NETDATA SYSTEM MONITOR #####
+
+- name: install netdata requirements
+  apt:
+    package:
+      - bash
+      - curl
+      - iproute2
+      - python
+      - python-yaml
+      - python-dnspython
+      - python-ipaddress
+      - python-mysqldb
+      - lm-sensors
+      - libmnl0
+      - netcat
+      - libuv1
+      - libjudydebian1
+      - openssl
+      - liblz4-1
+    state: present
+
+### INSTALL NETDATA FROM BINARY #####
+
+- name: download netdata binary installer
+  get_url:
+    url: https://github.com/netdata/netdata/releases/download/{{ netdata_version }}/netdata-{{ netdata_version }}.gz.run
+    dest: /root/netdata-{{ netdata_version }}.gz.run
+    mode: 0700
+  when: netdata_install_method == 'binary'
+
+- name: check netdata installer integrity
+  command: /root/netdata-{{ netdata_version }}.gz.run --check
+  changed_when: False
+  when: netdata_install_method == 'binary'
+
+# Not idempotent/overwrites configuration
+- name: run netdata installer
+  command: /root/netdata-{{ netdata_version }}.gz.run --accept -- --dont-start-it --disable-telemetry
+  when: netdata_install_method == 'binary'
+  notify: restart netdata
+
+##### SELF-SIGNED SSL CERTIFICATES #####
+
+- name: install python3-openssl
+  apt:
+    package: python3-openssl
+    state: present
+
+# the directory for certificates/keys must be kept outside netdata installation directory
+# lse running the install/upgrade procedure will remove the files, breaking playbook idempotence
+- name: create directory for netdata SSL certs/keys
+  file:
+    path: /etc/ssl/netdata
+    state: directory
+    owner: root
+    group: netdata
+    mode: 0750
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/ssl/netdata/netdata-key.pem"
+    owner: root
+    group: netdata
+    mode: "0640"
+  notify: restart netdata
+
+- name: generate openssl certificate signing request (CSR)
+  openssl_csr:
+    path: "/etc/ssl/netdata/netdata-csr.pem"
+    privatekey_path: "/etc/ssl/netdata/netdata-key.pem"
+    common_name: "{{ inventory_hostname }}"
+
+- name: generate self-signed openssl certificate
+  openssl_certificate:
+    path: "/etc/ssl/netdata/netdata-cert.pem"
+    privatekey_path: "/etc/ssl/netdata/netdata-key.pem"
+    csr_path: "/etc/ssl/netdata/netdata-csr.pem"
+    provider: selfsigned
+    owner: root
+    group: netdata
+    mode: "0640"
+    force: no
+  notify: restart netdata
+
+### NETDATA CONFIGURATION ###
+
+# required for systemd services charts/cgroups accounting
+- name: create systemd dynamic configuration directory
+  file:
+    path: '/etc/systemd/system.conf.d'
+    state: directory
+
+- name: enable systemd cgroups ressource accounting (systemd services chart)
+  template:
+    src: 'etc_systemd_system.conf.d_accounting.conf.j2'
+    dest: '/etc/systemd/system.conf.d/accounting.conf'
+  notify: re-execute the systemd manager
+
+- name: copy netdata base configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: 'opt_netdata_etc_netdata_netdata.conf.j2', dest: '/opt/netdata/etc/netdata/netdata.conf' }
+    - { src: 'opt_netdata_etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/opt/netdata/etc/netdata/.opt-out-from-anonymous-statistics' }
+  notify: restart netdata
+
+- name: copy netdata process health checks configuration
+  template:
+    src: opt_netdata_etc_netdata_health.d_processes.conf.j2
+    dest: /opt/netdata/etc/netdata/health.d/processes.conf
+
+- name: copy netdata HTTP checks configuration
+  template:
+    src: opt_netdata_etc_netdata_go.d_httpcheck.conf.j2
+    dest: /opt/netdata/etc/netdata/go.d/httpcheck.conf
+
+- name: copy netdata SSL certificate checks configuration
+  template:
+    src: opt_netdata_etc_netdata_go.d_x509check.conf.j2
+    dest: /opt/netdata/etc/netdata/go.d/x509check.conf
+
+- name: copy netdata TCP port checks configuration
+  template:
+    src: opt_netdata_etc_netdata_go.d_portcheck.conf.j2
+    dest: /opt/netdata/etc/netdata/go.d/portcheck.conf
+
+- name: copy netdata docker container checks configuration
+  template:
+    src: opt_netdata_etc_netdata_health.d_dockerd.conf.j2
+    dest: /opt/netdata/etc/netdata/health.d/dockerd.conf
+
+- name: copy netdata apache status checks configuration
+  template:
+    src: opt_netdata_etc_netdata_python.d_apache.conf.j2
+    dest: /opt/netdata/etc/netdata/python.d/apache.conf
+
+# required for systemd services charts/cgroups accounting
+- name: create systemd dynamic configuration directory
+  file:
+    path: '/etc/systemd/system.conf.d'
+    state: directory
+
+- name: enable systemd cgroups ressource accounting (systemd services chart)
+  template:
+    src: 'etc_systemd_system.conf.d_accounting.conf.j2'
+    dest: '/etc/systemd/system.conf.d/accounting.conf'
+  notify: re-execute the systemd manager
+
+- name: install additional netdata modules
+  include: netdata-modules.yml
+
+- name: start and enable netdata
+  service:
+    name: netdata
+    state: started
+    enabled: yes
+
+# Apply IP access restrictions as soon as possible
+- name: run all notified handlers now
+  meta: flush_handlers

@@ -1,0 +1,14 @@
+# rsyslog - monitor gitea log files
+module(load="imfile")
+
+input(type="imfile"
+      File="/var/lib/gitea/log/access.log"
+      Tag="gitea"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/lib/gitea/log/gitea.log"
+      Tag="gitea"
+      Facility="daemon"
+      PersistStateInterval="0")

@@ -1,0 +1,14 @@
+# netdata go.d.plugin configuration for x509check
+{% if netdata_http_checks %}
+jobs:
+{% for job in netdata_http_checks %}
+{% if job.url.split('/')[0] == 'https:' %}
+  - name: {{ job.name }}
+    source: {{ job.url }}:443
+    timeout: {{ netdata_x509_checks_timeout }}
+    update_every: {{ netdata_x509_checks_interval }}
+    days_until_expiration_warning: {{ netdata_x509_checks_days_until_expiration_warning }}
+    days_until_expiration_critical: {{ netdata_x509_checks_days_until_expiration_critical }}
+{% endif %}
+{% endfor %}
+{% endif %}

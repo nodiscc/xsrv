@@ -1,0 +1,42 @@
+---
+
+##### RSYSLOG #####
+
+- name: configure rsyslog to monitor fail2ban log file
+  template: src=etc_rsyslog.d_fail2ban.conf.j2 dest=/etc/rsyslog.d/fail2ban.conf
+  notify: restart rsyslog
+
+- name: configure rsyslog to monitor apt history log file
+  template: src=etc_rsyslog.d_apt.conf.j2 dest=/etc/rsyslog.d/apt.conf
+  notify: restart rsyslog
+
+- name: configure rsyslog to monitor apache logs
+  template: src=etc_rsyslog.d_apache.conf.j2 dest=/etc/rsyslog.d/apache.conf
+  notify: restart rsyslog
+
+- name: configure rsyslog to monitor netdata logs
+  template: src=etc_rsyslog.d_netdata.conf.j2 dest=/etc/rsyslog.d/netdata.conf
+  notify: restart rsyslog
+
+- name: configure rsyslog to monitor gitea logs
+  template: src=etc_rsyslog.d_gitea.conf.j2 dest=/etc/rsyslog.d/gitea.conf
+  notify: restart rsyslog
+
+- name: configure rsyslog to discard useless messages
+  template: src=etc_rsyslog.d_discard.conf.j2 dest=/etc/rsyslog.d/discard.conf
+  notify: restart rsyslog
+
+- name: configure rsyslog to log all messages to /var/log/syslog
+  template: src=etc_rsyslog.d_singlefile.conf.j2 dest=/etc/rsyslog.d/singlefile.conf
+  notify: restart rsyslog
+
+# rsyslog is configured to send all messages to /var/log/syslog in the task above
+# If a filter '*.*' is also present in rsyslog.conf messages will be logged twice
+- name: Ensure rsyslog main config file contains no *.* filter (avoid duplicate messages)
+  lineinfile:
+    path: /etc/rsyslog.conf
+    state: absent
+    regexp: '^\*\.\*'
+
+- name: run all notified handlers now
+  meta: flush_handlers

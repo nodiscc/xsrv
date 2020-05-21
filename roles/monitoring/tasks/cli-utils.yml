@@ -1,0 +1,10 @@
+---
+
+- name: install interactive/command-line monitoring tools
+  apt:
+    state: present
+    package:
+      - ncdu # ncurses disk usage viewer
+      - nethogs # network bandwidth usage monitor
+      - htop # system monitor/process manager
+      - lnav # enhanced log file viewer

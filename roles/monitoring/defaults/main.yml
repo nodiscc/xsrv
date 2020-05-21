@@ -1,0 +1,99 @@
+---
+
+##### LOGGING #####
+
+# setup rsyslog (centralize service logs in /var/log/syslog, discard useless messages)
+setup_rsyslog: yes
+
+
+##### NETDATA MONITORING SYSTEM #####
+
+# https://github.com/netdata/netdata/releases/
+netdata_version: "v1.19.0"
+
+# default interval between netdata updates (in seconds)
+# each plugin/module can override this setting (but only to set a longer interval)
+netdata_update_every: 2
+
+# Number of entries to keep in the database
+# (number of entries * update interval = max. chart retention time)
+# This affects memory usage
+netdata_history: 3600
+
+# space-separated list of IP addresses authorized to access netdata
+netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
+
+### NETDATA CHECKS ###
+
+# Process checks
+# Example:
+# netdata_process_checks:
+#   - { name: ssh, min_count: 1, interval: 20} # SSH server
+#   - { name: fail2ban, min_count: 1, interval: 20} # bruteforce prevention/IPS
+#   - { name: httpd, min_count: 1, interval: 20} # web server
+#   - { name: sql, min_count: 1, interval: 20} # SQL database engine
+#   - { name: gitea, min_count: 1, interval: 20} # gitea self-hosted software forge
+#   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
+#   - { name: ezstream, min_count: 1, interval: 20} # icecast/ezstream media streaming server
+#   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
+#   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
+#   - { name: auth, min_count: 1, interval: 20} # openldap server
+# name: process group name to check (apps_groups.conf)
+# min_count: minimum expected number of processes
+# interval: time interval (seconds) between checks
+netdata_process_checks: []
+
+# HTTP/SSL checks
+# Example:
+# netdata_http_checks:
+#   - name: example.com
+#     url: https://website.com
+#   - name: example.net
+#     url: http://example.net:8000
+#     timeout: 5
+#     interval: 60
+#   - name: broken-ssl-website
+#     url: https://broken.dev
+#     check_x509: no
+# name: readable name of the check
+# url: URL to check for successful HTTP response
+# timeout: (seconds, default 1) maximum allowed time to return the content
+# interval: (seconds) interval between HTTP checks
+# check_x509: (yes/no, default yes for https:// URLs): check x509/SSL certificate time to expiration
+netdata_http_checks: []
+
+# x509/SSL checks
+# (seconds) global interval between x509 certificate checks
+netdata_x509_checks_interval: "60"
+# (seconds) global SSL connection timeout value for x509 checks
+netdata_x509_checks_timeout: "60"
+# (days) raise an alarm when a SSL certificate expires in less than this value
+netdata_x509_checks_days_until_expiration_warning: "14"
+netdata_x509_checks_days_until_expiration_critical: "7"
+
+# TCP port checks
+# Example:
+# netdata_portchecks:
+#   - name: ldap-available
+#     host: 192.168.10.10
+#     ports: [389, 636]
+#     interval: 10
+# name: readable name of the check
+# host: hostname or IP address to contact
+# ports: list of TCP port numbers to check
+# interval: time interval (seconds) between checks
+netdata_port_checks: []
+
+# Docker container checks
+# expected number of running docker containers
+netdata_min_running_docker_containers: 0
+
+# netdata installation method. Only installation from 'binary' is supported
+netdata_install_method: binary
+
+### EXTRA MODULES ###
+# yes/no: automatically restart services that require it after an upgrade
+needrestart_autorestart_services: yes
+
+# git repository URL to download netdata-needrestart from
+netdata_needrestart_git_url: https://gitlab.com/nodiscc/netdata-needrestart

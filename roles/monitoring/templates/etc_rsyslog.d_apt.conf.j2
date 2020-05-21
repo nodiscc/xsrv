@@ -1,0 +1,16 @@
+# rsyslog - monitor apt history log
+module(load="imfile")
+
+input(type="imfile"
+      File="/var/log/apt/history.log"
+      readMode="0"
+      Tag="dpkg"
+      Facility="local0"
+      PersistStateInterval="0")
+
+# dpkg log - verbose, disabled
+#input(type="imfile"
+#      File="/var/log/dpkg.log"
+#      Tag="dpkg"
+#      Facility="local0"
+#      PersistStateInterval="0")

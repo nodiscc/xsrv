@@ -1,0 +1,10 @@
+# netdata go.d.plugin configuration for httpcheck
+{% if netdata_http_checks %}
+jobs:
+{% for job in netdata_http_checks %}
+  - name: {{ job.name }}
+    url: {{ job.url }}
+    timeout: {{ job.timeout | default('1') }}
+    update_every: {{ job.interval | default ('1') }}
+{% endfor %}
+{% endif %}

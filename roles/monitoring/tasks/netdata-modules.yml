@@ -1,0 +1,56 @@
+---
+
+##### NETDATA - ADDITIONAL MODULES #####
+
+### NEEDRESTART ###
+
+- name: install needrestart
+  apt:
+    state: present
+    package: needrestart
+
+- name: copy needrestart configuration
+  template:
+    src: 'etc_needrestart_conf.d_autorestart.conf.j2'
+    dest: '/etc/needrestart/conf.d/autorestart.conf'
+
+- name: generate initial needrestart report
+  command: needrestart -b > /var/log/needrestart.log
+  args:
+    creates: "/var/log/needrestart.log"
+
+- name: add a cron job to refresh needrestart report every hour
+  cron:
+    cron_file: "/etc/cron.d/needrestart"
+    month: "*"
+    day: "*"
+    hour: "*"
+    minute: "0"
+    job: /usr/sbin/needrestart -b > /var/log/needrestart.log 2>&1
+    name: needrestart
+    user: root
+
+- name: clone netdata-needrestart module
+  git:
+    dest: "/root/netdata-needrestart"
+    repo: "{{ netdata_needrestart_git_url }}"
+    version: "1.0.1"
+    accept_hostkey: yes
+    force: yes # discard modified files
+
+- name: configure dpkg to refresh the file after each run
+  copy:
+    remote_src: yes
+    src: "/root/netdata-needrestart/etc_apt_apt.conf.d_99needrestart"
+    dest: "/etc/apt/apt.conf.d/99needrestart"
+
+- name: copy netdata-needrestart module configuration/alarms
+  copy:
+    remote_src: yes
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: '/root/netdata-needrestart/needrestart.chart.py', dest: '/opt/netdata/usr/libexec/netdata/python.d/needrestart.chart.py' }
+    - { src: '/root/netdata-needrestart/needrestart.conf', dest: '/opt/netdata/usr/libexec/netdata/python.d/needrestart.conf' }
+    - { src: '/root/netdata-needrestart/health.d_needrestart.conf', dest: '/opt/netdata/etc/netdata/health.d/needrestart.conf' }
+  notify: restart netdata

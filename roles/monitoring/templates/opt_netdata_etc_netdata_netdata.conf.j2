@@ -1,0 +1,17 @@
+# netdata configuration
+# You can download the running configuration of your netdata instance, using:
+# curl http://localhost:19999/netdata.conf
+
+[global]
+   update every = {{ netdata_update_every }}
+   history = {{ netdata_history }}
+
+[web]
+   default port = 19999
+   allow connections from = {{ netdata_allow_connections_from }}
+   ssl key = /etc/ssl/netdata/netdata-key.pem
+   ssl certificate = /etc/ssl/netdata/netdata-cert.pem
+
+[cloud]
+   cloud base url = ""
+

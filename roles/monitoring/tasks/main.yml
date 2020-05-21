@@ -1,0 +1,26 @@
+---
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - common
+    - rsyslog
+  when: setup_rsyslog|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - monitoring
+    - netdata
+
+- include: netdata-modules.yml
+  become: yes
+  tags:
+    - monitoring
+    - netdata
+
+- include: cli-utils.yml
+  become: yes
+  tags:
+    - monitoring
+    - monitoring-utils

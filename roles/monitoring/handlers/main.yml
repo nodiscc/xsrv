@@ -1,0 +1,16 @@
+---
+
+##### SERVICE CONTROL #####
+
+
+- name: restart rsyslog
+  become: yes
+  service: name=rsyslog state=restarted enabled=yes
+
+- name: restart netdata
+  become: yes
+  service: name=netdata state=restarted enabled=yes
+
+- name: re-execute the systemd manager
+  become: yes
+  systemd: daemon_reexec=yes

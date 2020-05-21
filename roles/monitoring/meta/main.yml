@@ -1,0 +1,21 @@
+---
+
+galaxy_info:
+  role_name: monitoring
+  author: nodiscc
+  description: real-time monitoring system (netdata + modules, CLI utilities, rsyslog)
+  license: GPL-3.0
+  min_ansible_version: 2.8
+  platforms:
+    - name: Debian
+      versions:
+        - 9
+        - 10
+  galaxy_tags:
+    - system
+    - performance
+    - monitoring
+    - health
+    - graph
+    - alerts
+    - syslog
