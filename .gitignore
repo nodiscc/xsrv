@@ -16,14 +16,5 @@ public/*
 # do not track local copies of backups in git
 data/backups/
 
-# do not track roles downloaded by ansible-galaxy
-roles/common/
-roles/backup/
-roles/monitoring/
-roles/lamp/
-roles/nextcloud/
-roles/tt-rss/
-roles/gitea/
-
 # do not track the python virtualenv in git
 .venv/
