@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<link rel="shortcut icon" href="res/services.png">
+		<link rel="icon" type="image/png" href="res/services.png" sizes="16x16">
+        <meta charset="utf-8">
+        <title>{{ inventory_hostname }}</title>
+		<style>
+		body {
+			background: #eee;
+			color: #222;
+			font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+			font-weight: 400;
+			line-height: 1.5;
+			margin: 0 auto;
+			max-width: 960px;
+		}
+
+		a {
+			color: #222;
+			text-decoration: none;
+		}
+
+		h1 {
+			display: block;
+			text-align: center;
+		}
+
+		h5 {
+			margin: 0;
+		}
+
+		img {
+		    vertical-align: middle;
+		    margin: 0 0 3px 0;
+		}
+
+		code {
+			color: #D36C5B;
+			background-color: #FBE5E1;
+			padding: 2px;
+		}
+
+		hr {
+			color: #FFF;
+			border-style: 1px solid;
+			background-color: #FFF;
+		}
+
+		.content {
+			height: 100%;
+			width: 30%;
+			margin: 0 auto 0 auto;
+			text-align: center;
+			display: block;
+		}
+
+		.content a {
+			display: block;
+			/*transition: background-color 0.4s, color 0.4s, border-color 0.1s;*/
+			margin: 2px auto 2px auto;
+			text-align: center;
+			border-radius: 2px;
+			padding: 3px;
+			color: #222;
+			border: 1px solid transparent;
+		}
+
+		.content a:hover {
+			border: 1px solid;
+		}
+
+		.admin {
+			height: 100%;
+			min-width: 330px;
+			max-width: 90%;
+			margin: 0 auto 0 auto;
+			text-align: left;
+			display: block;
+		}
+
+		.admin a {
+				color: #2D5175;
+		}
+
+		.search-box {
+			background: #292421;
+			border: 1px solid #D1EEEE;
+			color: white;
+			font-size: 1em;
+			margin: 0;
+			padding: 0.5em;
+		}
+
+		.nextcloud:hover a, .nextcloud:hover {
+			background-color: #0082C9;
+			border-color: #0082C9;
+			color: #fff;
+		}
+
+		.shaarli:hover a, .shaarli:hover {
+			background-color: #1B926C;
+			border-color: #1B926C;
+			color: #fff;
+		}
+
+		.tt-rss:hover a, .tt-rss:hover {
+			background-color: #F2762E;
+			border-color: #F2762E;
+			color: #fff;
+		}
+
+		.transmission:hover a, .transmission:hover {
+			background-color: #A50200;
+			border-color: #A50200;
+			color: #fff;
+		}
+
+		.gitea:hover a, .gitea:hover {
+			background-color: #5C971C;
+			border-color: #5C971C;
+			color: #fff;
+		}
+
+		.icecast:hover a, .icecast:hover {
+			background-color: #D0AE21;
+			border-color: #D0AE21;
+			color: #fff;
+		}
+
+		.netdata:hover a, .netdata:hover {
+			background-color: #00FF00;
+			border-color: #00FF00;
+			color: #fff;
+		}
+
+		.ssh:hover a, .ssh:hover {
+			background-color: #000;
+			border-color: #000;
+			color: #fff;
+		}
+
+		.sftp:hover a, .sftp:hover {
+			background-color: #5294E2;
+			border-color: #5294E2;
+			color: #fff;
+		}
+
+		form {
+			margin: 2.5em 0 0 0;
+			padding: 0;
+		}
+
+		::placeholder {
+			color: white;
+		}
+		</style>
+    </head>
+    <body>
+    	<h1><a href="{{ inventory_hostname }}">{{ inventory_hostname }}</a></h1>
+		<div class="content">
+			{% if 'nextcloud' in role_names %}
+			<a class="nextcloud" href="https://{{ inventory_hostname }}/nextcloud/"><img src="res/nextcloud.png"/> Nextcloud</a>
+			{% endif %}
+			{% if 'shaarli' in role_names %}
+			<a class="shaarli" href="https://{{ inventory_hostname }}/links/"><img src="res/shaarli.png"/> Shaarli</a>
+			{% endif %}
+			{% if 'tt-rss' in role_names %}
+			<a class="tt-rss" href="https://{{ inventory_hostname }}/tt-rss/"><img src="res/tt-rss.png"/> Tiny Tiny RSS</a>
+			{% endif %}
+			{% if 'transmission' in role_names %}
+			<a class="transmission" href="https://{{ inventory_hostname }}/transmission/web/"><img src="res/transmission.png"/> Transmission</a>
+			{% endif %}
+			{% if 'gitea' in role_names %}
+			<a class="gitea" href="https://{{ inventory_hostname }}/gitea/"><img src="res/gitea.png"/> Gitea</a>
+			{% endif %}
+			{% if 'icecast' in role_names %}
+			<a class="icecast" href="https://{{ inventory_hostname }}/icecast/"><img src="res/icecast.png"/> Icecast</a>
+			{% endif %}
+			{% if 'monitoring' in role_names %}
+			<a class="netdata" href="https://{{ inventory_hostname }}:19999/#theme=white"><img src="res/netdata.png"/> Netdata</a>
+			{% endif %}
+			<a class="ssh"><img src="res/terminal.png"/> SSH <code>ssh user@{{ inventory_hostname }}</code></a>
+			<a class="sftp"><img src="res/folder.png"/> SFTP <code>sftp://user@{{ inventory_hostname }}</code></a>
+		</div>
+
+    </body>
+</html>

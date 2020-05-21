@@ -1,0 +1,118 @@
+---
+
+##### PACKAGES ###################
+
+- name: install apache/php packages
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - apache2
+      - libapache2-mod-evasive
+      - libapache2-mod-php
+      - php-apcu
+      - php
+
+##### APACHE MODULES/CONFIGURATON #####
+
+- name: copy apache2/php configuration
+  template: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'etc_apache2_conf-available_security.conf.j2', dest: '/etc/apache2/conf-available/security.conf'}
+    - { src: 'etc_apache2_conf-available_logging.conf.j2', dest: '/etc/apache2/conf-available/logging.conf'}
+    - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf'}
+    - { src: 'etc_php_7.3_apache2_conf.d_30-hide-header.ini.j2', dest: '/etc/php/7.3/apache2/conf.d/30-hide-header.ini'}
+  notify: restart apache
+
+- name: disable unnecessary apache modules
+  command: a2dismod {{ item }}
+  args:
+    removes: /etc/apache2/mods-enabled/cgi.load
+  with_items:
+    - 'cgi'
+  notify: restart apache
+
+- name: enable apache modules
+  command: a2enmod {{ item }}
+  args:
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+  with_items:
+    - 'auth_basic'
+    - 'deflate'
+    - 'headers'
+    - 'php7.3'
+    - 'rewrite'
+    - 'ssl'
+  notify: restart apache
+
+- name: enable apache configuration snippets
+  command: a2enconf {{ item }}
+  args:
+    creates: "/etc/apache2/conf-enabled/{{ item }}.conf"
+  with_items:
+    - 'security'
+    - 'logging'
+  notify: restart apache
+
+- include: apache-mod-evasive.yml
+
+
+##### APACHE VIRTUALHOSTS #####
+
+- name: create documentroot directories for virtualhosts
+  file:
+    state: directory
+    path: "{{ item.documentroot }}"
+  with_items: "{{ apache_virtualhosts }}"
+
+- name: copy robots.txt
+  template:
+    src: var_www_virtualhost_robots.txt.j2
+    dest: "{{ item.documentroot }}/robots.txt"
+  with_items: "{{ apache_virtualhosts }}"
+
+- name: generate automatic homepage
+  include: homepage.yml
+
+- name: copy apache sites config
+  template:
+    src: etc_apache2_sites-available_sites.conf.j2
+    dest: /etc/apache2/sites-available/sites.conf
+  notify: reload apache
+
+- name: disable default apache site
+  command: a2dissite 000-default
+  args:
+    removes: /etc/apache2/sites-enabled/000-default.conf
+  notify: restart apache
+
+- name: enable apache sites
+  command: a2ensite sites
+  args:
+    creates: /etc/apache2/sites-enabled/sites.conf
+  notify: restart apache
+
+##### BACKUPS #####
+
+- name: create rsnapshot configuration includes directory
+  file:
+    path: /etc/rsnapshot.d
+    state: directory
+
+- name: copy rsnapshot configuration for letsencrypt backups
+  template:
+    src: etc_rsnapshot.d_letsencrypt.conf.j2
+    dest: /etc/rsnapshot.d/letsencrypt.conf
+
+##### SERVICE #####
+
+- name: enable apache service
+  service: name=apache2 state=started enabled=yes
+  when: apache_enable_service|bool
+  tags: services
+
+- name: disable apache service
+  service: name=apache2 state=stopped enabled=no
+  when: not apache_enable_service|bool
+  tags: services

@@ -1,0 +1,12 @@
+---
+
+##### APACHE SSL/TLS CERTIFICATES - COMMON #####
+
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    package:
+      - python3-openssl # required for self-signed certificates
+      - ssl-cert # required for self-signed certificates
+      - certbot # required for letsencrypt certificates
+      - python3-certbot-apache # required for letsencrypt certificates
+    state: present

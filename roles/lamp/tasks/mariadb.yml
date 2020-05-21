@@ -1,0 +1,68 @@
+---
+
+- name: install mariadb database server
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - mariadb-server
+      - python3-mysqldb
+  notify: restart mariadb
+
+- name: Set root password for mariadb
+  mysql_user:
+    name: root
+    password: "{{ mariadb_root_password }}"
+    check_implicit_admin: yes
+    login_password: "{{ mariadb_root_password }}"
+    state: present
+
+- name: allow root user to connect to mysql/mariadb for automatic backups
+  template:
+    src: root_.my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0400
+
+- name: delete anonymous mariadb user for the current hostname
+  mysql_user:
+    user: ""
+    host: "{{ mariadb_hostname }}"
+    login_password: "{{ mariadb_root_password }}"
+    state: absent
+
+- name: delete anonymous mariadb user for localhost
+  mysql_user:
+    user: ""
+    login_password: "{{ mariadb_root_password }}"
+    state: "absent"
+
+- name: remove mariadb test database
+  mysql_db:
+    db: test
+    login_password: "{{ mariadb_root_password }}"
+    state: absent
+
+- name: upgrade mariadb tables
+  command: mysql_upgrade --password="{{ mariadb_root_password }}"
+  register: mysql_upgraded
+  changed_when: "'is already upgraded' not in mysql_upgraded.stdout"
+  notify: restart mariadb
+
+##### SERVICE #####
+
+- name: enable mariadb service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+  when: mariadb_enable_service|bool
+
+- name: disable mariadb service
+  service:
+    name: mariadb
+    state: stopped
+    enabled: no
+  when: not mariadb_enable_service|bool

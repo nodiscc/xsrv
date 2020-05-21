@@ -1,0 +1,45 @@
+---
+
+- include: apache-ssl-common.yml
+  become: yes
+  tags:
+    - apache
+    - lamp
+    - certificates
+    - ssl
+
+- include: apache-ssl-selfsigned.yml
+  become: yes
+  tags:
+    - apache
+    - lamp
+    - certificates
+    - ssl
+
+- include_tasks:
+    file: apache-ssl-letsencrypt.yml
+    apply:
+      become: yes
+      tags:
+        - apache
+        - lamp
+        - certificates
+        - ssl
+        - letsencrypt
+  loop: "{{ apache_virtualhosts }}"
+  tags: always
+
+- include: apache.yml
+  become: yes
+  tags:
+    - apache
+    - lamp
+
+- include: mariadb.yml
+  become: yes
+  tags:
+    - mariadb
+    - lamp
+
+- name: restart apache to apply configuration changes
+  meta: flush_handlers

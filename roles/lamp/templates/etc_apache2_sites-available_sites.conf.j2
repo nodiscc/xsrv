@@ -1,0 +1,81 @@
+<VirtualHost *:80>
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+<VirtualHost _default_:443>
+    # This virtualhost will be served for requests that do not match any known servername
+    # (for example trying to access the server with just an IP address). It just displays/logs a 404 error.
+    ServerName localhost
+    DocumentRoot /var/www/localhost
+    # Use the default self-signed certificate for localhost
+    SSLEngine On
+    SSLCertificateFile /etc/ssl/certs/localhost.crt
+    SSLCertificateKeyFile /etc/ssl/private/localhost.key
+</VirtualHost>
+
+{% for vhost in apache_virtualhosts %}
+<VirtualHost *:443>
+    ServerName {{ vhost.servername }}
+    DocumentRoot {{ vhost.documentroot }}
+
+    # Common SSL/TLS configuration
+    SSLEngine               on
+    SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1 -TLSv1.2
+    SSLCipherSuite          ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS
+    SSLHonorCipherOrder     on
+    SSLCompression          off
+    # Always ensure Cookies have "Secure" set (JAH 2012/1)
+    Header edit Set-Cookie (?i)^(.*)(;\s*secure)??((\s*;)?(.*)) "$1; Secure$3$4"
+    # Disable SSL session tickets, may compromise Perfect Forward Secrecy
+    SSLSessionTickets       off
+    # enable HTTP/2, if available
+    Protocols h2 http/1.1
+
+{% if vhost.cert_mode == 'selfsigned' %}
+    # Configuration for self-signed SSL certificates
+    SSLCertificateFile /etc/ssl/certs/{{ vhost.servername }}.crt
+    SSLCertificateKeyFile /etc/ssl/private/{{ vhost.servername }}.key
+    # HSTS/OCSP Stapling are not supported for self-signed certificates
+{% endif %}
+
+{% if vhost.cert_mode == 'letsencrypt' %}
+    # Configuration for letsencrypt.org SSL certificates
+    SSLCertificateFile /etc/letsencrypt/live/{{ vhost.servername }}/cert.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/{{ vhost.servername }}/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/{{ vhost.servername }}/fullchain.pem
+
+    # HTTP Strict Transport Security (63072000 seconds)
+    SSLOptions +StrictRequire
+    Header always set Strict-Transport-Security "max-age=63072000"
+{% endif %}
+
+{% if vhost.allow_robots is not defined or not vhost.allow_robots %}
+    # Ask search engines/bots not to crawl the website
+    Header always set X-Robots-Tag "noindex,nofollow,noarchive,nosnippet"
+{% endif %}
+
+{% if vhost.reverse_proxies is defined %}
+    LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
+    LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
+    ProxyPreserveHost On
+{% for reverse_proxy in vhost.reverse_proxies %}
+    # {{ reverse_proxy.name }} reverse proxy
+    ProxyPass {{ reverse_proxy.location }} {{ reverse_proxy.backend }}
+    ProxyPassReverse {{ reverse_proxy.location }} {{ reverse_proxy.backend }}
+{% if reverse_proxy.response_headers is defined %}
+    LoadModule setenvif_module /usr/lib/apache2/modules/mod_setenvif.so
+    SetEnvIf Request_URI ^{{ reverse_proxy.location }} {{ reverse_proxy.name }}
+{% for header in reverse_proxy.response_headers %}
+    Header always unset {{ header.split(' ')[0] }} env={{ reverse_proxy.name }}
+    Header always set {{ header }} env={{ reverse_proxy.name }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+</VirtualHost>
+{% endfor %}
+

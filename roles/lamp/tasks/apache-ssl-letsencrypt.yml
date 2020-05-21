@@ -1,0 +1,31 @@
+---
+
+##### APACHE SSL/TLS CERTIFICATES - LET'S ENCRYPT #####
+
+- name: check if letsencrypt certificate already exists for the servername
+  become: yes
+  stat:
+    path: "/etc/letsencrypt/live/{{ item.servername }}/cert.pem"
+  register: letsencrypt_cert
+  when: item.cert_mode == 'letsencrypt'
+
+- name: stop apache to allow certbot standalone server to bind to port 80
+  become: yes
+  service:
+    name: apache2
+    state: stopped
+  when:
+    - item.cert_mode == 'letsencrypt'
+    - not letsencrypt_cert.stat.exists
+  notify: restart apache
+
+- name: generate initial letsencrypt certificate
+  become: yes
+  command: >
+    certbot certonly --standalone --noninteractive --agree-tos
+    --email "{{ apache_letsencrypt_email | default('admin@' + item.servername) }}"
+    -d "{{ item.servername }}"
+  when:
+    - item.cert_mode == 'letsencrypt'
+    - not letsencrypt_cert.stat.exists
+  notify: restart apache

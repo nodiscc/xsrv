@@ -1,0 +1,71 @@
+---
+
+##### APACHE WEB SERVER #####
+
+# List of apache virtualhosts, each one takes the following parameters:
+#
+# 'servername': domain name  for which the virtualhost will serve requests
+# 'documentroot': document root where files for this virtualhost must be placed
+# 'allow_robots': yes/no (default: no): when set to no, crawlers/bots will be disallowed from browsing the site (bad bots will ignore this settings)
+# 'cert_mode': one of 'selfsigned', 'letsencrypt'
+#     'selfsigned': generate and use a self-signed certificate key for this domain
+#     'letsencrypt': generate a free certificate on Let's Encrypt (letsencrypt.org) certificate for this domain
+#                    port 80/tcp MUST be reachable from the Internet, the DNS domain MUST point to the server's public IP address
+# 'auto_homepage': yes/no: auto-build a homepage with links to installed web applications (based on enabled roles, only works with a single virtualhost named the same as the machine hostname)
+# 'reverse_proxies': (optional) a list of reverse proxies/remote servers to map to the local server URL space. Takes the following parameters:
+#     name: an arbitrary name (such as the destination app/server name)
+#     location: the base URL/path mapped to the proxied host, eg /myapp
+#     backend: the full URL of the host to pass requests to, eg. http://myapp.internalserv.er:8080
+#     response_headers: (optional) list of HTTP headers to set on responses from the proxy (override any previous header with the same name)
+#
+# Example:
+# apache_virtualhosts:
+#   - servername: "my.example.org"
+#     documentroot: "/var/www/my.example.org"
+#     cert_mode: "selfsigned"
+#     allow_robots: yes
+#     auto_homepage: yes
+#   - servername: "www.mysite.org"
+#     documentroot: "/var/www/www.mysite.org"
+#     cert_mode: "letsencrypt"
+#     auto_homepage: yes
+#     reverse_proxies:
+#       - name: gitea
+#         location: /gitea
+#         backend: http://localhost:3000
+#         response_headers:
+#           - Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
+
+apache_virtualhosts:
+  - servername: "{{ inventory_hostname }}"
+    documentroot: "/var/www/{{ inventory_hostname }}"
+    cert_mode: selfsigned
+    allow_robots: no
+    auto_homepage: yes
+
+# yes/no: listen on port 80 (unencrypted HTTP)
+# (all unencrypted requests will be redirected to HTTPS)
+apache_listen_http: yes
+
+# yes/no: start/stop the apache webserver, enable/disable it on boot
+apache_enable_service: yes
+
+# yes/no: enable mod_evasive for basic DoS protection
+# This can interfere with legitimate traffic, so be wary if you decide to enable it
+apache_enable_mod_evasive: no
+
+
+# (optional) e-mail address to register a letsencrypt.org account
+# defaults to 'admin@' + item.servername if unset
+# apache_letsencrypt_email: "admin@my.example.org"
+
+##### MARIADB DATABASE SERVER #####
+
+# root password for the mariadb database service (default: random password - the secrets_path variable must be defined )
+mariadb_root_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.mariadb_root_password length=19 chars=ascii_letters,digits,hexdigits') }}"
+
+# hostname for the mariadb database service
+mariadb_hostname: "{{ inventory_hostname }}"
+
+# yes/no: start/stop the mysql service, enable/disable it on boot
+mariadb_enable_service: yes
