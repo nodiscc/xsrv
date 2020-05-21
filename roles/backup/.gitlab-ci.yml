@@ -1,0 +1,10 @@
+stages:
+ - test
+
+test:
+  image: debian:stable
+  stage: test
+  script:
+    - apt update && apt -y install python3-pip
+    - pip3 install ansible-lint
+    - ansible-lint ./

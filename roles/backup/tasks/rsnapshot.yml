@@ -1,0 +1,102 @@
+---
+
+##### REQUIREMENTS #####
+
+- name: create backups directory
+  file:
+    path: "{{ rsnapshot_backup_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create rsnapshot log file if it does not exist
+  copy:
+    force: no
+    content: ""
+    dest: /var/log/rsnapshot.log
+    owner: root
+    group: root
+    mode: 0660
+
+
+##### INSTALLATION/CONFIGURATION #####
+
+- name: copy rsnapshot configuration
+  template:
+    src: etc_rsnapshot.conf.j2
+    dest: /etc/rsnapshot.conf
+
+- name: create /etc/rsnapshot.d dynamic configuration directory
+  file:
+    path: /etc/rsnapshot.d
+    state: directory
+
+- name: install rsnapshot
+  apt:
+    package: rsnapshot
+    state: present
+
+# If there is a syntax error in the config, this task will fail
+# If there is a non-existing directory backup source, it will also fail
+# Disabled since it will always throw an error on first deployment
+# - name: test rsnapshot configuration
+#   command: rsnapshot configtest
+#   changed_when: False
+
+- name: create ssh client configuration directory for the root user
+  file:
+    state: directory
+    path: /root/.ssh
+    owner: root
+    group: root
+    mode: 0600
+
+- name: ensure a SSH key pair exists for the root user
+  openssh_keypair:
+    path: /root/.ssh/id_rsa
+    mode: 0600
+    size: 4096
+  register: root_ssh_key
+
+- name: display root public SSH key
+  debug:
+    msg: >
+      Please authorize this key on remote machines backup user accounts
+      (see the https://gitlab.com/nodiscc/ansible-xsrv-common/ role and 'remotebackup_user_pubkey' option:\n
+      {{ root_ssh_key.public_key }}
+
+##### SCHEDULING #####
+
+# At 01:00 every day
+- name: setup daily backup cron job
+  cron:
+    user: root
+    cron_file: '/etc/cron.d/rsnapshot'
+    name: rsnapshot-daily
+    hour: '1'
+    minute: '0'
+    day: '*'
+    job: rsnapshot daily
+
+# At 00:01 every sunday
+- name: setup weekly backup cron job
+  cron:
+    user: root
+    cron_file: '/etc/cron.d/rsnapshot'
+    name: rsnapshot-weekly
+    hour: '0'
+    minute: '1'
+    weekday: '0'
+    job: rsnapshot weekly
+
+# At 02:01 on the first day of the month
+- name: setup monthly backup cron job
+  cron:
+    user: root
+    cron_file: '/etc/cron.d/rsnapshot'
+    name: rsnapshot-monthly
+    hour: '2'
+    minute: '1'
+    day: '1'
+    job: rsnapshot monthly

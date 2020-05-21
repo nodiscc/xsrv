@@ -1,0 +1,65 @@
+---
+
+##### RSNAPSHOT BACKUP SERVICE #####
+
+# Backups storage directory (with traing slash!)
+rsnapshot_backup_dir: "/var/backups/rsnapshot/"
+
+# Number of backup generations to keep
+# for daily, weekly and monthly backups
+rsnapshot_retain_daily: 6
+rsnapshot_retain_weekly: 6
+rsnapshot_retain_monthly: 6
+
+# Commands to run before starting backups (database dumps, application exports...)
+# Return codes different from 0 will cause the backup process to abort with an error
+# These commands are run as the 'rsnapshot' user locally.
+# Use 'ssh user@host /path/to/script' to run scripts on remote hosts.
+# - For local backups ensure the user has read permissions on the directories (or can 'sudo rsync' without password)
+# - For remote backups, ensure rsnapshot's SSH key is authorized to connect, and also has read/sudo rsync permissions on the remote host
+# Example:
+# rsnapshot_backup_execs:
+#   - 'ssh rsnapshot@srv01.example.org /opt/xsrv/nextcloud-mysql-dump.sh'
+#   - 'ssh rsnapshot@srv02.example.org /opt/xsrv/ttrss-mysql-dump.sh'
+#   - 'ssh rsnapshot@srv03.example.org /opt/xsrv/openldap-dump.sh'
+#   - /opt/xsrv/nextcloud-mysql-dump.sh
+rsnapshot_backup_execs: []
+
+# Local files/directories to backup
+# The 'rsnapshot' user must have read access to these directories
+# Example:
+# rsnapshot_local_backups:
+#   - '/var/backup/mysql/nextcloud/'
+#   - '/var/backups/mysql/ttrss/'
+#   - '/var/backups/openldap/'
+#   - '/var/lib/transmission-daemon/'
+#   - '/var/www/my.example.org/links/data/'
+#   - '/var/www/my.example.org/public/'
+#   - '/etc/letsencrypt/'
+#   - '/etc/ssl/private/'
+rsnapshot_local_backups: []
+
+# Remote files/directories to fetch. Parameters:
+#    user: SSH username to connect with (must have read access to backup paths)
+#    host: host address
+#    path: file/directory path to backup
+# Example:
+# rsnapshot_remote_backups:
+#   - { user: 'rsnapshot', host: 'srv01.example.org', path: '/var/backup/mysql/nextcloud/' }
+#   - { user: 'rsnapshot', host: 'srv01.example.org', path: '/var/backups/mysql/ttrss/' }
+#   - { user: 'rsnapshot', host: 'srv02.example.org', path: '/var/backups/openldap/' }
+#   - { user: 'rsnapshot', host: 'srv03.example.org', path: '/var/www/my.example.org/links/data/' }
+#   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/var/www/my.example.org/public/' }
+#   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/letsencrypt/' }
+#   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/ssl/private/' }
+rsnapshot_remote_backups: []
+
+# File name patterns to exclude from backups, globally
+# Example:
+# rsnapshot_excludes:
+#   - '/var/nextcloud/data/updater-*/'
+#   - '/var/nextcloud/data/appdata_*/'
+#   - '/var/nextcloud/data/*/cache/'
+#   - '/var/nextcloud/data/*/thumbnails/'
+#   - '/var/nextcloud/data/*/files_trashbin/'
+rsnapshot_excludes: []
