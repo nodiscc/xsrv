@@ -1,13 +1,5 @@
 ---
 
-- include: apache-ssl-common.yml
-  become: yes
-  tags:
-    - apache
-    - lamp
-    - certificates
-    - ssl
-
 - include: apache-ssl-selfsigned.yml
   become: yes
   tags:
@@ -15,19 +7,6 @@
     - lamp
     - certificates
     - ssl
-
-- include_tasks:
-    file: apache-ssl-letsencrypt.yml
-    apply:
-      become: yes
-      tags:
-        - apache
-        - lamp
-        - certificates
-        - ssl
-        - letsencrypt
-  loop: "{{ apache_virtualhosts }}"
-  tags: always
 
 - include: apache.yml
   become: yes

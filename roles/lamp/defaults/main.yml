@@ -4,44 +4,36 @@
 
 # List of apache virtualhosts, each one takes the following parameters:
 #
-# 'servername': domain name  for which the virtualhost will serve requests
-# 'documentroot': document root where files for this virtualhost must be placed
-# 'allow_robots': yes/no (default: no): when set to no, crawlers/bots will be disallowed from browsing the site (bad bots will ignore this settings)
-# 'cert_mode': one of 'selfsigned', 'letsencrypt'
-#     'selfsigned': generate and use a self-signed certificate key for this domain
-#     'letsencrypt': generate a free certificate on Let's Encrypt (letsencrypt.org) certificate for this domain
-#                    port 80/tcp MUST be reachable from the Internet, the DNS domain MUST point to the server's public IP address
-# 'auto_homepage': yes/no: auto-build a homepage with links to installed web applications (based on enabled roles, only works with a single virtualhost named the same as the machine hostname)
-# 'reverse_proxies': (optional) a list of reverse proxies/remote servers to map to the local server URL space. Takes the following parameters:
+# servername: domain name for which the virtualhost will serve requests
+# documentroot: directory for the document root of this virtualhost
+# allow_robots: yes/no (default: no): when set to no, crawlers/bots will be disallowed from browsing the site (bad bots will ignore this setting)
+# https_mode: inselfsigned/letsencrypt:
+#   none: don't enable HTTPS for this vhost, don't generate certificates
+#   selfsigned: generate and use a self-signed certificate key for this vhost
+#   letsencrypt: generate a free certificate on Let's Encrypt (letsencrypt.org) certificate for this vhost
+#                (port 80/tcp MUST be reachable from the Internet on the DNS name of the vhost)
+# reverse_proxies: (optional) list of reverse proxies/remote servers to map to the local server URL space. Takes the following parameters:
 #     name: an arbitrary name (such as the destination app/server name)
-#     location: the base URL/path mapped to the proxied host, eg /myapp
-#     backend: the full URL of the host to pass requests to, eg. http://myapp.internalserv.er:8080
+#     location: base URL/path mapped to the proxied host, eg /myapp
+#     backend: full URL of the host to pass requests to, eg. http://myapp.internalserv.er:8080
 #     response_headers: (optional) list of HTTP headers to set on responses from the proxy (override any previous header with the same name)
 #
 # Example:
 # apache_virtualhosts:
-#   - servername: "my.example.org"
-#     documentroot: "/var/www/my.example.org"
-#     cert_mode: "selfsigned"
-#     allow_robots: yes
-#     auto_homepage: yes
+#   - servername: "www.CHANGEME.org"
+#     documentroot: "/var/www/www.CHANGEME.org"
+#     https_mode: "selfsigned"
+#     allow_robots: no
 #   - servername: "www.mysite.org"
 #     documentroot: "/var/www/www.mysite.org"
-#     cert_mode: "letsencrypt"
-#     auto_homepage: yes
+#     https_mode: "letsencrypt"
 #     reverse_proxies:
 #       - name: gitea
 #         location: /gitea
 #         backend: http://localhost:3000
 #         response_headers:
 #           - Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
-
-apache_virtualhosts:
-  - servername: "{{ inventory_hostname }}"
-    documentroot: "/var/www/{{ inventory_hostname }}"
-    cert_mode: selfsigned
-    allow_robots: no
-    auto_homepage: yes
+apache_virtualhosts: []
 
 # yes/no: listen on port 80 (unencrypted HTTP)
 # (all unencrypted requests will be redirected to HTTPS)
@@ -54,15 +46,13 @@ apache_enable_service: yes
 # This can interfere with legitimate traffic, so be wary if you decide to enable it
 apache_enable_mod_evasive: no
 
-
 # (optional) e-mail address to register a letsencrypt.org account
-# defaults to 'admin@' + item.servername if unset
-# apache_letsencrypt_email: "admin@my.example.org"
+apache_letsencrypt_email: "CHANGEME@CHANGEME.org"
 
 ##### MARIADB DATABASE SERVER #####
 
-# root password for the mariadb database service (default: random password - the secrets_path variable must be defined )
-mariadb_root_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.mariadb_root_password length=19 chars=ascii_letters,digits,hexdigits') }}"
+# root password for the mariadb database service
+mariadb_root_password: "{{ vault_mariadb_root_password }}" # CHANGEME
 
 # hostname for the mariadb database service
 mariadb_hostname: "{{ inventory_hostname }}"

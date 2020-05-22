@@ -27,7 +27,7 @@ See [defaults/main.yml](defaults/main.yml)
 Dependencies
 ------------
 
-The [`common`](https://gitlab.com/nodiscc/ansible-xsrv-common) role.
+Recommended: the [`common`](https://gitlab.com/nodiscc/ansible-xsrv-common) role.
 
 
 Example Playbook

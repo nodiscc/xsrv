@@ -2,17 +2,33 @@
 
 ##### PACKAGES ###################
 
+- name: configure APT to install apache and modules from buster-backports
+  template:
+    src: etc_apt_preferences.d_99-apache2-buster-backports.j2
+    dest: /etc/apt/preferences.d/99-apache2-buster-backports
+  notify: update apt cache
+
+# refresh APT cache after updating APT preferences
+- meta: flush_handlers
+
 - name: install apache/php packages
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - apache2
       - libapache2-mod-evasive
       - libapache2-mod-php
+      - libapache2-mod-md
       - php-apcu
       - php
+
+- name: install libapache2-mod-md from buster-backports
+  apt:
+    state: present
+    package:
+      - libapache2-mod-md
+    default_release: buster-backports
+
 
 ##### APACHE MODULES/CONFIGURATON #####
 
@@ -21,6 +37,7 @@
   with_items:
     - { src: 'etc_apache2_conf-available_security.conf.j2', dest: '/etc/apache2/conf-available/security.conf'}
     - { src: 'etc_apache2_conf-available_logging.conf.j2', dest: '/etc/apache2/conf-available/logging.conf'}
+    - { src: 'etc_apache2_conf-available_ssl-common.conf.j2', dest: '/etc/apache2/conf-available/ssl-common.conf'}
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf'}
     - { src: 'etc_php_7.3_apache2_conf.d_30-hide-header.ini.j2', dest: '/etc/php/7.3/apache2/conf.d/30-hide-header.ini'}
   notify: restart apache
@@ -39,12 +56,12 @@
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   with_items:
     - 'auth_basic'
-    - 'deflate'
     - 'headers'
-    - 'php7.3'
     - 'rewrite'
+    - 'php7.3'
+    - 'md'
     - 'ssl'
-  notify: restart apache
+  notify: reload apache
 
 - name: enable apache configuration snippets
   command: a2enconf {{ item }}
@@ -53,6 +70,7 @@
   with_items:
     - 'security'
     - 'logging'
+    - 'ssl-common'
   notify: restart apache
 
 - include: apache-mod-evasive.yml
@@ -71,9 +89,6 @@
     src: var_www_virtualhost_robots.txt.j2
     dest: "{{ item.documentroot }}/robots.txt"
   with_items: "{{ apache_virtualhosts }}"
-
-- name: generate automatic homepage
-  include: homepage.yml
 
 - name: copy apache sites config
   template:

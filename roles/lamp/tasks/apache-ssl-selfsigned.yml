@@ -2,6 +2,13 @@
 
 ##### APACHE SSL/TLS CERTIFICATES - SELF-SIGNED #####
 
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    package:
+      - python3-openssl
+      - ssl-cert
+    state: present
+
 # We add a self-signed certificate for the domain 'localhost', and use it for the default
 # virtualhost (served for requests that do not match any configured servername)
 # It prevents disclosing the CN for the first 'real' virtualhost certificate, when accessing the server directly by IP address
@@ -9,8 +16,8 @@
 - name: generate openssl private keys
   openssl_privatekey:
     path: "/etc/ssl/private/{{ item.servername }}.key"
-  when: item.cert_mode == 'selfsigned'
-  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'cert_mode': 'selfsigned'} ] }}"
+  when: item.https_mode == 'selfsigned'
+  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'https_mode': 'selfsigned'} ] }}"
   notify: restart apache
 
 - name: generate openssl certficate signing requests
@@ -18,8 +25,8 @@
     path: "/etc/ssl/private/{{ item.servername }}.csr"
     privatekey_path: "/etc/ssl/private/{{ item.servername }}.key"
     common_name: "{{ item.servername }}"
-  when: item.cert_mode == 'selfsigned'
-  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'cert_mode': 'selfsigned'} ] }}"
+  when: item.https_mode == 'selfsigned'
+  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'https_mode': 'selfsigned'} ] }}"
 
 - name: generate self-signed openssl certificates
   openssl_certificate:
@@ -27,6 +34,6 @@
     privatekey_path: "/etc/ssl/private/{{ item.servername }}.key"
     csr_path: "/etc/ssl/private/{{ item.servername }}.csr"
     provider: selfsigned
-  when: item.cert_mode == 'selfsigned'
-  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'cert_mode': 'selfsigned'} ] }}"
+  when: item.https_mode == 'selfsigned'
+  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'https_mode': 'selfsigned'} ] }}"
   notify: restart apache

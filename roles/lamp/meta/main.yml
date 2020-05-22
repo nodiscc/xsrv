@@ -20,3 +20,6 @@ galaxy_info:
     - database
     - server
     - lamp
+
+dependencies:
+  - common
