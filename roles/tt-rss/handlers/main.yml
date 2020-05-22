@@ -1,5 +1,0 @@
----
-
-- name: update tt-rss admin user in database
-  become: yes
-  shell: mysql -u root -h {{ tt_rss_db_host }} {{ tt_rss_db_name }} < /root/tt_rss_admin_user_info.sql

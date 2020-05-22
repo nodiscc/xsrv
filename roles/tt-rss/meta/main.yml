@@ -18,3 +18,7 @@ galaxy_info:
     - news
     - feed
     - reader
+
+dependencies:
+  - lamp
+  - common

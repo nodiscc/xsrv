@@ -1,9 +1,8 @@
-tt-rss
-=============
+# xsrv.tt-rss
 
 This role will install [Tiny Tiny RSS](https://tt-rss.org/), a web-based [News feed reader](https://en.wikipedia.org/wiki/News_aggregator) and aggregator.
 
-A feed reader allows subscribing to many blogs/websites updates using the [RSS](https://en.wikipedia.org/wiki/RSS)/ATOM standard, and access all articles in a single, unified application. It comes with extensive fiiltering/sorting/searching/presentation options, and plugins to improve integration of content from subscribed pages.
+A feed reader allows subscribing to many blogs/websites updates (using the [RSS](https://en.wikipedia.org/wiki/RSS)/ATOM standard), and access all articles in a single, unified application. It comes with extensive fiiltering/sorting/searching/presentation options, and plugins to improve integration of content from subscribed pages.
 
 * **[Homepage/features](https://tt-rss.org/)**
 * **[Community/forums](https://discourse.tt-rss.org/)**
@@ -12,12 +11,11 @@ A feed reader allows subscribing to many blogs/websites updates using the [RSS](
 [![](https://i.imgur.com/7oO67Xq.png)](https://i.imgur.com/rNTiRva.png)
 [![](https://i.imgur.com/CqoOfXo.png)](https://i.imgur.com/mv2fppi.jpg)
 
-This role is not always idempotent - tt-rss is always upgraded to the latest available version (git master).
 
 Requirements
 ------------
 
-This role requires Ansible 2.8 or higher.
+- Ansible 2.9 or higher.
 
 
 Role Variables
@@ -29,11 +27,10 @@ See [defaults/main.yml](defaults/main.yml)
 Dependencies
 ------------
 
-Recommended:
+- [lamp](../lamp/README.md) role for automatic webserver configuration/SSL certificates
+- [common](../common/README.md) role for fail2ban support
+- [backup](../backup/README.md) role for automatic backups
 
-- The [lamp](https://gitlab.com/nodiscc/ansible-xsrv-lamp) role or similar apache setup
-- The [common](https://gitlab.com/nodiscc/ansible-xsrv-common) role for fail2ban support
-- The [backup](https://gitlab.com/nodiscc/ansible-xsrv-common) role automatic backups
 
 Example Playbook
 ----------------
@@ -46,8 +43,14 @@ Example Playbook
     - lamp
     - tt-rss
   vars:
-    tt_rss_user: "CHANGEME"
-    tt_rss_password: "CHANGEME"
+    tt_rss_fqdn: "rss.CHANGEME.org"
+
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_tt_rss_user: "CHANGEME"
+vault_tt_rss_password: "CHANGEME"
+vault_tt_rss_db_password: "CHANGEME"
+vault_tt_rss_feed_crypt_key: "CHANGEME" # random 24 characters
+vault_tt_rss_password_salt: "CHANGEME" # random 250 characters
 ```
 
 Usage
@@ -55,15 +58,19 @@ Usage
 
 ### Clients
 
-Tiny Tiny RSS can be accessed through a web browser. Other applications can be used:
+Tiny Tiny RSS can be accessed through:
 
+- a [web browser](https://www.mozilla.org/firefox/)
 - [TTRSS-Reader](https://f-droid.org/repository/browse/?fdid=org.ttrssreader) (Android)
 - [Liferea](https://lzone.de/liferea/) (Linux)
 - [Awesome RSS](https://addons.mozilla.org/en-US/firefox/addon/awesome-rss/) Firefox extension
 
+
 ### Backups
 
-See the included [rsnapshot configuration](templates/etc_rsnapshot.tt-rss.conf.j2) for the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role. To restore backups:
+See the included [rsnapshot configuration](templates/etc_rsnapshot.tt-rss.conf.j2) for the [backup](../backup/README.md) role.
+
+To restore backups:
 
 ```bash
 # remove the file indicating the database is populated
@@ -83,6 +90,14 @@ sudo mysql -e "DROP DATABASE ttrss; DROP USER 'ttrss'@'localhost';"
 # restore database backups
 sudo mysql ttrss < /var/backups/rsnapshot/daily.0/localhost/mysql/tt-rss.sql
 ```
+
+
+### Upgrades
+
+Re-apply the role on a regular basis to ensure the application stays up to date.
+
+This role is not always idempotent - tt-rss is always upgraded to the latest available version (git `master` branch).
+
 
 License
 -------

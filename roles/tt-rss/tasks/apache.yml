@@ -1,0 +1,16 @@
+##### APACHE CONFIG #####
+
+- name: copy tt-rss apache virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_tt-rss.conf.j2
+    dest: /etc/apache2/sites-available/tt-rss.conf
+    owner: root
+    group: root
+    mode: 0600
+  notify: reload apache
+
+- name: enable tt-rss apache virtualhost configuration
+  command: a2ensite tt-rss
+  args:
+    creates: "/etc/apache2/sites-enabled/tt-rss.conf"
+  notify: reload apache

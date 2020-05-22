@@ -1,0 +1,31 @@
+##### TT-RSS PLUGINS #####
+# TODO unmaintained, review, rewrite
+
+- name: clone tt-rss plugins
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: master
+    accept_hostkey: yes
+    force: yes
+  with_items:
+    - { repo: 'https://github.com/tribut/ttrss-videoframes', dest: '{{ tt_rss_install_dir }}/plugins.local/ttrss-videoframes' }
+    # - { repo: 'https://github.com/usr42/ttrss-sendtokindle', dest: '{{ tt_rss_install_dir }}/plugins.local/ttrss-sendtokindle' }
+    # - { repo: 'https://github.com/acaranta/tt-rss-yourls', dest: '{{ tt_rss_install_dir }}/plugins.local/tt-rss-yourls' }
+    # - { repo: 'https://framagit.org/framasoft/ttrss/framarticle_toolbar', dest: '{{ tt_rss_install_dir }}/plugins.local/framarticle_toolbar' }
+    # - { repo: 'https://github.com/jonrandoem/ttrss-qrcode', dest: '{{ tt_rss_install_dir }}/plugins.local/ttrss-qrcode' }
+    # - { repo: 'https://github.com/xppppp/ttrss-wallabag-plugin', dest: '{{ tt_rss_install_dir }}/plugins.local/wallabag' }
+    # - { repo: 'https://github.com/jcsaaddupuy/tt-rss-shaarli', dest: '{{ tt_rss_install_dir }}/plugins.local/tt-rss-shaarli' }
+  when: tt_rss_install_plugins|bool
+
+
+# - name: create symlinks in plugin directories
+#   file:
+#     state: link
+#     dest: "{{ item.dest }}"
+#     src: {{ item.src }}
+#   with_items:
+#     - { dest: '{{ tt_rss_install_dir }}/plugins.local/yourls', src: 'tt-rss-yourls/yourls/' }
+#     - { dest: '{{ tt_rss_install_dir }}/plugins.local/shaarli', src: 'tt-rss-shaarli/shaarli/' }
+#     - { dest: '{{ tt_rss_install_dir }}/plugins.local/videoframes', src: 'ttrss-videoframes/videoframes/' }
+#   when: tt_rss_install_plugins|bool

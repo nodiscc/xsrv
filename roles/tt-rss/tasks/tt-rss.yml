@@ -18,28 +18,7 @@
       - php7.3-gd
       - php7.3-opcache
 
-##### APPLICATION #####
-
-- name: clone/upgrade tt-rss
-  git:
-    repo: https://git.tt-rss.org/git/tt-rss.git
-    dest: "{{ tt_rss_install_dir }}"
-    version: '{{ tt_rss_version }}'
-    accept_hostkey: yes
-    force: yes
-  environment:
-    GIT_HTTP_USER_AGENT: "Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
-# (spoof git user agent to workaround buggy rate limiting on tt-rss.org)
-# https://discourse.tt-rss.org/t/gitlab-config-problems-trailing-slash-in-clone-urls/192
-# https://discourse.tt-rss.org/t/rate-limiting-for-some-git-related-requests/32
-
-- name: copy tt-rss configuration file
-  template:
-    src: var_www_tt-rss_config.php.j2
-    dest: "{{ tt_rss_install_dir }}/config.php"
-
-
-##### MYSQL #####
+##### DATABASE #####
 
 - name: create tt-rss mysql database
   mysql_db:
@@ -48,6 +27,7 @@
     login_host: "{{ tt_rss_db_host }}"
     login_user: root
 
+# TODO not idempotent
 - name: create tt-rss mysql user
   mysql_user:
     name: "{{ tt_rss_db_user }}"
@@ -55,161 +35,7 @@
     password: "{{ tt_rss_db_password }}"
     state: present
     priv: "{{ tt_rss_db_name }}.*:ALL"
-
-- name: import tt-rss database schema
-  shell: mysql -u root -h "{{ tt_rss_db_host }}" "{{ tt_rss_db_name }}" < "{{ tt_rss_install_dir }}/schema/ttrss_schema_mysql.sql"
-  when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
-
-- name: mark tt-rss database schema as imported
-  set_fact:
-    tt_rss_db_imported: True
-
-- name: create ansible local facts directory
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: 0755
-  with_items:
-    - /etc/ansible/
-    - /etc/ansible/facts.d
-
-- name: update tt-rss ansible facts file
-  template:
-    src: etc_ansible_facts.d_tt_rss.fact.j2
-    dest: /etc/ansible/facts.d/tt_rss.fact
-    mode: 0644
-
-- name: update tt-rss admin_user_info.sql credentials
-  template:
-    src: var_www_tt-rss_schema_admin_user_info.sql.j2
-    dest: /root/tt_rss_admin_user_info.sql
-    owner: root
-    group: root
-    mode: 0600
-  notify: update tt-rss admin user in database
-
-# TODO OPTIMIZE use mysql_query module in next ansible releases, remove credentials file from host
-# update admin user in database before continuing install
-- name: run all notified handlers now
-  meta: flush_handlers
-
-##### PLUGINS/THEMES #####
-
-- name: clone tt-rss themes
-  git: repo={{ item.repo }} dest={{ item.dest }} version=master accept_hostkey=yes force=yes
-  with_items:
-    - { repo: 'https://github.com/asyncopation/ttrss-theme-chalk', dest: '{{ tt_rss_install_dir }}/themes/chalk'}
-    - { repo: 'https://github.com/cas--/tt-rss_theme_grone', dest: '{{ tt_rss_install_dir }}/themes/grone'}
-    - { repo: 'https://github.com/levito/tt-rss-feedly-theme', dest: '{{ tt_rss_install_dir }}/themes/feedly'}
-    - { repo: 'https://github.com/tschinz/tt-rss_reeder_theme', dest: '{{ tt_rss_install_dir }}/themes/theme-reeder'}
-  when: tt_rss_install_themes|bool
-
-- name: clone tt-rss plugins
-  git: repo={{ item.repo }} dest={{ item.dest }} version=master accept_hostkey=yes force=yes
-  with_items:
-    - { repo: 'https://github.com/acaranta/tt-rss-yourls', dest: '{{ tt_rss_install_dir }}/plugins.local/tt-rss-yourls' }
-    - { repo: 'https://framagit.org/framasoft/ttrss/framarticle_toolbar', dest: '{{ tt_rss_install_dir }}/plugins.local/framarticle_toolbar' }
-    - { repo: 'https://github.com/jonrandoem/ttrss-qrcode', dest: '{{ tt_rss_install_dir }}/plugins.local/ttrss-qrcode' }
-    - { repo: 'https://github.com/xppppp/ttrss-wallabag-plugin', dest: '{{ tt_rss_install_dir }}/plugins.local/wallabag' }
-    - { repo: 'https://github.com/jcsaaddupuy/tt-rss-shaarli', dest: '{{ tt_rss_install_dir }}/plugins.local/tt-rss-shaarli' }
-    - { repo: 'https://github.com/tribut/ttrss-videoframes', dest: '{{ tt_rss_install_dir }}/plugins.local/ttrss-videoframes' }
-    - { repo: 'https://github.com/usr42/ttrss-sendtokindle', dest: '{{ tt_rss_install_dir }}/plugins.local/ttrss-sendtokindle' }
-  when: tt_rss_install_plugins|bool
-
-- name: create symlinks in theme directories
-  file: state=link dest={{ item.dest }} src={{ item.src }}
-  with_items:
-    - { dest: '{{ tt_rss_install_dir }}/themes/chalk.css', src: 'chalk/chalk.css' }
-    - { dest: '{{ tt_rss_install_dir }}/themes/chalk_images', src: 'chalk/chalk_images' }
-    - { dest: '{{ tt_rss_install_dir }}/themes/grone.css', src: 'grone/grone.css' }
-    - { dest: '{{ tt_rss_install_dir }}/themes/grone_imgs', src: 'grone/grone_imgs/' }
-    - { dest: '{{ tt_rss_install_dir }}/themes/feedly.css', src: 'feedly/feedly.css' }
-    - { dest: '{{ tt_rss_install_dir }}/themes/reeder', src: 'theme-reeder/reeder/' }
-    - { dest: '{{ tt_rss_install_dir }}/themes/reeder.css', src: 'theme-reeder/reeder.css' }
-  when: tt_rss_install_themes|bool
-
-- name: create symlinks in plugin directories
-  file: state=link dest={{ item.dest }} src={{ item.src }}
-  with_items:
-    - { dest: '{{ tt_rss_install_dir }}/plugins.local/yourls', src: 'tt-rss-yourls/yourls/' }
-    - { dest: '{{ tt_rss_install_dir }}/plugins.local/shaarli', src: 'tt-rss-shaarli/shaarli/' }
-    - { dest: '{{ tt_rss_install_dir }}/plugins.local/videoframes', src: 'ttrss-videoframes/videoframes/' }
-  when: tt_rss_install_plugins|bool
-
-
-##### FILE PERMISSIONS #####
-
-- name: set tt-rss files ownership to root:www-data
-  file:
-    path: "{{ tt_rss_install_dir }}"
-    state: directory
-    owner: root
-    group: www-data
-    recurse: yes
-
-- name: create tt-rss data/cache directories
-  file:
-    path: "{{ tt_rss_install_dir }}/{{ item }}"
-    state: directory
-    owner: www-data
-    group: www-data
-    recurse: yes
-  with_items:
-    - cache/images
-    - cache/export
-    - cache
-    - cache/js
-    - cache/simplepie
-    - cache/upload
-    - feed-icons
-    - lock
-
-- name: ensure files are mode 0640 and directories mode 0750
-  file:
-    path: "{{ tt_rss_install_dir }}"
-    state: directory
-    mode: u=rwX,g=rX,o=
-    recurse: yes
-
-- name: setup tt-rss feed update cron job
-  cron:
-    user: www-data
-    cron_file: '/etc/cron.d/tt-rss'
-    name: ttrss_update
-    hour: '*'
-    minute: '0'
-    job: '/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet'
-
-
-##### APACHE CONFIG #####
-
-- name: copy tt-rss apache content-security-policy configuration
-  template:
-    src: etc_apache2_conf-available_tt-rss-csp.conf.j2
-    dest: /etc/apache2/conf-available/tt-rss-csp.conf
-    owner: root
-    group: root
-    mode: 0600
-  notify: reload apache
-
-- name: enable tt-rss apache content-security-policy configuration
-  command: a2enconf tt-rss-csp
-  args:
-    creates: "/etc/apache2/conf-enabled/tt-rss-csp.conf"
-  notify: reload apache
-
-
-##### BACKUPS #####
-
-- name: create rsnapshot configuration includes directory
-  file:
-    path: /etc/rsnapshot.d
-    state: directory
-
-- name: copy rsnapshot configuration for tt-rss backups
-  template:
-    src: etc_rsnapshot.d_tt-rss.conf.j2
-    dest: /etc/rsnapshot.d/tt-rss.conf
+  no_log: True
 
 ##### FAIL2BAN #####
 
@@ -227,3 +53,95 @@
     dest: /etc/fail2ban/filter.d/tt-rss-auth.conf
   tags: fail2ban
   notify: reload fail2ban
+
+##### BACKUPS #####
+
+- name: create rsnapshot configuration includes directory
+  file:
+    path: /etc/rsnapshot.d
+    state: directory
+
+- name: copy rsnapshot configuration for tt-rss backups
+  template:
+    src: etc_rsnapshot.d_tt-rss.conf.j2
+    dest: /etc/rsnapshot.d/tt-rss.conf
+
+##### TT-RSS INSTALLATION #####
+
+- name: clone/upgrade tt-rss
+  git:
+    repo: https://git.tt-rss.org/git/tt-rss.git
+    dest: "{{ tt_rss_install_dir }}"
+    version: '{{ tt_rss_version }}'
+    accept_hostkey: yes
+    force: yes
+    umask: '027'
+  environment:
+    GIT_HTTP_USER_AGENT: "Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
+# (spoof git user agent to workaround buggy rate limiting on tt-rss.org)
+# https://discourse.tt-rss.org/t/gitlab-config-problems-trailing-slash-in-clone-urls/192
+# https://discourse.tt-rss.org/t/rate-limiting-for-some-git-related-requests/32
+
+- name: give required read permissions to the web server
+  file:
+    path: "{{ tt_rss_install_dir }}"
+    group: www-data
+    recurse: yes
+
+- name: give required write permissions to the web server
+  file:
+    path: "{{ tt_rss_install_dir }}/{{ item }}"
+    state: directory
+    group: www-data
+    mode: g=rwX
+  with_items:
+    - cache
+    - cache/export
+    - cache/images
+    - cache/feeds
+    - cache/upload
+    - feed-icons
+    - lock
+
+- name: copy tt-rss configuration file
+  template:
+    src: var_www_tt-rss_config.php.j2
+    dest: "{{ tt_rss_install_dir }}/config.php"
+    owner: root
+    group: www-data
+    mode: 0640
+
+- name: import tt-rss database schema if not already done
+  shell: mysql -u root -h "{{ tt_rss_db_host }}" "{{ tt_rss_db_name }}" < "{{ tt_rss_install_dir }}/schema/ttrss_schema_mysql.sql"
+  when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+
+# TODO OPTIMIZE use mysql_query module in next ansible releases
+- name: update tt-rss admin account
+  command: >
+    mysql -u root -h "{{ tt_rss_db_host }}" "{{ tt_rss_db_name }}"
+    --execute="UPDATE ttrss_users SET login = '{{ tt_rss_user }}',
+    pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}',
+    salt     = '{{ tt_rss_password_salt }}'
+    WHERE id = 1;"
+  when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+
+- name: setup tt-rss feed update cron job
+  cron:
+    user: www-data
+    cron_file: '/etc/cron.d/tt-rss'
+    name: ttrss_update
+    hour: '*'
+    minute: '0'
+    job: '/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet'
+
+- name: create ansible local facts directory
+  file:
+    path: "/etc/ansible/facts.d"
+    state: directory
+    mode: 0755
+
+- name: create tt-rss installed fact file
+  template:
+    src: etc_ansible_facts.d_tt_rss.fact.j2
+    dest: /etc/ansible/facts.d/tt_rss.fact
+    mode: 0644

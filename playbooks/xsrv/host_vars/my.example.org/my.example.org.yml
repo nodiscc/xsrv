@@ -20,6 +20,7 @@ nextcloud_password: "{{ xsrv_admin_password }}"
 
 ##### TT-RSS #####
 # see roles/tt-rss/defaults/main.yml
+tt_rss_fqdn: "rss.CHANGEME.org"
 tt_rss_user: "{{ xsrv_admin_username }}"
 tt_rss_password: "{{ xsrv_admin_password }}"
 

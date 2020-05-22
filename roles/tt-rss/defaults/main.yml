@@ -1,25 +1,33 @@
 ---
 
+# tt-rss instace fully qualified domain name
+# tt_rss_fqdn: "rss.CHANGEME.org" # CHANGEME
+
+# tt-rss installation directory (must be under a valid documentroot)
+tt_rss_install_dir: "/var/www/{{ tt_rss_fqdn }}"
+# full public URL of your tt-rss installation (update this if you changed the install location to a subdirectory)
+tt_rss_full_url: "https://{{ tt_rss_fqdn }}/"
+
+# HTTPS and SSL/TLS certificate mode for the tt-rss webserver virtualhost
+# letsencrypt: acquire a certificate from Let's Encrypt (tt_rss_fqdn must be piblicly resolvable, port tcp/80 must be reachable from the Internet)
+# selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
+# none: disable HTTPS entirely (not recommended)
+tt_rss_https_mode: selfsigned
+
 # tt-rss main user/admin username/password
-# tt_rss_user: "CHANGEME"
-# tt_rss_password: "CHANGEME"
+tt_rss_user: "{{ vault_tt_rss_user }}" # CHANGEME
+tt_rss_password: "{{ vault_tt_rss_password }}" # CHANGEME
 
 # tt-rss database credentials
 tt_rss_db_host: "localhost"
 tt_rss_db_name: "ttrss"
 tt_rss_db_user: "ttrss"
-tt_rss_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.tt_rss_db_password length=18') }}"
+tt_rss_db_password: "{{ vault_tt_rss_db_password }}" # CHANGEME
 
-# random 24 string used for encryption of passwords for password-protected feeds
-tt_rss_feed_crypt_key: "{{ lookup('password', 'secrets/' + inventory_hostname + '.tt_rss_feed_crypt_key length=24') }}"
+# random 24 characters string used for encryption of passwords for password-protected feeds
+tt_rss_feed_crypt_key: "{{ vault_tt_rss_feed_crypt_key }}" # CHANGEME random 24 charaters
 # random 250 characters string used to salt the password
-tt_rss_password_salt: "{{ lookup('password', 'secrets/' + inventory_hostname + '.tt_rss_password_salt length=250 chars=hexdigits') }}"
-
-# tt-rss installation directory (must be under a valid documentroot)
-tt_rss_install_dir: "/var/www/{{ inventory_hostname }}/tt-rss"
-
-# full public URL of your tt-rss installation
-tt_rss_full_url: "https://{{ inventory_hostname }}/tt-rss/"
+tt_rss_password_salt: "{{ vault_tt_rss_password_salt }}" # CHANGEME random 250 characters
 
 # tt-rss version (git revision)
 tt_rss_version: "master"
@@ -30,8 +38,8 @@ tt_rss_allow_registration: "false"
 # Maximum number of users allowed to register accounts
 tt_rss_account_limit: "10"
 
-# yes/no: install additional tt-rss themes
+# yes/no: install additional tt-rss themes (unmaintained)
 tt_rss_install_themes: no
 
-# yes/no: install additional tt-rss plugins
+# yes/no: install additional tt-rss plugins (unmaintained)
 tt_rss_install_plugins: no

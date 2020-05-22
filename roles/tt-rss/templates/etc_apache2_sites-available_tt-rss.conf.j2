@@ -1,0 +1,36 @@
+{% if tt_rss_https_mode in ['selfsigned', 'letsencrypt', 'none'] %}
+<VirtualHost *:80>
+    ServerName {{ tt_rss_fqdn }}
+{% if tt_rss_https_mode == 'selfsigned' or tt_rss_https_mode == 'letsencrypt' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+<VirtualHost *:443>
+{% endif %}
+{% if tt_rss_https_mode == 'selfsigned' %}
+  SSLEngine on
+  SSLCertificateFile /etc/ssl/certs/{{ tt_rss_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ tt_rss_fqdn }}.key
+{% elif tt_rss_https_mode == 'letsencrypt' %}
+  #MDomain TODO
+{% endif %}
+  DocumentRoot {{ tt_rss_install_dir }}
+  ServerName  {{ tt_rss_fqdn }}
+
+  <Directory {{ tt_rss_install_dir }}/cache>
+      Require all denied
+  </Directory>
+
+  <Directory  {{ tt_rss_install_dir }}>
+      <Files "config.php">
+          Require all denied
+      </Files>
+    Header always unset Content-Security-Policy
+    Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
+  </Directory>
+
+</VirtualHost>
+{% endif %}
