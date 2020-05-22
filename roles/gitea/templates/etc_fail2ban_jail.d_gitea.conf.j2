@@ -5,7 +5,7 @@
 enabled  = true
 filter   = gitea-auth
 port     = https,http
-logpath  = /var/lib/gitea/log/gitea.log
+logpath  = {{ gitea_user_home }}/log/gitea.log
 maxretry = 10
 findtime = 3600
 bantime = 900

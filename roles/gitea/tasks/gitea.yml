@@ -47,6 +47,7 @@
     state: present
     system: yes
 
+# TODO not idempotent
 - name: add gitea user
   user:
     name: 'gitea'
@@ -134,12 +135,12 @@
     mode: "{{ item.mode }}"
     recurse: yes
   with_items:
-    - { path: "/var/lib/gitea/custom", group: "root", mode: "u=rwX" }
-    - { path: "/var/lib/gitea/public", group: "root", mode: "u=rwX" }
-    - { path: "/var/lib/gitea/data", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: "/var/lib/gitea/indexers", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: "/var/lib/gitea/log", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: '/var/lib/gitea/repos', group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: "{{ gitea_user_home }}/custom", group: "root", mode: "u=rwX" }
+    - { path: "{{ gitea_user_home }}/public", group: "root", mode: "u=rwX" }
+    - { path: "{{ gitea_user_home }}/data", group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: "{{ gitea_user_home }}/indexers", group: "gitea", mode: "u=rwX,g=rwX" } # TODO not idempotent
+    - { path: "{{ gitea_user_home }}/log", group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: '{{ gitea_user_home }}/repos', group: "gitea", mode: "u=rwX,g=rwX" }
 
 # ansible unarchive directory can't extract plain .xz files
 # https://github.com/ansible/ansible-modules-core/issues/3241
@@ -178,6 +179,7 @@
   set_fact:
     gitea_jwt_secret: "{{ gitea_jwt_secret_generated.stdout_lines[0] }}"
 
+# TODO not idempotent
 - name: copy gitea main configuration file
   template:
     src: 'etc_gitea_app.ini'
@@ -187,12 +189,13 @@
     mode: '0640' # read only for gitea
   notify: restart gitea
 
+# TODO not idempotent
 - name: create gitea database tables
   become: yes
   become_user: gitea
   command: gitea migrate --config /etc/gitea/app.ini
   args:
-    chdir: "/var/lib/gitea"
+    chdir: "{{ gitea_user_home }}"
   when: (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized is not defined)
 
 - name: mark gitea database as initialized
@@ -223,7 +226,7 @@
            --email "{{ gitea_admin_email }}"
            --admin --config /etc/gitea/app.ini
   args:
-    chdir: "/var/lib/gitea"
+    chdir: "{{ gitea_user_home }}"
   register: "gitea_create_user"
   failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
   changed_when: "'user already exists' not in gitea_create_user.stdout"

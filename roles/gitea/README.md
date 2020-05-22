@@ -35,13 +35,9 @@ See [defaults/main.yml](defaults/main.yml)
 Dependencies
 ------------
 
-Recommended:
+The [lamp](../lamp/README.md) role.
 
-- The [lamp](https://gitlab.com/nodiscc/ansible-xsrv-lamp) role or similar apache setup
-- The [common](https://gitlab.com/nodiscc/ansible-xsrv-common) role for fail2ban support
-- The [backup](https://gitlab.com/nodiscc/ansible-xsrv-common) role automatic backups
-
-The web server must be configured to forward requests to the gitea server. Example using the [lamp role](https://gitlab.com/nodiscc/ansible-xsrv-lamp):
+The web server must be configured to forward requests to the gitea server. 
 
 ```yaml
 apache_virtualhosts:
@@ -66,29 +62,36 @@ Example Playbook
     - apache2
     - gitea
   vars:
+    gitea_fqdn: "git.CHANGEME.org"
     gitea_admin_user: "CHANGEME"
-    gitea_admin_password: "CHANGEME"
-    gitea_admin_email: "CHANGEME@my.example.org"
+    gitea_admin_email: "CHANGEME@CHANGEME.org"
+
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_gitea_admin_password: "CHANGEME"
+vault_gitea_secret_key: "CHANGEME"
+vault_gitea_db_password: "CHANGEME"
+vault_gitea_user_password: "CHANGEME"
 ```
 
 Usage
 -----
 
+### Backups
+
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role:
+
+Your backup service must run the `gitea dump` command and backup the resulting `.zip` file. If your backup service is not running as root, `sudoers` must be configured to allow the backup user to run `sudo -u gitea gitea` without password. See [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
+
+Restoring a backup: TODO
+
+
 ### Clients
 
 Gitea can be used from:
-- a web browser such as [Firefox](https://www.mozilla.org/en-US/firefox/)
-- the [`git`](https://git-scm.com/) command line client
+- a [web browser](https://www.mozilla.org/en-US/firefox/)
+- [`git`](https://git-scm.com/) command line client
 - any other [git GUI client](https://git-scm.com/downloads/guis)
-- the [GitNex](https://f-droid.org/en/packages/org.mian.gitnex/) Android application
-
-### Backups
-
-See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](https://gitlab.com/nodiscc/ansible-xsrv-backup) role.
-
-In short, your backup service must run the `gitea dump` command and backup the resulting `.zip` file. If your backup service is not running as root, `sudoers` must be configured to allow the backup user to run `sudo -u gitea gitea` without password. See [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
-
-Restoring a backup: TODO
+- [GitNex](https://f-droid.org/en/packages/org.mian.gitnex/) Android application
 
 ### Repository mirroring
 
@@ -139,31 +142,11 @@ gitea.issues() {
 ```
 
 ```bash
-# Create your projects
-gitea --description "LAMP stack (apache webserver / MySQL database / PHP interpreter) - ansible role" --private new xsrv/ansible-xsrv-lamp
-gitea --description "incremental backup server (rsnapshot) - ansible role" --private new xsrv/ansible-xsrv-backup
-gitea --description "basic Linux server setup - ansible role" --private new xsrv/ansible-xsrv-common
-gitea --description "Docker containerization system - ansible role" --private new xsrv/ansible-xsrv-docker
-gitea --description "Firewall and network filtering system (firehol/fail2ban) - ansible role" --private new xsrv/ansible-xsrv-firewall
-gitea --description "Gitea self-hosted Git service/software forge - ansible role" --private new xsrv/ansible-xsrv-gitea
-gitea --description "Gitlab self-hosted Git service/software forge - ansible role" --private new xsrv/ansible-xsrv-gitlab
-gitea --description "Gitlab Continuous Integration runner/worker service - ansible role" --private new xsrv/ansible-xsrv-gitlab-runner
-gitea --description "Icecast media streaming server - ansible role" --private new xsrv/ansible-xsrv-icecast
-gitea --description "Log aggregation and analysis server (rsyslog/graylog) - ansible role" --private new xsrv/ansible-xsrv-logserver
-gitea --description "System monitoring and auditing (netdata/other) - ansible role" --private new xsrv/ansible-xsrv-monitoring
-gitea --description "Mumble voice chat server - ansible role" --private new xsrv/ansible-xsrv-mumble
-gitea --description "Nextcloud self-hosted personal/groupware cloud service - ansible role" --private new xsrv/ansible-xsrv-nextcloud
-gitea --description "Nginx web server/reverse proxy - ansible role" --private new xsrv/ansible-xsrv-nginx
-gitea --description "OpenLDAP directory service - ansible role" --private new xsrv/ansible-xsrv-openldap
-gitea --description "PulseAudio network streaming server - ansible role" --private new xsrv/ansible-xsrv-pulseaudio
-gitea --description "Linux software RAID - ansible role" --private new xsrv/ansible-xsrv-raid
-gitea --description "Samba CIFS/SMB file sharing server - ansible role" --private new xsrv/ansible-xsrv-samba
-gitea --description "Shaarli bookmarking/link sharing application - ansible role" --private new xsrv/ansible-xsrv-shaarli
-gitea --description "Transmission bittorrent client and web interface - ansible role" --private new xsrv/ansible-xsrv-transmission
-gitea --description "Tiny-Tiny-RSS (tt-rss) RSS/ATOM feed reader" --private new xsrv/ansible-xsrv-tt-rss
+# Create a project
+gitea --description "My new project" --private new myusername/myproject
 
 # Get the list of issues for a project
-./gitea issues xsrv/xsrv | jq -r '.[] | "#\(.number) - \(.title)"'
+./gitea issues myusername/myproject | jq -r '.[] | "#\(.number) - \(.title)"'
 ```
 
 [tea](https://gitea.com/gitea/tea) will be the officially suported command line Gitea API client.

@@ -1,3 +1,3 @@
 # rsnapshot configuration for gitea backups
-backup			/var/lib/gitea	localhost/
+backup			{{ gitea_user_home }}	localhost/
 backup_script	/usr/bin/mysqldump --single-transaction -h localhost -u root gitea > gitea.sql	gitea_db/

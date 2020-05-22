@@ -2,23 +2,25 @@
 
 ##### GITEA SELF-HOSTED GIT SERVICE #####
 
-# REQUIRED username/password/e-mail address for the gitea admin user
-# gitea_admin_user: "CHANGEME"
-# gitea_admin_password: "CHANGEME"
-# gitea_admin_email: "CHANGEME"
+# username/password/e-mail address for the gitea admin user
+gitea_admin_user: "CHANGEME"
+gitea_admin_password: "{{ vault_gitea_admin_password }}" # CHANGEME
+gitea_admin_email: "admin@{{ gitea_fqdn }}"
 
 # 64 CHARACTER global secret key
-gitea_secret_key: "{{ lookup('password', 'secrets/' + inventory_hostname + '.gitea_secret_key length=64 chars=ascii_letters,digits') }}"
+gitea_secret_key: "{{ vault_gitea_secret_key }}" # CHANGEME
 # password for the gitea SQL database
-gitea_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.gitea_db_password length=20 chars=ascii_letters,digits') }}"
+gitea_db_password: "{{ vault_gitea_db_password }}" # CHANGEME
 # password for the local gitea linux user account
-gitea_user_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.gitea_user_password length=20 chars=ascii_letters,digits') }}"
+gitea_user_password: "{{ vault_gitea_user_password }}" # CHANGEME
 
+# fully qualified domain name of the gitea instance
+gitea_fqdn: "git.CHANGEME.org"
+# gitea base URL under the domain name (eg change. it to /gitea to serve from git.my.example.org/gitea)
+gitea_base_url: "/"
+# full public URL at which the gitea web service can be reached
+gitea_root_url: "https://{{ gitea_fqdn }}{{ gitea_base_url }}" # TODO move to apache config template
 
-# Hostname (FQDN) at which gitea services can be reached
-gitea_fqdn: "{{ inventory_hostname }}"
-# Full public URL at which the gitea web service can be reached
-gitea_root_url: "https://{{ inventory_hostname }}/gitea/"
 
 # Privacy settings
 # last/private/public: Default visibility setting when creating a new repository
@@ -50,3 +52,14 @@ gitea_version: '1.10.3'
 gitea_min_password_length: "10"
 # yes/no: start/stop the gitea service, enable/disable it on boot
 gitea_enable_service: yes
+# home directory for the gitea user
+gitea_user_home: /var/lib/gitea
+# yes/no: enable outgoing mail
+gitea_mailer_enabled: no
+# Mail settings below are required if gitea mailer is enabled
+# From: address used in mails sent by gitea
+gitea_mail_from: "gitea@{{ gitea_fqdn }}"
+# SMTP host, username and password for outgoing mail from gitea
+gitea_mail_host: "{{ vault_gitea_mail_host }}" # CHANGEME
+gitea_mail_user: "{{ vault_gitea_mail_user }}" # CHANGEME
+gitea_mail_password: "{{ vault_gitea_mail_password }}" # CHANGEME
