@@ -1,206 +1,258 @@
 #!/bin/bash
-# xsrv command-line wrapper for ansible
-# https://gitlab.com/nodiscc/xsrv
-##############################
-
-# abort on errors
 set -o errexit
+set -o nounset
 
-# debug mode
-#set -o xtrace
+# Configuration / defaults
+venv_dir="${XSRV_VENV_DIR:=$HOME/.local/share/xsrv/venv}"
+playbooks_dir="${XSRV_PLAYBOOKS_DIR:=$HOME/playbooks}"
+templates_path="${XSRV_TEMPLATES_DIR:=/opt/xsrv}"
+editor="${EDITOR:=nano}"
+ansible_tags="${TAGS:-}"
 
-# help text
-usage="USAGE: $0 COMMAND
-AVAILABLE COMMANDS:
-install-ansible     install ansible in a virtualenv
-init                initialize the playbook from example files
-deploy              run deployment/configuration
-config-host         edit host configuration
-config-playbook     edit the list of roles (playbook)
-config-inventory    edit the list of hosts (inventory)
-check               simulate deployment/report items that would be changed
-shell               open a SSH shell on the host
-logs                view system logs on the host
-netstat             view network connections on the host
-disk-usage          analyse disk usage on the host
-backup-force        force a backup on the host
-backup-fetch        fetch latest daily backups from the host
-web                 open the hosts main homepage in a web browser
-upgrade             upgrade the ansible collection to the latest version
-ansible-playbook    run a raw ansible-playbook command
-help-defaults       show roles configuration defaults
-help                show this message
-deploy my.exmp.org  deploy/configure a list of hosts (for multi-machine playbooks, comma-separated)
-"
 
-# exit if no command specified
-[[ -z "$1" ]] && echo "$usage" && exit 1
-
-##############################
 # Functions
-
-# Install ansible in a python virtualenv in the playbook directory
-# requires python3-pip
-function install_ansible() {
-    echo "[xsrv] creating virtualenv in $base_dir/.venv/..."
-    python3 -m venv "$base_dir/.venv/"
-    echo "[xsrv] installing ansible in virtualenv..."
-    source "$base_dir/.venv/bin/activate"
-    pip3 install ansible==2.9.3
+function check_playbook() {
+    if [[ ! -e "$playbooks_dir/$playbook_name" ]]; then
+        echo "[xsrv] ERROR: playbook $playbooks_dir/$playbook_name does not exist"; exit 1;
+    fi
 }
 
-# initialize the playbook from example files (interactive)
-function init() {
-    # abort if any target file exists
-    for file in "$base_dir/playbook.yml" "$base_dir/inventory.yml"; do
-        [[ -e "$file" ]] && echo "[xsrv] ERROR: file $file already exists" && exit 1
-    done
-
-    # read hostname, abort if target vars_file exists
-    read -r -p "[xsrv] hostname of the host to configure: " ansible_hostname
-    host_vars_file="$base_dir/host_vars/$ansible_hostname.yml"
-    [[ -e "$host_vars_file" ]] && echo "[xsrv] ERROR: file $host_vars_file already exists" && exit 1
-
-    # read credentials
-    read -r -p "[xsrv] admin user (member of the sudo group) on the host: " ansible_user
-    read -r -p "[xsrv] admin password for $ansible_user: " ansible_become_pass
-    read -r -p "[xsrv] default user name for your services/applications: " xsrv_default_username
-    read -r -p "[xsrv] default password for your services/applications: " xsrv_default_password
-
-    # write files
-    echo "[xsrv] creating host_vars, playbook and inventory file..."
-    cp "$base_dir/examples/my.example.org.yml" "$host_vars_file"
-    cp "$base_dir/examples/playbook.example.yml" "$base_dir/playbook.yml"
-    cp "$base_dir/examples/inventory.example.yml" "$base_dir/inventory.yml"
-    sed -i "s/ansible_user: \"CHANGEME\"/ansible_user: \"$ansible_user\"/g" "$host_vars_file"
-    sed -i "s/ansible_become_pass: \"CHANGEME\"/ansible_become_pass: \"$ansible_become_pass\"/g" "$host_vars_file"
-    sed -i "s/xsrv_default_username: \"CHANGEME\"/xsrv_default_username: \"$xsrv_default_username\"/g" "$host_vars_file"
-    sed -i "s/xsrv_default_password: \"CHANGEME\"/xsrv_default_password: \"$xsrv_default_password\"/g" "$host_vars_file"
-    sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/host_vars/$ansible_hostname.yml"
-    sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/inventory.yml"
-    sed -i "s/my.example.org/$ansible_hostname/g" "$base_dir/playbook.yml"
-
-    echo "[xsrv] succesffuly initialized"
-}
-
-# deploy the host (run ansible playbook)
 function deploy() {
-    source "$base_dir/.venv/bin/activate"
-    ansible-playbook playbook.yml $ansible_args
+    # run ansible playbook
+    check_playbook
+    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
+    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
+    cd "$playbooks_dir/$playbook_name"
+    echo "[xsrv] INFO: deploying playbook $playbook_name"
+    ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
 }
 
-# check what changes would be made by running 'deploy' (run ansible in check mode)
 function check() {
-    source "$base_dir/.venv/bin/activate"
-    ansible-playbook  playbook.yml --check --diff
+    # run ansible playbook in check mode
+    check_playbook
+    cd "$playbooks_dir/$playbook_name"
+    echo "[xsrv] INFO: deploying playbook $playbook_name"
+    ansible-playbook playbook.yml --check --diff
 }
 
-# edit host configuration variables
-function config_host_vars() {
-    $editor "$base_dir"/host_vars/*.yml
+function edit_playbook() {
+    # edit a playbook file
+    playbook_file="$playbooks_dir/$playbook_name/playbook.yml"
+    echo "[xsrv] INFO: opening playbook file $playbook_file"
+    $editor "$playbook_file"
 }
 
-# edit the playbook (host roles)
-function config_playbook() {
-    $editor "$base_dir/playbook.yml"
+function edit_inventory() {
+    # edit an inventory file
+    inventory_file="$playbooks_dir/$playbook_name/inventory.yml"
+    echo "[xsrv] INFO: opening inventory file $inventory_file"
+    $editor "$inventory_file"
 }
 
-# edit hosts inventory
-function config_inventory() {
-    $editor "$base_dir/inventory.yml"
+
+function check_host_name() {
+    if [[ -z "$host_name" ]]; then
+        host_vars_dirs=$(find "$playbooks_dir/$playbook_name/host_vars/" -maxdepth 1 -type d)
+        host_name="${host_vars_dirs##*/}"
+        echo "[xsrv] DEBUG: host_vars_dirs: $host_vars_dirs"
+        echo "[xsrv] INFO: no host name provided, using $host_name as host name"
+        if [[ ! $(echo "$host_name" | wc -l) -eq 1 ]]; then
+            echo "[xsrv] ERROR: no host name specified and multiple hosts found in playbook"; exit 1
+        fi
+    fi
+
+    host_vars_file="$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.yml"
+    host_vault_file="$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml"
+
+    if [[ ! -f "$host_vars_file" ]]; then
+        echo "[xsrv] ERROR: $host_vars_file does not exist"; exit 1
+    fi
 }
 
-# show roles configuration defaults
-function show_defaults() {
-    find roles/ -wholename "*defaults/main.yml" -exec cat '{}' \;|less
+function edit_host() {
+    # edit a host's vars file
+    check_playbook
+    check_host_name
+    echo "[xsrv] INFO: opening host vars file $host_vars_file"
+    $editor "$host_vars_file"
 }
 
-# extract the first host name from the playbook
-function get_ssh_host_name() {
-    playbook_first_host=$(grep "hosts:" playbook.yml | head -n1)
-    echo "$playbook_first_host" | awk '{print $NF}'
+
+function edit_vault() {
+    # edit a host's vault file
+    check_playbook
+    check_host_name
+    cd "$playbooks_dir/$playbook_name"
+    EDITOR="$editor" ansible-vault edit "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml"
 }
 
-# extract a variable value from host_vars file
-function get_host_var() {
-    host_name="$1"
-    host_var="$2"
-    line=$(grep "${host_var}:" "host_vars/$host_name.yml")
-    value=$(echo "$line" | awk '{print $NF}' | sed "s/['\"]//g")
-    echo "$value"
+function init_playbook() {
+    # add a new playbook (from template files)
+    if [[ -e "$playbooks_dir/$playbook_name" ]]; then
+        echo "[xsrv] ERROR: $playbooks_dir/$playbook_name already exists"; exit 1
+    fi
+
+    echo "[xsrv] INFO: copying xsrv playbook to $playbooks_dir/$playbook_name"
+    cp -rn "$templates_path/playbooks/xsrv" "$playbooks_dir/$playbook_name"
+    rm "$playbooks_dir/$playbook_name/inventory.yml" "$playbooks_dir/$playbook_name/playbook.yml"
+    rm -r "$playbooks_dir/$playbook_name/host_vars/my.example.org"
+
+    update_roles
+
+    echo "[xsrv] INFO: Generating random password for ansible-vault"
+    openssl rand -base64 32 > "$playbooks_dir/$playbook_name/.ansible-vault-password"
+    echo "[xsrv] INFO: vault password stored in $playbooks_dir/$playbook_name/.ansible-vault-password"
+    echo "[xsrv] INFO: Keep this file private! Keep backups of this file!"
+
+    init_host
+
+    echo "[xsrv] INFO: playbook '$playbook_name' initialized"
+    echo "[xsrv] INFO: run $0 deploy to apply configuration now, or $0 help for more options"
 }
 
-# open a ssh shell on the host
-function open_ssh_shell() {
-    ssh_command="$1"
-    host_name=$(get_ssh_host_name)
-    ssh_user=$(get_host_var "$host_name" ansible_user)
-    ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
-    # shellcheck disable=SC2029
-    ssh -t -p "$ssh_port" "$ssh_user"@"$host_name" "$ssh_command"
+function init_host() {
+    # add a new host to a playbook (from template files)
+    check_playbook
+
+    until [[ ! -z "$host_name" ]]; do
+        read -r -p "[xsrv] Name of the host to add to the playbook: " host_name
+    done
+    if [[ -e "$playbooks_dir/$playbook_name/host_vars/$host_name" ]]; then
+        echo "[xsrv] ERROR: $playbooks_dir/$playbook_name/host_vars/$host_name already exists"; exit 1
+    fi
+
+    echo "[xsrv] INFO: creating host vars/vault files for $host_name"
+    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/inventory.yml" >> "$playbooks_dir/$playbook_name/inventory.yml"
+    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/playbook.yml" >> "$playbooks_dir/$playbook_name/playbook.yml"
+    mkdir "$playbooks_dir/$playbook_name/host_vars/$host_name"
+    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.yml"
+    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml"
+
+    read -r -p "[xsrv] Press ENTER to edit the playbook (enable/disable roles)"
+    edit_playbook "$playbook_name"
+    read -r -p "[xsrv] Press ENTER to edit host variables (replace any values labeled CHANGEME) "
+    edit_host "$playbook_name" "$host_name"
+
+    echo "[xsrv] INFO: Encrypting secrets file"
+    (cd "$playbooks_dir/$playbook_name/" && ansible-vault encrypt "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml")
+    read -r -p "[xsrv] Press ENTER to edit secret (vaulted) host variables (replace any values labeled CHANGEME) "
+    edit_vault "$playbook_name" "$host_name"
 }
 
-# fetch latest daily backups from the host
-function backup_fetch() {
-    host_name=$(get_ssh_host_name)
-    ssh_user=$(get_host_var "$host_name" ansible_user)
-    ssh_port=$(get_host_var "$host_name" ansible_ssh_port)
-    local_backup_dir="./data/backups/${host_name}-daily.0.$(date +%Y-%m-%d)"
-    mkdir -p "$local_backup_dir"
-    rsync --rsync-path="sudo rsync" --hard-links --archive \
-    --compress --partial --progress \
-    --delete --rsh "ssh -p $ssh_port" \
-    "$ssh_user@$host_name:/var/backups/rsnapshot/daily.0" \
-    "$local_backup_dir/"
+function get_ssh_port() {
+	ssh_port=$(grep "^ansible_ssh_port" "$host_vars_file" | cut -d ' ' -f 2 | tr -d \'\")
+    if [[ -z "$ssh_port" ]]; then
+        ssh_port=22
+    fi
 }
 
-# open the hosts main homepage in a web browser
-function open_homepage() {
-    host_name=$(get_host_name)
-    echo "[xsrv] opening https://$host_name ..."
-    xdg-open "https://$host_name"
+function run_shell() {
+    # open a SSH shell on a host
+    check_playbook
+    check_host_name
+    get_ssh_port
+
+    cd "$playbooks_dir/$playbook_name"
+    vault_vars=$(ansible-vault decrypt --output - "$host_vault_file")
+    ssh_user=$(echo "$vault_vars" | grep "^vault_ansible_user:" | cut -d ' ' -f 2 | tr -d \'\")
+
+    ssh_command="ssh -p $ssh_port $ssh_user@$host_name"
+    $ssh_command
 }
 
-# upgrade the ansible collection to the latest version
+function utils() {
+    echo "TODO"
+    exit 1
+}
+
+function info() {
+    echo "TODO"
+    exit 1
+}
+
+function fetch_backups() {
+    echo "TODO"
+    exit 1
+}
+
+function help() {
+    echo "$usage"
+    exit 1
+}
+
+function update_roles() {
+    check_playbook
+    echo "[xsrv] INFO: copying roles from $templates_path to $playbooks_dir/$playbook_name"
+    cp -r "$templates_path/roles" "$playbooks_dir/$playbook_name/"
+}
+
+function init_venv() {
+    echo "[xsrv] INFO: creating virtualenv in $venv_dir"
+    mkdir -p "$venv_dir"
+    python3 -m venv "$venv_dir"
+    source "$venv_dir/bin/activate"
+    echo "[xsrv] INFO: installing ansible in $venv_dir"
+    pip3 install wheel
+    pip3 install ansible==2.9.9
+}
+
 function upgrade() {
-    echo "[xsrv] updating repository ..."
-    git pull
+    cd "$templates_path"
+    echo "[xsrv] INFO: fetching repository to $templates_path"
+    sudo git pull --ff-only
+    update_roles
+    echo "[xsrv] INFO: installing new version of xsrv script to /usr/local/bin/"
+    sudo cp "$templates_path/xsrv" /usr/local/bin
 }
 
-# run ansible-playbook in a virtualenv
-function run_ansible_playbook() {
-    ansible_playbook_args="$*"
-    echo "[xsrv] running ansible-playbook..."
-    source "$base_dir/.venv/bin/activate"
-    # shellcheck disable=SC2086
-    ansible-playbook $ansible_playbook_args
+function _main() {
+    if [[ -z "$command" ]]; then echo "[xsrv] ERROR: no command provided"; echo "$usage"; exit 1; fi
+    case "$command" in
+        "init-playbook") init_venv; shift; init_playbook ;;
+        "init-host") init_venv; shift; init_host ;;
+        "deploy") init_venv; shift; deploy ;;
+        "check") init_venv; shift; check ;;
+        "edit-playbook") shift; edit_playbook ;;
+        "edit-inventory") shift; edit_inventory ;;
+        "edit-host") shift; edit_host ;;
+        "edit-vault") init_venv; shift; edit_vault ;;
+        "shell") init_venv; shift; run_shell ;;
+        "utils") shift; run_utils ;;
+        "info") init_venv; shift; info ;;
+        "help") echo "$usage" ;;
+        "fetch-backups") fetch_backups ;;
+        "upgrade") upgrade ;;
+        "show-defaults") show_defaults ;;
+        *) echo "[xsrv] ERROR: unrecognized command $command"; exit 1 ;;
+    esac
 }
 
-##############################
-# Main loop
 
-command="$1"
-base_dir=$(realpath "$(dirname "$0")")
-editor="nano"
+############################"
 
-case "$command" in
-    "install-ansible") install_ansible;;
-    "init") init;;
-    "deploy") [[ -n "$2" ]] && ansible_args="--limit $2" || ansible_args=""; deploy;;
-    "check") check;;
-    "config-host" ) config_host_vars;;
-    "config-playbook" ) config_playbook;;
-    "config-inventory" ) config_inventory;;
-    "help-defaults" ) show_defaults;;
-    "shell" ) open_ssh_shell "";;
-    "logs" ) open_ssh_shell "sudo lnav /var/log/syslog";;
-    "netstat" ) open_ssh_shell "sudo watch -n 2 ss -laptu";;
-    "disk-usage" ) open_ssh_shell "sudo ncdu /";;
-    "backup-force" ) open_ssh_shell "sudo rsnapshot daily";;
-    "backup-fetch" ) backup_fetch;;
-    "web" ) open_homepage;;
-    "upgrade" ) upgrade;;
-    "ansible-playbook" ) shift && run_ansible_playbook "$@";;
-    "help" ) echo "$usage"; exit 0;;
-    *) echo "[xsrv] ERROR: unrecognized command $command"; echo "$usage"; exit 1;;
-esac
+# Usage
+usage='USAGE: xsrv COMMAND [playbook] [host]
+init-playbook   initialize a new playbook
+init-host       add a new host to an existing playbook
+deploy          deploy a playbook
+check           simulate deployment, report what would be changed
+edit-playbook   edit a playbook
+edit-inventory  edit inventory file for a playbook
+edit-host       edit a host vars file
+edit-vault      edit a host vault file
+shell           open an interactive shell on a host
+utils           run the xsrv-utils script on a host
+info            display quick access links for a host
+help            show this message
+fetch-backups   fetch backups from a host to the playbook backups dir
+upgrade         ugrade xsrv script and roles to latest versions
+show-defaults   show all available role variables and their default values
+
+The following environment variables are supported
+TAGS=tag1,tag2  limit deployment to a set of ansible tags (eg. TAGS=monitoring xsrv deploy)
+'
+
+command="${1:-}"
+playbook_name="${2:-default}"
+host_name="${3:-}"
+_main "$@"
