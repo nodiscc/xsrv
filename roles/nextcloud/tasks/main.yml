@@ -4,3 +4,14 @@
   become: yes
   tags:
     - nextcloud
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - nextcloud
+  when: nextcloud_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags:
+    - nextcloud

@@ -27,3 +27,6 @@ galaxy_info:
     - webdav
     - drive
     - web
+
+dependencies:
+  - lamp

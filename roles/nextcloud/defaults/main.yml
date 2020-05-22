@@ -3,11 +3,21 @@
 ##### NEXTCLOUD #####
 
 # Nextcloud admin username/password
-# nextcloud_user: "CHANGEME"
-# nextcloud_password: "CHANGEME"
+nextcloud_user: "{{ vault_nextcloud_user }}" # CHANGEME
+nextcloud_password: "{{ vault_nextcloud_password }}" # CHANGEME
 
 # Fully Qualified Domain Name for the nextcloud instance
-nextcloud_fqdn: "{{ inventory_hostname }}"
+# nextcloud_fqdn: "cloud.CHANGEME.org"
+# Nextcloud installation directory (must be under a valid documentroot)
+nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
+# full public URL of your tt-rss installation (update this if you changed the install location to a subdirectory)
+nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
+
+# HTTPS and SSL/TLS certificate mode for the nextcloud webserver virtualhost
+# letsencrypt: acquire a certificate from Let's Encrypt (nextcloud_fqdn must be piblicly resolvable, port tcp/80 must be reachable from the Internet)
+# selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
+# none: disable HTTPS entirely (not recommended)
+nextcloud_https_mode: selfsigned
 
 # nextcloud data storage directory
 nextcloud_data_dir: "/var/nextcloud/data"
@@ -17,26 +27,14 @@ nextcloud_db_name: "nextcloud"
 nextcloud_db_user: "nextcloud"
 nextcloud_db_table_prefix: "oc_"
 nextcloud_db_host: "localhost"
-nextcloud_db_password: "{{ lookup('password', 'secrets/' + inventory_hostname + '.nextcloud_db_password length=18') }}"
+nextcloud_db_password: "{{ vault_nextcloud_db_password }}" # CHANGEME
 
-# Nextcloud installation directory (must be under a valid documentroot)
-nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}/nextcloud"
-
-# Nextcloud and applications versions
-# https://github.com/nextcloud/server/releases.atom, remove leading v
-nextcloud_version: '17.0.2'
-# https://github.com/nextcloud/calendar/releases.atom
-nextcloud_calendar_version: 'v2.0.0'
-# https://github.com/nextcloud/contacts/releases.atom
-nextcloud_contacts_version: 'v3.1.7'
-# https://github.com/nextcloud/tasks/releases.atom
-nextcloud_tasks_version: '0.11.3'
-# https://github.com/owncloud/music/releases.atom, remove leading v
-nextcloud_music_version: '0.12.1'
-# https://github.com/nextcloud/notes/releases.atom
-nextcloud_notes_version: 3.1.1
+# nextcloud version to install
+nextcloud_version: "19.0.0"
 
 # Nextcloud applications to enable or disable
+# state: enable/disable
+# app: nextcloud app name
 nextcloud_apps:
   - { state: "disable", app: "encryption" }
   - { state: "disable", app: "files_antivirus" }
@@ -58,7 +56,7 @@ nextcloud_apps:
   - { state: "enable", app: "files_trashbin" }
   - { state: "enable", app: "files_videoplayer" }
   - { state: "enable", app: "firstrunwizard" }
-  - { state: "enable", app: "gallery" }
+  - { state: "enable", app: "photos" }
   - { state: "enable", app: "music" }
   - { state: "enable", app: "notifications" }
   - { state: "enable", app: "systemtags" }

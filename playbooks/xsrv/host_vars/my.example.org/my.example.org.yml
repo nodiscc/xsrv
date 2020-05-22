@@ -2,6 +2,7 @@
 ### configuration variables for my.example.org
 ### vault_* variables are stored encrypted in my.example.org.vault.yml
 
+
 # administrator/sudo account username/password
 ansible_user: "{{ vault_ansible_user }}"
 ansible_become_pass: "{{ vault_ansible_become_pass }}"
@@ -13,6 +14,7 @@ xsrv_admin_password: "{{ vault_xsrv_admin_password }}"
 
 ##### NEXTCLOUD #####
 # see roles/nextcloud/defaults/main.yml
+nextcloud_fqdn: "cloud.CHANGEME.org"
 nextcloud_user: "{{ xsrv_admin_username }}"
 nextcloud_password: "{{ xsrv_admin_password }}"
 

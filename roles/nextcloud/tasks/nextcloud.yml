@@ -2,7 +2,7 @@
 
 ##### PACKAGES #####
 
-- name: install required packages for nextcloud
+- name: install required packages
   apt:
     state: present
     update_cache: yes
@@ -16,35 +16,17 @@
       - php-json
       - php-ldap
       - php-sqlite3
+      - php-mysql
       - php-mbstring
       - php-xml
       - php-zip
+      - php-bz2
+      - php-smbclient
+      - php-imap
+      - php-apcu
+      - ffmpeg
       - acl
-  notify: restart apache
-
-
-##### DOWNLOADS #####
-
-- name: download nextcloud zip
-  get_url:
-    url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
-    dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
-
-- name: download nextcloud applications
-  get_url:
-    url: "{{ item.url }}"
-    dest: "{{ item.dest }}"
-  with_items:
-    - { url: 'https://github.com/nextcloud/calendar/releases/download/{{ nextcloud_calendar_version }}/calendar.tar.gz',
-        dest: '/root/nextcloud-calendar-{{ nextcloud_calendar_version }}.tar.gz'}
-    - { url: 'https://github.com/nextcloud/contacts/releases/download/{{ nextcloud_contacts_version }}/contacts.tar.gz',
-        dest: '/root/nextcloud-contacts-{{ nextcloud_contacts_version }}.tar.gz'}
-    - { url: 'https://github.com/nextcloud/tasks/releases/download/{{ nextcloud_tasks_version }}/tasks.tar.gz',
-        dest: '/root/nextcloud-tasks-{{ nextcloud_tasks_version }}.tar.gz'}
-    - { url: 'https://github.com/owncloud/music/releases/download/v{{ nextcloud_music_version }}/music.zip',
-        dest: '/root/music.zip'}
-    - { url: 'https://github.com/nextcloud/notes/releases/download/{{ nextcloud_notes_version }}/notes.tar.gz',
-        dest: '/root/notes.tar.gz'}
+  notify: reload apache
 
 
 ##### DATABASE #####
@@ -64,31 +46,7 @@
     state: present
     priv: "{{ nextcloud_db_name }}.*:ALL"
     login_password: "{{ mariadb_root_password }}"
-
-
-##### APACHE #####
-
-- name: enable apache2 modules env, dir, mime
-  command: a2enmod {{ item }}
-  with_items:
-    - 'env'
-    - 'dir'
-    - 'mime'
-  args:
-    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
-  notify: restart apache
-
-- name: setup nextcloud content-security-policy
-  template:
-    src: etc_apache2_conf-available_nextcloud-csp.conf.j2
-    dest: /etc/apache2/conf-available/nextcloud-csp.conf
-  notify: restart apache
-
-- name: enable content security policy config
-  command: a2enconf nextcloud-csp
-  args:
-    creates: "/etc/apache2/conf-enabled/nextcloud-csp.conf"
-  notify: restart apache
+  no_log: True
 
 
 ###### FAIL2BAN ##########
@@ -120,86 +78,117 @@
     src: etc_rsnapshot.d_nextcloud.conf.j2
     dest: /etc/rsnapshot.d/nextcloud.conf
 
-##### FILES IN WEBROOT #####
+
+##### NEXTCLOUD INSTALLATION #####
+
+- name: check nextcloud if installation directory exists
+  stat:
+    path: "{{ nextcloud_install_dir }}"
+  register: nextcloud_dir
+
+- name: abort on unsupported conditions
+  fail:
+    msg: "ERROR: unsupported conditions: nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, but ansible_local.nextcloud.installed.version says otherwise"
+  when: '((ansible_local.nextcloud.installed.version is defined) and (not nextcloud_dir.stat.exists)) or
+         ((ansible_local.nextcloud.installed.version is undefined) and (nextcloud_dir.stat.exists))'
+
+- name: check if initial installation should be performed
+  set_fact:
+    nextcloud_action: initial
+  when: '(ansible_local.nextcloud.installed.version is undefined) and (not nextcloud_dir.stat.exists)'
+
+- name: check if upgrade should be performed
+  set_fact:
+    nextcloud_action: upgrade
+  when: '(ansible_local.nextcloud.installed.version is defined) and (ansible_local.nextcloud.installed.version < nextcloud_version) and (nextcloud_dir.stat.exists)'
+
+#- debug:
+#    msg: "action: {{ nextcloud_action }}, nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, nextcloud_version: {{ nextcloud_version }}"
+
+- name: download nextcloud zip
+  get_url:
+    url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
+    dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
+  when:
+    - nextcloud_action is defined
+    - nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
+
+- name: remove nextcloud zip extraction directory
+  file:
+    path: /root/nextcloud-unpack
+    state: absent
+  when:
+    - nextcloud_action is defined
+    - nextcloud_action == 'upgrade'
+
+- name: create nextcloud zip extraction directory
+  file:
+    path: /root/nextcloud-unpack
+    state: directory
+  when:
+    - nextcloud_action is defined
+    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
 - name: extract nextcloud zip
   unarchive:
     src: "/root/nextcloud-{{ nextcloud_version }}.zip"
-    dest: "{{ nextcloud_install_dir | dirname }}"
-    copy: no
-    owner: www-data
-    group: www-data
-    creates: "{{ nextcloud_install_dir }}/occ"
+    dest: "/root/nextcloud-unpack"
+    remote_src: yes
+    owner: root
+    group: root
+  when:
+    - nextcloud_action is defined
+    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
-- name: extract nextcloud applications
-  unarchive:
-    src: "{{ item.archive }}"
-    dest: "{{ item.dest }}"
-    copy: no
-    owner: www-data
+- name: give write permissions to the webserver
+  file:
+    path: "{{ item }}"
     group: www-data
+    mode: "g+w"
+    recurse: no
   with_items:
-    - { archive: '/root/nextcloud-calendar-{{ nextcloud_calendar_version }}.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'}
-    - { archive: '/root/nextcloud-contacts-{{ nextcloud_contacts_version }}.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'}
-    - { archive: '/root/nextcloud-tasks-{{ nextcloud_tasks_version }}.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'} # Not idempotent
-    - { archive: '/root/music.zip', dest: '{{ nextcloud_install_dir }}/apps/'}
-    - { archive: '/root/notes.tar.gz', dest: '{{ nextcloud_install_dir }}/apps/'}
+    - "/root/nextcloud-unpack/nextcloud/apps"
+    - "/root/nextcloud-unpack/nextcloud/config"
+    - "/root/nextcloud-unpack/nextcloud/themes"
+    #- "/root/nextcloud-unpack/nextcloud/updater"
+  when:
+    - nextcloud_action is defined
+    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
+- name: give exexecute permissions to the webserver on occ command-line tool
+  file:
+    path: "/root/nextcloud-unpack/nextcloud/occ"
+    mode: g+X
+  when:
+    - nextcloud_action is defined
+    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
-###### FILE PERMISSIONS ######
-
-- name: create nextcloud data directory
+- name: create/set permissions on nextcloud data directory
   file:
     path: "/var/nextcloud/data"
     state: directory
-    owner: www-data
-    group: www-data
-    mode: 0750
-
-# Not idempotent
-- name: set nextcloud files ownership to root:www-data
-  file:
-    path: "{{ nextcloud_install_dir }}"
-    state: directory
     owner: root
     group: www-data
-    recurse: yes
+    mode: 0770
+  when:
+    - nextcloud_action is defined
+    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
-# Not idempotent
-- name: ensure files are mode 0640 and directories mode 0750
-  file:
-    path: "{{ nextcloud_install_dir }}"
-    mode: "u=rwX,g=rX"
-    recurse: yes
+- name: move old nextcloud installation to temporary dir
+  shell: mv '{{ nextcloud_install_dir }}' '{{ nextcloud_install_dir }}.old'
+  args:
+    removes: '{{ nextcloud_install_dir }}'
+  when:
+    - nextcloud_action is defined
+    - nextcloud_action == 'upgrade'
 
-# Not idempotent
-- name: give nextcloud write access to required directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: www-data
-    group: www-data
-    recurse: yes
-  with_items:
-    - "{{ nextcloud_install_dir }}/apps"
-    - "{{ nextcloud_install_dir }}/config"
-    - "{{ nextcloud_install_dir }}/data"
-    - "{{ nextcloud_install_dir }}/theme"
-    - "{{ nextcloud_install_dir }}/updater"
-    - "{{ nextcloud_install_dir }}/assets"
-    - "{{ nextcloud_data_dir }}"
+- name: move nextcloud extraction directory to install directory
+  shell: mv /root/nextcloud-unpack/nextcloud '{{ nextcloud_install_dir }}'
+  when:
+    - nextcloud_action is defined
+    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
-- name: set execute permission for occ command line tool
-  file:
-    path: "{{ nextcloud_install_dir }}/occ"
-    state: file
-    mode: 0750
-
-
-##### SETUP #####
-
-- name: nextcloud first setup
-  become: True
+- name: run first setup (this can take a while)
   become_user: www-data
   command: /usr/bin/php occ \
            maintenance:install \
@@ -217,15 +206,24 @@
     chdir: "{{ nextcloud_install_dir }}"
   failed_when: nextcloud_first_setup.rc !=0 and 'Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr
   changed_when: nextcloud_first_setup.rc == 0
+  when:
+    - nextcloud_action is defined
+    - nextcloud_action == 'initial'
 
-# trashbin_retention_obligation:
-#   auto: keep for 30 days, then delete IF space needed
-#   D, auto: keep at least D+ days, then delete IF space needed
-#   auto, D: max D days, but delete if space needed
-#   D1, D2: keep lat east D1 days and max D2 days
-#   disabled: auto clean disabled
+- name: copy config.php from old installation
+  copy:
+    remote_src: yes
+    src: '{{ nextcloud_install_dir }}.old/config/config.php'
+    dest: '{{ nextcloud_install_dir }}/config/config.php'
+    owner: www-data
+    group: www-data
+    mode: 0660
+  when:
+    - nextcloud_action is defined
+    - nextcloud_action == 'upgrade'
 
-# TODO OPTIMIZE: not idempotent, this task will return changed every time (ignored with noqa 301, occ doesn't report indication of changes)
+# TODO: not idempotent, this task will return changed every time (ignored with noqa 301, occ doesn't report indication of changes)
+# TODO: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
 - name: set nextcloud domain config.php values
   become: yes
   become_user: www-data
@@ -234,7 +232,7 @@
     chdir: "{{ nextcloud_install_dir }}/"
   with_items:
     - { key: "trusted_domains 1", value: "{{ nextcloud_fqdn }}" }
-    - { key: "overwrite.cli.url", value: "https://{{ nextcloud_fqdn }}" }
+    - { key: "overwrite.cli.url", value: "{{ nextcloud_full_url }}" }
     - { key: "datadir", value: "{{ nextcloud_data_dir }}" }
     - { key: "dbtype", value: "mysql" }
     - { key: "dbname", value: "{{ nextcloud_db_name }}" }
@@ -247,7 +245,16 @@
     - { key: "log_authfailip", value: "true" }
     - { key: "loglevel", value: "2" }
     - { key: "trashbin_retention_obligation", value: "auto" }
+    - { key: "memcache.local", value: '\OC\Memcache\APCu' }
   no_log: True
+  tags: nextcloud_config_php
+
+# trashbin_retention_obligation:
+#   auto: keep for 30 days, then delete IF space needed
+#   D, auto: keep at least D+ days, then delete IF space needed
+#   auto, D: max D days, but delete if space needed
+#   D1, D2: keep lat east D1 days and max D2 days
+#   disabled: auto clean disabled
 
 - name: run nextcloud upgrade command
   become: True
@@ -256,9 +263,40 @@
   args:
     chdir: "{{ nextcloud_install_dir }}"
   register: nextcloud_upgrade
-  changed_when: not 'Nextcloud is already latest version' in nextcloud_upgrade.stdout
+  changed_when: not 'Nextcloud is already at the latest version' in nextcloud_upgrade.stdout
+  when:
+    - nextcloud_action is defined
+    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
-# Not idempotent - https://github.com/nextcloud/server/issues/17789
+- name: create ansible facts.d directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+    mode: 0755
+
+- name: create nextcloud installed fact file
+  template:
+    src: etc_ansible_facts.d_nextcloud.fact.j2
+    dest: /etc/ansible/facts.d/nextcloud.fact
+    mode: 0644
+
+###### NEXTCLOUD APPLICATIONS ######
+
+- name: install nextcloud applications
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ app:install {{ item.app }}
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  with_items: "{{ nextcloud_apps }}"
+  register: nextcloud_app_install
+  when:
+    - 'item.state == "enable"'
+  changed_when:
+    - not 'already installed' in nextcloud_app_install.stdout
+  failed_when:
+    - nextcloud_app_install.rc !=0 and not 'not compatible with this version of the server' not in nextcloud_app_install.stderr
+
 - name: enable/disable nextcloud applications
   become: yes
   become_user: www-data
@@ -267,4 +305,23 @@
     chdir: "{{ nextcloud_install_dir }}"
   with_items: "{{ nextcloud_apps }}"
   register: nextcloud_app_enable_disable
-  changed_when: not 'No such app enabled' in nextcloud_app_enable_disable.stdout
+  changed_when:
+    - not 'No such app enabled' in nextcloud_app_enable_disable.stdout
+    - not 'already enabled' in nextcloud_app_enable_disable.stdout
+
+- name: update nextcloud applications
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ app:update --all
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+
+##### CLEANUP #####
+
+- name: remove old nextcloud installation
+  file: 
+    path: '{{ nextcloud_install_dir }}.old'
+    state: absent
+  when:
+    - nextcloud_action is defined
+    - nextcloud_action == 'upgrade'
