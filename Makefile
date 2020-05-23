@@ -9,12 +9,6 @@ venv:
 	source .venv/bin/activate && \
 	pip3 install isort ansible-lint yamllint ansible==2.9.3
 
-# download/update roles from ansible-galaxy
-galaxy: venv
-	source .venv/bin/activate && \
-	chmod -R o-rwX ./ && \
-	ansible-galaxy install -f -r requirements-dev.yml
-
 # Static syntax checker for shell scripts
 # requirements: sudo apt install shellcheck
 shellcheck:
@@ -22,7 +16,7 @@ shellcheck:
 	shellcheck -e SC1090 xsrv
 
 # Playbook syntax check
-ansible_syntax_check: venv galaxy
+ansible_syntax_check: venv
 	source .venv/bin/activate && \
 	cp examples/playbook.example.yml playbook-test.yml && \
 	echo -e "[all]\nmy.example.org" > inventory-test.yml && \
@@ -30,19 +24,19 @@ ansible_syntax_check: venv galaxy
 	rm playbook-test.yml inventory-test.yml
 
 # Ansible linter
-ansible_lint: venv galaxy
+ansible_lint: venv
 	source .venv/bin/activate && \
 	cp examples/playbook.example.yml playbook-test.yml && \
 	ansible-lint playbook-test.yml && \
 	rm playbook-test.yml
 
 # YAML syntax check and linter
-yamllint: venv galaxy
+yamllint: venv
 	source .venv/bin/activate && \
 	set -o pipefail && \
 	find roles/ examples/ requirements-dev.yml requirements.yml -iname "*.yml" | xargs yamllint -c tests/.yamllint
 
-check_jinja2: venv galaxy
+check_jinja2: venv
 	source .venv/bin/activate && \
 	j2_files=$$(find roles/ -name "*.j2") && \
 	for i in $$j2_files; do \
