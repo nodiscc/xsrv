@@ -26,7 +26,7 @@ See [defaults/main.yml](defaults/main.yml)
 License
 -------
 
-[GPLv3](LICENSE)
+[GPLv3](../../LICENSE)
 
 Usage
 ------------

@@ -106,7 +106,7 @@ sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 License
 -------
 
-[GNU GPLv3](LICENSE)
+[GNU GPLv3](../../LICENSE)
 
 
 References

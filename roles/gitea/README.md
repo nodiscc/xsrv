@@ -176,7 +176,7 @@ gitea --description "Tiny-Tiny-RSS (tt-rss) RSS/ATOM feed reader" --private new 
 License
 -------
 
-[GNU GPLv3](LICENSE)
+[GNU GPLv3](../../LICENSE)
 
 References/Documentation
 -------------

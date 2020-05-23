@@ -87,7 +87,7 @@ sudo mysql ttrss < /var/backups/rsnapshot/daily.0/localhost/mysql/tt-rss.sql
 License
 -------
 
-[GNU GPLv3](LICENSE)
+[GNU GPLv3](../../LICENSE)
 
 
 References

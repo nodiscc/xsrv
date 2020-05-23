@@ -13,10 +13,10 @@ rsnapshot_retain_monthly: 6
 
 # Commands to run before starting backups (database dumps, application exports...)
 # Return codes different from 0 will cause the backup process to abort with an error
-# These commands are run as the 'rsnapshot' user locally.
+# These commands run as the 'rsnapshot' user locally.
 # Use 'ssh user@host /path/to/script' to run scripts on remote hosts.
-# - For local backups ensure the user has read permissions on the directories (or can 'sudo rsync' without password)
-# - For remote backups, ensure rsnapshot's SSH key is authorized to connect, and also has read/sudo rsync permissions on the remote host
+# - For local scripts, 'rsnapshot' user must have appropriate permissions to run the script
+# - For remote backups, 'rsnapshot' user's SSH key must be authorized on the remote host, the remote user must have appropriate permissions to run the script
 # Example:
 # rsnapshot_backup_execs:
 #   - 'ssh rsnapshot@srv01.example.org /opt/xsrv/nextcloud-mysql-dump.sh'

@@ -52,7 +52,7 @@ Usage
 License
 -------
 
-- [GNU GPLv3](LICENSE)
+- [GNU GPLv3](../../LICENSE)
 - [Paper icons](https://github.com/snwh/paper-icon-theme) under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
 

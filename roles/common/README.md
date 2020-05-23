@@ -52,7 +52,7 @@ Usage
 License
 -------
 
-[GNU GPLv3](LICENSE)
+[GNU GPLv3](../../LICENSE)
 
 References
 -----------------
