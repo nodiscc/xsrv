@@ -1,0 +1,68 @@
+##### PACKAGES #####
+
+- name: install mumble-server
+  apt:
+    package: mumble-server
+    state: present
+
+##### CONFIGURATION #####
+
+- name: copy mumble-server configuration
+  template:
+    src: etc_mumble-server.ini.j2
+    dest: /etc/mumble-server.ini
+    owner: mumble-server
+    group: root
+    mode: 0600
+  notify: restart mumble
+  no_log: True
+
+##### FAIL2BAN ##### TODO
+
+- name: copy mumble fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_mumble.conf.j2
+    dest: /etc/fail2ban/jail.d/mumble.conf
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban
+
+
+##### BACKUPS #####
+
+- name: copy rsnapshot configuration for mumble-server backups
+  template:
+    src: etc_rsnapshot.d_mumble-server.conf.j2
+    dest: /etc/rsnapshot.d/mumble-server.conf
+    mode: 0600
+  when: '"backup" in role_names'
+  notify: check rsnapshot configuration
+
+##### COMMAND-LINE/MISC INSTALLATION STEPS #####
+
+# TODO not idempotent
+- name: upate mumble superuser password (not idempotent, returns changed every time)
+  become: yes
+  become_user: mumble-server
+  command: murmurd -ini /etc/mumble-server.ini -supw {{ mumble_superuser_password }} # noqa 301
+  register: mumble_update_superuser
+  no_log: True
+  failed_when:
+    - 'mumble_update_superuser.rc not in [0, 1]'
+    - '"Superuser password set on server" not in mumble_update_superuser.stdout'
+
+##### SERVICE #####
+
+- name: enable mumble service
+  service:
+    name: mumble-server
+    state: started
+    enabled: yes
+  when: mumble_enable_service|bool
+
+- name: disable mumble service
+  service:
+    name: mumble-server
+    state: stopped
+    enabled: no
+  when: not mumble_enable_service|bool

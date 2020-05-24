@@ -1,0 +1,3 @@
+- include: mumble.yml
+  become: yes
+  tags: mumble

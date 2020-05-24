@@ -1,0 +1,9 @@
+---
+
+- name: restart mumble
+  become: yes
+  service:
+    name: mumble-server
+    state: restarted
+    enabled: yes
+  when: mumble_enable_service|bool

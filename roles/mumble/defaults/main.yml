@@ -1,0 +1,24 @@
+##### MUMBLE VoIP SERVER #####
+
+# password to join the Mumble server (NO SPACES)
+mumble_password: "{{ vault_mumble_password }}"
+# administrator password for the mumble server (login as 'superuser' - NO SPACES)
+mumble_superuser_password: "{{ vault_mumble_superuser_password }}"
+
+# exposes current/maximum user count and max bandwidth per client to unauthenticated users (ture/false - QUOTED)
+mumble_allowping: 'false'
+
+# Welcome message sent to clients when they connect
+mumble_welcome_text: "<br />Welcome to this server running <b>Murmur</b>.<br />Enjoy your stay!<br />"
+
+# Port to bind TCP and UDP sockets to
+mumble_port: 64738
+
+# Maximum bandwidth (in bits per second) clients are allowed to send speech at.
+mumble_client_max_bandwidth: 72000
+
+# Maximum number of concurrent clients allowed.
+mumble_max_users: 100
+
+# yes/no: start/stop the mumble VoIP server, enable/disable it on boot
+mumble_enable_service: yes
