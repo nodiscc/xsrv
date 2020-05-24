@@ -29,6 +29,11 @@ tt_rss_password: "{{ xsrv_admin_password }}"
 gitea_admin_user: "{{ xsrv_admin_username }}"
 gitea_admin_password: "{{ xsrv_admin_password }}"
 
+##### SHAARLI #####
+# see roles/shaarli/defaults/main.yml
+shaarli_fqdn: "links.CHANGEME.org"
+
+
 ##### FIREWALL/FAIL2BAN #####
 # see roles/common/defaults/main.yml
 

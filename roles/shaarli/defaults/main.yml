@@ -1,0 +1,27 @@
+---
+
+# Fully Qualified Domain Name for the shaarli instance
+# shaarli_fqdn: "links.CHANGEME.org"
+
+# Shaarli login and password
+shaarli_username: "{{ vault_shaarli_username }}"
+shaarli_password: "{{ vault_shaarli_password }}"
+# Salt used to hash shaarli password (40-character random string, generate it with openssl rand -base64 32 | cut -b 1-40)
+shaarli_password_salt: "{{ vault_shaarli_password_salt }}"
+# REST API secret (12-character random string, generate it with openssl rand -base64 32 | cut -b 1-12)
+shaarli_api_secret: "{{ vault_shaarli_api_secret }}"
+# shaarli timezone (see https://www.php.net/manual/en/timezones.php)
+shaarli_timezone: "Europe/Amsterdam"
+# yes/no: overwrite shaarli configuration if it already exists (will overwrite any configuration changes made from Shaarli tools menu)
+shaarli_overwrite_config: no
+
+# mode for SSL/TLS certificates for the shaarli webserver virtualhost
+# letsencrypt: acquire a certificate from Let's Encrypt (shaarli_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+# selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+shaarli_https_mode: selfsigned
+
+# shaarli installation directory
+shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
+
+# https://github.com/shaarli/Shaarli/releases.atom
+shaarli_version: 'v0.11.1'

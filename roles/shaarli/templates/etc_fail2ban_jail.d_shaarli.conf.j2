@@ -1,0 +1,8 @@
+# Fail2ban shaarli jails
+
+[shaarli-auth]
+# Shaarli login failures
+enabled  = true
+filter   = shaarli-auth
+port     = https,http
+logpath  = {{ shaarli_install_dir }}/data/log.txt

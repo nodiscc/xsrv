@@ -1,0 +1,21 @@
+galaxy_info:
+  author: nodiscc
+  description: shaarli bookmark/link sharing web application
+  license: GPL-3.0
+  min_ansible_version: 2.8
+    - name: Debian
+      versions:
+        - 9
+        - 10
+  galaxy_tags:
+    - server
+    - bookmarks
+    - links
+    - microblog
+    - sharing
+    - notes
+
+dependencies:
+  - src: git+https://gitlab.com/nodiscc/ansible-xsrv-apache.git
+    version: master
+    name: apache

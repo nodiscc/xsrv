@@ -1,0 +1,14 @@
+---
+
+- include: shaarli.yml
+  become: yes
+  tags: shaarli
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: shaarli
+  when: shaarli_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags: shaarli

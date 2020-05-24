@@ -9,6 +9,7 @@
     # - postgresql
     # - nextcloud
     # - tt-rss
+    # - shaarli
     # - gitea
     # - samba
   # ignore_unreachable: yes # don't fail when host is unreachable

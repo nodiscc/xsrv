@@ -1,0 +1,46 @@
+<VirtualHost *:80>
+    DocumentRoot {{ shaarli_install_dir }}
+    ServerName {{ shaarli_fqdn }}
+{% if shaarli_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if shaarli_https_mode == 'letsencrypt' %}
+MDomain {{ shaarli_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  DocumentRoot {{ shaarli_install_dir }}
+  ServerName  {{ shaarli_fqdn }}
+  SSLEngine on
+{% if shaarli_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ shaarli_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ shaarli_fqdn }}.key
+{% endif %}
+
+  <Directory {{ shaarli_install_dir }}>
+      # Required for .htaccess support
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline'; frame-ancestors 'none'"
+  </Directory>
+
+  <LocationMatch "/\.">
+      # Prevent accessing dotfiles
+      RedirectMatch 404 ".*"
+  </LocationMatch>
+
+  <LocationMatch "\.(?:ico|css|js|gif|jpe?g|png)$">
+      # allow client-side caching of static files
+      Header set Cache-Control "max-age=2628000, public, must-revalidate, proxy-revalidate"
+  </LocationMatch>
+
+  # serve the Shaarli favicon from its custom location
+  Alias favicon.ico /var/www/shaarli.mydomain.org/images/favicon.ico
+
+</VirtualHost>

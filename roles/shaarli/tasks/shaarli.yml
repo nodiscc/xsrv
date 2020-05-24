@@ -1,0 +1,185 @@
+---
+
+##### PACKAGES #####
+
+- name: install required packages for shaarli
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - php-gd
+      - php-curl
+      - php-json
+      - php-mbstring
+      - php-gd
+      - php-intl
+      - php-curl
+      - php-gettext
+
+##### FAIL2BAN #####
+
+- name: copy shaarli fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_shaarli.conf.j2
+    dest: /etc/fail2ban/jail.d/shaarli.conf
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban
+
+- name: copy fail2ban shaarli-auth filter
+  copy:
+    src: etc_fail2ban_filter.d_shaarli-auth.conf
+    dest: /etc/fail2ban/filter.d/shaarli-auth.conf
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban
+
+##### BACKUPS #####
+
+- name: create rsnapshot configuration includes directory
+  file:
+    path: /etc/rsnapshot.d
+    state: directory
+  when: '"backup" in role_names'
+
+- name: copy rsnapshot configuration for shaarli backups
+  template:
+    src: etc_rsnapshot.d_shaarli.conf.j2
+    dest: /etc/rsnapshot.d/shaarli.conf
+  when: '"backup" in role_names'
+  notify: check rsnapshot configuration
+
+
+###### SHAARLI INSTALLATION #####
+
+- name: check shaarli if installation directory exists
+  stat:
+    path: "{{ shaarli_install_dir }}"
+  register: shaarli_dir
+
+- name: abort on unsupported conditions
+  fail:
+    msg: "ERROR: unsupported conditions: shaarli_dir.stat.exists: {{ shaarli_dir.stat.exists }}, but ansible_local.shaarli.installed.version says otherwise" # noqa 204
+  when: '((ansible_local.shaarli.installed.version is defined) and (not shaarli_dir.stat.exists)) or
+         ((ansible_local.shaarli.installed.version is undefined) and (shaarli_dir.stat.exists))'
+
+- name: check if initial installation should be performed
+  set_fact:
+    shaarli_action: initial
+  when: '(ansible_local.shaarli.installed.version is undefined) and (not shaarli_dir.stat.exists)'
+
+- name: check if upgrade should be performed
+  set_fact:
+    shaarli_action: upgrade
+  when: '(ansible_local.shaarli.installed.version is defined) and (ansible_local.shaarli.installed.version < shaarli_version) and (shaarli_dir.stat.exists)' # noqa 204
+
+- name: download shaarli zip
+  get_url:
+    url: "https://github.com/shaarli/Shaarli/releases/download/{{ shaarli_version }}/shaarli-{{ shaarli_version }}-full.zip"
+    dest: "/root/shaarli-{{ shaarli_version }}-full.zip"
+  when:
+    - shaarli_action is defined
+    - shaarli_action == 'initial' or shaarli_action == 'upgrade'
+
+- name: remove shaarli zip extraction directory
+  file:
+    path: /root/shaarli-unpack
+    state: absent
+  when:
+    - shaarli_action is defined
+    - shaarli_action == 'upgrade'
+
+- name: create shaarli zip extraction directory
+  file:
+    path: /root/shaarli-unpack
+    state: directory
+  when:
+    - shaarli_action is defined
+    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+
+- name: extract shaarli zip
+  unarchive:
+    src: "/root/shaarli-{{ shaarli_version }}-full.zip"
+    dest: "/root/shaarli-unpack"
+    remote_src: yes
+    owner: root
+    group: root
+  when:
+    - shaarli_action is defined
+    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+
+- name: set file permissions
+  file:
+    path: "{{ item.path }}"
+    owner: root
+    group: www-data
+    mode: "{{ item.mode }}"
+    recurse: no
+  with_items:
+    - { path: "/root/shaarli-unpack/Shaarli", mode: "0750" }
+    - { path: "/root/shaarli-unpack/Shaarli/data", mode: "0770" }
+    - { path: "/root/shaarli-unpack/Shaarli/tmp", mode: "0770" }
+    - { path: "/root/shaarli-unpack/Shaarli/cache", mode: "0770" }
+    - { path: "/root/shaarli-unpack/Shaarli/pagecache", mode: "0770" }
+  when:
+    - shaarli_action is defined
+    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+
+- name: move old shaarli installation to temporary dir
+  command: mv '{{ shaarli_install_dir }}' '{{ shaarli_install_dir }}.old'
+  args:
+    removes: '{{ shaarli_install_dir }}'
+  when:
+    - shaarli_action is defined
+    - shaarli_action == 'upgrade'
+
+- name: move shaarli extraction directory to install directory
+  command: mv /root/shaarli-unpack/Shaarli '{{ shaarli_install_dir }}'
+  when:
+    - shaarli_action is defined
+    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+
+- name: copy data directory from old installation
+  copy:
+    remote_src: yes
+    src: '{{ shaarli_install_dir }}.old/data'
+    dest: '{{ shaarli_install_dir }}/'
+    owner: root
+    group: www-data
+    mode: 0770
+  when:
+    - shaarli_action is defined
+    - shaarli_action == 'upgrade'
+
+- name: copy shaarli configuration
+  template:
+    src: "var_www_shaarli_data_config.json.php.j2"
+    dest: "{{ shaarli_install_dir }}/data/config.json.php"
+    owner: root
+    group: www-data
+    mode: 0660
+    force: "{{ shaarli_overwrite_config }}"
+
+- name: create ansible facts.d directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+    mode: 0755
+
+- name: create shaarli installed fact file
+  template:
+    src: etc_ansible_facts.d_shaarli.fact.j2
+    dest: /etc/ansible/facts.d/shaarli.fact
+    mode: 0644
+
+
+##### CLEANUP #####
+
+- name: remove old shaarli installation
+  file:
+    path: '{{ shaarli_install_dir }}.old'
+    state: absent
+  when:
+    - shaarli_action is defined
+    - shaarli_action == 'upgrade'

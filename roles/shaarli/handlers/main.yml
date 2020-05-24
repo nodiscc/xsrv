@@ -1,0 +1,7 @@
+---
+
+##### MESSAGES
+
+- name: display shaarli installation completion message
+  debug: msg="WARNING Shaarli partially installed.
+              Please open https://{{ host_fqdn }}/links to complete the installation"
