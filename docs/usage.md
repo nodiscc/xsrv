@@ -74,7 +74,7 @@ xsrv deploy default '!ex1.CHANGEME.org,!ex7.CHANGEME.org' # deploy all hosts exc
 Each project contains:
 - an independent/isolated ansible installation (_virtualenv_) and its configuration
 - an [inventory](#manage-hosts) of managed servers and their [roles](#manage-roles) (_playbook_)
-- [configuration](#manage-configuration) values specific to each host/group (*host_vars/group_vars*)
+- [configuration](#manage-hosts-configuration) values specific to each host/group (*host_vars/group_vars*)
 - [collections](#use-as-ansible-collection)/roles used by your project
 
 Projects are stored in the `~/playbooks` directory by default (use the `XSRV_PROJECTS_DIR` environment variable to override this).
@@ -130,7 +130,7 @@ Initialize a new project from the [template](https://gitlab.com/nodiscc/xsrv/-/t
 
 ## Manage hosts
 
-All servers [(hosts)](installation/server-preparation.md) must be listed in the inventory file. Their [roles](#manage-roles) must be listed in the playbook file. Hosts [configuration](#manage-configuration) must be set in [host_vars/group_vars](#manage-configuration) files.
+All servers [(hosts)](installation/server-preparation.md) must be listed in the inventory file. Their [roles](#manage-roles) must be listed in the playbook file. Hosts [configuration](#manage-hosts-configuration) must be set in [host_vars/group_vars](#manage-hosts-configuration) files.
 
 
 ### xsrv init-host
@@ -143,7 +143,7 @@ Add a new host to the inventory/playbook and create/update all required files. Y
 ```
 
 - An editor will let you set the list of [roles](#manage-roles) for the host
-- An editor wil let you set required [configuration variables](#manage-configuration).
+- An editor wil let you set required [configuration variables](#manage-hosts-configuration).
 
 
 ### xsrv edit-inventory
@@ -248,7 +248,7 @@ Removing a role from the list does not remove its components from your hosts. To
 Most roles provide variables to temporarily disable the services they manage.
 
 
-## Manage configuration
+## Manage hosts configuration
 
 ### xsrv show-defaults
 
@@ -372,7 +372,7 @@ _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2
 
 
 - [Install](installation/controller-preparation.md) the `xsrv` main script directly on the host
-- During [initialization](#manage-projects) or by [editing configuration](#manage-configuration) set `connection: local` in the playbook for this host:
+- During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `connection: local` in the playbook for this host:
 
 ```yaml
 # xsrv edit-playbook
