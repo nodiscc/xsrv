@@ -1,0 +1,8 @@
+---
+
+- name: reload transmission-daemon
+  become: yes
+  service:
+    name: transmission-daemon
+    state: reloaded
+    enabled: yes

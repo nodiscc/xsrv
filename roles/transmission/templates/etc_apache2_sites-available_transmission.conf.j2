@@ -1,0 +1,36 @@
+<VirtualHost *:80>
+    ServerName {{ transmission_fqdn }}
+{% if transmission_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if transmission_https_mode == 'letsencrypt' %}
+MDomain {{ transmission_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ transmission_fqdn }}
+  SSLEngine on
+{% if transmission_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ transmission_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ transmission_fqdn }}.key
+{% endif %}
+
+  <Location "/">
+    AuthType Basic
+    AuthName "Authorization required"
+    AuthBasicProvider file
+    AuthUserFile /etc/apache2/transmission-passwd
+    Require valid-user
+  </Location>
+
+  SetEnv proxy-chain-auth
+  ProxyPreserveHost On
+  ProxyRequests off
+  ProxyPass / http://localhost:9091/
+  ProxyPassReverse / http://localhost:9091/
+</VirtualHost>

@@ -1,0 +1,19 @@
+---
+
+galaxy_info:
+  role_name: transmission
+  author: nodiscc
+  description: transmission bittorrent client/web interface
+  license: GPL-3.0
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - 10
+  galaxy_tags:
+    - web
+    - bittorrent
+    - p2p
+    - seedbox
+    - download
+    - filesharing
