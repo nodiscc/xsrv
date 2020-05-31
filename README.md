@@ -175,7 +175,7 @@ To **add new hosts to your environment:**
 - Edit hosts configuration and roles with `./xsrv edit-*` commands
 - Deploy with `./xsrv check && ./xsrv deploy`. See [usage](#usage).
 
-**Tracking configuration in git:** The default `environments/` directory containing your configuration is [ignored](.gitignore) by git by default. Store the configuration in a separate directory and symlink it to  `environments/` - you can then tack this directory in git. Ensure sensitive values are vaulted (`./xsrv edit-vault`) before pacing them under version control.
+**Tracking configuration in git:** The default `environments/` directory containing your configuration is [ignored](environments/.gitignore) by git by default. Store the configuration in a separate directory and symlink it to  `environments/` - you can then tack this directory in git. Ensure sensitive values are vaulted (`./xsrv edit-vault`) before pacing them under version control.
 
 For professional/production systems, run the playbook and evaluate changes against a **testing/staging environment** first. For example:
 

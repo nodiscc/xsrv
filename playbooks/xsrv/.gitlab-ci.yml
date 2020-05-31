@@ -1,0 +1,29 @@
+image: debian:buster-backports
+
+deploy-test:
+  before_script:
+    - apt-get update -qy
+    - echo "$TEST_ANSIBLE_VAULT_PASSWORD" > environments/test/.ansible-vault-password
+    - apt-get install -y git bash python3-pip python3-venv
+  script:
+    - ./xsrv deploy test
+
+deploy-staging:
+  before_script:
+    - apt-get update -qy
+    - echo "$STAGING_ANSIBLE_VAULT_PASSWORD" > environments/test/.ansible-vault-password
+    - apt-get install -y git bash python3-pip python3-venv
+  script:
+    - ./xsrv deploy staging
+  when:
+    - manual
+
+deploy-production:
+  before_script:
+    - apt-get update -qy
+    - echo "$PROD_ANSIBLE_VAULT_PASSWORD" > environments/test/.ansible-vault-password
+    - apt-get install -y git bash python3-pip python3-venv
+  script:
+    - ./xsrv deploy production
+  when:
+    - manual

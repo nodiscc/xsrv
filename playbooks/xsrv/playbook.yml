@@ -1,5 +1,6 @@
----
 
+# only a minimal set of roles is enabled by default
+# uncomment roles below to enable them
 - hosts: my.example.org
   roles:
     - common

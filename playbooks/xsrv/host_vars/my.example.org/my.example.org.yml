@@ -1,0 +1,69 @@
+---
+
+### configuration variables for my.example.org
+### vault_* variables are stored encrypted in my.example.org.vault.yml
+
+# administrator/sudo account username/password
+ansible_user: "{{ vault_ansible_become_user }}"
+ansible_become_pass: "{{ vault_ansible_become_pass }}"
+ansible_ssh_port: '22'
+
+# shared default values for admin username/password for new services/applications
+xsrv_admin_username: "{{ vault_xsrv_admin_username }}"
+xsrv_admin_password: "{{ vault_xsrv_admin_password }}"
+
+##### NEXTCLOUD #####
+# see roles/nextcloud/defaults/main.yml
+nextcloud_user: "{{ xsrv_admin_username }}"
+nextcloud_password: "{{ xsrv_admin_password }}"
+
+##### TT-RSS #####
+# see roles/tt-rss/defaults/main.yml
+tt_rss_user: "{{ xsrv_admin_username }}"
+tt_rss_password: "{{ xsrv_admin_password }}"
+
+##### GITEA #####
+# see roles/gitea/defaults/main.yml
+gitea_admin_user: "{{ xsrv_admin_username }}"
+gitea_admin_password: "{{ xsrv_admin_password }}"
+
+##### FIREWALL/FAIL2BAN #####
+# see roles/common/defaults/main.yml
+
+# Firewall rules
+# By default a single, global network is defined, restrict traffic by IP source/destination in
+# individual rules, or create additional network definitions for more complex setups.
+firehol_networks:
+  - name: "global" # a name for this rule set
+    src: "any" # traffic to/from these IP addresses
+    interface: "any" # traffic to/from this network interface
+    policy: "RETURN" # pass traffic to the next chain if no rules match (one of DROP/RETURN/ACCEPT/REJECT)
+    allow_input: # incoming traffic
+      - { name: "ssh", src: "any" } # ssh from anywhere
+      # - { name: "netdata", src: "any" } # monitoring dashboard
+      # - { name: "http", src: "any" } # web server access from anywhere
+      # - { name: "https", src: "any" } # web server access from anywhere
+      # - { name: "ping", src: "any" } # allow incoming ICMP pings
+      # - { name: "mumble", src: "any" } # mumble voip server
+      # - { name: "samba", src: "{{ firehol_lan_ipalias }}" } # samba file sharing
+      # - { name: "sshcustom", src: "any" } # SSH server on custom port
+      # - { name: "transmission", src: "any", } # bittorrent peer connections, outgoing requires 'all'
+      # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
+      # - { name: "pulseaudio", src: "{{ firehol_lan_ipalias }}" } # pulseaudio sound server
+      # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
+      # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
+    allow_output: # outgoing connections
+      - { name: "dns", dst: "any" } # DNS queries to anywhere
+      - { name: "ntp", dst: "any" } # time/date synchronization
+      - { name: "dhcp", dst: "{{ firehol_lan_ipalias }}" } # DHCP requests on LAN
+      - { name: "http", dst: "any" } # outgoing HTTP requests
+      - { name: "https", dst: "any" } # outgoing HTTPS requests
+      - { name: "ping", dst: "any" } # outgoing ICMP pings
+      # - { name: "submission", dst: "any" } # outgoing mail/port 587
+      # - { name: "imaps", dst: "any" } # nextcloud mail
+      # - { name: "smtps", dst: "any" } # nextcloud mail
+      # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
+      # - { name: "all", dst: "any" } # allow ALL outgoing connections
+
+# alias for LAN networks, used in rules above
+firehol_lan_ipalias: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"

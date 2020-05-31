@@ -60,10 +60,10 @@ firehol_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
 # By default a single, global network is defined, restrict traffic by IP source/destination in
 # individual rules, or create additional network definitions for more complex setups.
 firehol_networks:
-  - name: "global" # a name for this network definition
-    src: "any" # traffic to/from any IP address
-    interface: "any" # traffic to/from any network interface
-    policy: "DROP" # DROP if no rules match the traffic (DROP/RETURN/ACCEPT)
+  - name: "global" # a name for this rule set
+    src: "any" # traffic to/from these IP addresses
+    interface: "any" # traffic to/from this network interface
+    policy: "RETURN" # pass traffic to the next chain if no rules match (one of DROP/RETURN/ACCEPT/REJECT)
     allow_input: # incoming traffic
       - { name: "ssh", src: "any" } # ssh from anywhere
       # - { name: "http", src: "any" } # web server access from anywhere
