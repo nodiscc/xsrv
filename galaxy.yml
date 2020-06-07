@@ -1,0 +1,12 @@
+namespace: xsrv
+name: xsrv
+version: 0.17
+readme: README.md
+authors:
+  - nodiscc <nodiscc@gmail.com>
+description: "Build and manager your private servers"
+license: "GPL-3.0"
+repository: "https://gitlab.com/nodiscc/xsrv"
+documentation: "https://gitlab.com/nodiscc/xsrv"
+homepage: "https://gitlab.com/nodiscc/xsrv"
+issues: "https://gitlab.com/nodiscc/xsrv"
