@@ -4,12 +4,13 @@
   ╹ ╹┗━┛╹┗╸┗┛ 
 ```
 
-Build and manage your private servers and infrastructure.
-
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 
-An [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection and simple [command-line wrapper](#usage-and-maintenance) that let you easily and reliably manage your self-hosted servers, network services and applications. The following roles are available:
+[ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection (playbook and roles) to manage your private servers, network services and applications.
+
+
+## Roles
 
 - [common](roles/common) - base server components (SSH, upgrades, users, hostname, networking, kernel, time/date)
 - [backup](roles/backup) - incremental backup service (local and remote backups)
@@ -29,7 +30,6 @@ An [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection and si
 
 ------------
 
-
 **Table of contents**
 
 <!-- MarkdownTOC -->
@@ -37,16 +37,19 @@ An [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection and si
 - [Requirements](#requirements)
   - [Prepare the server](#prepare-the-server)
   - [Prepare the controller](#prepare-the-controller)
-- [Deploy a single server](#deploy-a-single-server)
 - [Usage](#usage)
+  - [Initial deployment](#initial-deployment)
+- [Changing configuration](#changing-configuration)
 - [Maintenance](#maintenance)
   - [Backups](#backups)
   - [Upgrades](#upgrades)
-- [Managing multiple hosts/environments](#managing-multiple-hostsenvironments)
+  - [Uninstalling roles](#uninstalling-roles)
+  - [Reverting changes](#reverting-changes)
+  - [Use as ansible collection in your playbooks](#use-as-ansible-collection-in-your-playbooks)
 - [Contributing/Issues/Work in progress](#contributingissueswork-in-progress)
 - [License](#license)
 - [Changelog](#changelog)
-- [Mirrors](#mirrors)
+- [See also](#see-also)
 
 <!-- /MarkdownTOC -->
 
@@ -54,159 +57,162 @@ An [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection and si
 
 ## Requirements
 
-xsrv/ansible runs from a _controller_ computer and configures your servers remotely through [SSH](https://en.wikipedia.org/wiki/Secure_Shell).
-
-- One or more remote servers (_hosts_)
-- A _controller_ machine to run xsrv
-
 
 ### Prepare the server
 
 See [server preparation](docs/server-preparation.md)
 
+
 ### Prepare the controller
 
-The controller can be any machine where git, bash, python and ansible are available (laptop/desktop PC, dedicated automation server/container...)
+The controller machine can be any workstation, dedicated server, container... where an operating system, python, git and ([ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)) are available.
 
 ```bash
 # install requirements (example for debian-based systems)
-sudo apt update && sudo apt install git bash python3-pip python3-venv
-
+sudo apt update && sudo apt install git bash python3-pip openssl
+# install ansible for the current user (~/.local/bin/)
+pip3 install ansible==2.9.9
 # clone the repository
-git clone -b release https://gitlab.com/nodiscc/xsrv # latest release
-git clone -b 1.0 https://gitlab.com/nodiscc/xsrv # OR specific release
-git clone -b master https://gitlab.com/nodiscc/xsrv # OR development version
+sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest release
+sudo git clone -b 1.0 https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR specific release
+sudo git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR development version
 ```
-
-
-## Deploy a single server
-
-```bash
-# enter the directory - all commands must be run from this directory
-cd xsrv
-
-# initialize an environment/playbook, create configuration files for the host
-./xsrv init-host
-# you will be asked for basic configuration settings, and a list of roles to enable
-```
-
-<!-- TODO asciinema -->
-
-Edit additional configuration if needed:
-
-- To **edit the list of enabled roles (playbook)**: `./xsrv edit-playbook`
-- To **change host configuration variables** (_host vars_): `./xsrv edit-host my.example.org`
-- To **change (secret) host configuration variables** (_vaulted_ host vars): `./xsrv edit-host my.example.org`
-- To **list all available variables** in roles: `./xsrv help-defaults`. Copy any variable to your _host vars_ and change it there to override the default value.
-
-Deploy changes to the server:
-
-```bash
-./xsrv deploy
-```
-
-If you need to later change host roles or configuration, repeat the previous steps at will (`./xsrv edit-playbook; ./xsrv edit-host my.example.org; ./xsrv deploy`). Only requested changes will be applied.
-
 
 ## Usage
 
-The command-line utility `xsrv` provides quick access to common deployment, configuration, maintenance and diagnostic tasks:
+A command line tool `xsrv` is provided to help performing common tasks (basic wrapper around ansible, rsync and SSH commands). You can also use roles directly in existing/custom ansible playbooks and use `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
+
+```
+TODO USAGE
+```
+
+### Initial deployment
+
+The default `xsrv` playbook installs/manages a basic set of roles on a single personal server:
 
 ```bash
-USAGE: ./xsrv COMMAND
-AVAILABLE COMMANDS:
-init-env            install the ansible environment (virtualenv)
-deploy              run deployment/configuration
-config-host         edit host configuration
-config-playbook     edit the list of roles (playbook)
-config-inventory    edit the list of hosts (inventory)
-check               simulate deployment/report items that would be changed
-shell               open a SSH shell on the host
-logs                view system logs on the host
-netstat             view network connections on the host
-disk-usage          analyse disk usage on the host
-backup-force        force a backup on the host
-backup-fetch        fetch latest daily backups from the host
-web                 open the hosts main homepage in a web browser
-upgrade             upgrade the ansible collection to the latest version
-ansible-playbook    run a raw ansible-playbook command
-help-defaults       show roles configuration defaults
-help                show this message
-deploy my.exmp.org  deploy/configure a list of hosts (for multi-machine playbooks, comma-separated)
+# Install the command-line helper
+sudo cp /opt/xsrv/bin/xsrv /usr/local/bin/
+
+# create a base directory for your playbooks/environments
+mkdir ~/playbooks/
+# put this directory under version control/git if needed. make sure no sensitive
+# config values/secrets are commited as plaintext! see ansible-vault below
+
+# create a new playbook
+xsrv init-playbook
 ```
+
+```bash
+TODO ASCIINEMA
+```
+
+When the configuration suits you, deploy changes to the host:
+
+```bash
+xsrv deploy
+```
+
+Once complete, your services are ready to use. A summary will be displayed:
+
+```
+TODO
+```
+
+
+## Changing configuration
+
+The default configuration should work out of the box. If you need to change the default config (before first deployment or at any later point):
+
+```bash
+# Edit the list of hosts (inventory)
+xsrv edit-inventory
+
+# Edit the list of roles to apply to hosts (playbook)
+xsrv edit-playbook
+
+# Edit configuration variables for a host (host vars)
+xsrv edit-host
+
+# Edit secret (vaulted) configuration variables
+xsrv edit-vault
+```
+
+To list all available variables for all roles, see [Roles](#roles) or run  `cat /opt/xsrv/roles/*/defaults/main.yml`.
+Copy any variable to your `host_vars` file and edit its value there, to override the default value.
+
+**After any changes to the playbook, inventory or configuration variables**, re-apply the playbook:
+
+```bash
+cd ~/playbooks/xsrv && ~/.local/bin/ansible-playbook playbook.yml
+```
+
 
 ## Maintenance
 
-Self-hosting places your services and data under your own responsibility (confidentiality, availability, integrity...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
+Self-hosting places your services and data under your own responsibility (availability, integrity, confidentiality...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
+
 
 
 ### Backups
 
-Your configuration and secrets are stored in the `environments/default/` directory.
 
-All user data is backed up daily/weekly/monthly to a local directory on the server (if the [backup](roles/backup) role is enabled). To download a copy of latest daily backups from a host, to the environment `backups/` directory), run:
+The [backup](roles/backup) role performs automatic daily/weekly/monthly backups of your data, to a local directory `/var/backups/rsnapshot` on the server.
+To download a copy of latest daily backups from a host, to the `backups/` directory on the controller, run:
 
 ```bash
-./xsrv backup-fetch $hostname
+xsrv backup-fetch
 ```
 
 See each role's documentation for information on how to restore backups.
 
-Keep **off-line, off-site backups** of your environment/playbooks directory and user data.
+Keep **off-line, off-site backups** of your `~/playbooks/` directory and user data.
 
 
 ### Upgrades
 
-Security upgrades for Debian packages are applied [automatically/daily](roles/common). To upgrade roles to their latest versions (bugfixes, new features, up-to-date versions of all unpackaged applications...):
+Security upgrades for Debian packages are applied [automatically/daily](roles/common). To upgrade roles to their latest versions (bugfixes, new features, latest stable releases of all unpackaged applications):
 
 - Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases)
-- Download latest backups from the server (`./xsrv backup-fetch`) and/or do a snapshot of the VM
-- Update the playbook to the latest release: `./xsrv upgrade`
-- Adjust configuration if needed `./xsrv edit-playbook; ./xsrv edit-host; ./xsrv edit-vault`
-- Run checks and watch out for unwanted changes `./xsrv check`
-- Deploy the playbook `./xsrv deploy`
+- Download latest backups from the server (`xsrv backup-fetch`) and/or do a snapshot of the VM
+- Download the latest release: `git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv` (or `git pull` if you already have a local copy)
+- Overwrite roles in your playbooks directory: `cp -r /opt/xsrv/roles ~/playbooks/`
+- Adjust your configuration if needed (inventory, playbook, host vars)
+- Run checks and watch out for unwanted changes `cd ~/playbooks/xsrv && ~/.local/bin/ansible-playbook playbook.yml --check --diff`
+- Apply the playbook `cd ~/playbooks/xsrv && ~/.local/bin/ansible-playbook playbook.yml`
+
+For production systems, it is strongly recommended to run the playbook and evaluate changes against a testing/staging environment first.
+Using git to manage your playbooks directory makes this significanlty easier/flexible.
+Ensure all sensitive variables are vaulted (`xyz_password: {{ vault_xyz_password }}` in plaintext host vars file, `vault_xyz_password: $3CR3T` in ansible-vault).
+Setup **Continuous Deployment** and monitoring to automate delivery and testing. See the example [`.gitlab-ci.yml`](playbooks/xsrv/.gitlab-ci.yml) to get started.
 
 
-## Managing multiple hosts/environments 
+### Uninstalling roles
 
-To **add new hosts to your environment:**
+Uninstalling roles is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups. Most roles provide variables to disable their services/functionality.
 
-- Run `./xsrv add-host $environment` (the default environment is named `default`).
-- Edit hosts configuration and roles with `./xsrv edit-*` commands
-- Deploy with `./xsrv check && ./xsrv deploy`. See [usage](#usage).
 
-**Tracking configuration in git:** The default `environments/` directory containing your configuration is [ignored](environments/.gitignore) by git by default. Store the configuration in a separate directory and symlink it to  `environments/` - you can then tack this directory in git. Ensure sensitive values are vaulted (`./xsrv edit-vault`) before pacing them under version control.
+### Reverting changes
 
-For professional/production systems, run the playbook and evaluate changes against a **testing/staging environment** first. For example:
-
-```bash
-./xsrv add-env test
-# ./xsrv add-env qa # add as many intermediate environments you want...
-./xsrv add-env staging
-./xsrv add-env production
-./xsrv add-host test # add a new host test.example.org
-./xsrv add-host staging # add a new host staging.example.org
-./xsrv add-host production # add a new host prod.example.org
- ```
-
-Setup **Continuous Deployment** and monitoring to automate delivery and testing. See the example [`.gitlab-ci.yml`](playbooks/example/.gitlab-ci.yml) to get started.
-
-**Uninstalling roles** is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups (most roles provide a way to disable their services/functionality though).
-
-**Reverting changes:**
+ - restore a VM snapshot from before the change (will cause loss of all data modified after the snapshot!)
+ - or, restore data from the last known good backups (see each role's documentation for restoration instructions)
  - `git checkout` the configuration as it was before the change
- - run the playbook `./xsrv deploy`
- - restore data from the last known good backups (see each role's documentation for restoration instructions)
- - or restore a VM snapshot from before the change
+ - run the playbook `xsrv deploy`
 
 Refer to **[ansible documentation](https://docs.ansible.com/)** for more information.
 
+<!-- 
+### Use as ansible collection in your playbooks
+
+TODO
+
+-->
 
 ## Contributing/Issues/Work in progress
 
-- [Planned features/work in progress](TODO.md)
+- [Planned features/work in progress](docs/TODO.md)
+- [Issue tracker](https://stdout.root.sx/gitea/xsrv/xsrv/issues)
 - [Gitlab issue tracker](https://gitlab.com/nodiscc/xsrv/issues)
-- See also [awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted)
 
 Branches/merge requests status:
 
@@ -226,6 +232,7 @@ Branches/merge requests status:
 ![](https://gitlab.com/nodiscc/xsrv/badges/transmission/pipeline.svg?key_width=100&key_text=transmission)
 ![](https://gitlab.com/nodiscc/xsrv/badges/warn-before-upgrade/pipeline.svg?key_width=100&key_text=warn-before-upgrade)
 
+
 ## License
 
 [GNU GPLv3](LICENSE)
@@ -236,8 +243,9 @@ Branches/merge requests status:
 [CHANGELOG.md](CHANGELOG.md)
 
 
-## Mirrors
+## See also
 
- - https://stdout.root.sx/gitea/xsrv/xsrv (upstream)
- - https://github.com/nodiscc/xsrv
- - https://gitlab.com/nodiscc/xsrv
+- [awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted)
+- https://stdout.root.sx/gitea/xsrv/xsrv (upstream)
+- https://github.com/nodiscc/xsrv (mirror)
+- https://gitlab.com/nodiscc/xsrv (mirror)
