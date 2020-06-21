@@ -1,0 +1,10 @@
+- #252 - WIP: ask confirmation before upgrading to a new tag
+- #251 - WIP: add transmission role
+- #250 - WIP: add pulseaudio-server role
+- #249 - WIP: add make release target
+- #248 - WIP: add gitlab-runner role
+- #247 - WIP: add gitlab role
+- #246 - WIP: add Shaarli role
+- #245 - shaarli: use new json config format
+- #244 - icecast: ezstream 100% usage when playlist is empty
+- #243 - icecast: make playlist storage directory configurable

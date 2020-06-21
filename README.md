@@ -7,7 +7,9 @@
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 
-[ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection (playbook and roles) to manage your private servers, network services and applications.
+Install and manage self-hosted network services and applications on your private servers:
+ - [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection (roles and playbook)
+ - simple [command-line tool](#usage) for common tasks
 
 
 ## Roles
@@ -70,20 +72,45 @@ The controller machine can be any workstation, dedicated server, container... wh
 ```bash
 # install requirements (example for debian-based systems)
 sudo apt update && sudo apt install git bash python3-pip openssl
+
 # install ansible for the current user (~/.local/bin/)
 pip3 install ansible==2.9.9
+
 # clone the repository
 sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest release
 sudo git clone -b 1.0 https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR specific release
 sudo git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR development version
 ```
 
+A command line tool `xsrv` is provided to help performing common tasks (basic wrapper around ansible, virtualenv, rsync and SSH commands). You can also use roles directly in existing/custom ansible playbooks and use `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html) directly.
+
+``` bash
+# (optional) install the command line tool
+sudo cp /opt/xsrv/xsrv /usr/local/bin/
+```
+
 ## Usage
 
-A command line tool `xsrv` is provided to help performing common tasks (basic wrapper around ansible, rsync and SSH commands). You can also use roles directly in existing/custom ansible playbooks and use `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
-
 ```
-TODO USAGE
+USAGE: xsrv COMMAND [playbook] [host]
+init-playbook   initialize a new playbook
+init-host       add a new host to an existing playbook
+deploy          deploy a playbook
+check           simulate deployment, report what would be changed
+edit-playbook   edit a playbook
+edit-inventory  edit inventory file for a playbook
+edit-host       edit a host vars file
+edit-vault      edit a host vault file
+shell           open an interactive shell on a host
+utils           run the xsrv-utils script on a host
+info            display quick access links for a host
+help            show this message
+fetch-backups   fetch backups from a host to the playbook backups dir
+upgrade         ugrade xsrv script and roles to latest versions
+show-defaults   show all available role variables and their default values
+
+The following environment variables are supported
+TAGS=tag1,tag2  limit deployment to a set of ansible tags (eg. TAGS=monitoring xsrv deploy)
 ```
 
 ### Initial deployment
@@ -91,8 +118,6 @@ TODO USAGE
 The default `xsrv` playbook installs/manages a basic set of roles on a single personal server:
 
 ```bash
-# Install the command-line helper
-sudo cp /opt/xsrv/bin/xsrv /usr/local/bin/
 
 # create a base directory for your playbooks/environments
 mkdir ~/playbooks/
@@ -175,11 +200,10 @@ Security upgrades for Debian packages are applied [automatically/daily](roles/co
 
 - Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases)
 - Download latest backups from the server (`xsrv backup-fetch`) and/or do a snapshot of the VM
-- Download the latest release: `git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv` (or `git pull` if you already have a local copy)
-- Overwrite roles in your playbooks directory: `cp -r /opt/xsrv/roles ~/playbooks/`
+- Download the latest release and overwrite roles in your playbooks directory: `./xsrv upgrade`
 - Adjust your configuration if needed (inventory, playbook, host vars)
-- Run checks and watch out for unwanted changes `cd ~/playbooks/xsrv && ~/.local/bin/ansible-playbook playbook.yml --check --diff`
-- Apply the playbook `cd ~/playbooks/xsrv && ~/.local/bin/ansible-playbook playbook.yml`
+- Run checks and watch out for unwanted changes `xsrv check`
+- Apply the playbook `csrv deploy`
 
 For production systems, it is strongly recommended to run the playbook and evaluate changes against a testing/staging environment first.
 Using git to manage your playbooks directory makes this significanlty easier/flexible.
