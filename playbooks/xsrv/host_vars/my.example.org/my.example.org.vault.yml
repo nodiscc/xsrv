@@ -1,8 +1,8 @@
 # secrets for my.example.org
-# protect this file with ansible-vault encrypt host_vars/my.example.org/my.example.org.vault.yml
-# edit the encrypted file with ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+# edit this file with xsrv edit-vault [PLAYBOOK] [my.example.org]
 vault_ansible_user: "CHANGEME"
 vault_ansible_become_pass: "CHANGEME"
 vault_xsrv_admin_username: "CHANGEME"
 vault_xsrv_admin_password: "CHANGEME"
-
+vault_mariadb_root_password: "CHANGEME"
+vault_nextcloud_db_password: "CHANGEME"
