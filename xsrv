@@ -24,7 +24,7 @@ function deploy() {
     if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
     cd "$playbooks_dir/$playbook_name"
     echo "[xsrv] INFO: deploying playbook $playbook_name"
-    ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
+    ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg --diff
 }
 
 function check() {
@@ -207,7 +207,7 @@ function upgrade() {
 
 function show_defaults() {
     # shellcheck disable=SC2002
-    cat "$templates_path/roles/*/defaults/main.yml" | less
+    cat $templates_path/roles/*/defaults/main.yml | less
 }
 
 function _main() {

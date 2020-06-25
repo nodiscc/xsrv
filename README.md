@@ -26,6 +26,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [mariadb](roles/mariadb) - MariaDB (MySQL) database server
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt-rss](roles/tt-rss) - Tiny Tiny RSS web feed reader
+- [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
 - _WIP_ [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
 - _WIP_ [docker](roles/docker) - Docker container platform
 - _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
@@ -34,7 +35,6 @@ Install and manage self-hosted network services and applications on your own ser
 - _WIP_ [mumble-server](roles/mumble) - Low-latency voice-over-IP (VoIP) server
 - _WIP_ [pulseaudio](roles/pulseaudio) - Network sound server
 - _WIP_ [openldap](roles/openldap) - LDAP directory service and management tools
-- _WIP_ [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
 - _WIP_ [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
 - _WIP_ [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
 - _WIP_ [rocketchat](roles/rocketchat) - Realtime web chat/communication service
@@ -57,6 +57,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [Usage](#usage)
   - [Basic deployment](#basic-deployment)
   - [Changing configuration](#changing-configuration)
+- [Command-line usage](#command-line-usage)
 - [Maintenance](#maintenance)
   - [Backups](#backups)
   - [Upgrades](#upgrades)
@@ -80,28 +81,6 @@ Install and manage self-hosted network services and applications on your own ser
 
 
 ## Usage
-
-```
-USAGE: xsrv COMMAND [playbook] [host]
-init-playbook   initialize a new playbook
-init-host       add a new host to an existing playbook
-deploy          deploy a playbook
-check           simulate deployment, report what would be changed
-edit-playbook   edit a playbook
-edit-inventory  edit inventory file for a playbook
-edit-host       edit a host vars file
-edit-vault      edit a host vault file
-shell           open an interactive shell on a host
-utils           run the xsrv-utils script on a host
-info            display quick access links for a host
-help            show this message
-fetch-backups   fetch backups from a host to the playbook backups dir
-upgrade         ugrade xsrv script and roles to latest versions
-show-defaults   show all available role variables and their default values
-
-The following environment variables are supported
-TAGS=tag1,tag2  limit deployment to a set of ansible tags (eg. TAGS=monitoring xsrv deploy)
-```
 
 ### Basic deployment
 
@@ -168,6 +147,32 @@ Copy any variable to your `host_vars` file and edit its value there, to override
 
 ```bash
 xsrv deploy [playbook] [host]
+```
+
+## Command-line usage
+
+Here is the full list of commands:
+
+```
+USAGE: xsrv COMMAND [playbook] [host]
+init-playbook   initialize a new playbook
+init-host       add a new host to an existing playbook
+deploy          deploy a playbook
+check           simulate deployment, report what would be changed
+edit-playbook   edit a playbook
+edit-inventory  edit inventory file for a playbook
+edit-host       edit a host vars file
+edit-vault      edit a host vault file
+shell           open an interactive shell on a host
+utils           run the xsrv-utils script on a host
+info            display quick access links for a host
+help            show this message
+fetch-backups   fetch backups from a host to the playbook backups dir
+upgrade         ugrade xsrv script and roles to latest versions
+show-defaults   show all available role variables and their default values
+
+The following environment variables are supported
+TAGS=tag1,tag2  limit deployment to a set of ansible tags (eg. TAGS=monitoring xsrv deploy)
 ```
 
 
@@ -249,9 +254,8 @@ TODO
 
 Branches/merge requests status:
 
-![](https://gitlab.com/nodiscc/xsrv/badges/ansible-collection/pipeline.svg?key_width=100&key_text=ansible-collection)
 ![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg?key_width=100&key_text=master)
-![](https://gitlab.com/nodiscc/xsrv/badges/ansible-vault/pipeline.svg?key_width=100&key_text=ansible-vault)
+![](https://gitlab.com/nodiscc/xsrv/badges/samba/pipeline.svg?key_width=100&key_text=samba)
 ![](https://gitlab.com/nodiscc/xsrv/badges/docker/pipeline.svg?key_width=100&key_text=docker)
 ![](https://gitlab.com/nodiscc/xsrv/badges/gitlab/pipeline.svg?key_width=100&key_text=gitlab)
 ![](https://gitlab.com/nodiscc/xsrv/badges/gitlab-runner/pipeline.svg?key_width=100&key_text=gitlab-runner)

@@ -1,0 +1,107 @@
+
+##### PACKAGES #####
+
+- name: install samba packages
+  apt:
+    state: latest
+    package:
+      - samba
+      - samba-common
+      - samba-common-bin
+      - samba-vfs-modules
+
+##### CONFIGURATION #####
+
+- name: copy samba configuration
+  template:
+    src: etc_samba_smb.conf.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: 0640
+  notify: check samba configuration
+
+###### BACKUPS ############
+
+- name: create rsnapshot configuration includes directory
+  file:
+    path: /etc/rsnapshot.d
+    state: directory
+  when: '"backup" in role_names'
+
+- name: copy rsnapshot configuration for samba backups
+  template:
+    src: etc_rsnapshot.d_samba.conf.j2
+    dest: /etc/rsnapshot.d/samba.conf
+  when: '"backup" in role_names'
+  notify: check rsnapshot configuration
+
+
+###### FAIL2BAN ############
+# copy fail2ban jail config/filters TODO
+
+#- name: copy EXAMPLE fail2ban jail config
+#  template: src=etc_fail2ban_jail.d_EXAMPLE.conf.j2 dest=/etc/fail2ban/jail.d/EXAMPLE.conf mode=0600
+#  tags: debug-config-fail2ban
+#  notify: restart fail2ban
+
+##### COMMAND-LINE/MISC INSTALLATION STEPS #####
+
+- name: Load nf_conntrack_netbios_ns kernel module
+  modprobe:
+    name: nf_conntrack_netbios_ns
+    state: present
+
+- name: load required kernel modules on boot
+  template:
+    src: etc_modules-load.d_nf-conntrack-netbios-ns.conf.j2
+    dest: /etc/modules-load.d/nf-conntrack-netbios-ns.conf
+    owner: root
+    group: root
+    mode: 0640
+
+- name: create sambausers group
+  group:
+    name: sambausers
+    state: present
+    system: yes
+
+- name: create disabled accounts for samba users
+  user:
+    name: "{{ item.username }}"
+    createhome: no
+    skeleton: no
+    state: present
+    groups: sambausers
+  with_items: "{{ samba_users }}"
+
+- name: update samba users/passwords database
+  shell: "printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}"
+  with_items: "{{ samba_users }}"
+
+###### SHARE DIRECTORIES
+
+- name: create base shares directory
+  file:
+    path: "{{ samba_shares_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+
+- name: create individual samba shares directories
+  file:
+    path: "{{ samba_shares_path }}/{{ item.name }}"
+    state: "{{ item.state | default('directory') }}"
+    owner: root
+    group: sambausers
+    mode: 0755
+  with_items: "{{ samba_shares }}"
+
+- name: list samba users
+  command: pdbedit -L # add -v for more details
+  changed_when: no
+  register: samba_users_list
+
+- name: show samba users list
+  debug: msg={{ samba_users_list.stdout }}

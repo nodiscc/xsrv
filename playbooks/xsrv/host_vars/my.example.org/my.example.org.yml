@@ -49,9 +49,9 @@ firehol_networks:
       - { name: "netdata", src: "{{ firehol_alias_lan }}" } # monitoring dashboard
       - { name: "http", src: "any" } # web server
       - { name: "https", src: "any" } # web server
+      # - { name: "samba", src: "{{ firehol_alias_lan }}" } # samba file sharing
       # - { name: "mumble", src: "{{ firehol_alias_lan }}" } # mumble voip server
       # - { name: "ping", src: "{{ firehol_alias_lan }}" } # incoming ICMP pings
-      # - { name: "samba", src: "{{ firehol_alias_lan }}" } # samba file sharing
       # - { name: "pulseaudio", src: "{{ firehol_alias_lan }}" } # pulseaudio sound server
       # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src: any
       # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any

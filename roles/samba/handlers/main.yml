@@ -1,0 +1,14 @@
+- name: check samba configuration
+  become: yes
+  command: testparm -s
+  notify: reload samba
+
+- name: reload samba
+  become: yes
+  service:
+    name: "{{ item }}"
+    state: reloaded
+  with_items:
+    - smbd
+    - nmbd
+

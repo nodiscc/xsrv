@@ -1,0 +1,314 @@
+#
+# Sample configuration file for the Samba suite for Debian GNU/Linux.
+#
+#
+# This is the main Samba configuration file. You should read the
+# smb.conf(5) manual page in order to understand the options listed
+# here. Samba has a huge number of configurable options most of which 
+# are not shown in this example
+#
+# Some options that are often worth tuning have been included as
+# commented-out examples in this file.
+#  - When such options are commented with ";", the proposed setting
+#    differs from the default Samba behaviour
+#  - When commented with "#", the proposed setting is the default
+#    behaviour of Samba but the option is considered important
+#    enough to be mentioned here
+#
+# NOTE: Whenever you modify this file you should run the command
+# "testparm" to check that you have not made any basic syntactic 
+# errors. 
+
+#======================= Global Settings =======================
+
+[global]
+
+## Browsing/Identification ###
+
+# Change this to the workgroup/NT-domain name your Samba server will part of
+   workgroup = WORKGROUP
+
+# What will appear in browse lists next to the machine name
+# Default: server string = Samba %v
+   server string = {{ samba_server_string }}
+
+# This sets the NetBIOS name by which a Samba server is known.
+# By default it is the same as the first component of the host's DNS name
+   netbios name = {{ samba_netbios_name }}
+
+# This will prevent nmbd to search for NetBIOS names through DNS.
+   dns proxy = no
+
+#### Networking ####
+
+# The specific set of interfaces / networks to bind to
+# This can be either the interface name or an IP address/netmask;
+# interface names are normally preferred
+;   interfaces = 127.0.0.0/8 eth0
+
+# Only bind to the named interfaces and/or networks; you must use the
+# 'interfaces' option above to use this.
+# It is recommended that you enable this feature if your Samba machine is
+# not protected by a firewall or is a firewall itself.  However, this
+# option cannot handle dynamic or non-broadcast interfaces correctly.
+;   bind interfaces only = yes
+
+#### Debugging/Accounting ####
+
+# This tells Samba to use a separate log file for each machine
+# that connects
+;   log file = /var/log/samba/log.%m
+
+# This tells Samba to log everything in a single file
+# There is no need to logrotate this file since is is truncated when it
+# reaches the max log size defined below
+    log file = /var/log/samba/samba.log
+
+# Do not prepend any timestamp to messages in Samba log file
+;   timestamp logs = no
+
+# Timestamp log messages, without filename/function information
+# This gives timestamps for messages without adding an additional line
+# Overrides the 'timestamp logs' parameter
+    debug prefix timestamp = yes
+
+# Appends the PID of the smbd process to log message timestamps
+    debug pid = yes
+
+# Cap the size of the individual log files (in KiB).
+   max log size = {{ samba_max_log_size_kb }}
+
+# We want Samba to only log to /var/log/samba/log.{smbd,nmbd}.
+# Append syslog@1 if you want important messages to be sent to syslog too.
+   logging = file
+
+# Log level, default is 0
+# Example: log level = 3 passdb:5 auth:10 winbind:2 
+   log level = {{ samba_log_level }}
+
+# Backend names which are used for Samba VFS I/O operations
+# these can be overloaded with one or more VFS objects.
+# Example: vfs objects = extd_audit recycle 
+# requires the samba-vfs-modules package
+    vfs objects = full_audit
+
+# full_audit VFS backend log message prefix: username|IPaddress|hostname|servicename
+    vfs_full_audit:prefix = %U|%I|%m|%S
+
+# full_audit VFS backend: log the following functions when successful
+# connect/disconnect, create/delete directory, rename and read/write (open), delete (unlink)
+# See also: read/pread, write/pwrite, sendfile, chmod/chown, lock,
+# link/symlink/readlink/mknod, fallocate/fftruncate
+    full_audit:success = mkdir rmdir rename open unlink connect disconnect
+
+# full_audit VFS backend: log the following functions when failed
+# failed connection attempts (connect)
+    full_audit:failure = connect
+
+# full_audit VFS backend: Log to syslog
+    full_audit:syslog = false
+
+# full_audit VFS backend: syslog facility and priority to use
+;   full_audit:facility = daemon
+;   full_audit:priority = NOTICE
+
+# Do something sensible when Samba crashes: mail the admin a backtrace
+   panic action = /usr/share/samba/panic-action %d
+
+
+####### Authentication #######
+
+# Server role. Defines in which mode Samba will operate. Possible
+# values are "standalone server", "member server", "classic primary
+# domain controller", "classic backup domain controller", "active
+# directory domain controller". 
+#
+# Most people will want "standalone server" or "member server".
+# Running as "active directory domain controller" will require first
+# running "samba-tool domain provision" to wipe databases and create a
+# new domain.
+   server role = standalone server
+
+# backend for storing user and group information
+   passdb backend = tdbsam
+
+# whether or not Samba should obey PAM's account and session management directives
+# Samba always ignores PAM for authentication in the case of
+# encrypt passwords = yes, which is the default
+   obey pam restrictions = yes
+
+# This boolean parameter controls whether Samba attempts to sync the Unix
+# password with the SMB password when the encrypted SMB password in the
+# passdb is changed.
+   unix password sync = yes
+
+# For Unix password sync to work on a Debian GNU/Linux system, the following
+# parameters must be set (thanks to Ian Kahan <<kahan@informatik.tu-muenchen.de> for
+# sending the correct chat script for the passwd program in Debian Sarge).
+   passwd program = /usr/bin/passwd %u
+   passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+
+# This boolean controls whether PAM will be used for password changes
+# when requested by an SMB client instead of the program listed in
+# 'passwd program'. The default is 'no'.
+   pam password change = yes
+
+# This option controls how unsuccessful authentication attempts are mapped
+# to anonymous connections
+   map to guest = bad user
+
+# Username which will be used for access to services which are specified as guest ok
+   guest account = nobody
+
+########## Domains ###########
+
+#
+# The following settings only takes effect if 'server role = primary
+# classic domain controller', 'server role = backup domain controller'
+# or 'domain logons' is set 
+#
+
+# It specifies the location of the user's
+# profile directory from the client point of view) The following
+# required a [profiles] share to be setup on the samba server (see
+# below)
+;   logon path = \\%N\profiles\%U
+# Another common choice is storing the profile in the user's home directory
+# (this is Samba's default)
+#   logon path = \\%N\%U\profile
+
+# The following setting only takes effect if 'domain logons' is set
+# It specifies the location of a user's home directory (from the client
+# point of view)
+;   logon drive = H:
+#   logon home = \\%N\%U
+
+# The following setting only takes effect if 'domain logons' is set
+# It specifies the script to run during logon. The script must be stored
+# in the [netlogon] share
+# NOTE: Must be store in 'DOS' file format convention
+;   logon script = logon.cmd
+
+# This allows Unix users to be created on the domain controller via the SAMR
+# RPC pipe.  The example command creates a user account with a disabled Unix
+# password; please adapt to your needs
+; add user script = /usr/sbin/adduser --quiet --disabled-password --gecos "" %u
+
+# This allows machine accounts to be created on the domain controller via the 
+# SAMR RPC pipe.  
+# The following assumes a "machines" group exists on the system
+; add machine script  = /usr/sbin/useradd -g machines -c "%u machine account" -d /var/lib/samba -s /bin/false %u
+
+# This allows Unix groups to be created on the domain controller via the SAMR
+# RPC pipe.  
+; add group script = /usr/sbin/addgroup --force-badname %g
+
+############ Misc ############
+
+# Prevents clients from seeing the existence of files that cannot be read.
+;   hide unreadable = no
+
+# Using the following line enables you to customise your configuration
+# on a per machine basis. The %m gets replaced with the netbios name
+# of the machine that is connecting
+;   include = /home/samba/etc/smb.conf.%m
+
+# Some defaults for winbind (make sure you're not using the ranges
+# for something else.)
+;   idmap config * :              backend = tdb
+;   idmap config * :              range   = 3000-7999
+;   idmap config YOURDOMAINHERE : backend = tdb
+;   idmap config YOURDOMAINHERE : range   = 100000-999999
+;   template shell = /bin/bash
+
+# Setup usershare options to enable non-root users to share folders
+# with the net usershare command.
+
+# Maximum number of usershare. 0 means that usershare is disabled.
+    usershare max shares = 0
+
+# Allow users who've been granted usershare privileges to create
+# public shares, not just authenticated ones
+;   usershare allow guests = yes
+
+# Limits the maximum number of smbd(8) processes concurrently running on a system
+# Mitigate SMBLoris DoS vulnerability https://smbloris.com/
+max smbd processes = 1000
+
+# Disable vulnerable SMBv1 and SMBv2
+protocol = SMB3
+
+#======================= Share Definitions =======================
+
+{% for item in samba_shares %}
+[{{ item.name }}]
+{% if item.comment is defined %}
+    comment = {{ item.comment }}
+{% endif %}
+    path = "{{ samba_shares_path }}/{{ item.name }}"
+    available = {{ item.enabled | default('yes') }}
+    browseable = {{ item.browseable | default('yes') }}
+    guest ok = no
+    valid users = {% for user in ( item.allow_read_users | default([]) ) + ( item.allow_write_users | default([]) ) %}{{ user }}{% if not loop.last %}{{', '}}{% else %}{{'\n'}}{% endif %}{% endfor %}
+    force group = sambausers
+    read only = yes
+    write list = {{ ( item.allow_write_users | default('') ) | join (', ') }}
+    hide files = "/.*/lost+found/"
+    dont descend = "/lost+found"
+    create mask = 0775
+    directory mask = 0775
+
+{% endfor %}
+
+
+# Un-comment the following and create the netlogon directory for Domain Logons
+# (you need to configure Samba to act as a domain controller too.)
+;[netlogon]
+;   comment = Network Logon Service
+;   path = /home/samba/netlogon
+;   guest ok = yes
+;   read only = yes
+
+# Un-comment the following and create the profiles directory to store
+# users profiles (see the "logon path" option above)
+# (you need to configure Samba to act as a domain controller too.)
+# The path below should be writable by all users so that their
+# profile directory may be created the first time they log on
+;[profiles]
+;   comment = Users profiles
+;   path = /home/samba/profiles
+;   guest ok = no
+;   browseable = no
+;   create mask = 0600
+;   directory mask = 0700
+
+# Disable printer sharing entirely
+    load printers = No
+    printing = cups
+    printcap name = /dev/null
+    disable spoolss = Yes
+
+;[printers]
+;   comment = All Printers
+;   browseable = no
+;   path = /var/spool/samba
+;   printable = yes
+;   guest ok = no
+;   read only = yes
+;   create mask = 0700
+
+# Windows clients look for this share name as a source of downloadable
+# printer drivers
+;[print$]
+;   comment = Printer Drivers
+;   path = /var/lib/samba/printers
+;   browseable = yes
+;   read only = yes
+;   guest ok = no
+# Uncomment to allow remote administration of Windows print drivers.
+# You may need to replace 'lpadmin' with the name of the group your
+# admin users are members of.
+# Please note that you also need to set appropriate Unix permissions
+# to the drivers directory for these users to have write rights in it
+;   write list = root, @lpadmin
+
