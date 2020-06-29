@@ -41,6 +41,12 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
 "user@my.example.org:/var/backups/srv01/daily.0" "/path/to/offsite-backups/${inventory_hostname}-daily.0.$(date +%Y-%m-%d)"
 ```
 
+**Backups schedule:** Automatic backups will run:
+- daily: at 01:00 every day
+- weekly: at 00:30 every sunday
+- monthly: at 00:01 on the first day of the month
+
+
 **Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep renaming/editing large files.
 
 **backup data from remote machines:**
