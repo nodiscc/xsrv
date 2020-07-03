@@ -43,9 +43,9 @@ firehol_networks:
     policy: "RETURN" # policy to apply for traffic that matches no rules match (one of DROP/RETURN/ACCEPT/REJECT)
     allow_input: # incoming traffic
       - { name: "ssh", src: "any" } # ssh from anywhere
-      # - { name: "netdata", src: "{{ firehol_alias_lan }}" } # monitoring dashboard
-      # - { name: "http", src: "{{ firehol_alias_lan }}" } # web server
-      # - { name: "https", src: "{{ firehol_alias_lan }}" } # web server
+      - { name: "netdata", src: "{{ firehol_alias_lan }}" } # monitoring dashboard
+      - { name: "http", src: "{{ firehol_alias_lan }}" } # web server
+      - { name: "https", src: "{{ firehol_alias_lan }}" } # web server
       # - { name: "mumble", src: "{{ firehol_alias_lan }}" } # mumble voip server
       # - { name: "ping", src: "{{ firehol_alias_lan }}" } # incoming ICMP pings
       # - { name: "samba", src: "{{ firehol_alias_lan }}" } # samba file sharing
@@ -67,3 +67,25 @@ firehol_networks:
       # - { name: "smtps", dst: "any" } # nextcloud mail
       # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
       # - { name: "all", dst: "any" } # allow ALL outgoing connections
+
+
+##### NETDATA MONITORING SYSTEM #####
+
+### NETDATA CHECKS ###
+# Process checks
+netdata_process_checks:
+  - { name: ssh, min_count: 1, interval: 20} # SSH server
+  - { name: time, min_count: 1, interval: 20} # NTP daemon
+  - { name: fail2ban, min_count: 1, interval: 20} # bruteforce prevention/IPS
+  - { name: httpd, min_count: 1, interval: 20} # web server
+  - { name: sql, min_count: 1, interval: 20} # SQL database engine
+#   - { name: gitea, min_count: 1, interval: 20} # gitea self-hosted software forge
+#   - { name: ezstream, min_count: 1, interval: 20} # icecast/ezstream media streaming server
+#   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
+#   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
+#   - { name: auth, min_count: 1, interval: 20} # openldap server
+#   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
+
+### EXTRA MODULES ###
+# yes/no: automatically restart services that require it after an upgrade
+needrestart_autorestart_services: yes
