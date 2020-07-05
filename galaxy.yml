@@ -4,7 +4,7 @@ version: 0.17
 readme: README.md
 authors:
   - nodiscc <nodiscc@gmail.com>
-description: "Build and manager your private servers"
+description: "Install and manage self-hosted network services and applications"
 license: "GPL-3.0"
 repository: "https://gitlab.com/nodiscc/xsrv"
 documentation: "https://gitlab.com/nodiscc/xsrv"

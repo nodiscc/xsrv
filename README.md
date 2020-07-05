@@ -7,20 +7,32 @@
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 
-Install and manage self-hosted network services and applications on your private servers:
- - [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) collection (roles and playbook)
- - simple [command-line tool](#usage) for common tasks
+Install and manage self-hosted network services and applications on your own server(s):
+ - collection of [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) [roles](#roles) for various services/applications
+ - premade default [playbook to setup a single server](#initial-deployment) for personal use or small/medium teams
+ - simple [command-line tool](#usage) for easy installation, common maintenance and configuration changes
 
 
 ## Roles
 
-- [common](roles/common) - base server components (SSH, upgrades, users, hostname, networking, kernel, time/date)
+- [common](roles/common) - base system components (SSH, upgrades, users, hostname, networking, kernel, time/date)
 - [backup](roles/backup) - incremental backup service (local and remote backups)
-- [monitoring](roles/monitoring) - lightweight monitoring, alerting and log aggregation system (netdata, rsyslog, other tools	)
+- [monitoring](roles/monitoring) - monitoring, alerting and log agregation system (netdata, rsyslog, other tools	)
 - [lamp](roles/lamp) - Apache web server, PHP interpreter and MariaDB (MySQL) database server
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt-rss](roles/tt-rss) - Tiny Tiny RSS web feed reader
-- [gitea](roles/gitea) - Gitea self-hosted Git service/software forge
+- [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
+- _WIP_ [docker](roles/docker) - Docker container platform
+- _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
+- _WIP_ [graylog](roles/graylog) - Log management and analysis software
+- _WIP_ [icecast](roles/icecast) - Streaming media server
+- _WIP_ [mumble-server](roles/mumble) - Low-latency voice-over-IP (VoIP) server
+- _WIP_ [pulseaudio](roles/pulseaudio) - Network sound server
+- _WIP_ [openldap](roles/openldap) - LDAP directory service and management tools
+- _WIP_ [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
+- _WIP_ [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
+- _WIP_ [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
+- _WIP_ [rocketchat](roles/rocketchat) - Realtime web chat/communication service
 
 <!-- TODO demo screencast -->
 
@@ -59,11 +71,12 @@ Install and manage self-hosted network services and applications on your private
 
 ## Requirements
 
+- One or more target Linux servers (_hosts_).
+- A remote administration machine (_controller_)
 
 ### Prepare the server
 
 See [server preparation](docs/server-preparation.md)
-
 
 ### Prepare the controller
 
@@ -73,21 +86,21 @@ The controller machine can be any workstation, dedicated server, container... wh
 # install requirements (example for debian-based systems)
 sudo apt update && sudo apt install git bash python3-pip openssl
 
-# install ansible for the current user (~/.local/bin/)
-pip3 install ansible==2.9.9
-
 # clone the repository
 sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest release
 sudo git clone -b 1.0 https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR specific release
 sudo git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR development version
 ```
 
-A command line tool `xsrv` is provided to help performing common tasks (basic wrapper around ansible, virtualenv, rsync and SSH commands). You can also use roles directly in existing/custom ansible playbooks and use `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html) directly.
+A command line tool `xsrv` is provided to help performing common tasks (basic wrapper around ansible, virtualenv, rsync and SSH commands, roles upgrade machanism).
 
 ``` bash
-# (optional) install the command line tool
+# (optional) install the command line tool to your $PATH
 sudo cp /opt/xsrv/xsrv /usr/local/bin/
 ```
+
+You can also use roles directly in existing/custom ansible playbooks and use `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html) directly. In that case add `/opt/xsrv/roles` to your ansible [roles path](https://docs.ansible.com/ansible/latest/reference_appendices/config.html).
+
 
 ## Usage
 
@@ -131,8 +144,7 @@ xsrv init-playbook
 ```bash
 TODO ASCIINEMA
 ```
-
-When the configuration suits you, deploy changes to the host:
+You can use the default playbook as-is, or [edit roles and configuration](#changing-configuration) before initial deployment. When the configuration suits you, deploy changes to the host:
 
 ```bash
 xsrv deploy
