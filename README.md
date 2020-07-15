@@ -7,6 +7,8 @@
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 
+**STATUS: rewrite in progress - Expect a stable release soon - The current version is partially broken and will require frequent adaptations to configuration files.**
+
 Install and manage self-hosted network services and applications on your own server(s):
  - collection of [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) [roles](#roles) for various services/applications
  - premade default [playbook to setup a single server](#initial-deployment) for personal use or small/medium teams

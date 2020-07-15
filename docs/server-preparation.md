@@ -10,9 +10,12 @@ Virtualization software includes [virt-manager](https://en.wikipedia.org/wiki/Vi
 
 Resource usage will vary depending on installed components (read each role's documentation), the number of users, and how much user data you need to store. Example minimal configuration for a personal/small team server with 2-10 users:
 
- - Computer with x86/64 compatible CPU
- - 1024-2048MB+ RAM
- - 40GB-∞ drive space
+```
+Computer with x86/64 compatible CPU
+1024-2048MB+ RAM
+10GB storage space for system and applications
+1-∞GB storage space for user data
+```
 
 Use low power consumption components. To increase availability, setup the BIOS to reboot after a power loss, setup an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
 
@@ -38,12 +41,16 @@ Mumble VoIP server:              TCP/UDP 64738
 
 ### DNS records
 
-The server's **hostname** ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) must be resolvable from the controller (`A` or `CNAME` record at a public [DNS registrar]([registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)), a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your private DNS resolver, alternatively an entry in your [hosts file](https://en.wikipedia.org/wiki/Hosts_(file)) will work).
+The server's **hostname** ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) must be resolvable from the controller (`A` or `CNAME` record at a public [DNS registrar]([registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)), a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your private DNS resolver, entry in your [hosts file](https://en.wikipedia.org/wiki/Hosts_(file)), or configure `ansible_ssh_host` to point ot server's IP address).
 
-Setup any additional records/subdomains required to access your applications (webserver virtual hosts). By default the following subdomains are required (if corresponding roles are enabled):
+Setup any additional records/subdomains required to access your applications (webserver virtualhosts). By default the following subdomains are required (if corresponding roles are enabled):
 
-```
-TODO
+```bash
+cloud.CHANGEME.org # nextcloud
+rss.CHANGEME.org   # tt-rss
+gitea.CHANGEME.org # gitea
+links.CHANGEME.org # shaarli
+radio.CHANGEME.org # icecast
 ```
 
 ### Debian installation
