@@ -1,9 +1,9 @@
 ---
 
 galaxy_info:
-  role_name: lamp
+  role_name: apache-php
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "apache web server + mod-php + mysql/mariadb server"
+  description: "apache web server + mod_php interpreter"
   license: "GPL-3.0"
   min_ansible_version: 2.8
   platforms:
@@ -12,12 +12,8 @@ galaxy_info:
         - 10
   galaxy_tags:
     - web
-    - server
     - apache
     - php
-    - mysql
-    - mariadb
-    - database
     - server
     - lamp
 

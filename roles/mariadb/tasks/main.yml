@@ -1,0 +1,8 @@
+---
+# tasks for mariadb role
+
+- include: mariadb.yml
+  become: yes
+  tags:
+    - mariadb
+    - lamp

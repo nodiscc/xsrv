@@ -27,9 +27,9 @@ See [defaults/main.yml](defaults/main.yml)
 Dependencies
 ------------
 
-- [lamp](../lamp/README.md) role for automatic webserver configuration/SSL certificates
-- [common](../common/README.md) role for fail2ban support
-- [backup](../backup/README.md) role for automatic backups
+- The [apache](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
+- [common](../common/README.md) role (for fail2ban support)
+- [backup](../backup/README.md) role (for automatic backups)
 
 
 Example Playbook
@@ -40,7 +40,8 @@ Example Playbook
   roles:
     - common
     - monitoring
-    - lamp
+    - apache
+    - mariadb
     - tt-rss
   vars:
     tt_rss_fqdn: "rss.CHANGEME.org"

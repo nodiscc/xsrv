@@ -9,8 +9,3 @@
   service: name=apache2 state=reloaded enabled=yes
   become: yes
   when: apache_enable_service|bool
-
-- name: restart mariadb
-  service: name=mariadb state=restarted enabled=yes
-  become: yes
-  when: mariadb_enable_service|bool

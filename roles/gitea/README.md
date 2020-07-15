@@ -20,10 +20,12 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 [![](https://i.imgur.com/4NhXqdG.png)](https://i.imgur.com/d5glB4P.png)
 
 
-Requirements
+Requirements/Dependencies
 ------------
 
-This role requires Ansible 2.8 or higher.
+- Ansible 2.8 or higher.
+- The [apache](../apache/README.md) role (webserver, PHP interpreter, SSL certificates)
+- The [mariadb](../mariadb/README.md) role (database engine)
 
 
 Role Variables
@@ -32,25 +34,6 @@ Role Variables
 See [defaults/main.yml](defaults/main.yml)
 
 
-Dependencies
-------------
-
-The [lamp](../lamp/README.md) role.
-
-The web server must be configured to forward requests to the gitea server. 
-
-```yaml
-apache_virtualhosts:
-  - servername: my.example.org
-    ...
-    reverse_proxies:
-      - name: gitea
-      - location: /gitea
-        backend: http://localhost:3000
-        response_headers:
-          - Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
-
-```
 
 Example Playbook
 ----------------

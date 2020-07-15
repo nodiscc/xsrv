@@ -151,13 +151,13 @@
     dest: '/etc/systemd/system.conf.d/accounting.conf'
   notify: re-execute the systemd manager
 
-- name: create mysql user for netdata (if lamp role is enabled)
+- name: create mysql user for netdata (if mariadb role is enabled)
   mysql_user:
     name: netdata
     state: present
     priv: '*.*:USAGE/*.*:REPLICATION CLIENT'
   no_log: True
-  when: '"lamp" in role_names'
+  when: '"mariadb" in role_names'
 
 - name: start and enable netdata
   service:

@@ -20,5 +20,5 @@ galaxy_info:
     - reader
 
 dependencies:
-  - lamp
-  - common
+  - apache
+  - mariadb

@@ -14,11 +14,8 @@
     - apache
     - lamp
 
-- include: mariadb.yml
-  become: yes
-  tags:
-    - mariadb
-    - lamp
-
 - name: restart apache to apply configuration changes
   meta: flush_handlers
+  tags:
+    - apache
+    - lamp

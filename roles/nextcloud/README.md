@@ -43,7 +43,9 @@ See [defaults/main.yml](defaults/main.yml)
 Dependencies
 ------------
 
-The [`lamp`](../lamp/README.md) role (webserver + self-signed or Let's Encrypt certificates generation)
+- The [`apache`](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
+- The [`mariadb`](../mariadb/README.md) role (database engine)
+- The [backup](../backup/README.md) role (for automatic backups)
 
 
 Example Playbook
@@ -53,7 +55,8 @@ Example Playbook
 - hosts: my.example.org
   roles:
     - common
-    - lamp
+    - apache
+    - mariadb
     - nextcloud
   vars:
     nextcloud_fqdn: "cloud.CHANGEME.org"

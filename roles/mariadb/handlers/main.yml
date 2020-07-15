@@ -1,0 +1,7 @@
+---
+# handlers for mariadb role
+
+- name: restart mariadb
+  service: name=mariadb state=restarted enabled=yes
+  become: yes
+  when: mariadb_enable_service|bool

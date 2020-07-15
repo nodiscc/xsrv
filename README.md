@@ -18,7 +18,8 @@ Install and manage self-hosted network services and applications on your own ser
 - [common](roles/common) - base system components (SSH, upgrades, users, hostname, networking, kernel, time/date)
 - [backup](roles/backup) - incremental backup service (local and remote backups)
 - [monitoring](roles/monitoring) - monitoring, alerting and log agregation system (netdata, rsyslog, other tools	)
-- [lamp](roles/lamp) - Apache web server, PHP interpreter and MariaDB (MySQL) database server
+- [apache](roles/apache-php) - Apache web server and PHP interpreter module
+- [mariadb](roles/mariadb) -  MariaDB (MySQL) database server
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt-rss](roles/tt-rss) - Tiny Tiny RSS web feed reader
 - [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
@@ -36,7 +37,7 @@ Install and manage self-hosted network services and applications on your own ser
 
 <!-- TODO demo screencast -->
 
-[![](https://i.imgur.com/E74kJx5.png)](roles/lamp/)
+[![](https://i.imgur.com/E74kJx5.png)](roles/apache/)
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt-rss)
