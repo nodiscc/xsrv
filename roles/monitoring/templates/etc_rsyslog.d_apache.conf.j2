@@ -1,11 +1,13 @@
 # rsyslog - monitor apache access/error log files
 module(load="imfile")
 
+{% if rsyslog_monitor_apache_accesslog %}
 input(type="imfile"
       File="/var/log/apache2/access.log"
       Tag="apache:"
       Facility="daemon"
       PersistStateInterval="0")
+{% endif %}
 
 input(type="imfile"
       File="/var/log/apache2/error.log"
