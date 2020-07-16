@@ -15,7 +15,12 @@
   SSLCertificateFile /etc/ssl/certs/{{ nextcloud_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ nextcloud_fqdn }}.key
 {% elif nextcloud_https_mode == 'letsencrypt' %}
-  #MDomain TODO
+  MDomain {{ nextcloud_fqdn }}
+  MDCertificateAgreement accepted
+  MDCertificateStatus off
+  MDContactEmail {{ letsencrypt_admin_email | default('admin@' + {{ nextcloud_fqdn }}) }}
+  MDPrivateKeys RSA 4096
+  MDRequireHttps permanent
 {% endif %}
   DocumentRoot {{ nextcloud_install_dir }}
   ServerName  {{ nextcloud_fqdn }}
