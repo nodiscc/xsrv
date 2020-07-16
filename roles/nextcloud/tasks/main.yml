@@ -1,5 +1,17 @@
 ---
 
+- include: mysql.yml
+  become: yes
+  tags:
+    - nextcloud
+  when: nextcloud_db_type == 'mysql'
+
+- include: postgresql.yml
+  become: yes
+  tags:
+    - nextcloud
+  when: nextcloud_db_type == 'pgsql'
+
 - include: nextcloud.yml
   become: yes
   tags:

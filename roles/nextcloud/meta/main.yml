@@ -30,4 +30,5 @@ galaxy_info:
 
 dependencies:
   - apache
-  - mariadb
+  # - mariadb
+  # - postgresql

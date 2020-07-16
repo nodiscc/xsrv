@@ -1,0 +1,26 @@
+##### NEXTCLOUD DATABASE (MYSQL/MARIADB) #####
+
+- name: install packages for mysql support
+  apt:
+    state: present
+    package:
+      - php-mysql
+      - python3-pymysql
+
+- name: create nextcloud mysql database
+  mysql_db:
+    name: "{{ nextcloud_db_name }}"
+    state: present
+    login_password: "{{ mariadb_root_password }}"
+    host: "{{ nextcloud_db_host }}"
+
+# Not idempotent - https://github.com/ansible/ansible/issues/60567
+- name: create nextcloud mysql user
+  mysql_user:
+    name: "{{ nextcloud_db_user }}"
+    password: "{{ nextcloud_db_password }}"
+    state: present
+    priv: "{{ nextcloud_db_name }}.*:ALL"
+    login_password: "{{ mariadb_root_password }}"
+    host: "{{ nextcloud_db_host }}"
+  no_log: True

@@ -22,11 +22,21 @@ nextcloud_https_mode: selfsigned
 # nextcloud data storage directory
 nextcloud_data_dir: "/var/nextcloud/data"
 
-# nextcloud database credentials
-nextcloud_db_name: "nextcloud"
-nextcloud_db_user: "nextcloud"
-nextcloud_db_table_prefix: "oc_"
+# nextcloud adminstrator e-mail address
+nextcloud_admin_email: "admin@{{ nextcloud_fqdn }}"
+
+# nextcloud database type (mysql/pgsql)
+nextcloud_db_type: "pgsql"
+# nextcloud database host
+# use /var/run/postgresql and unset the password to use postgresql local peer authentication
 nextcloud_db_host: "localhost"
+# nextcloud database name
+nextcloud_db_name: "nextcloud"
+# nextcloud database table prefix
+nextcloud_db_table_prefix: "oc_"
+# nextcloud database user
+nextcloud_db_user: "nextcloud"
+# nextcloud database password
 nextcloud_db_password: "{{ vault_nextcloud_db_password }}" # CHANGEME
 
 # nextcloud version to install

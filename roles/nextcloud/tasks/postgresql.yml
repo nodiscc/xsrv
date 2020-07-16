@@ -1,0 +1,38 @@
+##### NEXTCLOUD DATABASE (postgresql) #####
+
+- name: install packages for postgresql support
+  apt:
+    state: present
+    package:
+      - php-pgsql
+      - python3-psycopg2
+
+- name: create nextcloud postgresql user
+  become_user: postgres
+  postgresql_user:
+    name: "{{ nextcloud_db_user }}"
+    state: present
+
+- name: set nexctloud postgresql user password
+  become_user: postgres
+  postgresql_user:
+    name: "{{ nextcloud_db_user }}"
+    password: "{{ nextcloud_db_password }}"
+  when: nextcloud_db_password is defined
+  no_log: True
+
+- name: create nextcloud postgresql database
+  become_user: postgres
+  postgresql_db:
+    name: "{{ nextcloud_db_name }}"
+    state: present
+    encoding: 'UNICODE'
+    owner: '{{ nextcloud_db_user }}'
+
+- name: grant privileges on nextcloud database to nextcloud postgresql user
+  become_user: postgres
+  postgresql_privs:
+    db: nextcloud
+    privs: ALL
+    type: database
+    role: "{{ nextcloud_db_user }}"

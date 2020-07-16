@@ -5,8 +5,6 @@
 - name: install required packages
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - php-gmp
       - php-curl
@@ -16,7 +14,6 @@
       - php-json
       - php-ldap
       - php-sqlite3
-      - php-mysql
       - php-mbstring
       - php-xml
       - php-zip
@@ -26,28 +23,6 @@
       - php-apcu
       - ffmpeg
       - acl
-  notify: reload apache
-
-
-##### DATABASE #####
-
-- name: create nextcloud mysql database
-  mysql_db:
-    name: "{{ nextcloud_db_name }}"
-    state: present
-    login_password: "{{ mariadb_root_password }}"
-
-# Not idempotent - https://github.com/ansible/ansible/issues/60567
-- name: create nextcloud mysql user
-  mysql_user:
-    name: "{{ nextcloud_db_user }}"
-    host: "{{ nextcloud_db_host }}"
-    password: "{{ nextcloud_db_password }}"
-    state: present
-    priv: "{{ nextcloud_db_name }}.*:ALL"
-    login_password: "{{ mariadb_root_password }}"
-  no_log: True
-
 
 ###### FAIL2BAN ##########
 
@@ -192,15 +167,16 @@
   become_user: www-data
   command: /usr/bin/php occ \
            maintenance:install \
-           --database="mysql" \
+           --database="{{ nextcloud_db_type }}" \
+           --database-host="{{ nextcloud_db_host }}" \
            --database-name="{{ nextcloud_db_name }}" \
            --database-table-prefix="{{ nextcloud_db_table_prefix }}" \
            --database-user="{{ nextcloud_db_user }}" \
-           --database-host="{{ nextcloud_db_host }}" \
            --database-pass="{{ nextcloud_db_password }}" \
            --admin-user="{{ nextcloud_user }}" \
            --admin-pass="{{ nextcloud_password }}"
            --data-dir="{{ nextcloud_data_dir }}"
+           --admin-email="{{ nextcloud_admin_email }}"
   register: nextcloud_first_setup
   args:
     chdir: "{{ nextcloud_install_dir }}"
@@ -234,7 +210,7 @@
     - { key: "trusted_domains 1", value: "{{ nextcloud_fqdn }}" }
     - { key: "overwrite.cli.url", value: "{{ nextcloud_full_url }}" }
     - { key: "datadir", value: "{{ nextcloud_data_dir }}" }
-    - { key: "dbtype", value: "mysql" }
+    - { key: "dbtype", value: "{{ nextcloud_db_type }}" }
     - { key: "dbname", value: "{{ nextcloud_db_name }}" }
     - { key: "dbhost", value: "{{ nextcloud_db_host }}" }
     - { key: "dbtableprefix", value: "{{ nextcloud_db_table_prefix }}" }
