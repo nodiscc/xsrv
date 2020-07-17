@@ -1,0 +1,12 @@
+
+- hosts: my.example.org
+  roles:
+    - common
+    - backup
+    - monitoring
+    - apache
+    - mariadb
+    - postgresql
+    - nextcloud
+    - tt-rss
+    - gitea
