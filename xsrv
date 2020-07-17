@@ -205,6 +205,11 @@ function upgrade() {
     sudo cp "$templates_path/xsrv" /usr/local/bin
 }
 
+function show_defaults() {
+    # shellcheck disable=SC2002
+    cat "$templates_path/roles/*/defaults/main.yml" | less
+}
+
 function _main() {
     if [[ -z "$command" ]]; then echo "[xsrv] ERROR: no command provided"; echo "$usage"; exit 1; fi
     case "$command" in
