@@ -18,7 +18,7 @@
   MDomain {{ nextcloud_fqdn }}
   MDCertificateAgreement accepted
   MDCertificateStatus off
-  MDContactEmail {{ letsencrypt_admin_email | default('admin@' + {{ nextcloud_fqdn }}) }}
+  MDContactEmail {{ letsencrypt_admin_email | default('admin@' + nextcloud_fqdn) }}
   MDPrivateKeys RSA 4096
   MDRequireHttps permanent
 {% endif %}
