@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
 
+#### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - UNRELEASED
+
+**Added:**
+- [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
+
+
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
 
 **Upgrade procedure:**

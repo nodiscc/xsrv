@@ -20,3 +20,4 @@
     - nodiscc.xsrv.docker
     - nodiscc.xsrv.rocketchat
     - nodiscc.xsrv.graylog
+    - nodiscc.xsrv.proxmox

@@ -35,6 +35,8 @@ Unattended-Upgrade::Origins-Pattern {
 {% endif %}
 {% if 'nodiscc.xsrv.jellyfin' in role_names and jellyfin_auto_upgrade %}        "origin=Jellyfin,site=repo.jellyfin.org";
 {% endif %}
+{% if 'nodiscc.xsrv.proxmox' in role_names and proxmox_auto_upgrade %}        "o=Proxmox,site=download.proxmox.com";
+{% endif %}
 
         // Archive or Suite based matching:
         // Note that this will silently match a different release after

@@ -1,0 +1,23 @@
+- name: enable contrib section in debian apt repository
+  apt_repository:
+    repo: deb https://deb.debian.org/debian buster contrib
+    state: present
+    filename: debian-contrib
+
+- name: enable contrib section in debian updates apt repository
+  apt_repository:
+    repo: deb https://deb.debian.org/debian buster-updates contrib
+    state: present
+    filename: debian-updates-contrib
+
+- name: enable contrib sections in debian security apt repository
+  apt_repository:
+    repo: deb https://security.debian.org/debian-security buster/updates contrib
+    state: present
+    filename: debian-updates-contrib
+
+- name: enable proxmox no-subscription apt repository
+  apt_repository:
+    repo: deb http://download.proxmox.com/debian/pve buster pve-no-subscription
+    state: present
+    filename: proxmox-no-subscription

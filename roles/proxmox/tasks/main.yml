@@ -1,0 +1,9 @@
+- include: proxmox.yml
+  become: yes
+  tags: proxmox
+
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - proxmox
+    - fail2ban

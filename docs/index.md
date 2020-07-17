@@ -38,6 +38,7 @@
 - [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - media System that puts you in control of managing and streaming your media
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - simple homepage/dashboard for your services
 - [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) - access a server terminal as a web application
+- [proxmox](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) - basic setup for Proxmox VE hypervisors
 
 
 ## Quick start

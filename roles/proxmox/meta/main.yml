@@ -1,0 +1,17 @@
+galaxy_info:
+  author: nodiscc
+  description: Proxmox VE configuration
+  license: GPL-3.0
+  min_ansible_version: 2.10
+  platforms:
+    - name: Debian
+      versions:
+        - 10
+  galaxy_tags:
+    - proxmox
+    - virtualization
+    - hypervisor
+    - kvm
+    - lxc
+dependencies: []
+#  - nodiscc.xsrv.common # optional, unattended upgrades

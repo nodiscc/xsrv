@@ -1,0 +1,3 @@
+##### PROXMOX HYPERVISOR #####
+# allow automatic security upgrades of proxmox packages
+proxmox_auto_upgrade: yes

@@ -22,3 +22,5 @@ Then run `xsrv deploy` to apply changes.
 - [jellyfin](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml)
 - [samba](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml)
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
+- [gotty](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml) - access a server terminal as a web application
+- [proxmox](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/proxmox/defaults/main.yml) - basic setup for Proxmox VE hypervisors
