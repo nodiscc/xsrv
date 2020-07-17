@@ -82,6 +82,9 @@
   file:
     state: directory
     path: "{{ item.documentroot }}"
+    owner: root
+    group: www-data
+    mode: 0750
   with_items: "{{ apache_virtualhosts }}"
 
 - name: copy robots.txt
