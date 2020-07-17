@@ -1,0 +1,8 @@
+---
+
+- name: install postgresql
+  apt:
+    state: present
+    package:
+      - postgresql
+      - postgresql-client
