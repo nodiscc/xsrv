@@ -1,5 +1,5 @@
-{% if nextcloud_https_mode in ['selfsigned', 'letsencrypt', 'none'] %}
 <VirtualHost *:80>
+    DocumentRoot {{ nextcloud_install_dir }}
     ServerName {{ nextcloud_fqdn }}
 {% if nextcloud_https_mode == 'selfsigned' or nextcloud_https_mode == 'letsencrypt' %}
     # Redirect all HTTP requests to HTTPS
@@ -8,6 +8,11 @@
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </VirtualHost>
 
+MDomain {{ nextcloud_fqdn }}
+MDCertificateAgreement accepted
+MDCertificateStatus off
+MDContactEmail {{ letsencrypt_admin_email | default(nextcloud_admin_email) }}
+MDPrivateKeys RSA 4096
 <VirtualHost *:443>
 {% endif %}
 {% if nextcloud_https_mode == 'selfsigned' %}
@@ -15,12 +20,6 @@
   SSLCertificateFile /etc/ssl/certs/{{ nextcloud_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ nextcloud_fqdn }}.key
 {% elif nextcloud_https_mode == 'letsencrypt' %}
-  MDomain {{ nextcloud_fqdn }}
-  MDCertificateAgreement accepted
-  MDCertificateStatus off
-  MDContactEmail {{ letsencrypt_admin_email | default('admin@' + nextcloud_fqdn) }}
-  MDPrivateKeys RSA 4096
-  MDRequireHttps permanent
 {% endif %}
   DocumentRoot {{ nextcloud_install_dir }}
   ServerName  {{ nextcloud_fqdn }}
@@ -37,4 +36,3 @@
   </Directory>
 
 </VirtualHost>
-{% endif %}
