@@ -1,28 +1,26 @@
 <VirtualHost *:80>
     DocumentRoot {{ nextcloud_install_dir }}
     ServerName {{ nextcloud_fqdn }}
-{% if nextcloud_https_mode == 'selfsigned' or nextcloud_https_mode == 'letsencrypt' %}
+{% if nextcloud_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
     RewriteCond %{HTTPS} off
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
 </VirtualHost>
 
+{% if nextcloud_https_mode == 'letsencrypt' %}
 MDomain {{ nextcloud_fqdn }}
-MDCertificateAgreement accepted
-MDCertificateStatus off
-MDContactEmail {{ letsencrypt_admin_email | default(nextcloud_admin_email) }}
-MDPrivateKeys RSA 4096
+{% endif %}
+
 <VirtualHost *:443>
-{% endif %}
-{% if nextcloud_https_mode == 'selfsigned' %}
-  SSLEngine on
-  SSLCertificateFile /etc/ssl/certs/{{ nextcloud_fqdn }}.crt
-  SSLCertificateKeyFile /etc/ssl/private/{{ nextcloud_fqdn }}.key
-{% elif nextcloud_https_mode == 'letsencrypt' %}
-{% endif %}
   DocumentRoot {{ nextcloud_install_dir }}
   ServerName  {{ nextcloud_fqdn }}
+  SSLEngine on
+{% if nextcloud_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ nextcloud_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ nextcloud_fqdn }}.key
+{% endif %}
 
   <Directory {{ nextcloud_install_dir }}>
     # Unset system-wide Content-Security-Policy header since Nextcloud provides its own CSP

@@ -16,6 +16,11 @@
     SSLCertificateKeyFile /etc/ssl/private/localhost.key
 </VirtualHost>
 
+# common configuration for mod_md
+MDCertificateAgreement accepted
+MDContactEmail {{ apache_letsencrypt_email }}
+MDPrivateKeys RSA 4096
+
 {% for vhost in apache_virtualhosts %}
 {% if vhost.https_mode == 'selfsigned' %}
 <VirtualHost *:443>

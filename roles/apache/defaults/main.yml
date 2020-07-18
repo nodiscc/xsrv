@@ -8,7 +8,6 @@
 # documentroot: directory for the document root of this virtualhost
 # allow_robots: yes/no (default: no): when set to no, crawlers/bots will be disallowed from browsing the site (bad bots will ignore this setting)
 # https_mode: inselfsigned/letsencrypt:
-#   none: don't enable HTTPS for this vhost, don't generate certificates
 #   selfsigned: generate and use a self-signed certificate key for this vhost
 #   letsencrypt: generate a free certificate on Let's Encrypt (letsencrypt.org) certificate for this vhost
 #                (port 80/tcp MUST be reachable from the Internet on the DNS name of the vhost)
