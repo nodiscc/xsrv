@@ -47,8 +47,8 @@ firehol_networks:
     allow_input: # incoming traffic
       - { name: "ssh", src: "any" } # ssh from anywhere
       - { name: "netdata", src: "{{ firehol_alias_lan }}" } # monitoring dashboard
-      - { name: "http", src: "{{ firehol_alias_lan }}" } # web server
-      - { name: "https", src: "{{ firehol_alias_lan }}" } # web server
+      - { name: "http", src: "any" } # web server
+      - { name: "https", src: "any" } # web server
       # - { name: "mumble", src: "{{ firehol_alias_lan }}" } # mumble voip server
       # - { name: "ping", src: "{{ firehol_alias_lan }}" } # incoming ICMP pings
       # - { name: "samba", src: "{{ firehol_alias_lan }}" } # samba file sharing
