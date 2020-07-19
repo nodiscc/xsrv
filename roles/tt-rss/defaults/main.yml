@@ -43,3 +43,6 @@ tt_rss_install_themes: no
 
 # yes/no: install additional tt-rss plugins (unmaintained)
 tt_rss_install_plugins: no
+
+# sql, syslog, '': Error log destination. setting this to blank uses PHP logging/webserver error log
+tt_rss_log_destination: ''
