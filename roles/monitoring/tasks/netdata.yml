@@ -36,7 +36,7 @@
   changed_when: False
   when: netdata_install_method == 'binary'
 
-# Not idempotent/overwrites configuration
+# TODO Not idempotent/overwrites configuration/causes netdata restart
 - name: run netdata installer
   command: /root/netdata-{{ netdata_version }}.gz.run --accept -- --dont-start-it --disable-telemetry
   when: netdata_install_method == 'binary'
