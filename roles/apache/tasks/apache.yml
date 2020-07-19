@@ -118,10 +118,10 @@
     path: /etc/rsnapshot.d
     state: directory
 
-- name: copy rsnapshot configuration for letsencrypt backups
-  template:
-    src: etc_rsnapshot.d_letsencrypt.conf.j2
-    dest: /etc/rsnapshot.d/letsencrypt.conf
+- name: remove rsnapshot configuration file leftover by old role versions
+  file:
+    state: absent
+    path: /etc/rsnapshot.d/letsencrypt.conf
 
 ##### SERVICE #####
 
