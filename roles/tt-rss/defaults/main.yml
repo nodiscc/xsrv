@@ -11,7 +11,6 @@ tt_rss_full_url: "https://{{ tt_rss_fqdn }}/"
 # HTTPS and SSL/TLS certificate mode for the tt-rss webserver virtualhost
 # letsencrypt: acquire a certificate from Let's Encrypt (tt_rss_fqdn must be piblicly resolvable, port tcp/80 must be reachable from the Internet)
 # selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
-# none: disable HTTPS entirely (not recommended)
 tt_rss_https_mode: selfsigned
 
 # tt-rss main user/admin username/password

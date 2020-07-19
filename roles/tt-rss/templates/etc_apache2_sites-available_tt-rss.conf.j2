@@ -1,24 +1,26 @@
-{% if tt_rss_https_mode in ['selfsigned', 'letsencrypt', 'none'] %}
 <VirtualHost *:80>
+    DocumentRoot {{ tt_rss_install_dir }}
     ServerName {{ tt_rss_fqdn }}
-{% if tt_rss_https_mode == 'selfsigned' or tt_rss_https_mode == 'letsencrypt' %}
+{% if tt_rss_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
     RewriteCond %{HTTPS} off
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
 </VirtualHost>
 
+{% if tt_rss_https_mode == 'letsencrypt' %}
+MDomain {{ tt_rss_fqdn }}
+{% endif %}
+
 <VirtualHost *:443>
-{% endif %}
-{% if tt_rss_https_mode == 'selfsigned' %}
-  SSLEngine on
-  SSLCertificateFile /etc/ssl/certs/{{ tt_rss_fqdn }}.crt
-  SSLCertificateKeyFile /etc/ssl/private/{{ tt_rss_fqdn }}.key
-{% elif tt_rss_https_mode == 'letsencrypt' %}
-  #MDomain TODO
-{% endif %}
   DocumentRoot {{ tt_rss_install_dir }}
   ServerName  {{ tt_rss_fqdn }}
+  SSLEngine on
+{% if tt_rss_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ tt_rss_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ tt_rss_fqdn }}.key
+{% endif %}
 
   <Directory {{ tt_rss_install_dir }}/cache>
       Require all denied
@@ -33,4 +35,3 @@
   </Directory>
 
 </VirtualHost>
-{% endif %}
