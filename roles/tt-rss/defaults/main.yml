@@ -17,11 +17,13 @@ tt_rss_https_mode: selfsigned
 tt_rss_user: "{{ vault_tt_rss_user }}" # CHANGEME
 tt_rss_password: "{{ vault_tt_rss_password }}" # CHANGEME
 
-# tt-rss database credentials
+# tt-rss database settings
+tt_rss_db_type: "pgsql" # mysql or pgsql
 tt_rss_db_host: "localhost"
 tt_rss_db_name: "ttrss"
 tt_rss_db_user: "ttrss"
 tt_rss_db_password: "{{ vault_tt_rss_db_password }}" # CHANGEME
+tt_rss_db_port: "5432" # usually 5432 for PostgreSQL, 3306 for MySQL
 
 # random 24 characters string used for encryption of passwords for password-protected feeds
 tt_rss_feed_crypt_key: "{{ vault_tt_rss_feed_crypt_key }}" # CHANGEME random 24 charaters

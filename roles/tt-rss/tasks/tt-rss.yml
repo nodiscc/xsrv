@@ -9,7 +9,6 @@
     cache_valid_time: 900
     package:
       - php7.3-common
-      - php7.3-mysql
       - php7.3-xml
       - php7.3-json
       - php7.3-intl
@@ -17,25 +16,6 @@
       - php7.3-curl
       - php7.3-gd
       - php7.3-opcache
-
-##### DATABASE #####
-
-- name: create tt-rss mysql database
-  mysql_db:
-    name: "{{ tt_rss_db_name }}"
-    state: present
-    login_host: "{{ tt_rss_db_host }}"
-    login_user: root
-
-# TODO not idempotent
-- name: create tt-rss mysql user
-  mysql_user:
-    name: "{{ tt_rss_db_user }}"
-    host: "{{ tt_rss_db_host }}"
-    password: "{{ tt_rss_db_password }}"
-    state: present
-    priv: "{{ tt_rss_db_name }}.*:ALL"
-  no_log: True
 
 ##### FAIL2BAN #####
 
@@ -111,19 +91,49 @@
     group: www-data
     mode: 0640
 
-- name: import tt-rss database schema if not already done
+######## INITIAL DB POPULATION
+
+- name: import tt-rss database schema to mysql
   shell: mysql -u root -h "{{ tt_rss_db_host }}" "{{ tt_rss_db_name }}" < "{{ tt_rss_install_dir }}/schema/ttrss_schema_mysql.sql"
-  when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+  when:
+    - (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+    - tt_rss_db_type == 'mysql'
 
 # TODO OPTIMIZE use mysql_query module in next ansible releases
-- name: update tt-rss admin account
+- name: update tt-rss admin account in mysql database
   command: >
     mysql -u root -h "{{ tt_rss_db_host }}" "{{ tt_rss_db_name }}"
     --execute="UPDATE ttrss_users SET login = '{{ tt_rss_user }}',
     pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}',
     salt     = '{{ tt_rss_password_salt }}'
     WHERE id = 1;"
-  when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+  when:
+    - (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+    - tt_rss_db_type == 'mysql'
+
+- name: import tt-rss database schema to postgresql
+  postgresql_query:
+    login_host: "{{ tt_rss_db_host }}"
+    login_user: "{{ tt_rss_db_user }}"
+    login_password: "{{ tt_rss_db_password }}"
+    db: "{{ tt_rss_db_name }}"
+    path_to_script: "{{ tt_rss_install_dir }}/schema/ttrss_schema_pgsql.sql"
+  when:
+    - (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+    - tt_rss_db_type == 'pgsql'
+
+- name: update tt-rss admin account in mysql database
+  postgresql_query:
+    login_host: "{{ tt_rss_db_host }}"
+    login_user: "{{ tt_rss_db_user }}"
+    login_password: "{{ tt_rss_db_password }}"
+    db: "{{ tt_rss_db_name }}"
+    query: UPDATE ttrss_users SET login = '{{ tt_rss_user }}', pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}', salt     = '{{ tt_rss_password_salt }}' WHERE id = 1;
+  when:
+    - (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
+    - tt_rss_db_type == 'pgsql'
+
+####### FINALIZE
 
 - name: setup tt-rss feed update cron job
   cron:

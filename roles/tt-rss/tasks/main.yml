@@ -1,5 +1,17 @@
 ---
 
+- include: mysql.yml
+  become: yes
+  tags:
+    - tt-rss
+  when: tt_rss_db_type == 'mysql'
+
+- include: postgresql.yml
+  become: yes
+  tags:
+    - tt-rss
+  when: tt_rss_db_type == 'pgsql'
+
 - include: tt-rss.yml
   become: yes
   tags:

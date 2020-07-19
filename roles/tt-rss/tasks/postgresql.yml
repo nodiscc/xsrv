@@ -1,0 +1,38 @@
+##### TT-RSS DATABASE (postgresql) #####
+
+- name: install packages for postgresql support
+  apt:
+    state: present
+    package:
+      - php-pgsql
+      - python3-psycopg2
+
+- name: create tt-rss postgresql user
+  become_user: postgres
+  postgresql_user:
+    name: "{{ tt_rss_db_user }}"
+    state: present
+
+- name: set tt-rss postgresql user password
+  become_user: postgres
+  postgresql_user:
+    name: "{{ tt_rss_db_user }}"
+    password: "{{ tt_rss_db_password }}"
+  when: tt_rss_db_password is defined
+  no_log: True
+
+- name: create tt-rss postgresql database
+  become_user: postgres
+  postgresql_db:
+    name: "{{ tt_rss_db_name }}"
+    state: present
+    encoding: 'UNICODE'
+    owner: '{{ tt_rss_db_user }}'
+
+- name: grant privileges on tt-rss database to tt-rss postgresql user
+  become_user: postgres
+  postgresql_privs:
+    db: "{{ tt_rss_db_name }}"
+    privs: ALL
+    type: database
+    role: "{{ tt_rss_db_user }}"
