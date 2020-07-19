@@ -50,7 +50,6 @@ Example Playbook
 vault_tt_rss_user: "CHANGEME"
 vault_tt_rss_password: "CHANGEME"
 vault_tt_rss_db_password: "CHANGEME"
-vault_tt_rss_feed_crypt_key: "CHANGEME" # random 24 characters
 vault_tt_rss_password_salt: "CHANGEME" # random 250 characters
 ```
 
