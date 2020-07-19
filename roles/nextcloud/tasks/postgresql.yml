@@ -32,7 +32,7 @@
 - name: grant privileges on nextcloud database to nextcloud postgresql user
   become_user: postgres
   postgresql_privs:
-    db: nextcloud
+    db: "{{ nextcloud_db_name }}"
     privs: ALL
     type: database
     role: "{{ nextcloud_db_user }}"
