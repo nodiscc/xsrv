@@ -62,6 +62,7 @@
 # https://discourse.tt-rss.org/t/gitlab-config-problems-trailing-slash-in-clone-urls/192
 # https://discourse.tt-rss.org/t/rate-limiting-for-some-git-related-requests/32
 
+# TODO not idempotent
 - name: give required read permissions to the web server
   file:
     path: "{{ tt_rss_install_dir }}"
