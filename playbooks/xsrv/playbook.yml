@@ -10,3 +10,4 @@
     # - nextcloud
     # - tt-rss
     # - gitea
+  # ignore_unreachable: yes # don't fail when host is unreachable
