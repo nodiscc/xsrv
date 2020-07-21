@@ -13,6 +13,7 @@ Default installed applications include:
 - [Music](https://apps.nextcloud.com/apps/music): Play audio files directly from teh file list or in a library view (supports playlists, search, ampache and more)
 - [Photos](https://github.com/nextcloud/photos): Media gallery with previews for all media types
 - [Notes](https://apps.nextcloud.com/apps/notes): Note taking app with markdown support, notes are saved as files in your Nextcloud so you can view and edit them from anywhere.
+- [Notes](https://apps.nextcloud.com/apps/deck): Kanban style organization tool aimed at personal planning and project organization for teams.
 - Viewers and editors for common file types (PDF, text, video...)
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).

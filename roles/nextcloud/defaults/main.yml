@@ -73,5 +73,6 @@ nextcloud_apps:
   - { state: "enable", app: "updatenotification" }
   - { state: "enable", app: "user_ldap" }
   - { state: "enable", app: "notes" }
+  - { state: "enable", app: "deck" }
 #  - { state: "enable", app: "documents" } #TODO requires download
 #  - { state: "enable", app: "templateeditor" } #TODO requires download
