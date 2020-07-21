@@ -1,2 +1,12 @@
 # rsnapshot configuration for tt-rss backups
-backup_script	/usr/bin/mysqldump --single-transaction -h {{ tt_rss_db_host }} -u root {{ tt_rss_db_name }} > tt-rss.sql	tt-rss_db/
+{% if tt_rss_db_type == 'mysql' %}
+backup_script	/usr/bin/mysqldump --single-transaction  -u root -h {{ tt_rss_db_host }} {{ tt_rss_db_name }} > tt-rss.sql	tt-rss_db/
+{% elif tt_rss_db_type == 'pgsql' %}
+{% if tt_rss_db_host == 'localhost' %}
+# use peer authentication as postgres user on localhost
+backup_script	/usr/bin/sudo chgrp postgres . && /usr/bin/sudo chmod g+rwX . && /usr/bin/sudo -u postgres /usr/bin/pg_dump --format custom --dbname {{ tt_rss_db_name }} --file tt_rss.sql	tt_rss_db/
+{% else %}
+# use tcp + password authentication on remote postgresql server
+backup_script	/usr/bin/pg_dump --format custom --username {{ tt_rss_db_user }} --host {{ tt_rss_db_host }} --dbname {{ tt_rss_db_name }} --port {{ tt_rss_db_port }} --file tt_rss.sql	tt_rss_db/
+{% endif %}
+{% endif %}
