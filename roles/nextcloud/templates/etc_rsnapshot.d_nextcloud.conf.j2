@@ -3,8 +3,10 @@
 backup_script	/usr/bin/mysqldump --single-transaction -u root -h {{ nextcloud_db_host }} {{ nextcloud_db_name }} > nextcloud.sql	nextcloud_db/
 {% elif nextcloud_db_type == 'pgsql' %}
 {% if nextcloud_db_host == 'localhost' %}
+# use peer authentication as postgres user on localhost
 backup_script	/usr/bin/sudo chgrp postgres . && /usr/bin/sudo chmod g+rwX . && /usr/bin/sudo -u postgres /usr/bin/pg_dump --format custom --dbname {{ nextcloud_db_name }} --file nextcloud.sql	nextcloud_db/
 {% else %}
+# use tcp + password authentication on remote postgresql server
 backup_script	/usr/bin/pg_dump --format custom --username {{ nextcloud_db_user }} --host {{ nextcloud_db_host }} --dbname {{ nextcloud_db_name }} --port {{ nextcloud_db_port }} --file nextcloud.sql	nextcloud_db/
 {% endif %}
 {% endif %}
