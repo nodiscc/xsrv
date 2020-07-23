@@ -26,7 +26,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [mariadb](roles/mariadb) - MariaDB (MySQL) database server
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt-rss](roles/tt-rss) - Tiny Tiny RSS web feed reader
-- [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
+- _WIP_ [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
 - _WIP_ [docker](roles/docker) - Docker container platform
 - _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
 - _WIP_ [graylog](roles/graylog) - Log management and analysis software
