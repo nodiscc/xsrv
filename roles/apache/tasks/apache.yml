@@ -111,18 +111,6 @@
     creates: /etc/apache2/sites-enabled/sites.conf
   notify: restart apache
 
-##### BACKUPS #####
-
-- name: create rsnapshot configuration includes directory
-  file:
-    path: /etc/rsnapshot.d
-    state: directory
-
-- name: remove rsnapshot configuration file leftover by old role versions
-  file:
-    state: absent
-    path: /etc/rsnapshot.d/letsencrypt.conf
-
 ##### SERVICE #####
 
 - name: enable apache service
@@ -134,3 +122,10 @@
   service: name=apache2 state=stopped enabled=no
   when: not apache_enable_service|bool
   tags: services
+
+##### CLEANUP #####
+
+- name: remove rsnapshot configuration file leftover by old role versions
+  file:
+    state: absent
+    path: /etc/rsnapshot.d/letsencrypt.conf
