@@ -119,14 +119,14 @@
   file:
     path: /etc/rsnapshot.d
     state: directory
-  when: 'backup' in role_names
+  when: '"backup" in role_names'
 
 - name: copy rsnapshot configuration for gitea backups
   template:
     src: etc_rsnapshot.d_gitea.conf.j2
     dest: /etc/rsnapshot.d/gitea.conf
   notify: check rsnapshot configuration
-  when: 'backup' in role_names
+  when: '"backup" in role_names'
 
 ##### FILES/PERMISSIONS #####
 
