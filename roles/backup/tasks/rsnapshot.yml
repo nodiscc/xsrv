@@ -26,6 +26,10 @@
   template:
     src: etc_rsnapshot.conf.j2
     dest: /etc/rsnapshot.conf
+  notify: check rsnapshot configuration
+
+- name: ensure rsnapshot configuration is valid (flush handlers)
+  meta: flush_handlers
 
 - name: create /etc/rsnapshot.d dynamic configuration directory
   file:
