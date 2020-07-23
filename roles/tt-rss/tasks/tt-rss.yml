@@ -40,11 +40,14 @@
   file:
     path: /etc/rsnapshot.d
     state: directory
+  when: 'backup' in role_names
 
 - name: copy rsnapshot configuration for tt-rss backups
   template:
     src: etc_rsnapshot.d_tt-rss.conf.j2
     dest: /etc/rsnapshot.d/tt-rss.conf
+  when: 'backup' in role_names
+  notify: check rsnapshot configuration
 
 ##### TT-RSS INSTALLATION #####
 

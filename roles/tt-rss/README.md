@@ -30,7 +30,7 @@ Dependencies
 - [apache](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
 - [postgresql](../postgresql/README.md) or [mariadb](../mariadb/README.md) role (database engine)
 - [common](../common/README.md) role (for fail2ban support)
-- [backup](../backup/README.md) role (for automatic backups)
+- [backup](../backup/README.md) role (for automatic backups, optional)
 
 
 Example Playbook
