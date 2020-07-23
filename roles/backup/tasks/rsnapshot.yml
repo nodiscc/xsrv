@@ -19,7 +19,6 @@
     group: root
     mode: 0660
 
-
 ##### INSTALLATION/CONFIGURATION #####
 
 - name: copy rsnapshot configuration

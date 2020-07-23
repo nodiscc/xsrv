@@ -251,4 +251,4 @@ backup	{{ remote_backup.user }}@{{ remote_backup.host }}:{{ remote_backup.path }
 include_conf	`/usr/bin/find /etc/rsnapshot.d/ -type f -name "*.conf" -exec cat "{}" \;`
 
 # write backup success timestamp to file
-cmd_postexec	/usr/bin/date > /var/backups/rsnapshot_last_success_time
+cmd_postexec	/usr/bin/date > {{ rsnapshot_backup_dir }}/rsnapshot_last_success_time
