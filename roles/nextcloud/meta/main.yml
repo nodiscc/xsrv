@@ -28,7 +28,6 @@ galaxy_info:
     - drive
     - web
 
+# one of mariadb or postgresql is also required, unless the database is on another host
 dependencies:
   - apache
-  # - mariadb
-  # - postgresql

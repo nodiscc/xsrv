@@ -47,4 +47,3 @@ apache_enable_mod_evasive: no
 
 # (optional) e-mail address to register a letsencrypt.org account
 apache_letsencrypt_email: "CHANGEME@CHANGEME.org"
-
