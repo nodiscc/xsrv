@@ -35,7 +35,7 @@ ansible_lint: venv testenv
 yamllint: venv
 	source .venv/bin/activate && \
 	set -o pipefail && \
-	find roles/ examples/ requirements-dev.yml requirements.yml -iname "*.yml" | xargs yamllint -c tests/.yamllint
+	find roles/ -iname "*.yml" | xargs yamllint -c tests/.yamllint
 
 check_jinja2: venv
 	source .venv/bin/activate && \
