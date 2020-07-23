@@ -51,11 +51,9 @@ KexAlgorithms diffie-hellman-group-exchange-sha256
 # Authentication
 # --------------
 
-# Don't process environment variables passed by the client
-PermitUserEnvironment no
+# Don't process environment variables passed by the client except locale variables
+PermitUserEnvironment LANG,LC_*
 LoginGraceTime 30s
-# Only process the client's locale environment variables
-AcceptEnv LANG LC_*
 
 # Specifies  the  maximum  number  of authentication attempts permitted per connection.
 # Once the number of failures reaches half this value, additional failures are logged.
