@@ -6,9 +6,11 @@ ignore: .venv/
 
 rules:
   line-length: disable
-  braces: disable
+  braces:
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+  document-start: disable
   comments:
     require-starting-space: no
-  truthy: disable
-  comments:
     min-spaces-from-content: 1
+  truthy: disable
