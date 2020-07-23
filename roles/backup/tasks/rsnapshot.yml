@@ -8,9 +8,9 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: 0770
 
-- name: create rsnapshot log file if it does not exist
+- name: create rsnapshot log file
   copy:
     force: no
     content: ""
