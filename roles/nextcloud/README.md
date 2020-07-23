@@ -88,6 +88,7 @@ Calendar, contacts and tasks synchronization:
 
 Other:
  * [Notes](https://f-droid.org/en/packages/it.niedermann.owncloud.notes/) (Android)
+ * [Deck](https://f-droid.org/en/packages/it.niedermann.nextcloud.deck/) (Android)
 
 ### Useful commands
 
