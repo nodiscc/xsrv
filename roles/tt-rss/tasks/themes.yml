@@ -13,7 +13,7 @@
     - { repo: 'https://github.com/cas--/tt-rss_theme_grone', dest: '{{ tt_rss_install_dir }}/themes.local/grone'}
     - { repo: 'https://github.com/levito/tt-rss-feedly-theme', dest: '{{ tt_rss_install_dir }}/themes.local/feedly'}
     - { repo: 'https://github.com/tschinz/tt-rss_reeder_theme', dest: '{{ tt_rss_install_dir }}/themes.local/theme-reeder'}
-  
+
 - name: create symlinks in theme directories
   file:
     state: link

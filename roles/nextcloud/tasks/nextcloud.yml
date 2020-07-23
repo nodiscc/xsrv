@@ -66,7 +66,7 @@
 
 - name: abort on unsupported conditions
   fail:
-    msg: "ERROR: unsupported conditions: nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, but ansible_local.nextcloud.installed.version says otherwise"
+    msg: "ERROR: unsupported conditions: nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, but ansible_local.nextcloud.installed.version says otherwise" # noqa 204
   when: '((ansible_local.nextcloud.installed.version is defined) and (not nextcloud_dir.stat.exists)) or
          ((ansible_local.nextcloud.installed.version is undefined) and (nextcloud_dir.stat.exists))'
 
@@ -78,7 +78,7 @@
 - name: check if upgrade should be performed
   set_fact:
     nextcloud_action: upgrade
-  when: '(ansible_local.nextcloud.installed.version is defined) and (ansible_local.nextcloud.installed.version < nextcloud_version) and (nextcloud_dir.stat.exists)'
+  when: '(ansible_local.nextcloud.installed.version is defined) and (ansible_local.nextcloud.installed.version < nextcloud_version) and (nextcloud_dir.stat.exists)' # noqa 204
 
 #- debug:
 #    msg: "action: {{ nextcloud_action }}, nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, nextcloud_version: {{ nextcloud_version }}"
@@ -153,7 +153,7 @@
     - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
 - name: move old nextcloud installation to temporary dir
-  shell: mv '{{ nextcloud_install_dir }}' '{{ nextcloud_install_dir }}.old'
+  command: mv '{{ nextcloud_install_dir }}' '{{ nextcloud_install_dir }}.old'
   args:
     removes: '{{ nextcloud_install_dir }}'
   when:
@@ -161,12 +161,13 @@
     - nextcloud_action == 'upgrade'
 
 - name: move nextcloud extraction directory to install directory
-  shell: mv /root/nextcloud-unpack/nextcloud '{{ nextcloud_install_dir }}'
+  command: mv /root/nextcloud-unpack/nextcloud '{{ nextcloud_install_dir }}'
   when:
     - nextcloud_action is defined
     - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
 - name: run first setup (this can take a while)
+  become: yes
   become_user: www-data
   command: /usr/bin/php occ \
            maintenance:install \
@@ -183,7 +184,7 @@
   register: nextcloud_first_setup
   args:
     chdir: "{{ nextcloud_install_dir }}"
-  failed_when: nextcloud_first_setup.rc !=0 and 'Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr
+  failed_when: nextcloud_first_setup.rc !=0 and 'Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr  # noqa 204
   changed_when: nextcloud_first_setup.rc == 0
   when:
     - nextcloud_action is defined
@@ -288,7 +289,8 @@
     - not 'No such app enabled' in nextcloud_app_enable_disable.stdout
     - not 'already enabled' in nextcloud_app_enable_disable.stdout
 
-- name: update nextcloud applications
+# not imdepotent, by design. We always want the latest versions of apps
+- name: update nextcloud applications # noqa 301
   become: yes
   become_user: www-data
   command: /usr/bin/php ./occ app:update --all
@@ -298,7 +300,7 @@
 ##### CLEANUP #####
 
 - name: remove old nextcloud installation
-  file: 
+  file:
     path: '{{ nextcloud_install_dir }}.old'
     state: absent
   when:

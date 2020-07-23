@@ -132,7 +132,7 @@
     login_user: "{{ tt_rss_db_user }}"
     login_password: "{{ tt_rss_db_password }}"
     db: "{{ tt_rss_db_name }}"
-    query: UPDATE ttrss_users SET login = '{{ tt_rss_user }}', pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}', salt     = '{{ tt_rss_password_salt }}' WHERE id = 1;
+    query: UPDATE ttrss_users SET login = '{{ tt_rss_user }}', pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}', salt     = '{{ tt_rss_password_salt }}' WHERE id = 1; # noqa 204
   when:
     - (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
     - tt_rss_db_type == 'pgsql'

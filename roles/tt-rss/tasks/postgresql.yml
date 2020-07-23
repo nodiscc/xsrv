@@ -8,12 +8,14 @@
       - python3-psycopg2
 
 - name: create tt-rss postgresql user
+  become: yes
   become_user: postgres
   postgresql_user:
     name: "{{ tt_rss_db_user }}"
     state: present
 
 - name: set tt-rss postgresql user password
+  become: yes
   become_user: postgres
   postgresql_user:
     name: "{{ tt_rss_db_user }}"
@@ -22,6 +24,7 @@
   no_log: True
 
 - name: create tt-rss postgresql database
+  become: yes
   become_user: postgres
   postgresql_db:
     name: "{{ tt_rss_db_name }}"
@@ -30,6 +33,7 @@
     owner: '{{ tt_rss_db_user }}'
 
 - name: grant privileges on tt-rss database to tt-rss postgresql user
+  become: yes
   become_user: postgres
   postgresql_privs:
     db: "{{ tt_rss_db_name }}"

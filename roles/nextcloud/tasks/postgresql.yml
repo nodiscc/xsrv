@@ -8,12 +8,14 @@
       - python3-psycopg2
 
 - name: create nextcloud postgresql user
+  become: yes
   become_user: postgres
   postgresql_user:
     name: "{{ nextcloud_db_user }}"
     state: present
 
 - name: set nexctloud postgresql user password
+  become: yes
   become_user: postgres
   postgresql_user:
     name: "{{ nextcloud_db_user }}"
@@ -22,6 +24,7 @@
   no_log: True
 
 - name: create nextcloud postgresql database
+  become: yes
   become_user: postgres
   postgresql_db:
     name: "{{ nextcloud_db_name }}"
@@ -30,6 +33,7 @@
     owner: '{{ nextcloud_db_user }}'
 
 - name: grant privileges on nextcloud database to nextcloud postgresql user
+  become: yes
   become_user: postgres
   postgresql_privs:
     db: "{{ nextcloud_db_name }}"
