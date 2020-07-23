@@ -26,6 +26,7 @@ Requirements/Dependencies
 - Ansible 2.8 or higher.
 - The [apache](../apache/README.md) role (webserver, PHP interpreter, SSL certificates)
 - The [mariadb](../mariadb/README.md) role (database engine)
+- [backup](../backup/README.md) role (automatic backups, optional)
 
 
 Role Variables
