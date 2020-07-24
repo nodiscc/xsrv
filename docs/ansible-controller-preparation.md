@@ -2,7 +2,10 @@
 
 ```bash
 # install requirements (example for debian-based systems)
-sudo apt update && sudo apt install git bash python3-pip openssl
+sudo apt update && sudo apt install git bash python3-pip openssl ssh
+
+# authorize your SSH key on the server
+ssh-copy-id myusername@my.example.org
 
 # clone the repository
 sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest release
