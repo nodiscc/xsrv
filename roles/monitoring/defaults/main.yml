@@ -14,7 +14,7 @@ rsyslog_monitor_apache_accesslog: no
 ##### NETDATA MONITORING SYSTEM #####
 
 # https://github.com/netdata/netdata/releases/
-netdata_version: "v1.23.1"
+netdata_version: "v1.23.2"
 
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
