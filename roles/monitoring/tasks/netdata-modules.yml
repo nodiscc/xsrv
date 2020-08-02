@@ -107,5 +107,6 @@
   file:
     path: /var/run/logcount
     state: file
+    owner: root
     group: netdata
-    mode: g+r
+    mode: 0650
