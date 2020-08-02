@@ -86,7 +86,7 @@
     path: "{{ samba_shares_path }}"
     state: directory
     owner: root
-    group: root
+    group: sambausers
     mode: 0750
 
 - name: create individual samba shares directories
