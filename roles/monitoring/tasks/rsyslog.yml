@@ -22,6 +22,10 @@
   template: src=etc_rsyslog.d_gitea.conf.j2 dest=/etc/rsyslog.d/gitea.conf
   notify: restart rsyslog
 
+- name: configure rsyslog to monitor samba logs
+  template: src=etc_rsyslog.d_samba.conf.j2 dest=/etc/rsyslog.d/samba.conf
+  notify: restart rsyslog
+
 - name: configure rsyslog to discard useless messages
   template: src=etc_rsyslog.d_discard.conf.j2 dest=/etc/rsyslog.d/discard.conf
   notify: restart rsyslog
