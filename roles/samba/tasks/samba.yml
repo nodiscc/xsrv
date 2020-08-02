@@ -95,7 +95,7 @@
     state: "{{ item.state | default('directory') }}"
     owner: root
     group: sambausers
-    mode: 0755
+    mode: 0775
   with_items: "{{ samba_shares }}"
 
 - name: list samba users
