@@ -66,6 +66,7 @@ firehol_networks:
       - { name: "https", dst: "any" } # outgoing HTTPS requests
       - { name: "ping", dst: "any" } # outgoing ICMP pings
       - { name: "submission", dst: "any" } # outgoing mail/port 587
+      # - { name: "samba", dst: "{{ firehol_alias_lan }}" } # samba file sharing
       # - { name: "imaps", dst: "any" } # nextcloud mail
       # - { name: "smtps", dst: "any" } # nextcloud mail
       # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
