@@ -73,8 +73,9 @@ Usage
 
 ### Clients
 
-- Samba file shares can be accessed under the Network entry from the Windows file explorer, or at the `\\SERVER_NAME\SHARE_NAME` URI.
-- Linux and Mac OS clients can access the server from the Network entry in their respective file manager, or at the `smb://SERVER_NAME/SHARE_NAME` URI.
+- **From Windows clients:** access from the `Network` entry in the Windows file manager sidebar, or directly at `\\SERVER_ADDRESS` in the explorer location bar.
+- **From Mac OSX clients:** access from the `Network` entry in the OSX Finder sidebar, or directly at `smb://SERVER_ADDRESS/` from the `Go > Connect to server...` finder menu entry.
+- **From Linux clients:** access from the `Network > Windows Network` entry in the file manager sidebar, or directly at `smb://SERVER_ADDRESS/` from the `File > Connect to server...` menu entry.
 
 
 ### Backups
