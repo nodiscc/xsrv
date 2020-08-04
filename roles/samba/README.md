@@ -2,7 +2,7 @@
 
 This role will install [Samba](https://en.wikipedia.org/wiki/Samba_(software)), a file sharing service for various operating systems. Samba is a free software re-implementation of Microsoft SMB networking protocol.
 
-The server is set up as a "standalone"/workgroup server (ie. not part of a domain) and uses standard Linux user as a backend for user accounts.
+The server is set up as a "standalone"/workgroup server (ie. not part of a domain) and uses standard Linux users as a backend for user accounts.
 
 
 Requirements
@@ -79,7 +79,7 @@ Usage
 
 ### Backups
 
-See the included [rsnapshot configuration](templates/etc_rsnapshot.samba.conf.j2) for the [backup](../backup/README.md) role.
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_samba.conf.j2) for the [backup](../backup/) role.
 
 
 ### Removing samba users
