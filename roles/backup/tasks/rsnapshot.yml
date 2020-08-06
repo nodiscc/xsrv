@@ -21,6 +21,12 @@
 
 ##### INSTALLATION/CONFIGURATION #####
 
+
+- name: install rsnapshot
+  apt:
+    package: rsnapshot
+    state: present
+
 - name: copy rsnapshot configuration
   template:
     src: etc_rsnapshot.conf.j2
@@ -34,18 +40,6 @@
   file:
     path: /etc/rsnapshot.d
     state: directory
-
-- name: install rsnapshot
-  apt:
-    package: rsnapshot
-    state: present
-
-# If there is a syntax error in the config, this task will fail
-# If there is a non-existing directory backup source, it will also fail
-# Disabled since it will always throw an error on first deployment
-# - name: test rsnapshot configuration
-#   command: rsnapshot configtest
-#   changed_when: False
 
 - name: create ssh client configuration directory for root
   file:
