@@ -106,7 +106,9 @@
 - name: set read permissions for netdata on /var/run/logcount
   file:
     path: /var/run/logcount
-    state: file
+    state: touch
     owner: root
     group: netdata
     mode: 0650
+    modification_time: preserve
+    access_time: preserve
