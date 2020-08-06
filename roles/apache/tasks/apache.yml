@@ -9,7 +9,7 @@
   register: apache_apt_pinning
 
 # refresh APT cache after updating APT preferences
-- name: update apt cache
+- name: update apt cache # noqa 503
   become: yes
   apt:
     update_cache: yes
