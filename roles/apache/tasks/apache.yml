@@ -6,10 +6,14 @@
   template:
     src: etc_apt_preferences.d_99-apache2-buster-backports.j2
     dest: /etc/apt/preferences.d/99-apache2-buster-backports
-  notify: update apt cache
+  register: apache_apt_pinning
 
 # refresh APT cache after updating APT preferences
-- meta: flush_handlers
+- name: update apt cache
+  become: yes
+  apt:
+    update_cache: yes
+  when: apache_apt_pinning.changed
 
 - name: install apache/php packages
   apt:
