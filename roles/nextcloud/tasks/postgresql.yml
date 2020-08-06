@@ -6,6 +6,7 @@
     package:
       - php-pgsql
       - python3-psycopg2
+      - acl # required to use 'become' unprivilegied user
 
 - name: create nextcloud postgresql user
   become: yes
