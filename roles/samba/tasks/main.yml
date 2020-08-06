@@ -1,4 +1,3 @@
-
 - include: samba.yml
   become: yes
   tags: samba
