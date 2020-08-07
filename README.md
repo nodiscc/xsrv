@@ -12,7 +12,7 @@
 
 Install and manage self-hosted network services and applications on your own server(s):
  - a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) [roles](#roles) for various services/applications
- - a premade default [playbook to setup a single server](#initial-deployment) for personal use or small/medium teams
+ - a premade default [playbook to setup a single server](#basic-deployment) for personal use or small/medium teams
  - an optional [command-line tool](#usage) for easy deployment, common maintenance and configuration changes
 
 
@@ -256,8 +256,6 @@ TODO
 Branches/merge requests status:
 
 ![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg?key_width=100&key_text=master)
-![](https://gitlab.com/nodiscc/xsrv/badges/samba/pipeline.svg?key_width=100&key_text=samba)
-![](https://gitlab.com/nodiscc/xsrv/badges/docker/pipeline.svg?key_width=100&key_text=docker)
 ![](https://gitlab.com/nodiscc/xsrv/badges/gitlab/pipeline.svg?key_width=100&key_text=gitlab)
 ![](https://gitlab.com/nodiscc/xsrv/badges/gitlab-runner/pipeline.svg?key_width=100&key_text=gitlab-runner)
 ![](https://gitlab.com/nodiscc/xsrv/badges/graylog/pipeline.svg?key_width=100&key_text=graylog)
@@ -269,6 +267,7 @@ Branches/merge requests status:
 ![](https://gitlab.com/nodiscc/xsrv/badges/shaarli/pipeline.svg?key_width=100&key_text=shaarli)
 ![](https://gitlab.com/nodiscc/xsrv/badges/transmission/pipeline.svg?key_width=100&key_text=transmission)
 ![](https://gitlab.com/nodiscc/xsrv/badges/warn-before-upgrade/pipeline.svg?key_width=100&key_text=warn-before-upgrade)
+![](https://gitlab.com/nodiscc/xsrv/badges/docker/pipeline.svg?key_width=100&key_text=docker)
 
 
 ## License
