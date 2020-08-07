@@ -83,6 +83,11 @@ Usage
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_samba.conf.j2) for the [backup](../backup/) role.
 
 
+### Listing samba users
+
+`ssh my.example.org sudo pdbedit -Lv`
+
+
 ### Removing samba users
 
 This role does not remove any user accounts. To remove a samba user account, remove it from the `samba_users` list, and remove their account from the server manually with `sudo deluser my_old_user`

@@ -96,11 +96,3 @@
     group: sambausers
     mode: 0775
   with_items: "{{ samba_shares }}"
-
-- name: list samba users
-  command: pdbedit -L # add -v for more details
-  changed_when: no
-  register: samba_users_list
-
-- name: show samba users list
-  debug: msg={{ samba_users_list.stdout }}
