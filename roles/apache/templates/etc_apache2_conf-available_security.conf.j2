@@ -103,8 +103,10 @@ Header always set X-XSS-Protection "1; mode=block"
 # Setting this header will prevent other sites from embedding pages
 # from this site as frames. This defends against clickjacking attacks.
 # Requires mod_headers to be enabled.
+# This made obsolete by Content-Security-Policy frame-ancestors directive
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
 #
-Header always set X-Frame-Options "sameorigin"
+#Header always set X-Frame-Options "sameorigin"
 
 #
 # Do not send HTTP referrers when following a link to a third-party domain
