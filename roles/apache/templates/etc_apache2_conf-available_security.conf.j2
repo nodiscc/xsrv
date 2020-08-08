@@ -103,8 +103,7 @@ Header always set X-XSS-Protection "1; mode=block"
 # Setting this header will prevent other sites from embedding pages
 # from this site as frames. This defends against clickjacking attacks.
 # Requires mod_headers to be enabled.
-# This made obsolete by Content-Security-Policy frame-ancestors directive
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+# This is made obsolete by Content-Security-Policy frame-ancestors directive
 #
 #Header always set X-Frame-Options "sameorigin"
 
@@ -115,7 +114,7 @@ Header always set Referrer-Policy "same-origin"
 
 # Prevent browsers from runnning scripts injected form other domains
 #
-Header always set Content-Security-Policy "script-src 'self'; frame-ancestors 'none'"
+Header always set Content-Security-Policy "script-src 'self'; frame-ancestors 'self'"
 
 # Prevent embedding this site from other domains (iframes)
 #
