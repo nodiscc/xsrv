@@ -31,7 +31,7 @@ MDomain {{ tt_rss_fqdn }}
           Require all denied
       </Files>
     Header always unset Content-Security-Policy
-    Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
+    Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'"
   </Directory>
 
 </VirtualHost>
