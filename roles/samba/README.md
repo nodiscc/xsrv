@@ -9,6 +9,7 @@ Requirements
 ------------
 
 - Ansible 2.9 or higher.
+- Firewall must allow incoming **and** outgoing samba traffic on the LAN
 
 
 Role Variables

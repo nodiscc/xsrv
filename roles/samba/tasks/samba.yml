@@ -74,6 +74,7 @@
     groups: sambausers
   with_items: "{{ samba_users }}"
 
+# TODO not idempotent
 - name: update samba users/passwords database
   shell: "printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}"
   with_items: "{{ samba_users }}"
