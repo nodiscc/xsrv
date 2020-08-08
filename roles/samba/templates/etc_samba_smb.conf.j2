@@ -233,10 +233,16 @@
 
 # Limits the maximum number of smbd(8) processes concurrently running on a system
 # Mitigate SMBLoris DoS vulnerability https://smbloris.com/
-max smbd processes = 1000
+    max smbd processes = 1000
 
 # Disable vulnerable SMBv1 and SMBv2
-protocol = SMB3
+    protocol = SMB3
+
+# Disable printer sharing entirely
+    load printers = No
+    printing = cups
+    printcap name = /dev/null
+    disable spoolss = Yes
 
 #======================= Share Definitions =======================
 
@@ -281,12 +287,6 @@ protocol = SMB3
 ;   browseable = no
 ;   create mask = 0600
 ;   directory mask = 0700
-
-# Disable printer sharing entirely
-    load printers = No
-    printing = cups
-    printcap name = /dev/null
-    disable spoolss = Yes
 
 ;[printers]
 ;   comment = All Printers
