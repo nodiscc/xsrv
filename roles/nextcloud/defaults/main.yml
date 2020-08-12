@@ -14,8 +14,8 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 
 # mode for SSL/TLS certificates for the nextcloud webserver virtualhost
-# letsencrypt: acquire a certificate from Let's Encrypt (nextcloud_fqdn must be piblicly resolvable, port tcp/80 must be reachable from the Internet)
-# selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
+# letsencrypt: acquire a certificate from Let's Encrypt (nextcloud_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+# selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 nextcloud_https_mode: selfsigned
 
 # nextcloud data storage directory
