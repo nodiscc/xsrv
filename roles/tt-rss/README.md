@@ -51,7 +51,7 @@ Example Playbook
 vault_tt_rss_user: "CHANGEME"
 vault_tt_rss_password: "CHANGEME"
 vault_tt_rss_db_password: "CHANGEME"
-vault_tt_rss_password_salt: "CHANGEME" # random 250 characters
+vault_tt_rss_password_salt: "CHANGEME" # 250-character random string, generate it with openssl rand -base64 187 | tr -d '\n' | cut -b 1-250
 ```
 
 Usage

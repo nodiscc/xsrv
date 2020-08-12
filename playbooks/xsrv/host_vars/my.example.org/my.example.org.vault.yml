@@ -7,5 +7,5 @@ vault_xsrv_admin_password: "CHANGEME"
 vault_mariadb_root_password: "CHANGEME"
 vault_nextcloud_db_password: "CHANGEME"
 vault_tt_rss_db_password: "CHANGEME"
-vault_tt_rss_password_salt: "CHANGEME" # random 250 characters
+vault_tt_rss_password_salt: "CHANGEME" # 250-character random string, generate it with openssl rand -base64 187 | tr -d '\n' | cut -b 1-250
 vault_shaarli_password_salt: "CHANGEME" # 40-character random string, generate it with openssl rand -hex 20
