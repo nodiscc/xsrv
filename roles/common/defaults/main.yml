@@ -165,11 +165,11 @@ setup_msmtp: no
 
 # If msmtp is enabled, the following values must be set:
 # System mail relay (SMTP server) to use, and authentication username/password
-msmtp_host: "smtp.CHANGEME.org"
-msmtp_username: "CHANGEME"
+msmtp_host: "{{ vault_msmtp_host }}"
+msmtp_username: "{{ vault_msmtp_username }}"
 msmtp_password: "{{ vault_msmtp_password }}" # CHANGEME
 # Mail address to send all local mail to
-msmtp_admin_email: "CHANGEME@CHANGEME.org"
+msmtp_admin_email: "{{ vault_msmtp_admin_email }}"
 
 # (optional) TLS certificate fingerprint of the SMTP server - use this to accept a self-signed certificate
 # Get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout

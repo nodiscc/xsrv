@@ -46,4 +46,4 @@ apache_enable_service: yes
 apache_enable_mod_evasive: no
 
 # (optional) e-mail address to register a letsencrypt.org account
-apache_letsencrypt_email: "CHANGEME@CHANGEME.org"
+apache_letsencrypt_email: "{{ vault_apache_letsencrypt_email }}"
