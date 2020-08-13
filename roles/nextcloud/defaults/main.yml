@@ -3,8 +3,8 @@
 ##### NEXTCLOUD #####
 
 # Nextcloud admin username/password
-nextcloud_user: "{{ vault_nextcloud_user }}" # CHANGEME
-nextcloud_password: "{{ vault_nextcloud_password }}" # CHANGEME
+nextcloud_user: "{{ vault_nextcloud_user }}"
+nextcloud_password: "{{ vault_nextcloud_password }}"
 
 # Fully Qualified Domain Name for the nextcloud instance
 # nextcloud_fqdn: "cloud.CHANGEME.org"
@@ -22,7 +22,7 @@ nextcloud_https_mode: selfsigned
 nextcloud_data_dir: "/var/nextcloud/data"
 
 # nextcloud adminstrator e-mail address
-nextcloud_admin_email: "admin@{{ nextcloud_fqdn }}"
+nextcloud_admin_email: "{{ vault_nextcloud_admin_email }}"
 
 # nextcloud database type (mysql/pgsql)
 nextcloud_db_type: "pgsql"
@@ -36,7 +36,7 @@ nextcloud_db_table_prefix: "oc_"
 # nextcloud database user
 nextcloud_db_user: "nextcloud"
 # nextcloud database password
-nextcloud_db_password: "{{ vault_nextcloud_db_password }}" # CHANGEME
+nextcloud_db_password: "{{ vault_nextcloud_db_password }}"
 
 # nextcloud version to install
 nextcloud_version: "19.0.0"
