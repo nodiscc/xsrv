@@ -23,3 +23,4 @@ vault_shaarli_password: "{{ vault_xsrv_admin_password }}"
 vault_shaarli_password_salt: "CHANGEME40" # 40-character random string, generate it with openssl rand -base64 32 | cut -b 1-40
 vault_shaarli_api_secret: "CHANGEME12" # 12-character random string, generate it with openssl rand -base64 32 | cut -b 1-12
 vault_gitea_admin_email: "{{ vault_msmtp_admin_email }}"
+
