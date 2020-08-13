@@ -3,16 +3,16 @@
 ##### GITEA SELF-HOSTED GIT SERVICE #####
 
 # username/password/e-mail address for the gitea admin user
-gitea_admin_user: "CHANGEME"
-gitea_admin_password: "{{ vault_gitea_admin_password }}" # CHANGEME
-gitea_admin_email: "admin@{{ gitea_fqdn }}"
+gitea_admin_user: "{{ vault_gitea_admin_user }}"
+gitea_admin_password: "{{ vault_gitea_admin_password }}"
+gitea_admin_email: "{{ vault_gitea_admin_email }}"
 
 # 64 CHARACTER global secret key
-gitea_secret_key: "{{ vault_gitea_secret_key }}" # CHANGEME
+gitea_secret_key: "{{ vault_gitea_secret_key }}"
 # password for the gitea SQL database
-gitea_db_password: "{{ vault_gitea_db_password }}" # CHANGEME
+gitea_db_password: "{{ vault_gitea_db_password }}"
 # password for the local gitea linux user account
-gitea_user_password: "{{ vault_gitea_user_password }}" # CHANGEME
+gitea_user_password: "{{ vault_gitea_user_password }}"
 
 # fully qualified domain name of the gitea instance
 gitea_fqdn: "git.CHANGEME.org"
@@ -60,6 +60,6 @@ gitea_mailer_enabled: no
 # From: address used in mails sent by gitea
 gitea_mail_from: "gitea@{{ gitea_fqdn }}"
 # SMTP host, username and password for outgoing mail from gitea
-gitea_mail_host: "{{ vault_gitea_mail_host }}" # CHANGEME
-gitea_mail_user: "{{ vault_gitea_mail_user }}" # CHANGEME
-gitea_mail_password: "{{ vault_gitea_mail_password }}" # CHANGEME
+gitea_mail_host: "{{ vault_gitea_mail_host }}"
+gitea_mail_user: "{{ vault_gitea_mail_user }}"
+gitea_mail_password: "{{ vault_gitea_mail_password }}"

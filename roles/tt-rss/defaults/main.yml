@@ -14,8 +14,8 @@ tt_rss_full_url: "https://{{ tt_rss_fqdn }}/"
 tt_rss_https_mode: selfsigned
 
 # tt-rss main user/admin username/password
-tt_rss_user: "{{ vault_tt_rss_user }}" # CHANGEME
-tt_rss_password: "{{ vault_tt_rss_password }}" # CHANGEME
+tt_rss_user: "{{ vault_tt_rss_user }}"
+tt_rss_password: "{{ vault_tt_rss_password }}"
 
 # tt-rss database settings
 tt_rss_db_type: "pgsql" # mysql or pgsql
