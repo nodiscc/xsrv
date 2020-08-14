@@ -166,6 +166,7 @@ edit-vault      edit a host vault file
 shell           open an interactive shell on a host
 utils           run the xsrv-utils script on a host
 info            display quick access links for a host
+logs            view system log on a host
 help            show this message
 fetch-backups   fetch backups from a host to the playbook backups dir
 upgrade         ugrade xsrv script and roles to latest versions
