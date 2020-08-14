@@ -1,28 +1,15 @@
-# Fail2ban configuration
-# Default values
+# Default Fail2ban configuration values
+
 [DEFAULT]
+# list of IPs not to ban
 ignoreip  = 127.0.0.1 {{ ' '.join(fail2ban_ignoreip) }}
-maxretry  = 5
-bantime   = 604800
-destemail = root@localhost
-banaction = iptables-ipset-proto6-allports
-action    = %(action_)s
-
-# Jails
-
-[sshd]
-# openssh server auth failures
-enabled   = true
-maxretry  = 5
-filter    = sshd
-port      = 22
-logpath   = /var/log/auth.log
-bantime   = 604800
-
-[pam-generic]
-# PAM login failures
-enabled   = true
-maxretry  = 5
-filter    = pam-generic
-logpath   = /var/log/auth.log
-bantime   = 604800
+# time interval (in seconds or time abbreviation format) before the current time where failures will count towards a ban
+findtime  = {{ fail2ban_default_findtime }}
+# number of failures that have to occur in the last findtime seconds to ban the IP
+maxretry  = {{ fail2ban_default_maxretry }}
+# effective ban duration (in seconds or time abbreviation format)
+bantime   = {{ fail2ban_default_bantime }}
+# destination email address used for banactions 'action_m*' which trigger sending an email
+destemail = {{ fail2ban_destemail }}
+# default banning action
+banaction = iptables-ipset-proto6

@@ -1,0 +1,13 @@
+# Fail2ban OpenSSH server jails
+
+[sshd]
+# openssh server auth failures
+# To use more aggressive sshd modes set filter parameter "mode" in jail.local:
+# normal (default), ddos, extra or aggressive (combines all).
+# See "tests/files/logs/sshd" or "filter.d/sshd.conf" for usage example and details.
+mode   = normal
+enabled   = true
+filter    = sshd
+bantime   = -1
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
