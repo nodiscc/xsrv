@@ -27,7 +27,6 @@ MDPrivateKeys RSA 4096
 {% elif vhost.https_mode == 'letsencrypt' %}
 ServerAdmin webmaster@{{ vhost.servername }}
 MDomain {{ vhost.servername }}
-MDPrivateKeys RSA 4096
 <VirtualHost *:443>
 {% else %}
 <VirtualHost *:80>
