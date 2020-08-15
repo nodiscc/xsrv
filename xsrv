@@ -137,6 +137,7 @@ function init_host() {
     (cd "$playbooks_dir/$playbook_name/" && ansible-vault encrypt "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml")
     read -r -p "[xsrv] Press ENTER to edit secret (vaulted) host variables (replace any values labeled CHANGEME) "
     edit_vault "$playbook_name" "$host_name"
+    echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $playbook_name $host_name"
 }
 
 function get_ssh_port() {
