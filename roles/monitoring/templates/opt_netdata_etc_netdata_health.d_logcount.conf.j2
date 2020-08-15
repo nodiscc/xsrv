@@ -6,7 +6,7 @@
   crit: $this >  {{ netdata_logcount_error_threshold_crit }}
  units: error messages
   info: error messages in logs over last {{ netdata_logcount_update_interval }} minutes
-    to: sysadmin
+    to: {{ netdata_logcount_notification_to }}
 
  alarm: logcount_warning
     on: logcount.messages
@@ -15,4 +15,4 @@
   warn: $this >  {{ netdata_logcount_warning_threshold_warn }}
  units: warning messages
   info: warning messages in logs over last {{ netdata_logcount_update_interval }} minutes
-    to: sysadmin
+    to: {{ netdata_logcount_notification_to }}

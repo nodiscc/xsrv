@@ -116,6 +116,8 @@ netdata_logcount_error_threshold_warn: 0
 netdata_logcount_error_threshold_crit: 10
 # maximum acceptable WARNING message in logs over the last period before raising a WARNING alert
 netdata_logcount_warning_threshold_warn: 0
+# user to send logcount notifications to (eg. sysadmin, silent...)
+netdata_logcount_notification_to: "silent"
 
 # git repository URL to download netdata-needrestart from
 netdata_needrestart_git_url: https://gitlab.com/nodiscc/netdata-needrestart
