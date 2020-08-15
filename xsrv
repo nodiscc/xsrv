@@ -122,7 +122,11 @@ function init_host() {
     fi
 
     echo "[xsrv] INFO: creating host vars/vault files for $host_name"
-    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/inventory.yml" >> "$playbooks_dir/$playbook_name/inventory.yml"
+    if [[ -f "$playbooks_dir/$playbook_name/inventory.yml" ]]; then
+        sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/inventory.yml" >> "$playbooks_dir/$playbook_name/inventory.yml"
+    else
+        echo "    $host_name" >> "$playbooks_dir/$playbook_name/inventory.yml"
+    fi
     sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/playbook.yml" >> "$playbooks_dir/$playbook_name/playbook.yml"
     mkdir "$playbooks_dir/$playbook_name/host_vars/$host_name"
     sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.yml"
