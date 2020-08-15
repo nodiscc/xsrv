@@ -47,6 +47,13 @@
     - firewall
   when: setup_firewall|bool
 
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - common
+    - fail2ban
+  when: setup_fail2ban|bool
+
 - include: users.yml
   become: yes
   tags:

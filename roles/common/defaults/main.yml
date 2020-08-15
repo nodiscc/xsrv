@@ -61,9 +61,9 @@ ssh_sftp_loglevel: "ERROR"
 ssh_allow_tcp_forwarding: "no"
 
 
-##### FIREWALL/FAIL2BAN #####
+##### FIREWALL #####
 
-# yes/no: setup firewall and fail2ban
+# yes/no: setup firewall
 setup_firewall: yes
 
 # alias for LAN addresses (CIDR notation,comma-separated values)
@@ -128,11 +128,27 @@ firehol_custom_services:
   - { name: "pulseaudio", ports: "tcp/4713" } # pulseaudio sound server
   - { name: "transmission", ports: "tcp/52943", } # bittorrent peer connections, outgoing requires 'all'
 
-# fail2ban: don't auto-ban IP addresses from these networks
+
+##### FAIL2BAN #####
+
+# yes/no: setup fail2ban bruteforce detection/prevention system
+setup_fail2ban: yes
+
+# fail2ban: list of IPs not to ban
+# 127.0.0.1 is always ignored
 fail2ban_ignoreip:
   - '10.0.0.0/8'
   - '192.168.0.0/16'
   - '172.16.0.0/12'
+
+# fail2ban default ban duration (in seconds or time abbreviation format)
+fail2ban_default_bantime: "1year"
+# fail2ban: default interval (in seconds or time abbreviation format) before counting failures towards a ban
+fail2ban_default_findtime: "10min"
+# fail2ban default number of failures that have to occur in the last findtime to ban the IP
+fail2ban_default_maxretry: 5
+# destination email address used for some actions
+fail2ban_destemail: "{{ msmtp_admin_email | default('root@localhost') }}"
 
 
 ##### USERS #####

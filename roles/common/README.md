@@ -9,7 +9,8 @@ This role will install/configure a basic Debian-based server.
 - APT package management, automatic daily security updates
 - NTP date/time synchronization
 - SSH server configuration/hardening
-- firewall (`firehol`) and IPS (`fail2ban`)
+- firewall (`firehol`)
+- Intrusion/bruteforce detention and prevention system (`fail2ban`)
 - user accounts, resources, PAM restrictions
 - (optional) creation of a user account for remote backups
 - `sftponly` group: chrooted, SFTP-only accounts

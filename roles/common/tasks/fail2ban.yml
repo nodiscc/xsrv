@@ -1,0 +1,48 @@
+---
+
+#### FAIL2BAN #####
+
+- name: create fail2ban configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/etc/fail2ban"
+    - "/etc/fail2ban/jail.d"
+    - "/etc/fail2ban/filter.d"
+
+- name: copy fail2ban configuration
+  template: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
+    - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
+    - { src: 'etc_fail2ban_jail.d_sshd.conf.j2', dest: '/etc/fail2ban/jail.d/sshd.conf' }
+    - { src: 'etc_fail2ban_jail.d_pam-generic.conf.j2', dest: '/etc/fail2ban/jail.d/pam-generic.conf' }
+  notify: reload fail2ban
+
+- name: install fail2ban
+  apt:
+    state: present
+    package:
+      - fail2ban
+      - ipset
+
+- name: start and enable fail2ban
+  service:
+    name: "fail2ban"
+    state: started
+    enabled: yes
+
+# Apply firewall rules as soon as possible
+- name: force all notified handlers to run now
+  meta: flush_handlers
+
+
+##### CLEANUP #####
+
+- name: remove systemd unit/override files leftover by older role versions
+  file:
+    state: absent
+    dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
+  notify: reload systemd unit files
+

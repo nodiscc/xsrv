@@ -1,25 +1,16 @@
 ---
 
-#### FIREWALL/FAIL2BAN #####
+#### FIREWALL #####
 
 - name: ensure ufw is not installed
   apt:
     package: ufw
     state: absent
 
-- name: create firewall/fail2ban configuration directories
+- name: create firehol configuration directory
   file:
-    path: "{{ item }}"
+    path: "/etc/firehol"
     state: directory
-  with_items:
-    - "/etc/firehol/"
-    - "/etc/fail2ban/"
-
-- name: remove systemd unit/override files leftover by older role versions
-  file:
-    state: absent
-    dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
-  notify: reload systemd unit files
 
 - name: install firehol systemd service
   template:
@@ -40,31 +31,20 @@
     mode: 0600
   notify: restart firewall
 
-- name: copy fail2ban configuration
-  template: src={{ item.src }} dest={{ item.dest }}
-  with_items:
-    - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
-    - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
-  notify: reload fail2ban
-
 # first firewall startup may cause the SSH connection to hang
-- name: install firewall/network filtering tools - restart the play if this task hangs for a while
+- name: install firehol - restart the play if this task hangs for a while
   apt:
     state: present
     package:
-      - fail2ban
       - firehol
       - firehol-tools
       - ipset
 
 - name: start and enable firehol/fail2ban
   service:
-    name: "{{ item }}"
+    name: "firehol"
     state: started
     enabled: yes
-  with_items:
-    - firehol
-    - fail2ban
 
 # Apply firewall rules as soon as possible
 - name: force all notified handlers to run now
