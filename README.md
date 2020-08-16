@@ -242,12 +242,31 @@ Uninstalling roles is not supported at this time: components must be removed man
 
 Refer to **[ansible documentation](https://docs.ansible.com/)** for more information.
 
-<!-- 
 ### Use as ansible collection in your playbooks
 
-TODO
+```bash
+# install the collection
+ansible-galaxy collection install nodiscc.xsrv
 
--->
+# add roles from the collection to your playbook
+nano playbook.yml
+```
+
+```yaml
+- hosts: all
+  collections:
+   - nodiscc.xsrv
+
+- hosts: my.example.org
+  roles:
+   - common
+   - monitoring
+   - apache
+   - ...
+```
+
+See [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
+
 
 ## Contributing/Issues/Work in progress
 
