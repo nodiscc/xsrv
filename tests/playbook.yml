@@ -8,5 +8,6 @@
     - mariadb
     - postgresql
     - nextcloud
-    - tt-rss
+    - shaarli
+    - tt_rss
     - gitea
