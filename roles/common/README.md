@@ -65,7 +65,8 @@ Usage
 - Force purge of unused configuration files: `ssh user@my.example.org sudo aptitude -y purge ~c`
 - Force rotation of system logs: `ssh user@my.example.org sudo logrotate -f /etc/logrotate.conf`
 - If running in a KVM virtual machine in libvirt/virt-manager, to share a directory from the hypervisor to the VM: access VM settings in `virt-manager`. Click `Add hardware > Filesystem`, Set Mode: `Mapped`, Source path: `/path/to/the/directory/to/share` (on the hypervisor), Target path: `/exampleshareddirectory` (in the VM), then inside the VM run `sudo apt install 9mount, mount -t 9p /exampleshareddirectory /mnt/example`.
-- Force upgrade of all packages `ssh user@my.example.org 'sudo apt update; sudo apt safe-upgrade'`
+- Upgrade all packages without waiting for unattended-upgrades `ssh user@my.example.org 'sudo apt update && sudo apt upgrade'`
+- Stop the firewall, allow all connections incoming/outgoing connections (be careful) `ssh user@my.example.org sudo firehol stop # or start` - or set `policy: ACCEPT` in firehol definitions for permanent effect
 - Backups: nothing to backup. See the [backup](../backup/README.md) role.
 
 
