@@ -198,7 +198,7 @@ function init_venv() {
     source "$venv_dir/bin/activate"
     echo "[xsrv] INFO: installing ansible in $venv_dir"
     pip3 install wheel
-    pip3 install ansible==2.9.9
+    pip3 install ansible==2.9.12
 }
 
 function upgrade() {
