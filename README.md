@@ -27,6 +27,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt_rss](roles/tt_rss) - Tiny Tiny RSS web feed reader
 - [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
+- [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
 - _WIP_ [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
 - _WIP_ [docker](roles/docker) - Docker container platform
 - _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
@@ -35,7 +36,6 @@ Install and manage self-hosted network services and applications on your own ser
 - _WIP_ [mumble-server](roles/mumble) - Low-latency voice-over-IP (VoIP) server
 - _WIP_ [pulseaudio](roles/pulseaudio) - Network sound server
 - _WIP_ [openldap](roles/openldap) - LDAP directory service and management tools
-- _WIP_ [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
 - _WIP_ [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
 - _WIP_ [rocketchat](roles/rocketchat) - Realtime web chat/communication service
 
@@ -45,7 +45,9 @@ Install and manage self-hosted network services and applications on your own ser
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
+[![](https://i.imgur.com/8wEBRSG.png)](roles/shaarli)
 [![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
+
 
 ------------
 
