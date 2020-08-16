@@ -1,12 +1,20 @@
-namespace: xsrv
+namespace: nodiscc
 name: xsrv
-version: 0.17
+version: 0.18.0
 readme: README.md
 authors:
   - nodiscc <nodiscc@gmail.com>
-description: "Install and manage self-hosted network services and applications"
-license: "GPL-3.0"
+description: "Install and manage self-hosted network services and applications on your own server(s)"
+license: "GPL-3.0-or-later"
+tags: []
+dependencies: {}
 repository: "https://gitlab.com/nodiscc/xsrv"
 documentation: "https://gitlab.com/nodiscc/xsrv"
 homepage: "https://gitlab.com/nodiscc/xsrv"
 issues: "https://gitlab.com/nodiscc/xsrv"
+build_ignore:
+  - .venv
+  - tests/
+  - Makefile
+  - xsrv
+  - .gitlab-ci.yml
