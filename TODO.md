@@ -8,3 +8,23 @@
 - #245 - shaarli: use new json config format
 - #244 - icecast: ezstream 100% usage when playlist is empty
 - #243 - icecast: make playlist storage directory configurable
+- #287 - backups are failing
+- #286 - gitea role
+- #285 - Check that all variables are defined and none is `.*CHANGEME.*` before running roles
+- #284 - transmission bittorrent client
+- #283 - glusterfs role
+- #282 - apache: Warning: DocumentRoot [/var/www/localhost] does not exist
+- #280 - Samba Directory Controller or other Identity Management solution
+- #279 - Samba: LDAP user backend
+- #278 - Samba: harden configuration
+- #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
+- #287 - backups are failing
+- #286 - gitea role
+- #285 - Check that all variables are defined and none is `.*CHANGEME.*` before running roles
+- #284 - transmission bittorrent client
+- #283 - glusterfs role
+- #282 - apache: Warning: DocumentRoot [/var/www/localhost] does not exist
+- #280 - Samba Directory Controller or other Identity Management solution
+- #279 - Samba: LDAP user backend
+- #278 - Samba: harden configuration
+- #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
