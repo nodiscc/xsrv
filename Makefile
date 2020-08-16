@@ -19,7 +19,7 @@ testenv:
 	cp tests/playbook.yml test.yml
 
 clean:
-	rm -r test.yml .venv/
+	-rm -r test.yml .venv/
 
 # Playbook syntax check
 ansible_syntax_check: venv testenv
@@ -54,3 +54,9 @@ update_todo:
 	echo -e "\n### xsrv/xsrv\n" >> docs/TODO.md; \
 	./gitea-cli/bin/gitea issues xsrv/xsrv | jq -r '.[] | "- #\(.number) - \(.title)"' >> TODO.md;o
 	rm -rf gitea-cli
+
+# build and publish the ansible collection
+publish_collection: venv
+	source .venv/bin/activate && \
+	ansible-galaxy collection build && \
+	ansible-galaxy collection publish nodiscc-xsrv-0.18.0.tar.gz
