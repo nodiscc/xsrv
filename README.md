@@ -11,9 +11,9 @@
 **STATUS: rewrite in progress - Expect a stable release soon - The current version is partially broken and will require frequent adaptations to configuration files.**
 
 Install and manage self-hosted network services and applications on your own server(s):
- - a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) [roles](#roles) for various services/applications
- - a premade default [playbook to setup a single server](#basic-deployment) for personal use or small/medium teams
- - an optional [command-line tool](#usage) for easy deployment, common maintenance and configuration changes
+- a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) [roles](#roles) for various services/applications
+- a premade default [playbook to setup a single server](#basic-deployment) for personal use or small/medium teams
+- an optional [command-line tool](#usage) for easy deployment, common maintenance and configuration changes
 
 
 ## Roles
