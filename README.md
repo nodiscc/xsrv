@@ -25,7 +25,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [postgresql](roles/postgresql) - PostgreSQL database server
 - [mariadb](roles/mariadb) - MariaDB (MySQL) database server
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
-- [tt-rss](roles/tt-rss) - Tiny Tiny RSS web feed reader
+- [tt_rss](roles/tt_rss) - Tiny Tiny RSS web feed reader
 - [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
 - _WIP_ [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
 - _WIP_ [docker](roles/docker) - Docker container platform
@@ -44,7 +44,7 @@ Install and manage self-hosted network services and applications on your own ser
 [![](https://i.imgur.com/E74kJx5.png)](roles/apache/)
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
-[![](https://i.imgur.com/UoKs3x1.png)](roles/tt-rss)
+[![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
 [![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
 
 ------------

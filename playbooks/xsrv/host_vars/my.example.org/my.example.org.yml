@@ -12,7 +12,7 @@ ansible_ssh_port: 22
 nextcloud_fqdn: "cloud.CHANGEME.org"
 
 ##### TT-RSS #####
-# see roles/tt-rss/defaults/main.yml
+# see roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.CHANGEME.org"
 
 ##### SHAARLI #####
