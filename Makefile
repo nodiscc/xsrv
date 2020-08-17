@@ -7,7 +7,7 @@ tests: shellcheck check_jinja2 ansible_syntax_check ansible_lint yamllint clean
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
-	pip3 install isort ansible-lint yamllint ansible==2.9.12
+	pip3 install isort ansible-lint yamllint ansible==2.9.9
 
 # Static syntax checker for shell scripts
 # requirements: sudo apt install shellcheck
