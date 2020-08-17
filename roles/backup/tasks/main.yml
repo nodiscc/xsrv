@@ -2,4 +2,6 @@
 
 - include: rsnapshot.yml
   become: yes
-  tags: rsnapshot
+  tags:
+    - rsnapshot
+    - backup
