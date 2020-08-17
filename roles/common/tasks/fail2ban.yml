@@ -45,4 +45,3 @@
     state: absent
     dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
   notify: reload systemd unit files
-
