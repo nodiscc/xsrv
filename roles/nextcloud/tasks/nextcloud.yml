@@ -203,9 +203,9 @@
     - nextcloud_action is defined
     - nextcloud_action == 'upgrade'
 
-# TODO: not idempotent, this task will return changed every time (ignored with noqa 301, occ doesn't report indication of changes)
+# TODO: not idempotent, replace with template-based management of config.php
 # TODO: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
-- name: set nextcloud domain config.php values
+- name: set nextcloud config.php values (not idempotent, returns changed every time - occ doesn't report changed status)
   become: yes
   become_user: www-data
   command: /usr/bin/php ./occ config:system:set {{ item.key }} --value="{{ item.value }}" # noqa 301
@@ -290,8 +290,7 @@
     - not 'No such app enabled' in nextcloud_app_enable_disable.stdout
     - not 'already enabled' in nextcloud_app_enable_disable.stdout
 
-# not imdepotent, by design. We always want the latest versions of apps
-- name: update nextcloud applications # noqa 301
+- name: update nextcloud applications (not imdepotent, always upgrade to latest version) # noqa 301
   become: yes
   become_user: www-data
   command: /usr/bin/php ./occ app:update --all
