@@ -151,6 +151,7 @@ A summary of changes is included below. See [README.md](README.md) for more info
 - gallery app replaced with photos app
 - remove old installation directory at the end of upgrades
 - make backup role fully optional, check rsnapshot configuration after copying config file
+- delegate database backups to the respective database role (mariadb/postgresql)
 - add deck app
 
 
@@ -159,6 +160,7 @@ A summary of changes is included below. See [README.md](README.md) for more info
 - add support for postgresql databases, make it the default (config variable tt_rss_db_type)
 - add support for postgresql backups/dumps
 - make backup role fully optional, check rsnapshot configuration after copying config file
+- delegate database backups to the respective database role (mariadb/postgresql)
 - add support for let's encrypt certificates (use mod_md when tt_rss_https_mode: letsencrypt)
 - make log destination configurable, default to blank/PHP/webserver logs
 - update config.php template (remove deprecated feed_crypt_key setting)
@@ -213,6 +215,7 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 **gitea: refactor role:**
 - import from https://gitlab.com/nodiscc/ansible-xsrv-gitea
 - make backup role fully optional, check rsnapshot configuration after copying config file
+- delegate database backups to the respective database role (mariadb/postgresql)
 - update documentation
 - make gitea user home directory configurable
 - add optional configuration variables for mailer system (enable/disable, host/user/passwod/from-address)
@@ -239,6 +242,7 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 
 **postgresql role:**
 - add basic postgresql role
+- add optional integration with the backup role (automatic database backups)
 
 
 **samba role:**
