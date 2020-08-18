@@ -91,7 +91,7 @@ netdata_x509_checks_days_until_expiration_critical: "7"
 #   ports: list of TCP port numbers to check
 #   interval: time interval (seconds) between checks
 # Example:
-# netdata_portchecks:
+# netdata_port_checks:
 #   - name: ldap-available
 #     host: 192.168.10.10
 #     ports: [389, 636]
