@@ -1,0 +1,7 @@
+# rsnapshot configuration for mariadb backups
+# dump all databases to /var/backups/mariadb/
+backup_exec /usr/local/bin/mariadb-dump-all-databases.sh required
+# backup database dumps
+backup  /var/backups/mariadb localhost/
+# remove temporary dumps
+backup_exec rm /var/backups/mariadb/*.sql  required

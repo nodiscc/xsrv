@@ -1,3 +1,4 @@
 # rsnapshot configuration for gitea backups
+# backup gitea data directory
 backup			{{ gitea_user_home }}	localhost/
-backup_script	/usr/bin/mysqldump --single-transaction -h localhost -u root gitea > gitea.sql	gitea_db/
+# gitea database backups are managed by mariadb/postgresql roles

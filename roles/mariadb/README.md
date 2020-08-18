@@ -7,6 +7,8 @@ Requirements/Dependencies
 ------------
 
 - Ansible 2.9 or higher.
+- the [common](../common) role (optional)
+- the [backup](../backup) role (optional, for automatic database backups)
 
 
 Configuration Variables
@@ -31,6 +33,8 @@ vault_mariadb_root_password: "CHANGEME"
 
 Usage
 -----
+
+**Backups**: See the included [rsnapshot configuration](templates/etc_rsnapshot.d_mariadb.conf.j2) for the [backup](../backup/README.md) role.
 
 
 License

@@ -1,18 +1,10 @@
 # rsnapshot configuration for nextcloud backups
-{% if nextcloud_db_type == 'mysql' %}
-backup_script	/usr/bin/mysqldump --single-transaction -u root -h {{ nextcloud_db_host }} {{ nextcloud_db_name }} > nextcloud.sql	nextcloud_db/
-{% elif nextcloud_db_type == 'pgsql' %}
-{% if nextcloud_db_host == 'localhost' %}
-# use peer authentication as postgres user on localhost
-backup_script	/usr/bin/sudo chgrp postgres . && /usr/bin/sudo chmod g+rwX . && /usr/bin/sudo -u postgres /usr/bin/pg_dump --format custom --dbname {{ nextcloud_db_name }} --file nextcloud.sql	nextcloud_db/
-{% else %}
-# use tcp + password authentication on remote postgresql server
-backup_script	/usr/bin/pg_dump --format custom --username {{ nextcloud_db_user }} --host {{ nextcloud_db_host }} --dbname {{ nextcloud_db_name }} --port {{ nextcloud_db_port }} --file nextcloud.sql	nextcloud_db/
-{% endif %}
-{% endif %}
-backup	/var/nextcloud/	localhost/
-exclude	/var/nextcloud/data/updater-*/
-exclude	/var/nextcloud/data/appdata_*/
-exclude	/var/nextcloud/data/*/cache/
-exclude	/var/nextcloud/data/*/thumbnails/
-exclude	/var/nextcloud/data/*/files_trashbin/
+# backup nextcloud data directory
+backup	{{ nextcloud_data_dir }}	localhost/
+# exclude caches/trash directories
+exclude	{{ nextcloud_data_dir }}/updater-*/
+exclude	{{ nextcloud_data_dir }}/appdata_*/
+exclude	{{ nextcloud_data_dir }}/*/cache/
+exclude	{{ nextcloud_data_dir }}/*/thumbnails/
+exclude	{{ nextcloud_data_dir }}/*/files_trashbin/
+# nextcloud database backups are managed by mariadb/postgresql roles

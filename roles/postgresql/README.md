@@ -11,6 +11,8 @@ Requirements/Dependencies
 ------------
 
 - Ansible 2.9 or higher.
+- [common](../common) role (optional)
+- [backup](../backup) role (optional, for automatic database backups)
 
 
 Role Variables
@@ -27,12 +29,17 @@ Example Playbook
   roles:
     - common
     - monitoring
+    - backups
     - apache
     - postgresql
+    - nextcloud
 ```
 
 Usage
 -----
+
+**Backups**: See the included [rsnapshot configuration](templates/etc_rsnapshot.d_postgresql.conf.j2) for the [backup](../backup/README.md) role.
+
 
 License
 -------

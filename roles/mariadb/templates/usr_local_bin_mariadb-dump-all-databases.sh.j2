@@ -1,0 +1,12 @@
+#!/bin/bash
+# Description: dump all mysql databases to separate files
+set -o errexit
+set -o nounset
+
+DBLIST=$(sudo mysql -N -e 'show databases')
+
+for db in $DBLIST; do
+     echo "[INFO] Dumping database $db ..."
+     sudo mysqldump --single-transaction "$db" > "/var/backups/mariadb/$db.sql"
+     echo "[INFO] Finished dumping database $db"
+done

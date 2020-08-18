@@ -36,12 +36,8 @@
 
 ##### BACKUPS #####
 
-- name: copy rsnapshot configuration for tt-rss backups
-  template:
-    src: etc_rsnapshot.d_tt-rss.conf.j2
-    dest: /etc/rsnapshot.d/tt-rss.conf
-  when: '"backup" in role_names'
-  notify: check rsnapshot configuration
+# there are no files to backup
+# database dumps are managed by the postgresql/mariadb role
 
 ##### TT-RSS INSTALLATION #####
 
