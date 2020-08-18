@@ -14,7 +14,7 @@
   postgresql_user:
     name: "{{ nextcloud_db_user }}"
     state: present
-  no_password_changes: yes
+    no_password_changes: yes
 
 - name: set nexctloud postgresql user password
   become: yes

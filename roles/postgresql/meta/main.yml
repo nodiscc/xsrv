@@ -12,6 +12,6 @@ galaxy_info:
         - 10
   galaxy_tags:
     - server
-    - lamp
+    - lapp
     - postgresql
     - database
