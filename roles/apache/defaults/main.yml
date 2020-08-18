@@ -3,20 +3,17 @@
 ##### APACHE WEB SERVER #####
 
 # List of apache virtualhosts, each one takes the following parameters:
-#
-# servername: domain name for which the virtualhost will serve requests
-# documentroot: directory for the document root of this virtualhost
-# allow_robots: yes/no (default: no): when set to no, crawlers/bots will be disallowed from browsing the site (bad bots will ignore this setting)
-# https_mode: inselfsigned/letsencrypt:
-#   selfsigned: generate and use a self-signed certificate key for this vhost
-#   letsencrypt: generate a free certificate on Let's Encrypt (letsencrypt.org) certificate for this vhost
-#                (port 80/tcp MUST be reachable from the Internet on the DNS name of the vhost)
-# reverse_proxies: (optional) list of reverse proxies/remote servers to map to the local server URL space. Takes the following parameters:
+#   servername: domain name for which the virtualhost will serve requests
+#   documentroot: directory for the document root of this virtualhost
+#   allow_robots: yes/no (default: no): when set to no, crawlers/bots will be disallowed from browsing the site (bad bots will ignore this setting)
+#   https_mode: mode for SSL/TLS certificates generation (selfsigned/letsencrypt)
+#     selfsigned: generate and use a self-signed certificate key for this vhost
+#     letsencrypt: generate a free certificate on Let's Encrypt (letsencrypt.org) certificate for this vhost
+#   reverse_proxies: (optional) list of reverse proxies/remote servers to map to the local server URL space. Takes the following parameters:
 #     name: an arbitrary name (such as the destination app/server name)
 #     location: base URL/path mapped to the proxied host, eg /myapp
 #     backend: full URL of the host to pass requests to, eg. http://myapp.internalserv.er:8080
 #     response_headers: (optional) list of HTTP headers to set on responses from the proxy (override any previous header with the same name)
-#
 # Example:
 # apache_virtualhosts:
 #   - servername: "www.CHANGEME.org"

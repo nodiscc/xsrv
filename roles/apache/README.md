@@ -17,23 +17,18 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 [![](https://i.imgur.com/E74kJx5.png)](https://i.imgur.com/Ij5dhjo.png)
 
 
-Requirements
+Requirements/Dependencies
 ------------
 
-This role requires Ansible 2.8 or higher.
+- Ansible 2.9 or higher.
+- [`common`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) role (optional)
+- For Let's Encrypt certificates, port 80/tcp must be reachable from the Internet, and the virtualhost ServerName must have a Arecord in the public DNS system
 
 
 Configuration Variables
 -----------------------
 
 See [defaults/main.yml](defaults/main.yml)
-
-
-Dependencies
-------------
-
-
-The [`common`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) role
 
 
 Example Playbook
@@ -55,13 +50,12 @@ Example Playbook
 Usage
 -----
 
-- Backups: See the the included [rsnapshot configuration](templates/etc_rsnapshot.d_letsencrypt.conf) for the [backup](../backup/README.md) role
+**Backups:** See the the included [rsnapshot configuration](templates/etc_rsnapshot.d_letsencrypt.conf) for the [backup](../backup/README.md) role
 
 License
 -------
 
-- [GNU GPLv3](../../LICENSE)
-- [Paper icons](https://github.com/snwh/paper-icon-theme) under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+[GNU GPLv3](../../LICENSE)
 
 
 References
