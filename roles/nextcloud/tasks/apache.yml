@@ -12,11 +12,6 @@
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   notify: reload apache
 
-- name: check that nextcloud_https_mode is one of selfsigned/letsencrypt
-  assert:
-    that: nextcloud_https_mode in ['selfsigned', 'letsencrypt']
-    fail_msg: "Unsupported nextcloud_https_mode: {{ nextcloud_https_mode }}"
-
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_nextcloud.conf.j2
