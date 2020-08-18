@@ -15,7 +15,7 @@ gitea_db_password: "{{ vault_gitea_db_password }}"
 gitea_user_password: "{{ vault_gitea_user_password }}"
 
 # fully qualified domain name of the gitea instance
-gitea_fqdn: "git.CHANGEME.org"
+# gitea_fqdn: "git.CHANGEME.org"
 # gitea base URL under the domain name (eg change. it to /gitea to serve from git.my.example.org/gitea)
 gitea_base_url: "/"
 # full public URL at which the gitea web service can be reached
@@ -23,41 +23,40 @@ gitea_root_url: "https://{{ gitea_fqdn }}{{ gitea_base_url }}" # TODO move to ap
 
 
 # Privacy settings
-# last/private/public: Default visibility setting when creating a new repository
+# Default visibility setting when creating a new repository (last/private/public)
 gitea_default_private: "private"
-# true/false: force every new repository to be private
+# force every new repository to be private (true/false - QUOTED)
 gitea_force_private: "false"
-# true/false: User must sign in to view anything.
+# User must sign in to view anything (true/false - QUOTED)
 gitea_require_signin: "true"
-# true/false: Disallow registration, only allow admins to create accounts.
+# Disallow registration, only allow admins to create accounts (true/false - QUOTED)
 gitea_disable_registration: "true"
-# true/false: whether the email of the user should be shown in the Explore Users page
+# Whether the email of the user should be shown in the Explore Users page (true/false - QUOTED)
 gitea_show_user_email: "false"
 
 # Third party services
-# true/false: disable all third-party/external services/CDNs
+# disable all third-party/external services/CDNs (true/false - QUOTED)
 gitea_offline_mode: "true"
-# true/false: disable third-party gravatar service
+# disable third-party gravatar service (true/false - QUOTED)
 gitea_disable_gravatar: "true"
 
 # Other settings
 # global limit of repositories per user, applied at creation time. -1 means no limit
-gitea_user_repo_limit: "-1"
-# true/false: enable/disable gitea REST API
+gitea_user_repo_limit: -1
+# enable/disable gitea REST API (true/false - QUOTED)
 gitea_enable_api: "false"
-# Gitea version
-# https://github.com/go-gitea/gitea/releases.atom; remove leading v
+# gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
 gitea_version: '1.10.3'
 # The minimum password length for new Users
-gitea_min_password_length: "10"
-# yes/no: start/stop the gitea service, enable/disable it on boot
+gitea_min_password_length: 10
+# start/stop the gitea service, enable/disable it on boot (yes/no)
 gitea_enable_service: yes
 # home directory for the gitea user
 gitea_user_home: /var/lib/gitea
-# yes/no: enable outgoing mail
+# enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
 # Mail settings below are required if gitea mailer is enabled
-# From: address used in mails sent by gitea
+# 'From:'' address used in mails sent by gitea
 gitea_mail_from: "gitea@{{ gitea_fqdn }}"
 # SMTP host, username and password for outgoing mail from gitea
 gitea_mail_host: "{{ vault_gitea_mail_host }}"
