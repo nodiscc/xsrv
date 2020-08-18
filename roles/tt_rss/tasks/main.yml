@@ -1,5 +1,9 @@
 ---
 
+- include: checks.yml
+  tags:
+    - tt-rss
+
 - include: mysql.yml
   become: yes
   tags:
