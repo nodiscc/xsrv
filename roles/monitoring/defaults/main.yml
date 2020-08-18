@@ -5,15 +5,15 @@
 # setup rsyslog (centralize service logs in /var/log/syslog, discard useless messages)
 setup_rsyslog: yes
 
-# yes/no: agregate netdata logs to main syslog (default disabled, noisy)
+# agregate netdata logs to main syslog (default disabled, noisy) (yes/no)
 rsyslog_monitor_netdata: no
 
-# yes/no: aggregate apache access logs to main syslog (default disabled)
+# aggregate apache access logs to main syslog (default disabled) (yes/no)
 rsyslog_monitor_apache_accesslog: no
 
 ##### NETDATA MONITORING SYSTEM #####
 
-# https://github.com/netdata/netdata/releases/
+# Netdata release to install - https://github.com/netdata/netdata/releases/
 netdata_version: "v1.24.0"
 
 # default interval between netdata updates (in seconds)
@@ -28,17 +28,20 @@ netdata_dbengine_disk_space: 256
 # space-separated list of IP addresses authorized to access netdata
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 
-# yes/no: enable netdata cloud/SaaS features
+# enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
 
-# yes/no: enable/disable netdata debug/error/access logs
+# enable/disable netdata debug/error/access logs (yes/no)
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
 netdata_disable_access_log: yes
 
 ### NETDATA CHECKS ###
 
-# Process checks
+# Netdata process checks
+#   name: process group name to check (apps_groups.conf)
+#   min_count: minimum expected number of processes
+#   interval: time interval (seconds) between checks
 # Example:
 # netdata_process_checks:
 #   - { name: ssh, min_count: 1, interval: 20} # SSH server
@@ -52,17 +55,14 @@ netdata_disable_access_log: yes
 #   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
 #   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
 #   - { name: auth, min_count: 1, interval: 20} # openldap server
-# name: process group name to check (apps_groups.conf)
-# min_count: minimum expected number of processes
-# interval: time interval (seconds) between checks
 netdata_process_checks: []
 
-# HTTP/SSL checks
-# name: readable name of the check
-# url: URL to check for successful HTTP response
-# timeout: (seconds, default 1) maximum allowed time to return the content
-# interval: (seconds) interval between HTTP checks
-# check_x509: (yes/no, default yes for https:// URLs): check x509/SSL certificate time to expiration
+# Netdata HTTP/SSL checks
+#   name: readable name of the check
+#   url: URL to check for successful HTTP response
+#   timeout: (seconds, default 1) maximum allowed time to return the content
+#   interval: (seconds) interval between HTTP checks
+#   check_x509: (yes/no, default yes for https:// URLs): check x509/SSL certificate time to expiration
 # Example:
 # netdata_http_checks:
 #   - name: example.com
@@ -76,7 +76,7 @@ netdata_process_checks: []
 #     check_x509: no
 netdata_http_checks: []
 
-# x509/SSL checks
+# Netdata x509/SSL checks
 # (seconds) global interval between x509 certificate checks
 netdata_x509_checks_interval: "60"
 # (seconds) global SSL connection timeout value for x509 checks
@@ -85,20 +85,20 @@ netdata_x509_checks_timeout: "60"
 netdata_x509_checks_days_until_expiration_warning: "14"
 netdata_x509_checks_days_until_expiration_critical: "7"
 
-# TCP port checks
+# Netdata TCP port checks
+#   name: readable name of the check
+#   host: hostname or IP address to contact
+#   ports: list of TCP port numbers to check
+#   interval: time interval (seconds) between checks
 # Example:
 # netdata_portchecks:
 #   - name: ldap-available
 #     host: 192.168.10.10
 #     ports: [389, 636]
 #     interval: 10
-# name: readable name of the check
-# host: hostname or IP address to contact
-# ports: list of TCP port numbers to check
-# interval: time interval (seconds) between checks
 netdata_port_checks: []
 
-# Docker container checks
+# Netdata Docker container checks
 # expected number of running docker containers
 netdata_min_running_docker_containers: 0
 
@@ -106,7 +106,7 @@ netdata_min_running_docker_containers: 0
 netdata_install_method: binary
 
 ### EXTRA MODULES ###
-# yes/no: automatically restart services that require it after an upgrade
+# automatically restart services that require it after an upgrade (yes/no)
 needrestart_autorestart_services: no
 
 # (minutes) interval between updates of log message counts in the logcount module

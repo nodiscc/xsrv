@@ -1,13 +1,13 @@
 ##### SAMBA FILE SHARING SERVER
 
 # List of samba shares. Each item has the following attributes:
-# name: unique name for the share
-# allow_read_users: list of users allowed to read the share
-# allow_write_users: list of users allowed to write to the share
-# comment: (optional) text string that is seen next to a share in share listings on clients
-# available: (optional, default yes) yes/no: set to no to disable the share
-# browseable: (optional, default yes) yes/no: set to no to hide the share from network share listings on clients (it can still be accessed)
-# state: (optional, default 'directory') directory/absent: set to 'absent' to delete the share. All data will be removed!
+#   name: unique name for the share
+#   allow_read_users: list of users allowed to read the share
+#   allow_write_users: list of users allowed to write to the share
+#   comment: (optional) text string that is seen next to a share in share listings on clients
+#   available: (optional, default yes) yes/no: set to no to disable the share
+#   browseable: (optional, default yes) yes/no: set to no to hide the share from network share listings on clients (it can still be accessed)
+#   state: (optional, default 'directory') directory/absent: set to 'absent' to delete the share. All data will be removed!
 # Example:
 # samba_shares:
 #   - name: mycompany
@@ -34,8 +34,8 @@
 samba_shares: []
 
 # List of samba_users. Each item has the following attributes:
-# username: the username. Do not use a username already in use by a system service or interactive user!
-# password: password for this user. It is best to store this value in ansible-vault
+#   username: the username. Do not use a username already in use by a system service or interactive user!
+#   password: password for this user. It is best to store this value in ansible-vault
 # Example:
 # samba_users:
 #   - username: alice

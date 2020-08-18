@@ -12,16 +12,16 @@ shaarli_password_salt: "{{ vault_shaarli_password_salt }}"
 shaarli_api_secret: "{{ vault_shaarli_api_secret }}"
 # shaarli timezone (see https://www.php.net/manual/en/timezones.php)
 shaarli_timezone: "Europe/Amsterdam"
-# yes/no: overwrite shaarli configuration if it already exists (will overwrite any configuration changes made from Shaarli tools menu)
+# overwrite shaarli configuration if it already exists (yes/no - yes will overwrite any changes made from Shaarli tools menu)
 shaarli_overwrite_config: no
 
-# mode for SSL/TLS certificates for the shaarli webserver virtualhost
-# letsencrypt: acquire a certificate from Let's Encrypt (shaarli_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
-# selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+# Mode for SSL/TLS certificates for the shaarli webserver virtualhost
+#   letsencrypt: acquire a certificate from Let's Encrypt (shaarli_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 shaarli_https_mode: selfsigned
 
-# shaarli installation directory
+# Shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 
-# https://github.com/shaarli/Shaarli/releases.atom
+# Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
 shaarli_version: 'v0.11.1'
