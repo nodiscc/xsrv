@@ -1,5 +1,10 @@
 ---
 
+- include: checks.yml
+  tags:
+    - rsnapshot
+    - backup
+
 - include: rsnapshot.yml
   become: yes
   tags:

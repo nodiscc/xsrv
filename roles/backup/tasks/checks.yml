@@ -1,0 +1,15 @@
+---
+
+##### CHECKS FOR APACHE ROLE #####
+
+- name: check that mandatory variables are correctly defined
+  assert:
+    that:
+      - rsnapshot_backup_dir is string
+      - rsnapshot_backup_execs|type_debug == "list"
+      - rsnapshot_excludes|type_debug == "list"
+      - rsnapshot_local_backups|type_debug == "list"
+      - rsnapshot_remote_backups|type_debug == "list"
+      - rsnapshot_retain_daily|int
+      - rsnapshot_retain_monthly|int
+      - rsnapshot_retain_weekly|int
