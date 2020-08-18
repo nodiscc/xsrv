@@ -1,0 +1,14 @@
+---
+
+##### CHECKS FOR APACHE ROLE #####
+
+- name: check that mandatory variables are correctly defined
+  assert:
+    that:
+      - samba_log_level == samba_log_level|int
+      - samba_max_log_size_kb == samba_max_log_size_kb|int
+      - samba_netbios_name is string
+      - samba_server_string is string
+      - samba_shares|type_debug == "list"
+      - samba_shares_path is string
+      - samba_users|type_debug == "list"

@@ -1,3 +1,8 @@
+---
+
+- include: checks.yml
+  tags: samba
+
 - include: samba.yml
   become: yes
   tags: samba
