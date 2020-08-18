@@ -1,0 +1,32 @@
+---
+
+##### CHECKS FOR APACHE ROLE #####
+
+- name: check that mandatory variables are correctly defined
+  assert:
+    that:
+      - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd|bool
+      - dns_nameservers|type_debug == "list"
+      - firehol_custom_services|type_debug == "list"
+      - firehol_networks|type_debug == "list"
+      - firehol_routers|type_debug == "list"
+      - linux_users|type_debug == "list"
+      - msmtp_admin_email is not search("CHANGEME")
+      - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump|bool
+      - setup_apt == setup_apt|bool
+      - setup_cli_utils == setup_cli_utils|bool
+      - setup_dns == setup_dns|bool
+      - setup_firewall == setup_firewall|bool
+      - setup_haveged == setup_haveged|bool
+      - setup_msmtp == setup_msmtp|bool
+      - setup_ssh == setup_ssh|bool 
+      - setup_sysctl == setup_sysctl|bool
+      - ssh_allow_tcp_forwarding in ['no', 'local', 'remote', 'all']
+      - ssh_authorized_keys|type_debug == "list"
+      - ssh_log_level in ['QUIET', 'FATAL', 'ERROR', 'INFO', 'VERBOSE', 'DEBUG', 'DEBUG1', 'DEBUG2', 'DEBUG3']
+      - ssh_server_revoked_keys|type_debug == "list"
+      - ssh_sftp_loglevel in ['QUIET', 'FATAL', 'ERROR', 'INFO', 'VERBOSE', 'DEBUG', 'DEBUG1', 'DEBUG2', 'DEBUG3']
+      - sysctl_allow_forwarding == sysctl_allow_forwarding|bool
+      - sysctl_answer_ping == sysctl_answer_ping|bool
+      - sysctl_vm_swappiness|int
+      - sysctl_vm_vfs_cache_pressure|int
