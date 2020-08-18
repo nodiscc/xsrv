@@ -44,12 +44,6 @@
 
 ##### BACKUPS #####
 
-- name: create rsnapshot configuration includes directory
-  file:
-    path: /etc/rsnapshot.d
-    state: directory
-  when: '"backup" in role_names'
-
 - name: copy rsnapshot configuration for nextcloud backups
   template:
     src: etc_rsnapshot.d_nextcloud.conf.j2
