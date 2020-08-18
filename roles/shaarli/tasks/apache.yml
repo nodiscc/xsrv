@@ -9,11 +9,6 @@
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   notify: reload apache
 
-- name: check that shaarli_https_mode is one of selfsigned/letsencrypt
-  assert:
-    that: shaarli_https_mode in ['selfsigned', 'letsencrypt']
-    fail_msg: "Unsupported shaarli_https_mode: {{ shaarli_https_mode }}"
-
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_shaarli.conf.j2
