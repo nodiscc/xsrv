@@ -3,12 +3,18 @@
 set -o errexit
 set -o nounset
 
+cd /var/backups/postgresql/ # prevents could not change directory to "/root": Permission denied
+
 DBLIST=$(sudo -u postgres /usr/bin/psql -d postgres -q -t -c 'SELECT datname from pg_database')
 
 for db in $DBLIST; do
-     echo "[INFO] Dumping database $db ..."
-     sudo -u postgres pg_dump --format custom --dbname "$db" --file "/var/backups/postgresql/$db.sql"
-     echo "[INFO] Finished dumping database $db"
+    if [[ "$db" =~ ^template.? ]]; then
+        echo "[INFO] Skipping database $db";
+    else
+        echo "[INFO] Dumping database $db ..."
+        sudo -u postgres pg_dump --format custom --dbname "$db" --file "/var/backups/postgresql/$db.sql"
+        echo "[INFO] Finished dumping database $db"
+    fi
 done
 
 echo "[INFO] dumping global variables..."
