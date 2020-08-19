@@ -67,6 +67,7 @@ nextcloud_apps:
   - { state: "enable", app: "firstrunwizard" }
   - { state: "enable", app: "photos" }
   - { state: "enable", app: "music" }
+  - { state: "enable", app: "maps" }
   - { state: "enable", app: "notifications" }
   - { state: "enable", app: "systemtags" }
   - { state: "enable", app: "tasks" }
