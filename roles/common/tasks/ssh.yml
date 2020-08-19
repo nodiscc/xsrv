@@ -7,8 +7,6 @@
     src: 'etc_ssh_revoked_keys.j2'
     dest: '/etc/ssh/revoked_keys'
     mode: 0600
-    owner: root
-    group: root
   notify: restart ssh
 
 - name: Add authorized keys
@@ -29,13 +27,12 @@
   template:
     src: etc_ssh_sshd_config.j2
     dest: /etc/ssh/sshd_config
+    mode: 0600
   notify: restart ssh
 
 - name: install openssh server
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - openssh-server
       - pinentry-curses

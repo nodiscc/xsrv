@@ -3,13 +3,17 @@
 ##### PACKAGE MANAGEMENT/APT/UPGRADES #####
 
 - name: copy apt sources lists (debian + security + backports)
-  template: src={{ item.src }} dest={{ item.dest }}
-  with_items:
-    - { src: 'etc_apt_sources.list.j2', dest: '/etc/apt/sources.list' }
+  template:
+    src: "etc_apt_sources.list.j2"
+    dest: "/etc/apt/sources.list"
+    mode: 0644
   when: ansible_facts.distribution == 'Debian'
 
 - name: copy apt config (automatic upgrades, no recommended packages)
-  copy: src={{ item.src }} dest={{ item.dest }}
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0600
   with_items:
     - { src: 'etc_apt_apt.conf.d_99-no-overwrite-conffiles', dest: '/etc/apt/apt.conf.d/99-no-overwrite-conffiles' }
     - { src: 'etc_apt_apt.conf.d_99-norecommends', dest: '/etc/apt/apt.conf.d/99-norecommends' }
@@ -25,7 +29,5 @@
 - name: install unattended-upgrades
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - unattended-upgrades

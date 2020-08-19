@@ -6,6 +6,7 @@
   template:
     src: etc_apt_preferences.d_99-apache2-buster-backports.j2
     dest: /etc/apt/preferences.d/99-apache2-buster-backports
+    mode: 0644
   register: apache_apt_pinning
 
 # refresh APT cache after updating APT preferences

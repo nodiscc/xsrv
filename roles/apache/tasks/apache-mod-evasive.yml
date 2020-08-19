@@ -6,6 +6,7 @@
   template:
     src: etc_apache2_conf-available_mod-evasive.conf.j2
     dest: /etc/apache2/conf-available/mod-evasive.conf
+    mode: 0644
   when: apache_enable_mod_evasive|bool
 
 - name: enable apache mod_evasive

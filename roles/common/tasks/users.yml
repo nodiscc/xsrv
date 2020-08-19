@@ -95,4 +95,7 @@
 ##### CRON #####
 
 - name: restrict cron jobs creation to root only
-  copy: src=etc_cron.allow dest=/etc/cron.allow
+  copy:
+    src: etc_cron.allow
+    dest: /etc/cron.allow
+    mode: 0600

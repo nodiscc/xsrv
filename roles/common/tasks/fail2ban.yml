@@ -12,7 +12,10 @@
     - "/etc/fail2ban/filter.d"
 
 - name: copy fail2ban configuration
-  template: src={{ item.src }} dest={{ item.dest }}
+  template:
+    src: {{ item.src }}
+    dest: {{ item.dest }}
+    mode: 0600
   with_items:
     - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
     - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }

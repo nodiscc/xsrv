@@ -97,12 +97,16 @@
   template:
     src: 'etc_systemd_system.conf.d_accounting.conf.j2'
     dest: '/etc/systemd/system.conf.d/accounting.conf'
+    mode: 0600
   notify: re-execute the systemd manager
 
 - name: copy netdata base configuration
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+    owner: root
+    group: netdata
+    mode: 0640
   with_items:
     - { src: 'opt_netdata_etc_netdata_netdata.conf.j2', dest: '/opt/netdata/etc/netdata/netdata.conf' }
     - { src: 'opt_netdata_var_lib_netdata_cloud.d_cloud.conf.j2', dest: '/opt/netdata/var/lib/netdata/cloud.d/cloud.conf' }
@@ -113,31 +117,49 @@
   template:
     src: opt_netdata_etc_netdata_health.d_processes.conf.j2
     dest: /opt/netdata/etc/netdata/health.d/processes.conf
+    owner: root
+    group: netdata
+    mode: 0640
 
 - name: copy netdata HTTP checks configuration
   template:
     src: opt_netdata_etc_netdata_go.d_httpcheck.conf.j2
     dest: /opt/netdata/etc/netdata/go.d/httpcheck.conf
+    owner: root
+    group: netdata
+    mode: 0640
 
 - name: copy netdata SSL certificate checks configuration
   template:
     src: opt_netdata_etc_netdata_go.d_x509check.conf.j2
     dest: /opt/netdata/etc/netdata/go.d/x509check.conf
+    owner: root
+    group: netdata
+    mode: 0640
 
 - name: copy netdata TCP port checks configuration
   template:
     src: opt_netdata_etc_netdata_go.d_portcheck.conf.j2
     dest: /opt/netdata/etc/netdata/go.d/portcheck.conf
+    owner: root
+    group: netdata
+    mode: 0640
 
 - name: copy netdata docker container checks configuration
   template:
     src: opt_netdata_etc_netdata_health.d_dockerd.conf.j2
     dest: /opt/netdata/etc/netdata/health.d/dockerd.conf
+    owner: root
+    group: netdata
+    mode: 0640
 
 - name: copy netdata apache status checks configuration
   template:
     src: opt_netdata_etc_netdata_python.d_apache.conf.j2
     dest: /opt/netdata/etc/netdata/python.d/apache.conf
+    owner: root
+    group: netdata
+    mode: 0640
 
 # required for systemd services charts/cgroups accounting
 - name: create systemd dynamic configuration directory
@@ -149,6 +171,7 @@
   template:
     src: 'etc_systemd_system.conf.d_accounting.conf.j2'
     dest: '/etc/systemd/system.conf.d/accounting.conf'
+    mode: 0600
   notify: re-execute the systemd manager
 
 - name: create mysql user for netdata (if mariadb role is enabled)

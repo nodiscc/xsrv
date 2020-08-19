@@ -3,7 +3,10 @@
 ##### KERNEL CONFIGURATION #####
 
 - name: copy sysctl configuration
-  template: src='etc_sysctl.d_custom.conf.j2' dest='/etc/sysctl.d/custom.conf'
+  template:
+    src: 'etc_sysctl.d_custom.conf.j2'
+    dest: '/etc/sysctl.d/custom.conf'
+    mode: 0600
   notify: apply sysctl configuration
 
 # apply sysctl configuration as soon as possible

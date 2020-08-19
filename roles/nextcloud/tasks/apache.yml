@@ -16,6 +16,7 @@
   template:
     src: etc_apache2_sites-available_nextcloud.conf.j2
     dest: /etc/apache2/sites-available/nextcloud.conf
+    mode: 0644
   notify: reload apache
 
 - name: enable apache2 virtualhost

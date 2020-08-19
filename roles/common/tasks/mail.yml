@@ -6,9 +6,7 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: root
-    group: root
-    mode: 0644
+    mode: 0600
   with_items:
     - { src: "etc_msmtprc.j2", dest: "/etc/msmtprc" }
     - { src: "etc_aliases.j2", dest: "/etc/aliases" }
@@ -19,5 +17,3 @@
       - msmtp
       - msmtp-mta
     state: present
-    update_cache: true
-    cache_valid_time: 900

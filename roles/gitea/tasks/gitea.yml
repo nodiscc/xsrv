@@ -66,6 +66,7 @@
   template:
     src: "etc_systemd_system_gitea.service.j2"
     dest: "/etc/systemd/system/gitea.service"
+    mode: 0644
   notify: reload systemd unit files
 
 # reload systemd unit files as soon as possible
@@ -109,6 +110,7 @@
   template:
     src: etc_fail2ban_filter.d_gitea-auth.conf.j2
     dest: /etc/fail2ban/filter.d/gitea-auth.conf
+    mode: 0600
   tags: fail2ban
   notify: reload fail2ban
 
@@ -118,6 +120,7 @@
   template:
     src: etc_rsnapshot.d_gitea.conf.j2
     dest: /etc/rsnapshot.d/gitea.conf
+    mode: 0600
   notify: check rsnapshot configuration
   when: '"backup" in role_names'
 
@@ -183,7 +186,7 @@
     dest: '/etc/gitea/app.ini'
     owner: root
     group: gitea
-    mode: '0640' # read only for gitea
+    mode: 0640 # read only for gitea
   notify: restart gitea
 
 # TODO not idempotent

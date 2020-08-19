@@ -23,7 +23,7 @@
   template:
     src: etc_fail2ban_jail.d_tt-rss.conf.j2
     dest: /etc/fail2ban/jail.d/tt-rss.conf
-    mode: 0644
+    mode: 0600
   tags: fail2ban
   notify: reload fail2ban
 
@@ -31,6 +31,7 @@
   template:
     src: etc_fail2ban_filter.d_tt-rss-auth.conf.j2
     dest: /etc/fail2ban/filter.d/tt-rss-auth.conf
+    mode: 0600
   tags: fail2ban
   notify: reload fail2ban
 

@@ -16,6 +16,7 @@
   template:
     src: etc_systemd_system_firehol.service.j2
     dest: /etc/systemd/system/firehol.service
+    mode: 0644
   notify: reload systemd unit files
 
 # reload systemd unit files before attempting to start/stop the service

@@ -31,6 +31,7 @@
   template:
     src: etc_rsnapshot.conf.j2
     dest: /etc/rsnapshot.conf
+    mode: 0600
   notify: check rsnapshot configuration
 
 - name: ensure rsnapshot configuration is valid (flush handlers)

@@ -3,35 +3,59 @@
 ##### RSYSLOG #####
 
 - name: configure rsyslog to monitor fail2ban log file
-  template: src=etc_rsyslog.d_fail2ban.conf.j2 dest=/etc/rsyslog.d/fail2ban.conf
+  template:
+    src: etc_rsyslog.d_fail2ban.conf.j2
+    dest: /etc/rsyslog.d/fail2ban.conf
+    mode: 0600
   notify: restart rsyslog
 
 - name: configure rsyslog to monitor apt history log file
-  template: src=etc_rsyslog.d_apt.conf.j2 dest=/etc/rsyslog.d/apt.conf
+  template:
+    src: etc_rsyslog.d_apt.conf.j2
+    dest: /etc/rsyslog.d/apt.conf
+    mode: 0600
   notify: restart rsyslog
 
 - name: configure rsyslog to monitor apache logs
-  template: src=etc_rsyslog.d_apache.conf.j2 dest=/etc/rsyslog.d/apache.conf
+  template:
+    src: etc_rsyslog.d_apache.conf.j2
+    dest: /etc/rsyslog.d/apache.conf
+    mode: 0600
   notify: restart rsyslog
 
 - name: configure rsyslog to monitor netdata logs
-  template: src=etc_rsyslog.d_netdata.conf.j2 dest=/etc/rsyslog.d/netdata.conf
+  template:
+    src: etc_rsyslog.d_netdata.conf.j2
+    dest: /etc/rsyslog.d/netdata.conf
+    mode: 0600
   notify: restart rsyslog
 
 - name: configure rsyslog to monitor gitea logs
-  template: src=etc_rsyslog.d_gitea.conf.j2 dest=/etc/rsyslog.d/gitea.conf
+  template:
+    src: etc_rsyslog.d_gitea.conf.j2
+    dest: /etc/rsyslog.d/gitea.conf
+    mode: 0600
   notify: restart rsyslog
 
 - name: configure rsyslog to monitor samba logs
-  template: src=etc_rsyslog.d_samba.conf.j2 dest=/etc/rsyslog.d/samba.conf
+  template:
+    src: etc_rsyslog.d_samba.conf.j2
+    dest: /etc/rsyslog.d/samba.conf
+    mode: 0600
   notify: restart rsyslog
 
 - name: configure rsyslog to discard useless messages
-  template: src=etc_rsyslog.d_discard.conf.j2 dest=/etc/rsyslog.d/discard.conf
+  template:
+    src: etc_rsyslog.d_discard.conf.j2
+    dest: /etc/rsyslog.d/discard.conf
+    mode: 0600
   notify: restart rsyslog
 
 - name: configure rsyslog to log all messages to /var/log/syslog
-  template: src=etc_rsyslog.d_singlefile.conf.j2 dest=/etc/rsyslog.d/singlefile.conf
+  template:
+    src: etc_rsyslog.d_singlefile.conf.j2
+    dest: /etc/rsyslog.d/singlefile.conf
+    mode: 0600
   notify: restart rsyslog
 
 # rsyslog is configured to send all messages to /var/log/syslog in the task above
