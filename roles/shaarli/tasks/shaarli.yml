@@ -89,6 +89,7 @@
   file:
     path: /root/shaarli-unpack
     state: directory
+    mode: 0750
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
@@ -98,8 +99,7 @@
     src: "/root/shaarli-{{ shaarli_version }}-full.zip"
     dest: "/root/shaarli-unpack"
     remote_src: yes
-    owner: root
-    group: root
+    mode: u=rwX
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')

@@ -79,6 +79,7 @@
   file:
     path: /opt/netdata-logcount/
     state: directory
+    mode: 0755
 
 - name: copy configuration/lnav script for netdata-logcount
   template:

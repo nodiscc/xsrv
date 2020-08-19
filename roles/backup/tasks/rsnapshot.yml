@@ -41,6 +41,7 @@
   file:
     path: /etc/rsnapshot.d
     state: directory
+    mode: 0700
 
 - name: create ssh client configuration directory for root
   file:

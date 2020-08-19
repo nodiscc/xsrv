@@ -99,6 +99,7 @@
   file:
     path: /root/nextcloud-unpack
     state: directory
+    mode: 0750
   when:
     - nextcloud_action is defined
     - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
@@ -108,8 +109,7 @@
     src: "/root/nextcloud-{{ nextcloud_version }}.zip"
     dest: "/root/nextcloud-unpack"
     remote_src: yes
-    owner: root
-    group: root
+    mode: u=rwX
   when:
     - nextcloud_action is defined
     - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')

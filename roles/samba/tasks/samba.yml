@@ -2,7 +2,7 @@
 
 - name: install samba packages
   apt:
-    state: latest
+    state: present
     package:
       - samba
       - samba-common
@@ -69,9 +69,8 @@
     groups: sambausers
   with_items: "{{ samba_users }}"
 
-# TODO not idempotent
-- name: update samba users/passwords database
-  shell: "printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}"
+- name: update samba users/passwords database - not idempotent always returns changed
+  shell: "set -o pipefail; printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}" # noqa 301
   with_items: "{{ samba_users }}"
   no_log: True
 

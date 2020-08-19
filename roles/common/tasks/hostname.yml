@@ -10,5 +10,8 @@
     dest: '/etc/hosts'
     line: '{{ item }}	{{ inventory_hostname }}' # noqa 203
     regexp: '^{{ item }}'
+    owner: root
+    group: root
+    mode: 0644
   with_items:
     - '127.0.1.1'

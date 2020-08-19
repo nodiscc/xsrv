@@ -19,6 +19,9 @@
     state: link
     dest: "{{ item.dest }}"
     src: "{{ item.src }}"
+    owner: root
+    group: www-data
+    mode: u=rwX,g=rX
   with_items:
     - { dest: '{{ tt_rss_install_dir }}/themes.local/chalk.css', src: 'chalk/chalk.css' }
     - { dest: '{{ tt_rss_install_dir }}/themes.local/chalk_images', src: 'chalk/chalk_images' }

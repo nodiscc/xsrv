@@ -11,6 +11,7 @@
   file:
     path: "/etc/firehol"
     state: directory
+    mode: 0700
 
 - name: install firehol systemd service
   template:

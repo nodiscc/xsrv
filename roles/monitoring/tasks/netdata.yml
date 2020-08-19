@@ -92,6 +92,7 @@
   file:
     path: '/etc/systemd/system.conf.d'
     state: directory
+    mode: 0755
 
 - name: enable systemd cgroups ressource accounting (systemd services chart)
   template:
@@ -160,12 +161,6 @@
     owner: root
     group: netdata
     mode: 0640
-
-# required for systemd services charts/cgroups accounting
-- name: create systemd dynamic configuration directory
-  file:
-    path: '/etc/systemd/system.conf.d'
-    state: directory
 
 - name: enable systemd cgroups ressource accounting (systemd services chart)
   template:

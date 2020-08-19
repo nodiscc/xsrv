@@ -38,7 +38,10 @@
 ##### APACHE MODULES/CONFIGURATON #####
 
 - name: copy apache2/php configuration
-  template: src={{ item.src }} dest={{ item.dest }}
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
   with_items:
     - { src: 'etc_apache2_conf-available_security.conf.j2', dest: '/etc/apache2/conf-available/security.conf' }
     - { src: 'etc_apache2_conf-available_logging.conf.j2', dest: '/etc/apache2/conf-available/logging.conf' }
@@ -96,12 +99,16 @@
   template:
     src: var_www_virtualhost_robots.txt.j2
     dest: "{{ item.documentroot }}/robots.txt"
+    owner: root
+    group: www-data
+    mode: 0640
   with_items: "{{ apache_virtualhosts }}"
 
 - name: copy apache sites config
   template:
     src: etc_apache2_sites-available_sites.conf.j2
     dest: /etc/apache2/sites-available/sites.conf
+    mode: 0644
   notify: reload apache
 
 - name: disable default apache site
