@@ -4,9 +4,12 @@
 
 [global]
    update every = {{ netdata_update_every }}
-{% if netdata_disable_debug_log %}   debug log = none{% endif %}
-{% if netdata_disable_error_log %}   error log = none{% endif %}
-{% if netdata_disable_access_log %}   access log = none{% endif %}
+{% if netdata_disable_debug_log %}   debug log = none
+{% endif %}
+{% if netdata_disable_error_log %}   error log = none
+{% endif %}
+{% if netdata_disable_access_log %}   access log = none
+{% endif %}
    page cache size = {{ netdata_dbengine_page_cache_size }}
    dbengine disk space = {{ netdata_dbengine_disk_space }}
 
@@ -16,4 +19,5 @@
    ssl key = /etc/ssl/netdata/netdata-key.pem
    ssl certificate = /etc/ssl/netdata/netdata-cert.pem
    enable gzip compression = no
-
+   web files owner = root
+   web files group = netdata
