@@ -55,9 +55,9 @@
     group: netdata
     mode: 0640
   with_items:
-    - { src: '/root/netdata-needrestart/needrestart.chart.py', dest: '/opt/netdata/usr/libexec/netdata/python.d/needrestart.chart.py' }
-    - { src: '/root/netdata-needrestart/needrestart.conf', dest: '/opt/netdata/usr/libexec/netdata/python.d/needrestart.conf' }
-    - { src: '/root/netdata-needrestart/health.d_needrestart.conf', dest: '/opt/netdata/etc/netdata/health.d/needrestart.conf' }
+    - { src: '/root/netdata-needrestart/needrestart.chart.py', dest: '{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/needrestart.chart.py' }
+    - { src: '/root/netdata-needrestart/needrestart.conf', dest: '{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/needrestart.conf' }
+    - { src: '/root/netdata-needrestart/health.d_needrestart.conf', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/needrestart.conf' }
   notify: restart netdata
 
 ### LOGCOUNT ###
@@ -90,15 +90,15 @@
     mode: 0640
   with_items:
     - { src: 'opt_netdata-logcount_logcount.sql.j2', dest: '/opt/netdata-logcount/logcount.sql' }
-    - { src: 'opt_netdata_etc_netdata_python.d_logcount.conf.j2', dest: '/opt/netdata/etc/netdata/python.d/logcount.conf' }
-    - { src: 'opt_netdata_etc_netdata_health.d_logcount.conf.j2', dest: '/opt/netdata/etc/netdata/health.d/logcount.conf' }
+    - { src: 'opt_netdata_etc_netdata_python.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/logcount.conf' }
+    - { src: 'opt_netdata_etc_netdata_health.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/logcount.conf' }
   notify: restart netdata
 
 - name: install netdata-logcount module
   copy:
     remote_src: yes
     src: "/root/netdata-logcount/logcount.chart.py"
-    dest: "/opt/netdata/usr/libexec/netdata/python.d/logcount.chart.py"
+    dest: "{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/logcount.chart.py"
     owner: root
     group: netdata
     mode: 0750

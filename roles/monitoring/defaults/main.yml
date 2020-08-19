@@ -13,9 +13,6 @@ rsyslog_monitor_apache_accesslog: no
 
 ##### NETDATA MONITORING SYSTEM #####
 
-# Netdata release to install - https://github.com/netdata/netdata/releases/
-netdata_version: "v1.24.0"
-
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
@@ -102,8 +99,13 @@ netdata_port_checks: []
 # expected number of running docker containers
 netdata_min_running_docker_containers: 0
 
-# netdata installation method. Only installation from 'binary' is supported
-netdata_install_method: binary
+# netdata installation method (packagecloud/binary)
+#   packagecloud: install signed deb package from packagecloud APT repository (recommended)
+#   binary: install netdata from .run install script
+netdata_install_method: 'packagecloud'
+
+# Netdata release to install in 'bainary' installation mode - https://github.com/netdata/netdata/releases/
+netdata_version: "v1.24.0"
 
 ### EXTRA MODULES ###
 # automatically restart services that require it after an upgrade (yes/no)

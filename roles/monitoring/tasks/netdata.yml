@@ -20,9 +20,52 @@
       - libjudydebian1
       - openssl
       - liblz4-1
+      - gnupg
+    state: present
+
+
+### INSTALL NETDATA FROM PACKAGECLOUD APT REPOSITORY #####
+
+- name: remove netdata installed from binary
+  file:
+    path: /opt/netdata
+    state: absent
+  when: netdata_install_method == 'packagecloud'
+  notify: restart netdata
+
+- name: add netdata APT repository signing key
+  apt_key:
+    url: https://packagecloud.io/netdata/netdata/gpgkey
+    state: present
+  when: netdata_install_method == 'packagecloud'
+
+- name: copy netdata/packagecloud APT pinning preferences
+  template:
+    src: etc_apt_preferences.d_99-netdata-packagecloud.j2
+    dest: /etc/apt/preferences.d/99-netdata-packagecloud
+    mode: 0644
+  when: netdata_install_method == 'packagecloud'
+
+- name: add netdata repository to APT sources
+  apt_repository:
+    repo: "deb https://packagecloud.io/netdata/netdata/debian/ buster main"
+    state: present
+    update_cache: yes
+  when: netdata_install_method == 'packagecloud'
+
+- name: install netdata
+  apt:
+    package: netdata
     state: present
 
 ### INSTALL NETDATA FROM BINARY #####
+
+- name: remove netdata installed from APT
+  apt:
+    package: netdata
+    state: absent
+  when: netdata_install_method == 'binary'
+  notify: restart netdata
 
 - name: download netdata binary installer
   get_url:
@@ -49,8 +92,6 @@
     package: python3-openssl
     state: present
 
-# the directory for certificates/keys must be kept outside netdata installation directory
-# lse running the install/upgrade procedure will remove the files, breaking playbook idempotence
 - name: create directory for netdata SSL certs/keys
   file:
     path: /etc/ssl/netdata
@@ -101,6 +142,25 @@
     mode: 0644
   notify: re-execute the systemd manager
 
+- name: set netdata installation prefix for binary install method
+  set_fact:
+    netdata_install_prefix: "/opt/netdata"
+  when: netdata_install_method == 'binary'
+
+- name: set netdata installation prefix for packagecloud install method
+  set_fact:
+    netdata_install_prefix: ""
+  when: netdata_install_method == 'packagecloud'
+
+- name: create directories for netdata configuration
+  file:
+    path: /var/lib/netdata/cloud.d
+    state: directory
+    owner: netdata
+    group: netdata
+    mode: 0770
+  when: netdata_install_method == 'packagecloud'
+
 - name: copy netdata configuration files
   template:
     src: "{{ item.src }}"
@@ -109,15 +169,15 @@
     group: netdata
     mode: 0440
   with_items:
-    - { src: 'opt_netdata_etc_netdata_netdata.conf.j2', dest: '/opt/netdata/etc/netdata/netdata.conf' } # general configuration
-    - { src: 'opt_netdata_var_lib_netdata_cloud.d_cloud.conf.j2', dest: '/opt/netdata/var/lib/netdata/cloud.d/cloud.conf' } # cloud/SaaS service configuration
-    - { src: 'opt_netdata_etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/opt/netdata/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry # noqa 204
-    - { src: 'opt_netdata_etc_netdata_health.d_processes.conf.j2', dest: '/opt/netdata/etc/netdata/health.d/processes.conf' } # process health checks
-    - { src: 'opt_netdata_etc_netdata_go.d_httpcheck.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/httpcheck.conf' } # HTTP checks
-    - { src: 'opt_netdata_etc_netdata_go.d_x509check.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/x509check.conf' } # SSL certificate checks
-    - { src: 'opt_netdata_etc_netdata_go.d_portcheck.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/portcheck.conf' } # TCP port checks
-    - { src: 'opt_netdata_etc_netdata_health.d_dockerd.conf.j2', dest: '/opt/netdata/etc/netdata/health.d/dockerd.conf' } # docker container checks
-    - { src: 'opt_netdata_etc_netdata_python.d_apache.conf.j2', dest: '/opt/netdata/etc/netdata/python.d/apache.conf' } # apache status checks
+    - { src: 'etc_netdata_netdata.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/netdata.conf' } # general configuration
+    - { src: 'var_lib_netdata_cloud.d_cloud.conf.j2', dest: '{{ netdata_install_prefix }}/var/lib/netdata/cloud.d/cloud.conf' } # cloud/SaaS service configuration # noqa 204
+    - { src: 'etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry # noqa 204
+    - { src: 'etc_netdata_health.d_processes.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/processes.conf' } # process health checks
+    - { src: 'etc_netdata_go.d_httpcheck.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/go.d/httpcheck.conf' } # HTTP checks
+    - { src: 'etc_netdata_go.d_x509check.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/go.d/x509check.conf' } # SSL certificate checks
+    - { src: 'etc_netdata_go.d_portcheck.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/go.d/portcheck.conf' } # TCP port checks
+    - { src: 'etc_netdata_health.d_dockerd.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/dockerd.conf' } # docker container checks
+    - { src: 'etc_netdata_python.d_apache.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/apache.conf' } # apache status checks
   notify: restart netdata
 
 - name: create mysql user for netdata (if mariadb role is enabled)
