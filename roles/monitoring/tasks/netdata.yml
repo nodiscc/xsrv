@@ -111,7 +111,7 @@
   with_items:
     - { src: 'opt_netdata_etc_netdata_netdata.conf.j2', dest: '/opt/netdata/etc/netdata/netdata.conf' } # general configuration
     - { src: 'opt_netdata_var_lib_netdata_cloud.d_cloud.conf.j2', dest: '/opt/netdata/var/lib/netdata/cloud.d/cloud.conf' } # cloud/SaaS service configuration
-    - { src: 'opt_netdata_etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/opt/netdata/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry
+    - { src: 'opt_netdata_etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/opt/netdata/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry # noqa 204
     - { src: 'opt_netdata_etc_netdata_health.d_processes.conf.j2', dest: '/opt/netdata/etc/netdata/health.d/processes.conf' } # process health checks
     - { src: 'opt_netdata_etc_netdata_go.d_httpcheck.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/httpcheck.conf' } # HTTP checks
     - { src: 'opt_netdata_etc_netdata_go.d_x509check.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/x509check.conf' } # SSL certificate checks
