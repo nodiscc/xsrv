@@ -44,7 +44,7 @@
     remote_src: yes
     src: "/root/netdata-needrestart/etc_apt_apt.conf.d_99needrestart"
     dest: "/etc/apt/apt.conf.d/99needrestart"
-    mode: 0600
+    mode: 0644
 
 - name: install netdata-needrestart module/configuration/alarms
   copy:
