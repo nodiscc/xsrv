@@ -64,7 +64,7 @@
     path: "/etc/ssl/netdata/netdata-key.pem"
     owner: root
     group: netdata
-    mode: "0640"
+    mode: 0640
   notify: restart netdata
 
 - name: generate openssl certificate signing request (CSR)
@@ -81,7 +81,7 @@
     provider: selfsigned
     owner: root
     group: netdata
-    mode: "0640"
+    mode: 0640
     force: no
   notify: restart netdata
 
@@ -98,76 +98,27 @@
   template:
     src: 'etc_systemd_system.conf.d_accounting.conf.j2'
     dest: '/etc/systemd/system.conf.d/accounting.conf'
-    mode: 0600
+    mode: 0644
   notify: re-execute the systemd manager
 
-- name: copy netdata base configuration
+- name: copy netdata configuration files
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: root
+    owner: netdata
     group: netdata
-    mode: 0640
+    mode: 0440
   with_items:
-    - { src: 'opt_netdata_etc_netdata_netdata.conf.j2', dest: '/opt/netdata/etc/netdata/netdata.conf' }
-    - { src: 'opt_netdata_var_lib_netdata_cloud.d_cloud.conf.j2', dest: '/opt/netdata/var/lib/netdata/cloud.d/cloud.conf' }
-    - { src: 'opt_netdata_etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/opt/netdata/etc/netdata/.opt-out-from-anonymous-statistics' }
+    - { src: 'opt_netdata_etc_netdata_netdata.conf.j2', dest: '/opt/netdata/etc/netdata/netdata.conf' } # general configuration
+    - { src: 'opt_netdata_var_lib_netdata_cloud.d_cloud.conf.j2', dest: '/opt/netdata/var/lib/netdata/cloud.d/cloud.conf' } # cloud/SaaS service configuration
+    - { src: 'opt_netdata_etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/opt/netdata/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry
+    - { src: 'opt_netdata_etc_netdata_health.d_processes.conf.j2', dest: '/opt/netdata/etc/netdata/health.d/processes.conf' } # process health checks
+    - { src: 'opt_netdata_etc_netdata_go.d_httpcheck.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/httpcheck.conf' } # HTTP checks
+    - { src: 'opt_netdata_etc_netdata_go.d_x509check.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/x509check.conf' } # SSL certificate checks
+    - { src: 'opt_netdata_etc_netdata_go.d_portcheck.conf.j2', dest: '/opt/netdata/etc/netdata/go.d/portcheck.conf' } # TCP port checks
+    - { src: 'opt_netdata_etc_netdata_health.d_dockerd.conf.j2', dest: '/opt/netdata/etc/netdata/health.d/dockerd.conf' } # docker container checks
+    - { src: 'opt_netdata_etc_netdata_python.d_apache.conf.j2', dest: '/opt/netdata/etc/netdata/python.d/apache.conf' } # apache status checks
   notify: restart netdata
-
-- name: copy netdata process health checks configuration
-  template:
-    src: opt_netdata_etc_netdata_health.d_processes.conf.j2
-    dest: /opt/netdata/etc/netdata/health.d/processes.conf
-    owner: root
-    group: netdata
-    mode: 0640
-
-- name: copy netdata HTTP checks configuration
-  template:
-    src: opt_netdata_etc_netdata_go.d_httpcheck.conf.j2
-    dest: /opt/netdata/etc/netdata/go.d/httpcheck.conf
-    owner: root
-    group: netdata
-    mode: 0640
-
-- name: copy netdata SSL certificate checks configuration
-  template:
-    src: opt_netdata_etc_netdata_go.d_x509check.conf.j2
-    dest: /opt/netdata/etc/netdata/go.d/x509check.conf
-    owner: root
-    group: netdata
-    mode: 0640
-
-- name: copy netdata TCP port checks configuration
-  template:
-    src: opt_netdata_etc_netdata_go.d_portcheck.conf.j2
-    dest: /opt/netdata/etc/netdata/go.d/portcheck.conf
-    owner: root
-    group: netdata
-    mode: 0640
-
-- name: copy netdata docker container checks configuration
-  template:
-    src: opt_netdata_etc_netdata_health.d_dockerd.conf.j2
-    dest: /opt/netdata/etc/netdata/health.d/dockerd.conf
-    owner: root
-    group: netdata
-    mode: 0640
-
-- name: copy netdata apache status checks configuration
-  template:
-    src: opt_netdata_etc_netdata_python.d_apache.conf.j2
-    dest: /opt/netdata/etc/netdata/python.d/apache.conf
-    owner: root
-    group: netdata
-    mode: 0640
-
-- name: enable systemd cgroups ressource accounting (systemd services chart)
-  template:
-    src: 'etc_systemd_system.conf.d_accounting.conf.j2'
-    dest: '/etc/systemd/system.conf.d/accounting.conf'
-    mode: 0600
-  notify: re-execute the systemd manager
 
 - name: create mysql user for netdata (if mariadb role is enabled)
   mysql_user:
