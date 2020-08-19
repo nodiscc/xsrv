@@ -111,7 +111,7 @@
     day: "*"
     hour: "*"
     minute: "*/{{ netdata_logcount_update_interval }}"
-    job: script --return --quiet -c "/usr/bin/lnav -n -f /opt/netdata-logcount/logcount.sql" > /dev/null
+    job: script --return --quiet -c "/usr/bin/lnav /var/log/syslog -n -f /opt/netdata-logcount/logcount.sql" > /dev/null
     name: logcount
     user: root
 
