@@ -48,7 +48,7 @@
     - { src: 'etc_apache2_conf-available_ssl-common.conf.j2', dest: '/etc/apache2/conf-available/ssl-common.conf' }
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf' }
     - { src: 'etc_php_7.3_apache2_conf.d_30-hide-header.ini.j2', dest: '/etc/php/7.3/apache2/conf.d/30-hide-header.ini' }
-  notify: restart apache
+  notify: reload apache
 
 - name: disable unnecessary apache modules
   command: a2dismod {{ item }}
@@ -69,7 +69,7 @@
     - 'php7.3'
     - 'md'
     - 'ssl'
-  notify: reload apache
+  notify: restart apache
 
 - name: enable apache configuration snippets
   command: a2enconf {{ item }}
@@ -79,7 +79,7 @@
     - 'security'
     - 'logging'
     - 'ssl-common'
-  notify: restart apache
+  notify: reload apache
 
 - include: apache-mod-evasive.yml
 
