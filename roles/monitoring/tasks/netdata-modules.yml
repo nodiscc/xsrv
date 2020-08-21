@@ -90,8 +90,8 @@
     mode: 0640
   with_items:
     - { src: 'opt_netdata-logcount_logcount.sql.j2', dest: '/opt/netdata-logcount/logcount.sql' }
-    - { src: 'opt_netdata_etc_netdata_python.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/logcount.conf' }
-    - { src: 'opt_netdata_etc_netdata_health.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/logcount.conf' }
+    - { src: 'etc_netdata_python.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/logcount.conf' }
+    - { src: 'etc_netdata_health.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/logcount.conf' }
   notify: restart netdata
 
 - name: install netdata-logcount module
@@ -124,3 +124,35 @@
     mode: 0650
     modification_time: preserve
     access_time: preserve
+
+### MODTIME ###
+
+- name: clone netdata-modtime module
+  git:
+    dest: "/root/netdata-modtime"
+    repo: "{{ netdata_modtime_git_url }}"
+    version: "0.1.0"
+    accept_hostkey: yes
+    force: yes # discard modified files
+
+- name: copy configuration for netdata-modtime
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: netdata
+    mode: 0640
+  with_items:
+    - { src: 'etc_netdata_python.d_modtime.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/modtime.conf' }
+    - { src: 'etc_netdata_health.d_modtime.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/modtime.conf' }
+  notify: restart netdata
+
+- name: install netdata-modtime module
+  copy:
+    remote_src: yes
+    src: "/root/netdata-modtime/modtime.chart.py"
+    dest: "{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/modtime.chart.py"
+    owner: root
+    group: netdata
+    mode: 0750
+  notify: restart netdata

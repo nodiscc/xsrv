@@ -1,8 +1,8 @@
 ---
 
-##### LOGGING #####
+##### LOGGING (RSYSLOG) #####
 
-# setup rsyslog (centralize service logs in /var/log/syslog, discard useless messages)
+# setup rsyslog (aggregate application/service logs to /var/log/syslog, discard useless messages)
 setup_rsyslog: yes
 
 # agregate netdata logs to main syslog (default disabled, noisy) (yes/no)
@@ -10,6 +10,7 @@ rsyslog_monitor_netdata: no
 
 # aggregate apache access logs to main syslog (default disabled) (yes/no)
 rsyslog_monitor_apache_accesslog: no
+
 
 ##### NETDATA MONITORING SYSTEM #####
 
@@ -32,6 +33,7 @@ netdata_cloud_enabled: no
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
 netdata_disable_access_log: yes
+
 
 ### NETDATA CHECKS ###
 
@@ -107,7 +109,9 @@ netdata_install_method: 'packagecloud'
 # Netdata release to install in 'bainary' installation mode - https://github.com/netdata/netdata/releases/
 netdata_version: "v1.24.0"
 
-### EXTRA MODULES ###
+
+### NETDATA EXTRA MODULES ###
+
 # automatically restart services that require it after an upgrade (yes/no)
 needrestart_autorestart_services: no
 
@@ -121,7 +125,22 @@ netdata_logcount_warning_threshold_warn: 0
 # user to send logcount notifications to (eg. sysadmin, silent...)
 netdata_logcount_notification_to: "silent"
 
-# git repository URL to download netdata-needrestart from
+# files to watch with netdata-modtime. each item takes the following parameters;
+#   name: a unique name for the job/chart
+#   path: path of the file to monitor
+#   age_warning: raise a warning alert when time since last modification exceeds this value (seconds)
+#   age_critical: raise a critical alert when time since last modification exceeds this value (seconds)
+# Example:
+# netdata_modtime_checks:
+#   - name: rsnapshot_last_success
+#     path: /var/log/rsnapshot_last_success
+#     age_warning: 88200
+#     age_critical: 90000
+netdata_modtime_checks: []
+
+# git repository URL for netdata-needrestart
 netdata_needrestart_git_url: https://gitlab.com/nodiscc/netdata-needrestart
-# git repository URL to download netdata-logcount from
+# git repository URL for netdata-logcount
 netdata_logcount_git_url: https://gitlab.com/nodiscc/netdata-logcount
+# git repository URL for netdata-modtime
+netdata_modtime_git_url: https://gitlab.com/nodiscc/netdata-modtime
