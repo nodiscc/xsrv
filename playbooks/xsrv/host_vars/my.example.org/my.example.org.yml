@@ -80,6 +80,12 @@ netdata_process_checks:
 #   - { name: auth, min_count: 1, interval: 20} # openldap server
 #   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
 
+netdata_modtime_checks:
+  - name: rsnapshot_last_success # check successful daily backups
+    path: /var/log/rsnapshot_last_success
+    age_warning: 88200
+    age_critical: 90000
+
 ### EXTRA MODULES ###
 # yes/no: automatically restart services that require it after an upgrade
 needrestart_autorestart_services: yes
