@@ -91,7 +91,7 @@
     hour: '1'
     minute: '0'
     day: '*'
-    job: 'rsnapshot daily && touch {{ rsnapshot_backup_dir }}/rsnapshot_last_success_time'
+    job: 'rsnapshot daily && touch {{ rsnapshot_backup_dir }}/rsnapshot_last_success'
 
 - name: setup weekly backup cron job
   cron:
@@ -101,7 +101,7 @@
     hour: '0'
     minute: '30'
     weekday: '0'
-    job: 'rsnapshot weekly && touch {{ rsnapshot_backup_dir }}/rsnapshot_last_success_time'
+    job: 'rsnapshot weekly && touch {{ rsnapshot_backup_dir }}/rsnapshot_last_success'
 
 - name: setup monthly backup cron job
   cron:
@@ -111,4 +111,4 @@
     hour: '0'
     minute: '1'
     day: '1'
-    job: 'rsnapshot monthly && touch {{ rsnapshot_backup_dir }}/rsnapshot_last_success_time'
+    job: 'rsnapshot monthly && touch {{ rsnapshot_backup_dir }}/rsnapshot_last_success'
