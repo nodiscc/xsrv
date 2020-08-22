@@ -106,22 +106,39 @@
 
 - name: copy apache sites config
   template:
-    src: etc_apache2_sites-available_sites.conf.j2
-    dest: /etc/apache2/sites-available/sites.conf
+    src: etc_apache2_sites-available_000-sites.conf.j2
+    dest: /etc/apache2/sites-available/000-sites.conf
     mode: 0644
   notify: reload apache
 
-- name: disable default apache site
-  command: a2dissite 000-default
+- name: disable default apache sites
+  command: a2dissite {{ item }}
   args:
-    removes: /etc/apache2/sites-enabled/000-default.conf
+    removes: /etc/apache2/sites-enabled/{{ item }}.conf
+  with_items:
+    - 000-default
+    - default-ssl
   notify: restart apache
 
+- name: remove default virtualhost index.html page
+  file:
+    path: /var/www/html/index.html
+    state: absent
+
 - name: enable apache sites
-  command: a2ensite sites
+  command: a2ensite 000-sites
   args:
-    creates: /etc/apache2/sites-enabled/sites.conf
-  notify: restart apache
+    creates: /etc/apache2/sites-enabled/000-sites.conf
+  notify: reload apache
+
+- name: remove virtualhost configuration from previous versions of the role
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/apache2/sites-enabled/sites.conf
+    - /etc/apache2/sites-available/sites.conf
+  notify: reload apache
 
 ##### SERVICE #####
 
