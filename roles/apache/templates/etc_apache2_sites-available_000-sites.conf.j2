@@ -3,6 +3,7 @@
 <VirtualHost *:80>
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
+    RewriteCond %{REQUEST_URI} !=/server-status
     RewriteCond %{HTTPS} off
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </VirtualHost>
