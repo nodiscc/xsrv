@@ -27,7 +27,7 @@ See [defaults/main.yml](defaults/main.yml)
 Dependencies
 ------------
 
-Recommended: the [`common`](https://gitlab.com/nodiscc/ansible-xsrv-common) role.
+- [`common`](https://gitlab.com/nodiscc/ansible-xsrv-common) role (optional)
 
 
 Example Playbook
@@ -48,13 +48,13 @@ Usage
 ### Netdata
 
 - Netdata dashboard access: https://my.example.org:19999.
-- When there is an anormal condition on the host, an alarm will show up in the alarms panel, and a mail will be sent using the system's Mail Tranfer Agent.
+- When there is an abnormal condition on the host, an alarm will show up in the alarms panel, and a mail will be sent to the server admin e-mail address, using the system's Mail Transfer Agent (see the [common](../common) role and `msmtp*` variables)
 
 Read [netdata documentation](https://docs.netdata.cloud/) for more info.
 
 ### Logs
 
-- Navigate/search/filter agregated system logs (using [lnav](https://lnav.org/)): `ssh user@my.example.org sudo lnav /var/log/syslog`. Some useful internal lnav [commands](https://lnav.readthedocs.io/en/latest/):
+Navigate/search/filter agregated system logs (using [lnav](https://lnav.org/)): `ssh -t user@my.example.org sudo lnav /var/log/syslog`. Some useful internal lnav [commands](https://lnav.readthedocs.io/en/latest/):
 
 - `:filter-in <expression>` only display messages matching filter expression
 - `:set-min-log-level debug|info|warning|error` only display messages above a defined log level.
