@@ -7,24 +7,26 @@
     that:
       - gitea_admin_email is not search("CHANGEME")
       - gitea_admin_password is not search("CHANGEME")
-      - gitea_admin_user is not search("CHANGEME")
+      - gitea_admin_username is not search("CHANGEME")
       - gitea_base_url is not search("CHANGEME")
+      - gitea_db_host is not search("CHANGEME")
       - gitea_db_password is not search("CHANGEME")
-      - gitea_default_private in ['true', 'false']
+      - gitea_db_port == gitea_db_port|int
+      - gitea_db_type in ['postgres', 'mysql']
+      - gitea_db_user is not search("CHANGEME")
+      - gitea_default_private in ['last', 'private', 'public']
       - gitea_disable_gravatar in ['true', 'false']
       - gitea_disable_registration in ['true', 'false']
       - gitea_enable_api in ['true', 'false']
-      - gitea_enable_service in ['true', 'false']
+      - gitea_enable_service == gitea_enable_service|bool
       - gitea_force_private in ['true', 'false']
       - gitea_fqdn is not search("CHANGEME")
-      - gitea_mailer_enabled in ['true', 'false']
-      - gitea_min_password_length|int
+      - gitea_mailer_enabled == gitea_mailer_enabled|bool
+      - gitea_min_password_length == gitea_min_password_length|int
       - gitea_offline_mode in ['true', 'false']
       - gitea_require_signin in ['true', 'false']
-      - gitea_root_url is not search("CHANGEME")
       - gitea_secret_key is not search("CHANGEME")
       - gitea_show_user_email in ['true', 'false']
       - gitea_user_home is string
-      - gitea_user_password is not search("CHANGEME")
-      - gitea_user_repo_limit|int
+      - gitea_user_repo_limit == gitea_user_repo_limit|int
       - gitea_version is string

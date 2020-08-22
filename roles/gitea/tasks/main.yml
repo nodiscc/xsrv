@@ -3,6 +3,27 @@
 - include: checks.yml
   tags: gitea
 
+- include: mysql.yml
+  become: yes
+  tags: gitea
+  when: gitea_db_type == 'mysql'
+
+- include: postgresql.yml
+  become: yes
+  tags: gitea
+  when: gitea_db_type == 'postgres'
+
 - include: gitea.yml
   become: yes
   tags: gitea
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: gitea
+  when: gitea_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags:
+    - gitea
+    - apache

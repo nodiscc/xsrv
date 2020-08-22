@@ -24,8 +24,8 @@ Requirements/Dependencies
 ------------
 
 - Ansible 2.8 or higher.
-- The [apache](../apache/README.md) role (webserver, PHP interpreter, SSL certificates)
-- The [mariadb](../mariadb/README.md) role (database engine)
+- The [apache](../apache/README.md) role (webserver/reverse proxy, SSL certificates)
+- The [postgresql](../postgresql) or [mariadb](../mariadb/README.md) role (database engine)
 - [backup](../backup/README.md) role (automatic backups, optional)
 
 
@@ -47,14 +47,13 @@ Example Playbook
     - gitea
   vars:
     gitea_fqdn: "git.CHANGEME.org"
-    gitea_admin_user: "CHANGEME"
-    gitea_admin_email: "CHANGEME@CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_gitea_admin_username: "CHANGEME"
 vault_gitea_admin_password: "CHANGEME"
-vault_gitea_secret_key: "CHANGEME"
-vault_gitea_db_password: "CHANGEME"
-vault_gitea_user_password: "CHANGEME"
+vault_gitea_admin_email: "CHANGEME@CHANGEME.org"
+vault_gitea_db_password: "" # leave empty when using postgresql/peer authentication on localhost
+vault_gitea_secret_key: "CHANGEME64" # 64-character random string, generate it with openssl rand -base64 48 | tr -d '\n' | cut -b 1-64
 ```
 
 Usage
@@ -62,12 +61,14 @@ Usage
 
 ### Backups
 
-See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role:
-
-Your backup service must run the `gitea dump` command and backup the resulting `.zip` file. If your backup service is not running as root, `sudoers` must be configured to allow the backup user to run `sudo -u gitea gitea` without password. See [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role and [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
 
 Restoring a backup: TODO
 
+
+### Postgresql support
+
+Only local `peer` authentication is currently supported for postgresql databases.
 
 ### Clients
 
@@ -148,4 +149,7 @@ License
 References/Documentation
 -------------
 
-https://stdout.root.sx/links/?searchterm=gitea
+- https://github.com/nodiscc/xsrv/tree/master/roles/gitea
+- https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea
+- https://stdout.root.sx/links/?searchterm=gitea
+- https://stdout.root.sx/links/?searchtags=git

@@ -14,12 +14,12 @@
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { url: "https://dl.gitea.io/gitea/{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.xz",
-        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.xz" }
-    - { url: "https://dl.gitea.io/gitea/{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.xz.asc",
-        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.xz.asc" }
-    - { url: "https://dl.gitea.io/gitea/{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.xz.sha256",
-        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.xz.sha256" }
+    - { url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64",
+        dest: "/root/gitea-{{ gitea_version }}-linux-amd64" }
+    - { url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.asc",
+        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.asc" }
+    - { url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.sha256",
+        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.sha256" }
 
 # Key from 'gpg --keyserver pgp.mit.edu --recv 7C9E68152594688862D62AF62D9AE806EC1592E2; gpg --export --armor 7C9E68152594688862D62AF62D9AE806EC1592E2'
 - name: copy gitea GPG key
@@ -36,7 +36,7 @@
   changed_when: "'unchanged: 1' not in gitea_import_gpgkey.stderr"
 
 - name: verify gitea GPG signatures
-  command: gpg --verify /root/gitea-{{ gitea_version }}-linux-amd64.xz.asc /root/gitea-{{ gitea_version }}-linux-amd64.xz
+  command: gpg --verify /root/gitea-{{ gitea_version }}-linux-amd64.asc /root/gitea-{{ gitea_version }}-linux-amd64
   changed_when: no
 
 ##### USER #####
@@ -53,14 +53,31 @@
     name: 'gitea'
     system: yes
     shell: '/bin/bash'
-    password: "{{ gitea_user_password | password_hash('sha512') }}"
-    comment: 'Gitea user'
-    home: '/home/gitea'
+    comment: 'Git service'
+    home: '/var/lib/gitea'
     groups:
       - 'gitea'
       - 'ssh'
 
-##### CONFIGURATION #####
+
+##### FILES/PERMISSIONS #####
+
+- name: create gitea directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    owner: "root"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    recurse: yes
+  with_items:
+    - { path: "/etc/gitea", group: "gitea", mode: "u=rwX,g=rX" }
+    - { path: "{{ gitea_user_home }}/custom", group: "root", mode: "u=rwX" }
+    - { path: "{{ gitea_user_home }}/public", group: "root", mode: "u=rwX" }
+    - { path: "{{ gitea_user_home }}/data", group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: "{{ gitea_user_home }}/indexers", group: "gitea", mode: "u=rwX,g=rwX" } # TODO not idempotent
+    - { path: "{{ gitea_user_home }}/log", group: "gitea", mode: "u=rwX,g=rwX" }
+    - { path: '{{ gitea_user_home }}/repos', group: "gitea", mode: "u=rwX,g=rwX" }
 
 - name: install gitea systemd service/unit file
   template:
@@ -73,28 +90,86 @@
 - name: run all notified handlers now
   meta: flush_handlers
 
-- name: create gitea configuration directory
-  file:
-    state: directory
-    path: '/etc/gitea'
+- name: copy gitea binary
+  copy:
+    src: "/root/gitea-{{ gitea_version }}-linux-amd64"
+    dest: "/usr/local/bin/gitea"
+    mode: 0755
+    remote_src: yes
     owner: root
     group: root
-    mode: 'u=rwX'
+  notify: restart gitea
+  when: not ansible_check_mode
 
-##### MYSQL #####
+- name: generate gitea INTERNAL_TOKEN
+  command: gitea generate secret INTERNAL_TOKEN
+  register: gitea_internal_token_generated
+  changed_when: False
+  when: not ansible_check_mode
 
-- name: create gitea mysql database
-  mysql_db:
-    name: gitea
-    state: present
+- name: generate gitea LFS_JWT_SECRET
+  command: gitea generate secret LFS_JWT_SECRET
+  register: gitea_jwt_secret_generated
+  changed_when: False
+  when: not ansible_check_mode
 
-- name: create gitea mysql user
-  mysql_user:
-    name: gitea
-    host: localhost
-    password: "{{ gitea_db_password }}"
-    state: present
-    priv: gitea.*:ALL
+- name: set gitea_jwt_secret variable
+  set_fact:
+    gitea_root_url: "https://{{ gitea_fqdn }}{{ gitea_base_url }}"
+    gitea_internal_token: "{{ gitea_internal_token_generated.stdout_lines[0] }}"
+    gitea_jwt_secret: "{{ gitea_jwt_secret_generated.stdout_lines[0] }}"
+  when: not ansible_check_mode
+
+- name: copy gitea configuration file
+  template:
+    src: 'etc_gitea_app.ini'
+    dest: '/etc/gitea/app.ini'
+    owner: root
+    group: gitea
+    mode: 0640 # read only for gitea
+  notify: restart gitea
+  when: not ansible_check_mode
+
+# TODO not idempotent
+- name: create gitea database tables
+  become: yes
+  become_user: gitea
+  command: gitea migrate --config /etc/gitea/app.ini
+  args:
+    chdir: "{{ gitea_user_home }}"
+  when: 
+    - (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized)
+    - not ansible_check_mode
+
+- name: create gitea admin user
+  become: yes
+  become_user: gitea
+  command: gitea admin create-user
+           --username "{{ gitea_admin_username }}"
+           --password "{{ gitea_admin_password }}"
+           --email "{{ gitea_admin_email }}"
+           --admin --config /etc/gitea/app.ini
+  args:
+    chdir: "{{ gitea_user_home }}"
+  register: "gitea_create_user"
+  failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
+  changed_when: "'user already exists' not in gitea_create_user.stdout"
+  when: not ansible_check_mode
+
+- name: create ansible local facts directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - /etc/ansible/
+    - /etc/ansible/facts.d
+
+- name: create gitea ansible facts file
+  template:
+    src: etc_ansible_facts.d_gitea.fact.j2
+    dest: /etc/ansible/facts.d/gitea.fact
+    mode: 0644
 
 ###### FAIL2BAN ############
 
@@ -114,6 +189,7 @@
   tags: fail2ban
   notify: reload fail2ban
 
+
 ##### BACKUPS #####
 
 - name: copy rsnapshot configuration for gitea backups
@@ -124,112 +200,6 @@
   notify: check rsnapshot configuration
   when: '"backup" in role_names'
 
-##### FILES/PERMISSIONS #####
-
-- name: create gitea directories
-  file:
-    state: directory
-    path: "{{ item.path }}"
-    owner: "root"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
-    recurse: yes
-  with_items:
-    - { path: "{{ gitea_user_home }}/custom", group: "root", mode: "u=rwX" }
-    - { path: "{{ gitea_user_home }}/public", group: "root", mode: "u=rwX" }
-    - { path: "{{ gitea_user_home }}/data", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: "{{ gitea_user_home }}/indexers", group: "gitea", mode: "u=rwX,g=rwX" } # TODO not idempotent
-    - { path: "{{ gitea_user_home }}/log", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: '{{ gitea_user_home }}/repos', group: "gitea", mode: "u=rwX,g=rwX" }
-
-# ansible unarchive directory can't extract plain .xz files
-# https://github.com/ansible/ansible-modules-core/issues/3241
-- name: extract gitea binary
-  command: unxz --keep --force "/root/gitea-{{ gitea_version }}-linux-amd64.xz"
-  args:
-    creates: /root/gitea-{{ gitea_version }}-linux-amd64
-
-- name: copy gitea binary
-  copy:
-    src: "/root/gitea-{{ gitea_version }}-linux-amd64"
-    dest: "/usr/local/bin/gitea"
-    mode: 0755
-    remote_src: yes
-    owner: root
-    group: root
-  notify: restart gitea
-
-##### GITEA #####
-
-- name: generate gitea INTERNAL_TOKEN
-  command: gitea generate secret INTERNAL_TOKEN
-  register: gitea_internal_token_generated
-  changed_when: False
-
-- name: set gitea_internal_token variable
-  set_fact:
-    gitea_internal_token: "{{ gitea_internal_token_generated.stdout_lines[0] }}"
-
-- name: generate gitea LFS_JWT_SECRET
-  command: gitea generate secret LFS_JWT_SECRET
-  register: gitea_jwt_secret_generated
-  changed_when: False
-
-- name: set gitea_jwt_secret variable
-  set_fact:
-    gitea_jwt_secret: "{{ gitea_jwt_secret_generated.stdout_lines[0] }}"
-
-# TODO not idempotent
-- name: copy gitea main configuration file
-  template:
-    src: 'etc_gitea_app.ini'
-    dest: '/etc/gitea/app.ini'
-    owner: root
-    group: gitea
-    mode: 0640 # read only for gitea
-  notify: restart gitea
-
-# TODO not idempotent
-- name: create gitea database tables
-  become: yes
-  become_user: gitea
-  command: gitea migrate --config /etc/gitea/app.ini
-  args:
-    chdir: "{{ gitea_user_home }}"
-  when: (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized is not defined)
-
-- name: mark gitea database as initialized
-  set_fact:
-    gitea_db_initialized: True
-
-- name: create ansible local facts directory
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: 0755
-  with_items:
-    - /etc/ansible/
-    - /etc/ansible/facts.d
-
-- name: update gitea ansible facts file
-  template:
-    src: etc_ansible_facts.d_gitea.fact.j2
-    dest: /etc/ansible/facts.d/gitea.fact
-    mode: 0644
-
-- name: create gitea admin user
-  become: yes
-  become_user: gitea
-  command: gitea admin create-user
-           --username "{{ gitea_admin_user }}"
-           --password "{{ gitea_admin_password }}"
-           --email "{{ gitea_admin_email }}"
-           --admin --config /etc/gitea/app.ini
-  args:
-    chdir: "{{ gitea_user_home }}"
-  register: "gitea_create_user"
-  failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
-  changed_when: "'user already exists' not in gitea_create_user.stdout"
 
 ##### SERVICE #####
 

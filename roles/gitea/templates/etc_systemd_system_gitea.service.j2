@@ -8,11 +8,11 @@ After=network.target
 # Don't forget to add the database service requirements
 ###
 #
-#Requires=mysql.service
-Requires=mariadb.service
-#Requires=postgresql.service
-#Requires=memcached.service
-#Requires=redis.service
+After=mysql.service
+After=mariadb.service
+After=postgresql.service
+After=memcached.service
+After=redis.service
 #
 ###
 # If using socket activation for main http/s
@@ -58,7 +58,7 @@ WorkingDirectory={{ gitea_user_home }}/
 #RuntimeDirectory=gitea
 ExecStart=/usr/local/bin/gitea web --config /etc/gitea/app.ini
 Restart=always
-Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR={{ gitea_user_home }}
+Environment=USER=gitea HOME={{ gitea_user_home }} GITEA_WORK_DIR={{ gitea_user_home }}
 # If you want to bind Gitea to a port below 1024, uncomment
 # the two values below, or use socket activation to pass Gitea its ports as above
 ###

@@ -1,0 +1,29 @@
+<VirtualHost *:80>
+    ServerName {{ gitea_fqdn }}
+{% if gitea_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if gitea_https_mode == 'letsencrypt' %}
+MDomain {{ gitea_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ gitea_fqdn }}
+  SSLEngine on
+{% if gitea_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ gitea_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ gitea_fqdn }}.key
+{% endif %}
+
+  ProxyPreserveHost On
+  ProxyRequests off
+  AllowEncodedSlashes NoDecode
+  ProxyPass / http://localhost:3000/ nocanon
+  ProxyPassReverse / http://localhost:3000/
+
+</VirtualHost>

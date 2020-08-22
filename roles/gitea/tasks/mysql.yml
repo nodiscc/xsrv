@@ -1,0 +1,24 @@
+##### GITEA DATABASE (MYSQL/MARIADB) #####
+
+- name: create gitea mysql database
+  mysql_db:
+    name: "{{ gitea_db_name }}"
+    state: present
+    collation: 'utf8mb4_unicode_ci'
+    encoding: 'utf8mb4'
+    login_user: "root"
+    login_host: "{{ gitea_db_host }}"
+    login_port: "{{ gitea_db_port }}"
+    login_password: "{{ mariadb_root_password }}"
+
+- name: create gitea mysql user
+  mysql_user:
+    name: "{{ gitea_db_name }}"
+    state: present
+    host: "{{ gitea_db_host }}"
+    password: "{{ gitea_db_password }}"
+    priv: "{{ gitea_db_name }}.*:ALL"
+    login_user: "root"
+    login_host: "{{ gitea_db_host }}"
+    login_port: "{{ gitea_db_port }}"
+    login_password: "{{ mariadb_root_password }}"

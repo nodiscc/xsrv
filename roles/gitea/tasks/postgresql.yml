@@ -1,0 +1,45 @@
+##### GITEA DATABASE (postgresql) #####
+
+- name: install packages for postgresql support
+  apt:
+    state: present
+    package:
+      - php-pgsql
+      - python3-psycopg2
+
+- name: create gitea postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ gitea_db_user }}"
+    state: present
+
+- name: set gitea postgresql user password
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ gitea_db_user }}"
+    password: "{{ gitea_db_password }}"
+  when:
+    - gitea_db_password|length > 0
+  no_log: True
+
+- name: create gitea postgresql database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ gitea_db_name }}"
+    state: present
+    lc_collate: 'en_US.UTF-8'
+    lc_ctype: 'en_US.UTF-8'
+    encoding: 'UTF8'
+    owner: '{{ gitea_db_user }}'
+
+- name: grant privileges on gitea database to gitea postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_privs:
+    db: "{{ gitea_db_name }}"
+    privs: ALL
+    type: database
+    role: "{{ gitea_db_user }}"
