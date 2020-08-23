@@ -30,9 +30,11 @@ function deploy() {
 function check() {
     # run ansible playbook in check mode
     check_playbook
+    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
+    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
     cd "$playbooks_dir/$playbook_name"
     echo "[xsrv] INFO: deploying playbook $playbook_name"
-    ansible-playbook playbook.yml --check --diff
+    ansible-playbook playbook.yml --check --diff $ansible_tags_arg $ansible_host_arg
 }
 
 function edit_playbook() {
@@ -261,7 +263,7 @@ upgrade         ugrade xsrv script and roles to latest versions
 show-defaults   show all available role variables and their default values
 
 The following environment variables are supported
-TAGS=tag1,tag2  limit deployment to a set of ansible tags (eg. TAGS=monitoring xsrv deploy)
+TAGS=tag1,tag2  limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
 '
 
 command="${1:-}"
