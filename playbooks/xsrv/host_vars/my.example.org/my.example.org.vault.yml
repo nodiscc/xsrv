@@ -22,5 +22,11 @@ vault_shaarli_username: "{{ vault_xsrv_admin_username }}"
 vault_shaarli_password: "{{ vault_xsrv_admin_password }}"
 vault_shaarli_password_salt: "CHANGEME40" # 40-character random string, generate it with openssl rand -base64 32 | cut -b 1-40
 vault_shaarli_api_secret: "CHANGEME12" # 12-character random string, generate it with openssl rand -base64 32 | cut -b 1-12
+vault_gitea_admin_username: "{{ vault_xsrv_admin_username }}"
+vault_gitea_admin_password: "{{ vault_xsrv_admin_password }}"
 vault_gitea_admin_email: "{{ vault_msmtp_admin_email }}"
-
+vault_gitea_db_password: "" # leave empty when using postgresql/peer authentication on same host
+vault_gitea_secret_key: "CHANGEME64" # 64-character random string, generate it with openssl rand -base64 48 | tr -d '\n' | cut -b 1-64
+vault_gitea_mail_host: "{{ vault_msmtp_host }}"
+vault_gitea_mail_user: "{{ vault_msmtp_username }}"
+vault_gitea_mail_password: "{{ vault_msmtp_password }}"
