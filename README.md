@@ -175,7 +175,7 @@ upgrade         ugrade xsrv script and roles to latest versions
 show-defaults   show all available role variables and their default values
 
 The following environment variables are supported
-TAGS=tag1,tag2  limit deployment to a set of ansible tags (eg. TAGS=monitoring xsrv deploy)
+TAGS=tag1,tag2  limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
 ```
 
 
