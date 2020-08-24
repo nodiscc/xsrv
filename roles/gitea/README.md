@@ -54,8 +54,8 @@ vault_gitea_admin_password: "CHANGEME"
 vault_gitea_admin_email: "CHANGEME@CHANGEME.org"
 vault_gitea_secret_key: "CHANGEME64"
 vault_gitea_internal_token: "CHANGEME160"
-vault_gitea_oauth2_jwt_secret: "CHANGEME32"
-vault_gitea_lfs_jwt_secret: "CHANGEME44"
+vault_gitea_oauth2_jwt_secret: "CHANGEME43"
+vault_gitea_lfs_jwt_secret: "CHANGEME43"
 ```
 
 Usage

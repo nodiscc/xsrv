@@ -26,6 +26,9 @@
       - gitea_offline_mode in ['true', 'false']
       - gitea_require_signin in ['true', 'false']
       - gitea_secret_key is not search("CHANGEME")
+      - gitea_oauth2_jwt_secret is not search("CHANGEME")
+      - gitea_lfs_jwt_secret is not search("CHANGEME")
+      - gitea_internal_token is not search("CHANGEME")
       - gitea_show_user_email in ['true', 'false']
       - gitea_user_home is string
       - gitea_user_repo_limit == gitea_user_repo_limit|int

@@ -24,9 +24,9 @@ gitea_version: '1.12.3'
 gitea_internal_token: " {{ vault_gitea_internal_token }}"
 # 64 character global secret key
 gitea_secret_key: "{{ vault_gitea_secret_key }}"
-# 32 character OAuth2 JWT secret
+# 43 character OAuth2 JWT secret
 gitea_oauth2_jwt_secret: "{{ vault_gitea_oauth2_jwt_secret }}"
-# 44 character LFS JWT secret
+# 43 character LFS JWT secret
 gitea_lfs_jwt_secret: "{{ vault_gitea_lfs_jwt_secret }}"
 # home directory for the gitea user
 gitea_user_home: /var/lib/gitea
@@ -51,6 +51,8 @@ gitea_force_private: "false"
 gitea_require_signin: "true"
 # Disallow registration, only allow admins to create accounts (true/false - QUOTED)
 gitea_disable_registration: "true"
+# Whether a new user needs to confirm their email when registering (true/false - QUOTED)
+gitea_register_email_confirm: "true"
 # Whether the email of the user should be shown in the Explore Users page (true/false - QUOTED)
 gitea_show_user_email: "false"
 # disable all third-party/external services/CDNs (true/false - QUOTED)
@@ -63,6 +65,10 @@ gitea_user_repo_limit: -1
 gitea_enable_api: "false"
 # The minimum password length for new Users
 gitea_min_password_length: 10
+# comma-separated list of charactacter classes required in passwords (lower,upper,digit,spec or off)
+gitea_password_complexity: "lower,upper,digit,spec"
+# Allow new users to create organizations by default (true/false - QUOTED)
+gitea_default_allow_create_organization: "false"
 
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
