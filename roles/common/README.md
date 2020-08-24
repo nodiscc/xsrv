@@ -46,12 +46,13 @@ Example playbook
   roles:
      - common
   vars:
-    msmtp_host: "smtp.CHANGEME.org"
-    msmtp_username: "CHANGEME"
-    msmtp_admin_email: "CHANGEME@CHANGEME.org"
+    setup_msmtp: yes
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_msmtp_host: "smtp.CHANGEME.org"
+vault_msmtp_username: "CHANGEME"
 vault_msmtp_password: "CHANGEME"
+vault_msmtp_admin_email: "CHANGEME@CHANGEME.org"
 ```
 
 

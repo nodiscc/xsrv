@@ -182,7 +182,7 @@ setup_msmtp: no
 # System mail relay (SMTP server) to use, and authentication username/password
 msmtp_host: "{{ vault_msmtp_host }}"
 msmtp_username: "{{ vault_msmtp_username }}"
-msmtp_password: "{{ vault_msmtp_password }}" # CHANGEME
+msmtp_password: "{{ vault_msmtp_password }}"
 # Mail address to send all local mail to
 msmtp_admin_email: "{{ vault_msmtp_admin_email }}"
 
