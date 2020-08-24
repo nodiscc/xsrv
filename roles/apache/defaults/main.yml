@@ -24,9 +24,9 @@
 #     documentroot: "/var/www/www.mysite.org"
 #     https_mode: "letsencrypt"
 #     reverse_proxies:
-#       - name: gitea
-#         location: /gitea
-#         backend: http://localhost:3000
+#       - name: myapp
+#         location: /myapp
+#         backend: http://localhost:3333
 #         response_headers:
 #           - Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'none'"
 apache_virtualhosts: []
