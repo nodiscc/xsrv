@@ -53,7 +53,10 @@ vault_gitea_admin_username: "CHANGEME"
 vault_gitea_admin_password: "CHANGEME"
 vault_gitea_admin_email: "CHANGEME@CHANGEME.org"
 vault_gitea_db_password: "" # leave empty when using postgresql/peer authentication on localhost
-vault_gitea_secret_key: "CHANGEME64" # 64-character random string, generate it with openssl rand -base64 48 | tr -d '\n' | cut -b 1-64
+vault_gitea_secret_key: "CHANGEME64" # 64-character random string, generate it with openssl rand -base64 64 | tr -d '\n' | cut -b 1-64
+vault_gitea_internal_token: "CHANGEME160" # 106 character random string, generate it with openssl rand -base64 160 | tr -d '\n' | cut -b 1-160
+vault_gitea_oauth2_jwt_secret: "CHANGEME32" # 32 character random string, generate it with openssl rand -base64 32 | cut -b 1-32
+vault_gitea_lfs_jwt_secret: # 44 character random string, generate it with openssl rand -base64 44 | cut -b 1-44
 ```
 
 Usage

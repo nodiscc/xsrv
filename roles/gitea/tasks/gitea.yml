@@ -102,24 +102,9 @@
   notify: restart gitea
   when: not ansible_check_mode
 
-- name: generate gitea INTERNAL_TOKEN
-  command: gitea generate secret INTERNAL_TOKEN
-  register: gitea_internal_token_generated
-  changed_when: False
-  when: not ansible_check_mode
-
-- name: generate gitea LFS_JWT_SECRET
-  command: gitea generate secret LFS_JWT_SECRET
-  register: gitea_jwt_secret_generated
-  changed_when: False
-  when: not ansible_check_mode
-
-- name: set gitea_jwt_secret variable
+- name: set gitea_root_url variable
   set_fact:
     gitea_root_url: "https://{{ gitea_fqdn }}{{ gitea_base_url }}"
-    gitea_internal_token: "{{ gitea_internal_token_generated.stdout_lines[0] }}"
-    gitea_jwt_secret: "{{ gitea_jwt_secret_generated.stdout_lines[0] }}"
-  when: not ansible_check_mode
 
 - name: copy gitea configuration file
   template:
@@ -129,7 +114,6 @@
     group: gitea
     mode: 0640 # read only for gitea
   notify: restart gitea
-  when: not ansible_check_mode
 
 # TODO not idempotent
 - name: create gitea database tables
