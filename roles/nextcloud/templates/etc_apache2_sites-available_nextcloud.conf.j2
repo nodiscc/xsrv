@@ -23,8 +23,6 @@ MDomain {{ nextcloud_fqdn }}
 {% endif %}
 
   <Directory {{ nextcloud_install_dir }}>
-    # Unset system-wide Content-Security-Policy header since Nextcloud provides its own CSP
-    Header always unset Content-Security-Policy
     Require all granted
     AllowOverride All
     Options FollowSymLinks MultiViews
