@@ -27,7 +27,7 @@ MDomain {{ shaarli_fqdn }}
       AllowOverride All
       Order allow,deny
       Allow from all
-      Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline'; frame-ancestors 'none'"
+      Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com; frame-ancestors 'none'"
   </Directory>
 
   <LocationMatch "/\.">
