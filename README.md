@@ -28,7 +28,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [tt_rss](roles/tt_rss) - Tiny Tiny RSS web feed reader
 - [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
 - [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
-- _WIP_ [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
+- [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
 - _WIP_ [docker](roles/docker) - Docker container platform
 - _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
 - _WIP_ [graylog](roles/graylog) - Log management and analysis software
@@ -41,7 +41,6 @@ Install and manage self-hosted network services and applications on your own ser
 
 <!-- TODO demo screencast -->
 
-[![](https://i.imgur.com/E74kJx5.png)](roles/apache/)
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
@@ -181,13 +180,18 @@ TAGS=tag1,tag2  limit deploy/check to a list of ansible tags (eg. TAGS=common,mo
 
 ## Maintenance
 
-Self-hosting places your services and data under your own responsibility (availability, integrity, confidentiality...). Always have a plan in place if your server crashes, gets compromised or damaged. There is no High Availability mechanism configured by default.
+- Self-hosting places your services and data under your own responsibility (availability, integrity, confidentiality...).
+- Always have a plan in place if your server crashes, gets compromised or damaged.
+- Respond to alerts sent by the monitoring system.
+- There is no High Availability mechanism configured by default.
 
 
 ### Backups
 
+Always keep 3 copies of valuable data (the working data, a local backup - preferably on another drive, and an offiste backup).
 
 The [backup](roles/backup) role performs automatic daily/weekly/monthly backups of your data, to a local directory `/var/backups/rsnapshot` on the server.
+
 To download a copy of latest daily backups from a host, to the `backups/` directory on the controller, run:
 
 ```bash

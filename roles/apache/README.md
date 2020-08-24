@@ -14,8 +14,6 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 - (optional) Disallow robots/crawlers from browsing/indexing sites (using robots.txt and X-Robots-Tag headers)
 - (optional) simple setup of [reverse proxies](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) to remote or local application servers
 
-[![](https://i.imgur.com/E74kJx5.png)](https://i.imgur.com/Ij5dhjo.png)
-
 
 Requirements/Dependencies
 ------------

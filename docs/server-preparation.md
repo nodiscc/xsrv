@@ -22,7 +22,7 @@ Use low power consumption components. To increase availability, setup the BIOS t
 
 ## Network
 
-The server must have Internet access during deployment and upgrades. Prefer fast and reliable network links. Here we assume the server has a single network interface.
+The server must have Internet access during deployment and upgrades. Prefer fast and reliable network links (download/upload). Here we assume the server has a single network interface.
 
 Setup a **static IP address** + default gateway on the server during installation.
 
@@ -47,10 +47,9 @@ Setup any additional records/subdomains required to access your applications (we
 
 ```bash
 cloud.CHANGEME.org # nextcloud
-rss.CHANGEME.org   # tt-rss
-gitea.CHANGEME.org # gitea
+git.CHANGEME.org # gitea
 links.CHANGEME.org # shaarli
-radio.CHANGEME.org # icecast
+rss.CHANGEME.org   # tt-rss
 ```
 
 ### Debian installation
