@@ -54,7 +54,8 @@
     system: yes
     shell: '/bin/bash'
     comment: 'Git service'
-    home: '/var/lib/gitea'
+    password: '!'
+    home: '{{ gitea_user_home }}'
     groups:
       - 'gitea'
       - 'ssh'
