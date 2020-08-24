@@ -62,9 +62,9 @@ Example Playbook
     - nextcloud
   vars:
     nextcloud_fqdn: "cloud.CHANGEME.org"
-    nextcloud_user: "CHANGEME"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_nextcloud_user: "CHANGEME"
 vault_nextcloud_password: "CHANGEME"
 vault_nextcloud_db_password: "CHANGEME"
 ```
