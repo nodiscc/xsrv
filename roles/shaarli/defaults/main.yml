@@ -6,9 +6,9 @@
 # Shaarli login and password
 shaarli_username: "{{ vault_shaarli_username }}"
 shaarli_password: "{{ vault_shaarli_password }}"
-# Salt used to hash shaarli password (40-character random string, generate it with openssl rand -base64 32 | cut -b 1-40)
+# 40 character random salt used to hash shaarli password
 shaarli_password_salt: "{{ vault_shaarli_password_salt }}"
-# REST API secret (12-character random string, generate it with openssl rand -base64 32 | cut -b 1-12)
+# 12 character REST API secret
 shaarli_api_secret: "{{ vault_shaarli_api_secret }}"
 # shaarli timezone (see https://www.php.net/manual/en/timezones.php)
 shaarli_timezone: "Europe/Amsterdam"

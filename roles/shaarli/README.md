@@ -44,8 +44,8 @@ Example Playbook
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_shaarli_user: "CHANGEME"
 vault_shaarli_password: "CHANGEME"
-vault_shaarli_password_salt: "CHANGEME" # 40-character random string, generate it with openssl rand -base64 32 | cut -b 1-40
-vault_shaarli_api_secret: "CHANGEME" # 12-character random string, generate it with openssl rand -base64 32 | cut -b 1-12
+vault_shaarli_password_salt: "CHANGEME"
+vault_shaarli_api_secret: "CHANGEME"
 ```
 
 Usage
