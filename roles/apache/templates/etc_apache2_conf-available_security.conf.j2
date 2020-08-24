@@ -107,14 +107,15 @@ Header always set X-XSS-Protection "1; mode=block"
 #
 #Header always set X-Frame-Options "sameorigin"
 
+# Prevent browsers from runnning scripts injected form other domains
+# Disabled as each application/virtualhost should set this header according to its needs
+#
+#Header always set Content-Security-Policy "script-src 'self'; frame-ancestors 'self'"
+
 #
 # Do not send HTTP referrers when following a link to a third-party domain
 #
 Header always set Referrer-Policy "same-origin"
-
-# Prevent browsers from runnning scripts injected form other domains
-#
-Header always set Content-Security-Policy "script-src 'self'; frame-ancestors 'self'"
 
 # Prevent embedding this site from other domains (iframes)
 #
