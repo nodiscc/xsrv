@@ -31,3 +31,4 @@
     state: present
     package:
       - unattended-upgrades
+      - apt-listchanges
