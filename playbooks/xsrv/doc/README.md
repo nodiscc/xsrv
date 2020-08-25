@@ -29,6 +29,13 @@ Notes about printers (setup/maintenance procedures, inventory/lifeycle informati
 
 Notes about printers (setup/maintenance procedures, inventory/lifeycle information...)
 
+<!--
+| Name                  | Adress       | Location            | Password          | Web                |
+|-----------------------|--------------|---------------------|-------------------|--------------------|
+| C3350                 | 10.0.0.1     | Office1             | 00112233          | http://10.0.0.1    |
+| C3351                 | 10.0.0.2     | Office2             | 00112233          | http://10.0.0.2    |
+| C4444                 | 10.0.0.3     | Hall1               | 00112233          | http://10.0.0.3    |
+-->
 
 ## Phones
 
