@@ -50,6 +50,7 @@ cloud.CHANGEME.org # nextcloud
 git.CHANGEME.org # gitea
 links.CHANGEME.org # shaarli
 rss.CHANGEME.org   # tt-rss
+torrent.CHANGEME.org   # tranmission
 ```
 
 ### Debian installation

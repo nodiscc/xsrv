@@ -29,6 +29,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
 - [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
 - [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
+- [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
 - _WIP_ [docker](roles/docker) - Docker container platform
 - _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
 - _WIP_ [graylog](roles/graylog) - Log management and analysis software
@@ -36,7 +37,6 @@ Install and manage self-hosted network services and applications on your own ser
 - _WIP_ [mumble-server](roles/mumble) - Low-latency voice-over-IP (VoIP) server
 - _WIP_ [pulseaudio](roles/pulseaudio) - Network sound server
 - _WIP_ [openldap](roles/openldap) - LDAP directory service and management tools
-- _WIP_ [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
 - _WIP_ [rocketchat](roles/rocketchat) - Realtime web chat/communication service
 
 <!-- TODO demo screencast -->
@@ -285,12 +285,9 @@ Branches/merge requests status:
 ![](https://gitlab.com/nodiscc/xsrv/badges/gitlab-runner/pipeline.svg?key_width=100&key_text=gitlab-runner)
 ![](https://gitlab.com/nodiscc/xsrv/badges/graylog/pipeline.svg?key_width=100&key_text=graylog)
 ![](https://gitlab.com/nodiscc/xsrv/badges/icecast/pipeline.svg?key_width=100&key_text=icecast)
-![](https://gitlab.com/nodiscc/xsrv/badges/make-release/pipeline.svg?key_width=100&key_text=make-release)
 ![](https://gitlab.com/nodiscc/xsrv/badges/mumble-server/pipeline.svg?key_width=100&key_text=mumble-server)
 ![](https://gitlab.com/nodiscc/xsrv/badges/pulseaudio/pipeline.svg?key_width=100&key_text=pulseaudio)
 ![](https://gitlab.com/nodiscc/xsrv/badges/rsyslog-auditd/pipeline.svg?key_width=100&key_text=rsyslog-auditd)
-![](https://gitlab.com/nodiscc/xsrv/badges/shaarli/pipeline.svg?key_width=100&key_text=shaarli)
-![](https://gitlab.com/nodiscc/xsrv/badges/transmission/pipeline.svg?key_width=100&key_text=transmission)
 ![](https://gitlab.com/nodiscc/xsrv/badges/warn-before-upgrade/pipeline.svg?key_width=100&key_text=warn-before-upgrade)
 ![](https://gitlab.com/nodiscc/xsrv/badges/docker/pipeline.svg?key_width=100&key_text=docker)
 
