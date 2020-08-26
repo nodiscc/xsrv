@@ -106,7 +106,7 @@ netdata_min_running_docker_containers: 0
 #   binary: install netdata from .run install script
 netdata_install_method: 'packagecloud'
 
-# Netdata release to install in 'bainary' installation mode - https://github.com/netdata/netdata/releases/
+# Netdata release to install in 'binary' installation mode - https://github.com/netdata/netdata/releases/
 netdata_version: "v1.24.0"
 
 

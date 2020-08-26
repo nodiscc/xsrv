@@ -10,14 +10,14 @@
   when: ansible_facts.distribution == 'Debian'
 
 - name: copy apt config (automatic upgrades, no recommended packages)
-  copy:
+  template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: 0644
   with_items:
-    - { src: 'etc_apt_apt.conf.d_99-no-overwrite-conffiles', dest: '/etc/apt/apt.conf.d/99-no-overwrite-conffiles' }
-    - { src: 'etc_apt_apt.conf.d_99-norecommends', dest: '/etc/apt/apt.conf.d/99-norecommends' }
-    - { src: 'etc_apt_apt.conf.d_50unattended-upgrades', dest: '/etc/apt/apt.conf.d/50unattended-upgrades' }
+    - { src: 'etc_apt_apt.conf.d_99-no-overwrite-conffiles.j2', dest: '/etc/apt/apt.conf.d/99-no-overwrite-conffiles' }
+    - { src: 'etc_apt_apt.conf.d_99-norecommends.j2', dest: '/etc/apt/apt.conf.d/99-norecommends' }
+    - { src: 'etc_apt_apt.conf.d_50unattended-upgrades.j2', dest: '/etc/apt/apt.conf.d/50unattended-upgrades' }
   register: apt_config
   when: ansible_facts.distribution == 'Debian'
   notify: update apt cache
