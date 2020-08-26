@@ -21,7 +21,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [common](roles/common) - base system components (SSH, upgrades, users, hostname, networking, kernel, time/date)
 - [backup](roles/backup) - incremental backup service (local and remote backups)
 - [monitoring](roles/monitoring) - monitoring, alerting and log agregation system (netdata, rsyslog, other tools	)
-- [apache](roles/apache-php) - Apache web server and PHP interpreter module
+- [apache](roles/apache) - Apache web server and PHP interpreter module
 - [postgresql](roles/postgresql) - PostgreSQL database server
 - [mariadb](roles/mariadb) - MariaDB (MySQL) database server
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service

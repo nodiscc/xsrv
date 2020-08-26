@@ -24,7 +24,7 @@ Example Playbook
 - hosts: my.example.org
   roles:
      - common
-     - apache-php
+     - apache
      - mariadb
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml

@@ -1,7 +1,7 @@
 ---
 
 galaxy_info:
-  role_name: tt-rss
+  role_name: tt_rss
   author: nodiscc
   description: tiny-tiny-rss (tt-rss) web-based news feed reader
   license: GPL-3.0
