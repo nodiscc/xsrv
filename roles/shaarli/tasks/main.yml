@@ -1,9 +1,7 @@
 ---
 
 - include: checks.yml
-  tags:
-    - apache
-    - lamp
+  tags: shaarli
 
 - include: shaarli.yml
   become: yes

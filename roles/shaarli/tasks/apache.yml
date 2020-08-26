@@ -1,4 +1,4 @@
----
+##### SHAARLI - APACHE CONFIGURATION #####
 
 - name: enable apache2 modules
   command: a2enmod {{ item }}
@@ -20,4 +20,4 @@
   command: a2ensite shaarli
   args:
     creates: "/etc/apache2/sites-enabled/shaarli.conf"
-  notify: restart apache
+  notify: reload apache
