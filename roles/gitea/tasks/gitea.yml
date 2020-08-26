@@ -53,8 +53,8 @@
     name: 'gitea'
     system: yes
     shell: '/bin/bash'
-    comment: 'Git service'
-    password: '!'
+    comment: 'Gitea git service'
+    password: '*'
     home: '{{ gitea_user_home }}'
     groups:
       - 'gitea'
