@@ -23,7 +23,8 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 Requirements/Dependencies
 ------------
 
-- Ansible 2.8 or higher.
+- Ansible 2.9 or higher.
+- The [common(../common/README.md) role (recommended)
 - The [apache](../apache/README.md) role (webserver/reverse proxy, SSL certificates)
 - The [postgresql](../postgresql) or [mariadb](../mariadb/README.md) role (database engine)
 - [backup](../backup/README.md) role (automatic backups, optional)
