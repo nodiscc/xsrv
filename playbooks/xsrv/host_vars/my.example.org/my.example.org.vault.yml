@@ -52,3 +52,7 @@ vault_gitea_lfs_jwt_secret: "CHANGEME43" # openssl rand -base64 43 | sed 's|[/\+
 vault_gitea_mail_host: "{{ vault_msmtp_host }}"
 vault_gitea_mail_user: "{{ vault_msmtp_username }}"
 vault_gitea_mail_password: "{{ vault_msmtp_password }}"
+
+##### transmission role #####
+vault_transmission_username: "{{ vault_xsrv_admin_username }}"
+vault_transmission_password: "{{ vault_xsrv_admin_password }}"

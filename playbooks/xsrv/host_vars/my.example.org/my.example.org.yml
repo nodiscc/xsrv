@@ -23,6 +23,11 @@ shaarli_fqdn: "links.CHANGEME.org"
 # see roles/gitea/defaults/main.yml
 gitea_fqdn: "git.CHANGEME.org"
 
+##### TRANSMISSION #####
+# see roles/transmission/defaults/main.yml
+transmission_fqdn: "torrent.CHANGEME.org"
+
+
 ##### FIREWALL/FAIL2BAN #####
 # see roles/common/defaults/main.yml
 
