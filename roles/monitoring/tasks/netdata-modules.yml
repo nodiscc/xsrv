@@ -46,6 +46,17 @@
     dest: "/etc/apt/apt.conf.d/99needrestart"
     mode: 0644
 
+# this task runs even in check mode so that the next task does not fail on non-existing directories
+- name: ensure netdata-needrestart directories exist
+  file:
+    state: directory
+    mode: 0755
+    path: "{{ item }}"
+  with_items:
+    - '{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/'
+    - '{{ netdata_install_prefix }}/etc/netdata/health.d/'
+  check_mode: no
+
 - name: install netdata-needrestart module/configuration/alarms
   copy:
     remote_src: yes
@@ -156,3 +167,4 @@
     group: netdata
     mode: 0750
   notify: restart netdata
+  when: not ansible_check_mode
