@@ -6,8 +6,8 @@
 # Basic configuration
 # ===================
 
-# Disable root login
-PermitRootLogin no
+# Enable/disable root login
+PermitRootLogin {{ ssh_permit_root_login }}
 
 # Define which port sshd should listen to.
 Port 22
@@ -119,8 +119,12 @@ GatewayPorts no
 X11Forwarding no
 X11UseLocalhost yes
 
-# Only allow login for users from ssh/sftponly groups
-AllowGroups ssh sftponly
+# Only allow login for users from authorized groups
+{% if ssh_permit_root_login == 'yes' %}
+AllowGroups ssh sftponly git root
+{% else %}
+AllowGroups ssh sftponly git
+{% endif %}
 
 # Misc. configuration
 # ===================

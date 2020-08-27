@@ -60,6 +60,8 @@ ssh_sftp_loglevel: "ERROR"
 # remote/all is required to use the host as a jumpbox
 ssh_allow_tcp_forwarding: "no"
 
+# enable/disable root SSH logins (yes, no - QUOTED)
+ssh_permit_root_login: "no"
 
 ##### FIREWALL #####
 
