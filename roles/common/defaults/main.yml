@@ -63,6 +63,9 @@ ssh_allow_tcp_forwarding: "no"
 # enable/disable root SSH logins (yes, no - QUOTED)
 ssh_permit_root_login: "no"
 
+# enable/disable SSH password authentication (yes, no - QUOTED)
+ssh_password_authentication: "no"
+
 ##### FIREWALL #####
 
 # setup firewall (yes/no)
