@@ -65,7 +65,7 @@ Install and manage self-hosted network services and applications on your own ser
   - [Tracking configuration changes](#tracking-configuration-changes)
   - [Uninstalling roles](#uninstalling-roles)
   - [Reverting changes](#reverting-changes)
-  - [Use as ansible collection in your playbooks](#use-as-ansible-collection-in-your-playbooks)
+  - [Using as ansible collection in your playbooks](#using-as-ansible-collection-in-your-playbooks)
 - [Contributing/Issues/Work in progress](#contributingissueswork-in-progress)
 - [License](#license)
 - [Changelog](#changelog)
@@ -77,15 +77,16 @@ Install and manage self-hosted network services and applications on your own ser
 
 ## Requirements
 
-- One or more target Linux servers (_hosts_): see [server preparation](docs/server-preparation.md)
-- A remote administration machine (_controller_): see [ansible controller preparation](docs/ansible-controller-preparation.md)
+This tool requires:
+ - one or more target servers (_hosts_): see [server preparation](docs/server-preparation.md)
+ - a remote administration machine (_controller_) from which playbooks will be run against your _hosts_. See [ansible controller preparation](docs/ansible-controller-preparation.md)
 
 
 ## Usage
 
 ### Basic deployment
 
-The default `xsrv` playbook installs/manages a basic set of roles on a single server:
+The [default playbook](playbooks/xsrv/playbook.yml) installs/manages a basic set of roles on a single server.
 
 ```bash
 # create a base directory for your playbooks/environments
@@ -95,9 +96,6 @@ mkdir ~/playbooks/
 xsrv init-playbook
 ```
 
-```bash
-TODO ASCIINEMA
-```
 [Edit roles and configuration](#changing-configuration) before initial deployment:
 
 ```bash
@@ -116,10 +114,8 @@ Deploy changes to the host:
 xsrv deploy
 ```
 
-Once complete, your services are ready to use. A summary will be displayed:
-
-```
-TODO
+```bash
+TODO ASCIINEMA
 ```
 
 
@@ -152,9 +148,9 @@ xsrv deploy [playbook] [host]
 
 ## Command-line usage
 
-Here is the full list of commands:
+Full list of commands:
 
-```
+```bash
 USAGE: xsrv COMMAND [playbook] [host]
 init-playbook   initialize a new playbook
 init-host       add a new host to an existing playbook
@@ -175,6 +171,19 @@ show-defaults   show all available role variables and their default values
 
 The following environment variables are supported
 TAGS=tag1,tag2  limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+```
+
+Examples:
+
+```bash
+# deploy all hosts in the default playbook
+xsrv deploy
+
+# deploy all hosts from in the environment named 'infra'
+xsrv deploy infra
+
+# deploy only the hosts ex1.myexample.org and ex2.myexample.org in the playbook 'infra'
+xsrv deploy infra ex1.myexample.org,ex2.myexample.org
 ```
 
 
@@ -246,7 +255,8 @@ Uninstalling roles is not supported at this time: components must be removed man
 
 Refer to **[ansible documentation](https://docs.ansible.com/)** for more information.
 
-### Use as ansible collection in your playbooks
+
+### Using as ansible collection in your playbooks
 
 ```bash
 # install the collection
