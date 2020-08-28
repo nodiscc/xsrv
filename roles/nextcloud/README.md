@@ -45,6 +45,7 @@ See [defaults/main.yml](defaults/main.yml)
 Dependencies
 ------------
 
+- The [`common`](../apache/README.md) role (hardening/firewall/bruteforce prevention)
 - The [`apache`](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
 - The [`mariadb`](../mariadb/README.md) or [`postgresql`](../postgresql/README.md) role (database engine)
 - The [backup](../backup/README.md) role (for automatic backups, optional)

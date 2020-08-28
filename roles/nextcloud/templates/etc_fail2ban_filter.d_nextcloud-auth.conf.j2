@@ -1,6 +1,6 @@
-# faile2ban filter for nextcloud authentication
+# fail2ban filter for nextcloud authentication
 [INCLUDES]
 before = common.conf
 [Definition]
-failregex=^{.*Login failed: .* \(Remote IP: <HOST>\).*}$
+failregex=Login failed: .* \(Remote IP: <HOST>\)
 ignoreregex =

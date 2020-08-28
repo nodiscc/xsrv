@@ -217,7 +217,7 @@
     - { key: "dbuser", value: "{{ nextcloud_db_user }}" }
     - { key: "dbpassword", value: "{{ nextcloud_db_password }}" }
     - { key: "logtimezone", value: "UTC" }
-    - { key: "log_type", value: "syslog" }
+    - { key: "log_type", value: "errorlog" }
     - { key: "log_authfailip", value: "true" }
     - { key: "loglevel", value: "2" }
     - { key: "trashbin_retention_obligation", value: "auto" }
