@@ -24,10 +24,10 @@ Requirements/Dependencies
 ------------
 
 - Ansible 2.9 or higher.
-- The [common(../common/README.md) role (recommended)
+- The [common(../common/README.md) role (hardening/firewall/bruteforce prevention)
 - The [apache](../apache/README.md) role (webserver/reverse proxy, SSL certificates)
 - The [postgresql](../postgresql) or [mariadb](../mariadb/README.md) role (database engine)
-- [backup](../backup/README.md) role (automatic backups, optional)
+- The [backup](../backup/README.md) role (automatic backups, optional)
 
 
 Role Variables
