@@ -83,7 +83,7 @@ firehol_networks:
     src: "any" # traffic to/from any IP address
     interface: "any" # traffic to/from any network interface
     policy: "RETURN" # policy to apply for traffic that matches no rules match (one of DROP/RETURN/ACCEPT/REJECT)
-    allow_input: # incoming traffic
+    allow_input: # incoming traffic to allow (name: service name, src: source IP address/subnet)
       - { name: "ssh", src: "any" } # ssh from anywhere
       # - { name: "netdata", src: "{{ firehol_alias_lan }}" } # monitoring dashboard
       # - { name: "http", src: "{{ firehol_alias_lan }}" } # web server
@@ -97,7 +97,7 @@ firehol_networks:
       # - { name: "sshcustom", src: "any" } # SSH server on custom port
       # - { name: "transmission", src: "any", } # bittorrent peer connections, outgoing requires 'all'
       # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
-    allow_output: # outgoing connections
+    allow_output: # outgoing traffic to allow (name: service name, dst: destination IP address/subnet)
       - { name: "dns", dst: "any" } # DNS queries to anywhere
       - { name: "ntp", dst: "any" } # time/date synchronization
       - { name: "dhcp", dst: "{{ firehol_alias_lan }}" } # DHCP requests on LAN
@@ -132,7 +132,8 @@ firehol_custom_services:
   - { name: "mdns", ports: "udp/5353" } # avahi/zeroconf/MDNS/DNS-SD
   - { name: "pulseaudio", ports: "tcp/4713" } # pulseaudio sound server
   - { name: "transmission", ports: "tcp/52943", } # bittorrent peer connections, outgoing requires 'all'
-
+  - { name: "iscsi", ports: "tcp/3260", } # iSCSI to labriche-san
+  - { name: "dropboxlan", ports: "udp/17500", } # Dropbox LAN sync
 
 ##### FAIL2BAN #####
 
