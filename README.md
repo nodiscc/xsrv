@@ -46,6 +46,8 @@ Install and manage self-hosted network services and applications on your own ser
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
 [![](https://i.imgur.com/8wEBRSG.png)](roles/shaarli)
 [![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
+[![](https://i.imgur.com/blWO4LL.png)](roles/transmission)
+
 
 
 ------------
