@@ -49,8 +49,9 @@ Setup any additional records/subdomains required to access your applications (we
 cloud.CHANGEME.org # nextcloud
 git.CHANGEME.org # gitea
 links.CHANGEME.org # shaarli
-rss.CHANGEME.org   # tt-rss
-torrent.CHANGEME.org   # tranmission
+rss.CHANGEME.org # tt-rss
+torrent.CHANGEME.org # transmission
+mumble.CHANGEME.org # mumble server (optional)
 ```
 
 ### Debian installation
