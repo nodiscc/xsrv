@@ -106,7 +106,7 @@ xsrv init-playbook
 xsrv edit-playbook
 # setup passwords and secret values
 xsrv edit-vault
-# setup configuration variables
+# edit configuration variables
 xsrv edit-host
 # to list all available variables, run xsrv show-defaults
 ```
@@ -179,14 +179,14 @@ TAGS=tag1,tag2  limit deploy/check to a list of ansible tags (eg. TAGS=common,mo
 Examples:
 
 ```bash
-# deploy all hosts in the default playbook
-xsrv deploy
-
-# deploy all hosts from in the environment named 'infra'
-xsrv deploy infra
-
-# deploy only the hosts ex1.myexample.org and ex2.myexample.org in the playbook 'infra'
-xsrv deploy infra ex1.myexample.org,ex2.myexample.org
+xsrv deploy default # deploy all hosts in the 'default' playbook
+xsrv deploy # deploy all hosts in the default playbook (default is assumed when no playbook name is specified)
+xsrv init-playbook infra # initialize a new playbook/environment named 'infra'
+xsrv deploy infra # deploy all hosts in the playbook named 'infra'
+xsrv init-host infra ex2.example.org # add a new host 'ex2.example.org' to the playbook named 'infra'
+xsrv edit-host infra ex2.example.org # edit host variables for the host 'ex2.example.org' in the playbook 'infra'
+xsrv edit-vault infra ex2.example.org # edit secret/vaulted variables for 'ex2.example.org' in the playbook 'infra'
+xsrv deploy infra ex1.example.org,ex2.example.org # deploy only the hosts ex1.example.org and ex2.example.org in the playbook 'infra'
 ```
 
 
@@ -200,7 +200,7 @@ xsrv deploy infra ex1.myexample.org,ex2.myexample.org
 
 ### Backups
 
-Always keep 3 copies of valuable data (the working data, a local backup - preferably on another drive, and an offiste backup).
+Always keep 3 copies of valuable data (the working data, a local backup - preferably on another drive, and an off-site backup).
 
 The [backup](roles/backup) role performs automatic daily/weekly/monthly backups of your data, to a local directory `/var/backups/rsnapshot` on the server.
 
