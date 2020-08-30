@@ -1,2 +1,14 @@
-# Send all local mail to admin
+mailer-daemon: postmaster
+postmaster: root
+nobody: root
+hostmaster: root
+usenet: root
+news: root
+webmaster: root
+www: root
+ftp: root
+abuse: root
+noc: root
+security: root
+root: {{ msmtp_admin_email }}
 default: {{ msmtp_admin_email }}
