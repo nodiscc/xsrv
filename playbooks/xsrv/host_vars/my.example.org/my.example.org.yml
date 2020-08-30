@@ -55,7 +55,7 @@ firehol_networks:
       # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src: any
       # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
       # - { name: "sshcustom", src: "any" } # SSH server on custom port
-      # - { name: "transmission", src: "any", } # bittorrent peer connections, outgoing requires 'all'
+      # - { name: "transmission", src: "any" } # incoming bittorrent/transmission peer connections
       # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
     allow_output: # outgoing connections
       - { name: "dns", dst: "any" } # DNS queries to anywhere
@@ -69,7 +69,7 @@ firehol_networks:
       # - { name: "imaps", dst: "any" } # nextcloud mail
       # - { name: "smtps", dst: "any" } # nextcloud mail
       # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
-      # - { name: "all", dst: "any" } # allow ALL outgoing connections
+      # - { name: "all", dst: "any" } # allow ALL outgoing connections (required for bittorrent/transmission)
 
 
 ##### NETDATA MONITORING SYSTEM #####
