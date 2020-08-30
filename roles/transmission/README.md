@@ -1,9 +1,7 @@
 transmission
 =============
 
-This role will install the [Transmission](https://en.wikipedia.org/wiki/Transmission_(BitTorrent_client)) Bittorrent client. [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent) is a [Peer-to-peer](https://en.wikipedia.org/wiki/Peer-to-peer) file sharing network.
-
-Transmission allows you to manage torrent downloads from a web interface. Torrents will be downloaded to the server, and can be accessed them using file transfer services (SFTP, Nextcloud...) - also known as a [Seedbox](https://en.wikipedia.org/wiki/Seedbox).
+This role will install the [Transmission](https://en.wikipedia.org/wiki/Transmission_(BitTorrent_client)) Bittorrent client. [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent) is a [Peer-to-peer](https://en.wikipedia.org/wiki/Peer-to-peer) file sharing network. Transmission allows you to manage torrent downloads from a web interface. Torrents will be downloaded to the server, and can be accessed them using file transfer services (SFTP, Nextcloud...) - also known as a [Seedbox](https://en.wikipedia.org/wiki/Seedbox).
 
 [![](https://i.imgur.com/blWO4LL.png)](https://i.imgur.com/q1gcHRf.png)
 
@@ -45,10 +43,12 @@ Example Playbook
 - hosts: my.example.org
   roles:
     - common
+    - monitoring
+    - backup
     - apache2
     - transmission
 
-# ansible-vault edit host_vars/my.example.org/my.example.org.vaut.yml
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_transmission_username: "CHANGEME"
 vault_transmission_password: "CHANGEME20"
 ```
@@ -61,7 +61,6 @@ Usage
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmsssion.conf.j2) for the [backup](../backup) role.
 
 Restoring a backup: TODO
-
 
 ### Clients
 
@@ -79,5 +78,5 @@ License
 References
 -----------------
 
-- https://stdout.root.sx/links?searchtags=torrent
+- https://stdout.root.sx/links/?searchtags=torrent
 
