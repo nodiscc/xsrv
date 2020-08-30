@@ -56,3 +56,7 @@ vault_gitea_mail_password: "{{ vault_msmtp_password }}"
 ##### transmission role #####
 vault_transmission_username: "{{ vault_xsrv_admin_username }}"
 vault_transmission_password: "{{ vault_xsrv_admin_password }}"
+
+##### mumble role #####
+vault_mumble_password: "CHANGEME20"
+vault_transmission_password: "{{ vault_xsrv_admin_password }}"
