@@ -8,5 +8,4 @@
       - transmission_fqdn is not search("CHANGEME")
       - transmission_https_mode is in ["selfsigned", "letsencrypt"]
       - transmission_password is not search("CHANGEME")
-      - transmission_port == transmission_port|int
       - transmission_username is not search("CHANGEME")

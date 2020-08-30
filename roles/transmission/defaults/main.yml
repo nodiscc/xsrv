@@ -17,6 +17,3 @@ transmission_https_mode: selfsigned
 
 # yes/no: start/stop the transmission bitorrent client, enable/disable it on boot
 transmission_enable_service: yes
-
-# TCP/UDP port used for incmoing bittorrent peer connections
-transmission_port: 55702
