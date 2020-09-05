@@ -44,6 +44,13 @@
     mode: 0600
   notify: restart rsyslog
 
+- name: configure rsyslog to monitor rsnapshot logs
+  template:
+    src: etc_rsyslog.d_rsnapshot.conf.j2
+    dest: /etc/rsyslog.d/rsnapshot.conf
+    mode: 0600
+  notify: restart rsyslog
+
 - name: configure rsyslog to discard useless messages
   template:
     src: etc_rsyslog.d_discard.conf.j2
