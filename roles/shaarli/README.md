@@ -60,7 +60,7 @@ Shaarli RSS can be accessed through:
 
 ### Backups
 
-See the included [rsnapshot configuration](templates/etc_rsnapshot.shaarli.conf.j2) for the [backup](../backup/) role.
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d/shaarli.conf.j2) for the [backup](../backup/) role.
 
 To restore backups, deploy the role and restore the `data/` directory:
 
