@@ -39,7 +39,7 @@ nextcloud_db_user: "nextcloud"
 nextcloud_db_password: "{{ vault_nextcloud_db_password }}"
 
 # nextcloud version to install
-nextcloud_version: "19.0.1"
+nextcloud_version: "19.0.2"
 
 # Nextcloud applications to enable or disable
 #   state: enable/disable
