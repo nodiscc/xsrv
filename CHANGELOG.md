@@ -29,6 +29,7 @@ A summary of changes is included below. See [README.md](README.md) for more info
 - doc: add firewall examples for all services (only from LAN by default)
 - doc: add example .gitlab-ci.yml
 - ansible: use .ansible-vault-password as vault password file
+- ansible: speed up ansible SSH operations using controlmaster and pipelining SSH options
 - host_vars: add a netdata check for successful daily backups
 - host_vars: add netdata process checks for ssh, fail2ban, ntp, httpd, sql
 - host_vars: auto-restart services by default when needrestart detects a restart is required
@@ -78,7 +79,7 @@ A summary of changes is included below. See [README.md](README.md) for more info
 - netdata: monitor mysql server if mariadb role is enabled (add netdata mysql user)
 - netdata: upgrade to 1.24.0 when installed from binary
 - rsyslog: aggregate all log messages to `/var/log/syslog` by default
-- rsyslog: monitor samba and gitea log files with imfile module
+- rsyslog: monitor samba, gitea, mumble-server and rsnapshot log files with imfile module
 - rsyslog: fix syslog tags for imfile watches
 - rsyslog: make agregation of apache access logs to syslog optional, disable by default
 - rsyslog: disable aggregation of netdata logs to syslog by default (very noisy, many false-positive ERROR messages)
@@ -91,6 +92,7 @@ A summary of changes is included below. See [README.md](README.md) for more info
 - auto-load rsnapshot configuration from /etc/rsnapshot.d/*.conf, remove hardcoded xsrv* roles integration
 - check rsnapshot configuration after copying files
 - restrict access to backups directory to root only
+- redirect cron job stdout to /dev/null, only send errors by mail
 - write rsnapshot last success time to file (allows monitoring the time since last successful backup)
 - store ssh public key to ansible facts (this will allow generating a human readable document/dashboard with hosts information)
 
@@ -139,7 +141,7 @@ A summary of changes is included below. See [README.md](README.md) for more info
 - templatize nextcloud domain name/install directory/full URL
 - require manual configuration of nextcloud FQDN
 - enforce fail2ban bans on nextcloud login failures
-- upgrade nextcloud to 19.0.1, upgrade all nextcloud apps
+- upgrade nextcloud to 19.0.2, upgrade all nextcloud apps
 - add fine-grained ansible tags
 - automatically install applications using occ app:install command, remove app-related variables and ansible tasks
 - enable APCu memcache https://docs.nextcloud.com/server/19/admin_manual/configuration_server/caching_configuration.html
@@ -255,6 +257,14 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - delegate HTTP basic auth to apache, pass credentials to the backend tranmission service (proxy-chain-auth)
 - update documentation and role metadata
 - add rsnapshot configuration (backup transmission downloads and torrents cache)
+
+
+**mumble: refactor role:**
+- setup mumble-server (murmur)
+- make server password, superuser password, allowping, max users, max bandwidth per client, server port and welcome text and service state configurable through ansible variables
+- update documentation, add screenshot
+- add rsnapshot configuration for automatic backups of mumble server data
+- add fail2ban configuration for failed mumble logins
 
 
 **postgresql role:**
