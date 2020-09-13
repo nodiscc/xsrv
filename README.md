@@ -168,7 +168,7 @@ utils           run the xsrv-utils script on a host
 info            display quick access links for a host
 logs            view system log on a host
 help            show this message
-fetch-backups   fetch backups from a host to the playbook backups dir
+fetch-backups   fetch backups from a host to the playbook backups directory
 upgrade         ugrade xsrv script and roles to latest versions
 show-defaults   show all available role variables and their default values
 
@@ -207,10 +207,13 @@ The [backup](roles/backup) role performs automatic daily/weekly/monthly backups 
 To download a copy of latest daily backups from a host, to the `backups/` directory on the controller, run:
 
 ```bash
-xsrv backup-fetch
+# for a single default playbook with a single host
+xsrv fetch-backups
+# for playbooks with multiple hosts
+xsrv fetch-backups myplaybook my.example.org
 ```
 
-See each role's documentation for information on how to restore backups.
+See each [role](#roles)'s documentation for information on how to restore backups.
 
 Keep **off-line, off-site backups** of your `~/playbooks/` directory and user data.
 
