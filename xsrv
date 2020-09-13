@@ -147,10 +147,19 @@ function init_host() {
 }
 
 function get_ssh_port() {
+    # get SSH port from host_vars file
 	ssh_port=$(grep "^ansible_ssh_port" "$host_vars_file" | cut -d ' ' -f 2 | tr -d \'\")
     if [[ -z "$ssh_port" ]]; then
         ssh_port=22
     fi
+}
+
+function get_ssh_user() {
+    # get SSH user from vaulted host_vars file
+    cd "$playbooks_dir/$playbook_name"
+    vault_vars=$(ansible-vault decrypt --output - "$host_vault_file")
+    ssh_user=$(echo "$vault_vars" | grep "^vault_ansible_user:" | cut -d ' ' -f 2 | tr -d \'\")
+
 }
 
 function run_shell() {
@@ -158,10 +167,7 @@ function run_shell() {
     check_playbook
     check_host_name
     get_ssh_port
-
-    cd "$playbooks_dir/$playbook_name"
-    vault_vars=$(ansible-vault decrypt --output - "$host_vault_file")
-    ssh_user=$(echo "$vault_vars" | grep "^vault_ansible_user:" | cut -d ' ' -f 2 | tr -d \'\")
+    get_ssh_user
 
     ssh_command="ssh -t -p $ssh_port $ssh_user@$host_name $ssh_args"
     $ssh_command
