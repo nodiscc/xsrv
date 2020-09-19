@@ -5,7 +5,7 @@
 ```
 
 
-[![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/commits/master)
+[![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 
 **STATUS: rewrite in progress - Expect a stable release soon - The current version is partially broken and will require frequent adaptations to configuration files.**
@@ -290,21 +290,14 @@ See [Using collections](https://docs.ansible.com/ansible/latest/user_guide/colle
 
 ## Contributing/Issues/Work in progress
 
-- [Planned features/work in progress](docs/TODO.md)
-- [Issue tracker](https://stdout.root.sx/gitea/xsrv/xsrv/issues)
-- [Gitlab issue tracker](https://gitlab.com/nodiscc/xsrv/issues)
-
-Branches/merge requests status:
-
-![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg?key_width=100&key_text=master)
-![](https://gitlab.com/nodiscc/xsrv/badges/gitlab/pipeline.svg?key_width=100&key_text=gitlab)
-![](https://gitlab.com/nodiscc/xsrv/badges/gitlab-runner/pipeline.svg?key_width=100&key_text=gitlab-runner)
-![](https://gitlab.com/nodiscc/xsrv/badges/graylog/pipeline.svg?key_width=100&key_text=graylog)
-![](https://gitlab.com/nodiscc/xsrv/badges/icecast/pipeline.svg?key_width=100&key_text=icecast)
-![](https://gitlab.com/nodiscc/xsrv/badges/pulseaudio/pipeline.svg?key_width=100&key_text=pulseaudio)
-![](https://gitlab.com/nodiscc/xsrv/badges/rsyslog-auditd/pipeline.svg?key_width=100&key_text=rsyslog-auditd)
-![](https://gitlab.com/nodiscc/xsrv/badges/warn-before-upgrade/pipeline.svg?key_width=100&key_text=warn-before-upgrade)
-![](https://gitlab.com/nodiscc/xsrv/badges/docker/pipeline.svg?key_width=100&key_text=docker)
+- Check the [Planned features/work in progress](docs/TODO.md) document [[1](https://git.lambdacore.network/xsrv/xsrv/issues)]
+- Please report any problem on the [Gitlab issue tracker](https://gitlab.com/nodiscc/xsrv/issues) - include the following information:
+  - expected results, steps to reproduce the problem, observed results
+  - relevant technical information (configuration, logs, versions...)
+  - if reporting a security issue, please check the `This issue is confidential` checkbox
+- Please send patches by [Merge request](https://gitlab.com/nodiscc/xsrv/-/merge_requests) or attached to your bug reports
+  - patches must pass CI checks, include relevant documentation, and be split in a meaningful way1
+- Please contribute to upstream projects and report issues on relevant bug trackers
 
 
 ## License
