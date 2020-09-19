@@ -230,6 +230,105 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - add support for self-signed and let's encrypt certificates through gitea_https_mode variable
 - update documentation
 
+**Migrating gitea data to Postgresql from a MySQL-based installation**
+
+```bash
+# To save some backup/restoration time and if you don't care about keeping system notices,
+# Access https://$OLD_DOMAIN/gitea/admin/notices and 'Delete all notices'
+# on the original machine, do a backup, and upgrade gitea to the target version
+# if source and target versions do not match you will have to correct the database
+# dump by hand to match the expected schema...
+
+# download the binary from github
+wget https://github.com/go-gitea/gitea/releases/download/v1.12.4/gitea-1.12.4-linux-amd64
+# stop gitea
+sudo systemctl stop gitea
+# replace the gitea binary with the new version
+sudo mv gitea-1.12.4-linux-amd64 /usr/local/bin/gitea
+sudo chmod a+x /usr/local/bin/gitea
+# run migrations
+sudo -u gitea gitea -c /etc/gitea/app.ini convert
+sudo -u gitea gitea -c /etc/gitea/app.ini migrate
+
+# the dump command must be run from gitea's home directory
+sudo su
+export TMPDIR=/var/backups/gitea/
+cd /var/backups/gitea/
+# remove any old dumps
+rm -rf gitea-dump*zip
+# backup gitea data + database as postgresql dump
+sudo -u gitea gitea dump -d postgres --tempdir /var/backups/gitea/ -c /etc/gitea/app.ini
+# ensure your normal user account can read the backup file
+chown $MY_USER /var/backups/gitea/gitea-dump-*.zip
+```
+
+```bash
+# on the ansible controller
+# download the backup file
+rsync -avP $OLD_MACHINE:/var/backups/gitea/gitea-dump-*.zip ./
+# upload the zip to the new machine
+rsync -avP gitea-dump-*.zip $NEW_MACHINE:
+# make sure gitea is deployed to the new machine
+TAGS=gitea xsrv deploy
+```
+
+```bash
+# on the new machine
+# stop gitea
+sudo systemctl stop gitea
+
+# unarchive the backup zip to gitea's directory
+sudo mkdir /var/lib/gitea/dump
+sudo unzip gitea-dump-*.zip -d /var/lib/gitea/dump/
+sudo chown -R gitea:gitea /var/lib/gitea/dump
+
+# make the database dump in a directory readable by postgresql user
+sudo mv /var/lib/gitea/dump/gitea-db.sql /var/lib/postgresql/
+sudo chown postgres /var/lib/postgresql/gitea-db.sql
+
+# edit the db dump to skip index creations when they already exist
+sudo sed -i 's/CREATE INDEX/CREATE INDEX IF NOT EXISTS/g' /var/lib/postgresql/gitea-db.sql
+sudo sed -i 's/CREATE UNIQUE INDEX/CREATE UNIQUE INDEX IF NOT EXISTS/g' /var/lib/postgresql/gitea-db.sql
+
+# delete the gitea admin user created by ansible
+# since it will conflict with the admin user from the database dump
+sudo -u gitea psql; --command="delete from public.user where name = '$gitea_admin_username';"
+
+# restore the database dump
+sudo -u postgres psql --echo-all --set ON_ERROR_STOP=on gitea < /var/lib/postgresql/gitea-db.sql
+
+# extract repositories zip file
+sudo -u gitea bash -c ' \
+  cd /var/lib/gitea/dump && \
+  unzip gitea-repo.zip && \
+  mv repos/* /var/lib/gitea/repos/'
+sudo chown -R gitea:gitea /var/lib/gitea/repos/
+
+# remove the backup zip, psql dump, and temporary extraction directory
+sudo rm -r gitea-dump-*.zip /var/lib/postgresql/gitea-db.sql /var/lib/gitea/dump
+
+# regenerate hooks
+sudo -u gitea gitea admin regenerate hooks -c /etc/gitea/app.ini
+
+# start gitea and watch logs until it has finished starting up
+sudo systemctl start gitea
+sudo lnav /var/log/syslog
+```
+
+```bash
+# on the controller
+# log in to the new instance with your old admin account
+# go to https://git.xinit.se/user/settings/ ->
+#   change username and e-mail address to match values provided by ansible (gitea_admin_username/e-mail)
+# go to https://git.xinit.se/user/settings/account
+#   change password to match value provided by ansible (gitea_admin_password)
+
+# re-apply the playbook and check that it finishes without error
+TAGS=gitea xsrv deploy
+
+# Check that all gitea funtionality works
+```
+
 
 **shaarli: refactor role:**
 - detect installed version from ansible fact file and appropriate install/upgrade procedure depending on installed version
