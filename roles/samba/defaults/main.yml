@@ -56,3 +56,14 @@ samba_log_level: 0
 
 # base path for samba share directories
 samba_shares_path: /var/lib/samba/shares/
+
+# list of hosts allowed to connect to samba services
+samba_hosts_allow:
+  - '192.168.0.0/16'
+  - '172.31.0.0/12'
+  - '10.0.0.0/8'
+
+# list of hosts allowed to access the $IPC share anonymously
+# windows clients require access to $IPC to be able to access any other share,
+# so it is recommended to keep the same value as samba_hosts_allow
+samba_hosts_allow_ipc: "{{ samba_hosts_allow }}"

@@ -41,6 +41,20 @@
 
 #### Networking ####
 
+
+# comma, space, or tab delimited set of hosts which are permitted to access a service.
+# If specified in the [global] section then it will apply to all services,
+# regardless of whether the individual service has a different setting.
+  hosts allow = {{ ' '.join(samba_hosts_allow) }}
+
+# The opposite of hosts allow - hosts listed here are NOT permitted access to
+# services unless the specific services have their own lists to override this one.
+# Where the lists conflict, the allow list takes precedence.
+# In the event that it is necessary to deny all by default, use the keyword ALL
+# (or the netmask 0.0.0.0/0) and then explicitly specify to the hosts allow
+# parameter those hosts that should be permitted access.
+  hosts deny = ALL
+
 # The specific set of interfaces / networks to bind to
 # This can be either the interface name or an IP address/netmask;
 # interface names are normally preferred
@@ -160,6 +174,13 @@
 # Username which will be used for access to services which are specified as guest ok
    guest account = nobody
 
+# attempt to authenticate to servers using the NTLMv2 encrypted password response
+# If enabled, only an NTLMv2 and LMv2 response (both much more secure than earlier versions) will be sent.
+# if enabled, NTLMv1, client lanman auth and client plaintext auth authentication will be disabled.
+# This also disables share-level authentication.
+  client NTLMv2 auth = yes
+
+
 ########## Domains ###########
 
 #
@@ -243,6 +264,16 @@
     printing = cups
     printcap name = /dev/null
     disable spoolss = Yes
+
+# the $IPC share allows anonymous access to perform certain activities, such as
+# enumerating the names of domain accounts and network shares.
+[IPC$]
+{% if samba_hosts_allow_ipc %}
+    # only these hosts are allowed to access the $IPC share
+    hosts allow = {{ ' '.join(samba_hosts_allow_ipc) }}
+{% endif %}
+    # all hosts are denied access by default
+    hosts deny = 0.0.0.0/0
 
 #======================= Share Definitions =======================
 
