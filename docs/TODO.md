@@ -2,3 +2,250 @@
 
 ### xsrv/xsrv
 
+- #316 - WIP: add/remove the ansible user to/from the www-data group
+- #315 - WIP: harden samba configuration:
+- #314 - WIP: gitea: warn when no MariaDB/MySQL/PostgreSQL roles are installed locally
+- #312 - Automate random password generation for init-host
+- #311 - Media server
+- #310 - samba: ability to whitelist/blacklist files by extension
+- #309 - apply postgresqltuner recommended settings?
+- #307 - apache: make certificate status endpoint enable/disable configurable
+- #305 - switch firewall management to firewalld
+- #303 - firehol: add example NAT loopback/hairpin rule
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening
+- #293 - WIP: add nginx role
+- #292 - WIP: switch apache php interpreter to php-fpm
+- #291 - apache: use php-fpm
+- #290 - netdata: monitor number of upgradeable APT packages
+- #280 - Samba Directory Controller or other Identity Management solution
+- #279 - Samba: LDAP user backend
+- #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
+- #276 - Samba: protect file shares from cryptolockers
+- #275 - Samba: implement filesystem/size quotas
+- #274 - Samba: advertise samba server over avahi/zeroconf
+- #273 - OpenLDAP: secure connections with SSL/TLS (LDAPS)
+- #272 - postgresql: hardening
+- #271 - apache: enable mod-md status handler
+- #270 - xsrv: add xsrv logs command (view host logs in lnav)
+- #269 - netdata http check: support all httpcheck module options
+- #268 - Wireguard VPN server
+- #267 - apache: make disabled modules list configurable, disable more modules by default
+- #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
+- #265 - apache: provide custom error pages
+- #263 - Netdata: setup registry
+- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS)
+- #260 - WIP: add ldap-auth role (LDAP authentication for Unix/Samba accounts)
+- #259 - WIP: add openLDAP server role
+- #258 - WIP: add custom info page to netdata
+- #257 - WIP: add samba role
+- #256 - CAS, SAML or Oauth Sigle Sign On (SSO)
+- #255 - new role: custom homepage generation
+- #254 - apache: LDAP authentication for virtualhosts
+- #253 - lamp: allow setting up HTTP basic auth username/password for virtualhosts
+- #252 - WIP: ask confirmation before upgrading to a new tag
+- #250 - WIP: add pulseaudio-server role
+- #249 - WIP: add make release target
+- #248 - WIP: add gitlab-runner role
+- #247 - WIP: add gitlab role
+- #244 - icecast: ezstream 100% usage when playlist is empty
+- #243 - icecast: make playlist storage directory configurable
+- #242 - icecast: add a default/demo audio file
+- #241 - icecast: allow/document streaming from a source client running on another machine
+- #240 - icecast: allow streaming other formats (mp3)
+- #239 - icecast: update stream title metadata with currently playing track?
+- #238 - icecast: firefox stops playing when ezstream skips track
+- #237 - rsyslog: monitor auditd log files
+- #236 - WIP: add icecast role
+- #235 - icecast server role
+- #234 - mysql: use percona-xtrabackup to perform non-locking backups?
+- #231 - apache: letsencrypt/selfsigned: reach A+ grade on Mozilla Security Observatory
+- #230 - mysql: add a read-only user for backups
+- #229 - apache: add a config variable to log times taken to serve requests
+- #228 - apache: additional hardening measures
+- #226 - mysql: update root password for *all* root accounts
+- #224 - mysql: log MariaDB slow queries
+- #223 - apache: enable HTTP/2
+- #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost
+- #221 - apache: add a symlink to /var/www in home directory
+- #220 - apache: allow setting group ownership/permissions for virtualhosts documentroots
+- #219 - xsrv-homepage: main/aggregated RSS feed on the homepage
+- #218 - apache: implement modsecurity
+- #216 - xsrv: generate a local copy of the homepage/netdata custom dashboard
+- #215 - xsrv-homepage: add ability to set a custom title/message/footer
+- #214 - mysql: improve MySQL/Mariadb server hardening
+- #212 - apache: PHP OPCache tuning?
+- #211 - xsrv-homepage: add mumble server address/port
+- #210 - xsrv-homepage: add more (optional) features to homepage
+- #208 - netdata: graph/alert on logwatch warnings
+- #207 - netdata: make ping checks configurable
+- #206 - netdata: add https://gitlab.com/nodiscc/netdata-debsecan
+- #205 - netdata: monitor debsums warnings/return status
+- #204 - netdata: add custom dashboard with status summary of the host/important logs/reports
+- #203 - netdata: monitor snmpd
+- #202 - netdata: ability to enable/add eBPF probes?
+- #201 - monitoring: merge role with mrlesmithjr/ansible-netdata
+- #200 - roles for other monitoring software
+- #199 - netdata: graph number of manchines on LAN
+- #198 - netdata: ERROR: Cannot send HTTPS headers to web client
+- #197 - netdata: graph php-malware-finder warnings
+- #196 - netdata: log alarms to syslog
+- #195 - monitoring: add apt-listchanges
+- #194 - netdata: add config variable to enable netdata auto-updates
+- #193 - netdata: graph tiger warnings
+- #192 - monitoring/apache: add goaccess, generate reports for each virtualhost
+- #191 - monitoring: add inxi
+- #190 - netdata: graph number of firehol hits
+- #189 - netdata: graph VULS reports
+- #187 - monitoring: setup PSAD (Port Scan Attack Detector) Edit
+- #186 - netdata: many ERROR messages in logs
+- #184 - netdata: add Mozilla observatory module
+- #182 - netdata: graph number of packages with upgrades available
+- #181 - netdata: monitor MySQL server
+- #180 - netdata: graph SCAP workbench warnings
+- #178 - netdata: graph/alert on deborphan matches
+- #177 - netdata: graph lynis warnings/suggestions
+- #176 - netdata: add Qualys SSL check module
+- #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
+- #174 - netdata: allow setting a repetition period for alarms
+- #173 - rsyslog: add ability to forward logs to a remote host (TCP+SSL+disk queues)
+- #172 - netdata: support long-term archiving
+- #171 - needrestart: add a config variable to automatically reboot when a kernel upgrade is pending
+- #170 - netdata: add support for postgresql monitoring
+- #169 - Netdata: the installer script is not idempotent/no authenticity check for binary
+- #167 - monitoring: add spectre-meltdown-checker
+- #166 - gitea/rsyslog: Add gitea logs to rsyslog imfile watches
+- #165 - gitea: Enable search/indexing for repository/code/issues
+- #164 - gitea: add CI/CD service
+- #163 - gitea: allow using postgresql
+- #161 - gitea: document how to create a mirror from command line
+- #160 - gitea: HTTP 401 on click on a milestone from the global issues list
+- #159 - nextcloud: add Keeporsweep app
+- #158 - nextcloud: add AppOrder app
+- #157 - nextcloud: add polls app
+- #156 - nextcloud: add Mail app
+- #155 - nextcloud: add Fulltextsearch App + OCR
+- #154 - nextcloud: add Keeweb app
+- #153 - nextcloud: add News app
+- #152 - nextcloud: add group folders app
+- #151 - nextcloud: add markdown editor app
+- #150 - nextcloud: add maintenance on/off switch
+- #149 - nextcloud: add bookmarks app
+- #148 - nextcloud: verify downloads with GPG signature
+- #147 - nextcloud: allow using postgresql Edit
+- #146 - nextcloud: add Collabora Online integration
+- #145 - nextcloud: add cookbook app
+- #144 - nextcloud: role is not idempotent
+- #143 - nextcloud: add mindmap app
+- #142 - nextcloud: add files automated tagging app
+- #141 - nextcloud: add fail2ban to documentation
+- #140 - WIP: add graylog role
+- #139 - WIP: add docker role
+- #138 - apache: rewrite all 500 502 503 errors to generic 50x.html error page
+- #137 - apache: allow setting up HTTP Basic auth and autoindex for specific directories/URLs/virtualhosts
+- #134 - tt-rss: RuntimeWarning during SQL update task
+- #133 - tt-rss: add tumblr GDPR plugin
+- #131 - tt-rss: allow using postgresql
+- #130 - tt-rss: role is not idempotent
+- #129 - OpenLDAP role
+- #127 - xsrv: add commands to check firewall/fail2ban status/active TCP/UDP connections
+- #126 - common: firehol/fail2ban: recheck interaction/effect on fail2ban rules when restarting the firewall
+- #125 - common: enforce AppArmor on all services/executables
+- #124 - common: implement SELinux policy
+- #123 - common: allow management of /etc/hosts
+- #122 - common: ssh/sftp: harden default SFTP umask
+- #121 - common: disable sysctl configuration when running in a container
+- #120 - common: firehol: add a manual IP whitelist/blacklist mechanism
+- #119 - common: allow enforcing a password policy (complexity, aging, restrict use of previous passwords...)
+- #118 - common: allow restricting use of 'su' to a list of approved users
+- #117 - common: prevent forkbombs through ulimit/limits.conf
+- #116 - common: add an option to disable known compilers
+- #115 - common: setup auditd
+- #114 - common: ssh/sftp: check that SFTP users are chrooted
+- #113 - common: fail2ban: allow permaban when accessing specific/honeypot URLs
+- #112 - common: firehol: implement a TARPIT mode
+- #111 - common: setup process accounting?
+- #110 - common: ssh: add molly-guard
+- #109 - common: check that locale generation works correctly
+- #108 - common: minimize write access to a list of files/directories?
+- #107 - xsrv: add 'version' subcommand
+- #106 - common: apt: switch to HTTPS APT sources
+- #105 - xsrv: add a global download cache dir variable? (instead of /root)
+- #104 - common: rsyslog: watch more log files
+- #103 - common: firehol: allow limiting a rule to a single user (owner iptables module)
+- #101 - common: improve OS hardening/implement STIG/CIS
+- #100 - common: configure timezone
+- #98 - Maps and routing services
+- #97 - openshift role
+- #96 - grafana role
+- #95 - WIP: encrypt secrets with ansible-vault
+- #94 - Kubernetes role
+- #93 - VNC server
+- #92 - Add {{ ansible_managed }} in templates
+- #86 - Peertube
+- #85 - add ansible-vault support:
+- #84 - 'make update_todo' does not honor the ?limit=50 parameter
+- #82 - tests: cache gitlab ci dependencies
+- #81 - Mirror neuralnet.xinit.se list of issues to the README of each role
+- #78 - Adminer role
+- #72 - Proxmox role
+- #70 - Setup endlessh
+- #69 - IDS/IPS
+- #68 - Automate playbook deployment/testing
+- #67 - add show-tags command
+- #66 - add show-tasks command
+- #64 - RAID role
+- #63 - PfSense role
+- #62 - IPBX/SIP Server
+- #61 - GDPR compliance?
+- #60 - doc: screenshots
+- #59 - Collaborative pad
+- #58 - HTTP downloader
+- #57 - Rundeck
+- #56 - Hypervisor role
+- #55 - Guacamole remote control gateway
+- #54 - bittorrent tracker
+- #53 - Web analytics
+- #52 - blogging engine/static site generator
+- #51 - Dokuwiki
+- #50 - Docker role
+- #49 - Caching HTTP proxy
+- #48 - FTP server
+- #47 - distributed filesystem (ceph, glusterfs)
+- #46 - Printer sharing
+- #45 - Video hosting/streaming platform
+- #44 - UPNP mediaserver
+- #43 - Maps/routing application
+- #42 - OpenStreetMap tileserver
+- #41 - network scanner server
+- #40 - Search engine
+- #39 - Wallabag
+- #38 - Wake on LAN
+- #37 - Replace `ntp` with `chrony`?
+- #36 - RADIUS server
+- #35 - simple git server
+- #34 - CentOS compatibility
+- #33 - Minecraft server
+- #32 - Minetest server
+- #31 - Add bash completion to xsrv script
+- #30 - Gitlab instance
+- #28 - Instant messaging/communication system
+- #27 - nginx role
+- #26 - Dynamic DNS updater
+- #25 - DNS Server
+- #24 - DHCP/TFTP/PXE server
+- #22 - Add molecule tests
+- #19 - Document outgoing mail setup with smarthost
+- #18 - Register a domain name
+- #17 - Static site generator
+- #16 - Automated performance benchmarks
+- #14 - Logo
+- #12 - go-shiori
+- #10 - cloud-init
+- #9 - VPN Server
+- #8 - Proxmox
+- #6 - Cockpit
+- #5 - Matrix/Synapse server
+- #4 - Graylog server
+- #3 - Mail server
+- #2 - Make it easier to configure ansible-vault
+- #1 - Add LICENSE files to all roles
