@@ -59,4 +59,4 @@ vault_transmission_password: "{{ vault_xsrv_admin_password }}"
 
 ##### mumble role #####
 vault_mumble_password: "CHANGEME20"
-vault_transmission_password: "{{ vault_xsrv_admin_password }}"
+vault_mumble_superuser_password: "{{ vault_xsrv_admin_password }}"
