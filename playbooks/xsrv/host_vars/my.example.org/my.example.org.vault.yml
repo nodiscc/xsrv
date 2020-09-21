@@ -47,7 +47,7 @@ vault_gitea_admin_email: "{{ vault_msmtp_admin_email }}"
 vault_gitea_db_password: "" # leave empty when using postgresql/peer authentication on same host
 vault_gitea_internal_token: "CHANGEME106" # openssl rand -base64 106 | tr -d '\n' | cut -b 1-106
 vault_gitea_secret_key: "CHANGEME64" # openssl rand -base64 64 | tr -d '\n' | cut -b 1-64
-vault_gitea_oauth2_jwt_secret: "CHANGEME43" # openssl rand -base64 43 | tr -d '\n' | cut -b 1-43
+vault_gitea_oauth2_jwt_secret: "CHANGEME43" # openssl rand -base64 43 | sed 's|[/\+=]|_|g' | tr -d '\n' | cut -b 1-43
 vault_gitea_lfs_jwt_secret: "CHANGEME43" # openssl rand -base64 43 | sed 's|[/\+=]|_|g' | tr -d '\n' | cut -b 1-43
 vault_gitea_mail_host: "{{ vault_msmtp_host }}"
 vault_gitea_mail_user: "{{ vault_msmtp_username }}"
