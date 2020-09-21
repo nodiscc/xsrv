@@ -9,9 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.0) - UNRELEASED
 
-This is a major rewrite of https://github.com/nodiscc/srv01. It improves usability, portability, standards compliance, separation of concerns, performance, documentation, security, simplifies installation and usage, and adds many new features to all roles/components. There is no easy upgrade path from previous releases, you must redeploy to a new instance, and restore backups/exports of all user data.
+This is a major rewrite of https://github.com/nodiscc/srv01. To upgrade/migrate from previous releases, you must redeploy services to a new instance, and restore user data from backups/exports.
 
-A summary of changes is included below. See [README.md](README.md) for more information.
+This releases improves usability, portability, standards compliance, separation of concerns, performance, documentation, security, simplifies installation and usage, and adds new features to all roles/components. A summary of changes is included below. See [README.md](README.md) for more information.
 
 **xsrv command-line tool**
 - improve/simplify command-line usage, see `xsrv help`
@@ -218,19 +218,18 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - use ansible-vault to handle secret variables, dont generate random passwords
 - simplify domain name/location/root URL templating
 - require manual configuration of gitea instance FQDN/URL, JWT secrets and internal token
-- default admin e-mail address to admin@{{ gitea_fqdn }}
 - add checks for mandatory variables
 - LFS JWT secret must not contain /+= characters
 - only configure a subset of gitea settings in the configuration file, let gitea use defaut values for other settings
 - disable displaying gitea version in footer
-- update gitea to 1.12.3
+- update gitea to 1.12.4
 - download binary from github.com instea of gitea.io
 - download uncompressed binary to avoid handling xz decompression
 - update configuration file template
 - add support for self-signed and let's encrypt certificates through gitea_https_mode variable
 - update documentation
 
-**Migrating gitea data to Postgresql from a MySQL-based installation**
+**Migrating gitea data to Postgresql from a MySQL-based installation** [](){:name='anchorName'}
 
 ```bash
 # To save some backup/restoration time and if you don't care about keeping system notices,
@@ -292,10 +291,19 @@ sudo sed -i 's/CREATE UNIQUE INDEX/CREATE UNIQUE INDEX IF NOT EXISTS/g' /var/lib
 
 # delete the gitea admin user created by ansible
 # since it will conflict with the admin user from the database dump
-sudo -u gitea psql; --command="delete from public.user where name = '$gitea_admin_username';"
+sudo -u gitea psql --command="delete from public.user where name = '$gitea_admin_username';"
+# must return DELETE 1
 
 # restore the database dump
 sudo -u postgres psql --echo-all --set ON_ERROR_STOP=on gitea < /var/lib/postgresql/gitea-db.sql
+
+# fix sequence values
+# https://github.com/go-gitea/gitea/issues/740
+# https://github.com/go-gitea/gitea/issues/12511
+# get a list of tables
+sudo -u gitea psql -c '\dt' | cut -d " " -f 4
+echo $tables # check that the list is correct
+for table in $tables; do sudo -u gitea psql --echo-all -c "SELECT setval('${table}_id_seq', COALESCE((SELECT MAX(id) FROM \"$table\"), 0) + 1, false);"; done
 
 # extract repositories zip file
 sudo -u gitea bash -c ' \
@@ -318,9 +326,9 @@ sudo lnav /var/log/syslog
 ```bash
 # on the controller
 # log in to the new instance with your old admin account
-# go to https://git.xinit.se/user/settings/ ->
+# go to https://$NEW_DOMAIN/user/settings/ ->
 #   change username and e-mail address to match values provided by ansible (gitea_admin_username/e-mail)
-# go to https://git.xinit.se/user/settings/account
+# go to https://$NEW_DOMAIN/user/settings/account
 #   change password to match value provided by ansible (gitea_admin_password)
 
 # re-apply the playbook and check that it finishes without error
