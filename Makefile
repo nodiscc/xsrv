@@ -4,6 +4,7 @@ SHELL := '/bin/bash'
 tests: shellcheck check_jinja2 ansible_syntax_check ansible_lint yamllint clean
 
 # Install dev tools in virtualenv
+# https://pypi.org/rss/project/ansible/releases.xml
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
@@ -27,7 +28,7 @@ ansible_syntax_check: venv testenv
 	source .venv/bin/activate && \
 	ansible-playbook --syntax-check --inventory tests/inventory.yml test.yml
 
-# Ansible linter
+# Ansible linter - https://pypi.org/rss/project/ansible-lint/releases.xml
 ansible_lint: venv testenv
 	source .venv/bin/activate && \
 	ansible-lint test.yml
