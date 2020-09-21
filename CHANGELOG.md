@@ -229,7 +229,7 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - add support for self-signed and let's encrypt certificates through gitea_https_mode variable
 - update documentation
 
-**Migrating gitea data to Postgresql from a MySQL-based installation** [](){:name='anchorName'}
+**Migrating gitea data to Postgresql from a MySQL-based installation**
 
 ```bash
 # To save some backup/restoration time and if you don't care about keeping system notices,
