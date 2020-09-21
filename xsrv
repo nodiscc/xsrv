@@ -124,7 +124,7 @@ function init_host() {
     fi
 
     echo "[xsrv] INFO: creating host vars/vault files for $host_name"
-    if [[ -f "$playbooks_dir/$playbook_name/inventory.yml" ]]; then
+    if [[ ! -f "$playbooks_dir/$playbook_name/inventory.yml" ]]; then
         sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/inventory.yml" >> "$playbooks_dir/$playbook_name/inventory.yml"
     else
         echo "    $host_name" >> "$playbooks_dir/$playbook_name/inventory.yml"
