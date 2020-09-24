@@ -29,6 +29,9 @@ netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.1
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
 
+# enable netdata self-monitoring charts (yes/no)
+netdata_enable_self_monitoring: no
+
 # enable/disable netdata debug/error/access logs (yes/no)
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no

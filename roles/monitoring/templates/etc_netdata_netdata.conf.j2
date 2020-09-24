@@ -21,3 +21,168 @@
    enable gzip compression = no
    web files owner = root
    web files group = netdata
+
+
+{% if not netdata_self_monitoring_enabled %}
+##### DISABLE NETDATA SELF-MONITORING CHARTS #####
+
+[netdata.statsd_metrics]
+   enabled = no
+
+[netdata.statsd_useful_metrics]
+   enabled = no
+
+[netdata.statsd_events]
+   enabled = no
+
+[netdata.statsd_reads]
+   enabled = no
+
+[netdata.statsd_bytes]
+   enabled = no
+
+[netdata.statsd_packets]
+   enabled = no
+
+[netdata.tcp_connects]
+   enabled = no
+
+[netdata.tcp_connected]
+   enabled = no
+
+[netdata.private_charts]
+   enabled = no
+
+[netdata.plugin_statsd_charting_cpu]
+   enabled = no
+
+[netdata.plugin_statsd_collector1_cpu]
+   enabled = no
+
+[netdata.plugin_cgroups_cpu]
+   enabled = no
+
+[netdata.aclk_status]
+   enabled = no
+
+[netdata.apps_cpu]
+   enabled = no
+
+[netdata.plugin_tc_cpu]
+   enabled = no
+
+[netdata.web_thread1_cpu]
+   enabled = no
+
+[netdata.plugin_diskspace]
+   enabled = no
+
+[netdata.plugin_diskspace_dt]
+   enabled = no
+
+[netdata.aclk_query_per_second]
+   enabled = no
+
+[netdata.aclk_write_q]
+   enabled = no
+
+[netdata.aclk_read_q]
+   enabled = no
+
+[netdata.aclk_cloud_req]
+   enabled = no
+
+[netdata.aclk_query_threads]
+   enabled = no
+
+[netdata.aclk_query_time]
+   enabled = no
+
+[netdata.apps_sizes]
+   enabled = no
+
+[netdata.apps_fix]
+   enabled = no
+
+[netdata.apps_children_fix]
+   enabled = no
+
+[netdata.plugin_tc_time]
+   enabled = no
+
+[netdata.plugin_proc_modules]
+   enabled = no
+
+[netdata.plugin_proc_cpu]
+   enabled = no
+
+[netdata.server_cpu]
+   enabled = no
+
+[netdata.clients]
+   enabled = no
+
+[netdata.requests]
+   enabled = no
+
+[netdata.net]
+   enabled = no
+
+[netdata.response_time]
+   enabled = no
+
+[netdata.compression_ratio]
+   enabled = no
+
+[netdata.dbengine_compression_ratio]
+   enabled = no
+
+[netdata.page_cache_hit_ratio]
+   enabled = no
+
+[netdata.page_cache_stats]
+   enabled = no
+
+[netdata.dbengine_long_term_page_stats]
+   enabled = no
+
+[netdata.dbengine_io_throughput]
+   enabled = no
+
+[netdata.dbengine_io_operations]
+   enabled = no
+
+[netdata.dbengine_global_errors]
+   enabled = no
+
+[netdata.dbengine_global_file_descriptors]
+   enabled = no
+
+[netdata.dbengine_ram]
+   enabled = no
+
+[netdata.runtime_ntpd_local]
+   enabled = no
+
+[netdata.queries]
+   enabled = no
+
+[netdata.db_points]
+   enabled = no
+
+[netdata.runtime_logcount]
+   enabled = no
+
+[netdata.runtime_modtime_rsnapshot_last_success]
+   enabled = no
+
+[netdata.runtime_needrestart]
+   enabled = no
+
+[netdata.runtime_apache]
+   enabled = no
+
+[netdata.execution_time_of_apache_local]
+   enabled = no
+
+{% endif %}
