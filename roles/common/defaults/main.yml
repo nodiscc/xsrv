@@ -132,7 +132,7 @@ firehol_custom_services:
   - { name: "mdns", ports: "udp/5353" } # avahi/zeroconf/MDNS/DNS-SD
   - { name: "pulseaudio", ports: "tcp/4713" } # pulseaudio sound server
   - { name: "transmission", ports: "tcp/52943 udp/52943" } # incoming bittorrent/transmission peer connections
-  - { name: "iscsi", ports: "tcp/3260" } # iSCSI to labriche-san
+  - { name: "iscsi", ports: "tcp/3260" } # iSCSI initiator
   - { name: "dropboxlan", ports: "udp/17500" } # Dropbox LAN sync
 
 ##### FAIL2BAN #####
