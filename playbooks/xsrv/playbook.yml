@@ -14,5 +14,3 @@
     # - samba
     # - transmission
     # - mumble
-  # ignore_unreachable: yes # don't fail when host is unreachable
-  # strategy: free # use this if your servers are independent from each other/do not require ordered/synchronized deployment
