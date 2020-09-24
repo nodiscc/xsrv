@@ -26,6 +26,7 @@
       - netdata_needrestart_git_url is string
       - netdata_port_checks|type_debug == "list"
       - netdata_process_checks|type_debug == "list"
+      - netdata_self_monitoring_enabled == netdata_self_monitoring_enabled|bool
       - netdata_update_every == netdata_update_every|int
       - netdata_version is string
       - rsyslog_monitor_apache_accesslog == rsyslog_monitor_apache_accesslog|bool
