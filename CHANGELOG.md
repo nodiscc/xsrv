@@ -177,29 +177,31 @@ This releases improves usability, portability, standards compliance, separation 
 **Migrating tt-rss data to Postgresql from a MySQL-based installation:**
 
 ```bash
-# OPML import/export (including filters and some settings). Must be done before data_migration plugin if you want to keep feed categories
+
 # on the original machine
+# OPML import/export (including filters and some settings). Must be done before data_migration plugin if you want to keep feed categories
 sudo mkdir /var/www/tt-rss/export
 sudo chown -R www-data:www-data /var/www/tt-rss/export/
 sudo -u www-data php /var/www/tt-rss/update.php --opml-export "MYUSERNAME /var/www/tt-rss/export/export-2020-08-07.opml" # export feeds OPML
-# on a client
-rsync -avP my.original.machine.org:/var/www/tt-rss/export/export-2020-08-07.opml ./ # download opml export
-# login to the new tt-rss instance from a browser, go to Preferences > Feeds, import OPML file
-
 # migrate all articles from mysql to postgresql
-# on the original machine
 git clone https://git.tt-rss.org/fox/ttrss-data-migration
 sudo chown -R root:www-data ttrss-data-migration/
 sudo mv ttrss-data-migration/ /var/www/tt-rss/plugins.local/data_migration
 sudo nano /var/www/tt-rss/config.php # enable data_migration in the PLUGINS array
 sudo -u www-data php /var/www/tt-rss/update.php --data_user MYUSERNAME --data_export /var/www/tt-rss/export/export-2020-08-07.zip # export articles to database-agnostic format
 
+# on a client
+xsrv deploy # deploy tt-rss role
+rsync -avP my.original.machine.org:/var/www/tt-rss/export/export-2020-08-07.zip ./ # download zip export
+rsync -avP export-2020-08-07.zip my.new.machine.org: # upload zip export
+rsync -avP my.original.machine.org:/var/www/tt-rss/export/export-2020-08-07.opml ./ # download opml export
+# login to the new tt-rss instance from a browser, go to Preferences > Feeds, import OPML file
+
 # on the target machine
 git clone https://git.tt-rss.org/fox/ttrss-data-migration
 sudo chown -R root:www-data ttrss-data-migration/
 sudo mv ttrss-data-migration/ /var/www/rss.example.org/plugins.local/data_migration
 sudo nano /var/www/rss.example.org/config.php # enable data_migration in the PLUGINS array
-rsync -avP my.original.machine.org:/var/www/tt-rss/export/export-2020-08-07.zip ./
 sudo mkdir /var/www/rss.example.org/export
 sudo mv export-2020-08-07.zip /var/www/rss.example.org/export
 sudo chown -R root:www-data /var/www/rss.example.org/export
