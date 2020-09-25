@@ -16,6 +16,7 @@
       - php7.3-curl
       - php7.3-gd
       - php7.3-opcache
+      - php-zip # required for data_migration plugin
 
 ##### FAIL2BAN #####
 
