@@ -81,6 +81,9 @@
       Please authorize this key on remote machines backup user accounts:
       {{ ansible_local.rsnapshot.ssh.public_key }}
 
+- name: ensure rsnapshot configuration is valid (flush handlers)
+  meta: flush_handlers
+
 ##### SCHEDULING #####
 
 - name: setup daily backup cron job
