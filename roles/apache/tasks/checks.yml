@@ -9,4 +9,5 @@
       - apache_enable_service == apache_enable_service|bool
       - apache_letsencrypt_email is not search("CHANGEME")
       - apache_listen_http == apache_listen_http|bool
+      - apache_allow_robots == apache_allow_robots|bool
       - php_fpm_enable_default_pool == php_fpm_enable_default_pool|bool

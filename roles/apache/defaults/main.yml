@@ -4,6 +4,9 @@
 # (all unencrypted requests will be redirected to HTTPS)
 apache_listen_http: yes
 
+# yes/no: ask search engines/bots that respect the X-Robots-Tag header not to crawl this webserver's sites
+apache_allow_robots: no
+
 # yes/no: start/stop the apache webserver, enable/disable it on boot
 apache_enable_service: yes
 

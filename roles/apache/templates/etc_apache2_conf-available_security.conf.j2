@@ -128,3 +128,8 @@ RequestHeader unset Proxy early
 
 # Restricts the total size of the HTTP request body sent from the client
 #LimitRequestBody 512000
+
+{% if not apache_allow_robots %}
+# Ask search engines/bots that respect the X-Robots-Tag header not to crawl this webserver's sites
+Header always set X-Robots-Tag "noindex,nofollow,noarchive,nosnippet"
+{% endif %}
