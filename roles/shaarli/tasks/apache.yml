@@ -28,3 +28,6 @@
   args:
     creates: "/etc/apache2/sites-enabled/shaarli.conf"
   notify: reload apache
+
+- name: ensure apache configuration is applied (flush handlers)
+  meta: flush_handlers
