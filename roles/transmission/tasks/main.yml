@@ -13,7 +13,3 @@
 - include: apache.yml
   become: yes
   tags: transmission
-
-- name: restart services to apply configuration changes
-  meta: flush_handlers
-  tags: transmission

@@ -46,6 +46,9 @@
 
 ##### SERVICES #####
 
+- name: ensure transmission configuration is applied (flush handlers)
+  meta: flush_handlers
+
 - name: enable transmission-daemon service
   service:
     name: transmission-daemon
