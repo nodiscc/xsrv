@@ -1,6 +1,7 @@
 <VirtualHost *:80>
     DocumentRoot {{ nextcloud_install_dir }}
     ServerName {{ nextcloud_fqdn }}
+    ServerAdmin webmaster@{{ nextcloud_fqdn }}
 {% if nextcloud_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
