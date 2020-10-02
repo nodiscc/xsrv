@@ -77,3 +77,23 @@ nextcloud_apps:
   - { state: "enable", app: "deck" }
 #  - { state: "enable", app: "documents" } #TODO requires download
 #  - { state: "enable", app: "templateeditor" } #TODO requires download
+
+# nextcloud php-fpm pool settings (performance/resource usage)
+# php-fpm: Maximum amount of memory a script may consume (K, M, G)
+nextcloud_php_memory_limit: '128M'
+# php_fpm: Maximum execution time of each script (seconds)
+nextcloud_php_max_execution_time: 30
+# php-fpm: Maximum amount of time each script may spend parsing request data (seconds)
+nextcloud_php_max_input_time: 60
+# php-fpm: Maximum size of POST data that PHP will accept (K, M, G)
+nextcloud_php_post_max_size: '4G'
+# php-fpm: Maximum allowed size for uploaded files (K, M, G)
+nextcloud_php_upload_max_filesize: '4G'
+# php-fpm: maximum number of child processes
+nextcloud_php_pm_max_children: 30
+# php-fpm: number of child processes created on startup.
+nextcloud_php_pm_start_servers: 3
+# php-fpm: desired minimum number of idle server processes
+nextcloud_php_pm_min_spare_servers: 2
+# php-fpm: desired maximum number of idle server processes
+nextcloud_php_pm_max_max_spare_servers: 4

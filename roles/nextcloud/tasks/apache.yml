@@ -12,6 +12,13 @@
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   notify: reload apache
 
+- name: copy php-fpm configuration
+  template:
+    src: etc_php_7.3_fpm_pool.d_nextcloud.conf.j2
+    dest: /etc/php/7.3/fpm/pool.d/nextcloud.conf
+    mode: 0644
+  notify: restart php-fpm
+
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_nextcloud.conf.j2

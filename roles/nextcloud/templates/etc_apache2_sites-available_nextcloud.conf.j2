@@ -16,11 +16,16 @@ MDomain {{ nextcloud_fqdn }}
 <VirtualHost *:443>
   DocumentRoot {{ nextcloud_install_dir }}
   ServerName  {{ nextcloud_fqdn }}
+  ServerAdmin webmaster@{{ nextcloud_fqdn }}
   SSLEngine on
 {% if nextcloud_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ nextcloud_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ nextcloud_fqdn }}.key
 {% endif %}
+
+  <FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php7.3-fpm-nextcloud.sock|fcgi://localhost"
+  </FilesMatch>
 
   <Directory {{ nextcloud_install_dir }}>
     Require all granted
