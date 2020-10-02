@@ -13,8 +13,8 @@
       - shaarli_timezone is string
       - shaarli_username is not search("CHANGEME")
       - shaarli_version is string
-      - nextcloud_php_memory_limit|regex_search('[KMG]$')
-      - nextcloud_php_max_execution_time == nextcloud_php_max_execution_time|int
-      - nextcloud_php_max_input_time == nextcloud_php_max_input_time|int
-      - nextcloud_php_post_max_size|regex_search('[KMG]$')
-      - nextcloud_php_upload_max_filesize|regex_search('[KMG]$')
+      - shaarli_php_memory_limit|regex_search('[KMG]$')
+      - shaarli_php_max_execution_time == shaarli_php_max_execution_time|int
+      - shaarli_php_max_input_time == shaarli_php_max_input_time|int
+      - shaarli_php_post_max_size|regex_search('[KMG]$')
+      - shaarli_php_upload_max_filesize|regex_search('[KMG]$')
