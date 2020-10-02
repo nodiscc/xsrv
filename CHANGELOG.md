@@ -103,26 +103,24 @@ This releases improves usability, portability, standards compliance, separation 
 
 **apache: refactor role:**
 - use apache mod-md for Let's Encrypt certificate generation, remove certbot and associated ansible tasks
+- switch to php-fpm interpreter, remove mod_php
+- switch to mpm_event, disable mpm_worker
+- remove ability to create custom virtualhosts
+- remove automatic homepage generation feature (will be split to separate role)
+- use ansible-vault to manage secret variables
+- enforce fail2ban bans on HTTP basic auth failures
+- set the default log format to `vhost_combined` (all vhosts to a single file)
 - rename cert_mode variable to https_mode
 - don't enable mod-deflate by default
-- remove SSLEngine directive from common SSL configuration (SSLEngine must be at the same level as the SSLCertificateFile directive)
-- remove automatic homepage generation feature (will be split to separate role)
-- always install libapache2-mod-md/apache2 from buster-backports, newer version with ACMEv2 support required
-- the role depends on common role for apt backports sources installation/update apt cache handler
+- add variable apache_allow_robots (allow/disabllow robots globally, default no)
+- add hard dependency on common role
 - update doc, cleanup, formatting, add screenshot
-- use ansible-vault to manage secret variables
-- do not setup any virtualhost by default
-- set the default log format to `vhost_combined` (all vhosts to a single file)
 - require manual configuration of the letsencrypt admin email address
-- move common mod_md settings to apache role
-- enforce root:www-data ownership and mode 0750 on virtualhosts documentroots
 - disable X-Frame-Options header as Content-Security-Policy frame-ancestors replaces/obsoletes it
-- mark HTTP->HTTPS redirects as permanent (HTTP code 301)
 - disable setting a default Content-Security-Policy, each application is responsible for setting an appropriate CSP
+- mark HTTP->HTTPS redirects as permanent (HTTP code 301)
 - exclude /server-status from automatic HTTP -> HTTPS redirects
 - ensure the default/fallback vhost is always the first in load order
-- enforce fail2ban bans on HTTP basic auth failures
-- allow defining custom reverse proxies in configuration
 
 
 **nextcloud: refactor role:**
@@ -150,6 +148,7 @@ This releases improves usability, portability, standards compliance, separation 
 - make backup role fully optional, check rsnapshot configuration after copying config file
 - delegate database backups to the respective database role (mariadb/postgresql)
 - add deck, notes and maps apps
+- add php-fpm configuration
 
 
 **tt-rss: refactor role:**
@@ -172,6 +171,7 @@ This releases improves usability, portability, standards compliance, separation 
 - update documentation
 - simplify domain name/install directory/full URL templating
 - rename role to `tt_rss`
+- add php-fpm configuration
 - various fixes, cleanup, reordering
 
 **Migrating tt-rss data to Postgresql from a MySQL-based installation:**
@@ -353,6 +353,7 @@ TAGS=gitea xsrv deploy
 - add documentation, add backup restoration procedure
 - use ansible-vault as default source for shaarli username, password, api secret and salt
 - add role to example playbook (disabled by default)
+- add php-fpm configuration
 
 **Migrating Shaarli data to a new installation**
 
