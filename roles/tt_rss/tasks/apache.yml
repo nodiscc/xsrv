@@ -1,4 +1,4 @@
-##### APACHE CONFIG #####
+##### TT_RSS - APACHE CONFIGURATION #####
 
 - name: copy tt-rss apache virtualhost configuration
   template:
@@ -8,6 +8,13 @@
     group: root
     mode: 0600
   notify: reload apache
+
+- name: copy php-fpm configuration
+  template:
+    src: etc_php_7.3_fpm_pool.d_tt-rss.conf.j2
+    dest: /etc/php/7.3/fpm/pool.d/tt-rss.conf
+    mode: 0644
+  notify: restart php-fpm
 
 - name: enable tt-rss apache virtualhost configuration
   command: a2ensite tt-rss
