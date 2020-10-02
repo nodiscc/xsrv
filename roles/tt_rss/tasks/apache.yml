@@ -21,3 +21,6 @@
   args:
     creates: "/etc/apache2/sites-enabled/tt-rss.conf"
   notify: reload apache
+
+- name: ensure apache configuration is applied (flush handlers)
+  meta: flush_handlers
