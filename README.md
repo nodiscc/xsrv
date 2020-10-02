@@ -58,6 +58,7 @@ Install and manage self-hosted network services and applications on your own ser
 <!-- MarkdownTOC -->
 
 - [Requirements](#requirements)
+- [Installation](#installation)
 - [Usage](#usage)
   - [Basic deployment](#basic-deployment)
   - [Changing configuration](#changing-configuration)
@@ -80,9 +81,32 @@ Install and manage self-hosted network services and applications on your own ser
 
 ## Requirements
 
-This tool requires:
- - one or more target servers (_hosts_): see [server preparation](docs/server-preparation.md)
- - a remote administration machine (_controller_) from which playbooks will be run against your _hosts_. See [ansible controller preparation](docs/ansible-controller-preparation.md)
+One or more target servers (_hosts_) to configure. See [server preparation](docs/server-preparation.md).
+ 
+
+
+## Installation
+
+A _controller_ machine will be used for deployment and remote administration. The controller can be any laptop desktop PC, dedicated server, container... where python, bash and ansible are available. On the controller:
+
+
+```bash
+# install requirements (example for debian-based systems)
+sudo apt update && sudo apt install git bash python3-pip openssl ssh
+
+# authorize your SSH key on target servers (hosts)
+ssh-copy-id myusername@my.example.org
+
+# clone the repository
+sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest release
+sudo git clone -b 1.0 https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR specific release
+sudo git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR development version
+
+# (optional) install the command line tool to your $PATH
+sudo cp /opt/xsrv/xsrv /usr/local/bin/
+```
+
+You can use `xsrv` to manage your ansible environments, or use components through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html) directly (for example, add `/path/to/xsrv/roles` to your ansible [roles path](https://docs.ansible.com/ansible/latest/reference_appendices/config.html), or get the collection using `ansible-galaxy collection install nodiscc.xsrv`). See [Using as ansible collection](#using-as-ansible-collection-in-your-playbooks).
 
 
 ## Usage
