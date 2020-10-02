@@ -1,0 +1,8 @@
+# rsyslog - monitor php-fpm access/error log files
+module(load="imfile")
+
+input(type="imfile"
+      File="/var/log/php7.3-fpm.log"
+      Tag="php-fpm:"
+      Facility="daemon"
+      PersistStateInterval="0")

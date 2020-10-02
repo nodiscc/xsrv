@@ -23,6 +23,13 @@
     mode: 0600
   notify: restart rsyslog
 
+- name: configure rsyslog to monitor php-fpm logs
+  template:
+    src: etc_rsyslog.d_php-fpm.conf.j2
+    dest: /etc/rsyslog.d/php-fpm.conf
+    mode: 0600
+  notify: restart rsyslog
+
 - name: configure rsyslog to monitor netdata logs
   template:
     src: etc_rsyslog.d_netdata.conf.j2
