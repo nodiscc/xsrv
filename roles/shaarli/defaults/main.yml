@@ -22,6 +22,16 @@ shaarli_https_mode: selfsigned
 
 # Shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
-
 # Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
 shaarli_version: 'v0.11.1'
+
+# php-fpm: Maximum amount of memory a script may consume (K, M, G)
+shaarli_php_memory_limit: '128M'
+# php_fpm: Maximum execution time of each script (seconds)
+shaarli_php_max_execution_time: 30
+# php-fpm: Maximum amount of time each script may spend parsing request data (seconds)
+shaarli_php_max_input_time: 60
+# php-fpm: Maximum size of POST data that PHP will accept (K, M, G)
+shaarli_php_post_max_size: '8M'
+# php-fpm: Maximum allowed size for uploaded files (K, M, G)
+shaarli_php_upload_max_filesize: '2M'

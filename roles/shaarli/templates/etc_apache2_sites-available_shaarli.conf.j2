@@ -22,6 +22,10 @@ MDomain {{ shaarli_fqdn }}
   SSLCertificateKeyFile /etc/ssl/private/{{ shaarli_fqdn }}.key
 {% endif %}
 
+  <FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php7.3-fpm-shaarli.sock|fcgi://localhost"
+  </FilesMatch>
+
   <Directory {{ shaarli_install_dir }}>
       # Required for .htaccess support
       AllowOverride All
