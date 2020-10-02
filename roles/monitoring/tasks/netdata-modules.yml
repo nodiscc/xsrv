@@ -82,7 +82,7 @@
   git:
     dest: "/root/netdata-logcount"
     repo: "{{ netdata_logcount_git_url }}"
-    version: "1.0"
+    version: "1.0.3"
     accept_hostkey: yes
     force: yes # discard modified files
 
@@ -126,13 +126,13 @@
     name: logcount
     user: root
 
-- name: set read permissions for netdata on /var/run/logcount
+- name: set read permissions for netdata on /var/cache/logcount
   file:
-    path: /var/run/logcount
+    path: /var/cache/logcount
     state: touch
     owner: root
     group: netdata
-    mode: 0650
+    mode: 0640
     modification_time: preserve
     access_time: preserve
 
