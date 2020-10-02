@@ -129,6 +129,9 @@
 
 ##### SERVICE #####
 
+- name: ensure apache/fail2ban configuration is applied (flush handlers)
+  meta: flush_handlers
+
 - name: enable apache service
   service: name=apache2 state=started enabled=yes
   when: apache_enable_service|bool
