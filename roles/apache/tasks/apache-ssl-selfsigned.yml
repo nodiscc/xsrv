@@ -9,31 +9,21 @@
       - ssl-cert
     state: present
 
-# We add a self-signed certificate for the domain 'localhost', and use it for the default
-# virtualhost (served for requests that do not match any configured servername)
-# It prevents disclosing the CN for the first 'real' virtualhost certificate, when accessing the server directly by IP address
-
-- name: generate openssl private keys
+- name: generate private key for default virtualhost
   openssl_privatekey:
-    path: "/etc/ssl/private/{{ item.servername }}.key"
-  when: item.https_mode == 'selfsigned'
-  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'https_mode': 'selfsigned'} ] }}"
+    path: "/etc/ssl/private/localhost.key"
   notify: restart apache
 
-- name: generate openssl certficate signing requests
+- name: generate certificate signing request for default virtualhost
   openssl_csr:
-    path: "/etc/ssl/private/{{ item.servername }}.csr"
-    privatekey_path: "/etc/ssl/private/{{ item.servername }}.key"
-    common_name: "{{ item.servername }}"
-  when: item.https_mode == 'selfsigned'
-  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'https_mode': 'selfsigned'} ] }}"
+    path: "/etc/ssl/private/localhost.csr"
+    privatekey_path: "/etc/ssl/private/localhost.key"
+    common_name: "localhost"
 
-- name: generate self-signed openssl certificates
+- name: generate self-signed certificate for default virtualhost
   openssl_certificate:
-    path: "/etc/ssl/certs/{{ item.servername }}.crt"
-    privatekey_path: "/etc/ssl/private/{{ item.servername }}.key"
-    csr_path: "/etc/ssl/private/{{ item.servername }}.csr"
+    path: "/etc/ssl/certs/localhost.crt"
+    privatekey_path: "/etc/ssl/private/localhost.key"
+    csr_path: "/etc/ssl/private/localhost.csr"
     provider: selfsigned
-  when: item.https_mode == 'selfsigned'
-  with_items: "{{ apache_virtualhosts + [ {'servername': 'localhost', 'https_mode': 'selfsigned'} ] }}"
   notify: restart apache

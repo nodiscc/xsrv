@@ -11,61 +11,8 @@
 <VirtualHost _default_:443>
     ServerName localhost
     DocumentRoot /var/www/localhost
-    # Use the default self-signed certificate for localhost
     SSLEngine On
+    # Use the default self-signed certificate for localhost
     SSLCertificateFile /etc/ssl/certs/localhost.crt
     SSLCertificateKeyFile /etc/ssl/private/localhost.key
 </VirtualHost>
-
-# common configuration for mod_md
-MDCertificateAgreement accepted
-MDContactEmail {{ apache_letsencrypt_email }}
-MDPrivateKeys RSA 4096
-
-{% for vhost in apache_virtualhosts %}
-{% if vhost.https_mode == 'selfsigned' %}
-<VirtualHost *:443>
-{% elif vhost.https_mode == 'letsencrypt' %}
-ServerAdmin webmaster@{{ vhost.servername }}
-MDomain {{ vhost.servername }}
-<VirtualHost *:443>
-{% else %}
-<VirtualHost *:80>
-{% endif %}
-    ServerName {{ vhost.servername }}
-    DocumentRoot {{ vhost.documentroot }}
-
-{% if vhost.https_mode == 'selfsigned' %}
-    # Configuration for self-signed SSL certificates
-    SSLCertificateFile /etc/ssl/certs/{{ vhost.servername }}.crt
-    SSLCertificateKeyFile /etc/ssl/private/{{ vhost.servername }}.key
-    # HSTS/OCSP Stapling are not supported for self-signed certificates
-{% endif %}
-
-{% if vhost.allow_robots is not defined or not vhost.allow_robots %}
-    # Ask search engines/bots not to crawl the website
-    Header always set X-Robots-Tag "noindex,nofollow,noarchive,nosnippet"
-{% endif %}
-
-{% if vhost.reverse_proxies is defined %}
-    LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
-    LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
-    ProxyPreserveHost On
-{% for reverse_proxy in vhost.reverse_proxies %}
-    # {{ reverse_proxy.name }} reverse proxy
-    ProxyPass {{ reverse_proxy.location }} {{ reverse_proxy.backend }}
-    ProxyPassReverse {{ reverse_proxy.location }} {{ reverse_proxy.backend }}
-{% if reverse_proxy.response_headers is defined %}
-    LoadModule setenvif_module /usr/lib/apache2/modules/mod_setenvif.so
-    SetEnvIf Request_URI ^{{ reverse_proxy.location }} {{ reverse_proxy.name }}
-{% for header in reverse_proxy.response_headers %}
-    Header always unset {{ header.split(' ')[0] }} env={{ reverse_proxy.name }}
-    Header always set {{ header }} env={{ reverse_proxy.name }}
-{% endfor %}
-{% endif %}
-{% endfor %}
-{% endif %}
-
-</VirtualHost>
-{% endfor %}
-

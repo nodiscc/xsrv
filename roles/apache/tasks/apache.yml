@@ -22,18 +22,17 @@
     package:
       - apache2
       - libapache2-mod-evasive
-      - libapache2-mod-php
       - libapache2-mod-md
+      - libapache2-mod-fcgid
       - php-apcu
       - php
+      - php-fpm
 
-- name: install libapache2-mod-md from buster-backports
+- name: remove mod-php (replaced with php-fpm)
   apt:
-    state: present
-    package:
-      - libapache2-mod-md
-    default_release: buster-backports
-
+    package: libapache2-mod-php
+    state: absent
+  notify: restart apache
 
 ##### APACHE MODULES/CONFIGURATON #####
 
@@ -46,16 +45,21 @@
     - { src: 'etc_apache2_conf-available_security.conf.j2', dest: '/etc/apache2/conf-available/security.conf' }
     - { src: 'etc_apache2_conf-available_logging.conf.j2', dest: '/etc/apache2/conf-available/logging.conf' }
     - { src: 'etc_apache2_conf-available_ssl-common.conf.j2', dest: '/etc/apache2/conf-available/ssl-common.conf' }
+    - { src: 'etc_apache2_conf-available_mod-md.conf.j2', dest: '/etc/apache2/conf-available/mod-md.conf' }
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf' }
-    - { src: 'etc_php_7.3_apache2_conf.d_30-hide-header.ini.j2', dest: '/etc/php/7.3/apache2/conf.d/30-hide-header.ini' }
-  notify: reload apache
+    - { src: 'etc_php_7.3_fpm_pool.d_www.conf.j2', dest: '/etc/php/7.3/fpm/pool.d/www.conf' }
+  notify:
+    - reload apache
+    - restart php-fpm
 
 - name: disable unnecessary apache modules
   command: a2dismod {{ item }}
   args:
-    removes: /etc/apache2/mods-enabled/cgi.load
+    removes: /etc/apache2/mods-enabled/{{ item }}.load
   with_items:
     - 'cgi'
+    - 'php7.3' # conflicts with mpm_event
+    - 'mpm_prefork' # conflicts with mpm_event
   notify: restart apache
 
 - name: enable apache modules
@@ -66,9 +70,11 @@
     - 'auth_basic'
     - 'headers'
     - 'rewrite'
-    - 'php7.3'
     - 'md'
     - 'ssl'
+    - 'mpm_event'
+    - 'proxy'
+    - 'proxy_fcgi'
   notify: restart apache
 
 - name: enable apache configuration snippets
@@ -79,30 +85,11 @@
     - 'security'
     - 'logging'
     - 'ssl-common'
+    - 'mod-md'
+    - 'php7.3-fpm'
   notify: reload apache
 
 - include: apache-mod-evasive.yml
-
-
-##### APACHE VIRTUALHOSTS #####
-
-- name: create documentroot directories for virtualhosts
-  file:
-    state: directory
-    path: "{{ item.documentroot }}"
-    owner: root
-    group: www-data
-    mode: 0750
-  with_items: "{{ apache_virtualhosts }}"
-
-- name: copy robots.txt
-  template:
-    src: var_www_virtualhost_robots.txt.j2
-    dest: "{{ item.documentroot }}/robots.txt"
-    owner: root
-    group: www-data
-    mode: 0640
-  with_items: "{{ apache_virtualhosts }}"
 
 - name: copy apache sites config
   template:
@@ -111,33 +98,23 @@
     mode: 0644
   notify: reload apache
 
-- name: disable default apache sites
-  command: a2dissite {{ item }}
-  args:
-    removes: /etc/apache2/sites-enabled/{{ item }}.conf
-  with_items:
-    - 000-default
-    - default-ssl
-  notify: restart apache
-
-- name: remove default virtualhost index.html page
-  file:
-    path: /var/www/html/index.html
-    state: absent
-
-- name: enable apache sites
+- name: enable apache sites configuration
   command: a2ensite 000-sites
   args:
     creates: /etc/apache2/sites-enabled/000-sites.conf
   notify: reload apache
 
-- name: remove virtualhost configuration from previous versions of the role
+- name: remove apache/php configuration from previous versions of the role + default sites
   file:
     path: "{{ item }}"
     state: absent
   with_items:
     - /etc/apache2/sites-enabled/sites.conf
+    - /etc/apache2/sites-enabled/000-default.conf
+    - /etc/apache2/sites-enabled/default-ssl.conf
     - /etc/apache2/sites-available/sites.conf
+    - /var/www/html/index.html
+    - /etc/php/7.3/apache2/conf.d/30-hide-header.ini
   notify: reload apache
 
 ##### FAIL2BAN #####

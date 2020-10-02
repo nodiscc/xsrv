@@ -15,3 +15,10 @@
     enabled: yes
   become: yes
   when: apache_enable_service|bool
+
+- name: restart php-fpm
+  service:
+    name: php7.3-fpm
+    state: restarted
+    enabled: yes
+  become: yes
