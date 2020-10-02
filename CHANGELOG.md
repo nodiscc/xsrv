@@ -354,6 +354,15 @@ TAGS=gitea xsrv deploy
 - use ansible-vault as default source for shaarli username, password, api secret and salt
 - add role to example playbook (disabled by default)
 
+**Migrating Shaarli data to a new installation**
+
+```bash
+# deploy shaarli
+make deploy
+# access https://old.CHANGEME.org/links/?do=export and export ALL links as HTML (without prepending instance URL to notes)
+# access the new instance at https://links.CHANGEME.org/?do=import and import your HTML file
+# you can also resynchronize thumbnails a https://links.CHANGEME.org/?do=thumbs_update
+```
 
 **transmission: refactor role:
 - install and configure transmission (most settings are left to their defaults)
