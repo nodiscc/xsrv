@@ -75,6 +75,7 @@
     - 'mpm_event'
     - 'proxy'
     - 'proxy_fcgi'
+    - 'http2'
   notify: restart apache
 
 - name: enable apache configuration snippets
