@@ -1,6 +1,7 @@
 <VirtualHost *:80>
     DocumentRoot {{ tt_rss_install_dir }}
     ServerName {{ tt_rss_fqdn }}
+    ServerAdmin webmaster@{{ tt_rss_fqdn }}
 {% if tt_rss_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -16,6 +17,7 @@ MDomain {{ tt_rss_fqdn }}
 <VirtualHost *:443>
   DocumentRoot {{ tt_rss_install_dir }}
   ServerName  {{ tt_rss_fqdn }}
+  ServerAdmin webmaster@{{ tt_rss_fqdn }}
   SSLEngine on
 {% if tt_rss_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ tt_rss_fqdn }}.crt
