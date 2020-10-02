@@ -31,3 +31,6 @@
   args:
     creates: "/etc/apache2/sites-enabled/nextcloud.conf"
   notify: restart apache
+
+- name: ensure apache configuration is applied (flush handlers)
+  meta: flush_handlers
