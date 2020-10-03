@@ -1,4 +1,4 @@
----
+# metadata info for docker role
 
 galaxy_info:
   role_name: docker

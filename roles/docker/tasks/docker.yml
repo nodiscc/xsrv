@@ -1,0 +1,81 @@
+- name: Ensure old versions of Docker are not installed.
+  apt:
+    package:
+      - docker
+      - docker-engine
+    state: absent
+
+- name: Ensure dependencies are installed.
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - apt-transport-https
+      - ca-certificates
+      - "gpg" # required for APT key import
+
+- name: Add Docker apt key.
+  apt_key:
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    state: present
+  register: add_repository_key
+
+- name: Add Docker repository.
+  apt_repository:
+    repo: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+    state: present
+    filename: docker
+    update_cache: yes
+
+- name: create docker configuration directory
+  file:
+    path: "/etc/docker"
+    state: directory
+
+- name: copy docker daemon configuration
+  template:
+    src: etc_docker_daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify: restart docker
+
+- name: Install Docker.
+  package:
+    name: "docker-ce"
+    state: "present"
+  notify: restart docker
+
+- name: Install python-docker and docker-compose
+  package:
+    name:
+      - python-docker
+      - python3-docker
+      - docker-compose
+    state: present
+
+- name: Ensure docker users are added to the docker group.
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"
+
+- name: force all notified handlers to run now
+  meta: flush_handlers
+
+##### SERVICE #####
+
+- name: enable docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  when: docker_enable_service|bool
+
+- name: disable docker service
+  service:
+    name: docker
+    state: stopped
+    enabled: no
+  when: not docker_enable_service|bool

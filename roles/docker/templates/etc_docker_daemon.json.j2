@@ -1,0 +1,10 @@
+{
+{% if docker_log_driver == 'syslog' %}
+  "log-driver": "syslog",
+  "log-opts": {
+    "tag": "docker.{{ '{{' }}.Name{{ '}}' }}"
+  },
+{% endif %}
+  "metrics-addr" : "127.0.0.1:9323",
+  "experimental" : true
+}
