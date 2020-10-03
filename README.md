@@ -148,29 +148,16 @@ TODO ASCIINEMA
 
 ### Changing configuration
 
-The default configuration should work out of the box. If you need to change the default config (before first deployment or at any later point):
+Edit the playbook (list of roles), host vars files (configuration variables), or inventory using the commands below.
 
-```bash
-# Edit the list of hosts (inventory)
-xsrv edit-inventory
 
-# Edit the list of roles to apply to hosts (playbook)
-xsrv edit-playbook
-
-# Edit configuration variables for a host (host vars)
-xsrv edit-host
-
-# Edit secret (vaulted) configuration variables
-xsrv edit-vault
-```
-
-To list all available variables for all roles, see [Roles](#roles) or run  `xsrv show-defaults`.
-Copy any variable to your `host_vars` file and edit its value there, to override the default value.
+Run `xsrv show-defaults` to list all available configuration variables, or see [roles](#roles) documentation.
+To change a configuration variable from its default value, simply copy it from the defaults, to your host_vars file, and edit its value there.
 
 **After any changes to the playbook, inventory or configuration variables**, re-apply the playbook:
 
 ```bash
-xsrv deploy [playbook] [host]
+xsrv deploy
 ```
 
 ## Command-line usage
@@ -218,7 +205,6 @@ xsrv deploy infra ex1.example.org,ex2.example.org # deploy only the hosts ex1.ex
 
 - Self-hosting places your services and data under your own responsibility (availability, integrity, confidentiality...).
 - Always have a plan in place if your server crashes, gets compromised or damaged.
-- Respond to alerts sent by the monitoring system.
 - There is no High Availability mechanism configured by default.
 
 
