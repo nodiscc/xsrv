@@ -36,7 +36,7 @@ os_security_kernel_enable_core_dump: no
 
 ##### PACKAGE MANAGEMENT #####
 
-# yes/no: setup APT sources and preferences
+# yes/no: setup APT sources (security, backports) and automatic security upgrades
 setup_apt: yes
 
 
