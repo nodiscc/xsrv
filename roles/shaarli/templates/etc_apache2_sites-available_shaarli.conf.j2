@@ -31,8 +31,7 @@ MDomain {{ shaarli_fqdn }}
   <Directory {{ shaarli_install_dir }}>
       # Required for .htaccess support
       AllowOverride All
-      Order allow,deny
-      Allow from all
+      Require all granted
       Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com; frame-ancestors 'none'"
   </Directory>
 
