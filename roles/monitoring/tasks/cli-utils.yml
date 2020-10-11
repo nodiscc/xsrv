@@ -7,4 +7,6 @@
       - ncdu # ncurses disk usage viewer
       - nethogs # network bandwidth usage monitor
       - htop # system monitor/process manager
+      - lsof # list open files
+      - strace # trace system calls
       - lnav # enhanced log file viewer
