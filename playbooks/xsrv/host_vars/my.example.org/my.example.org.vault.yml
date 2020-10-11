@@ -8,7 +8,7 @@ vault_ansible_user: "CHANGEME"
 vault_ansible_become_pass: "CHANGEME"
 # default username/password for applications/services admin accounts
 vault_xsrv_admin_username: "CHANGEME"
-vault_xsrv_admin_password: "CHANGEME" # openssl rand -base64 20 | tr -d '\n' | cut -b 1-20
+vault_xsrv_admin_password: "CHANGEME" # pwgen -s 20 1
 
 ##### common role #####
 vault_msmtp_host: "smtp.CHANGEME.org"
@@ -20,35 +20,35 @@ vault_msmtp_admin_email: "CHANGEME@CHANGEME.org"
 vault_apache_letsencrypt_email: "{{ vault_msmtp_admin_email }}"
 
 ##### mariadb role #####
-vault_mariadb_root_password: "CHANGEME20" # openssl rand -base64 20 | tr -d '\n' | cut -b 1-20
+vault_mariadb_root_password: "CHANGEME20" # pwgen -s 20 1
 
 ##### nextcloud role #####
 vault_nextcloud_user: "{{ vault_xsrv_admin_username }}"
 vault_nextcloud_password: "{{ vault_xsrv_admin_password }}"
 vault_nextcloud_admin_email: "{{ vault_msmtp_admin_email }}"
-vault_nextcloud_db_password: "CHANGEME20" # openssl rand -base64 20 | tr -d '\n' | cut -b 1-20
+vault_nextcloud_db_password: "CHANGEME20" # pwgen -s 20 1
 
 ##### tt_rss role #####
 vault_tt_rss_user: "{{ vault_xsrv_admin_username }}"
 vault_tt_rss_password: "{{ vault_xsrv_admin_password }}"
-vault_tt_rss_db_password: "CHANGEME20" # openssl rand -base64 20 | tr -d '\n' | cut -b 1-20
-vault_tt_rss_password_salt: "CHANGEME250" # openssl rand -base64 250 | tr -d '\n' | cut -b 1-250
+vault_tt_rss_db_password: "CHANGEME20" # pwgen -s 20 1
+vault_tt_rss_password_salt: "CHANGEME250" # pwgen -s 250 1
 
 ##### shaarli role #####
 vault_shaarli_username: "{{ vault_xsrv_admin_username }}"
 vault_shaarli_password: "{{ vault_xsrv_admin_password }}"
-vault_shaarli_password_salt: "CHANGEME40" # openssl rand -base64 32 | cut -b 1-40
-vault_shaarli_api_secret: "CHANGEME12" # openssl rand -base64 12 | cut -b 1-12
+vault_shaarli_password_salt: "CHANGEME40" # pwgen -s 40 1
+vault_shaarli_api_secret: "CHANGEME12" # pwgen -s 12 1
 
 ##### gitea role #####
 vault_gitea_admin_username: "{{ vault_xsrv_admin_username }}"
 vault_gitea_admin_password: "{{ vault_xsrv_admin_password }}"
 vault_gitea_admin_email: "{{ vault_msmtp_admin_email }}"
 vault_gitea_db_password: "" # leave empty when using postgresql/peer authentication on same host
-vault_gitea_internal_token: "CHANGEME106" # openssl rand -base64 106 | tr -d '\n' | cut -b 1-106
-vault_gitea_secret_key: "CHANGEME64" # openssl rand -base64 64 | tr -d '\n' | cut -b 1-64
-vault_gitea_oauth2_jwt_secret: "CHANGEME43" # openssl rand -base64 43 | sed 's|[/\+=]|_|g' | tr -d '\n' | cut -b 1-43
-vault_gitea_lfs_jwt_secret: "CHANGEME43" # openssl rand -base64 43 | sed 's|[/\+=]|_|g' | tr -d '\n' | cut -b 1-43
+vault_gitea_internal_token: "CHANGEME106" # pwgen -s 106 1
+vault_gitea_secret_key: "CHANGEME64" # pwgen -s 64 1
+vault_gitea_oauth2_jwt_secret: "CHANGEME43" # pwgen -s 43 1
+vault_gitea_lfs_jwt_secret: "CHANGEME43" # pwgen -s 43 1
 vault_gitea_mail_host: "{{ vault_msmtp_host }}"
 vault_gitea_mail_user: "{{ vault_msmtp_username }}"
 vault_gitea_mail_password: "{{ vault_msmtp_password }}"
@@ -58,10 +58,9 @@ vault_transmission_username: "{{ vault_xsrv_admin_username }}"
 vault_transmission_password: "{{ vault_xsrv_admin_password }}"
 
 ##### mumble role #####
-vault_mumble_password: "CHANGEME20"  # openssl rand -base64 20 | tr -d '\n' | cut -b 1-20
+vault_mumble_password: "CHANGEME20" # pwgen -s 20 1
 vault_mumble_superuser_password: "{{ vault_xsrv_admin_password }}"
 
 ##### openldap role #####
-vault_openldap_admin_password: "CHANGEME30" # openssl rand -base64 30 | tr -d '\n' | cut -b 1-30
-vault_openldap_bind_password: "CHANGEME30" # openssl rand -base64 30 | tr -d '\n' | cut -b 1-30
-
+vault_openldap_admin_password: "CHANGEME30" # pwgen -s 30 1
+vault_openldap_bind_password: "CHANGEME30" # pwgen -s 30 1

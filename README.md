@@ -95,7 +95,7 @@ A _controller_ machine will be used for deployment and remote administration. Th
 
 ```bash
 # install requirements (example for debian-based systems)
-sudo apt update && sudo apt install git bash python3-pip openssl ssh
+sudo apt update && sudo apt install git bash python3-pip ssh pwgen
 
 # authorize your SSH key on target servers (hosts)
 ssh-copy-id myusername@my.example.org

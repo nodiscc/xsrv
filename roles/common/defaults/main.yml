@@ -97,6 +97,8 @@ firehol_networks:
       # - { name: "sshcustom", src: "any" } # SSH server on custom port
       # - { name: "transmission", src: "any", } # incoming bittorrent peer connections
       # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
+      # - { name: "ldap", src: "{{ firehol_alias_lan }}", } # LDAP (plain/insecure) from LAN
+      # - { name: "ldaps", src: "{{ firehol_alias_lan }}", } # LDAP (SSL/secure) from LAN
     allow_output: # outgoing traffic to allow (name: service name, dst: destination IP address/subnet)
       - { name: "dns", dst: "any" } # DNS queries to anywhere
       - { name: "ntp", dst: "any" } # time/date synchronization
