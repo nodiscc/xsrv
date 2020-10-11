@@ -1,0 +1,39 @@
+<VirtualHost *:80>
+    DocumentRoot {{ ldap_account_manager_install_dir }}
+    ServerName {{ ldap_account_manager_fqdn }}
+    ServerAdmin webmaster@{{ ldap_account_manager_fqdn }}
+{% if ldap_account_manager_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if ldap_account_manager_https_mode == 'letsencrypt' %}
+MDomain {{ ldap_account_manager_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  DocumentRoot {{ ldap_account_manager_install_dir }}
+  ServerName  {{ ldap_account_manager_fqdn }}
+  ServerAdmin webmaster@{{ ldap_account_manager_fqdn }}
+  SSLEngine on
+{% if ldap_account_manager_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ ldap_account_manager_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ ldap_account_manager_fqdn }}.key
+{% endif %}
+
+  <FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php7.3-fpm-tt-rss.sock|fcgi://localhost"
+  </FilesMatch>
+
+  <Directory {{ ldap_account_manager_install_dir }}/config>
+      Require all denied
+  </Directory>
+
+  <Directory {{ ldap_account_manager_install_dir }}/sess>
+      Require all denied
+  </Directory>
+
+</VirtualHost>

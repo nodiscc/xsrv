@@ -1,0 +1,63 @@
+# password to add/delete/rename configuration profiles (default: lam)
+# Configuration via web interface is locked by default, changes will be overwritten by ansible
+# Uncomment this to temporarily allow access to configuration interface with the password 'lam'
+# don't forget to comment it back afterwards!
+# password: {SSHA}D6AaX93kPmck9wAxNlq3GF93S7A= R7gkjQ==
+
+# default profile, without ".conf"
+default: lam
+
+# log level
+logLevel: 5
+
+# log destination
+logDestination: SYSLOG
+
+
+# session timeout in minutes
+sessionTimeout: {{ ldap_account_manager_session_timeout }}
+
+# list of hosts which may access LAM
+allowedHosts: {{ ldap_account_manager_allowed_hosts }}
+
+# list of hosts which may access LAM Pro self service
+allowedHostsSelfService: 
+
+# encrypt session data
+encryptSession: true
+
+# Password: minimum password length
+passwordMinLength: 9
+
+# Password: minimum uppercase characters
+passwordMinUpper: 0
+
+# Password: minimum lowercase characters
+passwordMinLower: 0
+
+# Password: minimum numeric characters
+passwordMinNumeric: 0
+
+# Password: minimum symbolic characters
+passwordMinSymbol: 0
+
+# Password: minimum character classes (0-4)
+passwordMinClasses: 3
+
+# Password: checked rules
+checkedRulesCount: -1
+
+# Password: must not contain part of user name
+passwordMustNotContain3Chars: false
+
+# Password: must not contain user name
+passwordMustNotContainUser: false
+
+# Email format (default/unix)
+mailEOL: default
+
+# PHP error reporting (default/system)
+errorReporting: default
+
+# License
+license: 

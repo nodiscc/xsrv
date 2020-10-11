@@ -58,5 +58,10 @@ vault_transmission_username: "{{ vault_xsrv_admin_username }}"
 vault_transmission_password: "{{ vault_xsrv_admin_password }}"
 
 ##### mumble role #####
-vault_mumble_password: "CHANGEME20"
+vault_mumble_password: "CHANGEME20"  # openssl rand -base64 20 | tr -d '\n' | cut -b 1-20
 vault_mumble_superuser_password: "{{ vault_xsrv_admin_password }}"
+
+##### openldap role #####
+vault_openldap_admin_password: "CHANGEME30" # openssl rand -base64 30 | tr -d '\n' | cut -b 1-30
+vault_openldap_bind_password: "CHANGEME30" # openssl rand -base64 30 | tr -d '\n' | cut -b 1-30
+

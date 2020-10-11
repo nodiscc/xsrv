@@ -1,0 +1,55 @@
+---
+
+##### OPENLDAP DIRECTORY SERVICE #####
+
+# FQDN at which the LDAP server can be reached
+openldap_fqdn: "ldap.CHANGEME.org"
+# LDAP base DN
+openldap_base_dn: "dc=CHANGEME,dc=org"
+# admin username/password for OpenLDAP server
+# the admin DN will be of the form cn=admin,dc=CHANGEME,dc=org
+openldap_admin_password: "{{ vault_openldap_admin_password }}"
+
+# Unprivilegied "bind" LDAP account username/password
+# This account will be allowed to to browse the directory/resolve UIDs and GIDs)
+openldap_bind_username: "bind"
+openldap_bind_password: "{{ vault_openldap_bind_password }}"
+
+
+##### LDAP ACCOUNT MANAGER #####
+
+# setup LDAP Account Manager web management interface (yes/no)
+openldap_setup_lam: yes
+
+# domain name (FQDN) for ldap-account-manager
+ldap_account_manager_fqdn: "{{ openldap_fqdn }}"
+
+# comma-separated list of IP addresses allowed to access ldap-account-manager (wildcards allowed)
+# for security reasons only private/RFC1918 addresses are allowed by default
+ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*"
+
+# installation directory for ldap-account-manager
+ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
+# ldap account manager version
+ldap_account_manager_version: "7.3"
+# ldap-account-manager installation method (tar.bz2, apt...)
+# currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
+ldap_account_manager_install_method: "tar.bz2"
+# ldap-account-manager session timeout in minutes
+ldap_account_manager_session_timeout: 10
+
+# HTTPS and SSL/TLS certificate mode for the ldap-account-manager webserver virtualhost
+#   letsencrypt: acquire a certificate from Let's Encrypt (ldap_account_manager_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+ldap_account_manager_https_mode: "selfsigned"
+
+# php-fpm: Maximum amount of memory a script may consume (K, M, G)
+ldap_account_manager_php_memory_limit: '128M'
+# php_fpm: Maximum execution time of each script (seconds)
+ldap_account_manager_php_max_execution_time: 30
+# php-fpm: Maximum amount of time each script may spend parsing request data (seconds)
+ldap_account_manager_php_max_input_time: 60
+# php-fpm: Maximum size of POST data that PHP will accept (K, M, G)
+ldap_account_manager_php_post_max_size: '8M'
+# php-fpm: Maximum allowed size for uploaded files (K, M, G)
+ldap_account_manager_php_upload_max_filesize: '2M'

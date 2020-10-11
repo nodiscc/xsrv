@@ -1,0 +1,109 @@
+##### GET/SET FACTS #####
+
+- name: set variables for tar.bz2 installation method
+  set_fact:
+    ldap_account_manager_configcfg_dir: "{{ ldap_account_manager_install_dir }}/config"
+
+- name: check if ldap-account-manager installation directory exists
+  stat:
+    path: "{{ ldap_account_manager_install_dir }}"
+  register: ldap_account_manager_dir
+
+- name: set the default installation action (do nothing)
+  set_fact:
+    ldap_account_manager_action: none
+
+- name: check if initial installation should be performed
+  set_fact:
+    ldap_account_manager_action: initial
+  when:
+    - ansible_local.ldap_account_manager.installed.version is undefined
+    - not ldap_account_manager_dir.stat.exists
+
+- name: check if upgrade should be performed
+  set_fact:
+    ldap_account_manager_action: upgrade
+  when:
+    - ansible_local.ldap_account_manager.installed.version is defined
+    - ansible_local.ldap_account_manager.installed.version < ldap_account_manager_version
+    - ldap_account_manager_dir.stat.exists
+
+##### CLEANUP #####
+
+# remove lam installed from apt on debian 9
+- name: remove previous versions of ldap-account-manager
+  apt:
+    package: ldap-account-manager
+    state: absent
+
+
+##### DOWNLOAD/INSTALLATION #####
+
+# TODO: checksum/signature verification?
+- name: download ldap-account-manager tar.bz2
+  get_url:
+    url: https://netix.dl.sourceforge.net/project/lam/LAM/{{ ldap_account_manager_version }}/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
+    dest: /root/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
+  retries: 3
+  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+
+- name: create ldap-account-manager tar.bz2 extraction directory
+  file:
+    path: /root/ldap-account-manager-unpack
+    state: directory
+    mode: 0750
+  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+
+- name: extract ldap-account-manager tar.bz2
+  unarchive:
+    src: "/root/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2"
+    dest: "/root/ldap-account-manager-unpack"
+    remote_src: yes
+    owner: root
+    group: www-data
+    mode: u=rwX,g=rX
+  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+
+- name: give required write permissions to the webserver
+  file:
+    path: "{{ item }}"
+    group: www-data
+    mode: "g+wX"
+    recurse: yes
+  with_items:
+    - "/root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }}/sess"
+    - "/root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }}/tmp"
+    - "/root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }}/tmp/internal"
+    - "/root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }}/config"
+  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+
+- name: delete old ldap-account-manager installation
+  file:
+    path: '{{ ldap_account_manager_install_dir }}'
+    state: absent
+  when: ldap_account_manager_action == 'upgrade'
+
+- name: move ldap_account_manager extraction directory to install directory
+  command: mv /root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }} '{{ ldap_account_manager_install_dir }}'
+  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+
+##### ANSIBLE FACTS #####
+
+- name: create ansible facts.d directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+    mode: 0755
+
+- name: create ldap-account-manager installed fact file
+  template:
+    src: etc_ansible_facts.d_ldap_account_manager.fact.j2
+    dest: /etc/ansible/facts.d/ldap_account_manager.fact
+    mode: 0644
+
+### CLEANUP ###
+
+- name: remove ldap-account-manager tar.bz2 extraction directory
+  file:
+    path: /root/ldap-account-manager-unpack
+    state: absent

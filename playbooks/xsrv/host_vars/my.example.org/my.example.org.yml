@@ -27,6 +27,11 @@ gitea_fqdn: "git.CHANGEME.org"
 # see roles/transmission/defaults/main.yml
 transmission_fqdn: "torrent.CHANGEME.org"
 
+#### OPENLDAP ####
+# see roles/openldap/defaults/main.yml
+openldap_fqdn: "ldap.CHANGEME.org"
+openldap_base_dn: "dc=CHANGEME,dc=org"
+
 
 ##### FIREWALL/FAIL2BAN #####
 # see roles/common/defaults/main.yml

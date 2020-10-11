@@ -1,0 +1,78 @@
+##### LDAP DATABASE POPULATION #####
+
+- name: create base LDAP DN entry
+  ldap_entry:
+    dn: "{{ openldap_base_dn }}"
+    objectClass:
+      - domain
+      - organization
+      - dcObject
+    attributes:
+      o: "{{ openldap_base_dn }}"
+      structuralObjectClass: organization
+
+- name: hash LDAP admin password
+  shell: slappasswd -s {{ openldap_admin_password }} # noqa 305
+  register: slapd_admin_password
+  changed_when: False # does not change anything
+  check_mode: no # run even in check mode
+
+- name: hash LDAP 'bind' user password
+  shell: slappasswd -s {{ openldap_bind_password }} # noqa 305
+  register: slapd_bind_password
+  changed_when: False # does not change anything
+  check_mode: no # run even in check mode
+
+# slappasswd uses a new seed every time, hence the hash changes every time the playbook runs
+- name: create LDAP admin account (not idempotent, returns changed every time)
+  ldap_attr:
+    dn: "{{ item.dn }}"
+    name: "{{ item.name }}"
+    values: "{{ item.value }}"
+    state: 'exact'
+  no_log: True
+  with_items:
+    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootDN', value: 'cn=admin,{{ openldap_base_dn }}' }
+    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootDN', value: 'cn=admin,cn=config' }
+    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
+    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
+
+- name: create basic Organizational Units
+  ldap_entry:
+    dn: ou={{ item }},{{ openldap_base_dn }}
+    objectClass: organizationalUnit
+    server_uri: ldap://localhost/
+    bind_dn: cn=admin,{{ openldap_base_dn }}
+    bind_pw: "{{ openldap_admin_password }}"
+  with_items:
+    - 'system'
+    - 'groups'
+    - 'users'
+
+- name: create 'users' LDAP group
+  ldap_entry:
+    dn: "cn=users,ou=groups,{{ openldap_base_dn }}"
+    objectClass: posixGroup
+    attributes:
+      gidNumber: 10000
+      description: 'Default group for all users'
+    server_uri: ldap://localhost/
+    bind_dn: cn=admin,{{ openldap_base_dn }}
+    bind_pw: "{{ openldap_admin_password }}"
+
+- name: create unprivilegied bind LDAP user
+  ldap_entry:
+    dn: 'cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}'
+    objectClass:
+      - organizationalRole
+      - simpleSecurityObject
+    server_uri: ldap://localhost/
+    bind_dn: cn=admin,{{ openldap_base_dn }}
+    bind_pw: "{{ openldap_admin_password }}"
+    attributes:
+      description: "Unprivilegied user for resolving UIDs/GIDs"
+
+- name: set a password for the bind LDAP user
+  community.general.ldap_passwd:
+    dn: 'cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}'
+    passwd: "{{ openldap_bind_password }}"

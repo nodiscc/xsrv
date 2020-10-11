@@ -34,12 +34,12 @@
 - [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
 - [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
 - [mumble](roles/mumble) - Low-latency voice-over-IP (VoIP) server
+- [openldap](roles/openldap) - LDAP directory server
 - _WIP_ [docker](roles/docker) - Docker container platform
 - _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
 - _WIP_ [graylog](roles/graylog) - Log management and analysis software
 - _WIP_ [icecast](roles/icecast) - Streaming media server
 - _WIP_ [pulseaudio](roles/pulseaudio) - Network sound server
-- _WIP_ [openldap](roles/openldap) - LDAP directory service and management tools
 - _WIP_ [rocketchat](roles/rocketchat) - Realtime web chat/communication service
 
 <!-- TODO demo screencast -->

@@ -1,0 +1,33 @@
+- include: checks.yml
+  tags: openldap
+
+- include: openldap.yml
+  become: yes
+  tags: openldap
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: openldap
+
+# restart slapd to apply configuration
+- name: run all notified handlers
+  meta: flush_handlers
+  become: yes
+  tags: openldap
+
+- include: populate.yml
+  become: yes
+  tags: openldap
+
+- include: backups.yml
+  become: yes
+  tags:
+    - openldap
+    - backup
+
+- include: ldap-account-manager.yml
+  become: yes
+  when: openldap_setup_lam|bool
+  tags:
+    - openldap
+    - ldap-account-manager

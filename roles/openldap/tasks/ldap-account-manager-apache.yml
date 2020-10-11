@@ -1,0 +1,24 @@
+---
+
+- name: copy php-fpm configuration
+  template:
+    src: etc_php_7.3_fpm_pool.d_ldap-account-manager.conf.j2
+    dest: /etc/php/7.3/fpm/pool.d/ldap-account-manager.conf
+    mode: 0644
+  notify: restart php-fpm
+
+- name: copy apache2 virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_ldap-account-manager.conf.j2
+    dest: /etc/apache2/sites-available/ldap-account-manager.conf
+    mode: 0644
+  notify: reload apache
+
+- name: enable apache2 virtualhost
+  command: a2ensite ldap-account-manager
+  args:
+    creates: "/etc/apache2/sites-enabled/ldap-account-manager.conf"
+  notify: restart apache
+
+- name: ensure apache configuration is applied (flush handlers)
+  meta: flush_handlers

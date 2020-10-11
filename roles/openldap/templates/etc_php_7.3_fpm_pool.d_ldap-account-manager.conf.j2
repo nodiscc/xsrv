@@ -1,0 +1,39 @@
+[ldap-account-manager]
+user = www-data
+group = www-data
+listen = /run/php/php7.3-fpm-ldap-account-manager.sock
+listen.owner = www-data
+listen.group = www-data
+listen.allowed_clients = 127.0.0.1
+
+;;; PROCESS MANAGEMENT ;;;
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+pm.process_idle_timeout = 20s
+;pm.max_requests = 500
+
+;;; MONITORING ;;;
+;pm.status_path = /status
+;ping.path = /ping
+;ping.response = pong
+
+;;; LOGGING/DEBUGGING ;;;
+;access.log = log/$pool.access.log
+;slowlog = log/$pool.log.slow
+;request_slowlog_timeout = 0
+;request_slowlog_trace_depth = 20
+;catch_workers_output = no
+;php_flag[display_errors] = off
+
+;;; LIMITS
+php_admin_value[max_execution_time] = {{ ldap_account_manager_php_max_execution_time }}
+php_admin_value[max_input_time] = {{ ldap_account_manager_php_max_input_time }}
+php_admin_value[memory_limit] = {{ ldap_account_manager_php_memory_limit }}
+php_admin_value[post_max_size] = {{ ldap_account_manager_php_post_max_size }}
+php_admin_value[upload_max_filesize] = {{ ldap_account_manager_php_upload_max_filesize }}
+;rlimit_files = 1024
+;chroot =
+;chdir = /

@@ -1,0 +1,18 @@
+---
+
+galaxy_info:
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "OpenLDAP directory server"
+  license: "GPL-3.0"
+  min_ansible_version: 2.7
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+  galaxy_tags:
+    - ldap
+    - directory
+    - authentication
+
+dependencies:
+  - 'common'

@@ -1,0 +1,57 @@
+##### OPENLDAP DIRECTORY SERVER #####
+
+- name: install ansible modules requirements
+  apt:
+    state: present
+    package:
+      - debconf-utils
+      - python3-ldap
+
+### DEBCONF ###
+
+# it is required to preconfigure the LDAP base DN in debconf, else it will
+# be automatically derived from the machine's hostname
+- name: pre-configure ldap server base DN/organization
+  debconf:
+    name: slapd
+    question: "{{ item }}"
+    vtype: string
+    value: "{{ openldap_base_dn }}"
+  with_items:
+    - "slapd/domain"
+    - "shared/organization"
+
+
+### PACKAGES ###
+
+- name: install openLDAP server
+  apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 900
+    package:
+      - slapd
+      - ldap-utils
+      - openssl
+      - ldapscripts
+      - python3-pyldap
+
+
+### CONFIGURATION ###
+
+- name: create LDAP database directory
+  file:
+    path: "/var/lib/ldap/{{ openldap_fqdn }}/"
+    state: directory
+    owner: openldap
+    group: openldap
+    mode: 0750
+
+- name: copy slapd configuration
+  template:
+    src: etc_default_slapd.j2
+    dest: /etc/default/slapd
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart slapd

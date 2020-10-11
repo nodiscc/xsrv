@@ -1,0 +1,35 @@
+##### SSL/TLS CERTIFICATES - SELF-SIGNED #####
+
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
+- name: create directory for openldap SSL certs/keys
+  file:
+    path: /etc/ssl/openldap
+    state: directory
+    owner: root
+    group: netdata
+    mode: 0750
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
+  notify: restart apache
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/ssl/openldap/{{ openldap_base_dn }}.csr"
+    privatekey_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
+    common_name: "{{ openldap_base_dn }}"
+
+- name: generate self-signed openssl certificate
+  openssl_certificate:
+    path: "/etc/ssl/openldap/{{ openldap_base_dn }}.crt"
+    privatekey_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
+    csr_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.csr"
+    provider: selfsigned
+  notify: restart apache

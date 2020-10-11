@@ -1,0 +1,50 @@
+### REQUIREMENTS ###
+
+- name: installed required php extensions
+  apt:
+    package:
+      - php-ldap
+      - php-gettext
+
+### LDAP ACCOUNT MANAGER INSTALLATION ###
+
+- include: ldap-account-manager-tar-bz2.yml
+  when: ldap_account_manager_install_method == "tar.bz2"
+
+### CONFIGURATION ###
+
+- name: create ldap-account-manager profile configuration directory
+  file:
+    path: "{{ ldap_account_manager_configcfg_dir }}/profiles/lam"
+    owner: root
+    group: www-data
+    mode: u=rwX,g=rwX
+    state: directory
+
+- name: copy ldap-account-manager configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: www-data
+    mode: "{{ item.mode }}"
+  with_items:
+    - src: "etc_ldap-account-manager_config.cfg.j2"
+      dest: "{{ ldap_account_manager_configcfg_dir }}/config.cfg"
+      mode: "0640"
+    - src: "var_lib_ldap-account-manager_config_lam.conf.j2"
+      dest: "{{ ldap_account_manager_install_dir }}/config/lam.conf"
+      mode: "0640"
+    - src: "var_lib_ldap-account-manager_config_profiles_lam_default.group.j2"
+      dest: "{{ ldap_account_manager_install_dir }}/config/profiles/lam/default.group"
+      mode: "0660"
+    - src: "var_lib_ldap-account-manager_config_profiles_lam_default.user.j2"
+      dest: "{{ ldap_account_manager_install_dir }}/config/profiles/lam/default.user"
+      mode: "0660"
+
+### APACHE ###
+
+- include: ldap-account-manager-ssl-selfsigned.yml
+  when: ldap_account_manager_https_mode == 'selfsigned'
+
+- include: ldap-account-manager-apache.yml
