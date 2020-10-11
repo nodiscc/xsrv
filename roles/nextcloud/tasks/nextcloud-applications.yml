@@ -1,0 +1,33 @@
+- name: install nextcloud applications
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ app:install {{ item.app }}
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  with_items: "{{ nextcloud_apps }}"
+  register: nextcloud_app_install
+  when:
+    - 'item.state == "enable"'
+  changed_when:
+    - not 'already installed' in nextcloud_app_install.stdout
+  failed_when:
+    - nextcloud_app_install.rc !=0 and not 'not compatible with this version of the server' not in nextcloud_app_install.stderr
+
+- name: enable/disable nextcloud applications
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ app:{{ item.state }} {{ item.app }}
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  with_items: "{{ nextcloud_apps }}"
+  register: nextcloud_app_enable_disable
+  changed_when:
+    - not 'No such app enabled' in nextcloud_app_enable_disable.stdout
+    - not 'already enabled' in nextcloud_app_enable_disable.stdout
+
+- name: update nextcloud applications (not imdepotent, always upgrade to latest version) # noqa 301
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ app:update --all
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
