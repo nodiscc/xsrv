@@ -19,6 +19,7 @@ MDomain {{ nextcloud_fqdn }}
   ServerName  {{ nextcloud_fqdn }}
   ServerAdmin webmaster@{{ nextcloud_fqdn }}
   SSLEngine on
+  SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1
 {% if nextcloud_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ nextcloud_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ nextcloud_fqdn }}.key
