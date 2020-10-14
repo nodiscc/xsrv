@@ -150,6 +150,20 @@ This releases improves usability, portability, standards compliance, separation 
 - add deck, notes and maps apps
 - add php-fpm configuration
 
+**Migrating Nextcloud data to Postgresql from a MySQL-based installation:**
+
+```bash
+# migration is manual
+# files: login nextcloud desktop client to your account on the old server, wait for complete file synchronization (eg. to ~/Nextcloud)
+#        deploy the new server, create equivalent accounts
+#        from nextcloud desktop, login a new/secondary account to the new server, synchronize to another directory (eg. ~/Nextcloud2)
+#        from desktop, move files from ~/Nextcloud to ~/Nextcloud2
+# calendar/tasks: from the old server's https://old.EXAMPLE.org/nextcloud/index.php/apps/calendar/, export calendars as ICS from the "..." menu
+#                 from the new server's https://cloud.EXAMPLE.org/index.php/apps/calendar/, import ICS file from the "Import" menu
+# contacts: from the old server's https://old.EXAMPLE.org/nextcloud/index.php/apps/contacts/, export contacts as VCF from the "..." menu
+#           from the new server's https://cloud.EXAMPLE.org/index.php/apps/contacts/, import VCF file from the "Import" menu > Local file
+# update all desktop/mobile clients to use the new URL/account (DAVx5, thunderbird...)
+```
 
 **tt-rss: refactor role:**
 - import from https://gitlab.com/nodiscc/ansible-xsrv-tt-rss
