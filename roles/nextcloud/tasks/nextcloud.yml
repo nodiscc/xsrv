@@ -203,7 +203,7 @@
 - name: set nextcloud config.php values (not idempotent, returns changed every time - occ doesn't report changed status)
   become: yes
   become_user: www-data
-  command: /usr/bin/php ./occ config:system:set {{ item.key }} --value="{{ item.value }}" # noqa 301
+  command: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301
   args:
     chdir: "{{ nextcloud_install_dir }}/"
   with_items:
@@ -215,15 +215,16 @@
     - { key: "dbhost", value: "{{ nextcloud_db_host }}" }
     - { key: "dbtableprefix", value: "{{ nextcloud_db_table_prefix }}" }
     - { key: "dbuser", value: "{{ nextcloud_db_user }}" }
-    - { key: "dbpassword", value: "{{ nextcloud_db_password }}" }
+    - { key: "dbpassword", value: "{{ nextcloud_db_password }}", no_log: True }
     - { key: "logtimezone", value: "UTC" }
-    - { key: "log_type", value: "errorlog" }
-    - { key: "log_authfailip", value: "true" }
-    - { key: "loglevel", value: "2" }
+    - { key: "log_type", value: "file" }
+    - { key: "log_authfailip", value: "true", type: "boolean" }
+    - { key: "loglevel", value: "1", type: "integer" }
     - { key: "trashbin_retention_obligation", value: "auto" }
-    - { key: "memcache.local", value: '\OC\Memcache\APCu' }
-  no_log: True
+    - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
+  no_log: "{{ item.no_log | default(False) }}"
   tags: nextcloud_config_php
+
 
 # trashbin_retention_obligation:
 #   auto: keep for 30 days, then delete IF space needed
