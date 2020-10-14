@@ -183,8 +183,10 @@ fetch-backups   fetch backups from a host to the playbook backups directory
 upgrade         ugrade xsrv script and roles to latest versions
 show-defaults   show all available role variables and their default values
 
-The following environment variables are supported
-TAGS=tag1,tag2  limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+The following environment variables are supported:
+TAGS=tag1,tag2     limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+BRANCH=feature-xyz advanced (upgrade only): checkout/pull a specific branch before upgrade
+XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (/opt/xsrv)
 ```
 
 Examples:
@@ -198,6 +200,7 @@ xsrv init-host infra ex2.example.org # add a new host 'ex2.example.org' to the p
 xsrv edit-host infra ex2.example.org # edit host variables for the host 'ex2.example.org' in the playbook 'infra'
 xsrv edit-vault infra ex2.example.org # edit secret/vaulted variables for 'ex2.example.org' in the playbook 'infra'
 xsrv deploy infra ex1.example.org,ex2.example.org # deploy only the hosts ex1.example.org and ex2.example.org in the playbook 'infra'
+TAGS=nextcloud,gitea deploy infra ex3.example.org # run tasks tagged nextcloud or gitea on ex3.example.org
 ```
 
 

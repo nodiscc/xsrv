@@ -8,6 +8,7 @@ playbooks_dir="${XSRV_PLAYBOOKS_DIR:=$HOME/playbooks}"
 templates_path="${XSRV_TEMPLATES_DIR:=/opt/xsrv}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
+git_branch="${BRANCH:-}"
 
 
 # Functions
@@ -218,11 +219,18 @@ function init_venv() {
 }
 
 function upgrade() {
+    # upgrade the xsrv roles/template/bin directory from git,
+    # upgrade the specifed playbook with latest roles
     cd "$templates_path"
-    echo "[xsrv] INFO: fetching repository to $templates_path"
+    # optionally switch to env variable BRANCH before git pull
+    if [[ ! -z "$git_branch" ]]; then
+        echo "[xsrv] INFO: switching $templates_path/ to branch $git_branch"
+        sudo git checkout "$git_branch"
+    fi
+    echo "[xsrv] INFO: updating $templates_path/ from git"
     sudo git pull --ff-only
     update_roles
-    echo "[xsrv] INFO: installing new version of xsrv script to /usr/local/bin/"
+    echo "[xsrv] INFO: installing $templates_path/xsrv script to /usr/local/bin/"
     sudo cp "$templates_path/xsrv" /usr/local/bin
 }
 
@@ -277,7 +285,9 @@ upgrade         ugrade xsrv script and roles to latest versions
 show-defaults   show all available role variables and their default values
 
 The following environment variables are supported
-TAGS=tag1,tag2  limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+TAGS=tag1,tag2     limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+BRANCH=feature-xyz advanced (upgrade only): checkout/pull a specific branch before upgrade
+XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (/opt/xsrv)
 '
 
 command="${1:-}"
