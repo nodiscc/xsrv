@@ -9,6 +9,7 @@ templates_path="${XSRV_TEMPLATES_DIR:=/opt/xsrv}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 git_branch="${BRANCH:-}"
+skip_venv="${SKIP_VENV:=no}"
 
 
 # Functions
@@ -209,13 +210,18 @@ function update_roles() {
 }
 
 function init_venv() {
-    echo "[xsrv] INFO: creating virtualenv in $venv_dir"
-    mkdir -p "$venv_dir"
-    python3 -m venv "$venv_dir"
+    # create a virtualenv, activate it and install dependencies
+    if [[ ! "$skip_venv" == "yes" ]]; then
+        echo "[xsrv] INFO: creating virtualenv in $venv_dir"
+        mkdir -p "$venv_dir"
+        python3 -m venv "$venv_dir"
+    fi
     source "$venv_dir/bin/activate"
-    echo "[xsrv] INFO: installing ansible in $venv_dir"
-    pip3 install wheel
-    pip3 install ansible==2.10.0
+    if [[ ! "$skip_venv" == "yes" ]]; then
+        echo "[xsrv] INFO: installing ansible in $venv_dir"
+        pip3 install wheel
+        pip3 install ansible==2.10.0
+    fi
 }
 
 function upgrade() {
@@ -288,6 +294,7 @@ The following environment variables are supported
 TAGS=tag1,tag2     limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
 BRANCH=feature-xyz advanced (upgrade only): checkout/pull a specific branch before upgrade
 XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (/opt/xsrv)
+SKIP_VENV          advanced: skip creation of virtualenv/dependencies installation (faster startup)
 '
 
 command="${1:-}"
