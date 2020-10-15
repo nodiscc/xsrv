@@ -53,6 +53,12 @@ function edit_inventory() {
     $editor "$inventory_file"
 }
 
+function show_hosts() {
+    # print contents of the inventory file
+    inventory_file="$playbooks_dir/$playbook_name/inventory.yml"
+    echo "[xsrv] INFO: opening inventory file $inventory_file"
+    cat "$inventory_file"
+}
 
 function check_host_name() {
     if [[ -z "$host_name" ]]; then
@@ -263,6 +269,7 @@ function _main() {
         "help") echo "$usage" ;;
         "fetch-backups") init_venv; shift; fetch_backups ;;
         "upgrade") upgrade ;;
+        "show-hosts") shift; show_hosts ;;
         "show-defaults") show_defaults ;;
         *) echo "[xsrv] ERROR: unrecognized command $command"; exit 1 ;;
     esac
@@ -288,6 +295,7 @@ logs            view system log on a host
 help            show this message
 fetch-backups   fetch backups from a host to the playbook backups directory
 upgrade         ugrade xsrv script and roles to latest versions
+show-hosts      list hosts in a playbook/inventory
 show-defaults   show all available role variables and their default values
 
 The following environment variables are supported
