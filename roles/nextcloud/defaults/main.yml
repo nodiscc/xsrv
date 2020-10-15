@@ -68,7 +68,7 @@ nextcloud_apps:
   - { state: "enable", app: "files_videoplayer" }
   - { state: "enable", app: "firstrunwizard" }
   - { state: "enable", app: "photos" }
-  #- { state: "enable", app: "music" }
+  #- { state: "enable", app: "music" } # not compatible with NC 20 https://github.com/owncloud/music/issues/790
   - { state: "enable", app: "maps" }
   - { state: "enable", app: "notifications" }
   - { state: "enable", app: "systemtags" }
@@ -77,6 +77,7 @@ nextcloud_apps:
   - { state: "enable", app: "user_ldap" }
   - { state: "enable", app: "notes" }
   - { state: "enable", app: "deck" }
+  - { state: "enable", app: "admin_audit" }
 #  - { state: "enable", app: "documents" } #TODO requires download
 #  - { state: "enable", app: "templateeditor" } #TODO requires download
 
