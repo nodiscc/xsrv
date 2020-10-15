@@ -10,10 +10,13 @@
 
 **STATUS: rewrite in progress - Expect a stable release soon - The current version is partially broken and will require frequent adaptations to configuration files.**
 
-Install and manage self-hosted network services and applications on your own server(s):
-- a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_(software)) [roles](#roles) for various services/applications
-- a premade default [playbook to setup a single server](#basic-deployment) for personal use or small/medium teams
-- an optional [command-line tool](#usage) for easy deployment, common maintenance and configuration changes
+**Install and manage self-hosted network services/applications on your own server(s).**
+
+`xsrv` provides:
+
+- a [command-line wrapper](#command-line-usage) around [`ansible`](https://en.wikipedia.org/wiki/Ansible_(software)) for easy deployment, maintenance and configuration
+- a collection of ansible [roles](#roles) for various services/applications
+- a base [playbook to setup a single server](#basic-deployment) for personal use or small/medium teams
 
 
 ## Roles
@@ -62,7 +65,7 @@ Install and manage self-hosted network services and applications on your own ser
 - [Usage](#usage)
   - [Basic deployment](#basic-deployment)
   - [Changing configuration](#changing-configuration)
-- [Command-line usage](#command-line-usage)
+  - [Command-line usage](#command-line-usage)
 - [Maintenance](#maintenance)
   - [Backups](#backups)
   - [Upgrades](#upgrades)
@@ -123,7 +126,7 @@ mkdir ~/playbooks/
 xsrv init-playbook
 ```
 
-[Edit roles and configuration](#changing-configuration) before initial deployment:
+Setup roles and required configuration before initial deployment:
 
 ```bash
 # enable desired roles by uncommenting them
@@ -145,22 +148,23 @@ xsrv deploy
 TODO ASCIINEMA
 ```
 
-
 ### Changing configuration
 
-Edit the playbook (list of roles), host vars files (configuration variables), or inventory using the commands below.
+At any point in the future, to edit your configuration:
+ - enable more roles with `xsrv edit-playbook`
+ - show all available configuration variables, and their default value with `xsrv show-defaults`
+ - edit configuration variables with `xsrv edit-host` (copy/paste any variable from defaults and edit is value)
+ - edit secret/encrypted configuration variables with `xsrv edit-vault`
 
+All commands support and additional playbook/host name parameter if you have multiple playbook/hosts. See below for advanced ussage.
 
-Run `xsrv show-defaults` to list all available configuration variables, or see [roles](#roles) documentation.
-To change a configuration variable from its default value, simply copy it from the defaults, to your host_vars file, and edit its value there.
-
-**After any changes to the playbook, inventory or configuration variables**, re-apply the playbook:
+**After any changes to the playbook, inventory or configuration variables**, apply your changes:
 
 ```bash
 xsrv deploy
 ```
 
-## Command-line usage
+### Command-line usage
 
 Full list of commands:
 

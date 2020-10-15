@@ -379,7 +379,7 @@ make deploy
 # you can also resynchronize thumbnails a https://links.CHANGEME.org/?do=thumbs_update
 ```
 
-**transmission: refactor role:
+**transmission: refactor role:**
 - install and configure transmission (most settings are left to their defaults)
 - add ansible variables for username/password, service status, download directory, FQDN
 - only let transmission web interface listen on 127.0.0.1
