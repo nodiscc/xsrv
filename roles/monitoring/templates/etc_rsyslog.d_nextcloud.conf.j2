@@ -1,0 +1,14 @@
+# rsyslog - monitor nextcloud log files
+module(load="imfile")
+
+input(type="imfile"
+      File="{{ nextcloud_data_dir }}/nextcloud.log"
+      Tag="nextcloud:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="{{ nextcloud_data_dir }}/audit.log"
+      Tag="nextcloud:"
+      Facility="daemon"
+      PersistStateInterval="0")
