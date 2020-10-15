@@ -200,6 +200,7 @@ function fetch_backups() {
 
     backup_date=$(date "+%Y%m%d_%H%M%S")
     rsync_command="rsync --archive --verbose --rsh=\"ssh -p $ssh_port\" --progress --fake-super --rsync-path='/usr/bin/sudo /usr/bin/rsync' $ssh_user@$host_name:/var/backups/rsnapshot/daily.0/ $playbooks_dir/$playbook_name/backups/daily.0.$backup_date"
+    echo "[xsrv] INFO: fetching latest daily backups from $host_name in playbook $playbook_name"
     echo "[xsrv] INFO: running $rsync_command"
     eval "$rsync_command"
 }
