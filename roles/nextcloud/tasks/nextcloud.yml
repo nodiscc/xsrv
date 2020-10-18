@@ -112,6 +112,7 @@
     dest: "/root/nextcloud-unpack"
     remote_src: yes
     mode: u=rwX
+  no_log: True
   when:
     - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
@@ -263,5 +264,6 @@
   file:
     path: '{{ nextcloud_install_dir }}.old'
     state: absent
+  no_log: True
   when:
     - nextcloud_action == 'upgrade'
