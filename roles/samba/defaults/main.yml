@@ -1,13 +1,13 @@
 ##### SAMBA FILE SHARING SERVER
 
 # List of samba shares. Each item has the following attributes:
-#   name: unique name for the share
-#   allow_read_users: list of users allowed to read the share
-#   allow_write_users: list of users allowed to write to the share
-#   comment: (optional) text string that is seen next to a share in share listings on clients
-#   available: (optional, default yes) yes/no: set to no to disable the share
-#   browseable: (optional, default yes) yes/no: set to no to hide the share from network share listings on clients (it can still be accessed)
-#   state: (optional, default 'directory') directory/absent: set to 'absent' to delete the share. All data will be removed!
+#   name: (required): unique name for the share
+#   allow_read_users (default none): list of users allowed to read the share
+#   allow_write_users (default none): list of users allowed to write to the share
+#   comment (default none): text  that is seen next to a share in share listings on clients
+#   available: (yes/no, default yes): set to no to disable the share
+#   browseable: (yes/no, default yes): set to no to hide the share from network share listings on clients (it can still be accessed)
+#   state: (directory/absent, default 'directory') : set to 'absent' to delete the share. All data will be removed!
 # Example:
 # samba_shares:
 #   - name: mycompany
@@ -19,7 +19,7 @@
 #       - eve
 #       - boss
 #   - name: eve-personal
-#     comment: "Eve's personal file storage (hidden from share listing)"
+#     comment: "Eve's file share (hidden from share listing)"
 #     browseable: no
 #     allow_write_users:
 #       - eve
