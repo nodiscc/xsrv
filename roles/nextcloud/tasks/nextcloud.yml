@@ -95,16 +95,14 @@
   get_url:
     url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
     dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
-  when:
-    - nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
+  when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
 - name: create nextcloud zip extraction directory
   file:
     path: /root/nextcloud-unpack
     state: directory
     mode: 0750
-  when:
-    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
 - name: extract nextcloud zip
   unarchive:
@@ -113,8 +111,7 @@
     remote_src: yes
     mode: u=rwX
   no_log: True
-  when:
-    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
 - name: give write permissions to the webserver
   file:
@@ -127,21 +124,17 @@
     - { path: "/root/nextcloud-unpack/nextcloud/config", mode: "g+w" }
     - { path: "/root/nextcloud-unpack/nextcloud/themes", mode: "g+w" }
     - { path: "/root/nextcloud-unpack/nextcloud/occ", mode: "g+X" }
-    #- "/root/nextcloud-unpack/nextcloud/updater"
-  when:
-    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
 - name: move old nextcloud installation to temporary dir
   command: mv '{{ nextcloud_install_dir }}' '{{ nextcloud_install_dir }}.old'
   args:
     removes: '{{ nextcloud_install_dir }}'
-  when:
-    - nextcloud_action == 'upgrade'
+  when: nextcloud_action == 'upgrade'
 
 - name: move nextcloud extraction directory to install directory
   command: mv /root/nextcloud-unpack/nextcloud '{{ nextcloud_install_dir }}'
-  when:
-    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
 
 ### CONFIGURATION ###
