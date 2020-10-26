@@ -1,6 +1,6 @@
 ---
 
-# tt-rss instace fully qualified domain name
+# domain name (FQDN) for the tt-rss instance
 # tt_rss_fqdn: "rss.CHANGEME.org"
 
 # tt-rss installation directory (must be under a valid documentroot)
