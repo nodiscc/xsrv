@@ -71,3 +71,10 @@ list_default_variables:
 	echo -e "\n#### $$i #####\n"; \
 	grep --no-filename -E --only-matching "^(# )?[a-z\_]*:" $$i/defaults/main.yml | sed 's/# //' | sort -u ; \
 	done
+
+# development/utility: get build status of the current commit/branch
+# GITLAB_PRIVATE_TOKEN must be defined in the environment
+get_build_status:
+	@branch=$$(git rev-parse --abbrev-ref HEAD) && \
+	commit=$$(git rev-parse HEAD) && \
+	curl --silent --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" "https://gitlab.com/api/v4/projects/nodiscc%2Fxsrv/repository/commits/$$commit/statuses?ref=$$branch" | jq  .[].status
