@@ -21,7 +21,7 @@ testenv:
 	cp tests/playbook.yml test.yml
 
 clean:
-	-rm -r test.yml .venv/
+	-rm -r test.yml .venv/ nodiscc-xsrv-*.tar.gz
 
 # Playbook syntax check
 ansible_syntax_check: venv testenv
