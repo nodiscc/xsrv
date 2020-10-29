@@ -83,7 +83,7 @@ nextcloud_apps:
 
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
-nextcloud_php_memory_limit: '128M'
+nextcloud_php_memory_limit: '512M'
 # php_fpm: Maximum execution time of each script (seconds)
 nextcloud_php_max_execution_time: 30
 # php-fpm: Maximum amount of time each script may spend parsing request data (seconds)
