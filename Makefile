@@ -64,7 +64,7 @@ publish_collection: venv
 	ansible-galaxy collection publish nodiscc-xsrv-0.18.0.tar.gz
 
 
-# list all variables names from role defaults
+# development/utility: list all variables names from role defaults
 # can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginnning of the role
 list_default_variables:
 	for i in roles/*; do \
