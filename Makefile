@@ -58,13 +58,16 @@ update_todo:
 	rm -rf gitea-cli
 
 # build and publish the ansible collection
+# ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment
 publish_collection: venv
+	tag=$$(git describe --tags --abbrev=0) && \
+	sed -i "s/^version:.*/version: $$tag/" galaxy.yml && \
 	source .venv/bin/activate && \
 	ansible-galaxy collection build && \
-	ansible-galaxy collection publish nodiscc-xsrv-0.18.0.tar.gz
+	ansible-galaxy collection publish --token "$$ANSIBLE_GALAXY_PRIVATE_TOKEN" nodiscc-xsrv-$$tag.tar.gz
 
 
-# development/utility: list all variables names from role defaults
+# list all variables names from role defaults
 # can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginnning of the role
 list_default_variables:
 	for i in roles/*; do \
@@ -72,7 +75,7 @@ list_default_variables:
 	grep --no-filename -E --only-matching "^(# )?[a-z\_]*:" $$i/defaults/main.yml | sed 's/# //' | sort -u ; \
 	done
 
-# development/utility: get build status of the current commit/branch
+# get build status of the current commit/branch
 # GITLAB_PRIVATE_TOKEN must be defined in the environment
 get_build_status:
 	@branch=$$(git rev-parse --abbrev-ref HEAD) && \
