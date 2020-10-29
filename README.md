@@ -109,7 +109,9 @@ sudo git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR developm
 sudo cp /opt/xsrv/xsrv /usr/local/bin/
 ```
 
-You can use `xsrv` to manage your ansible environments, or use components through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html) directly (for example, add `/path/to/xsrv/roles` to your ansible [roles path](https://docs.ansible.com/ansible/latest/reference_appendices/config.html), or get the collection using `ansible-galaxy collection install nodiscc.xsrv`). See [Using as ansible collection](#using-as-ansible-collection-in-your-playbooks).
+You can either:
+- use the [`xsrv` script](#command-line-usage) to manage your ansible environments
+- or use components through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html). See [Using as ansible collection](#using-as-ansible-collection).
 
 
 ## Usage
@@ -279,26 +281,28 @@ Uninstalling roles is not supported at this time: components must be removed man
 Refer to **[ansible documentation](https://docs.ansible.com/)** for more information.
 
 
-### Using as ansible collection in your playbooks
+### Using as ansible collection
+
+If you just want to integrate the [roles](#roles) in your own playbooks, install them through [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html):
 
 ```bash
-# install the collection
 ansible-galaxy collection install nodiscc.xsrv
-
-# add roles from the collection to your playbook
-nano playbook.yml
 ```
 
+And include the in your playbooks:
+
 ```yaml
+# playbook.yml
+
 - hosts: all
   collections:
    - nodiscc.xsrv
 
 - hosts: my.example.org
   roles:
-   - common
-   - monitoring
-   - apache
+   - nodiscc.xsrv.common
+   - nodiscc.xsrv.monitoring
+   - nodiscc.xsrv.apache
    - ...
 ```
 
