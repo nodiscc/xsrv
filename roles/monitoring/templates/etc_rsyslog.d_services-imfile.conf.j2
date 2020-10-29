@@ -1,0 +1,171 @@
+# rsyslog - aggregate services log files
+module(load="imfile")
+
+
+##### APT #####
+
+input(type="imfile"
+      File="/var/log/apt/history.log"
+      readMode="0"
+      Tag="dpkg:"
+      Facility="local0"
+      PersistStateInterval="0")
+
+# dpkg log - verbose, disabled
+#input(type="imfile"
+#      File="/var/log/dpkg.log"
+#      Tag="dpkg:"
+#      Facility="local0"
+#      PersistStateInterval="0")
+
+
+#### FAIL2BAN #####
+
+input(type="imfile"
+      File="/var/log/fail2ban.log"
+      Tag="fail2ban:"
+      Facility="auth"
+      PersistStateInterval="0")
+
+
+##### NETDATA #####
+
+# netdata installed from deb/packagecloud repository
+input(type="imfile"
+      File="/var/log/netdata/error.log"
+      Tag="netdata:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+# netdata installed from deb/packagecloud repository
+# netdata access log - verbose, disabled
+#input(type="imfile"
+#      File="/var/log/netdata/access.log"
+#      Tag="netdata:"
+#      Facility="daemon"
+#      PersistStateInterval="0")
+
+# netdata installed from binary installer
+input(type="imfile"
+      File="/opt/netdata/var/log/netdata/error.log"
+      Tag="netdata:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+# netdata installed from binary installer
+# netdata access log - verbose, disabled
+#input(type="imfile"
+#      File="/opt/netdata/var/log/netdata/access.log"
+#      Tag="netdata:"
+#      Facility="daemon"
+#      PersistStateInterval="0")
+
+##### RSNAPSHOT #####
+
+input(type="imfile"
+      File="/var/log/rsnapshot.log"
+      Tag="rsnapshot:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+
+##### APACHE ######
+
+input(type="imfile"
+      File="/var/log/apache2/access.log"
+      Tag="apache:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/apache2/error.log"
+      Tag="apache:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+
+##### PHP-FPM #####
+
+input(type="imfile"
+      File="/var/log/php7.3-fpm.log"
+      Tag="php-fpm:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+
+##### GITEA #####
+
+input(type="imfile"
+      File="/var/lib/gitea/log/access.log"
+      Tag="gitea:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/lib/gitea/log/gitea.log"
+      Tag="gitea:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+
+##### MUMBLE-SERVER #####
+
+input(type="imfile"
+      File="/var/log/mumble-server/mumble-server.log"
+      Tag="mumble-server:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+
+##### NEXTCLOUD #####
+
+input(type="imfile"
+      File="{{ nextcloud_data_dir }}/nextcloud.log"
+      Tag="nextcloud:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="{{ nextcloud_data_dir }}/audit.log"
+      Tag="nextcloud:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+
+##### SAMBA #####
+
+input(type="imfile"
+      File="/var/log/samba/cores/smbd"
+      Tag="samba:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/samba/cores/nmbd"
+      Tag="samba:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/samba/log."
+      Tag="samba:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/samba/log.nmbd"
+      Tag="samba:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/samba/log.smbd"
+      Tag="samba:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/samba/samba.log"
+      Tag="samba:"
+      Facility="daemon"
+      PersistStateInterval="0")

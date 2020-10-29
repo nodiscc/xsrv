@@ -1,98 +1,44 @@
----
-
 ##### RSYSLOG #####
 
-- name: configure rsyslog to monitor fail2ban log file
+- name: configure rsyslog
   template:
-    src: etc_rsyslog.d_fail2ban.conf.j2
-    dest: /etc/rsyslog.d/fail2ban.conf
-    mode: 0600
+    src: etc_rsyslog.d_{{ item }}.conf.j2
+    dest: /etc/rsyslog.d/{{ item }}.conf
+    owner: root
+    group: root
+    mode: 0644
   notify: restart rsyslog
+  with_items:
+    - services-imfile # aggregate common/other role's services log files
+    - discard # discard useless messages
+    - singlefile # log all messages to /var/log/syslog
 
-- name: configure rsyslog to monitor apt history log file
-  template:
-    src: etc_rsyslog.d_apt.conf.j2
-    dest: /etc/rsyslog.d/apt.conf
-    mode: 0600
+- name: remove rsyslog config files from old versions of the role
+  file:
+    state: absent
+    path: /etc/rsyslog.d/{{ item }}.conf
   notify: restart rsyslog
+  with_items:
+    - fail2ban
+    - apt
+    - apache
+    - php-fpm
+    - netdata
+    - gitea
+    - samba
+    - rsnapshot
+    - mumble
+    - nextcloud
 
-- name: configure rsyslog to monitor apache logs
-  template:
-    src: etc_rsyslog.d_apache.conf.j2
-    dest: /etc/rsyslog.d/apache.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to monitor php-fpm logs
-  template:
-    src: etc_rsyslog.d_php-fpm.conf.j2
-    dest: /etc/rsyslog.d/php-fpm.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to monitor netdata logs
-  template:
-    src: etc_rsyslog.d_netdata.conf.j2
-    dest: /etc/rsyslog.d/netdata.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to monitor gitea logs
-  template:
-    src: etc_rsyslog.d_gitea.conf.j2
-    dest: /etc/rsyslog.d/gitea.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to monitor samba logs
-  template:
-    src: etc_rsyslog.d_samba.conf.j2
-    dest: /etc/rsyslog.d/samba.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to monitor rsnapshot logs
-  template:
-    src: etc_rsyslog.d_rsnapshot.conf.j2
-    dest: /etc/rsyslog.d/rsnapshot.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to monitor mumble-server logs
-  template:
-    src: etc_rsyslog.d_mumble.conf.j2
-    dest: /etc/rsyslog.d/mumble.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to monitor nextcloud logs
-  template:
-    src: etc_rsyslog.d_nextcloud.conf.j2
-    dest: /etc/rsyslog.d/nextcloud.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to discard useless messages
-  template:
-    src: etc_rsyslog.d_discard.conf.j2
-    dest: /etc/rsyslog.d/discard.conf
-    mode: 0600
-  notify: restart rsyslog
-
-- name: configure rsyslog to log all messages to /var/log/syslog
-  template:
-    src: etc_rsyslog.d_singlefile.conf.j2
-    dest: /etc/rsyslog.d/singlefile.conf
-    mode: 0600
-  notify: restart rsyslog
-
-# rsyslog is configured to send all messages to /var/log/syslog in the task above
-# If a filter '*.*' is also present in rsyslog.conf messages will be logged twice
-- name: Ensure rsyslog main config file contains no *.* filter (avoid duplicate messages)
+# rsyslog is configured to send all messages to /var/log/syslog in singlefile.conf
+# if a '*.*' filter is present in main rsyslog.conf, messages will be logged twice
+- name: configure rsyslog to avoid duplicate messages
   lineinfile:
     path: /etc/rsyslog.conf
     state: absent
     regexp: '^\*\.\*'
+  notify: restart rsyslog
 
+# apply rsyslog configuration
 - name: run all notified handlers now
   meta: flush_handlers

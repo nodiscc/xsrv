@@ -1,8 +1,0 @@
-# rsyslog - monitor rsnapshot log file
-module(load="imfile")
-
-input(type="imfile"
-      File="/var/log/rsnapshot.log"
-      Tag="rsnapshot:"
-      Facility="daemon"
-      PersistStateInterval="0")

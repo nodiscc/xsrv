@@ -1,8 +1,0 @@
-# rsyslog - monitor mumble-server log file
-module(load="imfile")
-
-input(type="imfile"
-      File="/var/log/mumble-server/mumble-server.log"
-      Tag="mumble-server:"
-      Facility="daemon"
-      PersistStateInterval="0")

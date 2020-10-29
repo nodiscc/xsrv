@@ -1,8 +1,0 @@
-# rsyslog - monitor fail2ban log file
-module(load="imfile")
-
-input(type="imfile"
-      File="/var/log/fail2ban.log"
-      Tag="fail2ban:"
-      Facility="auth"
-      PersistStateInterval="0")
