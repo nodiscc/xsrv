@@ -14,7 +14,7 @@
 
 `xsrv` provides:
 
-- a [command-line wrapper](#command-line-usage) around [`ansible`](https://en.wikipedia.org/wiki/Ansible_(software)) for easy deployment, maintenance and configuration
+- a [command-line tool](#command-line-usage) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for easy deployment, maintenance and configuration
 - a collection of ansible [roles](#roles) for various services/applications
 - a base [playbook to setup a single server](#basic-deployment) for personal use or small/medium teams
 
@@ -34,7 +34,7 @@
 - [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
 - [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
 - [mumble](roles/mumble) - Low-latency voice-over-IP (VoIP) server
-- [openldap](roles/openldap) - LDAP directory server
+- [openldap](roles/openldap) - LDAP directory server and web administration tools
 - _WIP_ [docker](roles/docker) - Docker container platform
 - _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
 - _WIP_ [graylog](roles/graylog) - Log management and analysis software
@@ -84,26 +84,24 @@
 
 ## Requirements
 
-One or more target servers (_hosts_) to configure. See [server preparation](docs/server-preparation.md).
+- One or more target servers (_hosts_) to configure. See [server preparation](docs/server-preparation.md)
+- A controller machine for remote administration. See [instalaltion](#installation).
  
 
 
 ## Installation
 
-A _controller_ machine will be used for deployment and remote administration. The controller can be any laptop desktop PC, dedicated server, container... where python, bash and ansible are available. On the controller:
+A _controller_ machine will be used for deployment and remote administration. The controller can be any laptop/desktop PC, a dedicated server, VM or container where python and bash are available. On the controller:
 
 
 ```bash
 # install requirements (example for debian-based systems)
 sudo apt update && sudo apt install git bash python3-pip ssh pwgen
 
-# authorize your SSH key on target servers (hosts)
-ssh-copy-id myusername@my.example.org
-
 # clone the repository
 sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest release
-sudo git clone -b 1.0 https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR specific release
-sudo git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR development version
+# sudo git clone -b 1.0 https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR specific release
+# sudo git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR development version
 
 # (optional) install the command line tool to your $PATH
 sudo cp /opt/xsrv/xsrv /usr/local/bin/
@@ -121,10 +119,13 @@ You can either:
 The [default playbook](playbooks/xsrv/playbook.yml) installs/manages a basic set of roles on a single server.
 
 ```bash
+# authorize your SSH key on target server (host)
+ssh-copy-id myusername@my.example.org
+
 # create a base directory for your playbooks/environments
 mkdir ~/playbooks/
 
-# create a new playbook
+# create a new playbook named 'default'
 xsrv init-playbook
 ```
 
@@ -133,11 +134,10 @@ Setup roles and required configuration before initial deployment:
 ```bash
 # enable desired roles by uncommenting them
 xsrv edit-playbook
-# setup passwords and secret values
+# setup passwords and secret values (replace any values labaled CHANGEME)
 xsrv edit-vault
-# edit configuration variables
+# edit configuration variables (replace any values labeled CHANGEME)
 xsrv edit-host
-# to list all available variables, run xsrv show-defaults
 ```
 
 Deploy changes to the host:
@@ -152,10 +152,10 @@ TODO ASCIINEMA
 
 ### Changing configuration
 
-At any point in the future, to edit your configuration:
+At any point, to edit your configuration:
  - enable more roles with `xsrv edit-playbook`
  - show all available configuration variables, and their default value with `xsrv show-defaults`
- - edit configuration variables with `xsrv edit-host` (copy/paste any variable from defaults and edit is value)
+ - edit configuration variables with `xsrv edit-host` (copy/paste any variable from defaults and change its value)
  - edit secret/encrypted configuration variables with `xsrv edit-vault`
 
 All commands support and additional playbook/host name parameter if you have multiple playbook/hosts. See below for advanced ussage.
@@ -207,6 +207,7 @@ xsrv edit-host infra ex2.example.org # edit host variables for the host 'ex2.exa
 xsrv edit-vault infra ex2.example.org # edit secret/vaulted variables for 'ex2.example.org' in the playbook 'infra'
 xsrv deploy infra ex1.example.org,ex2.example.org # deploy only the hosts ex1.example.org and ex2.example.org in the playbook 'infra'
 TAGS=nextcloud,gitea deploy infra ex3.example.org # run tasks tagged nextcloud or gitea on ex3.example.org
+BRANCH=1.0.0 xsrv upgrade infra # upgrade roles in the playbook 'infra' to version 1.0.0
 ```
 
 
@@ -242,11 +243,11 @@ Keep **off-line, off-site backups** of your `~/playbooks/` directory and user da
 Security upgrades for Debian packages are applied [automatically/daily](roles/common). To upgrade roles to their latest versions (bugfixes, new features, latest stable releases of all unpackaged applications):
 
 - Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases)
+- Adjust your configuration if needed (`xsrv edit-*`)
 - Download latest backups from the server (`xsrv backup-fetch`) and/or do a snapshot of the VM
-- Download the latest release and overwrite roles in your playbooks directory: `./xsrv upgrade`
-- Adjust your configuration if needed (inventory, playbook, host vars)
+- Download the latest release and overwrite roles in your playbooks directory: `BRANCH=release xsrv upgrade`
 - Run checks and watch out for unwanted changes `xsrv check`
-- Apply the playbook `csrv deploy`
+- Apply the playbook `xsrv deploy`
 
 
 ### Tracking configuration changes
@@ -263,33 +264,33 @@ vault_xyz_password: "$3CR3T"
 
 ```
 
-For production systems, it is strongly recommended to run the playbook and evaluate changes against a testing/staging environment first. Setup **Continuous Deployment** and monitoring to automate delivery and testing. See the example [`.gitlab-ci.yml`](playbooks/xsrv/.gitlab-ci.yml) to get started.
+For production systems, it is strongly recommended to run the playbook and evaluate changes against a testing/staging environment first (create separate testing/prod groups in `inventory.yml`, deploy changes against the testing environment). Setup **Continuous Deployment** and monitoring to automate delivery and testing. See the example [`.gitlab-ci.yml`](playbooks/xsrv/.gitlab-ci.yml) to get started.
 
 
-### Uninstalling roles
+**Reverting changes:**
 
-Uninstalling roles is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups. Most roles provide variables to disable their services/functionality.
-
-
-### Reverting changes
-
+ - `git checkout` your playbook/configuration as it was before the change
  - restore a VM snapshot from before the change (will cause loss of all data modified after the snapshot!)
  - or, restore data from the last known good backups (see each role's documentation for restoration instructions)
- - `git checkout` the configuration as it was before the change
  - run the playbook `xsrv deploy`
 
 Refer to **[ansible documentation](https://docs.ansible.com/)** for more information.
 
 
+**Uninstalling roles:**
+
+Uninstalling roles is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups. Most roles provide variables to disable their services/functionality.
+
+
 ### Using as ansible collection
 
-If you just want to integrate the [roles](#roles) in your own playbooks, install them through [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html):
+If you just want to integrate the [roles](#roles) in your own playbooks, install them using [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html):
 
 ```bash
 ansible-galaxy collection install nodiscc.xsrv
 ```
 
-And include the in your playbooks:
+And include them in your playbooks:
 
 ```yaml
 # playbook.yml
@@ -311,7 +312,7 @@ See [Using collections](https://docs.ansible.com/ansible/latest/user_guide/colle
 
 ## Contributing/Issues/Work in progress
 
-- Check the [Planned features/work in progress](docs/TODO.md) document [[1](https://git.lambdacore.network/xsrv/xsrv/issues)]
+- Check the [Planned features/work in progress](docs/TODO.md) [[1](https://git.lambdacore.network/xsrv/xsrv/issues)]
 - Please report any problem on the [Gitlab issue tracker](https://gitlab.com/nodiscc/xsrv/issues) - include the following information:
   - expected results, steps to reproduce the problem, observed results
   - relevant technical information (configuration, logs, versions...)
