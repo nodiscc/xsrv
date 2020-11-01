@@ -1,7 +1,7 @@
 #!/usr/bin/env make
 SHELL := '/bin/bash'
 
-tests: shellcheck check_jinja2 ansible_syntax_check ansible_lint yamllint clean
+tests: shellcheck check_readmes check_jinja2 ansible_syntax_check ansible_lint yamllint clean
 
 # Install dev tools in virtualenv
 # https://pypi.org/rss/project/ansible/releases.xml
@@ -46,6 +46,10 @@ check_jinja2: venv
 	echo "[INFO] checking syntax for $$i"; \
 	python3 ./tests/check-jinja2.py "$$i"; \
 	done
+
+# check that all roles README.md contains expected sections/info
+check_readmes:
+	for i in roles/*/README.md; do grep '../../LICENSE' "$$i" >/dev/null || (echo "ERROR: missing license information in $$i"; exit 1); done
 
 # Update TODO.md by fetching issues from the main gitea instance API
 # requirements: sudo apt install git jq
