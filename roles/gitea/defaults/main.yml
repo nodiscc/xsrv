@@ -63,6 +63,8 @@ gitea_disable_gravatar: "true"
 gitea_user_repo_limit: -1
 # enable/disable gitea REST API (true/false - QUOTED)
 gitea_enable_api: "false"
+# max number of items in API responses
+gitea_api_max_results: 1000
 # The minimum password length for new Users
 gitea_min_password_length: 10
 # comma-separated list of charactacter classes required in passwords (lower,upper,digit,spec or off)

@@ -18,6 +18,7 @@
       - gitea_disable_gravatar in ['true', 'false']
       - gitea_disable_registration in ['true', 'false']
       - gitea_enable_api in ['true', 'false']
+      - gitea_api_max_results == gitea_api_max_results|int
       - gitea_enable_service == gitea_enable_service|bool
       - gitea_force_private in ['true', 'false']
       - gitea_fqdn is not search("CHANGEME")
