@@ -29,3 +29,4 @@
   tags:
     - monitoring
     - monitoring-utils
+  when: setup_monitoring_cli_utils|bool

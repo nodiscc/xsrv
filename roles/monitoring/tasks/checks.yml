@@ -32,3 +32,4 @@
       - rsyslog_monitor_apache_accesslog == rsyslog_monitor_apache_accesslog|bool
       - rsyslog_monitor_netdata == rsyslog_monitor_netdata|bool
       - setup_rsyslog == setup_rsyslog|bool
+      - setup_monitoring_cli_utils == setup_monitoring_cli_utils|bool

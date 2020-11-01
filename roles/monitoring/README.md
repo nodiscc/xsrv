@@ -2,10 +2,10 @@ monitoring
 =============
 
 This role will install a lightweight monitoring system on a Linux machine:
- - Log aggregation for most services/applications (using [rsyslog](https://en.wikipedia.org/wiki/Rsyslog))
- - [Netdata](https://my-netdata.io/), a real-time, efficient, distributed performance and health monitoring system.
- - (Optional) netdata modules/graphs: [needrestart](https://gitlab.com/nodiscc/netdata-needrestart), [logcount](https://gitlab.com/nodiscc/netdata-logcount), [modtime](https://gitlab.com/nodiscc/netdata-modtime)
- - [lnav](http://lnav.org/) log viewer, [htop](https://hisham.hm/htop/) system monitor/process manager, [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor, [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer
+ - (optional) log aggregation for most services/applications, using [rsyslog](https://en.wikipedia.org/wiki/Rsyslog)
+ - [netdata](https://my-netdata.io/), a real-time, efficient, distributed performance and health monitoring system.
+ - (optional) netdata modules/graphs: [needrestart](https://gitlab.com/nodiscc/netdata-needrestart), [logcount](https://gitlab.com/nodiscc/netdata-logcount), [modtime](https://gitlab.com/nodiscc/netdata-modtime)
+ - (optional) [lnav](http://lnav.org/) log viewer, [htop](https://hisham.hm/htop/) system monitor/process manager, [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor, [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer
 
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](https://screenshots.debian.net/package/netdata)
 [![](https://screenshots.debian.net/screenshots/000/010/371/thumb.png)](https://screenshots.debian.net/package/lnav)
