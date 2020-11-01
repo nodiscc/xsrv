@@ -51,7 +51,8 @@ git.CHANGEME.org # gitea
 links.CHANGEME.org # shaarli
 rss.CHANGEME.org # tt-rss
 torrent.CHANGEME.org # transmission
-mumble.CHANGEME.org # mumble server (optional)
+mumble.CHANGEME.org # mumble server
+ldap.CHANGEME.org # openldap server
 ```
 
 ### Debian installation
