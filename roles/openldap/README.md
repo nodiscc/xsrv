@@ -45,5 +45,3 @@ See [defaults/main.yml](defaults/main.yml)
 **Accessing LDAP account manager settings:** LAM should be configured from the templates provided by this role. If you need to temporarily access LAM settings from the web interface (your changes will be overwritten on the next ansible deployment), edit these files:
 - `/etc/ldap-account-manager/config.cfg`: `password: CHANGEME`
 - `/var/lib/ldap-account-manager/config/lam.conf`, `Passwd: CHANGEME`
-
-- Icon from [paper-icon-theme](https://www.snwh.org/paper), [CC-SA-4.0](http://creativecommons.org/licenses/by-sa/4.0/)
