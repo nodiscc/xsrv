@@ -63,7 +63,6 @@
 - #254 - apache: LDAP authentication for virtualhosts
 - #253 - lamp: allow setting up HTTP basic auth username/password for virtualhosts
 - #250 - WIP: add pulseaudio-server role
-- #249 - WIP: add make release target
 - #248 - WIP: add gitlab-runner role
 - #247 - WIP: add gitlab role
 - #244 - icecast: ezstream 100% usage when playlist is empty
@@ -193,12 +192,10 @@
 - #98 - Maps and routing services
 - #97 - openshift role
 - #96 - grafana role?
-- #95 - WIP: encrypt secrets with ansible-vault
 - #94 - Kubernetes role
 - #93 - VNC server
 - #92 - Add {{ ansible_managed }} in templates
 - #86 - Peertube
-- #84 - 'make update_todo' does not honor the ?limit=50 parameter - `0.24`
 - #82 - tests: cache gitlab ci dependencies
 - #81 - Mirror neuralnet.xinit.se list of issues to the README of each role
 - #78 - Adminer role
@@ -226,12 +223,12 @@
 - #49 - Caching HTTP proxy
 - #48 - FTP server
 - #47 - distributed filesystem (ceph, glusterfs)
-- #46 - Printer sharing
+- #46 - Printer sharing server?
 - #45 - Video hosting/streaming platform
-- #44 - UPNP mediaserver
-- #43 - Maps/routing application
+- #44 - UPNP mediaserver?
+- #43 - OSM routing service?
 - #42 - OpenStreetMap tileserver
-- #41 - network scanner server
+- #41 - Network scanner (SANE) server?
 - #40 - Search engine
 - #39 - Wallabag
 - #38 - Wake on LAN
@@ -242,25 +239,18 @@
 - #33 - Minecraft server
 - #32 - Minetest server
 - #31 - Add bash completion to xsrv script
-- #30 - Gitlab instance
+- #30 - Gitlab role
 - #28 - Instant messaging/communication system - `0.24`
 - #27 - nginx role
 - #26 - Dynamic DNS updater
 - #25 - DNS Server
 - #24 - DHCP/TFTP/PXE server
 - #22 - Add molecule tests
-- #19 - Document outgoing mail setup with smarthost
-- #18 - Register a domain name
-- #17 - Static site generator
 - #16 - Automated performance benchmarks
-- #14 - Logo
 - #12 - go-shiori
-- #10 - cloud-init
-- #9 - VPN Server
+- #9 - openvpn-server role
 - #8 - Proxmox
-- #6 - Cockpit
+- #6 - cockpit role?
 - #5 - Matrix/Synapse server
 - #4 - Graylog role
 - #3 - Mail server
-- #2 - Make it easier to configure ansible-vault
-- #1 - Add LICENSE files to all roles
