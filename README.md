@@ -51,6 +51,7 @@
 [![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
 [![](https://i.imgur.com/blWO4LL.png)](roles/transmission)
 [![](https://i.imgur.com/jYSU9zC.png)](roles/mumble)
+[![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](roles/openldap)
 
 
 
