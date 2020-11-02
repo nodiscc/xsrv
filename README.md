@@ -135,7 +135,7 @@ Setup roles and required configuration before initial deployment:
 ```bash
 # enable desired roles by uncommenting them
 xsrv edit-playbook
-# setup passwords and secret values (replace any values labaled CHANGEME)
+# setup passwords and secret values (replace any values labeled CHANGEME)
 xsrv edit-vault
 # edit configuration variables (replace any values labeled CHANGEME)
 xsrv edit-host
