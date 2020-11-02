@@ -2,18 +2,19 @@
 
 ### xsrv/xsrv
 
+- #354 - common: bash: set TMOUT value
+- #353 - common: apt: autoremove/autoclean/purge packages
+- #352 - common: add support for hardware RNG
 - #351 - nextcloud: enable pretty URLs
 - #348 - ldap-account-manager: Unable to set locale
-- #347 - DepreactionWarning when ansible starts (when reading ansible.cfg?) - `0.24`
+- #347 - DeprecationWarning for ldap_attr module - `0.26`
 - #346 - samba: LDAP user backend - `0.24`
 - #345 - openldap: postgresql backend?
 - #344 - nextcloud: add office suite integration
 - #343 - nextcloud: warning on settings/admin/overview: missing bcmath php module
-- #342 - nextcloud: warning on settings/admin/overview: The PHP memory limit is below the recommended value of 512MB.
 - #341 - nextcloud: warning on settings/admin/overview: Some app directories are owned by a different user than the web server one
 - #339 - WIP: speed up ansible execution with mitogen
 - #337 - nextcloud: maps: enable OSRM demo servers by default
-- #335 - xsrv: show-defaults [role] - `0.24`
 - #333 - WIP: add self-service-password role - `0.25`
 - #325 - Rocket.chat - `0.24`
 - #324 - Jitsi Meet
@@ -38,8 +39,7 @@
 - #303 - firehol: add example NAT loopback/hairpin rule
 - #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `0.24`
 - #293 - WIP: add nginx role
-- #290 - netdata: monitor number of upgradeable APT packages - `0.24`
-- #282 - apache: Warning: DocumentRoot [/var/www/localhost] does not exist - `0.24`
+- #290 - netdata: monitor number of upgradeable APT packages - `0.25`
 - #280 - Samba Directory Controller or other Identity Management solution
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
 - #276 - Samba: protect file shares from cryptolockers
@@ -95,7 +95,7 @@
 - #210 - xsrv-homepage: add more (optional) features to homepage
 - #208 - netdata: graph/alert on logwatch warnings
 - #207 - netdata: make ping checks configurable
-- #206 - netdata: add https://gitlab.com/nodiscc/netdata-debsecan - `0.24`
+- #206 - netdata: add https://gitlab.com/nodiscc/netdata-debsecan - `0.25`
 - #205 - netdata: monitor debsums warnings/return status
 - #204 - netdata: add custom dashboard with status summary of the host/important logs/reports
 - #203 - netdata: monitor snmpd
@@ -105,11 +105,10 @@
 - #199 - netdata: graph number of manchines on LAN
 - #198 - netdata: ERROR: Cannot send HTTPS headers to web client
 - #197 - netdata: graph php-malware-finder warnings
-- #196 - netdata: log alarms to syslog - `0.24`
 - #195 - monitoring: add apt-listchanges
 - #194 - netdata: add config variable to enable netdata auto-updates
 - #193 - netdata: graph tiger warnings
-- #192 - monitoring/apache: add goaccess, generate reports for each virtualhost - `0.24`
+- #192 - monitoring/apache: add goaccess, generate reports for each virtualhost - `0.26`
 - #191 - monitoring: add inxi
 - #190 - netdata: graph number of firehol hits
 - #189 - netdata: graph VULS reports
@@ -120,7 +119,7 @@
 - #181 - netdata: monitor MySQL server
 - #180 - netdata: graph SCAP workbench warnings
 - #178 - netdata: graph/alert on deborphan matches
-- #177 - netdata: graph lynis warnings/suggestions
+- #177 - common: add lynis audit tool - `0.26`
 - #176 - netdata: add Qualys SSL check module
 - #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
 - #174 - netdata: allow setting a repetition period for alarms
