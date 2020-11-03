@@ -140,9 +140,7 @@
     remote_src: yes
     src: '{{ shaarli_install_dir }}.old/data'
     dest: '{{ shaarli_install_dir }}/'
-    owner: root
-    group: www-data
-    mode: 0770
+    mode: preserve
   when:
     - shaarli_action is defined
     - shaarli_action == 'upgrade'
