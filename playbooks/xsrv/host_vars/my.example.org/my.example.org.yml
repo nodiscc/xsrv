@@ -32,6 +32,9 @@ transmission_fqdn: "torrent.CHANGEME.org"
 openldap_fqdn: "ldap.CHANGEME.org"
 openldap_base_dn: "dc=CHANGEME,dc=org"
 
+##### ROCKETCHAT #####
+# see roles/rocketchat/defaults/main.yml
+rocketchat_fqdn: "chat.CHANGEME.org"
 
 ##### FIREWALL/FAIL2BAN #####
 # see roles/common/defaults/main.yml

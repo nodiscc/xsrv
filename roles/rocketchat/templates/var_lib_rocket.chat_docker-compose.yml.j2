@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  rocketchat:
+
+services:
+  rocketchat:
+    image: rocketchat/rocket.chat:{{ rocketchat_docker_version }}
+    restart: unless-stopped
+    volumes:
+      - /var/lib/rocket.chat/uploads:/app/uploads
+    environment:
+      - PORT=3000
+      - ROOT_URL=https://{{ rocketchat_fqdn }}
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+      - MAIL_URL=smtp://smtp.email
+    depends_on:
+      - mongo
+    ports:
+      - 127.0.0.1:3001:3000
+    networks:
+      - rocketchat
+
+  mongo:
+    image: mongo:4.0
+    restart: unless-stopped
+    volumes:
+     - /var/lib/rocket.chat/db:/data/db
+     - /var/lib/rocket.chat/dump:/dump
+     - /var/lib/rocket.chat/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+    networks:
+      - rocketchat

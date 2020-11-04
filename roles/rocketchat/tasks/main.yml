@@ -1,0 +1,12 @@
+- include: rocketchat.yml
+  become: yes
+  tags: rocketchat
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: rocketchat
+  when: rocketchat_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags: rocketchat

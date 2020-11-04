@@ -1,0 +1,60 @@
+- name: add rocket.chat FQDN to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ rocketchat_fqdn }}"
+
+- name: create directories for rocket.chat data
+  file:
+    state: directory
+    owner: root
+    group: root
+    mode: 0770
+    path: "{{ item }}"
+  with_items:
+    - /var/lib/rocket.chat/db
+    - /var/lib/rocket.chat/dump
+    - /var/lib/rocket.chat/uploads
+
+- name: copy compose file
+  template:
+    src: var_lib_rocket.chat_docker-compose.yml.j2
+    dest: /var/lib/rocket.chat/docker-compose.yml
+    owner: root
+    group: root
+    mode: 0600
+
+- name: copy mongodb initialization script
+  template:
+    src: var_lib_rocket.chat_mongo-init.js.j2
+    dest: /var/lib/rocket.chat/mongo-init.js
+    owner: root
+    group: root
+    mode: 0644
+
+- name: start rocketchat docker stack
+  docker_stack:
+    name: rocketchat
+    prune: yes
+    compose: /var/lib/rocket.chat/docker-compose.yml
+
+
+##### BACKUPS #####
+
+- name: copy mongodb dump script
+  template:
+    src: usr_local_bin_rocketchat-dump-mongodb.sh.j2
+    dest: /usr/local/bin/rocketchat-dump-mongodb.sh
+    mode: 0755
+    owner: root
+    group: root
+
+- name: copy rsnapshot configuration for rocketchat backups
+  template:
+    src: etc_rsnapshot.d_rocketchat.conf.j2
+    dest: /etc/rsnapshot.d/rocketchat.conf
+    mode: 0644
+    owner: root
+    group: root
+  when: '"backup" in role_names'
+  notify: check rsnapshot configuration

@@ -1,0 +1,6 @@
+rocketchat_docker_version: "3.7.1"
+rocketchat_fqdn: "chat.CHANGEME.org"
+# mode for SSL/TLS certificates for the rocketchat webserver virtualhost (letsencrypt/selfsigned)
+#   letsencrypt: acquire a certificate from Let's Encrypt (rocketchat_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+rocketchat_https_mode: selfsigned
