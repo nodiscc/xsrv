@@ -239,6 +239,7 @@ function upgrade() {
     # optionally switch to env variable BRANCH before git pull
     if [[ ! -z "$git_branch" ]]; then
         echo "[xsrv] INFO: switching $templates_path/ to branch $git_branch"
+        sudo git remote update
         sudo git checkout "$git_branch"
     fi
     echo "[xsrv] INFO: updating $templates_path/ from git"
