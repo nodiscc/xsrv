@@ -10,6 +10,7 @@ editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 git_branch="${BRANCH:-}"
 skip_venv="${SKIP_VENV:=no}"
+pager="${PAGER:=less}"
 
 
 # Functions
@@ -250,10 +251,10 @@ function upgrade() {
 function show_defaults() {
     role=${1:-}
     if [[ ! -z "$role" ]]; then
-        cat $templates_path/roles/$role/defaults/main.yml | less
+        $pager "$templates_path/roles/$role/defaults/main.yml"
     else
         # shellcheck disable=SC2002
-        cat $templates_path/roles/*/defaults/main.yml | less
+        cat "$templates_path/roles/*/defaults/main.yml" | $pager
     fi
 }
 
