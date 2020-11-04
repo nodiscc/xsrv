@@ -182,18 +182,20 @@ edit-inventory  edit inventory file for a playbook
 edit-host       edit a host vars file
 edit-vault      edit a host vault file
 shell           open an interactive shell on a host
-utils           run the xsrv-utils script on a host
-info            display quick access links for a host
 logs            view system log on a host
 help            show this message
 fetch-backups   fetch backups from a host to the playbook backups directory
 upgrade         ugrade xsrv script and roles to latest versions
-show-defaults   show all available role variables and their default values
+show-hosts      list hosts in a playbook/inventory
+show-defaults   show all variables and their default values (accepts a role as argument)
 
 The following environment variables are supported:
-TAGS=tag1,tag2     limit deploy/check to a list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
-BRANCH=feature-xyz advanced (upgrade only): checkout/pull a specific branch before upgrade
-XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (/opt/xsrv)
+TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+BRANCH             advanced (upgrade only): git branch to checkout/pull before upgrade
+XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (default /opt/xsrv)
+SKIP_VENV          advanced: skip creation of virtualenv/dependencies installation (yes/no, default no)
+EDITOR             text editor to use (default nano)
+PAGER              pager to use (default less)
 ```
 
 Examples:
