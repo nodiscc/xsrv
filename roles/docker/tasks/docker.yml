@@ -46,11 +46,13 @@
     state: "present"
   notify: restart docker
 
-- name: Install python-docker and docker-compose
+- name: Install docker_stack module requirements and docker-compose
   package:
     name:
       - python-docker
+      - python3-jsondiff
       - python3-docker
+      - python3-yaml
       - docker-compose
     state: present
 
