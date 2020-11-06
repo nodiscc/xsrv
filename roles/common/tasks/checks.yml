@@ -10,6 +10,7 @@
       - firehol_custom_services|type_debug == "list"
       - firehol_networks|type_debug == "list"
       - firehol_routers|type_debug == "list"
+      - firehol_docker_swarm_compat == firehol_docker_swarm_compat|bool
       - linux_users|type_debug == "list"
       - msmtp_admin_email is not search("CHANGEME")
       - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump|bool

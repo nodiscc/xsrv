@@ -126,6 +126,14 @@ firehol_networks:
 #       - { name: "any", from_interface: "docker0" }
 firehol_routers: []
 
+# if docker role is enabled, add relevant firewall/router rules (yes/no):
+# - allow traffic from host to containers
+# - allow traffic between containers
+# - allow all outgoing swarm traffic
+# - insert SNAT rules for outgoing swarm traffic
+firehol_docker_swarm_compat: yes
+
+
 # custom services definitions, in addition to https://firehol.org/services/
 firehol_custom_services:
   - { name: "sshcustom", ports: "tcp/722" } # SSH server on custom port

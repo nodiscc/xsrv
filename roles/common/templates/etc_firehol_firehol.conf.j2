@@ -44,7 +44,7 @@ router {{ router.name }}
     server {{ service.name }} accept inface any outface {{ service.to_interface }}
 {% endfor %}
 {% for service in router.allow_route_from %}
-    server any accept inface {{ servce.from_interface }} outface any
+    server any accept inface {{ service.from_interface }} outface any
 {% endfor %}
 
 {% endfor %}
@@ -54,6 +54,9 @@ router {{ router.name }}
 ipv4 interface {{ network.interface }} {{ network.name }} src {{ network.src }}
     protection strong
     policy {{ network.policy }}
+{% if 'docker' in role_names and firehol_docker_swarm_compat %}
+    masquerade src not "127.0.0.1/16" # apply SNAT for all traffic leaving this interface
+{% endif %}
 {% for service in network.allow_input %}
     server {{ service.name }} accept src "{{ service.src }}"
 {% endfor %}
@@ -62,3 +65,17 @@ ipv4 interface {{ network.interface }} {{ network.name }} src {{ network.src }}
 {% endfor %}
 
 {% endfor %}
+{% if 'docker' in role_names and firehol_docker_swarm_compat %}
+# Docker swarm routing
+ipv4 interface docker_gwbridge docker_swarm_bridge
+    policy accept
+interface docker0 docker_bridge
+    policy accept
+router4 docker2docker inface docker0 outface docker0
+    server all accept
+router dockergw2dockergw inface docker_gwbridge outface docker_gwbridge
+    policy accept
+router dockergw2inet inface docker_gwbridge outface any
+    policy accept
+
+{% endif %}
