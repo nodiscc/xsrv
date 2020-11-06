@@ -66,6 +66,11 @@
 - name: force all notified handlers to run now
   meta: flush_handlers
 
+##### SWARM #####
+
+- name: configure docker swarm
+  docker_swarm: "{{ docker_swarm }}"
+
 ##### SERVICE #####
 
 - name: enable docker service
