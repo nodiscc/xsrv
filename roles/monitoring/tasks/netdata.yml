@@ -170,7 +170,7 @@
     mode: 0440
   with_items:
     - { src: 'etc_netdata_netdata.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/netdata.conf' } # general configuration
-    - { src: 'etc_netdata_health_alarm_notify.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health_alarm_notify.conf' } # health notifications configuration
+    - { src: 'etc_netdata_health_alarm_notify.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health_alarm_notify.conf' } # health notifications configuration # noqa 204
     - { src: 'var_lib_netdata_cloud.d_cloud.conf.j2', dest: '{{ netdata_install_prefix }}/var/lib/netdata/cloud.d/cloud.conf' } # cloud/SaaS service configuration # noqa 204
     - { src: 'etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry # noqa 204
     - { src: 'etc_netdata_health.d_processes.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/processes.conf' } # process health checks
