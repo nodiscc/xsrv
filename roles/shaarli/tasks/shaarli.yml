@@ -141,6 +141,8 @@
     src: '{{ shaarli_install_dir }}.old/data'
     dest: '{{ shaarli_install_dir }}/'
     mode: preserve
+    owner: root
+    group: www-data
   when:
     - shaarli_action is defined
     - shaarli_action == 'upgrade'
