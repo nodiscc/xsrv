@@ -33,12 +33,9 @@
 - [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
 - [mumble](roles/mumble) - Low-latency voice-over-IP (VoIP) server
 - [openldap](roles/openldap) - LDAP directory server and web administration tools
-- _WIP_ [docker](roles/docker) - Docker container platform
-- _WIP_ [gitlab](roles/gitlab) - Self-hosted software forge, project management, CI/CD tool suite
-- _WIP_ [graylog](roles/graylog) - Log management and analysis software
-- _WIP_ [icecast](roles/icecast) - Streaming media server
-- _WIP_ [pulseaudio](roles/pulseaudio) - Network sound server
-- _WIP_ [rocketchat](roles/rocketchat) - Realtime web chat/communication service
+- [docker](roles/docker) - Docker container platform
+- [rocketchat](roles/rocketchat) - Realtime web chat/communication platform
+
 
 <!-- TODO demo screencast -->
 
@@ -50,7 +47,7 @@
 [![](https://i.imgur.com/blWO4LL.png)](roles/transmission)
 [![](https://i.imgur.com/jYSU9zC.png)](roles/mumble)
 [![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](roles/openldap)
-
+[![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
 
 
 ------------
