@@ -8,15 +8,13 @@
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 
-**STATUS: rewrite in progress - Expect a stable release soon - The current version is partially broken and will require frequent adaptations to configuration files.**
-
 **Install and manage self-hosted network services/applications on your own server(s).**
 
 `xsrv` provides:
 
-- a [command-line tool](#command-line-usage) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for easy deployment, maintenance and configuration
-- a collection of ansible [roles](#roles) for various services/applications
+- a collection of ansible [roles](#roles) for various network services, web applications, and system administration
 - a base [playbook to setup a single server](#basic-deployment) for personal use or small/medium teams
+- a [command-line tool](#command-line-usage) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for simple deployments, maintenance and configuration
 
 
 ## Roles
@@ -83,16 +81,21 @@
 
 ------------
 
-## Requirements
+## Installation
 
-- One or more target servers (_hosts_) to configure. See [server preparation](docs/server-preparation.md)
-- A controller machine for remote administration. See [instalaltion](#installation).
+This tool runs on an administration machine (_controller_) and configures one or more remote servers (_hosts_), over the network using SSH.
  
+![](docs/ansible-diagram.png)
+
+
+## Server preparation
+
+See **[server preparation](docs/server-preparation.md)**.
 
 
 ## Installation
 
-A _controller_ machine will be used for deployment and remote administration. The controller can be any laptop/desktop PC, a dedicated server, VM or container where python and bash are available. On the controller:
+A **controller** machine will be used for deployment and remote administration. The controller can be any laptop/desktop PC, dedicated server, VM or container where python and bash are available. On the controller:
 
 
 ```bash
