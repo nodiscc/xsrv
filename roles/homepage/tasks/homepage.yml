@@ -1,0 +1,23 @@
+- name: create documentroot
+  file:
+    path: "/var/www/{{ homepage_fqdn }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy homepage HTML file
+  template:
+    src: index.html.j2
+    dest: "/var/www/{{ homepage_fqdn }}/index.html"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy static files/homepage resources
+  copy:
+    src: res
+    dest: "/var/www/{{ homepage_fqdn }}/"
+    owner: root
+    group: root
+    mode: 0644

@@ -1,0 +1,15 @@
+- include: checks.yml
+  tags: homepage
+
+- include: homepage.yml
+  become: yes
+  tags: homepage
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: homepage
+  when: homepage_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags: homepage

@@ -1,0 +1,17 @@
+- name: copy homepage apache virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_homepage.conf.j2
+    dest: /etc/apache2/sites-available/homepage.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload apache
+
+- name: enable homepage apache virtualhost configuration
+  command: a2ensite homepage
+  args:
+    creates: "/etc/apache2/sites-enabled/homepage.conf"
+  notify: reload apache
+
+- name: ensure apache configuration is applied (flush handlers)
+  meta: flush_handlers
