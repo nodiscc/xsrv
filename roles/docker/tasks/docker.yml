@@ -33,11 +33,17 @@
   file:
     path: "/etc/docker"
     state: directory
+    owner: root
+    group: root
+    mode: 0755
 
 - name: copy docker daemon configuration
   template:
     src: etc_docker_daemon.json.j2
     dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
   notify: restart docker
 
 - name: Install Docker.
