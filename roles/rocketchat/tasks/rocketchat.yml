@@ -2,7 +2,7 @@
   lineinfile:
     path: /etc/hosts
     state: present
-    line: "127.0.0.1	{{ rocketchat_fqdn }}"
+    line: "127.0.0.1	{{ rocketchat_fqdn }}" # noqa 203
 
 - name: create directories for rocket.chat data
   file:
