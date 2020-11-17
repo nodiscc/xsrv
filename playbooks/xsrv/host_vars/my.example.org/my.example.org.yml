@@ -7,6 +7,10 @@ ansible_user: "{{ vault_ansible_user }}"
 ansible_become_pass: "{{ vault_ansible_become_pass }}"
 ansible_ssh_port: 22
 
+##### HOMEPAGE #####
+# see roles/nextcloud/defaults/main.yml
+homepage_fqdn: "www.CHANGEME.org"
+
 ##### NEXTCLOUD #####
 # see roles/nextcloud/defaults/main.yml
 nextcloud_fqdn: "cloud.CHANGEME.org"

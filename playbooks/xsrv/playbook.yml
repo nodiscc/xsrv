@@ -5,6 +5,7 @@
     - backup
     - monitoring
     # - apache
+    # - homepage
     # - mariadb
     # - postgresql
     # - nextcloud
