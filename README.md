@@ -35,6 +35,7 @@
 - [openldap](roles/openldap) - LDAP directory server and web administration tools
 - [docker](roles/docker) - Docker container platform
 - [rocketchat](roles/rocketchat) - Realtime web chat/communication platform
+- [homepage](role/homepage) - simple web homepage
 
 
 <!-- TODO demo screencast -->
