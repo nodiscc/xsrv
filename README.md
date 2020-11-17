@@ -49,33 +49,14 @@
 [![](https://i.imgur.com/jYSU9zC.png)](roles/mumble)
 [![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](roles/openldap)
 [![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
+[![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
 
 
 ------------
 
 **Table of contents**
 
-<!-- MarkdownTOC -->
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Basic deployment](#basic-deployment)
-  - [Changing configuration](#changing-configuration)
-  - [Command-line usage](#command-line-usage)
-- [Maintenance](#maintenance)
-  - [Backups](#backups)
-  - [Upgrades](#upgrades)
-  - [Tracking configuration changes](#tracking-configuration-changes)
-  - [Uninstalling roles](#uninstalling-roles)
-  - [Reverting changes](#reverting-changes)
-  - [Using as ansible collection in your playbooks](#using-as-ansible-collection-in-your-playbooks)
-- [Contributing/Issues/Work in progress](#contributingissueswork-in-progress)
-- [License](#license)
-- [Changelog](#changelog)
-- [See also](#see-also)
-
-<!-- /MarkdownTOC -->
+[[TOC]]
 
 ------------
 
