@@ -23,6 +23,7 @@
 - [backup](roles/backup) - incremental backup service (local and remote backups)
 - [monitoring](roles/monitoring) - monitoring, alerting and log agregation system (netdata, rsyslog, other tools	)
 - [apache](roles/apache) - Apache web server and PHP-FPM interpreter
+- [homepage](role/homepage) - simple web server homepage
 - [postgresql](roles/postgresql) - PostgreSQL database server
 - [mariadb](roles/mariadb) - MariaDB (MySQL) database server
 - [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
@@ -35,7 +36,6 @@
 - [openldap](roles/openldap) - LDAP directory server and web administration tools
 - [docker](roles/docker) - Docker container platform
 - [rocketchat](roles/rocketchat) - Realtime web chat/communication platform
-- [homepage](role/homepage) - simple web homepage
 
 
 <!-- TODO demo screencast -->
@@ -108,10 +108,6 @@ sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest rel
 # (optional) install the command line tool to your $PATH
 sudo cp /opt/xsrv/xsrv /usr/local/bin/
 ```
-
-You can either:
-- use the [`xsrv` script](#command-line-usage) to manage your ansible environments
-- or use components through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html). See [Using as ansible collection](#using-as-ansible-collection).
 
 
 ## Usage
@@ -246,47 +242,56 @@ Keep **off-line, off-site backups** of your `~/playbooks/` directory and user da
 
 Security upgrades for Debian packages are applied [automatically/daily](roles/common). To upgrade roles to their latest versions (bugfixes, new features, latest stable releases of all unpackaged applications):
 
-- Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/releases)
-- Adjust your configuration if needed (`xsrv edit-*`)
+- Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md) and/or subscribe to the [releases RSS feed](https://gitlab.com/nodiscc/xsrv/-/tags?format=atom)
 - Download latest backups from the server (`xsrv backup-fetch`) and/or do a snapshot of the VM
-- Download the latest release and overwrite roles in your playbooks directory: `BRANCH=release xsrv upgrade`
-- Run checks and watch out for unwanted changes `xsrv check`
+- Upgrade roles in your playbook `xsrv upgrade` (use `BRANCH=<VERSION> xsrv upgrade` to upgrade to a specific release)
+- (Optional) run checks and watch out for unwanted changes `xsrv check`
 - Apply the playbook `xsrv deploy`
 
 
-### Tracking configuration changes
+### Storing sensitive configuration values
 
-Put your playbooks directory under version control if you need to track changes to your configuration.
-Make sure no sensitive config values/secrets are commited as plaintext! Put sensitives values in vaulted host vars files:
+Ensure no sensitive config values/secrets are stored as plaintext! Encrypt secret variables with ansible-vault:
 
 ```yaml
-# plaintext host_vars file
+# xsrv edit-host
 xyz_password: {{ vault_xyz_password }}
 
-# vauilted host vars file
+# xsrv edit-vault
 vault_xyz_password: "$3CR3T"
 
 ```
 
-For production systems, it is strongly recommended to run the playbook and evaluate changes against a testing/staging environment first (create separate testing/prod groups in `inventory.yml`, deploy changes against the testing environment). Setup **Continuous Deployment** and monitoring to automate delivery and testing. See the example [`.gitlab-ci.yml`](playbooks/xsrv/.gitlab-ci.yml) to get started.
+### Versioning your playbook
 
+Put your playbook directory (eg. `~/playbooks/default`) under version control/[git](https://stdout.root.sx/?searchtags=git+doc) if you need to track changes to your configuration.
 
 **Reverting changes:**
 
- - `git checkout` your playbook/configuration as it was before the change
- - restore a VM snapshot from before the change (will cause loss of all data modified after the snapshot!)
- - or, restore data from the last known good backups (see each role's documentation for restoration instructions)
- - run the playbook `xsrv deploy`
+- (optional) restore a VM snapshot from before the change (will cause loss of all data modified after the snapshot!), OR restore data from last known good backups (see each role's documentation for restoration instructions)
+- `git checkout` your playbook directory as it was before the change
+- run the playbook `xsrv deploy`
 
 Refer to **[ansible documentation](https://docs.ansible.com/)** for more information.
 
-
 **Uninstalling roles:**
 
-Uninstalling roles is not supported at this time: components must be removed manually, or a new server must be deployed and data restored from backups. Most roles provide variables to disable their services/functionality.
+Uninstalling roles is not supported at this time: components must be removed manually or using a ad-hoc playbook. Or a new server must be deployed and data restored from backups. Most roles provide variables to disable their services/functionality.
+
+
+### Continuous Delivery
+
+For production systems, it is strongly recommended to run the playbook and evaluate changes against a testing/staging environment first (eg. create separate `testing`,`prod` groups in `inventory.yml`, deploy changes to the `testing` environmnent with `xsrv deploy PLAYBOOK_NAME testing`). 
+
+You can further automate deployment procedures using a CI/CD pipeline. See the example [`.gitlab-ci.yml`](playbooks/xsrv/.gitlab-ci.yml) to get started.
 
 
 ### Using as ansible collection
+
+
+You can either:
+- use the [`xsrv` script](#command-line-usage) to manage your ansible environments
+- or use components through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html). See [Using as ansible collection](#using-as-ansible-collection).
 
 If you just want to integrate the [roles](#roles) in your own playbooks, install them using [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html):
 
