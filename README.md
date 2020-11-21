@@ -68,6 +68,7 @@
   * [Backups](#backups)
   * [Upgrades](#upgrades)
   * [Storing sensitive configuration values](#storing-sensitive-configuration-values)
+- [Advanced usage](#advanced-usage)
   * [Versioning your playbook](#versioning-your-playbook)
   * [Continuous Delivery](#continuous-delivery)
   * [Using as ansible collection](#using-as-ansible-collection)
@@ -260,6 +261,8 @@ xyz_password: {{ vault_xyz_password }}
 vault_xyz_password: "$3CR3T"
 
 ```
+
+## Advanced usage
 
 ### Versioning your playbook
 
