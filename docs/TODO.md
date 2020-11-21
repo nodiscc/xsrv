@@ -2,13 +2,24 @@
 
 ### xsrv/xsrv
 
+- #368 - installation/basic setup screencast - `0.24`
+- #366 - nextcloud: file locking causes synchronization errors - `0.24`
+- #365 - nextcloud: LDAP user backend - `0.25`
+- #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
+- #363 - Distribute as ISO image? - `0.25`
+- #362 - netdata: default apache status monitoring jobs trigger error 403
+- #360 - netdata: add httpchecks on each apache virtualhost setup by other roles
+- #359 - Matrix/Element role?
+- #358 - jsxc role?
+- #357 - mattermost role?
+- #356 - nextcloud: add nextcloud talk app?
 - #354 - common: bash: set TMOUT value
 - #353 - common: apt: autoremove/autoclean/purge packages
 - #352 - common: add support for hardware RNG
 - #351 - nextcloud: enable pretty URLs
 - #348 - ldap-account-manager: Unable to set locale
 - #347 - DeprecationWarning for ldap_attr module - `0.26`
-- #346 - samba: LDAP user backend - `0.24`
+- #346 - samba: LDAP user backend - `0.25`
 - #345 - openldap: postgresql backend?
 - #344 - nextcloud: add office suite integration
 - #343 - nextcloud: warning on settings/admin/overview: missing bcmath php module
@@ -16,8 +27,7 @@
 - #339 - WIP: speed up ansible execution with mitogen
 - #337 - nextcloud: maps: enable OSRM demo servers by default
 - #333 - WIP: add self-service-password role - `0.25`
-- #325 - Rocket.chat - `0.24`
-- #324 - Jitsi Meet
+- #324 - Jitsi Meet role
 - #323 - prometheus role?
 - #322 - Frontail role?
 - #321 - ELK stack?
@@ -37,7 +47,7 @@
 - #307 - apache: make certificate status endpoint enable/disable configurable
 - #305 - switch firewall management to firewalld - `0.26`
 - #303 - firehol: add example NAT loopback/hairpin rule
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `0.24`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `0.25`
 - #293 - WIP: add nginx role
 - #290 - netdata: monitor number of upgradeable APT packages - `0.25`
 - #280 - Samba Directory Controller or other Identity Management solution
@@ -154,7 +164,6 @@
 - #142 - nextcloud: add files automated tagging app
 - #141 - nextcloud: add fail2ban to documentation
 - #140 - WIP: add graylog role
-- #139 - WIP: add docker role
 - #138 - apache: rewrite all 500 502 503 errors to generic 50x.html error page
 - #137 - apache: allow setting up HTTP Basic auth and autoindex for specific directories/URLs/virtualhosts
 - #134 - tt-rss: RuntimeWarning during SQL update task
@@ -218,7 +227,6 @@
 - #53 - Web analytics
 - #52 - blogging engine/static site generator
 - #51 - Dokuwiki
-- #50 - Docker role
 - #49 - Caching HTTP proxy
 - #48 - FTP server
 - #47 - distributed filesystem (ceph, glusterfs)
@@ -239,7 +247,6 @@
 - #32 - Minetest server
 - #31 - Add bash completion to xsrv script
 - #30 - Gitlab role
-- #28 - Instant messaging/communication system - `0.24`
 - #27 - nginx role
 - #26 - Dynamic DNS updater
 - #25 - DNS Server
