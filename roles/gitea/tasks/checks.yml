@@ -1,13 +1,10 @@
----
-
-##### CHECKS FOR APACHE ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
     that:
       - gitea_admin_email is not search("CHANGEME")
       - gitea_admin_password is not search("CHANGEME")
       - gitea_admin_username is not search("CHANGEME")
+      - gitea_https_mode in ['selfsigned', 'letsencrypt']
       - gitea_base_url is not search("CHANGEME")
       - gitea_db_host is not search("CHANGEME")
       - gitea_db_password is not search("CHANGEME")
