@@ -298,7 +298,7 @@ You can either:
 If you just want to integrate the [roles](#roles) in your own playbooks, install them using [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html):
 
 ```bash
-ansible-galaxy collection install nodiscc.xsrv
+ansible-galaxy collection install git+https://gitlab.com/nodiscc/xsrv,release
 ```
 
 And include them in your playbooks:
@@ -316,6 +316,12 @@ And include them in your playbooks:
    - nodiscc.xsrv.monitoring
    - nodiscc.xsrv.apache
    - ...
+```
+
+Tp upgrade the ollection to the latest [release](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md):
+
+```bash
+ansible-galaxy collection install git+https://gitlab.com/nodiscc/xsrv,release
 ```
 
 See [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
