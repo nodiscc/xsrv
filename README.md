@@ -56,7 +56,25 @@
 
 **Table of contents**
 
-[[TOC]]
+- [Roles](#roles)
+- [Installation](#installation)
+- [Server preparation](#server-preparation)
+- [Installation](#installation-1)
+- [Usage](#usage)
+  * [Basic deployment](#basic-deployment)
+  * [Changing configuration](#changing-configuration)
+  * [Command-line usage](#command-line-usage)
+- [Maintenance](#maintenance)
+  * [Backups](#backups)
+  * [Upgrades](#upgrades)
+  * [Storing sensitive configuration values](#storing-sensitive-configuration-values)
+  * [Versioning your playbook](#versioning-your-playbook)
+  * [Continuous Delivery](#continuous-delivery)
+  * [Using as ansible collection](#using-as-ansible-collection)
+- [Contributing/Issues/Work in progress](#contributing-issues-work-in-progress)
+- [License](#license)
+- [Changelog](#changelog)
+- [See also](#see-also)
 
 ------------
 
