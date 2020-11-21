@@ -46,6 +46,7 @@ The server's **hostname** ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_
 Setup any additional records/subdomains required to access your applications (webserver virtualhosts). By default the following subdomains are required (if corresponding roles are enabled):
 
 ```bash
+www.CHANGEME.org # homepage
 cloud.CHANGEME.org # nextcloud
 git.CHANGEME.org # gitea
 links.CHANGEME.org # shaarli
