@@ -118,7 +118,7 @@ The [default playbook](playbooks/xsrv/playbook.yml) installs/manages a basic set
 
 ```bash
 # authorize your SSH key on target server (host)
-ssh-copy-id myusername@my.example.org
+ssh-copy-id myusername@my.CHANGEME.org
 
 # create a base directory for your playbooks/environments
 mkdir ~/playbooks/
@@ -202,11 +202,11 @@ xsrv deploy default # deploy all hosts in the 'default' playbook
 xsrv deploy # deploy all hosts in the default playbook (default is assumed when no playbook name is specified)
 xsrv init-playbook infra # initialize a new playbook/environment named 'infra'
 xsrv deploy infra # deploy all hosts in the playbook named 'infra'
-xsrv init-host infra ex2.example.org # add a new host 'ex2.example.org' to the playbook named 'infra'
-xsrv edit-host infra ex2.example.org # edit host variables for the host 'ex2.example.org' in the playbook 'infra'
-xsrv edit-vault infra ex2.example.org # edit secret/vaulted variables for 'ex2.example.org' in the playbook 'infra'
-xsrv deploy infra ex1.example.org,ex2.example.org # deploy only the hosts ex1.example.org and ex2.example.org in the playbook 'infra'
-TAGS=nextcloud,gitea deploy infra ex3.example.org # run tasks tagged nextcloud or gitea on ex3.example.org
+xsrv init-host infra ex2.CHANGEME.org # add a new host 'ex2.CHANGEME.org' to the playbook named 'infra'
+xsrv edit-host infra ex2.CHANGEME.org # edit host variables for the host 'ex2.CHANGEME.org' in the playbook 'infra'
+xsrv edit-vault infra ex2.CHANGEME.org # edit secret/vaulted variables for 'ex2.CHANGEME.org' in the playbook 'infra'
+xsrv deploy infra ex1.CHANGEME.org,ex2.CHANGEME.org # deploy only the hosts ex1.CHANGEME.org and ex2.CHANGEME.org in the playbook 'infra'
+TAGS=nextcloud,gitea deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud or gitea on ex3.CHANGEME.org
 BRANCH=1.0.0 xsrv upgrade infra # upgrade roles in the playbook 'infra' to version 1.0.0
 ```
 
@@ -230,7 +230,7 @@ To download a copy of latest daily backups from a host, to the `backups/` direct
 # for a single default playbook with a single host
 xsrv fetch-backups
 # for playbooks with multiple hosts
-xsrv fetch-backups myplaybook my.example.org
+xsrv fetch-backups myplaybook my.CHANGEME.org
 ```
 
 See each [role](#roles)'s documentation for information on how to restore backups.
@@ -310,7 +310,7 @@ And include them in your playbooks:
   collections:
    - nodiscc.xsrv
 
-- hosts: my.example.org
+- hosts: my.CHANGEME.org
   roles:
    - nodiscc.xsrv.common
    - nodiscc.xsrv.monitoring
