@@ -1,5 +1,7 @@
 image: debian:buster-backports
 
+# *_ANSIBLE_VAULT_PASSWORD variables must be set in the environment (Settings > CI/CD > variables)
+
 deploy-test:
   before_script:
     - apt-get update -qy
