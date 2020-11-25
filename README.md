@@ -93,7 +93,7 @@ See **[server preparation](docs/server-preparation.md)**.
 
 ## Installation
 
-A **controller** machine will be used for deployment and remote administration. The controller can be any laptop/desktop PC, dedicated server, VM or container where python and bash are available. On the controller:
+A **controller** machine will be used for deployment and remote administration. The controller can be any laptop/desktop PC, dedicated server, VM or container where a SSH client, python and bash are available. On the controller:
 
 
 ```bash
@@ -132,8 +132,10 @@ Setup roles and required configuration before initial deployment:
 ```bash
 # enable desired roles by uncommenting them
 xsrv edit-playbook
+
 # setup passwords and secret values (replace any values labeled CHANGEME)
 xsrv edit-vault
+
 # edit configuration variables (replace any values labeled CHANGEME)
 xsrv edit-host
 ```
