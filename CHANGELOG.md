@@ -18,7 +18,6 @@ This releases improves usability, portability, standards compliance, separation 
 - refactor main script/simplify/cleanup
 - make installation to $PATH optional
 
-
 **example playbook: refactor:**
 - add examples for playbook, inventory, and host_vars (cleartext and vaulted) files
 - disable all role by default except common, backup, monitoring. Users should manually enable additional roles
@@ -26,6 +25,7 @@ This releases improves usability, portability, standards compliance, separation 
 - firewall: by default, allow incoming SSH from anywhere (key-based authentication is enabled so this is reasonably secure)
 - firewall: by default, allow HTTP/HTTPS access from anywhere (required for let's encrypt http-01 challenge, and apache role is enabled by default)
 - firewall: change the default policy for the 'global' firehol_network definition to RETURN (changes nothing in the default configuration, makes adding other network definitions easier)
+- firewall: add an option to generate firewall rules compatible with docker swarm routing/port forwarding
 - doc: add firewall examples for all services (only from LAN by default)
 - doc: add example .gitlab-ci.yml
 - ansible: use .ansible-vault-password as vault password file
@@ -77,14 +77,17 @@ This releases improves usability, portability, standards compliance, separation 
 - netdata: install and configure https://gitlab.com/nodiscc/netdata-modtime module
 - netdata: make dbengine disk space size and memory page cache size configurable
 - netdata: monitor mysql server if mariadb role is enabled (add netdata mysql user)
-- netdata: upgrade to 1.24.0 when installed from binary
+- netdata: add default configuration for health notifications
+- netdata: upgrade to latest stable release
 - rsyslog: aggregate all log messages to `/var/log/syslog` by default
-- rsyslog: monitor samba, gitea, mumble-server and rsnapshot log files with imfile module
+- rsyslog: monitor samba, gitea, mumble-server, openldap, nextcloud, and rsnapshot log files with imfile module
 - rsyslog: fix syslog tags for imfile watches
 - rsyslog: make agregation of apache access logs to syslog optional, disable by default
 - rsyslog: disable aggregation of netdata logs to syslog by default (very noisy, many false-positive ERROR messages)
+- rsyslog: discard apache access logs caused by netdata apche monitoring
 - needrestart: don't auto-restart services by default
-- various fixes, reorder, cleanup, update documentation, fix role/certificate generation idempotence
+- extend list of command-line monitoring tools (lsof/strace)
+- various fixes, reorder, cleanup, update documentation, fix role/certificate generation idempotence, make more components optional
 
 
 **backup role**
@@ -101,10 +104,12 @@ This releases improves usability, portability, standards compliance, separation 
 - split lamp role to separate apache and mariadb roles
 
 
-**apache: refactor role:**
+**apache role:**
+- import/refactor/split role from https://gitlab.com/nodiscc/ansible-xsrv-lamp
 - use apache mod-md for Let's Encrypt certificate generation, remove certbot and associated ansible tasks
 - switch to php-fpm interpreter, remove mod_php
 - switch to mpm_event, disable mpm_worker
+- switch to HTTP2
 - remove ability to create custom virtualhosts
 - remove automatic homepage generation feature (will be split to separate role)
 - use ansible-vault to manage secret variables
@@ -120,7 +125,7 @@ This releases improves usability, portability, standards compliance, separation 
 - disable setting a default Content-Security-Policy, each application is responsible for setting an appropriate CSP
 - mark HTTP->HTTPS redirects as permanent (HTTP code 301)
 - exclude /server-status from automatic HTTP -> HTTPS redirects
-- ensure the default/fallback vhost is always the first in load order
+- ensure the default/fallback vhost is always the first in load order, raise HTTP error 403 and autoindex:error when accessing the default vhost
 
 
 **nextcloud: refactor role:**
@@ -139,7 +144,7 @@ This releases improves usability, portability, standards compliance, separation 
 - templatize nextcloud domain name/install directory/full URL
 - require manual configuration of nextcloud FQDN
 - enforce fail2ban bans on nextcloud login failures
-- upgrade nextcloud to 19.0.2, upgrade all nextcloud apps
+- upgrade nextcloud to latest stable version (https://nextcloud.com/changelog), upgrade all nextcloud apps
 - add fine-grained ansible tags
 - automatically install applications using occ app:install command, remove app-related variables and ansible tasks
 - enable APCu memcache https://docs.nextcloud.com/server/19/admin_manual/configuration_server/caching_configuration.html
@@ -147,7 +152,7 @@ This releases improves usability, portability, standards compliance, separation 
 - remove old installation directory at the end of upgrades
 - make backup role fully optional, check rsnapshot configuration after copying config file
 - delegate database backups to the respective database role (mariadb/postgresql)
-- add deck, notes and maps apps
+- add deck, notes, admin_audit and maps apps
 - add php-fpm configuration
 
 **Migrating Nextcloud data to Postgresql from a MySQL-based installation:**
@@ -238,7 +243,7 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - LFS JWT secret must not contain /+= characters
 - only configure a subset of gitea settings in the configuration file, let gitea use defaut values for other settings
 - disable displaying gitea version in footer
-- update gitea to 1.12.4
+- upgrade gitea to latest stable version (https://github.com/go-gitea/gitea/releases)
 - download binary from github.com instea of gitea.io
 - download uncompressed binary to avoid handling xz decompression
 - update configuration file template
@@ -368,6 +373,7 @@ TAGS=gitea xsrv deploy
 - use ansible-vault as default source for shaarli username, password, api secret and salt
 - add role to example playbook (disabled by default)
 - add php-fpm configuration
+- upgrade shaarli to latest stable release (https://github.com/shaarli/Shaarli/releases)
 
 **Migrating Shaarli data to a new installation**
 
@@ -414,11 +420,33 @@ make deploy
  - make shares available/browseable state configurable (default to yes)
  - update documentation
 
+**docker role:**
+ - add docker role (install and configure Docker container platform)
+ - add ability to configure a docker swarm orchestrator (default to initialize a new swarm)
+ 
+**homepage role:**
+ - add a role to generate a basic webserver homepage listing URLs/commands to access deployed services
+ - automatic apache virtualhost configuration and let's encrypt/self-signed certificate generation
+
+**rocketchat role:**
+ - add a role to deploy the rocket.chat instant messaging/communication software
+ - deploy rocket.chat as a stack of docker swarm services
+ - add apache cofiguration to proxy traffic from the host's apache instance, add let's encrypt/self-signed certificate generation tasks
+
+**openldap role:**
+ - add a role to install openldap server andoptionally ldap-account-manager
+ - preconfigure base DN, users and groups OUs, 
+ - add rsnapshot backup configuration
+ - add apache configuration/host for ldap-account-managaer, add let's encrypt/self-signed certificate generation tasks
+ - make ldap-account-manager configuration read-only (must be configured through ansible)
+ -  - only allow access to ldap-account-manager from private IP addresses by default
+
 **tools, documentation, misc:**
 - refactor and update documentation (clarify/cleanup/update/reorder/reword/simplify/deduplicate/move)
 - import all roles from separate repositories to single repository
-- publish roles and default playbook as ansible collection (https://galaxy.ansible.com/nodiscc/xsrv)
-- fix automated tests (ansible-lint, yamllint, shellcheck), add ansible-playbook --syntax-check test
+- publish roles and default playbook as ansible collection (https://galaxy.ansible.com/nodiscc/xsrv - use make publish_collection to build)
+- add automated tests (ansible-lint, yamllint, shellcheck) for all roles, add ansible-playbook --syntax-check test
+- integrate with Gitlab CI (https://gitlab.com/nodiscc/xsrv/-/pipelines)
 - remove pip install requirements (performed by xsrv script)
 - move to release/dev/tag branching/release model
 - generate TODO.md file with 'make update_todo'
@@ -427,3 +455,4 @@ make deploy
 - add checks/assertions for all mandatory variables
 - remove .gitignore, clean files generated by tests using 'make clean'
 - improve logging
+- upgrade ansible to latest stable version (https://github.com/ansible/ansible/blob/stable-2.10/changelogs/CHANGELOG-v2.10.rst)
