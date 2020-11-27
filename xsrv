@@ -128,8 +128,9 @@ function init_host() {
     check_playbook
 
     until [[ ! -z "$host_name" ]]; do
-        read -r -p "[xsrv] Name of the host to add to the playbook: " host_name
+        read -r -p "[xsrv] Host name to add to the $playbook_name playbook: " host_name
     done
+
     if [[ -e "$playbooks_dir/$playbook_name/host_vars/$host_name" ]]; then
         echo "[xsrv] ERROR: $playbooks_dir/$playbook_name/host_vars/$host_name already exists"; exit 1
     fi
