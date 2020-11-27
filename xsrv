@@ -96,7 +96,7 @@ function edit_vault() {
     check_playbook
     check_host_name
     cd "$playbooks_dir/$playbook_name"
-    EDITOR="$editor" ansible-vault edit "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml"
+    EDITOR="$editor" ansible-vault edit "$host_vault_file"
 }
 
 function init_playbook() {
@@ -143,7 +143,7 @@ function init_host() {
     sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/playbook.yml" >> "$playbooks_dir/$playbook_name/playbook.yml"
     mkdir "$playbooks_dir/$playbook_name/host_vars/$host_name"
     sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.yml"
-    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml"
+    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
 
     read -r -p "[xsrv] Press ENTER to edit the playbook (enable/disable roles)"
     edit_playbook "$playbook_name"
@@ -151,7 +151,7 @@ function init_host() {
     edit_host "$playbook_name" "$host_name"
 
     echo "[xsrv] INFO: Encrypting secrets file"
-    (cd "$playbooks_dir/$playbook_name/" && ansible-vault encrypt "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml")
+    (cd "$playbooks_dir/$playbook_name/" && ansible-vault encrypt "$host_vault_file")
     read -r -p "[xsrv] Press ENTER to edit secret (vaulted) host variables (replace any values labeled CHANGEME) "
     edit_vault "$playbook_name" "$host_name"
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $playbook_name $host_name"
