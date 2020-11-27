@@ -145,6 +145,16 @@ function init_host() {
     sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.yml"
     sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
 
+    if $(which pwgen >/dev/null); then
+        echo "[xsrv] INFO: generating random passwords for $host_name"
+        for i in 20 250 40 12 106 64 43 30; do
+            random_password=$(pwgen -s "$i" 1);
+            sed -i "s/CHANGEME$i/$random_password/g" "$host_vault_file"
+        done
+    else
+        echo "[xsrv] WARNING: pwgen not installed, unable to generate random passwords for $host_name. Please manually replace any values labeled CHANGEME!"
+    fi
+
     read -r -p "[xsrv] Press ENTER to edit the playbook (enable/disable roles)"
     edit_playbook "$playbook_name"
     read -r -p "[xsrv] Press ENTER to edit host variables (replace any values labeled CHANGEME) "
