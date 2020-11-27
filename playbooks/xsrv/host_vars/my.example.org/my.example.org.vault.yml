@@ -11,10 +11,11 @@ vault_xsrv_admin_username: "CHANGEME"
 vault_xsrv_admin_password: "CHANGEME" # pwgen -s 20 1
 
 ##### common role #####
-vault_msmtp_host: "smtp.CHANGEME.org"
-vault_msmtp_username: "CHANGEME"
-vault_msmtp_password: "CHANGEME"
-vault_msmtp_admin_email: "CHANGEME@CHANGEME.org"
+# SMTP server/credentials for outgoing mail (when setup_msmtp is set to yes)
+# vault_msmtp_host: "smtp.CHANGEME.org"
+# vault_msmtp_username: "CHANGEME"
+# vault_msmtp_password: "CHANGEME"
+# vault_msmtp_admin_email: "CHANGEME@CHANGEME.org"
 
 ##### apache role #####
 vault_apache_letsencrypt_email: "{{ vault_msmtp_admin_email }}"
