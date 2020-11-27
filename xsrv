@@ -135,7 +135,8 @@ function init_host() {
         echo "[xsrv] ERROR: $playbooks_dir/$playbook_name/host_vars/$host_name already exists"; exit 1
     fi
 
-    echo "[xsrv] INFO: creating host vars/vault files for $host_name"
+    # TODO move inventory creation to init_playbook(), only handle adding a single host here
+    # TODO echo "[xsrv] INFO: adding host $host_name to $playbook_name inventory"
     if [[ ! -f "$playbooks_dir/$playbook_name/inventory.yml" ]]; then
         sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/inventory.yml" >> "$playbooks_dir/$playbook_name/inventory.yml"
     else
