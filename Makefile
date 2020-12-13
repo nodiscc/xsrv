@@ -85,3 +85,21 @@ get_build_status:
 	@branch=$$(git rev-parse --abbrev-ref HEAD) && \
 	commit=$$(git rev-parse HEAD) && \
 	curl --silent --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" "https://gitlab.com/api/v4/projects/nodiscc%2Fxsrv/repository/commits/$$commit/statuses?ref=$$branch" | jq  .[].status
+	
+# documentation generation
+doc: install_dev_docs doc_html
+
+# install documentation generator (sphinx + markdown + theme)
+install_dev_docs:
+	python3 -m venv .venv/
+	source .venv/bin/activate && pip3 install sphinx recommonmark sphinx_rtd_theme
+
+
+# HTML documentation generation (sphinx-build --help)
+SPHINXOPTS    ?=
+SPHINXBUILD   ?= sphinx-build
+SOURCEDIR     = docs/    # source directory (markdown)
+BUILDDIR      = doc/html  # destination directory (html)
+doc_html:
+	source .venv/bin/activate && sphinx-build -c doc/ -b html doc/ doc/html
+
