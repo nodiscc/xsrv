@@ -55,8 +55,11 @@
   - [Backups](maintenance/backups.md)
   - [Upgrading](maintenance/upgrading.md)
 - [Advanced usage](advanced.md)
+<<<<<<< HEAD
   - [Version control](advanced/version-control.md)
   - [Continuous deployment](advanced/continuous-deployment.md)
   - [Using as ansible collection](advanced/using-as-ansible-collection.md)
+=======
+>>>>>>> 436eb6b... doc: merge advanced usage subpages, merge maintenance subpages
 - [Contributing](contributing.md)
 
