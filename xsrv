@@ -11,7 +11,9 @@ ansible_tags="${TAGS:-}"
 git_branch="${BRANCH:-}"
 skip_venv="${SKIP_VENV:=no}"
 pager="${PAGER:=less}"
-
+ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
+░░╺╋╸┗━┓┣┳┛┃┏┛
+  ╹ ╹┗━┛╹┗╸┗┛ "
 
 # Functions
 function check_playbook() {
@@ -22,6 +24,7 @@ function check_playbook() {
 
 function deploy() {
     # run ansible playbook
+    echo "$ascii_banner"
     if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
     if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
     cd "$playbooks_dir/$playbook_name"

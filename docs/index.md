@@ -7,10 +7,9 @@
 
 `xsrv` provides:
 
-- a [command-line tool](usage.html#command-line-usage) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for simple deployments, maintenance and configuration
-- a collection of ansible [roles](#roles) for various network services, web applications, system administration and infrastructure
-- a base [playbook to setup a single server](installation/first-deployment.html) for personal use or small/medium teams
-
+- a collection of ansible [roles](#roles) for various network services, web applications, system administration and infrastructure management
+- a base [playbook to setup a single server](installation/first-deployment.md) for personal use or small/medium teams
+- a [command-line tool](usage.md#command-line-usage) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for simple deployments, maintenance and configuration
 
 ## Roles
 
@@ -33,6 +32,8 @@
 - [rocketchat](roles/rocketchat) - Realtime web chat/communication platform
 
 
+<!-- TODO demo screencast -->
+
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
@@ -48,19 +49,16 @@
 ## Documentation
 
 - [Installation](installation.md)
-  - [Server preparation](installation/server-preparation.md)
-  - [Controller preparation](installation/controller-preparation.md)
-  - [First deployment](installation/first-deployment.md)
+- [Server preparation](installation/server-preparation.md)
+- [Controller preparation](installation/controller-preparation.md)
+- [First deployment](installation/first-deployment.md)
 - [Usage](usage.md)
 - [Maintenance](maintenance.md)
-  - [Backups](maintenance/backups.md)
-  - [Upgrading](maintenance/upgrading.md)
+- [Backups](maintenance/backups.md)
+- [Upgrading](maintenance/upgrading.md)
 - [Advanced usage](advanced.md)
-<<<<<<< HEAD
-  - [Version control](advanced/version-control.md)
-  - [Continuous deployment](advanced/continuous-deployment.md)
-  - [Using as ansible collection](advanced/using-as-ansible-collection.md)
-=======
->>>>>>> 436eb6b... doc: merge advanced usage subpages, merge maintenance subpages
+- [Version control](advanced/version-control.md)
+- [Continuous deployment](advanced/continuous-deployment.md)
+- [Using as ansible collection](advanced/using-as-ansible-collection.md)
 - [Contributing](contributing.md)
 
