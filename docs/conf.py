@@ -74,7 +74,7 @@ from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 def setup(app):
     app.add_config_value('recommonmark_config', {
-        'enable_auto_toc_tree': True,
+        'enable_auto_toc_tree': False,
         'auto_toc_tree_section': 'Documentation',
         'auto_toc_maxdepth': 1, # Defines in-place generated TOC depth, not the sidebar depth
     }, True)

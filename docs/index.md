@@ -1,12 +1,7 @@
-```
-  ╻ ╻┏━┓┏━┓╻ ╻
-░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ 
-```
-
+# xsrv
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
+[![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 
 **Install and manage self-hosted network services/applications on your own server(s).**
 
@@ -18,14 +13,14 @@
 
 ## Roles
 
-- [common](roles/common) - base system components (SSH, upgrades, users, hostname, networking, kernel, time/date)
+- [common](roles/common) - base system components (SSH, upgrades, users, hostname, network, kernel, time...)
 - [backup](roles/backup) - incremental backup service (local and remote backups)
-- [monitoring](roles/monitoring) - monitoring, alerting and log agregation system (netdata, rsyslog, other tools	)
+- [monitoring](roles/monitoring) - monitoring, alerting and log agregation system (netdata, rsyslog, other tools)
 - [apache](roles/apache) - Apache web server and PHP-FPM interpreter
 - [homepage](role/homepage) - simple web server homepage
 - [postgresql](roles/postgresql) - PostgreSQL database server
 - [mariadb](roles/mariadb) - MariaDB (MySQL) database server
-- [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud" service
+- [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud"
 - [tt_rss](roles/tt_rss) - Tiny Tiny RSS web feed reader
 - [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
 - [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
@@ -36,8 +31,6 @@
 - [docker](roles/docker) - Docker container platform
 - [rocketchat](roles/rocketchat) - Realtime web chat/communication platform
 
-
-<!-- TODO demo screencast -->
 
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
@@ -54,8 +47,16 @@
 ## Documentation
 
 - [Installation](installation.md)
+  - [Server preparation](installation/server-preparation.md)
+  - [Controller preparation](installation/controller-preparation.md)
+  - [First deployment](installation/first-deployment.md)
 - [Usage](usage.md)
 - [Maintenance](maintenance.md)
+  - [Backups](maintenance/backups.md)
+  - [Upgrading](maintenance/upgrading.md)
 - [Advanced usage](advanced.md)
+  - [Version control](advanced/version-control.md)
+  - [Continuous deployment](advanced/continuous-deployment.md)
+  - [Using as ansible collection](advanced/using-as-ansible-collection.md)
 - [Contributing](contributing.md)
 
