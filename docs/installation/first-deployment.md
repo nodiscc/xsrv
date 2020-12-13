@@ -1,6 +1,6 @@
 # First deployment
 
-The [default playbook](playbooks/xsrv/playbook.yml) installs/manages a basic set of roles on a single server.
+The [default playbook](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/playbook.yml) installs/manages a basic set of roles on a single server.
 
 ```bash
 # authorize your SSH key on target server (host)
