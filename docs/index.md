@@ -7,7 +7,7 @@
 
 `xsrv` provides:
 
-- a collection of ansible [roles](#roles) for various network services, web applications, and system administration
+- a collection of ansible [roles](#roles) for various network services, web applications, system administration and infrastructure
 - a base [playbook to setup a single server](installation/first-deployment.md) for personal use or small/medium teams
 - a [command-line tool](usage.md#command-line-usage) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for simple deployments, maintenance and configuration
 

@@ -70,7 +70,7 @@ ldap.CHANGEME.org # openldap server
 Alternatively an entry the client's [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29) will work.
 
 
-### Debian installation
+## Debian installation
 
 Roles in this project are designed to run against minimal [Debian](https://www.debian.org/) 10 ([_Stable_](https://wiki.debian.org/DebianStable)) installations:
 
@@ -95,7 +95,7 @@ Roles in this project are designed to run against minimal [Debian](https://www.d
   - Finish installation and reboot to disk.
 
 
-### Ansible requirements
+## Ansible requirements
 
 From the server console, login as `root` and run:
 

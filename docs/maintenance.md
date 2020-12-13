@@ -18,7 +18,7 @@ xsrv fetch-backups
 xsrv fetch-backups myplaybook my.CHANGEME.org
 ```
 
-See each [role](#roles)'s documentation for information on how to restore backups.
+See each [role](index.md#roles)'s documentation for information on how to restore backups.
 
 Keep **off-line, off-site backups** of your `~/playbooks/` directory and user data.
 
