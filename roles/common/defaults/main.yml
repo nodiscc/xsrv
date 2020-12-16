@@ -108,7 +108,10 @@ firehol_networks:
       - { name: "ping", dst: "any" } # outgoing ICMP pings
       - { name: "submission", dst: "any" } # outgoing mail/port 587
       # - { name: "imaps", dst: "any" } # nextcloud mail
+      # - { name: "imaps585", dst: "any" } # nextcloud mail
+      # - { name: "imap", dst: "any" } # nextcloud mail
       # - { name: "smtps", dst: "any" } # nextcloud mail
+      # - { name: "smtp", dst: "any" } # nextcloud mail
       # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
       # - { name: "all", dst: "any" } # allow ALL outgoing connections
 
@@ -144,6 +147,8 @@ firehol_custom_services:
   - { name: "transmission", ports: "tcp/52943 udp/52943" } # incoming bittorrent/transmission peer connections
   - { name: "iscsi", ports: "tcp/3260" } # iSCSI initiator
   - { name: "dropboxlan", ports: "udp/17500" } # Dropbox LAN sync
+  - { name: "imaps585", ports: "tcp/585" } # IMAPS on port 585
+
 
 ##### FAIL2BAN #####
 
