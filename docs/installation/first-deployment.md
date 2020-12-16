@@ -13,7 +13,7 @@ mkdir ~/playbooks/
 xsrv init-playbook
 ```
 
-Setup roles and required configuration before initial deployment:
+Setup roles and required configuration before initial deployment. By default all roles except very basic components are disabled, uncomment (remove leading `#`) any role to enable it:
 
 ```bash
 # enable desired roles by uncommenting them
@@ -36,3 +36,6 @@ xsrv deploy
 TODO ASCIINEMA
 ```
 
+**Your server is ready to use!**
+
+Access your services from their domain names or URIs, specified in configuration variables. A summary of all access points and client software can be found at `homepage_fqdn` if the `homepage` role is enabled.
