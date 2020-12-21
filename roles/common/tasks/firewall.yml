@@ -7,6 +7,11 @@
     package: ufw
     state: absent
 
+- name: load nf_conntrack module
+  modprobe:
+    name: nf_conntrack
+    state: present
+
 - name: create firehol configuration directory
   file:
     path: "/etc/firehol"
@@ -34,7 +39,7 @@
   notify: restart firewall
 
 # first firewall startup may cause the SSH connection to hang
-- name: install firehol - restart the play if this task hangs for a while
+- name: install firehol
   apt:
     state: present
     package:
