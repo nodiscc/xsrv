@@ -6,19 +6,20 @@
 # sudo username/password
 vault_ansible_user: "CHANGEME"
 vault_ansible_become_pass: "CHANGEME"
-# default username/password for applications/services admin accounts
+# default username/password/email for applications/services admin accounts
 vault_xsrv_admin_username: "CHANGEME"
 vault_xsrv_admin_password: "CHANGEME" # pwgen -s 20 1
+vault_xsrv_admin_email: "CHANGEME@CHANGEME.org"
 
 ##### common role #####
 # SMTP server/credentials for outgoing mail (when setup_msmtp is set to yes)
 # vault_msmtp_host: "smtp.CHANGEME.org"
 # vault_msmtp_username: "CHANGEME"
 # vault_msmtp_password: "CHANGEME"
-# vault_msmtp_admin_email: "CHANGEME@CHANGEME.org"
+# vault_msmtp_admin_email: "{{ vault_xsrv_admin_email }}"
 
 ##### apache role #####
-vault_apache_letsencrypt_email: "{{ vault_msmtp_admin_email }}"
+vault_apache_letsencrypt_email: "{{ vault_xsrv_admin_email }}"
 
 ##### mariadb role #####
 vault_mariadb_root_password: "CHANGEME20" # pwgen -s 20 1
@@ -26,7 +27,7 @@ vault_mariadb_root_password: "CHANGEME20" # pwgen -s 20 1
 ##### nextcloud role #####
 vault_nextcloud_user: "{{ vault_xsrv_admin_username }}"
 vault_nextcloud_password: "{{ vault_xsrv_admin_password }}"
-vault_nextcloud_admin_email: "{{ vault_msmtp_admin_email }}"
+vault_nextcloud_admin_email: "{{ vault_xsrv_admin_email }}"
 vault_nextcloud_db_password: "CHANGEME20" # pwgen -s 20 1
 
 ##### tt_rss role #####
@@ -44,7 +45,7 @@ vault_shaarli_api_secret: "CHANGEME12" # pwgen -s 12 1
 ##### gitea role #####
 vault_gitea_admin_username: "{{ vault_xsrv_admin_username }}"
 vault_gitea_admin_password: "{{ vault_xsrv_admin_password }}"
-vault_gitea_admin_email: "{{ vault_msmtp_admin_email }}"
+vault_gitea_admin_email: "{{ vault_xsrv_admin_email }}"
 vault_gitea_db_password: "" # leave empty when using postgresql/peer authentication on same host
 vault_gitea_internal_token: "CHANGEME106" # pwgen -s 106 1
 vault_gitea_secret_key: "CHANGEME64" # pwgen -s 64 1
