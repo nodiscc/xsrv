@@ -7,7 +7,6 @@
       - nextcloud_db_host is not search("CHANGEME")
       - nextcloud_db_name is not search("CHANGEME")
       - nextcloud_db_password is not search("CHANGEME")
-      - nextcloud_db_table_prefix is string
       - nextcloud_db_type in ['pgsql', 'mysql']
       - nextcloud_db_user is not search("CHANGEME")
       - nextcloud_fqdn is not search("CHANGEME")

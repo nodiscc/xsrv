@@ -31,8 +31,6 @@ nextcloud_db_type: "pgsql"
 nextcloud_db_host: "localhost"
 # nextcloud database name
 nextcloud_db_name: "nextcloud"
-# nextcloud database table prefix
-nextcloud_db_table_prefix: "oc_"
 # nextcloud database user
 nextcloud_db_user: "nextcloud"
 # nextcloud database password
