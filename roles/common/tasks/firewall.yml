@@ -46,7 +46,7 @@
       - firehol
       - firehol-tools
       - ipset
-  async: 45
+  async: 60
   poll: 5
 
 - name: start and enable firehol/fail2ban
