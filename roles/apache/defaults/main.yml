@@ -17,8 +17,10 @@ apache_enable_mod_evasive: no
 # (optional) e-mail address to register a letsencrypt.org account
 apache_letsencrypt_email: "{{ vault_apache_letsencrypt_email }}"
 
+
 ##### PHP-FPM #####
 
 # yes/no: enable/disable the default php-fpm pool (www)
-# it is recommended to create separate pools for each application. disabling the default pool saves some system resources
-php_fpm_enable_default_pool: no
+# It is recommended to create separate pools for each application. Disabling the default pool saves some resources
+# The default (www) pool is enabled by default as starting php-fpm without any pool defined will cause the service to fail
+php_fpm_enable_default_pool: yes
