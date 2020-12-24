@@ -195,7 +195,6 @@
     - { key: "dbtype", value: "{{ nextcloud_db_type }}" }
     - { key: "dbname", value: "{{ nextcloud_db_name }}" }
     - { key: "dbhost", value: "{{ nextcloud_db_host }}" }
-    - { key: "dbtableprefix", value: "{{ nextcloud_db_table_prefix }}" }
     - { key: "dbuser", value: "{{ nextcloud_db_user }}" }
     - { key: "dbpassword", value: "{{ nextcloud_db_password }}", no_log: True }
     - { key: "logtimezone", value: "UTC" }
