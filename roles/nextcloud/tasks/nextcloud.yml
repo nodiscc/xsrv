@@ -225,6 +225,13 @@
   when:
     - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
 
+- name: schedule nextcloud background tasks
+  cron:
+    user: www-data
+    cron_file: nextcloud
+    minute: "*/5"
+    job: "/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php"
+    name: "run nextcloud background tasks"
 
 ##### ANSIBLE FACTS #####
 
