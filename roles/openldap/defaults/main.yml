@@ -4,6 +4,10 @@
 
 # FQDN at which the LDAP server can be reached
 openldap_fqdn: "ldap.CHANGEME.org"
+# LDAP domain
+openldap_domain: "CHANGEME.org"
+# LDAP organization
+openldap_organization: "CHANGEME"
 # LDAP base DN
 openldap_base_dn: "dc=CHANGEME,dc=org"
 # admin username/password for OpenLDAP server

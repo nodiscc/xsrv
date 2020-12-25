@@ -4,6 +4,8 @@
   assert:
     that:
       - openldap_fqdn is not search("CHANGEME")
+      - openldap_domain is not search("CHANGEME")
+      - openldap_organization is not search("CHANGEME")
       - openldap_base_dn is not search("CHANGEME")
       - openldap_bind_username is not search("CHANGEME")
       - openldap_bind_password is not search("CHANGEME")

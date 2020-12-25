@@ -9,18 +9,16 @@
 
 ### DEBCONF ###
 
-# it is required to preconfigure the LDAP base DN in debconf, else it will
-# be automatically derived from the machine's hostname
-- name: pre-configure ldap server base DN/organization
+# preconfigure the LDAP base DN in debconf - else it will be automatically derived from the machine's hostname
+- name: pre-configure openldap server
   debconf:
     name: slapd
-    question: "{{ item }}"
+    question: "{{ item.question }}"
     vtype: string
-    value: "{{ openldap_base_dn }}"
+    value: "{{ item.value }}"
   with_items:
-    - "slapd/domain"
-    - "shared/organization"
-
+    - { question: "slapd/domain", value: "{{ openldap_domain }}" }
+    - { question: "shared/organization", value: "{{ openldap_organization }}" }
 
 ### PACKAGES ###
 
