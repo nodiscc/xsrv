@@ -123,7 +123,7 @@ input(type="imfile"
       Facility="daemon"
       PersistStateInterval="0")
 
-
+{% if 'nextcloud' in role_names %}
 ##### NEXTCLOUD #####
 
 input(type="imfile"
@@ -137,7 +137,7 @@ input(type="imfile"
       Tag="nextcloud:"
       Facility="daemon"
       PersistStateInterval="0")
-
+{% endif %}
 
 ##### SAMBA #####
 
