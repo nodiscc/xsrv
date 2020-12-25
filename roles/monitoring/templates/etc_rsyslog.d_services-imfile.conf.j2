@@ -34,39 +34,6 @@ input(type="imfile"
       Facility="auth"
       PersistStateInterval="0")
 
-
-##### NETDATA #####
-
-# netdata installed from deb/packagecloud repository
-input(type="imfile"
-      File="/var/log/netdata/error.log"
-      Tag="netdata:"
-      Facility="daemon"
-      PersistStateInterval="0")
-
-# netdata installed from deb/packagecloud repository
-# netdata access log - verbose, disabled
-#input(type="imfile"
-#      File="/var/log/netdata/access.log"
-#      Tag="netdata:"
-#      Facility="daemon"
-#      PersistStateInterval="0")
-
-# netdata installed from binary installer
-input(type="imfile"
-      File="/opt/netdata/var/log/netdata/error.log"
-      Tag="netdata:"
-      Facility="daemon"
-      PersistStateInterval="0")
-
-# netdata installed from binary installer
-# netdata access log - verbose, disabled
-#input(type="imfile"
-#      File="/opt/netdata/var/log/netdata/access.log"
-#      Tag="netdata:"
-#      Facility="daemon"
-#      PersistStateInterval="0")
-
 {% if 'backup' in role_names %}
 ##### RSNAPSHOT #####
 
