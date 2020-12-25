@@ -67,6 +67,7 @@ input(type="imfile"
 #      Facility="daemon"
 #      PersistStateInterval="0")
 
+{% if 'backup' in role_names %}
 ##### RSNAPSHOT #####
 
 input(type="imfile"
@@ -74,8 +75,8 @@ input(type="imfile"
       Tag="rsnapshot:"
       Facility="daemon"
       PersistStateInterval="0")
-
-
+{% endif %}
+{% if 'apache' in role_names %}
 ##### APACHE ######
 
 input(type="imfile"
@@ -98,8 +99,8 @@ input(type="imfile"
       Tag="php-fpm:"
       Facility="daemon"
       PersistStateInterval="0")
-
-
+{% endif %}
+{% if 'gitea' in role_names %}
 ##### GITEA #####
 
 input(type="imfile"
@@ -113,8 +114,8 @@ input(type="imfile"
       Tag="gitea:"
       Facility="daemon"
       PersistStateInterval="0")
-
-
+{% endif %}
+{% if 'mumble' in role_names %}
 ##### MUMBLE-SERVER #####
 
 input(type="imfile"
@@ -122,7 +123,7 @@ input(type="imfile"
       Tag="mumble-server:"
       Facility="daemon"
       PersistStateInterval="0")
-
+{% endif %}
 {% if 'nextcloud' in role_names %}
 ##### NEXTCLOUD #####
 
@@ -138,7 +139,7 @@ input(type="imfile"
       Facility="daemon"
       PersistStateInterval="0")
 {% endif %}
-
+{% if 'samba' in role_names %}
 ##### SAMBA #####
 
 input(type="imfile"
@@ -176,3 +177,4 @@ input(type="imfile"
       Tag="samba:"
       Facility="daemon"
       PersistStateInterval="0")
+{% endif %}
