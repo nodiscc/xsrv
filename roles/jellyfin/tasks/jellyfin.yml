@@ -1,0 +1,71 @@
+- name: install jellyfin requirements
+  apt:
+    state: present
+    package:
+      - apt-transport-https
+
+- name: import jellyfin gpg signing key
+  apt_key:
+    state: present
+    url: https://repo.jellyfin.org/debian/jellyfin_team.gpg.key
+
+- name: add jellyfin APT repository
+  apt_repository:
+    state: present
+    repo: deb [arch=amd64] https://repo.jellyfin.org/debian {{ ansible_distribution_release | lower }} main
+    filename: jellyfin
+
+- name: install jellyfin
+  apt:
+    state: present
+    package: jellyfin
+  notify: display jellyfin first run message
+
+##### FAIL2BAN #####
+# TODO
+
+##### BACKUPS #####
+# TODO
+
+- name: create a default media directory
+  file:
+    path: "/var/lib/jellyfin/media"
+    state: directory
+    owner: jellyfin
+    group: jellyfin
+    mode: 02770
+
+- name: create symlink from home directory to jellyfin media directory
+  file:
+    state: link
+    dest: "{{ ansible_env.HOME }}/MEDIA"
+    src: "/var/lib/jellyfin/media/"
+
+# required to allow jellyfin group to write in subdirectories
+- name: set permissions on jellyfin data directory
+  file:
+    path: /var/lib/jellyfin
+    owner: jellyfin
+    group: jellyfin
+    mode: 0770
+
+- name: allow ansible user to read/write jellyfin data files
+  user:
+    name: "{{ ansible_user }}"
+    groups: jellyfin
+    append: yes
+
+- name: run all notified handlers
+  meta: flush_handlers
+
+##### SERVICE #####
+
+- name: enable jellyfin service
+  service: name=jellyfin state=started enabled=yes
+  when: jellyfin_enable_service|bool
+  tags: services
+
+- name: disable jellyfin service
+  service: name=jellyfin state=stopped enabled=no
+  when: not jellyfin_enable_service|bool
+  tags: services

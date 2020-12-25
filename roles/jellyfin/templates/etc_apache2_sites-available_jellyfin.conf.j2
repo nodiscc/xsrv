@@ -1,0 +1,31 @@
+<VirtualHost *:80>
+    ServerName {{ jellyfin_fqdn }}
+    ServerAdmin webmaster@{{ jellyfin_fqdn }}
+{% if jellyfin_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if jellyfin_https_mode == 'letsencrypt' %}
+MDomain {{ jellyfin_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ jellyfin_fqdn }}
+  ServerAdmin webmaster@{{ jellyfin_fqdn }}
+  SSLEngine on
+{% if jellyfin_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ jellyfin_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ jellyfin_fqdn }}.key
+{% endif %}
+
+  ProxyPreserveHost On
+  ProxyPass "/socket" "ws://127.0.0.1:8096/socket"
+  ProxyPassReverse "/socket" "ws://127.0.0.1:8096/socket"
+  ProxyPass "/" "http://127.0.0.1:8096/"
+  ProxyPassReverse "/" "http://127.0.0.1:8096/"
+
+</VirtualHost>

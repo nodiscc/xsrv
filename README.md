@@ -35,7 +35,7 @@
 - [openldap](roles/openldap) - LDAP directory server and web administration tools
 - [docker](roles/docker) - Docker container platform
 - [rocketchat](roles/rocketchat) - Realtime web chat/communication platform
-
+- [jellyfin](roles/jellyfin) - Media System that puts you in control of managing and streaming your media
 
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
@@ -47,6 +47,7 @@
 [![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](roles/openldap)
 [![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
 [![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
+[![](https://jellyfin.org/images/screenshots/movie_thumb.png)](roles/jellyfin)
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 

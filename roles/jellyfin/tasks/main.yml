@@ -1,0 +1,18 @@
+- include: checks.yml
+  tags: jellyfin
+  become: yes
+
+- include: jellyfin.yml
+  tags: jellyfin
+  become: yes
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: jellyfin
+  when: jellyfin_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags:
+    - jellyfin
+    - apache

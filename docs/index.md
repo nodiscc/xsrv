@@ -11,6 +11,7 @@
 - a base [playbook to setup a single server](installation/first-deployment.md) for personal use or small/medium teams
 - a [command-line tool](usage.md) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for simple deployments, maintenance and configuration
 
+
 ## Roles
 
 - [common](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) - base system components (SSH, upgrades, users, hostname, network, kernel, time...)
@@ -31,6 +32,7 @@
 - [docker](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker) - Docker container platform
 - [rocketchat](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat) - Realtime web chat/communication platform
 
+<!-- TODO link to roles on gitlab -->
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
@@ -41,8 +43,10 @@
 [![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](roles/openldap)
 [![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
 [![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
+[![](https://jellyfin.org/images/screenshots/movie_thumb.png)](roles/jellyfin)
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
+
 
 ## Documentation
 

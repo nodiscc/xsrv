@@ -1,0 +1,25 @@
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/ssl/private/{{ jellyfin_fqdn }}.key"
+  notify: restart apache
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/ssl/private/{{ jellyfin_fqdn }}.csr"
+    privatekey_path: "/etc/ssl/private/{{ jellyfin_fqdn }}.key"
+    common_name: "{{ jellyfin_fqdn }}"
+
+- name: generate self-signed openssl certificate
+  openssl_certificate:
+    path: "/etc/ssl/certs/{{ jellyfin_fqdn }}.crt"
+    privatekey_path: "/etc/ssl/private/{{ jellyfin_fqdn }}.key"
+    csr_path: "/etc/ssl/private/{{ jellyfin_fqdn }}.csr"
+    provider: selfsigned
+  notify: restart apache

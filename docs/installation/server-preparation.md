@@ -65,6 +65,8 @@ rss.CHANGEME.org # tt-rss
 torrent.CHANGEME.org # transmission
 mumble.CHANGEME.org # mumble server
 ldap.CHANGEME.org # openldap server
+chat.CHANGEME.org # rocketchat
+media.CHANGEME.org # jellyfin
 ```
 
 Alternatively an entry the client's [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29) will work.

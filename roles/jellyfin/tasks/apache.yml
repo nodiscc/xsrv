@@ -1,0 +1,28 @@
+##### APACHE CONFIG #####
+
+- name: enable required apache modules
+  command: a2enmod {{ item }}
+  with_items:
+    - headers
+    - proxy
+    - proxy_http
+  args:
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+
+- name: copy jellyfin apache virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_jellyfin.conf.j2
+    dest: /etc/apache2/sites-available/jellyfin.conf
+    owner: root
+    group: root
+    mode: 0600
+  notify: reload apache
+
+- name: enable jellyfin apache virtualhost configuration
+  command: a2ensite jellyfin
+  args:
+    creates: "/etc/apache2/sites-enabled/jellyfin.conf"
+  notify: reload apache
+
+- name: ensure apache configuration is applied (flush handlers)
+  meta: flush_handlers

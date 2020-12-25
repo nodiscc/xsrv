@@ -42,6 +42,10 @@ openldap_base_dn: "dc=CHANGEME,dc=org"
 # see roles/rocketchat/defaults/main.yml
 rocketchat_fqdn: "chat.CHANGEME.org"
 
+##### JELLYFIN #####
+# see roles/jellyfin/defaults/main.yml
+jellyfin_fqdn: "media.CHANGEME.org"
+
 ##### FIREWALL/FAIL2BAN #####
 # see roles/common/defaults/main.yml
 
