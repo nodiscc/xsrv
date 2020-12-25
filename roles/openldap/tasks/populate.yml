@@ -71,8 +71,4 @@
     bind_pw: "{{ openldap_admin_password }}"
     attributes:
       description: "Unprivilegied user for resolving UIDs/GIDs"
-
-- name: set a password for the bind LDAP user
-  community.general.ldap_passwd:
-    dn: 'cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}'
-    passwd: "{{ openldap_bind_password }}"
+      userPassword: "{{ openldap_bind_password }}"
