@@ -6,6 +6,7 @@
     package:
       - debconf-utils
       - python3-ldap
+  check_mode: no
 
 ### DEBCONF ###
 
