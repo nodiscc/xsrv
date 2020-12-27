@@ -53,6 +53,7 @@
     state: directory
     mode: 0750
   when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  check_mode: no
 
 - name: extract ldap-account-manager tar.bz2
   unarchive:
