@@ -6,3 +6,4 @@
     name: slapd
     state: restarted
     enabled: yes
+  when: not ansible_check_mode
