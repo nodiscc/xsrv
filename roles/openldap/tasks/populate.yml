@@ -10,18 +10,19 @@
     attributes:
       o: "{{ openldap_base_dn }}"
       structuralObjectClass: organization
+  when: not ansible_check_mode
 
 - name: hash LDAP admin password
   shell: slappasswd -s {{ openldap_admin_password }} # noqa 305
   register: slapd_admin_password
   changed_when: False # does not change anything
-  check_mode: no # run even in check mode
+  when: not ansible_check_mode
 
 - name: hash LDAP 'bind' user password
   shell: slappasswd -s {{ openldap_bind_password }} # noqa 305
   register: slapd_bind_password
   changed_when: False # does not change anything
-  check_mode: no # run even in check mode
+  when: not ansible_check_mode
 
 # slappasswd uses a new seed every time, hence the hash changes every time the playbook runs
 - name: create LDAP admin account (not idempotent, returns changed every time)
@@ -36,6 +37,7 @@
     - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootDN', value: 'cn=admin,cn=config' }
     - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
     - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
+  when: not ansible_check_mode
 
 - name: create basic Organizational Units
   ldap_entry:
@@ -48,6 +50,7 @@
     - 'system'
     - 'groups'
     - 'users'
+  when: not ansible_check_mode
 
 - name: create 'users' LDAP group
   ldap_entry:
@@ -59,6 +62,7 @@
     server_uri: ldap://localhost/
     bind_dn: cn=admin,{{ openldap_base_dn }}
     bind_pw: "{{ openldap_admin_password }}"
+  when: not ansible_check_mode
 
 - name: create unprivilegied bind LDAP user
   ldap_entry:
@@ -72,3 +76,4 @@
     attributes:
       description: "Unprivilegied user for resolving UIDs/GIDs"
       userPassword: "{{ openldap_bind_password }}"
+  when: not ansible_check_mode
