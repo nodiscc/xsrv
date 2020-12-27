@@ -35,6 +35,7 @@ transmission_fqdn: "torrent.CHANGEME.org"
 # see roles/openldap/defaults/main.yml
 openldap_fqdn: "ldap.CHANGEME.org"
 openldap_domain: "CHANGEME.org"
+openldap_organization: "CHANGEME"
 openldap_base_dn: "dc=CHANGEME,dc=org"
 
 ##### ROCKETCHAT #####
