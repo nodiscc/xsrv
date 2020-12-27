@@ -12,8 +12,9 @@
     path: /etc/ssl/openldap
     state: directory
     owner: root
-    group: netdata
+    group: root
     mode: 0750
+  check_mode: no
 
 - name: generate openssl private key
   openssl_privatekey:
