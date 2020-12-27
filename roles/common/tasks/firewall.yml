@@ -48,6 +48,7 @@
       - ipset
   async: 60
   poll: 5
+  when: not ansible_check_mode
 
 - name: start and enable firehol/fail2ban
   service:
