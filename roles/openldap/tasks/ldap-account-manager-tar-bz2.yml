@@ -46,6 +46,7 @@
     dest: /root/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
   retries: 3
   when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  check_mode: no
 
 - name: create ldap-account-manager tar.bz2 extraction directory
   file:
