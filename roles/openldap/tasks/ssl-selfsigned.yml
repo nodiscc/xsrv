@@ -20,12 +20,14 @@
   openssl_privatekey:
     path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
   notify: restart apache
+  check_mode: no
 
 - name: generate openssl certificate signing request
   openssl_csr:
     path: "/etc/ssl/openldap/{{ openldap_base_dn }}.csr"
     privatekey_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
     common_name: "{{ openldap_base_dn }}"
+  check_mode: no
 
 - name: generate self-signed openssl certificate
   openssl_certificate:
