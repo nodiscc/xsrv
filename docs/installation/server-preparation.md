@@ -6,7 +6,7 @@ The server machine can be:
  - a physical computer (dedicated server, repurposed desktop/laptop, small factor board/barebone...)
  - a [virtual machine](https://en.wikipedia.org/wiki/Virtualization) on your personal computer, at a VPS provider, or a dedicated/hardware hypervisor.
 
-Virtualization software includes [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) (hypervisor manager based on Debian/KVM), [virt-manager/libvirt](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) (Linux), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) (Linux/OSX/Windows)
+Virtualization software includes [libvirt/virt-manager](virt-manager.md) (Linux), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) (hypervisor manager based on Debian and KVM), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox) (Linux/OSX/Windows)
 
 Resource usage will vary depending on installed components (read each role's documentation), the number of users, and how much user data you need to store. Example minimal configuration for a personal/small team server with 2-10 users:
 
