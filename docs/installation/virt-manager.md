@@ -1,29 +1,27 @@
-# libvirt and virt-manager
+# libvirt / virt-manager
 
-Management of [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) (VMs) with [virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) on a Linux system.
+[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [`libvirt`](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine)
+and virtual storage, networks, and more.
 
-`virt-manager` is a graphical interface for [`libvirt`](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage VMs and accompanying virtual storage, virtual networks... and more.
-
-libvirt can manage many types of virtualization/container technologies.
-[KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) is a module in the Linux kernel that allows the kernel to function as a hypervisor (a computer that runs virtual machines). [QEMU](https://en.wikipedia.org/wiki/QEMU) is an emulator that interfaces with KVM, and provides additional management features on top of it.
+[KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) is a module in the Linux kernel that allows Linux to function as a hypervisor (a computer that runs virtual machines).
+[QEMU](https://en.wikipedia.org/wiki/QEMU) is an emulator that interfaces with KVM, and provides additional VM, storage and network management features.
 libvirt allows managing QEMU virtual machines, through easy graphical and command-line interfaces.
 
-Advantages and use cases of virtualization:
+Advantages of virtualization include:
 
-- Spin up a VM to test an operating system, and destroy it afterwards without affecting your computer. Virtual Machines provide isolation from the hypervisor.
-- Create a snapshot of the state of a VM at any time, run experiments in it, break it, and restore the snapshot to go back to where you were (testing environments).
-- Change the resources allocated to each VM (virtual storage/disk space, RAM, CPU...) and easily scale up/down depending on your needs.
-- Use a default, transparent network setup, or create complex virtual networks with routing, switching, firewalling... without investing in networking hardware.
-- Run many operating systems/environmnents on a single machine, without them affecting each other one.
-- Easily migrate a VM between hypervisors (in some configurations, without any downtime) for emergencies or load balancing.
-- The performance of a QEMU/KVM virtual machine is very close to the performance on the real, physical host ([Type 1 Hypervisor](https://en.wikipedia.org/wiki/Hypervisor#Classification)). This is in contrast with Type 2 hypervisors such as VirtualBox, VMWare Player/Workstation which have a greater performance penalty.
+- Run many independent operating systems/environmnents on a single machine.
+- Quickly create, clone and delete virtual machines for temporary/testing environments
+- VMs are isolated from each other and from the hypervisor (at the OS level).
+- Easy rollback: snapshot the state of a VM at any time - restore it to roll back to the exact previous state
+- Easy management of resources, virtual storage, RAM, CPU...)
+- Create simple or complex virtual networks with routing, switching, firewalling...
+- Easy migration of VMs between hypervisors (without/with few downtime) for emergencies or load balancing.
+- QEMU/KVM virtual machine performance is very close to the performance on a real, physical host ([Type 1 Hypervisor](https://en.wikipedia.org/wiki/Hypervisor#Classification)) - in contrast with Type 2 hypervisors (VirtualBox, VMWare Player...)
 
-There are Linux distributions dedicated to managing hypervisors such as [Proxmox](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment).
-
-One advantage of virt-manager/libvirt is that you can reuse your daily desktop machine as a hypevisor, and spare the investment in a dedicated machine for virtualization.
+libvirt/virt-manager can be installed on a dedicated machine, or on any GNU/Linux desktop computer.
 
 
-#### Installing virt-manager
+#### Installation
 
 On Debian-based systems:
 
@@ -31,13 +29,13 @@ On Debian-based systems:
 sudo apt install virt-manager
 ```
 
-You may add your normal user account to the `libvirt` group to allow it to manage virtual machines without using `sudo` or entering your password during normal operation:
+(Optional) add your normal user account to the `libvirt` group to allow it to manage virtual machines without using `sudo` or entering your password during normal operation:
 
 ```bash
 sudo usermod -G $USER libvirt
 ```
 
-#### Setting up a VM
+#### Virtual machine creation
 
 <!-- TODO update screenshots -->
 
@@ -73,13 +71,29 @@ You can also create a VM from the command-line using the [virsh](https://manpage
 virt-install --name mynew.example.org --os-type linux --ram 1024M --vcpu 2 --disk path=/path/to/mynew.example.org.qcow2,size=20 --graphics virtio --noautoconsole --hvm --cdrom /path/to/debian-10.3.1_amd64.iso --boot cdrom,hd
 ```
 
+
 #### Managing resources
+
+**CPU:** TODO
+
+**RAM:** TODO
+
+**Ballooning:** TODO
+
+**VIDEO:** TODO
 
 #### Managing virtual networks
 
+**NAT:** TODO
+
+**Port forwarding from the hypervisor:** TODO
+
+**Bridged:** TODO
+
 #### Cloning VMs
 
-It is common practice to setup a virtual machine with the bare minimum components required to access it over SSH, then use [configuration management](configuration-management.md) to manage its additional components.
+It is common practice to setup a virtual machine with the bare minimum components required to access it over SSH,
+then use [configuration management](configuration-management.md) to manage all other software components.
 
 Once the template VM has been set up ([server-preparation.md](server-preparation.md)), clone it to a new VM:
 
@@ -88,6 +102,7 @@ virt-clone --original vm-template --name myclone.example.org --file /path/to/myc
 # start the new VM
 virsh start myclone.example.org
 ```
+
 
 #### Migrating VMs between hypervisors
 
@@ -106,5 +121,7 @@ srvadmin@hv2:~$ virsh define my.virtual.machine.xml
 srvadmin@hv2:~$ virsh start my.virtual.machine.xml
 ```
 
+#### Alternatives
 
+[Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), a dedicated hypervisor manager based on Debian/KVM
 
