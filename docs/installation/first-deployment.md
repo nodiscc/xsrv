@@ -32,7 +32,7 @@ Deploy changes to the host:
 xsrv deploy
 ```
 
-[![asciicast](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
+[![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 
 **Your server is ready to use!**
 

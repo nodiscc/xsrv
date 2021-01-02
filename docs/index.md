@@ -42,7 +42,7 @@
 [![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
 [![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
 
-[![asciicast](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
+[![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 
 ## Documentation
 
