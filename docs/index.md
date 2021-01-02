@@ -31,9 +31,6 @@
 - [docker](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker) - Docker container platform
 - [rocketchat](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat) - Realtime web chat/communication platform
 
-
-<!-- TODO demo screencast -->
-
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
@@ -45,6 +42,7 @@
 [![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
 [![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
 
+[![asciicast](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 
 ## Documentation
 
