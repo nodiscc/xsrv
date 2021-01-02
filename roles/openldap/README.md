@@ -43,5 +43,5 @@ See [defaults/main.yml](defaults/main.yml)
 **Backups:** see the included [rsnapshot configuration](templates/etc_rsnasphot.d_openldap.conf.j2) and [openldap dump script](templates/_user_local_bin_openldap-dump.sh.j2)
 
 **Accessing LDAP account manager settings:** LAM should be configured from the templates provided by this role. If you need to temporarily access LAM settings from the web interface (your changes will be overwritten on the next ansible deployment), edit these files:
-- `/etc/ldap-account-manager/config.cfg`: `password: CHANGEME`
-- `/var/lib/ldap-account-manager/config/lam.conf`, `Passwd: CHANGEME`
+- `/var/www/{{ ldap_account_manager_fqdn }}/config/config.cfg`: `password: CHANGEME`
+- `/var/www/{{ ldap_account_manager_fqdn }}/config/lam.conf`, `Passwd: CHANGEME`
