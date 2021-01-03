@@ -41,29 +41,31 @@ sudo usermod -G $USER libvirt
 
 Run virt-manager from the main menu and click `New virtual machine`
 
-![](https://1081754738.rsc.cdn77.org/wp-content/uploads/2020/08/2-4.png)
+![](https://i.imgur.com/1e2jNP0.png)
 
 Select QEMU/KVM as the virtual machine type:
 
-![]()
+![](https://i.imgur.com/F7ZSXFS.png)
 
 Select the installation media/ISO image for the operating system you want to install:
 
-![](https://1081754738.rsc.cdn77.org/wp-content/uploads/2020/08/3-3.png)
+![](https://i.imgur.com/o5Fu0IX.png)
 
 Set memory amount and virtual CPU number depending on your performance requirements:
 
-![](https://1081754738.rsc.cdn77.org/wp-content/uploads/2020/08/5-1.png)
+![](https://i.imgur.com/0aQlobJ.png)
 
 Create a new virtual hard disk image for your VM depending on your storage requirements:
 
-![](https://1081754738.rsc.cdn77.org/wp-content/uploads/2020/08/6-1.png)
+![](https://i.imgur.com/Ra4vp3S.png)
 
-Set a unique name ()such as a [FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) for your VM, adn attach it to the default `NAT` virtual network:
+Set a unique name (such as a [FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) for your VM, and attach it to the default `NAT` virtual network:
 
-![](https://1081754738.rsc.cdn77.org/wp-content/uploads/2020/08/7-1.png)
+![](https://i.imgur.com/3Tn34xD.png)
 
 Click `Finish` and start the VM from virt-manager's main window.
+
+![](https://i.imgur.com/aJGkUJz.png)
 
 You can also create a VM from the command-line using the [virsh](https://manpages.debian.org/buster/libvirt-clients/virsh.1.en.html) command-line tool:
 
