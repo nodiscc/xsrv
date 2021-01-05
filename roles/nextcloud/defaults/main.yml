@@ -40,7 +40,7 @@ nextcloud_db_password: "{{ vault_nextcloud_db_password }}"
 nextcloud_version: "20.0.2"
 
 # base folder for shared files from other users
-nextcloud_share_folder: '/SHARED/
+nextcloud_share_folder: '/SHARED/'
 # workaround for old nextcloud-desktop clients which don't support TLSv1.3
 nextcloud_allow_tls12: true
 
