@@ -52,9 +52,6 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 
 A link is created from `~/MEDIA/` in your home directory, to `/var/lib/jellyfin/media`, allowing you to easily upload media files over [SFTP](../common#usage)
 
-<!-- TODO support uploading files from samba -->
-<!-- TODO support uploading files from nextcloud -->
-
 
 ### Playing media
 

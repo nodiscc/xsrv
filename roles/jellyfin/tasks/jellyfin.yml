@@ -21,12 +21,6 @@
     package: jellyfin
   notify: display jellyfin first run message
 
-##### FAIL2BAN #####
-# TODO
-
-##### BACKUPS #####
-# TODO
-
 - name: create a default media directory
   file:
     path: "/var/lib/jellyfin/media"

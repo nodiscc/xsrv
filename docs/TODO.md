@@ -2,6 +2,12 @@
 
 ### xsrv/xsrv
 
+- #386 - jellyfin: add fail2ban configuration - `0.26.0`
+- #385 - jellyfin: add rsnapshot configuration - `0.26.0`
+- #384 - jellyfin: allow/document uploading files from nextcloud
+- #383 - jellyfin: allow/document uploading files from samba - `0.25.0`
+- #382 - WIP: add Jellyfin Media server - `0.25.0`
+- #380 - Enforce DNSSEC for outgoing DNS queries
 - #379 - seup IPV6 support (sysctl, firewal, applications...)?
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ?
 - #377 - rocketchat: enable/configure federation?
@@ -10,7 +16,7 @@
 - #374 - makefile/readthedocs: include roles documentation in generated docs
 - #372 - WIP: shaarli: make hide_timestamp option configurable
 - #366 - nextcloud: file locking sometimes causes synchronization errors
-- #365 - nextcloud: LDAP user backend - `0.25.0`
+- #365 - nextcloud: LDAP user backend - `0.26.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
 - #362 - netdata: default apache status monitoring jobs trigger error 403
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles
@@ -31,7 +37,6 @@
 - #341 - nextcloud: warning on settings/admin/overview: Some app directories are owned by a different user than the web server one
 - #339 - WIP: speed up ansible execution with mitogen
 - #337 - nextcloud: maps: enable OSRM demo servers by default
-- #333 - WIP: add self-service-password role - `0.25.0`
 - #324 - Jitsi Meet role
 - #323 - prometheus role?
 - #322 - Frontail role?
@@ -51,7 +56,7 @@
 - #307 - apache: make certificate status endpoint enable/disable configurable
 - #305 - switch firewall management to firewalld - `0.26.0`
 - #303 - firehol: add example NAT loopback/hairpin rule
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `0.25.0`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `0.26.0`
 - #293 - WIP: add nginx role
 - #290 - netdata: monitor number of upgradeable APT packages - `0.25.0`
 - #280 - Samba Directory Controller or other Identity Management solution
