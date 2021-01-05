@@ -37,7 +37,8 @@ playbook.yml:
   roles:
     - common
     - monitoring
-    - backups
+    - apache
+    - jellyfin
 ```
 
 Usage
