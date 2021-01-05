@@ -203,6 +203,7 @@
     - { key: "loglevel", value: "1", type: "integer" }
     - { key: "trashbin_retention_obligation", value: "auto" }
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
+    - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
   no_log: "{{ item.no_log | default(False) }}"
   tags: nextcloud_config_php
 
