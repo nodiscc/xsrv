@@ -19,7 +19,7 @@ gitea_db_password: "{{ vault_gitea_db_password }}" # leave empty for local postg
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: '1.12.6'
+gitea_version: '1.13.1'
 # 106 character token used for internal API calls authentication
 gitea_internal_token: " {{ vault_gitea_internal_token }}"
 # 64 character global secret key
