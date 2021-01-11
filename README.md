@@ -11,9 +11,9 @@
 
 `xsrv` provides:
 
-- a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) (wrapper around  [`ansible`](https://en.wikipedia.org/wiki/Ansible_%28software%29)) for simple deployments, maintenance and configuration
-- a collection of ansible [roles](#roles) for various network services, web applications, system administration and infrastructure
-- a base [playbook to setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) for personal use or small/medium teams
+- a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) for easy configuration, deployment and maintenance
+- a collection of [roles](#roles) to install and configure various network services, web applications, system administration and infrastructure tools
+- a base [playbook to setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) for personal use or small/medium teams in a few minutes
 
 
 ## Roles
@@ -49,7 +49,25 @@
 [![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
 [![](https://jellyfin.org/images/screenshots/movie_thumb.png)](roles/jellyfin)
 
+
+## Quick start
+
+```bash
+# install the program
+sudo git clone https://gitlab.com/nodiscc/xsrv /opt/xsrv
+sudo cp /opt/xsrv/xsrv /usr/local/bin
+
+# initialize the playbook, select the target server and components to install
+xsrv init-playbook
+
+# deploy your configuration
+xsrv deploy
+```
+
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
+
+Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command-line tool to manage your servers, or include any of the [roles](#roles) in your own [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) playbooks.
+
 
 ## Documentation
 

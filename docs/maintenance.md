@@ -33,3 +33,26 @@ Security upgrades for Debian packages are applied [automatically/daily](roles/co
 - (Optional) run checks and watch out for unwanted changes `xsrv check`
 - Apply the playbook `xsrv deploy`
 
+
+## Security model
+
+- The security of the system and applications relies on proper use of [file permissions, ownership and groups](https://wiki.debian.org/Permissions) and partial [AppArmor](https://wiki.debian.org/AppArmor) confinement.
+- Each service/application SHOULD only have read/write access to the required resources and system calls. <!-- php applications currently share the same user - TODO -->
+- Compromise of a single service or account MUST not allow compromise of other services and accounts.
+- Usage of the server admin user with [`sudo`](https://wiki.debian.org/sudo) privileges requires both a correct/authorized SSH key and a password.
+- Be careful when performing manual operations from a shell, when managing users and file permissions.
+- Protect your private SSH key and the `.ansible-vault-password` file
+- The system is designed to host data and services with the same classification level. If you need different security contexts (for example public or private facing services, different sets of end users, ...), split your infrastructure across different VMs/machines/networks and setup additional access controls.
+
+```
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things: 
+
+#1) Respect the privacy of others.
+#2) Think before you type.
+#3) With great power comes great responsibility.
+```
+
+
+
+
