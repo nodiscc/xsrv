@@ -1,6 +1,9 @@
 # Controller preparation
 
-A **controller** machine will be used for deployment and remote administration. The controller can be any laptop/desktop PC, dedicated server, VM or container where a SSH client, python and bash are available. On the controller:
+A **controller** machine will be used for deployment and remote administration.
+The controller can be any laptop/desktop PC, dedicated server, VM or container where a SSH client, python and bash are available.
+The controller will connect to your [hosts](server-preparation.md) using SSH and perform configuration tasks remotely.
+On the controller:
 
 
 ```bash
@@ -16,3 +19,7 @@ sudo git clone -b release https://gitlab.com/nodiscc/xsrv /opt/xsrv # latest rel
 sudo cp /opt/xsrv/xsrv /usr/local/bin/
 ```
 
+_Note:_ it is also possible (but not recommended) to use the server itself as a controller. It will then configure itself without need for a SSH connection.
+In that case, install/clone `xsrv` directly on the host, and set `connection: local` in the playbook for this host (on the same level as `roles:`) during the initial confiurations step.
+
+Once the controller has been set up, it is time to [deploy](first-deployment.md) configuration to your hosts.

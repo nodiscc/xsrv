@@ -2,7 +2,7 @@
 
 ## Hardware requirements
 
-The server machine can be:
+The server (_host_) machine can be:
  - a physical computer (dedicated server, repurposed desktop/laptop, small factor board/barebone...)
  - a [virtual machine](https://en.wikipedia.org/wiki/Virtualization) on your personal computer, at a VPS provider, or a dedicated/hardware hypervisor.
 
@@ -22,11 +22,13 @@ Use low power consumption components. To increase availability, setup the BIOS t
 
 ## Network
 
-The server must have **Internet access** during deployment and upgrades. Prefer fast and reliable network links (download/upload). Here we assume the server has a single network interface.
+The server must have **Internet access** during deployment and upgrades. Prefer fast and reliable network links (download/upload).
+Here we assume the server has a single network interface.
 
 Setup a **static IP address** + default gateway on the server during installation.
 
-Setup **DNS resolution** during installation (use your ISP/hoster's DNS server, a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server), or your private DNS server - [pfSense](https://en.wikipedia.org/wiki/PfSense) is a good start to boostrap a private DNS server).
+Setup **DNS resolution** during installation (use your ISP/hoster's DNS server, a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server),
+or your private DNS server - [pfSense](https://en.wikipedia.org/wiki/PfSense) is a good start to boostrap a private DNS server).
 
 You can check connectivity by running these commands on the server:
 
@@ -40,7 +42,9 @@ getent hosts debian.org
 
 ### NAT/port forwarding
 
-If the network interface is in a [private network](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) behind a router, setup **NAT (port forwarding)** on the router if you need to access your services from other networks/Internet. Forward the following ports to your server's private IP address:
+If the network interface is in a [private network](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) behind a router,
+setup **NAT (port forwarding)** on the router if you need to access your services from other networks/Internet.
+Forward the following ports to your server's private IP address:
 
 ```
 SSH server:                      TCP 22
@@ -52,9 +56,12 @@ Mumble VoIP server:              TCP/UDP 64738
 
 ### DNS records
 
-The server's **hostname** ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) must be resolvable from the controller (`A` or `CNAME` record) at a public [domain name registrar]([registrar](https://en.wikipedia.org/wiki/Domain_name_registrar), a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your private DNS resolver.
+The server's **hostname** ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) must be resolvable from the controller (`A` or `CNAME` record) at a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar),
+a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your private DNS resolver.
 
-Setup additional records/subdomains required to access your applications (webserver virtualhosts). These must be resolvable by clients that want to access your services. By default the following subdomains are required (if corresponding roles are enabled):
+Setup additional records/subdomains required to access your applications (webserver virtualhosts).
+These must be resolvable by clients that want to access your services.
+By default the following subdomains are required (if corresponding roles are enabled):
 
 ```bash
 www.CHANGEME.org # homepage
