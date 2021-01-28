@@ -21,7 +21,7 @@ testenv:
 	cp tests/playbook.yml test.yml
 
 clean:
-	-rm -r test.yml .venv/ nodiscc-xsrv-*.tar.gz gitea-cli/
+	-rm -r test.yml .venv/ nodiscc-xsrv-*.tar.gz gitea-cli/ .venv/
 
 # Playbook syntax check
 ansible_syntax_check: venv testenv
