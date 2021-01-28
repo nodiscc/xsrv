@@ -5,6 +5,7 @@
     - backup
     - monitoring
     # - apache
+    # - openldap
     # - homepage
     # - mariadb
     # - postgresql
@@ -12,10 +13,9 @@
     # - tt_rss
     # - shaarli
     # - gitea
-    # - samba
     # - transmission
     # - mumble
-    # - openldap
     # - docker
     # - rocketchat
     # - jellyfin
+    # - samba
