@@ -38,13 +38,13 @@ upgrade         ugrade xsrv script and roles to latest versions
 show-hosts      list hosts in a playbook/inventory
 show-defaults   show all variables and their default values (accepts a role as argument)
 
-The following environment variables are supported:
+The following environment variables are supported (usage: VARIABLE=VALUE xsrv COMMAND ...):
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
-BRANCH             advanced (upgrade only): git branch to checkout/pull before upgrade
-XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (default /opt/xsrv)
-SKIP_VENV          advanced: skip creation of virtualenv/dependencies installation (yes/no, default no)
-EDITOR             text editor to use (default nano)
-PAGER              pager to use (default less)
+BRANCH             advanced (upgrade only): git branch/version to use for upgrades (default: stay on current branch)
+XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (default: /opt/xsrv)
+SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
+EDITOR             text editor to use (default: nano)
+PAGER              pager to use (default: less)
 ```
 
 Examples:
