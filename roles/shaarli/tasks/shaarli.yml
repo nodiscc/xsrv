@@ -160,7 +160,7 @@
   when:
     - shaarli_action is defined
     - shaarli_action == 'upgrade'
-    
+
 
 ##### FAIL2BAN #####
 
@@ -189,4 +189,3 @@
     mode: 0600
   when: '"backup" in role_names'
   notify: check rsnapshot configuration
-
