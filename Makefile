@@ -61,11 +61,18 @@ update_todo:
 	./gitea-cli/bin/gitea issues xsrv/xsrv | jq -r '.[] | "- #\(.number) - \(.title) - `\(.milestone.title)`"'  | sed 's/ - `null`//' >> docs/TODO.md
 	rm -rf gitea-cli
 
+LAST_TAG := $(shell git describe --tags --abbrev=0)
+# bump version numbers in repository files
+bump_versions:
+	tag=$(LAST_TAG) && \
+	sed -i "s/^version:.*/version: $$tag/" galaxy.yml && \
+	sed -i "s/^version=.*/version=\"$$tag\"/" xsrv
+
 # build and publish the ansible collection
 # ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment
-publish_collection: venv
-	tag=$$(git describe --tags --abbrev=0) && \
-	sed -i "s/^version:.*/version: $$tag/" galaxy.yml && \
+
+publish_collection: venv bump_versions
+	tag=$(LAST_TAG) && \
 	source .venv/bin/activate && \
 	ansible-galaxy collection build && \
 	ansible-galaxy collection publish --token "$$ANSIBLE_GALAXY_PRIVATE_TOKEN" nodiscc-xsrv-$$tag.tar.gz
