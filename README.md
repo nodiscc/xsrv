@@ -18,24 +18,23 @@
 
 ## Roles
 
-- [common](roles/common) - base system components (SSH, upgrades, users, hostname, network, kernel, time...)
-- [backup](roles/backup) - incremental backup service (local and remote backups)
-- [monitoring](roles/monitoring) - monitoring, alerting and log agregation system (netdata, rsyslog, other tools)
-- [apache](roles/apache) - Apache web server and PHP-FPM interpreter
-- [homepage](role/homepage) - simple web server homepage
-- [postgresql](roles/postgresql) - PostgreSQL database server
-- [mariadb](roles/mariadb) - MariaDB (MySQL) database server
-- [nextcloud](roles/nextcloud) - File hosting/sharing/synchronization/groupware/"private cloud"
-- [tt_rss](roles/tt_rss) - Tiny Tiny RSS web feed reader
-- [samba](roles/samba) - Cross-platform file and printer sharing service (SMB/CIFS)
-- [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
-- [gitea](roles/gitea) - Lightweight self-hosted Git service/software forge
-- [transmission](roles/transmission) - Bittorrent client/web interface/seedbox service
-- [mumble](roles/mumble) - Low-latency voice-over-IP (VoIP) server
-- [openldap](roles/openldap) - LDAP directory server and web administration tools
-- [docker](roles/docker) - Docker container platform
-- [rocketchat](roles/rocketchat) - Realtime web chat/communication platform
-- [jellyfin](roles/jellyfin) - Media System that puts you in control of managing and streaming your media
+- [common](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) - base system components
+- [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) - incremental backup service (local/remote backups)
+- [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - monitoring, alerting and logging system (netdata/rsyslog/other)
+- [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) - web server and PHP interpreter
+- [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - simple homepage/dashhoard for your services
+- [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) or [mariadb](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mariadb) (MySQL) database server
+- [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - file hosting/sharing/synchronization/groupware/"private cloud" service
+- [tt_rss](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss) - RSS feed reader
+- [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - cross-platform file and printer sharing service (SMB/CIFS)
+- [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli) - personal, minimalist, super-fast bookmarking service
+- [gitea](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea) - lightweight self-hosted Git service/software forge
+- [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - bittorrent peer-to-peer client web interface (seedbox) service
+- [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - low-latency voice-over-IP (VoIP) server
+- [openldap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap) - LDAP directory server and web administration tools
+- [docker](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker) - Docker container platform
+- [rocketchat](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat) - realtime web chat/communication platform
+- [jellyfin](roles/jellyfin) - media System that puts you in control of managing and streaming your media
 
 [![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
