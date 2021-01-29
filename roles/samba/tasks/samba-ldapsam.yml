@@ -17,7 +17,7 @@
     src: "etc_nslcd.conf.j2"
     dest: "/etc/nslcd.conf"
     owner: root
-    group: nscld
+    group: nslcd
     mode: 0640
   notify: restart nslcd
 
