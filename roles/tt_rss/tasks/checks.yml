@@ -7,11 +7,8 @@
     that:
       - tt_rss_account_limit == tt_rss_account_limit|int
       - tt_rss_allow_registration in ['true', 'false']
-      - tt_rss_db_host is not search("CHANGEME")
       - tt_rss_db_name is not search("CHANGEME")
       - tt_rss_db_password is not search("CHANGEME")
-      - tt_rss_db_port == tt_rss_db_port|int
-      - tt_rss_db_type in ['mysql', 'pgsql']
       - tt_rss_db_user is not search("CHANGEME")
       - tt_rss_fqdn is not search("CHANGEME")
       - tt_rss_full_url is not search("CHANGEME")
