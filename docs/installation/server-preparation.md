@@ -22,29 +22,20 @@ Use low power consumption components. To increase availability, setup the BIOS t
 
 ## Network
 
-The server must have **Internet access** during deployment and upgrades. Prefer fast and reliable network links (download/upload).
-Here we assume the server has a single network interface.
+The default configuration assumes server has a single network interface.
 
-Setup a **static IP address** + default gateway on the server during installation.
 
-Setup **DNS resolution** during installation (use your ISP/hoster's DNS server, a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server),
-or your private DNS server - [pfSense](https://en.wikipedia.org/wiki/PfSense) is a good start to boostrap a private DNS server).
+### Internet access
 
-You can check connectivity by running these commands on the server:
-
-```bash
-# test internet connectivity
-ping -c1 1.1.1.1
-# test DNS resolution
-getent hosts debian.org
-```
+The server must have Internet access during deployment and upgrades. Prefer fast and reliable network links. 
 
 
 ### NAT/port forwarding
 
 If the network interface is in a [private network](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) behind a router,
 setup **NAT (port forwarding)** on the router if you need to access your services from other networks/Internet.
-Forward the following ports to your server's private IP address:
+
+Forward the following ports to your server's private IP address (if corresponding services are installed):
 
 ```
 SSH server:                      TCP 22
@@ -53,17 +44,18 @@ BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738
 ```
 
+### Domain names
 
-### DNS records
+Clients (and the controller) must be able to resolve the server's IP address by its ([Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Separate domain or subdomain names are required for each service/application.
 
-The server's **hostname** ([FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) must be resolvable from the controller (`A` or `CNAME` record) at a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar),
-a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your private DNS resolver.
+- Setup `A` or `CNAME` DNS records at a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar),
+a [free subdomain service](https://freedns.afraid.org/domain/registry/) or on your private DNS resolver.
+- Alternatively an entry the client [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29) will work.
 
-Setup additional records/subdomains required to access your applications (webserver virtualhosts).
-These must be resolvable by clients that want to access your services.
 By default the following subdomains are required (if corresponding roles are enabled):
 
 ```bash
+***.CHANGEME.org # host name in the inventory/playbook
 www.CHANGEME.org # homepage
 cloud.CHANGEME.org # nextcloud
 git.CHANGEME.org # gitea
@@ -76,8 +68,6 @@ chat.CHANGEME.org # rocketchat
 media.CHANGEME.org # jellyfin
 ```
 
-Alternatively an entry the client's [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29) will work.
-
 
 ## Debian installation
 
@@ -89,8 +79,10 @@ Roles in this project are designed to run against minimal [Debian](https://www.d
 - Select `Advanced > Graphical advanced install`.
 - Follow the installation procedure, using the following options:
   - Set the machine's locale/language to English (`en_US.UTF-8`)
-  - IP address/gateway/DNS server: Refer to the [network](#network) section above.
-  - Enable `root` account, set a strong password and store it someplace safe like a Keepass database
+  - IP address: preferably a static IP address and the correct network mask/gateway, or use automatic configuration/DHCP
+  - DNS server: specify your ISP/hoster's DNS server, a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server),
+or your private DNS server ([pfSense](../advanced/pfsense.md) is a good start to boostrap a private DNS server)
+  - Enable the `root` account, set a strong password and store it somewhere safe like a Keepass database
   - Do **not** create an additional user account yet
   - Any disk partitioning scheme is OK, here are some generic recommendations:
     - Use LVM if possible. This will greatly facilitate disk management if the need arises.
