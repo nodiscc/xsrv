@@ -54,15 +54,15 @@ modules: posixAccount_pwdHash: SSHA
 
 # List of active account types.
 
-activeTypes: user,group
+activeTypes: user,group{% if 'samba' in role_names and samba_passdb_backend == 'ldapsam' %},smbDomain{% endif %}
 
 types: suffix_user: ou=users,{{ openldap_base_dn }}
 types: attr_user: #uid;#givenName;#sn;#uidNumber;#gidNumber
-types: modules_user: inetOrgPerson,posixAccount
+types: modules_user: inetOrgPerson,posixAccount{% if 'samba' in role_names and samba_passdb_backend == 'ldapsam' %},sambaSamAccount,shadowAccount{% endif %}
 
 types: suffix_group: ou=groups,{{ openldap_base_dn }}
 types: attr_group: #cn;#gidNumber;#memberUID;#description
-types: modules_group: posixGroup
+types: modules_group: posixGroup{% if 'samba' in role_names and samba_passdb_backend == 'ldapsam' %},sambaGroupMapping{% endif %}
 
 
 # Password mail subject
@@ -192,6 +192,8 @@ modules: inetOrgPerson_hideState: true
 modules: inetOrgPerson_hideStreet: true
 modules: inetOrgPerson_hideTelephoneNumber: false
 modules: inetOrgPerson_hideuserCertificate: false
+modules: inetOrgPerson_hideOu: false
+modules: inetOrgPerson_hideO: false
 modules: inetOrgPerson_jpegPhoto_maxHeight: 
 modules: inetOrgPerson_jpegPhoto_maxSize: 
 modules: inetOrgPerson_jpegPhoto_maxWidth: 
@@ -229,15 +231,59 @@ modules: inetOrgPerson_readOnly_title: false
 modules: inetOrgPerson_readOnly_uid: false
 modules: inetOrgPerson_readOnly_userPassword: false
 
+
 modules: posixAccount_user_hidegecos: false
+modules: posixAccount_user_hidepassword: false
 modules: posixAccount_user_uidGeneratorUsers: range
-modules: posixAccount_user_primaryGroupAsSecondary: false
+modules: posixAccount_primaryGroupAsSecondary: false
 modules: posixAccount_user_minUID: 10000
 modules: posixAccount_user_maxUID: 65535
 modules: posixAccount_user_userNameSuggestion: %givenname%.%sn%
+modules: posixAccount_shells: /bin/bash+::+/bin/csh+::+/bin/dash+::+/bin/false+::+/bin/ksh+::+/bin/sh
 
 modules: posixGroup_group_hidememberUid: false
 modules: posixGroup_group_minGID: 10000
 modules: posixGroup_group_maxGID: 65535
 modules: posixGroup_group_gidGenerator: range
 
+tools: tool_hide_toolWebauthn: false
+tools: tool_hide_ImportExport: false
+
+{% if 'samba' in role_names and samba_passdb_backend == 'ldapsam' %}
+referentialIntegrityOverlay: false
+hidePasswordPromptForExpiredPasswords: false
+twoFactorAuthentication: none
+twoFactorAuthenticationURL: https://localhost
+twoFactorAuthenticationClientId:
+twoFactorAuthenticationSecretKey: 
+twoFactorAuthenticationDomain: 
+twoFactorAuthenticationInsecure: 
+twoFactorAuthenticationLabel: 
+twoFactorAuthenticationOptional: 
+twoFactorAuthenticationCaption: 
+twoFactorAuthenticationAttribute: 
+
+hideDnPart: 
+
+types: suffix_smbDomain: ou=domains,{{ openldap_base_dn }}
+types: attr_smbDomain: #sambaDomainName;#sambaSID
+types: modules_smbDomain: sambaDomain
+modules: posixGroup_group_sambaIDPoolDN: 
+modules: posixGroup_group_windowsIDPoolDN: 
+modules: posixGroup_group_magicNumber: 
+modules: posixGroup_group_gidCheckSuffix: 
+modules: sambaSamAccount_history: yes_deleteLast
+modules: sambaSamAccount_lmHash: yes
+modules: sambaSamAccount_hideHomeDrive: false
+modules: sambaSamAccount_hideHomePath: false
+modules: sambaSamAccount_hideProfilePath: false
+modules: sambaSamAccount_hideLogonScript: false
+modules: sambaSamAccount_hideSambaPwdLastSet: false
+modules: sambaSamAccount_hideWorkstations: false
+modules: sambaSamAccount_hideLogonHours: false
+modules: sambaSamAccount_hideTerminalServer: false
+modules: posixAccount_user_sambaIDPoolDNUsers: 
+modules: posixAccount_user_windowsIDPoolDNUsers: 
+modules: posixAccount_user_magicNumberUser: 
+modules: posixAccount_user_uidCheckSuffixUser: 
+{% endif %}

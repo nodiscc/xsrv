@@ -25,3 +25,32 @@ inetOrgPerson_businessCategory:
 posixAccount_primaryGroup: users
 posixAccount_homeDirectory: /home/$user
 posixAccount_loginShell: /bin/bash
+
+{% if 'samba' in role_names and samba_passdb_backend == 'ldapsam' %}
+sambaSamAccount_addExt: true
+sambaSamAccount_displayName: 
+sambaSamAccount_sambaAcctFlagsN: false
+sambaSamAccount_sambaAcctFlagsD: false
+sambaSamAccount_sambaAcctFlagsX: true
+sambaSamAccount_expire_day: 1
+sambaSamAccount_expire_mon: 1
+sambaSamAccount_expire_yea: 2030
+sambaSamAccount_sambaHomeDrive: O:
+sambaSamAccount_smbhome: 
+sambaSamAccount_profilePath: 
+sambaSamAccount_logonScript: 
+sambaSamAccount_userWorkstations: 
+sambaSamAccount_sambaDomainName: {{ openldap_domain }}
+sambaSamAccount_group: 513
+sambaSamAccount_logonHours: 
+
+shadowAccount_addExt: true
+shadowAccount_shadowWarning:
+shadowAccount_shadowInactive:
+shadowAccount_shadowMin: 
+shadowAccount_shadowMax: 
+shadowAccount_shadowExpire_day: -
+shadowAccount_shadowExpire_mon: -
+shadowAccount_shadowExpire_yea: -
+{% endif %}
+
