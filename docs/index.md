@@ -7,9 +7,10 @@
 
 `xsrv` provides:
 
+- a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install and configure various network services, web applications, system administration and infrastructure tools
 - a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) for easy configuration, deployment and maintenance
-- a collection of [roles](#roles) to install and configure various network services, web applications, system administration and infrastructure tools
 - a base [playbook to setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) for personal use or small/medium teams in a few minutes
+
 
 
 ## Roles
@@ -62,7 +63,7 @@ xsrv deploy
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 
-Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command-line tool to manage your servers, or include any of the [roles](#roles) in your own [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) playbooks.
+Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command-line tool to manage your servers, or include any of the [roles](#roles) in your own `ansible` playbooks.
 
 
 ## Documentation
@@ -73,11 +74,5 @@ Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-u
 - [First deployment](installation/first-deployment.md)
 - [Usage](usage.md)
 - [Maintenance](maintenance.md)
-- [Backups](maintenance/backups.md)
-- [Upgrading](maintenance/upgrading.md)
 - [Advanced usage](advanced.md)
-- [Version control](advanced/version-control.md)
-- [Continuous deployment](advanced/continuous-deployment.md)
-- [Using as ansible collection](advanced/using-as-ansible-collection.md)
 - [Contributing](contributing.md)
-
