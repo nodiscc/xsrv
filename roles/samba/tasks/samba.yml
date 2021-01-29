@@ -11,36 +11,6 @@
 
 ##### CONFIGURATION #####
 
-- name: copy samba configuration
-  template:
-    src: etc_samba_smb.conf.j2
-    dest: /etc/samba/smb.conf
-    owner: root
-    group: root
-    mode: 0640
-  notify: check samba configuration
-
-###### BACKUPS ############
-
-- name: copy rsnapshot configuration for samba backups
-  template:
-    src: etc_rsnapshot.d_samba.conf.j2
-    dest: /etc/rsnapshot.d/samba.conf
-    mode: 0600
-  when: '"backup" in role_names'
-  notify: check rsnapshot configuration
-
-
-###### FAIL2BAN ############
-# copy fail2ban jail config/filters TODO
-
-#- name: copy EXAMPLE fail2ban jail config
-#  template: src=etc_fail2ban_jail.d_EXAMPLE.conf.j2 dest=/etc/fail2ban/jail.d/EXAMPLE.conf mode=0600
-#  tags: debug-config-fail2ban
-#  notify: restart fail2ban
-
-##### COMMAND-LINE/MISC INSTALLATION STEPS #####
-
 - name: Load nf_conntrack_netbios_ns kernel module
   modprobe:
     name: nf_conntrack_netbios_ns
@@ -54,29 +24,27 @@
     group: root
     mode: 0640
 
+- name: get samba server SID
+  command: net getlocalsid
+  register: samba_localsid
+  changed_when: False
+
+- name: copy samba configuration
+  template:
+    src: etc_samba_smb.conf.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: 0640
+  notify: reload samba
+
+##### SHARE DIRECTORIES #####
+
 - name: create sambausers group
   group:
     name: sambausers
     state: present
     system: yes
-
-- name: create disabled accounts for samba users
-  user:
-    name: "{{ item.username }}"
-    createhome: no
-    skeleton: no
-    state: present
-    groups: sambausers
-  with_items: "{{ samba_users }}"
-
-- name: update samba users/passwords database (not idempotent, always returns changed)
-  shell: "set -o pipefail; printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}" # noqa 301
-  args:
-    executable: /bin/bash
-  with_items: "{{ samba_users }}"
-  no_log: True
-
-###### SHARE DIRECTORIES
 
 - name: create base shares directory
   file:
@@ -94,3 +62,12 @@
     group: sambausers
     mode: 0775
   with_items: "{{ samba_shares }}"
+
+
+###### FAIL2BAN ############
+# copy fail2ban jail config/filters TODO
+
+#- name: copy EXAMPLE fail2ban jail config
+#  template: src=etc_fail2ban_jail.d_EXAMPLE.conf.j2 dest=/etc/fail2ban/jail.d/EXAMPLE.conf mode=0600
+#  tags: debug-config-fail2ban
+#  notify: restart fail2ban

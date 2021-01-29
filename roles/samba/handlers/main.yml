@@ -1,7 +1,7 @@
 - name: check samba configuration
   become: yes
   command: testparm -s
-  notify: reload samba
+  listen: reload samba
 
 - name: reload samba
   become: yes
@@ -11,3 +11,20 @@
   with_items:
     - smbd
     - nmbd
+
+- name: update ansible facts
+  setup:
+
+- name: restart nslcd
+  become: yes
+  service:
+    name: nslcd
+    state: restarted
+    enabled: yes
+
+- name: restart nscd
+  become: yes
+  service:
+    name: nscd
+    state: restarted
+    enabled: yes

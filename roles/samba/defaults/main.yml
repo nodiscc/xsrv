@@ -2,8 +2,8 @@
 
 # List of samba shares. Each item has the following attributes:
 #   name: (required): unique name for the share
-#   allow_read_users (default none): list of users allowed to read the share
-#   allow_write_users (default none): list of users allowed to write to the share
+#   allow_read_users (default none): list of users/groups allowed to read the share (use @groupname for groups)
+#   allow_write_users (default none): list of users/groups allowed to write to the share (use @groupname for groups)
 #   comment (default none): text  that is seen next to a share in share listings on clients
 #   available: (yes/no, default yes): set to no to disable the share
 #   browseable: (yes/no, default yes): set to no to hide the share from network share listings on clients (it can still be accessed)
@@ -17,32 +17,20 @@
 #       - bob
 #       - martin
 #       - eve
-#       - boss
-#   - name: eve-personal
-#     comment: "Eve's file share (hidden from share listing)"
+#   - name: bob-personal
+#     comment: "Bob's file share (hidden from share listing)"
 #     browseable: no
 #     allow_write_users:
-#       - eve
+#       - bob
 #   - name: accounting
 #     comment: "Share for the accounting department"
 #     allow_write_users:
-#       - martin
+#       - @accounting
 #     allow_read_users:
-#       - boss
-#   - name: old_share
+#       - alice # give alice read-only access
+#   - name: a_share_that_will_be_removed
 #     state: absent
 samba_shares: []
-
-# List of samba_users. Each item has the following attributes:
-#   username: the username. Do not use a username already in use by a system service or interactive user!
-#   password: password for this user. It is best to store this value in ansible-vault
-# Example:
-# samba_users:
-#   - username: alice
-#     password: "{{ vault_samba_user_password_alice }}"
-#   - username: bob
-#     password: "{{ vault_samba_user_password_bob }}"
-samba_users: []
 
 # Server name and description
 samba_netbios_name: "{{ ansible_hostname }}"
@@ -67,3 +55,26 @@ samba_hosts_allow:
 # windows clients require access to $IPC to be able to access any other share,
 # so it is recommended to keep the same value as samba_hosts_allow
 samba_hosts_allow_ipc: "{{ samba_hosts_allow }}"
+
+# user/group storage backend for samba accounts (tdbsam/ldapsam)
+#   tdbsam: use local UNIX user accounts and samba's internal TDB database
+#   ldapsam: use a LDAP server to store users and groups
+samba_passdb_backend: "tdbsam"
+
+# List of samba_users (only for samba_passdb_backend: "tdbsam")
+# Each item has the following attributes:
+#   username: the username. Do not use a username already in use by a system service or interactive user!
+#   password: password for this user. It is best to store this value in ansible-vault
+#   TODO: state: present/absent. Set to 'absent' to delete the account
+# Example:
+# samba_users:
+#   - username: alice
+#     password: "{{ vault_samba_user_password_alice }}"
+#   - username: bob
+#     password: "{{ vault_samba_user_password_bob }}"
+samba_users: []
+
+# 0-999: nscd debug log level
+samba_nscd_debug_level: 0
+# (seconds): time after which user/group/passwords are invalidated in nscd cache
+samba_nscd_cache_time_to_live: 60
