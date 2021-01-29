@@ -1,6 +1,11 @@
----
-
 image: python:3
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
+
+cache:
+  paths:
+    - "$CI_PROJECT_DIR/pip-cache"
 
 test:
   before_script:

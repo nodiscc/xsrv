@@ -1,0 +1,109 @@
+##### SAMBA (LDAPSAM BACKED) #####
+
+- name: install requirements for LDAP authentication
+  apt:
+    state: present
+    package:
+      - nslcd
+      - nscd
+      - libpam-ldapd
+      - libnss-ldapd
+      - ldap-utils
+      - smbldap-tools
+      - unzip
+
+- name: copy nslcd configuration
+  template:
+    src: "etc_nslcd.conf.j2"
+    dest: "/etc/nslcd.conf"
+    owner: root
+    group: nscld
+    mode: 0640
+  notify: restart nslcd
+
+- name: copy nscd configuration
+  template:
+    src: "etc_nscd.conf.j2"
+    dest: "/etc/nscd.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nscd
+
+- name: copy nsswitch configuration
+  template:
+    src: "etc_nsswitch.conf.j2"
+    dest: "/etc/nsswitch.conf"
+    trim_blocks: no
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nscd
+
+- name: decompress samba LDAP schema
+  shell: gunzip -c /usr/share/doc/samba/examples/LDAP/samba.ldif.gz > /root/samba.ldif
+  changed_when: False
+
+# TODO use ldap modules
+- name: import samba schema to LDAP database
+  command: ldapadd -Q -Y EXTERNAL -H ldapi:/// -f /root/samba.ldif
+  when: (ansible_local.samba.general.ldap_schema_installed is not defined) or (not ansible_local.samba.general.ldap_schema_installed)
+
+- name: create ansible local facts directory
+  file:
+    path: "/etc/ansible/facts.d"
+    state: directory
+    mode: 0755
+
+- name: create samba fact file
+  template:
+    src: etc_ansible_facts.d_samba.fact.j2
+    dest: /etc/ansible/facts.d/samba.fact
+    mode: 0644
+  notify: update ansible facts
+
+- name: set samba LDAP admin dn password (always returns changed)
+  command: "smbpasswd -w {{ openldap_bind_password }}"  # noqa 301
+  when: samba_passdb_backend == 'ldapsam'
+
+# update ansible facts from files in /etc/ansible/facts.d/
+- name: run all notified handlers
+  meta: flush_handlers
+
+- name: create samba domain LDAP entry
+  ldap_entry:
+    dn: 'sambaDomainName={{ openldap_domain }},ou=domains,{{ openldap_base_dn }}'
+    objectClass:
+      - sambaDomain
+      - top
+    server_uri: ldap://localhost
+    bind_dn: "cn=admin,{{ openldap_base_dn }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    attributes:
+      sambaDomainName: '{{ openldap_domain }}'
+      sambaSID: '{{ samba_localsid.stdout.split(" ") | last }}'
+
+# ldapsearch -Q -Y EXTERNAL -H ldapi:/// '(objectClass=sambaDomain)'
+- name: Set LDAP attributes of the samba domain
+  ldap_attr:
+    dn: 'sambaDomainName={{ openldap_domain }},ou=domains,{{ openldap_base_dn }}'
+    name: "{{ item.name }}"
+    values: "{{ item.value }}"
+    state: exact
+    server_uri: ldap://localhost/
+    bind_dn: "cn=admin,{{ openldap_base_dn }}"
+    bind_pw: "{{ openldap_admin_password }}"
+  with_items:
+    - { name: 'sambaAlgorithmicRidBase', value: '1000' }
+    - { name: 'sambaNextUserRid', value: '1000' } # TODO don't reinitialize this
+    - { name: 'sambaNextGroupRid', value: '1000' } # TODO don't reinitialize this
+    - { name: 'sambaMinPwdLength', value: '5' } # TODO description? make this configurable?
+    - { name: 'sambaPwdHistoryLength', value: '0' } # TODO description? make this configurable?
+    - { name: 'sambaLogonToChgPwd', value: '0' } # TODO description? make this configurable?
+    - { name: 'sambaMaxPwdAge', value: '-1' }
+    - { name: 'sambaMinPwdAge', value: '0' }
+    - { name: 'sambaLockoutDuration', value: '60' } # TODO description? make this configurable?
+    - { name: 'sambaLockoutObservationWindow', value: '10' } # TODO description? make this configurable?
+    - { name: 'sambaLockoutThreshold', value: '5' } # TODO description? make this configurable?
+    - { name: 'sambaForceLogoff', value: '-1' }  # TODO description? make this configurable?
+    - { name: 'sambaRefuseMachinePwdChange', value: '0' } # TODO description? make this configurable?

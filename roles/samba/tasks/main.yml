@@ -1,8 +1,20 @@
----
-
 - include: checks.yml
   tags: samba
 
 - include: samba.yml
+  become: yes
+  tags: samba
+
+- include: samba-ldapsam.yml
+  become: yes
+  when: samba_passdb_backend == 'ldapsam'
+  tags: samba
+
+- include: samba-tdbsam.yml
+  become: yes
+  when: samba_passdb_backend == 'tdbsam'
+  tags: samba
+
+- include: backups.yml
   become: yes
   tags: samba

@@ -94,3 +94,8 @@ See [defaults/main.yml](defaults/main.yml)
 - `Save changes`
 
 **Backups:** see the included [rsnapshot configuration](templates/etc_rsnasphot.d_rocketchat.conf.j2) and [rocketchat dump script](templates/_user_local_bin_rocketchat-dump.sh.j2)
+
+**Mobile clients:**
+- [Android app](https://f-droid.org/en/packages/chat.rocket.android/)
+- [iOS app](https://apps.apple.com/us/app/rocket-chat/id1148741252)
+

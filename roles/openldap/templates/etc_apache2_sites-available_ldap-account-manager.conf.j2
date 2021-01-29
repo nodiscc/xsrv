@@ -25,7 +25,7 @@ MDomain {{ ldap_account_manager_fqdn }}
 {% endif %}
 
   <FilesMatch \.php$>
-    SetHandler "proxy:unix:/run/php/php7.3-fpm-tt-rss.sock|fcgi://localhost"
+    SetHandler "proxy:unix:/run/php/php7.3-fpm-ldap-account-manager.sock|fcgi://localhost"
   </FilesMatch>
 
   <Directory {{ ldap_account_manager_install_dir }}/config>

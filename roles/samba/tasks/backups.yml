@@ -1,0 +1,9 @@
+###### BACKUPS ############
+
+- name: copy rsnapshot configuration for samba backups
+  template:
+    src: etc_rsnapshot.d_samba.conf.j2
+    dest: /etc/rsnapshot.d/samba.conf
+    mode: 0600
+  when: '"backup" in role_names'
+  notify: check rsnapshot configuration

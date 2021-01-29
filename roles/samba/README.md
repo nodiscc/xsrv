@@ -23,6 +23,7 @@ Dependencies
 
 - [common](../common/README.md) role (optional)
 - [backup](../backup/README.md) role (for automatic backups, optional)
+- [openldap](../openldap/README.md) role (optional, for LDAP user backend support)
 
 
 Example Playbook

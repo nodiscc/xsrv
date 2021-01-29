@@ -135,6 +135,9 @@ vm.vfs_cache_pressure = {{ sysctl_vm_vfs_cache_pressure }}
 #vm.overcommit_memory = 0
 #vm.overcommit_ratio = 100
 
+# increase the limit on the number of watches that can be created per real user ID
+# fs.inotify.max_user_watches = 524288
+
 
 ### MISC SECURITY
 

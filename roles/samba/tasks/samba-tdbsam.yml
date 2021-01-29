@@ -1,0 +1,17 @@
+##### SAMBA USERS (TDBSAM BACKEND) #####
+
+- name: create disabled accounts for samba users
+  user:
+    name: "{{ item.username }}"
+    createhome: no
+    skeleton: no
+    state: present
+    groups: sambausers
+  with_items: "{{ samba_users }}"
+
+- name: update samba users/passwords database (not idempotent, always returns changed)
+  shell: "set -o pipefail; printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}" # noqa 301
+  args:
+    executable: /bin/bash
+  with_items: "{{ samba_users }}"
+  no_log: True

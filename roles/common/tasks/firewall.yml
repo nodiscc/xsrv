@@ -46,7 +46,7 @@
       - firehol
       - firehol-tools
       - ipset
-  async: 60
+  async: 300
   poll: 5
   when: not ansible_check_mode
 

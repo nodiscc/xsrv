@@ -50,6 +50,7 @@
     - 'system'
     - 'groups'
     - 'users'
+    - 'domains'
   when: not ansible_check_mode
 
 - name: create 'users' LDAP group

@@ -26,7 +26,11 @@
 ## Browsing/Identification ###
 
 # Change this to the workgroup/NT-domain name your Samba server will part of
+{% if samba_passdb_backend == 'tdbsam' %}
    workgroup = WORKGROUP
+{% elif samba_passdb_backend == 'ldapsam' %}
+   workgroup = {{ openldap_domain }}
+{% endif %}
 
 # What will appear in browse lists next to the machine name
 # Default: server string = Samba %v
@@ -120,7 +124,7 @@
     full_audit:failure = connect
 
 # full_audit VFS backend: Log to syslog
-    full_audit:syslog = false
+    full_audit:syslog = true
 
 # full_audit VFS backend: syslog facility and priority to use
 ;   full_audit:facility = daemon
@@ -144,17 +148,37 @@
    server role = standalone server
 
 # backend for storing user and group information
+{% if samba_passdb_backend == 'tdbsam' %}
    passdb backend = tdbsam
+# This boolean parameter controls whether Samba attempts to sync the Unix
+# password with the SMB password when the encrypted SMB password in the
+# passdb is changed.
+   unix password sync = yes
+{% elif samba_passdb_backend == 'ldapsam' %}
+   passdb backend = ldapsam:ldap://127.0.0.1
+# base for all ldap suffixes and for storing the sambaDomain object.
+   ldap suffix = {{ openldap_base_dn }}
+# Distinguished Name (DN) name used by Samba to contact the ldap server when retreiving user account information
+# The ldap admin dn is used in conjunction with the admin dn password stored in the private/secrets.tdb filename
+# See the smbpasswd(8) man page for more information on how to accomplish this.
+   ldap admin dn = cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}
+# where users, groups, and machines mappings are added to the LDAP tree
+   ldap user suffix = ou=users
+   ldap group suffix = ou=groups
+   ldap machine suffix = ou=computers
+
+# This option is used to define whether or not Samba should sync the LDAP
+# password with the NT and LM hashes for normal accounts (NOT for workstation,
+# server or domain trusts) on a password change via SAMBA. 
+   ldap passwd sync = no
+# whether or not Samba should use SSL when connecting to the ldap server
+  ldap ssl = Off
+{% endif %}
 
 # whether or not Samba should obey PAM's account and session management directives
 # Samba always ignores PAM for authentication in the case of
 # encrypt passwords = yes, which is the default
    obey pam restrictions = yes
-
-# This boolean parameter controls whether Samba attempts to sync the Unix
-# password with the SMB password when the encrypted SMB password in the
-# passdb is changed.
-   unix password sync = yes
 
 # For Unix password sync to work on a Debian GNU/Linux system, the following
 # parameters must be set (thanks to Ian Kahan <<kahan@informatik.tu-muenchen.de> for
