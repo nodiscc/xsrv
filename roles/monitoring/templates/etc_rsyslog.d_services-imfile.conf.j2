@@ -109,17 +109,6 @@ input(type="imfile"
 {% if 'samba' in role_names %}
 ##### SAMBA #####
 
-input(type="imfile"
-      File="/var/log/samba/cores/smbd"
-      Tag="samba:"
-      Facility="daemon"
-      PersistStateInterval="0")
-
-input(type="imfile"
-      File="/var/log/samba/cores/nmbd"
-      Tag="samba:"
-      Facility="daemon"
-      PersistStateInterval="0")
 
 input(type="imfile"
       File="/var/log/samba/log."
@@ -141,6 +130,12 @@ input(type="imfile"
 
 input(type="imfile"
       File="/var/log/samba/samba.log"
+      Tag="samba:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/nscd.log"
       Tag="samba:"
       Facility="daemon"
       PersistStateInterval="0")
