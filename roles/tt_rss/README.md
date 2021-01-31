@@ -28,9 +28,9 @@ Dependencies
 ------------
 
 - [apache](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
-- [postgresql](../postgresql/README.md) or [mariadb](../mariadb/README.md) role (database engine)
+- [postgresql](../postgresql/README.md) role (database engine)
 - [common](../common/README.md) role (for fail2ban support)
-- [backup](../backup/README.md) role (for automatic backups, optional)
+- (optional) [backup](../backup/README.md) role (for automatic backups)
 
 
 Example Playbook
@@ -84,12 +84,12 @@ sudo rm /root/tt_rss_admin_user_info.sql
 sudo rm -r /var/www/my.example.com/tt-rss/
 
 # remove the database and user
-sudo mysql -e "DROP DATABASE ttrss; DROP USER 'ttrss'@'localhost';"
+sudo -u postgres psql -c "DROP DATABASE ttrss; DROP USER ttrss;"
 
 # from the ansible controller, reinstall the application, eg. ansible-playbook playbook.yml
 
 # restore database backups
-sudo mysql ttrss < /var/backups/rsnapshot/daily.0/localhost/mysql/tt-rss.sql
+sudo -u postgres pg_restore /var/backups/rsnapshot/daily.0/localhost/var/backups/postgresql/ttrss.sql
 ```
 
 

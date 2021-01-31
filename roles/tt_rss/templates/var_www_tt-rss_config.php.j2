@@ -3,12 +3,12 @@
 	// *** Database configuration (important!) ***
 	// *******************************************
 
-	define('DB_TYPE', "{{ tt_rss_db_type }}"); // mysql or pgsql
-	define('DB_HOST', "{{ tt_rss_db_host }}");
+	define('DB_TYPE', "pgsql"); // mysql or pgsql
+	define('DB_HOST', "localhost");
 	define('DB_USER', "{{ tt_rss_db_user }}");
 	define('DB_NAME', "{{ tt_rss_db_name }}");
 	define('DB_PASS', "{{ tt_rss_db_password }}");
-	define('DB_PORT', '{{ tt_rss_db_port }}'); // usually 5432 for PostgreSQL, 3306 for MySQL
+	define('DB_PORT', '5432'); // usually 5432 for PostgreSQL, 3306 for MySQL
 
 	define('MYSQL_CHARSET', 'UTF8');
 	// Connection charset for MySQL. If you have a legacy database and/or experience

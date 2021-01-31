@@ -20,7 +20,6 @@
   postgresql_user:
     name: "{{ tt_rss_db_user }}"
     password: "{{ tt_rss_db_password }}"
-  when: tt_rss_db_password is defined
   no_log: True
 
 - name: create tt-rss postgresql database

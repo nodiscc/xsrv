@@ -20,12 +20,9 @@ tt_rss_password: "{{ vault_tt_rss_password }}"
 tt_rss_password_salt: "{{ vault_tt_rss_password_salt }}"
 
 # tt-rss database settings
-tt_rss_db_type: "pgsql" # mysql or pgsql
-tt_rss_db_host: "localhost"
 tt_rss_db_name: "ttrss"
 tt_rss_db_user: "ttrss"
 tt_rss_db_password: "{{ vault_tt_rss_db_password }}"
-tt_rss_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 
 # tt-rss version (git revision)
 tt_rss_version: "master"
