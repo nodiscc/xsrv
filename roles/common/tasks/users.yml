@@ -21,6 +21,14 @@
     group: root
     mode: 0600
 
+- name: ensure ansible user home directory is noit world-readable
+  file:
+    state: directory
+    path: "{{ ansible_env.HOME }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0750
+
 - name: create additional user accounts
   user:
     name: "{{ item.name }}"
