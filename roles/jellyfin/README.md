@@ -33,12 +33,16 @@ Example Playbook
 playbook.yml:
 
 ```yaml
+# playbook.yml
 - hosts: my.CHANGEME.org
   roles:
     - common
     - monitoring
     - apache
     - jellyfin
+
+# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
+jellyfin_fqdn: media.CHANGEME.org
 ```
 
 Usage
