@@ -1,57 +1,40 @@
-transmission
-=============
+# xsrv.transmission
 
 This role will install the [Transmission](https://en.wikipedia.org/wiki/Transmission_(BitTorrent_client)) Bittorrent client. [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent) is a [Peer-to-peer](https://en.wikipedia.org/wiki/Peer-to-peer) file sharing network. Transmission allows you to manage torrent downloads from a web interface. Torrents will be downloaded to the server, and can be accessed them using file transfer services (SFTP, Nextcloud...) - also known as a [Seedbox](https://en.wikipedia.org/wiki/Seedbox).
 
 [![](https://i.imgur.com/blWO4LL.png)](https://i.imgur.com/q1gcHRf.png)
 
 
-Requirements/Dependencies
-------------
+## Requirements/Dependencies/example playbook
 
-- Ansible 2.9 or higher.
-- The [common](../common/README.md) role (hardening/firewall/bruteforce prevention)
-- The [apache](../apache/README.md) role (webserver/reverse proxy, SSL certificates)
-- The [backup](../backup/README.md) role (automatic backups, optional)
+See [meta/main.yml](meta/main.yml)
+
+```yaml
+- hosts: my.CHANGEME.org
+  roles:
+    - nodiscc.xsrv.common # bruteforce protection
+    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.transmission
+
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_transmission_username: "CHANGEME"
+vault_transmission_password: "CHANGEME20"
+```
 
 The firewall must allow incoming traffic on `transmission_port` (by default tcp/52943 and udp/52943), and outgoing traffic on all ports. For example using the `common` role:
 
 ```yaml
 firehol_networks:
   - name: "global"
-    ...
     allow_input:
-      - ...
       - { name: "transmission", src: "any" }
     allow_output: # outgoing connections
-      - ...
       - { name: "all", dst: "any"}
 ```
 
-
-Role Variables
---------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-
-Example Playbook
-----------------
-
-```yaml
-- hosts: my.example.org
-  roles:
-    - common
-    - monitoring
-    - backup
-    - apache2
-    - transmission
-
-# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_transmission_username: "CHANGEME"
-vault_transmission_password: "CHANGEME20"
-```
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 Usage
 -----

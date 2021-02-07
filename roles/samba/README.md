@@ -5,73 +5,26 @@ This role will install [Samba](https://en.wikipedia.org/wiki/Samba_(software)), 
 The server is set up as a "standalone"/workgroup server (ie. not part of a domain) and uses standard Linux users as a backend for user accounts.
 
 
-Requirements
-------------
-
-- Ansible 2.9 or higher.
-- Firewall must allow incoming **and** outgoing samba traffic on the LAN
+## Requirements/dependencies/example playbook
 
 
-Role Variables
---------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Dependencies
-------------
-
-- [common](../common/README.md) role (optional)
-- [backup](../backup/README.md) role (for automatic backups, optional)
-- [openldap](../openldap/README.md) role (optional, for LDAP user backend support)
-
-
-Example Playbook
-----------------
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
-- hosts: my.example.org
+# playbook.yml
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
-    - backup
-    - samba
-  vars:
-    samba_shares:
-      - name: mycompany
-        comment: "File share for the whole company"
-        allow_read_users:
-          - alice
-          - bob
-          - martin
-          - eve
-          - boss
-      - name: eve-personal
-        comment: "Eve's personal file storage (hidden from share listing)"
-        browseable: no
-        allow_write_users:
-          - eve
-      - name: accounting
-        comment: "Share for the accounting department"
-        allow_write_users:
-          - martin
-        allow_read_users:
-          - boss
-      - name: old_share
-        state: absent
-    samba_users:
-      - username: alice
-        password: "{{ vault_samba_user_password_alice }}"
-      - username: bob
-        password: "{{ vault_samba_user_password_bob }}"
-
-# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_samba_user_password_alice: "CHANGEME"
-vault_samba_user_password_bob: "CHANGEME"
+    - nodiscc.xsrv.common # (optional) hardening, firewall
+    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.backup # optional
+    - nodiscc.xsrv.apache # (optional) webserver, PHP interpreter and SSL/TLS certificates for ldap-account-manager
+    - nodiscc.xsrv.samba
 ```
 
-Usage
------
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+
+## Usage
 
 ### Clients
 

@@ -1,5 +1,4 @@
-jellyfin
-=============
+# xsrv.jellyfin
 
 This role will install [Jellyfin](https://jellyfin.org/), a media solution that puts you in control of your media.
 Stream to any device from your own server, with no strings attached. Your media, your server, your way.
@@ -14,39 +13,27 @@ Stream to any device from your own server, with no strings attached. Your media,
 [![](https://jellyfin.org/images/screenshots/playback_thumb.png)](hthttps://jellyfin.org/images/screenshots/playback_full.png)
 
 
-Requirements/Dependencies
-------------
+## Requirements/dependencies/example playbook
 
-- Ansible 2.10 or higher installed on the controller
-- [apache](../apache) role (web server/reverse proxy)
-
-
-Configuration variables
------------------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Example Playbook
-----------------
-
-playbook.yml:
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
-    - apache
-    - jellyfin
+    - nodiscc.xsrv.common # (optional)
+    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.apache # webserver/reverseproxy and SSL/TLS certificates
+    - nodiscc.xsrv.jellyfin
 
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
 jellyfin_fqdn: media.CHANGEME.org
 ```
 
-Usage
------
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+
+## Usage
 
 After initial installation, open https://media.CHANGEME.org in a web browser, and fill in:
 - a Jellyfin administrator login/password
@@ -55,7 +42,8 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 
 ### Uploading media
 
-A link is created from `~/MEDIA/` in your home directory, to `/var/lib/jellyfin/media`, allowing you to easily upload media files over [SFTP](../common#usage)
+- Upload media files over [SFTP](../common#usage) to `~/MEDIA/`
+- If the [samba](../samba) role is enabled, upload files over samba to the ``smy://my.CHANGEME.org/jellyfin` share
 
 
 ### Playing media
@@ -64,14 +52,11 @@ Jellyfin lets you watch your media from a web browser on your computer, apps on 
 Fire TV device, or via your Chromecast or existing Kodi installation. See all [clients](https://jellyfin.org/clients/).
 
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://stdout.root.sx/links/?searchtags=jellyfin
-

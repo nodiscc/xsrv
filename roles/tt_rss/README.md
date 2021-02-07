@@ -12,40 +12,23 @@ A feed reader allows subscribing to many blogs/websites updates (using the [RSS]
 [![](https://i.imgur.com/CqoOfXo.png)](https://i.imgur.com/mv2fppi.jpg)
 
 
-Requirements
-------------
+## Requirements/dependencies/example playbook
 
-- Ansible 2.9 or higher.
-
-
-Role Variables
---------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Dependencies
-------------
-
-- [apache](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
-- [postgresql](../postgresql/README.md) role (database engine)
-- [common](../common/README.md) role (for fail2ban support)
-- (optional) [backup](../backup/README.md) role (for automatic backups)
-
-
-Example Playbook
-----------------
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
-- hosts: my.example.org
+# playbook.yml
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
-    - apache
-    - mariadb
-    - tt-rss
-  vars:
-    tt_rss_fqdn: "rss.CHANGEME.org"
+    - nodiscc.xsrv.common # bruteforce prevention
+    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.postgresql # database engine
+    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.tt_rss
+
+# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml  
+tt_rss_fqdn: "rss.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_tt_rss_user: "CHANGEME"
@@ -54,8 +37,10 @@ vault_tt_rss_db_password: "CHANGEME"
 vault_tt_rss_password_salt: "CHANGEME"
 ```
 
-Usage
------
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+
+## Usage
 
 ### Clients
 

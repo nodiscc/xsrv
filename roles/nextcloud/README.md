@@ -1,5 +1,4 @@
-nextcloud
-=========
+# xsrv.nextcloud
 
 This role will install [Nextcloud](https://en.wikipedia.org/wiki/Nextcloud), a file hosting, sharing, and synchronization service.
 
@@ -30,45 +29,30 @@ Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... 
 [![](https://i.imgur.com/Co3DHUr.png)](https://i.imgur.com/Tu1lVHo.png)
 [![](https://i.imgur.com/TJTvqtd.png)](https://i.imgur.com/ztI0rJz.png)
 
-Requirements
-------------
+## Requirements/dependencies/example playbook
 
-This role requires Ansible 2.8 or higher.
-
-
-Configuration Variables
------------------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Dependencies
-------------
-
-- The [`common`](../apache/README.md) role (hardening/firewall/bruteforce prevention)
-- The [`apache`](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
-- The [`mariadb`](../mariadb/README.md) or [`postgresql`](../postgresql/README.md) role (database engine)
-- The [backup](../backup/README.md) role (for automatic backups, optional)
-
-
-Example Playbook
-----------------
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
-- hosts: my.example.org
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - apache
-    - mariadb
-    - nextcloud
-  vars:
-    nextcloud_fqdn: "cloud.CHANGEME.org"
+    - nodiscc.xsrv.common # fail2ban bruteforce protection
+    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.postgresql # database engine
+    - nodiscc.xsrv.nextcloud
+
+# host_vars/my.example.org/my.example.org.vault.yml
+nextcloud_fqdn: "cloud.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_nextcloud_user: "CHANGEME"
 vault_nextcloud_password: "CHANGEME"
 vault_nextcloud_db_password: "CHANGEME"
 ```
+
+See [defaults/main.yml](defaults/main.yml) for all configurable variables
 
 
 Usage

@@ -21,27 +21,25 @@ It provides an alternative to proprietary SaaS software like Slack, Discord, Goo
 
 ## Requirements/dependencies
 
-- Ansible 2.9 or higher.
-- [common](../common) role
-- [apache](../apache) role
-- [docker](../docker) role (this role deploys Rocket.Chat as a persistent [Docker Swarm](https://docs.docker.com/engine/swarm/) service)
-- [backup](../backup) role (optional, automatic backups)
+See [meta/main.yml](defaults/main.yml)
 
 
-## Role Variables
+```yaml
+# playbook.yml
+- hosts: my.CHANGEME.org
+  roles:
+    - nodiscc.xsrv.common # optional
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.apache # webserver and SSL/TLS certificates
+    - nodiscc.xsrv.docker # docker swarm
 
-See [defaults/main.yml](defaults/main.yml)
+# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
+rocketchat_fqdn: chat.CHANGEME.org
+```
 
+See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
-## License
-
-[GNU GPLv3](../../LICENSE)
-
-
-## References
-
-- https://stdout.root.sx/links/?searchtem=rocketchat
-
+--------------------
 
 ## Usage
 
@@ -99,3 +97,11 @@ See [defaults/main.yml](defaults/main.yml)
 - [Android app](https://f-droid.org/en/packages/chat.rocket.android/)
 - [iOS app](https://apps.apple.com/us/app/rocket-chat/id1148741252)
 
+
+## License
+
+[GNU GPLv3](../../LICENSE)
+
+## References
+
+- https://stdout.root.sx/links/?searchtem=rocketchat

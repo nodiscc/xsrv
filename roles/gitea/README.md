@@ -20,32 +20,18 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 [![](https://i.imgur.com/4NhXqdG.png)](https://i.imgur.com/d5glB4P.png)
 
 
-Requirements/Dependencies
-------------
+## Requirements/dependencies/example playbook
 
-- Ansible 2.9 or higher.
-- The [common(../common/README.md) role (hardening/firewall/bruteforce prevention)
-- The [apache](../apache/README.md) role (webserver/reverse proxy, SSL certificates)
-- The [postgresql](../postgresql) or [mariadb](../mariadb/README.md) role (database engine)
-- The [backup](../backup/README.md) role (automatic backups, optional)
-
-
-Role Variables
---------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-
-Example Playbook
-----------------
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
-- hosts: my.example.org
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - apache2
-    - gitea
+    - nodiscc.xsrv.common # bruteforce prevention, SSH
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.postgresql # database engine
+    - nodiscc.xsrv.gitea
   vars:
     gitea_fqdn: "git.CHANGEME.org"
 
@@ -59,8 +45,10 @@ vault_gitea_oauth2_jwt_secret: "CHANGEME43"
 vault_gitea_lfs_jwt_secret: "CHANGEME43"
 ```
 
-Usage
------
+See [defaults/main.yml](defaults/main.yml) for all configuration variables.
+
+
+## Usage
 
 ### Backups
 
@@ -68,10 +56,6 @@ See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.
 
 Restoring a backup: TODO
 
-
-### Postgresql support
-
-Only local `peer` authentication is currently supported for postgresql databases.
 
 ### Clients
 

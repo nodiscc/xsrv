@@ -6,28 +6,36 @@ This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/Op
 [![](https://screenshots.debian.net/screenshots/000/016/087/thumb.png)](https://screenshots.debian.net/package/ldap-account-manager)
 
 
-## Requirements/dependencies
+## Requirements/dependencies/example playbook
 
-- Ansible 2.9 or higher.
-- [common](../common) role
-- [apache](../apache) role (if `openldap_setup_lam` is enabled)
-- [backup](../backup) role (optional, automatic backups)
+See [meta/main.yml](meta/main.yml)
 
+```yaml
+# playbook.yml
+- hosts: my.example.org
+  roles:
+    - nodiscc.xsrv.common # fail2ban bruteforce protection
+    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.apache # (optional, if openldap_setup_lam: yes) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.openldap
 
-## Role Variables
+# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
+openldap_fqdn: "ldap.CHANGEME.org"
+openldap_domain: "CHANGEME.org"
+openldap_organization: "CHANGEME"
+openldap_base_dn: "dc=CHANGEME,dc=org"
 
-See [defaults/main.yml](defaults/main.yml)
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_openldap_admin_password: "CHANGEME"
+vault_openldap_bind_password: "CHANGEME"
+```
 
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ## License
 
 [GNU GPLv3](../../LICENSE)
-
-
-## References
-
-- https://stdout.root.sx/links/?searchtags=doc+ldap
-- https://stdout.root.sx/links/?searchtags=doc+idmanagement
 
 
 ## Usage
@@ -45,3 +53,9 @@ See [defaults/main.yml](defaults/main.yml)
 **Accessing LDAP account manager settings:** LAM should be configured from the templates provided by this role. If you need to temporarily access LAM settings from the web interface (your changes will be overwritten on the next ansible deployment), edit these files:
 - `/var/www/{{ ldap_account_manager_fqdn }}/config/config.cfg`: `password: CHANGEME`
 - `/var/www/{{ ldap_account_manager_fqdn }}/config/lam.conf`, `Passwd: CHANGEME`
+
+
+## References
+
+- https://stdout.root.sx/links/?searchtags=doc+ldap
+- https://stdout.root.sx/links/?searchtags=doc+idmanagement
