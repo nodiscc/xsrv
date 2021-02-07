@@ -1,3 +1,5 @@
+##### CHECKS FOR GITEA ROLE #####
+
 - name: check that mandatory variables are correctly defined
   assert:
     that:
@@ -5,12 +7,12 @@
       - gitea_admin_password is not search("CHANGEME")
       - gitea_admin_username is not search("CHANGEME")
       - gitea_https_mode in ['selfsigned', 'letsencrypt']
-      - gitea_base_url is not search("CHANGEME")
-      - gitea_db_host is not search("CHANGEME")
+      - gitea_base_url is string
+      - gitea_db_hostis string
       - gitea_db_password is not search("CHANGEME")
       - gitea_db_port == gitea_db_port|int
       - gitea_db_type in ['postgres', 'mysql']
-      - gitea_db_user is not search("CHANGEME")
+      - gitea_db_user is string
       - gitea_default_private in ['last', 'private', 'public']
       - gitea_disable_gravatar in ['true', 'false']
       - gitea_disable_registration in ['true', 'false']

@@ -1,15 +1,13 @@
----
-
-##### CHECKS FOR APACHE ROLE #####
+##### CHECKS FOR TT_RSS ROLE #####
 
 - name: check that mandatory variables are correctly defined
   assert:
     that:
       - tt_rss_account_limit == tt_rss_account_limit|int
       - tt_rss_allow_registration in ['true', 'false']
-      - tt_rss_db_name is not search("CHANGEME")
+      - tt_rss_db_name is string
       - tt_rss_db_password is not search("CHANGEME")
-      - tt_rss_db_user is not search("CHANGEME")
+      - tt_rss_db_user is string
       - tt_rss_fqdn is not search("CHANGEME")
       - tt_rss_full_url is not search("CHANGEME")
       - tt_rss_https_mode in ['selfsigned', 'letsencrypt']

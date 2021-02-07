@@ -1,6 +1,4 @@
----
-
-##### CHECKS FOR APACHE ROLE #####
+##### CHECKS FOR SAMBA ROLE #####
 
 - name: check that mandatory variables are correctly defined
   assert:

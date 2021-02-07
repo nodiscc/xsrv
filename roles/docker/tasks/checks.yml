@@ -1,4 +1,4 @@
-##### CHECKS FOR APACHE ROLE #####
+##### CHECKS FOR DOCKER ROLE #####
 
 - name: check that mandatory variables are correctly defined
   assert:

@@ -1,6 +1,8 @@
+##### CHECKS FOR ROCKETCHAT ROLE #####
+
 - name: check that mandatory variables are correctly defined
   assert:
     that:
-      - rocketchat_docker_version is not search("CHANGEME")
+      - rocketchat_docker_version is string
       - rocketchat_fqdn is not search("CHANGEME")
       - nextcloud_https_mode in ['selfsigned', 'letsencrypt']
