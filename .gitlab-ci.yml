@@ -8,10 +8,8 @@ cache:
     - "$CI_PROJECT_DIR/pip-cache"
 
 test:
-  before_script:
-    - apt-get update -qy
-    - apt-get install -y shellcheck python3-venv
-    - export LC_ALL=C.UTF-8
-    - export LANG=C.UTF-8
+  variables:
+    LC_ALL: "C.UTF-8"
+    LANG: "C.UTF-8"
   script:
-    - make tests
+    - make install_deps tests

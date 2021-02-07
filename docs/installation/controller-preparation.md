@@ -8,7 +8,7 @@ On the controller:
 
 ```bash
 # install requirements (example for debian-based systems)
-sudo apt update && sudo apt install git bash python3-pip ssh pwgen
+sudo apt update && sudo apt install git bash python3-venv python3-pip ssh pwgen rustc cargo libssl-dev
 
 # clone the repository
 git clone https://gitlab.com/nodiscc/xsrv
