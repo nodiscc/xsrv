@@ -1,9 +1,7 @@
----
-
 ##### GITEA SELF-HOSTED GIT SERVICE #####
 
 # fully qualified domain name of the gitea instance
-# gitea_fqdn: "git.CHANGEME.org"
+gitea_fqdn: "git.CHANGEME.org"
 
 # username/password/e-mail address for the gitea admin user
 gitea_admin_username: "{{ vault_gitea_admin_username }}"
