@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: tt_rss
   author: nodiscc
@@ -18,6 +16,8 @@ galaxy_info:
     - news
     - feed
     - reader
-
 dependencies:
-  - apache
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.backup
+  - nodiscc.xsrv.apache
+  - nodiscc.xsrv.postgresql

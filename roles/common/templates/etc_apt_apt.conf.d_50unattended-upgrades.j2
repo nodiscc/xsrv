@@ -31,7 +31,7 @@ Unattended-Upgrade::Origins-Pattern {
 //      "origin=Debian,codename=${distro_codename}-proposed-updates";
         "origin=Debian,codename=${distro_codename},label=Debian";
         "origin=Debian,codename=${distro_codename},label=Debian-Security";
-{% if 'monitoring' in role_names and netdata_install_method == 'packagecloud' %}        "origin=packagecloud.io/netdata/netdata,label=netdata";
+{% if 'nodiscc.xsrv.monitoring' in role_names and netdata_install_method == 'packagecloud' %}        "origin=packagecloud.io/netdata/netdata,label=netdata";
 {% endif %}
 
         // Archive or Suite based matching:

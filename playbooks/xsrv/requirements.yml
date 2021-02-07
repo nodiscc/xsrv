@@ -1,0 +1,4 @@
+collections:
+  - name: https://gitlab.com/nodiscc/xsrv.git
+    type: git
+    version: no-galaxy-deps

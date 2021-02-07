@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: nextcloud
   author: nodiscc
@@ -27,7 +25,10 @@ galaxy_info:
     - webdav
     - drive
     - web
-
-# one of mariadb or postgresql is also required, unless the database is on another host
 dependencies:
-  - apache
+  - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring
+  # - nodiscc.xsrv.backup
+  - nodiscc.xsrv.apache
+  - { role: 'nodiscc.xsrv.postgresql', when: nextcloud_db_type == "psql" }
+  - { role: 'nodiscc.xsrv.mariadb', when: nextcloud_db_type == "mysql" }

@@ -1,0 +1,4 @@
+dependencies:
+    # - nodiscc.xsrv.common
+    # - nodiscc.xsrv..monitoring
+    - nodiscc.xsrv.apache

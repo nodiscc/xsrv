@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   author: "nodiscc <nodiscc@gmail.com>"
   description: "OpenLDAP directory server"
@@ -13,6 +11,8 @@ galaxy_info:
     - ldap
     - directory
     - authentication
-
 dependencies:
-  - 'common'
+  - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring
+  # - nodiscc.xsrv.backup
+  - { role: nodiscc.xsrv.apache, when: openldap_setup_lam|bool }

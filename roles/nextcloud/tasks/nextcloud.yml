@@ -49,7 +49,7 @@
     src: etc_rsnapshot.d_nextcloud.conf.j2
     dest: /etc/rsnapshot.d/nextcloud.conf
     mode: 0600
-  when: '"backup" in role_names'
+  when: '"nodiscc.xsrv.backup" in role_names'
   notify: check rsnapshot configuration
 
 

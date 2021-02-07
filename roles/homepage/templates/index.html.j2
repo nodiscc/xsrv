@@ -166,31 +166,31 @@
     <body>
       <h1><a href="{{ inventory_hostname }}">{{ inventory_hostname }}</a></h1>
     <div class="content">
-      {% if 'nextcloud' in role_names %}
+      {% if 'nodiscc.xsrv.nextcloud' in role_names %}
       <a class="nextcloud" href="https://{{ nextcloud_fqdn }}"><img src="res/nextcloud.png"/> nextcloud</a>
       {% endif %}
-      {% if 'rocketchat' in role_names %}
+      {% if 'nodiscc.xsrv.rocketchat' in role_names %}
       <a class="rocketchat" href="https://{{ rocketchat_fqdn }}"><img src="res/rocketchat.png"/> rocketchat</a>
       {% endif %}
-      {% if 'shaarli' in role_names %}
+      {% if 'nodiscc.xsrv.shaarli' in role_names %}
       <a class="shaarli" href="https://{{ shaarli_fqdn }}"><img src="res/shaarli.png"/> shaarli</a>
       {% endif %}
-      {% if 'tt_rss' in role_names %}
+      {% if 'nodiscc.xsrv.tt_rss' in role_names %}
       <a class="tt-rss" href="https://{{ tt_rss_fqdn }}"><img src="res/tt-rss.png"/> tt-rss</a>
       {% endif %}
-      {% if 'transmission' in role_names %}
+      {% if 'nodiscc.xsrv.transmission' in role_names %}
       <a class="transmission" href="https://{{ transmission_fqdn }}"><img src="res/transmission.png"/> transmission</a>
       {% endif %}
-      {% if 'gitea' in role_names %}
+      {% if 'nodiscc.xsrv.gitea' in role_names %}
       <a class="gitea" href="https://{{ gitea_fqdn }}"><img src="res/gitea.png"/> gitea</a>
       {% endif %}
-      {% if 'openldap' in role_names and openldap_setup_lam %}
+      {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
       <a class="mumble" href="https://{{ inventory_hostname }}"><img src="res/mumble.png"/> mumble</a>
       {% endif %}
-      {% if 'openldap' in role_names and openldap_setup_lam %}
+      {% if 'nodiscc.xsrv.nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
       <a class="ldap-account-manager" href="https://{{ ldap_account_manager_fqdn }}"><img src="res/ldap-account-manager.png"/> ldap-account-manager</a>
       {% endif %}
-      {% if 'monitoring' in role_names %}
+      {% if 'nodiscc.xsrv.monitoring' in role_names %}
       <a class="netdata" href="https://{{ inventory_hostname }}:19999/#theme=white"><img src="res/netdata.png"/> netdata</a>
       {% endif %}
       <a class="ssh"><img src="res/ssh.png"/> ssh <code>ssh user@{{ inventory_hostname }}</code></a>

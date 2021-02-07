@@ -1,0 +1,23 @@
+galaxy_info:
+  role_name: samba
+  author: nodiscc
+  description: samba file sharing server
+  license: GPL-3.0
+  min_ansible_version: 2.10
+  platforms:
+    - name: Debian
+      versions:
+        - 10
+  galaxy_tags:
+    - server
+    - samba
+    - smb
+    - windows
+    - sharing
+    - filesharing
+    - ldap
+    - mac
+dependencies:
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.backup
+  - { role: nodiscc.xsrv.openldap, when: samba_passdb_backend == 'ldapsam' }

@@ -1,21 +1,20 @@
-
 - hosts: my.example.org
   roles:
-    - common
-    - backup
-    - monitoring
-    # - apache
-    # - openldap
-    # - homepage
-    # - mariadb
-    # - postgresql
-    # - nextcloud
-    # - tt_rss
-    # - shaarli
-    # - gitea
-    # - transmission
-    # - mumble
-    # - docker
-    # - rocketchat
-    # - jellyfin
-    # - samba
+    - nodiscc.xsrv.common
+    - nodiscc.xsrv.monitoring
+    # - nodiscc.xsrv.backup
+    # - nodiscc.xsrv.apache
+    # - nodiscc.xsrv.openldap
+    # - nodiscc.xsrv.mariadb
+    # - nodiscc.xsrv.postgresql
+    # - nodiscc.xsrv.nextcloud
+    # - nodiscc.xsrv.tt_rss
+    # - nodiscc.xsrv.shaarli
+    # - nodiscc.xsrv.gitea
+    # - nodiscc.xsrv.transmission
+    # - nodiscc.xsrv.mumble
+    # - nodiscc.xsrv.docker
+    # - nodiscc.xsrv.rocketchat
+    # - nodiscc.xsrv.jellyfin
+    # - nodiscc.xsrv.samba
+    # - nodiscc.xsrv.homepage

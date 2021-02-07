@@ -183,7 +183,7 @@
     dest: /etc/rsnapshot.d/gitea.conf
     mode: 0600
   notify: check rsnapshot configuration
-  when: '"backup" in role_names'
+  when: '"nodiscc.xsrv.backup" in role_names'
 
 
 ##### SERVICE #####

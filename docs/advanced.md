@@ -39,12 +39,15 @@ ansible-galaxy collection install git+https://gitlab.com/nodiscc/xsrv,release
 And include them in your playbooks:
 
 ```yaml
+# requirements.yml
+collections:
+  - name: https://gitlab.com/nodiscc/xsrv.git
+    type: git
+    version: no-galaxy-deps
+
+$ ansible-galaxy collection install --update -r requirements.yml
+
 # playbook.yml
-
-- hosts: all
-  collections:
-   - nodiscc.xsrv
-
 - hosts: my.CHANGEME.org
   roles:
    - nodiscc.xsrv.common

@@ -54,7 +54,7 @@ router {{ router.name }}
 ipv4 interface {{ network.interface }} {{ network.name }} src {{ network.src }}
     protection strong
     policy {{ network.policy }}
-{% if 'docker' in role_names and firehol_docker_swarm_compat %}
+{% if 'nodiscc.xsrv.docker' in role_names and firehol_docker_swarm_compat %}
     masquerade src not "127.0.0.1/16" # apply SNAT for all traffic leaving this interface
 {% endif %}
 {% for service in network.allow_input %}
@@ -65,7 +65,7 @@ ipv4 interface {{ network.interface }} {{ network.name }} src {{ network.src }}
 {% endfor %}
 
 {% endfor %}
-{% if 'docker' in role_names and firehol_docker_swarm_compat %}
+{% if 'nodiscc.xsrv.docker' in role_names and firehol_docker_swarm_compat %}
 # Docker swarm routing
 ipv4 interface docker_gwbridge docker_swarm_bridge
     policy accept

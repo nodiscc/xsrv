@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: backup
   author: "nodiscc"
@@ -19,3 +17,5 @@ galaxy_info:
     - backup
     - incremental
     - rsnapshot
+dependencies: []
+#   - nodiscc.xsrv.common

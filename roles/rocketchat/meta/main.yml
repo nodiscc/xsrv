@@ -1,6 +1,5 @@
----
-
 galaxy_info:
+  role_name: rocketchat
   author: "nodiscc <nodiscc@gmail.com>"
   description: "rocket.chat instant messaging communication platform"
   license: "GPL-3.0"
@@ -15,7 +14,7 @@ galaxy_info:
     - conference
     - instant
     - messaging
-
 dependencies:
-  - 'common'
-  - 'apache'
+  # - nodiscc.xsrv.backup
+  - nodiscc.xsrv.apache
+  - nodiscc.xsrv.docker

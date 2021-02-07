@@ -8,7 +8,6 @@ playbooks_dir="${XSRV_PLAYBOOKS_DIR:=$HOME/playbooks}"
 templates_path="${XSRV_TEMPLATES_DIR:=/opt/xsrv}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
-git_branch="${BRANCH:-}"
 skip_venv="${SKIP_VENV:=no}"
 pager="${PAGER:=less}"
 version="0.24.0"
@@ -17,9 +16,11 @@ ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
   ╹ ╹┗━┛╹┗╸┗┛ v${version}"
 
 # Functions
-function check_playbook() {
-    if [[ ! -e "$playbooks_dir/$playbook_name" ]]; then
-        echo "[xsrv] ERROR: playbook $playbooks_dir/$playbook_name does not exist"; exit 1;
+function check_playbook_exists() {
+    # check that the directory for the specified playbook exists, exit with error if not
+    export playbook_dir="$playbooks_dir/$playbook_name"
+    if [[ ! -e "$playbook_dir" ]]; then
+        echo "[xsrv] ERROR: playbook $playbook_dir does not exist"; exit 1;
     fi
 }
 
@@ -35,7 +36,7 @@ function deploy() {
 
 function check() {
     # run ansible playbook in check mode
-    check_playbook
+    check_playbook_exists
     if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
     if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
     cd "$playbooks_dir/$playbook_name"
@@ -85,7 +86,7 @@ function check_host_name() {
 
 function edit_host() {
     # edit a host's vars file
-    check_playbook
+    check_playbook_exists
     check_host_name
     echo "[xsrv] INFO: opening host vars file $host_vars_file"
     $editor "$host_vars_file"
@@ -94,29 +95,37 @@ function edit_host() {
 
 function edit_vault() {
     # edit a host's vault file
-    check_playbook
+    check_playbook_exists
     check_host_name
     cd "$playbooks_dir/$playbook_name"
     EDITOR="$editor" ansible-vault edit "$host_vault_file"
 }
 
-function init_playbook() {
-    # add a new playbook (from template files)
-    if [[ -e "$playbooks_dir/$playbook_name" ]]; then
-        echo "[xsrv] ERROR: $playbooks_dir/$playbook_name already exists"; exit 1
-    fi
-
-    echo "[xsrv] INFO: copying xsrv playbook to $playbooks_dir/$playbook_name"
-    cp -rn "$templates_path/playbooks/xsrv" "$playbooks_dir/$playbook_name"
-    rm "$playbooks_dir/$playbook_name/inventory.yml" "$playbooks_dir/$playbook_name/playbook.yml"
-    rm -r "$playbooks_dir/$playbook_name/host_vars/my.example.org"
-
-    update_roles
-
+function gen_vault_password_file() {
+    # generate a random password for ansible-vault and store it in a file
     echo "[xsrv] INFO: Generating random password for ansible-vault"
     openssl rand -base64 32 > "$playbooks_dir/$playbook_name/.ansible-vault-password"
     echo "[xsrv] INFO: vault password stored in $playbooks_dir/$playbook_name/.ansible-vault-password"
     echo "[xsrv] INFO: Keep this file private! Keep backups of this file!"
+}
+
+function init_playbook() {
+    # initialize a new playbook (default roles)
+    export playbook_dir="$playbooks_dir/$playbook_name"
+
+    echo "[xsrv] INFO: creating playbook $playbook_dir"
+    if [[ -e "$playbook_dir" ]]; then
+        echo "[xsrv] ERROR: $playbook_dir already exists"; exit 1
+    fi
+    mkdir "$playbook_dir"
+
+    upgrade_roles
+    echo "[xsrv] INFO: copying default playbook files and directories"
+    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,data/,group_vars/,host_vars/,public/,secrets/} "$playbook_dir/"
+    rm -r "$playbook_dir/host_vars/my.example.org"
+
+    gen_vault_password_file
+
 
     init_host
 
@@ -126,7 +135,7 @@ function init_playbook() {
 
 function init_host() {
     # add a new host to a playbook (from template files)
-    check_playbook
+    check_playbook_exists
 
     until [[ ! -z "$host_name" ]]; do
         read -r -p "[xsrv] Host name to add to the $playbook_name playbook: " host_name
@@ -194,7 +203,7 @@ function get_ssh_user() {
 
 function run_shell() {
     # open a SSH shell on a host
-    check_playbook
+    check_playbook_exists
     check_host_name
     get_ssh_port
     get_ssh_user
@@ -215,7 +224,7 @@ function info() {
 
 function fetch_backups() {
     # fetch latest daily backups from the host
-    check_playbook
+    check_playbook_exists
     check_host_name
     get_ssh_port
     get_ssh_user
@@ -232,10 +241,15 @@ function help() {
     exit 1
 }
 
-function update_roles() {
-    check_playbook
-    echo "[xsrv] INFO: copying roles from $templates_path to $playbooks_dir/$playbook_name"
-    cp -r "$templates_path/roles" "$playbooks_dir/$playbook_name/"
+function upgrade_roles() {
+    check_playbook_exists
+    if [[ ! -f "$playbook_dir"/requirements.yml ]]; then
+        echo "[xsrv] INFO: installing default collection git+https://gitlab.com/nodiscc/xsrv,release"
+        (cd "$playbook_dir" && ansible-galaxy collection install --force --collections-path "$playbook_dir/" git+https://gitlab.com/nodiscc/xsrv,release)
+    else
+        echo "[xsrv] INFO: upgrading collections from requirements.yml"
+        (cd "$playbook_dir" && ansible-galaxy collection install --force -r requirements.yml)
+    fi
 }
 
 function init_venv() {
@@ -253,23 +267,6 @@ function init_venv() {
     fi
 }
 
-function upgrade() {
-    # upgrade the xsrv roles/template/bin directory from git,
-    # upgrade the specifed playbook with latest roles
-    cd "$templates_path"
-    # optionally switch to env variable BRANCH before git pull
-    if [[ ! -z "$git_branch" ]]; then
-        echo "[xsrv] INFO: switching $templates_path/ to branch $git_branch"
-        sudo git remote update
-        sudo git checkout "$git_branch"
-    fi
-    echo "[xsrv] INFO: updating $templates_path/ from git"
-    sudo git pull --ff-only
-    update_roles
-    echo "[xsrv] INFO: installing $templates_path/xsrv script to /usr/local/bin/"
-    sudo cp "$templates_path/xsrv" /usr/local/bin
-}
-
 function show_defaults() {
     role=${1:-}
     if [[ ! -z "$role" ]]; then
@@ -285,7 +282,7 @@ function _main() {
     case "$command" in
         "init-playbook") init_venv; shift; init_playbook ;;
         "init-host") init_venv; shift; init_host ;;
-        "deploy") check_playbook; init_venv; shift; deploy ;;
+        "deploy") check_playbook_exists; init_venv; shift; deploy ;;
         "check") init_venv; shift; check ;;
         "edit-playbook") shift; edit_playbook ;;
         "edit-inventory") shift; edit_inventory ;;
@@ -295,7 +292,7 @@ function _main() {
         "logs") init_venv; shift; ssh_args="sudo lnav /var/log/syslog"; run_shell ;;
         "help") echo "$usage" ;;
         "fetch-backups") init_venv; shift; fetch_backups ;;
-        "upgrade") upgrade ;;
+        "upgrade") init_venv; shift; upgrade_roles ;;
         "show-hosts") shift; show_hosts ;;
         "show-defaults") shift; show_defaults "$@";;
         *) echo "[xsrv] ERROR: unrecognized command $command"; exit 1 ;;
@@ -320,13 +317,12 @@ shell           open an interactive shell on a host
 logs            view system log on a host
 help            show this message
 fetch-backups   fetch backups from a host to the playbook backups directory
-upgrade         ugrade xsrv script and roles to latest versions
+upgrade         upgrade roles to latest versions
 show-hosts      list hosts in a playbook/inventory
 show-defaults   show all variables and their default values (accepts a role as argument)
 
 The following environment variables are supported (usage: VARIABLE=VALUE xsrv COMMAND ...):
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
-BRANCH             upgrade only: git branch/version to upgrade to (default: stay on current branch)
 XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (default: /opt/xsrv)
 SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
 EDITOR             text editor to use (default: nano)

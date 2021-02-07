@@ -50,13 +50,13 @@
 
 ```bash
 # install the program
-sudo git clone https://gitlab.com/nodiscc/xsrv /opt/xsrv
-sudo cp /opt/xsrv/xsrv /usr/local/bin
+git clone -b release https://gitlab.com/nodiscc/xsrv
+sudo cp xsrv/xsrv /usr/local/bin/
 
 # initialize the playbook, select the target server and components to install
 xsrv init-playbook
 
-# deploy your configuration
+# deploy your first server
 xsrv deploy
 ```
 
