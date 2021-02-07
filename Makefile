@@ -3,8 +3,8 @@ SHELL := '/bin/bash'
 
 tests: shellcheck check_readmes check_jinja2 ansible_syntax_check ansible_lint yamllint clean
 
-# Install dev tools in virtualenv
-# https://pypi.org/rss/project/ansible/releases.xml
+# Install dev tools in virtualenv https://pypi.org/rss/project/ansible/releases.xml
+# requirements: sudo apt install rustc cargo libssl-dev
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \

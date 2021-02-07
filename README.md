@@ -9,11 +9,9 @@
 
 **Install and manage self-hosted services/applications on your own server(s).**
 
-`xsrv` provides:
-
 - a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install and configure various network services, web applications, system administration and infrastructure tools
 - a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) for easy configuration, deployment and maintenance
-- a base [playbook to setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) for personal use or small/medium teams in a few minutes
+- a [playbook to setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
 
 
 ## Roles
