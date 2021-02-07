@@ -11,7 +11,7 @@ transmission_password: "{{ vault_transmission_password }}"
 transmission_download_dir: '/var/lib/transmission-daemon/downloads'
 
 # HTTPS and SSL/TLS certificate mode for the transmission webserver virtualhost
-#   letsencrypt: acquire a certificate from Let's Encrypt (transmission_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+#   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 transmission_https_mode: selfsigned
 

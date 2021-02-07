@@ -16,7 +16,7 @@ shaarli_timezone: "Europe/Amsterdam"
 shaarli_overwrite_config: no
 
 # Mode for SSL/TLS certificates for the shaarli webserver virtualhost
-#   letsencrypt: acquire a certificate from Let's Encrypt (shaarli_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+#   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 shaarli_https_mode: selfsigned
 
