@@ -11,9 +11,7 @@ On the controller:
 sudo apt update && sudo apt install git bash python3-pip ssh pwgen
 
 # clone the repository
-git clone -b release https://gitlab.com/nodiscc/xsrv # latest release
-# git clone -b 1.0 https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR specific release
-# git clone -b master https://gitlab.com/nodiscc/xsrv /opt/xsrv # OR development version
+git clone https://gitlab.com/nodiscc/xsrv
 
 # (optional) install the command line tool to your $PATH (optional)
 sudo cp xsrv/xsrv /usr/local/bin/

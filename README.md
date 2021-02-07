@@ -51,7 +51,7 @@
 
 ```bash
 # install the program
-git clone -b release https://gitlab.com/nodiscc/xsrv
+git clone https://gitlab.com/nodiscc/xsrv
 sudo cp xsrv/xsrv /usr/local/bin/
 
 # initialize the playbook, select the target server and components to install

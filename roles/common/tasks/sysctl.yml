@@ -1,6 +1,4 @@
----
-
-##### KERNEL CONFIGURATION #####
+##### KERNEL CONFIGURATION (SYSCTL) #####
 
 - name: copy sysctl configuration
   template:
