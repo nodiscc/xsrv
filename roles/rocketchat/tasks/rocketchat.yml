@@ -56,5 +56,5 @@
     mode: 0644
     owner: root
     group: root
-  when: '"backup" in role_names'
+  when: '"nodiscc.xsrv.backup" in role_names'
   notify: check rsnapshot configuration

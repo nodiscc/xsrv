@@ -16,6 +16,8 @@ galaxy_info:
     - microblog
     - sharing
     - notes
-
 dependencies:
-  - apache
+  - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring
+  # - nodiscc.xsrv.backup
+  - nodiscc.xsrv.apache

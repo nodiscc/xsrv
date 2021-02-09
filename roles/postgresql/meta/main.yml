@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: postgresql
   author: "nodiscc <nodiscc@gmail.com>"
@@ -15,3 +13,6 @@ galaxy_info:
     - lapp
     - postgresql
     - database
+dependencies: []
+#   - nodiscc.xsrv.common
+#   - nodiscc.xsrv.monitoring

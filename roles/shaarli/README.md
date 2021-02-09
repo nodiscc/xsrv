@@ -10,36 +10,22 @@ This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a m
 [![](https://i.imgur.com/8wEBRSG.png)](https://i.imgur.com/WWPfSj0.png) [![](https://i.imgur.com/93PpLLs.png)](https://i.imgur.com/V09kAQt.png) [![](https://i.imgur.com/rrsjWYy.png)](https://i.imgur.com/TZzGHMs.png) [![](https://i.imgur.com/8iRzHfe.png)](https://i.imgur.com/sfJJ6NT.png) [![](https://i.imgur.com/GjZGvIh.png)](https://i.imgur.com/QsedIuJ.png) [![](https://i.imgur.com/TFZ9PEq.png)](https://i.imgur.com/KdtF8Ll.png) [![](https://i.imgur.com/uICDOle.png)](https://i.imgur.com/27wYsbC.png) [![](https://i.imgur.com/tVvD3gH.png)](https://i.imgur.com/zGF4d6L.jpg)
 
 
-Requirements
-------------
+## Requirements/dependencies/example playbook
 
-- Ansible 2.9 or higher.
-
-
-Role Variables
---------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Dependencies
-------------
-
-- [apache](../apache/README.md) role (webserver, PHP interpreter and SSL certificates)
-- [common](../common/README.md) role (for fail2ban support)
-- [backup](../backup/README.md) role (for automatic backups, optional)
-
-
-Example Playbook
-----------------
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
-- hosts: my.example.org
+# playbook.yml
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
-    - apache
-    - shaarli
+    - nodiscc.xsrv.common # fail2ban bruteforce protection
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.monitoring # (optional) apache monitoring
+    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.shaarli
+
+# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
+shaarli_fqdn: "links.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_shaarli_user: "CHANGEME"
@@ -48,8 +34,10 @@ vault_shaarli_password_salt: "CHANGEME"
 vault_shaarli_api_secret: "CHANGEME"
 ```
 
-Usage
------
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+
+## Usage
 
 ### Clients
 

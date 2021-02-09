@@ -34,7 +34,7 @@ input(type="imfile"
       Facility="auth"
       PersistStateInterval="0")
 
-{% if 'backup' in role_names %}
+{% if 'nodiscc.xsrv.backup' in role_names %}
 ##### RSNAPSHOT #####
 
 input(type="imfile"
@@ -43,7 +43,7 @@ input(type="imfile"
       Facility="daemon"
       PersistStateInterval="0")
 {% endif %}
-{% if 'apache' in role_names %}
+{% if 'nodiscc.xsrv.apache' in role_names %}
 ##### APACHE ######
 
 input(type="imfile"
@@ -67,7 +67,7 @@ input(type="imfile"
       Facility="daemon"
       PersistStateInterval="0")
 {% endif %}
-{% if 'gitea' in role_names %}
+{% if 'nodiscc.xsrv.gitea' in role_names %}
 ##### GITEA #####
 
 input(type="imfile"
@@ -82,7 +82,7 @@ input(type="imfile"
       Facility="daemon"
       PersistStateInterval="0")
 {% endif %}
-{% if 'mumble' in role_names %}
+{% if 'nodiscc.xsrv.mumble' in role_names %}
 ##### MUMBLE-SERVER #####
 
 input(type="imfile"
@@ -91,7 +91,7 @@ input(type="imfile"
       Facility="daemon"
       PersistStateInterval="0")
 {% endif %}
-{% if 'nextcloud' in role_names %}
+{% if 'nodiscc.xsrv.nextcloud' in role_names %}
 ##### NEXTCLOUD #####
 
 input(type="imfile"
@@ -106,7 +106,7 @@ input(type="imfile"
       Facility="daemon"
       PersistStateInterval="0")
 {% endif %}
-{% if 'samba' in role_names %}
+{% if 'nodiscc.xsrv.samba' in role_names %}
 ##### SAMBA #####
 
 

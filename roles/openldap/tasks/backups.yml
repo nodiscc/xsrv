@@ -21,5 +21,5 @@
     src: etc_rsnapshot.d_openldap.conf.j2
     dest: /etc/rsnapshot.d/openldap.conf
     mode: 0600
-  when: '"backup" in role_names'
+  when: '"nodiscc.xsrv.backup" in role_names'
   notify: check rsnapshot configuration

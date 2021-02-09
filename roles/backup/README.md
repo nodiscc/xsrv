@@ -12,16 +12,20 @@ This role will setup [rsnapshot](https://rsnapshot.org), an incremental backup s
 - loads any additional/custom configuration from `/etc/rsnapshot.d/*.conf`
 
 
-Requirements
+Requirements/dependencies/example playbook
 ------------
 
 See [meta/main.yml](meta/main.yml)
 
-Configuration variables
------------------------
+```yaml
+# playbook.yml
+- hosts: my.CHANGEME.org
+  roles:
+    - nodiscc.xsrv.common # (optional) hardening, SSH
+    - nodiscc.xsrv.backup
+```
 
-See [defaults/main.yml](defaults/main.yml)
-
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 License
 -------

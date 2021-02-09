@@ -1,6 +1,4 @@
----
-
-##### CHECKS FOR APACHE ROLE #####
+##### CHECKS FOR COMMON ROLE #####
 
 - name: check that mandatory variables are correctly defined
   assert:

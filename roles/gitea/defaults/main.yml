@@ -1,9 +1,7 @@
----
-
 ##### GITEA SELF-HOSTED GIT SERVICE #####
 
 # fully qualified domain name of the gitea instance
-# gitea_fqdn: "git.CHANGEME.org"
+gitea_fqdn: "git.CHANGEME.org"
 
 # username/password/e-mail address for the gitea admin user
 gitea_admin_username: "{{ vault_gitea_admin_username }}"
@@ -36,7 +34,7 @@ gitea_base_url: "/"
 gitea_enable_service: yes
 
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
-#   letsencrypt: acquire a certificate from Let's Encrypt (tt_rss_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+#   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
 gitea_https_mode: selfsigned
 

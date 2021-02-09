@@ -1,10 +1,8 @@
----
-
 ##### CHECKS FOR MARIADB ROLE #####
 
 - name: check that mandatory variables are correctly defined
   assert:
     that:
       - mariadb_enable_service == mariadb_enable_service|bool
-      - mariadb_hostname is not search("CHANGEME")
+      - mariadb_hostname == mariadb_hostname|string
       - mariadb_root_password is not search("CHANGEME")

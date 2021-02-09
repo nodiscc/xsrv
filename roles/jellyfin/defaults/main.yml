@@ -4,7 +4,7 @@
 # jellyfin_fqdn: "media.CHANGEME.org"
 
 # HTTPS and SSL/TLS certificate mode for the jellyfin webserver virtualhost
-#   letsencrypt: acquire a certificate from Let's Encrypt (tt_rss_fqdn must be publicly resolvable, port tcp/80 must be reachable from the Internet)
+#   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
 jellyfin_https_mode: selfsigned
 

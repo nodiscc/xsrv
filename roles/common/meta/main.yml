@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: "common"
   author: "nodiscc"
@@ -33,5 +31,4 @@ galaxy_info:
     - utilities
     - users
     - sudo
-
 dependencies: []

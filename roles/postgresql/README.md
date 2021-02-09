@@ -7,48 +7,32 @@ This role will install [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL), a
 [![](https://i.imgur.com/CqoOfXo.png)](https://i.imgur.com/mv2fppi.jpg)
 
 
-Requirements/Dependencies
+Requirements/Dependencies/example playbook
 ------------
 
-- Ansible 2.9 or higher.
-- [common](../common) role (optional)
-- [backup](../backup) role (optional, for automatic database backups)
-
-
-Role Variables
---------------
-
-None
-
-
-Example Playbook
-----------------
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
-- hosts: my.example.org
+# playbook.yml
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
-    - backups
-    - apache
-    - postgresql
-    - nextcloud
+    - nodiscc.xsrv.common # bruteforce prevention
+    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.postgresql
 ```
 
-Usage
------
+## Usage
 
 **Backups**: See the included [rsnapshot configuration](templates/etc_rsnapshot.d_postgresql.conf.j2) for the [backup](../backup/README.md) role.
 
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://stdout.root.sx/links/?searchterm=postgresql
 - https://stdout.root.sx/links/?searchtags=database

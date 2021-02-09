@@ -1,5 +1,4 @@
-common
-=============
+# xsrv.common
 
 This role will install/configure a basic Debian-based server. 
 
@@ -25,11 +24,10 @@ Requirements
 ------------
 
 - Ansible 2.8 or higher
-- Basic Debian GNU/Linux 9/10 netinstall on host
-- Ansible inventory hostname resolves to the host FQDN (using DNS, /etc/hosts...)
+- Debian 9/10
+- Ansible inventory hostname resolves to the host FQDN (using DNS, /etc/hosts, ansible_host)
 - SSH server reachable from the controller
-- User account on the host, member of the `sudo` group, for which you know the password
-- Controller SSH key authorized on this user account (`ssh-copy-id user@host`)
+- SSH key authorized on the remote `ansible_user` user account (`ssh-copy-id user@host`)
 
 
 Configuration variables
@@ -42,17 +40,16 @@ Example playbook
 -----------------
 
 ```yaml
-- hosts: my.example.org
+- hosts: my.CHANGEME.org
   roles:
-     - common
-  vars:
-    setup_msmtp: yes
+     - nodiscc.xsrv.common
+
+# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
+ansible_user: "CHANGEME"
+ansible_become_pass: "{{ vault_ansible_become_pass }}"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_msmtp_host: "smtp.CHANGEME.org"
-vault_msmtp_username: "CHANGEME"
-vault_msmtp_password: "CHANGEME"
-vault_msmtp_admin_email: "CHANGEME@CHANGEME.org"
+vault_ansible_become_pass: "CHANGEME"
 ```
 
 

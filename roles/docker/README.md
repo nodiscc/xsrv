@@ -2,25 +2,20 @@
 
 An Ansible Role that installs [Docker](https://www.docker.com) on Linux.
 
-## Requirements/Dependencies
+## Requirements/Dependencies/example playbook
 
-- Ansible 2.9+
-- [`common`](../common) role.
-
-## Role Variables
-
-See [`defaults/main.yml`](defaults/main.yml)
-
-
-## Example Playbook
+See [`meta/main.yml`](meta/main.yml)
 
 ```yaml
-- hosts: my.example.org
+# playbook.yml
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
-    - docker
+    - nodiscc.xsrv.common
+    - nodiscc.xsrv.monitoring # optional
+    - nodiscc.xsrv.docker
 ```
+
+See [`defaults/main.yml`](meta/main.yml) for all configuration variables.
 
 ## License
 

@@ -1,5 +1,3 @@
-# metadata info for docker role
-
 galaxy_info:
   role_name: docker
   author: geerlingguy
@@ -9,7 +7,7 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - buster
+        - 10
   galaxy_tags:
     - web
     - system
@@ -18,6 +16,6 @@ galaxy_info:
     - orchestration
     - compose
     - server
-
 dependencies:
-  - 'common'
+  - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring

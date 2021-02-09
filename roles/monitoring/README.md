@@ -1,5 +1,4 @@
-monitoring
-=============
+# xsrv.monitoring
 
 This role will install a lightweight monitoring system on a Linux machine:
  - (optional) log aggregation for most services/applications, using [rsyslog](https://en.wikipedia.org/wiki/Rsyslog)
@@ -14,8 +13,9 @@ This role will install a lightweight monitoring system on a Linux machine:
 Requirements
 ------------
 
-- Ansible 2.8 or higher installed on the controller
-- Host firewall must allow incoming traffic on port 19999
+- Ansible >= 2.8
+- Debian 9/10
+- The service must be reaschable on port tcp/19999 (firewall/NAT)
 
 
 Configuration variables
@@ -36,10 +36,10 @@ Example Playbook
 playbook.yml:
 
 ```yaml
-- hosts: my.example.org
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
+    - nodiscc.xsrv.common
+    - nodiscc.xsrv.monitoring
 ```
 
 Usage

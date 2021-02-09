@@ -1,5 +1,3 @@
----
-
 all:
   hosts:
     my.example.org:

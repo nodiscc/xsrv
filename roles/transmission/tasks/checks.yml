@@ -1,9 +1,9 @@
 ##### CHECKS FOR TRANSMISSION ROLE #####
 
-- name: check that mandatory variables are correctly defined
+- name: check that required variables/roles are correctly defined/enabled
   assert:
     that:
-      - transmission_download_dir is not search("CHANGEME")
+      - transmission_download_dir is string
       - transmission_enable_service == transmission_enable_service|bool
       - transmission_fqdn is not search("CHANGEME")
       - transmission_https_mode is in ["selfsigned", "letsencrypt"]

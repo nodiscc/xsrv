@@ -17,3 +17,5 @@ galaxy_info:
     - discord
     - game
     - audio
+dependencies: []
+#  - nodiscc.xsrv.common

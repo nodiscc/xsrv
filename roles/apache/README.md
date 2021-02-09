@@ -1,5 +1,4 @@
-apache
-====
+# xsrv.apache
 
 This role will install and configure the [Apache](https://en.wikipedia.org/wiki/Apache_HTTP_Server) webserver:
 
@@ -11,9 +10,11 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 Requirements/Dependencies
 ------------
 
-- Ansible 2.9 or higher.
+- Ansible => 2.9
+- Debian 10
 - [`common`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) role
 - For Let's Encrypt certificates, port 80/tcp must be reachable from the Internet, and the each virtualhost's FQDN (ServerName) must have a A record in the public DNS system
+- Each role relying on this one must install its own configuration in `/etc/apache2/*-enabled/` and notify the `reload/restart apache` handlers
 
 
 Configuration Variables
@@ -26,10 +27,10 @@ Example Playbook
 ----------------
 
 ```yaml
-- hosts: my.example.org
+- hosts: my.CHANGEME.org
   roles:
-     - common
-     - apache
+     - nodiscc.xsrv.common
+     - nodiscc.xsrv.apache
 ```
 
 Usage

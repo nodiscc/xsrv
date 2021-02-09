@@ -33,13 +33,12 @@ Security upgrades for Debian packages are applied [automatically/daily](roles/co
 - (Optional) run checks and watch out for unwanted changes `xsrv check`
 - Apply the playbook `xsrv deploy`
 
-
 ## Security model
 
-- Isolation between services/applications relies on proper use of [file permissions, ownership and groups](https://wiki.debian.org/Permissions) and partial [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). <!-- php applications currently share the same user - TODO --> Compromise of a single service or account must not allow compromise of other services and accounts.
-- Usage of the server admin user with [`sudo`](https://wiki.debian.org/sudo) privileges requires both a correct/authorized SSH key and a password.
-- Be careful when performing manual operations from a shell, managing users and file permissions. Protect your private SSH key and the `.ansible-vault-password` file
-- The system is designed to host data and services with the same classification level. If you need different security contexts (for example public or private facing services, different sets of end users, ...), split your infrastructure across different VMs/machines/networks and setup additional access controls.
+- Isolation between services/applications relies on proper use of [file permissions, ownership and groups](https://wiki.debian.org/Permissions) and [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). Compromise of a single service or account must not allow compromise of other services and accounts. There are a few exceptions:
+  - PHP web applications currently share the same user
+  - The server admin has unlimited access through [`sudo`](https://wiki.debian.org/sudo) (it requires both an authorized SSH key and a password). Be careful when performing manual operations from this account. Protect your private SSH key and the `.ansible-vault-password` file
+- The system is designed to host data and services with the same classification level. If you need different security contexts (for example public or private facing services, different sets of end users/multitenancy, ...), split your infrastructure across different VMs/machines/networks and setup additional access controls.
 
 ```
 We trust you have received the usual lecture from the local System

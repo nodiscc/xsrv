@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: apache
   author: "nodiscc <nodiscc@gmail.com>"
@@ -16,6 +14,5 @@ galaxy_info:
     - php
     - server
     - lamp
-
 dependencies:
-  - common
+  - nodiscc.xsrv.common

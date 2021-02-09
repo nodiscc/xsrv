@@ -3,7 +3,7 @@
 [apache-auth]
 enabled  = true
 port     = http,https
-{% if 'nextcloud' in role_names %}
+{% if 'nodiscc.xsrv.nextcloud' in role_names %}
 # workaround for https://github.com/nextcloud/server/issues/15688
 ignoreregex = {{ nextcloud_install_dir }}/config
 {% endif %}

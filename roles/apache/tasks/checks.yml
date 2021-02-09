@@ -1,5 +1,3 @@
----
-
 ##### CHECKS FOR APACHE ROLE #####
 
 - name: check that mandatory variables are correctly defined

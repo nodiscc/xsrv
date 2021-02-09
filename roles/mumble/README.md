@@ -1,5 +1,4 @@
-mumble
-=============
+# xsrv.mumble
 
 This role will install [Mumble](https://en.wikipedia.org/wiki/Mumble_(software)) server, a voice chat ([VoIP](https://en.wikipedia.org/wiki/Voice_over_IP)) server. It is primarily designed for use by gamers and can replace commercial programs such as TeamSpeak or Ventrilo.
 
@@ -9,28 +8,27 @@ This role will install [Mumble](https://en.wikipedia.org/wiki/Mumble_(software))
 Requirements/Dependencies
 ------------
 
-- Ansible 2.9 or higher.
+- Ansible >= 2.9
 - The [common](../common/README.md) role (hardening/firewall/bruteforce prevention)
 - The [backup](../backup/README.md) role (automatic backups, optional)
 
 
-Role Variables
+Configuration Variables
 --------------
 
 See [defaults/main.yml](defaults/main.yml)
-
 
 
 Example Playbook
 ----------------
 
 ```yaml
-- hosts: my.example.org
+- hosts: my.CHANGEME.org
   roles:
-    - common
-    - monitoring
-    - backup
-    - mumble
+    - nodiscc.xsrv.common
+    - nodiscc.xsrv.monitoring
+    - nodiscc.xsrv.backup
+    - nodiscc.xsrv.mumble
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_mumble_password: "CHANGEME"

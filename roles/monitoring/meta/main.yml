@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: monitoring
   author: nodiscc
@@ -19,3 +17,5 @@ galaxy_info:
     - graph
     - alerts
     - syslog
+dependencies: []
+#   - nodiscc.xsrv.common

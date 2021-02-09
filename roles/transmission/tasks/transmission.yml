@@ -41,7 +41,7 @@
     dest: /etc/rsnapshot.d/transmission.conf
     mode: 0600
   notify: check rsnapshot configuration
-  when: '"backup" in role_names'
+  when: '"nodiscc.xsrv.backup" in role_names'
 
 
 ##### SERVICES #####

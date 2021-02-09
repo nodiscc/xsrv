@@ -1,5 +1,3 @@
----
-
 galaxy_info:
   role_name: gitea
   author: nodiscc
@@ -18,3 +16,10 @@ galaxy_info:
     - wiki
     - vcs
     - web
+dependencies:
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring
+  # - nodiscc.xsrv.backup
+  - nodiscc.xsrv.apache
+  - { role: nodiscc.xsrv.mariadb, when: gitea_db_type == "mysql" }
+  - { role: nodiscc.xsrv.postgresql, when: gitea_db_type == "postgres" }
