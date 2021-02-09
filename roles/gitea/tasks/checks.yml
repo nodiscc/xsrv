@@ -8,7 +8,7 @@
       - gitea_admin_username is not search("CHANGEME")
       - gitea_https_mode in ['selfsigned', 'letsencrypt']
       - gitea_base_url is string
-      - gitea_db_hostis string
+      - gitea_db_host is string
       - gitea_db_password is not search("CHANGEME")
       - gitea_db_port == gitea_db_port|int
       - gitea_db_type in ['postgres', 'mysql']
