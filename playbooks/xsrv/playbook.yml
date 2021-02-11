@@ -1,3 +1,4 @@
+# playbook.yml - list of enabled roles for each host
 # enable additional roles by uncommenting them (remove leading # )
 - hosts: my.example.org
   roles:

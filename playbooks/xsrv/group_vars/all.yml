@@ -1,3 +1,6 @@
 # variables in this file apply to all hosts in the 'all' inventory group
 # these variables override role defaults
 # host-specific variables in host_vars/ override these variables
+# dns_nameservers:
+#   - "1.1.1.1"
+#   - "1.0.0.1"
