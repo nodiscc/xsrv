@@ -5,7 +5,6 @@ set -o nounset
 # Configuration / defaults
 venv_dir="${XSRV_VENV_DIR:=$HOME/.local/share/xsrv/venv}"
 playbooks_dir="${XSRV_PLAYBOOKS_DIR:=$HOME/playbooks}"
-templates_path="${XSRV_TEMPLATES_DIR:=/opt/xsrv}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 skip_venv="${SKIP_VENV:=no}"
@@ -19,6 +18,7 @@ ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
 function check_playbook_exists() {
     # check that the directory for the specified playbook exists, exit with error if not
     export playbook_dir="$playbooks_dir/$playbook_name"
+    export templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv"
     if [[ ! -e "$playbook_dir" ]]; then
         echo "[xsrv] ERROR: playbook $playbook_dir does not exist"; exit 1;
     fi
@@ -133,27 +133,27 @@ function init_host() {
         read -r -p "[xsrv] Host name to add to the $playbook_name playbook: " host_name
     done
 
-    if [[ -e "$playbooks_dir/$playbook_name/host_vars/$host_name" ]]; then
-        echo "[xsrv] ERROR: $playbooks_dir/$playbook_name/host_vars/$host_name already exists"; exit 1
+    if [[ -e "$playbook_dir/host_vars/$host_name" ]]; then
+        echo "[xsrv] ERROR: $playbook_dir/host_vars/$host_name already exists"; exit 1
     fi
 
     # TODO move inventory creation to init_playbook(), only handle adding a single host here
     # TODO echo "[xsrv] INFO: adding host $host_name to $playbook_name inventory"
-    if [[ ! -f "$playbooks_dir/$playbook_name/inventory.yml" ]]; then
-        sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/inventory.yml" >> "$playbooks_dir/$playbook_name/inventory.yml"
+    if [[ ! -f "$playbook_dir/inventory.yml" ]]; then
+        sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/inventory.yml" >> "$playbook_dir/inventory.yml"
     else
-        echo "    $host_name" >> "$playbooks_dir/$playbook_name/inventory.yml"
+        echo "    $host_name" >> "$playbook_dir/inventory.yml"
     fi
 
     echo "[xsrv] INFO: adding $host_name host to $playbook_name playbook"
-    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/playbook.yml" >> "$playbooks_dir/$playbook_name/playbook.yml"
+    sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/playbook.yml" >> "$playbook_dir/playbook.yml"
 
     echo "[xsrv] INFO: creating host vars/vault files for $host_name"
-    host_vars_file="$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.yml"
-    host_vault_file="$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml"
-    mkdir "$playbooks_dir/$playbook_name/host_vars/$host_name"
-    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
-    sed "s/my.example.org/$host_name/g" "$templates_path/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
+    host_vars_file="$playbook_dir/host_vars/$host_name/$host_name.yml"
+    host_vault_file="$playbook_dir/host_vars/$host_name/$host_name.vault.yml"
+    mkdir "$playbook_dir/host_vars/$host_name"
+    sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
+    sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
 
     if command -v pwgen >/dev/null; then
         echo "[xsrv] INFO: generating random passwords for $host_name"
@@ -171,7 +171,7 @@ function init_host() {
     edit_host "$playbook_name" "$host_name"
 
     echo "[xsrv] INFO: Encrypting secrets file"
-    (cd "$playbooks_dir/$playbook_name/" && ansible-vault encrypt "$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml")
+    (cd "$playbook_dir/" && ansible-vault encrypt "$playbook_dir/host_vars/$host_name/$host_name.vault.yml")
     read -r -p "[xsrv] Press ENTER to edit secret (vaulted) host variables (replace any values labeled CHANGEME) "
     edit_vault "$playbook_name" "$host_name"
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $playbook_name $host_name"
@@ -297,24 +297,27 @@ function _main() {
 # Usage
 usage="
 USAGE: xsrv COMMAND [playbook] [host]
-init-playbook   initialize a new playbook
-init-host       add a new host to an existing playbook
-deploy          deploy a playbook
-check           simulate deployment, report what would be changed
-edit-playbook   edit/show playbook (list of roles)
-edit-inventory  edit/show inventory file (list of hosts)
-edit-host       edit host configuration (host_vars)
-edit-vault      edit encrypted (vault) host configuration
-help            show this message
-fetch-backups   fetch backups from a host to the local backups/ directory
-upgrade         upgrade roles to latest versions
-show-defaults   show all variables and their default values (accepts a role as argument)
-shell           open an interactive shell on a host
-logs            view system log on a host
 
-The following environment variables are supported (usage: VARIABLE=VALUE xsrv COMMAND ...):
+# PLAYBOOK-LEVEL COMMANDS
+init-playbook [playbook]         initialize a new playbook
+edit-playbook [playbook]         edit/show playbook (list of roles)
+edit-inventory [playbook]        edit/show inventory file (list of hosts)
+
+# HOST-LEVEL COMMANDS
+init-host [playbook] [host]      add a new host to an existing playbook
+check [playbook] [host]          simulate deployment, report what would be changed
+deploy [playbook] [host]         deploy a playbook (apply configuration/roles)
+edit-host [playbook] [host]      edit host configuration (host_vars)
+edit-vault [playbook] [host]     edit encrypted (vault) host configuration
+fetch-backups [playbook] [host]  fetch backups from a host to the local backups/ directory
+upgrade [playbook] [host]        upgrade roles to latest version
+shell [playbook] [host]          open an interactive shell on a host
+logs [playbook] [host]           view system log on a host
+show-defaults [role]             show all variables and their default values
+help                             show this message
+
+# ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
-XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (default: /opt/xsrv)
 SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
 EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: less)

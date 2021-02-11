@@ -24,28 +24,34 @@ Full list of commands:
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
   ╹ ╹┗━┛╹┗╸┗┛ v0.24.0
-USAGE: xsrv COMMAND [playbook] [host]
-init-playbook   initialize a new playbook
-init-host       add a new host to an existing playbook
-deploy          deploy a playbook
-check           simulate deployment, report what would be changed
-edit-playbook   edit/show playbook (list of roles)
-edit-inventory  edit/show inventory file (list of hosts)
-edit-host       edit host configuration (host_vars)
-edit-vault      edit encrypted (vault) host configuration
-help            show this message
-fetch-backups   fetch backups from a host to the local backups/ directory
-upgrade         upgrade roles to latest versions
-show-defaults   show all variables and their default values (accepts a role as argument)
-shell           open an interactive shell on a host
-logs            view system log on a host
 
-The following environment variables are supported (usage: VARIABLE=VALUE xsrv COMMAND ...):
+USAGE: xsrv COMMAND [playbook] [host]
+
+# PLAYBOOK-LEVEL COMMANDS
+init-playbook [playbook]         initialize a new playbook
+edit-playbook [playbook]         edit/show playbook (list of roles)
+edit-inventory [playbook]        edit/show inventory file (list of hosts)
+
+# HOST-LEVEL COMMANDS
+init-host [playbook] [host]      add a new host to an existing playbook
+check [playbook] [host]          simulate deployment, report what would be changed
+deploy [playbook] [host]         deploy a playbook (apply configuration/roles)
+edit-host [playbook] [host]      edit host configuration (host_vars)
+edit-vault [playbook] [host]     edit encrypted (vault) host configuration
+fetch-backups [playbook] [host]  fetch backups from a host to the local backups/ directory
+upgrade [playbook] [host]        upgrade roles to latest version
+shell [playbook] [host]          open an interactive shell on a host
+logs [playbook] [host]           view system log on a host
+show-defaults [role]             show all variables and their default values
+help                             show this message
+
+# ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
-XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (default: /opt/xsrv)
 SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
 EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: less)
+
+
 ```
 
 Examples:
