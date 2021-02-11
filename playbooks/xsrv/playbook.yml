@@ -1,3 +1,4 @@
+# enable additional roles by uncommenting them (remove leading # )
 - hosts: my.example.org
   roles:
     - nodiscc.xsrv.common

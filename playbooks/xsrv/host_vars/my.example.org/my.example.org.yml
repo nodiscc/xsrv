@@ -1,10 +1,14 @@
 ### configuration variables for my.example.org
-### use xsrv edit-vault to edit encrypted {{ vault_* }} variables
+# to encrypt a sensitive configuration value, use my_value: {{ vault_my_value }} in this file
+# and store the actual 'vault_my_value: MY_SECRET' in ansible-vault: xsrv edit-vault
 
-# administrator/sudo account username/password
+##### COMMON #####
+# administrator account (sudo) username/password
 ansible_user: "{{ vault_ansible_user }}"
 ansible_become_pass: "{{ vault_ansible_become_pass }}"
 ansible_ssh_port: 22
+# set to yes to enable outgoing mail
+setup_msmtp: no
 
 ##### HOMEPAGE #####
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml
@@ -30,13 +34,6 @@ gitea_fqdn: "git.CHANGEME.org"
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml
 transmission_fqdn: "torrent.CHANGEME.org"
 
-#### OPENLDAP ####
-# https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
-openldap_fqdn: "ldap.CHANGEME.org"
-openldap_domain: "CHANGEME.org"
-openldap_organization: "CHANGEME"
-openldap_base_dn: "dc=CHANGEME,dc=org"
-
 ##### ROCKETCHAT #####
 # shttps://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
 rocketchat_fqdn: "chat.CHANGEME.org"
@@ -44,6 +41,13 @@ rocketchat_fqdn: "chat.CHANGEME.org"
 ##### JELLYFIN #####
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml
 jellyfin_fqdn: "media.CHANGEME.org"
+
+#### OPENLDAP ####
+# https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
+openldap_fqdn: "ldap.CHANGEME.org"
+openldap_domain: "CHANGEME.org"
+openldap_organization: "CHANGEME"
+openldap_base_dn: "dc=CHANGEME,dc=org"
 
 ##### FIREWALL/FAIL2BAN #####
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml

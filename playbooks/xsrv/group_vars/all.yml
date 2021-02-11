@@ -1,0 +1,3 @@
+# variables in this file apply to all hosts in the 'all' inventory group
+# these variables override role defaults
+# host-specific variables in host_vars/ override these variables
