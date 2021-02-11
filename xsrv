@@ -10,6 +10,7 @@ ansible_tags="${TAGS:-}"
 skip_venv="${SKIP_VENV:=no}"
 pager="${PAGER:=less}"
 version="0.24.0"
+xsrv_upgrade_channel="release"
 ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
   ╹ ╹┗━┛╹┗╸┗┛ v${version}"
@@ -236,8 +237,8 @@ function help() {
 function upgrade_roles() {
     check_playbook_exists
     if [[ ! -f "$playbook_dir"/requirements.yml ]]; then
-        echo "[xsrv] INFO: installing default collection git+https://gitlab.com/nodiscc/xsrv,release"
-        (cd "$playbook_dir" && ansible-galaxy collection install --force --collections-path "$playbook_dir/" git+https://gitlab.com/nodiscc/xsrv,release)
+        echo "[xsrv] INFO: installing default collection git+https://gitlab.com/nodiscc/xsrv,$xsrv_upgrade_channel"
+        (cd "$playbook_dir" && ansible-galaxy collection install --force --collections-path "$playbook_dir/" git+https://gitlab.com/nodiscc/xsrv,$xsrv_upgrade_channel)
     else
         echo "[xsrv] INFO: upgrading collections from requirements.yml"
         (cd "$playbook_dir" && ansible-galaxy collection install --force -r requirements.yml)
@@ -260,12 +261,13 @@ function init_venv() {
 }
 
 function show_defaults() {
+    check_playbook_exists
     role=${1:-}
     if [[ ! -z "$role" ]]; then
-        $pager "$templates_path/roles/$role/defaults/main.yml"
+        $pager "$templates_dir/roles/$role/defaults/main.yml"
     else
         # shellcheck disable=SC2002
-        cat "$templates_path/roles/*/defaults/main.yml" | $pager
+        cat "$templates_dir/roles/*/defaults/main.yml" | $pager
     fi
 }
 
