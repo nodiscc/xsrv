@@ -5,3 +5,6 @@
     that:
       - jellyfin_https_mode in ['selfsigned', 'letsencrypt']
       - jellyfin_enable_service == jellyfin_enable_service|bool
+      - jellyfin_samba_share_enabled == jellyfin_samba_share_enabled|bool
+      - ( jellyfin_samba_share_allow_write_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
+      - ( jellyfin_samba_share_allow_read_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )

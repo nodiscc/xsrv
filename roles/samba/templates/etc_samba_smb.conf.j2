@@ -321,6 +321,22 @@
 
 {% endfor %}
 
+{% if 'nodiscc.xsrv.jellyfin' in role_name and jellyfin_samba_share_enabled %}
+[jellyfin]
+    comment = Jellyfin media server - drop media files here
+    path = "/var/lib/samba/shares//jellyfin"
+    available = yes
+    browseable = yes
+    guest ok = no
+    valid users = {% for user in ( jellyfin_samba_share_allow_read_users | default([]) ) + ( jellyfin_samba_share_allow_write_users | default([]) ) %}{{ user }}{% if not loop.last %}{{', '}}{% else %}{{'\n'}}{% endif %}{% endfor %}
+    force group = sambausers
+    read only = yes
+    write list = {{ ( jellyfin_samba_share_allow_write_users ) | join (', ') }}
+    hide files = "/.*/lost+found/"
+    dont descend = "/lost+found"
+    create mask = 0775
+    directory mask = 0775
+{% endif %}
 
 # Un-comment the following and create the netlogon directory for Domain Logons
 # (you need to configure Samba to act as a domain controller too.)

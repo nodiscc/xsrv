@@ -30,20 +30,22 @@ See [meta/main.yml](meta/main.yml)
 jellyfin_fqdn: media.CHANGEME.org
 ```
 
-See [defaults/main.yml](defaults/main.yml) for all configuration variables
+See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 
 ## Usage
 
-After initial installation, open https://media.CHANGEME.org in a web browser, and fill in:
-- a Jellyfin administrator login/password
-- paths to your media files (please set to `/var/lib/jellyfin/media/` when unsure)
+After initial installation, open https://media.CHANGEME.org in a web browser, and:
+- set a Jellyfin administrator login/password
+- add media libraries pointing to directories where your media files are stored:
+  - `/var/lib/jellyfin/media`
+  - `/var/lib/jellyfin/sambashare` if the [samba](../samba) role is enabled
 
 
 ### Uploading media
 
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/`
-- If the [samba](../samba) role is enabled, upload files over samba to the ``smy://my.CHANGEME.org/jellyfin` share
+- If the [samba](../samba) role is enabled and [a list of valid users](defaults/main.yml) is specified, upload files to the `smy://my.CHANGEME.org/jellyfin` samba share
 
 
 ### Playing media

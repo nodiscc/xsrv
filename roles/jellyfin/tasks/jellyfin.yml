@@ -49,6 +49,24 @@
     groups: jellyfin
     append: yes
 
+- name: create mountpoint for jellyfin samba share
+  file:
+    state: directory
+    path: /var/lib/jellyfin
+    owner: root
+    group: jellyfin
+    mode: 0750
+  when: jellyfin_samba_share_enabled|bool
+
+- name: mount jellyfin samba share to jellyfin directory
+  mount:
+    path: /var/lib/jellyfin/sambashare
+    src: /var/lib/samba/shares/jellyfin
+    opts: bind
+    state: mounted
+    fstype: none
+  when: jellyfin_samba_share_enabled|bool
+
 - name: run all notified handlers
   meta: flush_handlers
 
