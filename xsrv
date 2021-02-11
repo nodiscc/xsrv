@@ -10,6 +10,7 @@ ansible_tags="${TAGS:-}"
 skip_venv="${SKIP_VENV:=no}"
 pager="${PAGER:=less}"
 version="0.24.0"
+ansible_version="2.10.5"
 xsrv_upgrade_channel="release"
 ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
@@ -131,7 +132,7 @@ function init_host() {
     check_playbook_exists
 
     until [[ ! -z "$host_name" ]]; do
-        read -r -p "[xsrv] Host name to add to the $playbook_name playbook: " host_name
+        read -r -p "[xsrv] Host name to add to the $playbook_name playbook (ex: my.CHANGEME.org): " host_name
     done
 
     if [[ -e "$playbook_dir/host_vars/$host_name" ]]; then
@@ -256,7 +257,7 @@ function init_venv() {
     if [[ ! "$skip_venv" == "yes" ]]; then
         echo "[xsrv] INFO: installing ansible in $venv_dir"
         pip3 install wheel
-        pip3 install cryptography==3.3.2 ansible==2.10.5
+        pip3 install cryptography==3.3.2 ansible=="$ansible_version"
     fi
 }
 
