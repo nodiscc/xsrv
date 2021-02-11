@@ -115,7 +115,7 @@ function init_playbook() {
 
     upgrade_roles
     echo "[xsrv] INFO: copying default playbook files and directories"
-    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,data/,group_vars/,host_vars/,public_keys/,secrets/} "$playbook_dir/"
+    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,group_vars/,host_vars/,public_keys/,playbooks/} "$playbook_dir/"
     rm -r "$playbook_dir/host_vars/my.example.org"
 
     gen_vault_password_file
