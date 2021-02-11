@@ -21,26 +21,27 @@ xsrv deploy
 Full list of commands:
 
 ```bash
+  ╻ ╻┏━┓┏━┓╻ ╻
+░░╺╋╸┗━┓┣┳┛┃┏┛
+  ╹ ╹┗━┛╹┗╸┗┛ v0.24.0
 USAGE: xsrv COMMAND [playbook] [host]
 init-playbook   initialize a new playbook
 init-host       add a new host to an existing playbook
 deploy          deploy a playbook
 check           simulate deployment, report what would be changed
-edit-playbook   edit a playbook
-edit-inventory  edit inventory file for a playbook
-edit-host       edit a host vars file
-edit-vault      edit a host vault file
+edit-playbook   edit/show playbook (list of roles)
+edit-inventory  edit/show inventory file (list of hosts)
+edit-host       edit host configuration (host_vars)
+edit-vault      edit encrypted (vault) host configuration
+help            show this message
+fetch-backups   fetch backups from a host to the local backups/ directory
+upgrade         upgrade roles to latest versions
+show-defaults   show all variables and their default values (accepts a role as argument)
 shell           open an interactive shell on a host
 logs            view system log on a host
-help            show this message
-fetch-backups   fetch backups from a host to the playbook backups directory
-upgrade         ugrade xsrv script and roles to latest versions
-show-hosts      list hosts in a playbook/inventory
-show-defaults   show all variables and their default values (accepts a role as argument)
 
 The following environment variables are supported (usage: VARIABLE=VALUE xsrv COMMAND ...):
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
-BRANCH             advanced (upgrade only): git branch/version to use for upgrades (default: stay on current branch)
 XSRV_TEMPLATES_DIR advanced: path to role/playbook templates (default: /opt/xsrv)
 SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
 EDITOR             text editor to use (default: nano)
