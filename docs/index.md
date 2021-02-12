@@ -79,3 +79,5 @@ Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-u
 - [Maintenance](maintenance.md)
 - [Advanced usage](advanced.md)
 - [Contributing](contributing.md)
+- [License](https://gitlab.com/nodiscc/xsrv/-/blob/master/LICENSE)
+- [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)
