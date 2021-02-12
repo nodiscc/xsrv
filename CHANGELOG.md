@@ -17,18 +17,20 @@ This releases improves usability, portability, standards compliance, separation 
 - improve/simplify command-line usage, see `xsrv help`
 - refactor main script/simplify/cleanup
 - use pwgen (optional) to generate random passwords during host creation
-- make installation to $PATH optional
+- make installation to $PATH and use of sudo optional
+- use ansible-galaxy collections for role upgrades method
+
 
 **example playbook: refactor:**
-- add examples for playbook, inventory, and host_vars (cleartext and vaulted) files
+- add examples for playbook, inventory, group_vars and host_vars (cleartext and vaulted) files
 - disable all but essential roles by default. Additional roles should be enabled manually by the admin
 - firewall: by default, allow incoming traffic for netdata dashboard from LAN (monitoring role is enabled by default)
 - firewall: by default, allow incoming SSH from anywhere (key-based authentication is enabled so this is reasonably secure)
 - firewall: by default, allow HTTP/HTTPS access from anywhere (required for let's encrypt http-01 challenge, and apache role is enabled by default)
 - firewall: change the default policy for the 'global' firehol_network definition to RETURN (changes nothing in the default configuration, makes adding other network definitions easier)
-- firewall: add an option to generate firewall rules compatible with docker swarm routing/port forwarding
 - doc: add firewall examples for all services (only from LAN by default)
 - doc: add example .gitlab-ci.yml
+- ansible/all roles: use ansible-vault as default storage for sensitive values
 - ansible: use .ansible-vault-password as vault password file
 - ansible: speed up ansible SSH operations using controlmaster and pipelining SSH options
 - host_vars: add a netdata check for successful daily backups
@@ -39,7 +41,6 @@ This releases improves usability, portability, standards compliance, separation 
 
 **common: refactor role:**
 - import from https://gitlab.com/nodiscc/ansible-xsrv-common
-- use ansible-vault to store secret values by default
 - unattended-upgrades: allow automatic upgrades from stable-updates repository
 - unattended-upgrades: install apt-listchanges (mail with a summary of changes will be sent to the server admin)
 - add ansible_user_allow_sudo_rsync_nopasswd option (allow ansible user to run sudo rsync without password)
@@ -52,18 +53,16 @@ This releases improves usability, portability, standards compliance, separation 
 - sshd: fix accepted environment variables LANG,LC_* accepted from the client
 - sshd: explicitely deny AllowTcpForwarding, AllowAgentForwarding, GatewayPorts and X11Forwarding for the sftponly group
 - sshd: add curve25519-sha256@libssh.org KexAlgorithm
+- firewall: add an option to generate firewall rules compatible with docker swarm routing/port forwarding
 - firewall: allow outgoing mail submission/port 587 by default
 - firewall: make firewall config file only readable by root
 - firewall: use an alias/variable to define LAN IP networks, templatize
-- firewall/fail2ban: prevent firehol from overwriting fail2Ban rules, remove interaction/integration between services
-- firewall/fail2Ban: split firewall and fail2ban configuration tasks, add ability to disable both
+- firewall/fail2ban: prevent firehol from overwriting fail2Ban rules, remove interaction/integration between services, split firewall/fail2ban configuration tasks, add ability to disable both
 - fail2ban: make more settings configurable (destination e-mail, default findtime/maxretry/bantime)
 - users: simplify management, remove *remotebackup* options/special remotebackup user/tasks
 - users: linux_users is now compatible with ansible users module syntax, with added ssh_authorized_keys and sudo_nopasswd_commands parameters
 - users: fix user password generation (use random salt, make task idempotent by setting update_password: on_create by default)
-- update documentation and role metadata
-- use new syntax for ansible facts/distribution release
-- various fixes, cleanup, formatting
+- users: ensure ansible user home is not world-readable
 
 
 **monitoring: refactor role:**
@@ -82,7 +81,6 @@ This releases improves usability, portability, standards compliance, separation 
 - netdata: upgrade to latest stable release
 - rsyslog: aggregate all log messages to `/var/log/syslog` by default
 - rsyslog: monitor samba, gitea, mumble-server, openldap, nextcloud, unattended-upgrades and rsnapshot log files with imfile module (when corresponding roles are enabled)
-- rsyslog: fix syslog tags for imfile watches
 - rsyslog: make agregation of apache access logs to syslog optional, disable by default
 - rsyslog: disable aggregation of netdata logs to syslog by default (very noisy, many false-positive ERROR messages)
 - rsyslog: discard apache access logs caused by netdata apche monitoring
@@ -113,7 +111,6 @@ This releases improves usability, portability, standards compliance, separation 
 - switch to HTTP2
 - remove ability to create custom virtualhosts
 - remove automatic homepage generation feature (will be split to separate role)
-- use ansible-vault to manage secret variables
 - enforce fail2ban bans on HTTP basic auth failures
 - set the default log format to `vhost_combined` (all vhosts to a single file)
 - rename cert_mode variable to https_mode
@@ -138,21 +135,17 @@ This releases improves usability, portability, standards compliance, separation 
 - support postgresql as database engine, make it the default
 - move apache configuration steps to separate file, add full automatic virtualhost configuration for nextcloud
 - reorder setup procedure (setup apache last)
-- use ansible-vault to manage secret variables by default
 - enable additional php modules https://docs.nextcloud.com/server/16/admin_manual/installation/source_installation.html#apache-web-server-configuration
 - reload apache instead of restarting when possible
-- update documentation, add screenshots
-- templatize nextcloud domain name/install directory/full URL
+- make basic settings configurable through ansible (FQDN, install directory, full URL, share_folder...)
 - require manual configuration of nextcloud FQDN
 - enforce fail2ban bans on nextcloud login failures
-- upgrade nextcloud to latest stable version (https://nextcloud.com/changelog), upgrade all nextcloud apps
-- add fine-grained ansible tags
-- automatically install applications using occ app:install command, remove app-related variables and ansible tasks
-- enable APCu memcache https://docs.nextcloud.com/server/19/admin_manual/configuration_server/caching_configuration.html
+- upgrade nextcloud to latest stable version (https://nextcloud.com/changelog)
+- upgrade all nextcloud apps to latest compatible versions
+- make installed/enabled applications configurable
+- enable APCu memcache
 - gallery app replaced with photos app
-- remove old installation directory at the end of upgrades
-- make backup role fully optional, check rsnapshot configuration after copying config file
-- delegate database backups to the respective database role (mariadb/postgresql)
+- optional integration with backup role, delegate database backups to the respective database role (mariadb/postgresql)
 - add deck, notes, admin_audit and maps apps
 - add php-fpm configuration
 - run background jobs via cron every 5 minutes
@@ -181,7 +174,6 @@ This releases improves usability, portability, standards compliance, separation 
 - add support for let's encrypt certificates (use mod_md when tt_rss_https_mode: letsencrypt)
 - make log destination configurable, default to blank/PHP/webserver logs
 - update config.php template (remove deprecated feed_crypt_key setting)
-- use ansible-vault to manage secret variables by default
 - require manual configuration of admin username and tt-rss FQDN/URL
 - standardize component installation order (backups/fail2ban/database first)
 - simplify ansible_local.tt_rss.db_imported, always set to true
@@ -238,7 +230,6 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - make backup role fully optional, check rsnapshot configuration after copying config file
 - delegate database backups to the respective database role (mariadb/postgresql)
 - make common settings configurable through ansible variables
-- use ansible-vault to handle secret variables, dont generate random passwords
 - simplify domain name/location/root URL templating
 - require manual configuration of gitea instance FQDN/URL, JWT secrets and internal token
 - LFS JWT secret must not contain /+= characters
@@ -371,7 +362,6 @@ TAGS=gitea xsrv deploy
 - by default, don't overwrite shaarli config when it already exists (rely on configuration from the web interface) (idempotence)
 - require manual generation of shaarli password salt (40 character string)
 - add documentation, add backup restoration procedure
-- use ansible-vault as default source for shaarli username, password, api secret and salt
 - add role to example playbook (disabled by default)
 - add php-fpm configuration
 - upgrade shaarli to latest stable release (https://github.com/shaarli/Shaarli/releases)
@@ -395,7 +385,6 @@ make deploy
 - add transmission_https_mode variable to configure SSL certificate generation (selfsigned/letsencrypt)
 - add checks for required variables
 - delegate HTTP basic auth to apache, pass credentials to the backend tranmission service (proxy-chain-auth)
-- update documentation and role metadata
 - add rsnapshot configuration (backup transmission downloads and torrents cache)
 
 
@@ -415,10 +404,12 @@ make deploy
 **samba role:**
  - add samba file sharing server role (standalone mode)
  - make log level configurable
- - make shares configurable through samba_shares variable/list of dicts
- - make users configurable through samba_users variable/list of dicts
+ - add support for internal (tdbsam) and LDAP user/group/password backends
+ - make shares configurable through samba_shares variable
+ - make tdbsam users configurable through samba_users variable
  - add rsnapshot backup configuration for samba
  - make shares available/browseable state configurable (default to yes)
+
  - update documentation
 
 **docker role:**
@@ -440,17 +431,23 @@ make deploy
  - add rsnapshot backup configuration
  - add apache configuration/host for ldap-account-managaer, add let's encrypt/self-signed certificate generation tasks
  - make ldap-account-manager configuration read-only (must be configured through ansible)
- -  - only allow access to ldap-account-manager from private IP addresses by default
+ - only allow access to ldap-account-manager from private IP addresses by default
+ - add optional support for Samba domain/users/groups
+
+**jellyfin role:**
+- add a role to install the jellyfin media server
+- require manual configuration of admin username/password and initial media directory
+- create a default media directory in /var/lib/jellyfin/media + symlink from home directory to media directory
 
 **tools, documentation, misc:**
-- refactor and update documentation (clarify/cleanup/update/reorder/reword/simplify/deduplicate/move)
-- import all roles from separate repositories to single repository
+- refactor and update documentation (clarify/cleanup/update/reorder/reword/simplify/deduplicate/move), add screenshots, add full setup guide
+- manage all components from a single git repository
 - publish roles and default playbook as ansible collection (https://galaxy.ansible.com/nodiscc/xsrv - use make publish_collection to build)
 - add automated tests (ansible-lint, yamllint, shellcheck) for all roles, add ansible-playbook --syntax-check test
-- integrate with Gitlab CI (https://gitlab.com/nodiscc/xsrv/-/pipelines)
+- add a test suite, add automatic tests with Gitlab CI (https://gitlab.com/nodiscc/xsrv/-/pipelines)
 - remove pip install requirements (performed by xsrv script)
-- move to release/dev/tag branching/release model
-- generate TODO.md file with 'make update_todo'
+- change release/branching model to 'release" (latest stable release), 'X.Y.Z' (semantic versioning), 'master' (development version)
+- automate TODO.md updates and version headers updates
 - fully working ansible-playbook --check mode
 - add checks for all mandatory variables
 - explicitely define file permissions for all file copy/templating tasks
@@ -458,5 +455,6 @@ make deploy
 - remove .gitignore, clean files generated by tests using 'make clean'
 - improve/clarify logging, program output and help messages
 - generate HTML documentation with sphinx+recommonmark, host on https://xsrv.readthedocs.io
-- 
+- various fixes, cleanup, formatting
+- update roles metadata
 - upgrade ansible to latest stable version (https://github.com/ansible/ansible/blob/stable-2.10/changelogs/CHANGELOG-v2.10.rst)
