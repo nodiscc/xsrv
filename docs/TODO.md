@@ -2,21 +2,31 @@
 
 ### xsrv/xsrv
 
-- #386 - jellyfin: add fail2ban configuration - `0.26.0`
-- #385 - jellyfin: add rsnapshot configuration - `0.26.0`
+- #409 - automate github/gitlab release generation - `1.1.0`
+- #406 - xsrv: self-upgrade subcommand - `1.1.0`
+- #405 - xsrv: replace environment variable based settings with settings from or positional arguments - `1.1.0`
+- #404 - add xsrv info command - `1.1.0`
+- #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900 - `1.1.0`
+- #401 - openldap: add self-service-password passwrd reset tool - `1.1.0`
+- #393 - Samba: performance improvements (socket options)?
+- #392 - SSH: harden MaxStartups option? - `1.1.0`
+- #390 - apache: auto reload/restart apache when mod_md certificate is installed
+- #389 - WIP: xsrv: add show-ssh-config subcommand (display ssh config to use in ~/.ssh/config)
+- #388 - WIP: add libvirt role
+- #387 - jellyfin: monitor logs with rsyslog - `1.1.0`
+- #386 - jellyfin: add fail2ban configuration - `1.1.0`
+- #385 - jellyfin: add rsnapshot configuration - `1.1.0`
 - #384 - jellyfin: allow/document uploading files from nextcloud
-- #383 - jellyfin: allow/document uploading files from samba - `0.25.0`
-- #382 - WIP: add Jellyfin Media server - `0.25.0`
 - #380 - Enforce DNSSEC for outgoing DNS queries
 - #379 - seup IPV6 support (sysctl, firewal, applications...)?
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ?
 - #377 - rocketchat: enable/configure federation?
 - #376 - netdata: enable samba monitoring when samba role is installed
-- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `0.26.0`
+- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.1.0`
 - #374 - makefile/readthedocs: include roles documentation in generated docs
 - #372 - WIP: shaarli: make hide_timestamp option configurable
 - #366 - nextcloud: file locking sometimes causes synchronization errors
-- #365 - nextcloud: LDAP user backend - `0.26.0`
+- #365 - nextcloud: LDAP user backend - `1.1.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
 - #362 - netdata: default apache status monitoring jobs trigger error 403
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles
@@ -29,8 +39,7 @@
 - #352 - common: add support for hardware RNG
 - #351 - nextcloud: enable pretty URLs
 - #348 - ldap-account-manager: Unable to set locale
-- #347 - DeprecationWarning for ldap_attr module - `0.26.0`
-- #346 - samba: LDAP user backend - `0.25.0`
+- #347 - DeprecationWarning for ldap_attr module - `1.1.0`
 - #345 - openldap: postgresql backend?
 - #344 - nextcloud: add office suite integration
 - #343 - nextcloud: warning on settings/admin/overview: missing bcmath php module
@@ -49,16 +58,14 @@
 - #326 - rsyslog/samba: imfile: '/var/log/samba/cores/*mbd' is DIRECTORY but FILE expected
 - #317 - Harden systemd services
 - #316 - WIP: add/remove the ansible user to/from the www-data group
-- #314 - WIP: gitea: warn when no MariaDB/MySQL/PostgreSQL roles are installed locally
-- #311 - Media server - `0.25.0`
 - #310 - samba: ability to whitelist/blacklist files by extension
 - #309 - apply postgresqltuner recommended settings?
 - #307 - apache: make certificate status endpoint enable/disable configurable
-- #305 - switch firewall management to firewalld - `0.26.0`
+- #305 - switch firewall management to firewalld - `2.0.0`
 - #303 - firehol: add example NAT loopback/hairpin rule
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `0.26.0`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.1.0`
 - #293 - WIP: add nginx role
-- #290 - netdata: monitor number of upgradeable APT packages - `0.25.0`
+- #290 - netdata: monitor number of upgradeable APT packages - `1.1.0`
 - #280 - Samba Directory Controller or other Identity Management solution
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
 - #276 - Samba: protect file shares from cryptolockers
@@ -73,9 +80,8 @@
 - #267 - apache: make disabled modules list configurable, disable more modules by default
 - #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
 - #265 - apache: provide custom error pages
-- #263 - Netdata: setup registry - `0.26.0`
+- #263 - Netdata: setup registry - `1.1.0`
 - #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS)
-- #260 - WIP: add ldap-auth role (LDAP authentication for Unix/Samba accounts)
 - #258 - WIP: add custom info page to netdata
 - #256 - CAS, SAML or Oauth Sigle Sign On (SSO)
 - #255 - new role: custom homepage generation
@@ -102,7 +108,7 @@
 - #226 - mysql: update root password for *all* root accounts
 - #224 - mysql: log MariaDB slow queries
 - #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost
-- #221 - apache: add a symlink to /var/www in home directory - `0.26.0`
+- #221 - apache: add a symlink to /var/www in home directory - `1.1.0`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage
 - #218 - apache: implement modsecurity
 - #216 - xsrv: generate a local copy of the homepage/netdata custom dashboard
@@ -113,7 +119,7 @@
 - #210 - xsrv-homepage: add more (optional) features to homepage
 - #208 - netdata: graph/alert on logwatch warnings
 - #207 - netdata: make ping checks configurable
-- #206 - netdata: add https://gitlab.com/nodiscc/netdata-debsecan - `0.25.0`
+- #206 - netdata: add https://gitlab.com/nodiscc/netdata-debsecan - `1.1.0`
 - #205 - netdata: monitor debsums warnings/return status
 - #204 - netdata: add custom dashboard with status summary of the host/important logs/reports
 - #203 - netdata: monitor snmpd
@@ -126,7 +132,7 @@
 - #195 - monitoring: add apt-listchanges
 - #194 - netdata: add config variable to enable netdata auto-updates
 - #193 - netdata: graph tiger warnings
-- #192 - monitoring/apache: add goaccess, generate reports for each virtualhost - `0.26.0`
+- #192 - monitoring/apache: add goaccess, generate reports for each virtualhost
 - #191 - monitoring: add inxi
 - #190 - netdata: graph number of firehol hits
 - #189 - netdata: graph VULS reports
@@ -137,7 +143,7 @@
 - #181 - netdata: monitor MySQL server
 - #180 - netdata: graph SCAP workbench warnings
 - #178 - netdata: graph/alert on deborphan matches
-- #177 - common: add lynis audit tool - `0.26.0`
+- #177 - common: add lynis audit tool - `1.1.0`
 - #176 - netdata: add Qualys SSL check module
 - #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
 - #174 - netdata: allow setting a repetition period for alarms
@@ -266,5 +272,5 @@
 - #8 - Proxmox
 - #6 - cockpit role?
 - #5 - Matrix/Synapse server
-- #4 - Graylog role
+- #4 - Graylog role - `1.1.0`
 - #3 - Mail server
