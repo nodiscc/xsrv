@@ -23,7 +23,7 @@ Full list of commands:
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v0.24.0
+  ╹ ╹┗━┛╹┗╸┗┛ vX.Y.Z
 
 USAGE: xsrv COMMAND [playbook] [host]
 
