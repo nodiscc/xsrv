@@ -275,12 +275,12 @@ function init_venv() {
 
 function show_defaults() {
     check_playbook_exists
-    role=${1:-}
+    role=${2:-}
     if [[ ! -z "$role" ]]; then
-        $pager "$templates_dir/roles/$role/defaults/main.yml"
+        $pager "$playbook_dir"/ansible_collections/*/*/roles/$role/defaults/main.yml
     else
         # shellcheck disable=SC2002
-        cat "$templates_dir/roles/*/defaults/main.yml" | $pager
+        cat "$playbook_dir"/ansible_collections/*/*/roles/*/defaults/main.yml | $pager
     fi
 }
 
@@ -319,6 +319,7 @@ USAGE: xsrv COMMAND [playbook] [host]
 init-playbook [playbook]         initialize a new playbook
 edit-playbook [playbook]         edit/show playbook (list of roles)
 edit-inventory [playbook]        edit/show inventory file (list of hosts)
+show-defaults [playbook] [role]  show all variables and their default values
 
 # HOST-LEVEL COMMANDS
 init-host [playbook] [host]      add a new host to an existing playbook
@@ -330,7 +331,6 @@ fetch-backups [playbook] [host]  fetch backups from a host to the local backups/
 upgrade [playbook] [host]        upgrade roles to latest version
 shell [playbook] [host]          open an interactive shell on a host
 logs [playbook] [host]           view system log on a host
-show-defaults [role]             show all variables and their default values
 help                             show this message
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
