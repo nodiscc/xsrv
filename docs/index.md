@@ -97,6 +97,7 @@ The project's documentation is under the [Creative Commons Attribution-ShareAlik
 - [Controller preparation](installation/controller-preparation.md)
 - [First deployment](installation/first-deployment.md)
 - [Usage](usage.md)
+- [List of all configuration variables](configuration-variables.md)
 - [Maintenance](maintenance.md)
 - [Advanced usage](advanced.md)
 - [Contributing](contributing.md)

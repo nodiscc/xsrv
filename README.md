@@ -102,6 +102,7 @@ The project's documentation is under the [Creative Commons Attribution-ShareAlik
 - [Controller preparation](https://xsrv.readthedocs.io/en/latest/installation/controller-preparation.html)
 - [First deployment](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html)
 - [Usage](https://xsrv.readthedocs.io/en/latest/usage.html)
+- [List of all configuration variables](https://xsrv.readthedocs.io/en/latest/configuration-variables.html)
 - [Maintenance](https://xsrv.readthedocs.io/en/latest/maintenance.html)
 - [Advanced usage](https://xsrv.readthedocs.io/en/latest/advanced.html)
 - [Contributing](https://xsrv.readthedocs.io/en/latest/contributing.html)

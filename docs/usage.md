@@ -6,7 +6,7 @@
 
 - `xsrv edit-playbook`: edit the list of enabled roles (`playbook`)
 - `xsrv edit-host`: edit configuration settings for the host and its roles (`host_vars`)
-- `xsrv show-defaults`: show all available configuration variables, and their default values (by default, only basic settings are set in `host_vars` to keep the file manageable). To change one of the defaults, simply copy it to your `host_vars` file and edit its value there.
+- `xsrv show-defaults`: show all available configuration variables, and their default values (by default, only basic settings are set in `host_vars` to keep the file manageable). To change one of the defaults, simply copy it to your `host_vars` file and edit its value there. [List of all configuration variables](configuration-variables.md)
 - `xsrv edit-vault`: edit secret/encrypted configuration variables. To prevent storing sensitive/secret values such as passwords in plain text, this file is encrypted with [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html), and decrypted on the fly during deployment. The decryption password for the vault must be present in `.ansible-vault-password`
 
 All commands support and additional playbook/host name parameter if you have multiple playbook/hosts. See below for complete usage examples.
