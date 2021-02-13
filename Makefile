@@ -86,7 +86,8 @@ bump_versions:
 	sed -i "s/^version:.*/version: $$tag/" galaxy.yml && \
 	sed -i "s/^version=.*/version=\"$$tag\"/" xsrv && \
 	sed -i "s/^version =.*/version = '$$tag'/" docs/conf.py && \
-	sed -i "s/^release =.*/release = '$$tag'/" docs/conf.py
+	sed -i "s/^release =.*/release = '$$tag'/" docs/conf.py && \
+	sed -i "s/latest%20release-.*-blue/latest%20release-$$tag-blue/" README.md docs/index.md
 
 # publish the ansible collection
 # ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment
