@@ -3,7 +3,7 @@
 This role will setup a simple webserver homepage/dashboard:
 - list and shortcuts to services installed on the host ([ssh/sftp (common)](../common), [nextcloud](../nextcloud), [rocketchat](../rocketchat), [shaarli](../shaarli), [tt-rss](../tt_rss), [transmission](../transmission), [gitea](../gitea), [mumble](../mumble), [netdata (monitoring)](../monitoring), [samba](../samba), [ldap-account-manager (openldap)](../openldap)...)
 
-[![](https://i.imgur.com/3ZwPVQNs.png)](https://i.imgur.com/3ZwPVQN.png)
+[![](https://i.imgur.com/nNzTiDO.png)](https://i.imgur.com/3ZwPVQN.png)
 
 
 Requirements/Dependencies

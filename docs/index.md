@@ -2,62 +2,53 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
+[![](https://img.shields.io/badge/latest%20release-1.0.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 
-**Install and manage self-hosted services/applications on your own server(s).**
+**Install and manage self-hosted services/applications, on your own server(s).**
 
 `xsrv` provides:
 
-- a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install and configure various network services, web applications, system administration and infrastructure tools
-- a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) for easy configuration, deployment and maintenance
-- a basic playbook to [setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
+- a comprehensive set of web applications/network services, system/infrastructure tools ([roles](#roles))
+- a [command-line tool](usage.md) for easy configuration, deployment and maintenance
+- a basic playbook to [setup a single server](installation/first-deployment.md) in a few minutes
 
 
 ## Roles
 
 **System components/infrastucture/middleware**
 
-- [common](roles/common) - base system components
-- [backup](roles/backup) - incremental backup service
-- [monitoring](monitoring) - monitoring, alerting and logging system
-- [apache](roles/apache) - web server and PHP interpreter
-- [postgresql](roles/postgresql) or [mariadb](roles/mariadb) database server
-- [openldap](roles/openldap) - LDAP directory server
-- [docker](roles/docker) - Docker container platform
+- [common](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) - common system components
+- [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) - incremental backup service
+- [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/monitoring) - monitoring, alerting and logging system
+- [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) - web server and PHP interpreter
+- [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) or [mariadb](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mariadb) database server
+- [openldap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap) - LDAP directory server
+- [docker](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker) - Docker container platform
 
 **End-user web applications/services**
 
-- [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization/groupware/"private cloud" service
-- [tt_rss](roles/tt_rss) - RSS feed reader
-- [samba](roles/samba) - cross-platform file and printer sharing service (SMB/CIFS)
-- [shaarli](role/shaarli) - personal, minimalist, super-fast bookmarking service
-- [gitea](roles/gitea) - lightweight self-hosted Git service/software forge
-- [transmission](roles/transmission) - bittorrent peer-to-peer client web interface (seedbox) service
-- [mumble](roles/mumble) - low-latency voice-over-IP (VoIP) server
-- [rocketchat](roles/rocketchat) - realtime web chat/communication platform
-- [jellyfin](roles/jellyfin) - media System that puts you in control of managing and streaming your media
-- [homepage](roles/homepage) - simple homepage/dashhoard for your services
-
-[![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
-[![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
-[![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
-[![](https://i.imgur.com/8wEBRSG.png)](roles/shaarli)
-[![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
-[![](https://i.imgur.com/blWO4LL.png)](roles/transmission)
-[![](https://i.imgur.com/jYSU9zC.png)](roles/mumble)
-[![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](roles/openldap)
-[![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
-[![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
-[![](https://jellyfin.org/images/screenshots/movie_thumb.png)](roles/jellyfin)
+- [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - file hosting/sharing/synchronization/groupware/"private cloud" service
+- [tt_rss](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss) - RSS feed reader
+- [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - cross-platform file and printer sharing service (SMB/CIFS)
+- [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/role/shaarli) - personal, minimalist, super-fast bookmarking service
+- [gitea](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea) - lightweight self-hosted Git service/software forge
+- [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - bittorrent peer-to-peer client web interface (seedbox) service
+- [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - low-latency voice-over-IP (VoIP) server
+- [rocketchat](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat) - realtime web chat/communication platform
+- [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - media System that puts you in control of managing and streaming your media
+- [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - simple homepage/dashhoard for your services
 
 
 ## Quick start
 
 ```bash
-# install the program
+# clone the repository
 git clone https://gitlab.com/nodiscc/xsrv
+
+# (optional) install the program to your $PATH
 sudo cp xsrv/xsrv /usr/local/bin/
 
-# initialize the playbook, select the target server and components to install
+# initialize the playbook, provide basic settings and roles to enable
 xsrv init-playbook
 
 # deploy your first server
@@ -66,7 +57,22 @@ xsrv deploy
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 
-Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command-line tool to manage your servers, or include any of the [roles](#roles) in your own `ansible` playbooks.
+`xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools. Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command-line tool to manage your servers, or include any of the roles in your own ansible playbooks. See [Using as ansible collection](https://xsrv.readthedocs.io/en/latest/advanced.html#using-as-ansible-collection).
+
+
+## Screenshots
+
+[![](https://i.imgur.com/v9BQYpN.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring)
+[![](https://i.imgur.com/PPVIb6V.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud)
+[![](https://i.imgur.com/UoKs3x1.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss)
+[![](https://i.imgur.com/gsoh2Mj.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli)
+[![](https://i.imgur.com/Rks90zV.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea)
+[![](https://i.imgur.com/7nJ6cMN.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission)
+[![](https://i.imgur.com/lHgDbDC.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble)
+[![](https://i.imgur.com/PRE7fvn.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap)
+[![](https://i.imgur.com/WUdwbAX.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat)
+[![](https://i.imgur.com/nNzTiDO.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
+[![](https://i.imgur.com/Fg8uRjL.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
 
 
 ## Documentation

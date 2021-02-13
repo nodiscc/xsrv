@@ -1,11 +1,10 @@
 # libvirt / virt-manager
 
-[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [`libvirt`](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine)
-and virtual storage, networks, and more.
+[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [`libvirt`](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more.
 
 [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) is a module in the Linux kernel that allows Linux to function as a hypervisor (a computer that runs virtual machines).
 [QEMU](https://en.wikipedia.org/wiki/QEMU) is an emulator that interfaces with KVM, and provides additional VM, storage and network management features.
-libvirt allows managing QEMU virtual machines, through easy graphical and command-line interfaces.
+The [libvirt](https://en.wikipedia.org/wiki/Libvirt) project allows easy and comprehensie management QEMU virtual machines through graphical (`virt-manager`) and command-line (`virsh`) interfaces.
 
 Advantages of virtualization include:
 
@@ -35,9 +34,8 @@ sudo apt install virt-manager
 sudo usermod -G $USER libvirt
 ```
 
-#### Virtual machine creation
 
-<!-- TODO update screenshots -->
+#### Virtual machine creation
 
 Run virt-manager from the main menu and click `New virtual machine`
 
@@ -91,6 +89,7 @@ virt-install --name mynew.example.org --os-type linux --ram 1024M --vcpu 2 --dis
 **Port forwarding from the hypervisor:** TODO
 
 **Bridged:** TODO
+
 
 #### Cloning VMs
 

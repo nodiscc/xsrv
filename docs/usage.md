@@ -1,14 +1,15 @@
 # Usage
 
+`xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools. Configuration settings are stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) in simple [YAML](https://en.wikipedia.org/wiki/YAML) files. To change server ([host](installation/server-preparation.md)) configuration and roles, you must first edit the YAML configuration, then apply changes to the host using the `deploy` command.
+
 ## Changing configuration
 
-At any point, to edit your configuration:
- - enable more roles with `xsrv edit-playbook`
- - show all available configuration variables, and their default value with `xsrv show-defaults`
- - edit configuration variables with `xsrv edit-host` (copy/paste any variable from defaults and change its value)
- - edit secret/encrypted configuration variables with `xsrv edit-vault`
+- `xsrv edit-playbook`: edit the list of enabled roles (`playbook`)
+- `xsrv edit-host`: edit configuration settings for the host and its roles (`host_vars`)
+- `xsrv show-defaults`: show all available configuration variables, and their default values (by default, only basic settings are set in `host_vars` to keep the file manageable). To change one of the defaults, simply copy it to your `host_vars` file and edit its value there.
+- `xsrv edit-vault`: edit secret/encrypted configuration variables. To prevent storing sensitive/secret values such as passwords in plain text, this file is encrypted with [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html), and decrypted on the fly during deployment. The decryption password for the vault must be present in `.ansible-vault-password`
 
-All commands support and additional playbook/host name parameter if you have multiple playbook/hosts. See below for advanced ussage.
+All commands support and additional playbook/host name parameter if you have multiple playbook/hosts. See below for complete usage examples.
 
 **After any changes to the playbook, inventory or configuration variables**, apply your changes:
 
@@ -75,10 +76,6 @@ BRANCH=1.0.0 xsrv upgrade infra # upgrade roles in the playbook 'infra' to versi
 Ensure no sensitive config values/secrets are stored as plaintext! Encrypt secret variables with ansible-vault:
 
 ```yaml
-# xsrv edit-host
-xyz_password: {{ vault_xyz_password }}
-
 # xsrv edit-vault
-vault_xyz_password: "$3CR3T"
-
+xyz_password: "$3CR3T"
 ```

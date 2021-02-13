@@ -6,19 +6,23 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
+[![](https://img.shields.io/badge/latest%20release-1.0.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 
-**Install and manage self-hosted services/applications on your own server(s).**
 
-- a collection of [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install and configure various network services, web applications, system administration and infrastructure tools
-- a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) for easy configuration, deployment and maintenance
-- a [playbook to setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
+**Install and manage self-hosted services/applications, on your own server(s).**
+
+`xsrv` provides:
+
+- a comprehensive set of web applications/network services, system/infrastructure tools ([roles](#roles))
+- a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html) for easy configuration, deployment and maintenance
+- a basic playbook to [setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
 
 
 ## Roles
 
 **System components/infrastucture/middleware**
 
-- [common](roles/common) - base system components
+- [common](roles/common) - common system components
 - [backup](roles/backup) - incremental backup service
 - [monitoring](monitoring) - monitoring, alerting and logging system
 - [apache](roles/apache) - web server and PHP interpreter
@@ -39,27 +43,17 @@
 - [jellyfin](roles/jellyfin) - media System that puts you in control of managing and streaming your media
 - [homepage](roles/homepage) - simple homepage/dashhoard for your services
 
-[![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](roles/monitoring)
-[![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
-[![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
-[![](https://i.imgur.com/8wEBRSG.png)](roles/shaarli)
-[![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
-[![](https://i.imgur.com/blWO4LL.png)](roles/transmission)
-[![](https://i.imgur.com/jYSU9zC.png)](roles/mumble)
-[![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](roles/openldap)
-[![](https://i.imgur.com/OL7RZXb.png)](roles/rocketchat)
-[![](https://i.imgur.com/3ZwPVQNs.png)](roles/homepage)
-[![](https://jellyfin.org/images/screenshots/movie_thumb.png)](roles/jellyfin)
-
 
 ## Quick start
 
 ```bash
-# install the program
+# clone the repository
 git clone https://gitlab.com/nodiscc/xsrv
+
+# (optional) install the program to your $PATH
 sudo cp xsrv/xsrv /usr/local/bin/
 
-# initialize the playbook, select the target server and components to install
+# initialize the playbook, provide basic settings and roles to enable
 xsrv init-playbook
 
 # deploy your first server
@@ -68,7 +62,22 @@ xsrv deploy
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 
-Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command-line tool to manage your servers, or include any of the [roles](#roles) in your own `ansible` playbooks.
+`xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools. Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command-line tool to manage your servers, or include any of the roles in your own ansible playbooks. See [Using as ansible collection](https://xsrv.readthedocs.io/en/latest/advanced.html#using-as-ansible-collection).
+
+
+## Screenshots
+
+[![](https://i.imgur.com/v9BQYpN.png)](roles/monitoring)
+[![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
+[![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
+[![](https://i.imgur.com/gsoh2Mj.png)](roles/shaarli)
+[![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
+[![](https://i.imgur.com/7nJ6cMN.png)](roles/transmission)
+[![](https://i.imgur.com/lHgDbDC.png)](roles/mumble)
+[![](https://i.imgur.com/PRE7fvn.png)](roles/openldap)
+[![](https://i.imgur.com/WUdwbAX.png)](roles/rocketchat)
+[![](https://i.imgur.com/nNzTiDO.png)](roles/homepage)
+[![](https://i.imgur.com/Fg8uRjL.png)](roles/jellyfin)
 
 
 ## Documentation
@@ -77,7 +86,7 @@ Use the [`xsrv`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-u
 - [Installation](https://xsrv.readthedocs.io/en/latest/installation.html)
 - [Server preparation](https://xsrv.readthedocs.io/en/latest/installation/server-preparation.html)
 - [Controller preparation](https://xsrv.readthedocs.io/en/latest/installation/controller-preparation.html)
-- [First deployment](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.gtml)
+- [First deployment](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html)
 - [Usage](https://xsrv.readthedocs.io/en/latest/usage.html)
 - [Maintenance](https://xsrv.readthedocs.io/en/latest/maintenance.html)
 - [Advanced usage](https://xsrv.readthedocs.io/en/latest/advanced.html)
