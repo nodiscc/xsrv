@@ -93,3 +93,4 @@ xsrv deploy
 - [Contributing](https://xsrv.readthedocs.io/en/latest/contributing.html)
 - [License](https://gitlab.com/nodiscc/xsrv/-/blob/master/LICENSE)
 - [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)
+- Source code: [Gitlab](https://gitlab.com/nodiscc/xsrv), [Github](https://github.com/nodiscc/xsrv)
