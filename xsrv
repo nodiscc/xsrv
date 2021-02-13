@@ -277,7 +277,7 @@ function show_defaults() {
     check_playbook_exists
     role=${2:-}
     if [[ ! -z "$role" ]]; then
-        $pager "$playbook_dir"/ansible_collections/*/*/roles/$role/defaults/main.yml
+        $pager "$playbook_dir"/ansible_collections/*/*/roles/"$role"/defaults/main.yml
     else
         # shellcheck disable=SC2002
         cat "$playbook_dir"/ansible_collections/*/*/roles/*/defaults/main.yml | $pager
