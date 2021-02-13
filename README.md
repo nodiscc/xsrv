@@ -79,6 +79,20 @@ xsrv deploy
 [![](https://i.imgur.com/nNzTiDO.png)](roles/homepage)
 [![](https://i.imgur.com/Fg8uRjL.png)](roles/jellyfin)
 
+## Source code
+
+- [Gitlab](https://gitlab.com/nodiscc/xsrv)
+- [Github](https://github.com/nodiscc/xsrv)
+
+
+## License
+
+This project and the components it manages are [Free and Open-Source Software](https://en.wikipedia.org/wiki/Free_software)
+
+Ansible components are licensed under the [GNU GPLv3](https://gitlab.com/nodiscc/xsrv/-/blob/master/LICENSE) unless noted otherwise.
+
+The project's documentation is under the [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
+
 
 ## Documentation
 
@@ -91,6 +105,4 @@ xsrv deploy
 - [Maintenance](https://xsrv.readthedocs.io/en/latest/maintenance.html)
 - [Advanced usage](https://xsrv.readthedocs.io/en/latest/advanced.html)
 - [Contributing](https://xsrv.readthedocs.io/en/latest/contributing.html)
-- [License](https://gitlab.com/nodiscc/xsrv/-/blob/master/LICENSE)
 - [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)
-- Source code: [Gitlab](https://gitlab.com/nodiscc/xsrv), [Github](https://github.com/nodiscc/xsrv)
