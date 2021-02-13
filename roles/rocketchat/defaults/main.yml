@@ -1,3 +1,5 @@
+##### ROCKETCHAT COMMUNICATION PLATFORM #####
+
 rocketchat_docker_version: "3.7.1"
 rocketchat_fqdn: "chat.CHANGEME.org"
 # mode for SSL/TLS certificates for the rocketchat webserver virtualhost (letsencrypt/selfsigned)

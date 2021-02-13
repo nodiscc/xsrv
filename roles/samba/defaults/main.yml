@@ -1,4 +1,4 @@
-##### SAMBA FILE SHARING SERVER
+##### SAMBA FILE SHARING SERVER #####
 
 # List of samba shares. Each item has the following attributes:
 #   name: (required): unique name for the share

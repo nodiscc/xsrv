@@ -1,4 +1,4 @@
----
+##### COMMON/GENERAL SYSTEM SETTINGS #####
 
 ##### DNS RESOLVER #####
 
@@ -65,6 +65,7 @@ ssh_permit_root_login: "no"
 
 # enable/disable SSH password authentication (yes, no - QUOTED)
 ssh_password_authentication: "no"
+
 
 ##### FIREWALL #####
 

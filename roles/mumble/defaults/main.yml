@@ -1,4 +1,4 @@
-##### MUMBLE VoIP SERVER #####
+##### MUMBLE VOIP SERVER #####
 
 # password to join the Mumble server (NO SPACES)
 mumble_password: "{{ vault_mumble_password }}"

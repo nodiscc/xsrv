@@ -1,4 +1,4 @@
----
+##### APACHE WEB SERVER #####
 
 # yes/no: listen on port 80 (unencrypted HTTP)
 # (all unencrypted requests will be redirected to HTTPS)
@@ -18,7 +18,7 @@ apache_enable_mod_evasive: no
 apache_letsencrypt_email: "{{ vault_apache_letsencrypt_email }}"
 
 
-##### PHP-FPM #####
+##### PHP-FPM INTERPRETER #####
 
 # yes/no: enable/disable the default php-fpm pool (www)
 # It is recommended to create separate pools for each application. Disabling the default pool saves some resources

@@ -1,4 +1,4 @@
-##### DOCKER #####
+##### DOCKER CONTAINER PLATFORM #####
 
 # Docker release channel (stable/edge)
 docker_apt_release_channel: stable
