@@ -24,7 +24,7 @@
 
 - [common](roles/common) - common system components
 - [backup](roles/backup) - incremental backup service
-- [monitoring](monitoring) - monitoring, alerting and logging system
+- [monitoring](roles/monitoring) - monitoring, alerting and logging system
 - [apache](roles/apache) - web server and PHP interpreter
 - [postgresql](roles/postgresql) or [mariadb](roles/mariadb) database server
 - [openldap](roles/openldap) - LDAP directory server

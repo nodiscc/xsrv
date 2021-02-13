@@ -19,7 +19,7 @@
 
 - [common](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) - common system components
 - [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) - incremental backup service
-- [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/monitoring) - monitoring, alerting and logging system
+- [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - monitoring, alerting and logging system
 - [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) - web server and PHP interpreter
 - [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) or [mariadb](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mariadb) database server
 - [openldap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap) - LDAP directory server
