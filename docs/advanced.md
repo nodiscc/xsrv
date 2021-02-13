@@ -32,21 +32,21 @@ You can either:
 
 If you just want to integrate the [roles](index.md#roles) in your own playbooks, install them using [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html):
 
-```bash
-ansible-galaxy collection install git+https://gitlab.com/nodiscc/xsrv,release
-```
-
-And include them in your playbooks:
-
 ```yaml
 # requirements.yml
 collections:
   - name: https://gitlab.com/nodiscc/xsrv.git
     type: git
-    version: no-galaxy-deps
+    version: release
+```
 
+```bash
 $ ansible-galaxy collection install --update -r requirements.yml
+```
 
+And include them in your playbooks:
+
+```
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
@@ -59,7 +59,7 @@ $ ansible-galaxy collection install --update -r requirements.yml
 To upgrade the collection to the latest [release](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md):
 
 ```bash
-ansible-galaxy collection install --force git+https://gitlab.com/nodiscc/xsrv,release
+$ ansible-galaxy collection install --force -r requirements.yml
 ```
 
 See [Ansible documentation - Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
