@@ -35,7 +35,7 @@
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt_rss](roles/tt_rss) - RSS feed reader
 - [samba](roles/samba) - cross-platform file and printer sharing service (SMB/CIFS)
-- [shaarli](role/shaarli) - personal, minimalist, super-fast bookmarking service
+- [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
 - [gitea](roles/gitea) - lightweight self-hosted Git service/software forge
 - [transmission](roles/transmission) - bittorrent peer-to-peer client web interface (seedbox) service
 - [mumble](roles/mumble) - low-latency voice-over-IP (VoIP) server
