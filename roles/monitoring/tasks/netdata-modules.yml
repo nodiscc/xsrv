@@ -123,6 +123,7 @@
     hour: "*"
     minute: "*/{{ netdata_logcount_update_interval }}"
     job: script --return --quiet -c "/usr/bin/lnav /var/log/syslog -n -f /opt/netdata-logcount/logcount.sql" > /dev/null
+    name: "logcount"
     user: root
 
 - name: set read permissions for netdata on /var/cache/logcount
@@ -179,7 +180,7 @@
   git:
     dest: "/root/netdata-debsecan"
     repo: "{{ netdata_debsecan_git_url }}"
-    version: "1.0.1"
+    version: "1.0.2"
     accept_hostkey: yes
     force: yes # discard modified files
 
@@ -210,5 +211,6 @@
     day: "*"
     hour: "*"
     minute: "0"
-    job:  /usr/local/bin/debsecan-by-type
+    job: /usr/local/bin/debsecan-by-type
+    name: "debsecan"
     user: root
