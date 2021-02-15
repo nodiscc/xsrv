@@ -147,6 +147,8 @@ netdata_needrestart_git_url: https://gitlab.com/nodiscc/netdata-needrestart
 netdata_logcount_git_url: https://gitlab.com/nodiscc/netdata-logcount
 # git repository URL for netdata-modtime
 netdata_modtime_git_url: https://gitlab.com/nodiscc/netdata-modtime
+# git repository URL for netdata-debsecan
+netdata_debsecan_git_url: https://gitlab.com/nodiscc/netdata-debsecan
 
 
 ##### CLI MONITORING UTILITIES #####

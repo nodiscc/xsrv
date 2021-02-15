@@ -3,11 +3,17 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.0.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.0.1) - UNRELEASED
+
+**Added:**
+ - monitoring role: add [netdata-debsecan](https://gitlab.com/nodiscc/netdata-debsecan) module
+
+
 
 -------------------------------
 
 
-#### [v1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.0) - 2021-02-12
+#### [v1.0.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.0.0) - 2021-02-12
 
 This is a major rewrite of https://github.com/nodiscc/srv01. To upgrade/migrate from previous releases, you must redeploy services to a new instance, and restore user data from backups/exports.
 
