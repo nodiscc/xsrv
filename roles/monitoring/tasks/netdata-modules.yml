@@ -22,13 +22,13 @@
 
 - name: add a cron job to refresh needrestart report every hour
   cron:
-    cron_file: "/etc/cron.d/needrestart"
+    cron_file: "needrestart"
     month: "*"
     day: "*"
     hour: "*"
     minute: "0"
     job: /usr/sbin/needrestart -b > /var/log/needrestart.log 2>&1
-    name: needrestart
+    name: "needrestart"
     user: root
 
 - name: clone netdata-needrestart module
@@ -117,7 +117,7 @@
 
 - name: add a cron job to refresh the logcount state file
   cron:
-    cron_file: "/etc/cron.d/logcount"
+    cron_file: "logcount"
     month: "*"
     day: "*"
     hour: "*"
@@ -206,7 +206,7 @@
 
 - name: add a cron job to refresh debsecan reports every hour
   cron:
-    cron_file: "/etc/cron.d/debsecan"
+    cron_file: "debsecan"
     month: "*"
     day: "*"
     hour: "*"
