@@ -123,7 +123,6 @@
     hour: "*"
     minute: "*/{{ netdata_logcount_update_interval }}"
     job: script --return --quiet -c "/usr/bin/lnav /var/log/syslog -n -f /opt/netdata-logcount/logcount.sql" > /dev/null
-    name: logcount
     user: root
 
 - name: set read permissions for netdata on /var/cache/logcount
@@ -168,3 +167,48 @@
     mode: 0750
   notify: restart netdata
   when: not ansible_check_mode
+
+### DEBSECAN ###
+
+- name: install debsecan
+  apt:
+    state: present
+    package: debsecan
+
+- name: clone netdata-debsecan module
+  git:
+    dest: "/root/netdata-debsecan"
+    repo: "{{ netdata_debsecan_git_url }}"
+    version: "1.0.1"
+    accept_hostkey: yes
+    force: yes # discard modified files
+
+- name: install netdata-debsecan module/script/configuration
+  copy:
+    remote_src: yes
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: netdata
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: "/root/netdata-debsecan/debsecan.chart.py", dest: "{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/debsecan.chart.py", mode: "0755" }
+    - { src: "/root/netdata-debsecan/usr_local_bin_debsecan-by-type", dest: "/usr/local/bin/debsecan-by-type", mode: "0755" }
+    - { src: "/root/netdata-debsecan/debsecan.conf", dest: "{{ netdata_install_prefix }}/etc/netdata/python.d/debsecan.conf", mode: "0644" }
+  notify: restart netdata
+  when: not ansible_check_mode
+
+- name: generate initial debsecan reports
+  command: /usr/local/bin/debsecan-by-type
+  args:
+    creates: "/var/log/debsecan/debsecan.log"
+
+- name: add a cron job to refresh debsecan reports every hour
+  cron:
+    cron_file: "/etc/cron.d/debsecan"
+    month: "*"
+    day: "*"
+    hour: "*"
+    minute: "0"
+    job:  /usr/local/bin/debsecan-by-type
+    user: root
