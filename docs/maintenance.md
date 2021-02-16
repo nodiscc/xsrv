@@ -25,13 +25,14 @@ Keep **off-line, off-site backups** of your `~/playbooks/` directory and user da
 
 ## Upgrading
 
-Security upgrades for Debian packages are applied [automatically/daily](roles/common). To upgrade roles to their latest versions (bugfixes, new features, latest stable releases of all unpackaged applications):
+Security upgrades for Debian packages are applied [automatically/daily](roles/common). To upgrade roles to their latest [releases](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md) ([RSS feed](https://gitlab.com/nodiscc/xsrv/-/tags?format=atom)) (bugfixes, new features/roles, latest stable releases of all unpackaged applications):
 
-- Read the [release notes](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md) and/or subscribe to the [releases RSS feed](https://gitlab.com/nodiscc/xsrv/-/tags?format=atom)
-- Download latest backups from the server (`xsrv backup-fetch`) and/or do a snapshot of the VM
-- Upgrade roles in your playbook `xsrv upgrade` (use `BRANCH=<VERSION> xsrv upgrade` to upgrade to a specific release)
+- (Optional) Ensure ou have a valid [backup](#backups) of the server's data and/or do a snapshot of the machine
+- Upgrade roles in your playbook `xsrv upgrade`
 - (Optional) run checks and watch out for unwanted changes `xsrv check`
 - Apply the playbook `xsrv deploy`
+
+To upgrade to a different/specific version of the roles (eg. `master`, `1.1.0`...), edit [requirements.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) in your playbook directory. You can also add other collections to this file.
 
 ## Security model
 
