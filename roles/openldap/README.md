@@ -1,9 +1,10 @@
 # xsrv.openldap
 
-This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/OpenLDAP), a [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) directory server, and optionally the [LDAP Account Manager](https://ldap-account-manager.org/) web management interface
+This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/OpenLDAP), a [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) directory server, and optionally the [LDAP Account Manager](https://ldap-account-manager.org/) web management interface, and the [Self Service Password](https://ltb-project.org/documentation/self-service-password) password change tool.
 
 [![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](https://screenshots.debian.net/package/ldap-account-manager)
 [![](https://screenshots.debian.net/screenshots/000/016/087/thumb.png)](https://screenshots.debian.net/package/ldap-account-manager)
+[![](TODO)](TODO)
 
 
 ## Requirements/dependencies/example playbook
@@ -25,10 +26,12 @@ openldap_fqdn: "ldap.CHANGEME.org"
 openldap_domain: "CHANGEME.org"
 openldap_organization: "CHANGEME"
 openldap_base_dn: "dc=CHANGEME,dc=org"
+self_service_password_fqdn: "ssp.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_openldap_admin_password: "CHANGEME"
 vault_openldap_bind_password: "CHANGEME"
+vault_self_service_password_keyphrase: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
@@ -53,6 +56,8 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 **Accessing LDAP account manager settings:** LAM should be configured from the templates provided by this role. If you need to temporarily access LAM settings from the web interface (your changes will be overwritten on the next ansible deployment), edit these files:
 - `/var/www/{{ ldap_account_manager_fqdn }}/config/config.cfg`: `password: CHANGEME`
 - `/var/www/{{ ldap_account_manager_fqdn }}/config/lam.conf`, `Passwd: CHANGEME`
+
+**Privileges/security:** By default, Self Service Password uses an unprivilegied LDAP user to access the directory, then uses user-provided credentials to change their own password. If the [samba](../samba) role is enabled, Self Service Password will use the LDAP `admin` credentials to access the directory - only expose the service on trusted networks (by default it is exposed to LAN/RFC1918 private IP addresses).
 
 
 ## References

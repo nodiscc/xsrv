@@ -31,3 +31,10 @@
   tags:
     - openldap
     - ldap-account-manager
+
+- include: self-service-password.yml
+  become: yes
+  when: openldap_setup_ssp|bool
+  tags:
+    - openldap
+    - self-service-password

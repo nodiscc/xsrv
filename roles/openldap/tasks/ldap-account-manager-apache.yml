@@ -1,4 +1,4 @@
----
+##### LDAP ACCOUNT MANAGER - APACHE CONFIGURATION #####
 
 - name: copy php-fpm configuration
   template:

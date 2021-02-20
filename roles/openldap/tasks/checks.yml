@@ -1,6 +1,6 @@
 ##### CHECKS FOR OPENLDAP ROLE #####
 
-- name: check that mandatory variables are correctly defined
+- name: check that mandatory variables are correctly defined (openldap)
   assert:
     that:
       - openldap_fqdn is not search("CHANGEME")
@@ -10,6 +10,14 @@
       - openldap_bind_username is not search("CHANGEME")
       - openldap_bind_password is not search("CHANGEME")
       - openldap_admin_password is not search("CHANGEME")
+      - openldap_setup_lam == openldap_setup_lam|bool
+      - openldap_setup_ssp == openldap_setup_ssp|bool
+    success_msg: "Role variables are correctly defined."
+    fail_msg: "One or more variables are not correctly defined. Check role documentation."
+
+- name: check that mandatory variables are correctly defined (ldap-account-manager)
+  assert:
+    that:
       - ldap_account_manager_allowed_hosts is not search(" ")
       - ldap_account_manager_fqdn is not search("CHANGEME")
       - ldap_account_manager_https_mode in ['selfsigned', 'letsencrypt']
@@ -22,4 +30,23 @@
       - ldap_account_manager_php_upload_max_filesize|regex_search('[KMG]$')
       - ldap_account_manager_session_timeout == ldap_account_manager_session_timeout|int
       - ldap_account_manager_version is defined
-      - openldap_setup_lam == openldap_setup_lam|bool
+    success_msg: "Role variables are correctly defined."
+    fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined."
+  when: openldap_setup_lam|bool
+
+- name: check that mandatory variables are correctly defined (self-service-password)
+  assert:
+    that:
+      - self_service_password_fqdn is not search("CHANGEME")
+      - self_service_password_keyphrase is not search("CHANGEME")
+      - self_service_password_install_dir is not search("CHANGEME")
+      - self_service_password_version is defined
+      - self_service_password_https_mode in ['selfsigned', 'letsencrypt']
+      - self_service_password_php_max_execution_time == self_service_password_php_max_execution_time|int
+      - self_service_password_php_max_input_time == self_service_password_php_max_input_time|int
+      - self_service_password_php_memory_limit|regex_search('[KMG]$')
+      - self_service_password_php_post_max_size|regex_search('[KMG]$')
+      - self_service_password_php_upload_max_filesize|regex_search('[KMG]$')
+    success_msg: "Role variables are correctly defined."
+    fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined."
+  when: openldap_setup_ssp|bool

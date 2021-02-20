@@ -55,3 +55,43 @@ ldap_account_manager_php_max_input_time: 60
 ldap_account_manager_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 ldap_account_manager_php_upload_max_filesize: '2M'
+
+
+##### SELF SERVICE PASSWORD #####
+
+# setup Self Service Password password change tool (yes/no)
+openldap_setup_ssp: no
+
+# domain name (FQDN) for Self Service Password
+self_service_password_fqdn: "ssp.CHANGEME.org"
+
+# long and random secret for token encryption
+self_service_password_keyphrase: "{{ vault_self_service_password_keyphrase }}"
+
+# comma-separated list of IP addresses/networks allowed to access self service password ((CIDR notation))
+# for security reasons only private/RFC1918 addresses are allowed by default
+self_service_password_allowed_hosts: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
+
+# yes/no: enable self service password debug log messages
+self_service_password_debug: no
+
+# installation directory for Self Service Password
+self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
+# ldap account manager version
+self_service_password_version: "1.3"
+
+# HTTPS and SSL/TLS certificate mode for the Self Service Password webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+self_service_password_https_mode: "selfsigned"
+
+# php-fpm: Maximum amount of memory a script may consume (K, M, G)
+self_service_password_php_memory_limit: '64M'
+# php_fpm: Maximum execution time of each script (seconds)
+self_service_password_php_max_execution_time: 30
+# php-fpm: Maximum amount of time each script may spend parsing request data (seconds)
+self_service_password_php_max_input_time: 60
+# php-fpm: Maximum size of POST data that PHP will accept (K, M, G)
+self_service_password_php_post_max_size: '8M'
+# php-fpm: Maximum allowed size for uploaded files (K, M, G)
+self_service_password_php_upload_max_filesize: '2M'

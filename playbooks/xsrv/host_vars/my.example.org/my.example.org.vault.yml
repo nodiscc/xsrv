@@ -66,3 +66,4 @@ vault_mumble_superuser_password: "{{ vault_xsrv_admin_password }}"
 ##### openldap role #####
 vault_openldap_admin_password: "CHANGEME30"
 vault_openldap_bind_password: "CHANGEME30"
+vault_self_service_password_keyphrase: "CHANGEME40"
