@@ -10,7 +10,7 @@ ansible_tags="${TAGS:-}"
 skip_venv="${SKIP_VENV:=no}"
 pager="${PAGER:=less}"
 version="1.0.0"
-ansible_version="2.10.5"
+ansible_version="2.10.7"
 xsrv_upgrade_channel="release"
 local_backups_dir="data/backups"
 ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
