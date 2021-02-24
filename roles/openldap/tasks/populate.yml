@@ -79,3 +79,14 @@
       description: "Unprivilegied user for resolving UIDs/GIDs"
       userPassword: "{{ openldap_bind_password }}"
   when: not ansible_check_mode
+
+- name: set password for unprivilegied LDAP bind user
+  ldap_attr:
+    dn: "cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}"
+    name: "userPassword"
+    values: "{{ openldap_bind_password }}"
+    state: 'exact'
+    server_uri: ldap://localhost/
+    bind_dn: cn=admin,{{ openldap_base_dn }}
+    bind_pw: "{{ openldap_admin_password }}"
+  when: not ansible_check_mode

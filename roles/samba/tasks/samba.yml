@@ -24,10 +24,9 @@
     group: root
     mode: 0640
 
-- name: get samba server SID
-  command: net getlocalsid
-  register: samba_localsid
-  changed_when: False
+- name: set samba LDAP admin dn password (always returns changed)
+  command: "smbpasswd -w {{ openldap_bind_password }}"  # noqa 301
+  when: samba_passdb_backend == 'ldapsam'
 
 - name: copy samba configuration
   template:
@@ -37,6 +36,11 @@
     group: root
     mode: 0640
   notify: reload samba
+
+- name: get samba server SID
+  command: net getlocalsid
+  register: samba_localsid
+  changed_when: False
 
 ##### SHARE DIRECTORIES #####
 
