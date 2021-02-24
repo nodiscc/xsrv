@@ -25,18 +25,19 @@
   when: not ansible_check_mode
 
 # slappasswd uses a new seed every time, hence the hash changes every time the playbook runs
-- name: create LDAP admin account (not idempotent, returns changed every time)
+- name: create LDAP admin account (not idempotent, returns changed every time), set log level
   ldap_attr:
     dn: "{{ item.dn }}"
     name: "{{ item.name }}"
     values: "{{ item.value }}"
     state: 'exact'
-  no_log: True
+  no_log: "{{ item.no_log | default(False) }}"
   with_items:
     - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootDN', value: 'cn=admin,{{ openldap_base_dn }}' }
     - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootDN', value: 'cn=admin,cn=config' }
-    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
-    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
+    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}', no_log: True }
+    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}', no_log: True }
+    - { dn: 'cn=config', name: 'olcLogLevel', value: '{{ openldap_log_level }}' }
   when: not ansible_check_mode
 
 - name: create basic Organizational Units

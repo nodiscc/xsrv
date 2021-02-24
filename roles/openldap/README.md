@@ -59,6 +59,16 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 **Privileges/security:** By default, Self Service Password uses an unprivilegied LDAP user to access the directory, then uses user-provided credentials to change their own password. If the [samba](../samba) role is enabled, Self Service Password will use the LDAP `admin` credentials to access the directory - only expose the service on trusted networks (by default it is exposed to LAN/RFC1918 private IP addresses).
 
+**Changing the OpenLDAP log level manually**:
+
+```bash
+$ sudo ldapmodify -Q -H ldapi:/// -Y EXTERNAL <<EOF
+dn: cn=config
+changetype: modify
+replace: olcLogLevel
+olcLogLevel: 2040
+EOF
+```
 
 ## References
 

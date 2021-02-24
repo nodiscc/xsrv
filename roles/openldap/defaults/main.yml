@@ -17,6 +17,8 @@ openldap_admin_password: "{{ vault_openldap_admin_password }}"
 openldap_bind_username: "bind"
 openldap_bind_password: "{{ vault_openldap_bind_password }}"
 
+# log level for the openldap server (integer) - https://openldap.org/doc/admin24/slapdconf2.html
+openldap_log_level: 256
 
 ##### LDAP ACCOUNT MANAGER #####
 
