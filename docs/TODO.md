@@ -2,14 +2,18 @@
 
 ### xsrv/xsrv
 
+- #414 - openldap role runs twice (when samba role is enabled?) - `1.1.0`
+- #413 - nextcloud: database password cannot be changed after initial installation - `1.1.0`
+- #412 - WIP: openldap! add Self Service Password LDAP password reset tool - `1.1.0`
+- #410 - upgrade ldap-account-manager to v7.4 - `1.1.0`
 - #409 - automate github/gitlab release generation - `1.1.0`
 - #406 - xsrv: self-upgrade subcommand - `1.1.0`
-- #405 - xsrv: replace environment variable based settings with settings from or positional arguments - `1.1.0`
+- #405 - xsrv: replace environment variable based settings with positional arguments or configuration file values - `1.1.0`
 - #404 - add xsrv info command - `1.1.0`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900 - `1.1.0`
 - #401 - openldap: add self-service-password passwrd reset tool - `1.1.0`
 - #393 - Samba: performance improvements (socket options)?
-- #392 - SSH: harden MaxStartups option? - `1.1.0`
+- #392 - SSH: harden MaxStartups option? - `1.2.0`
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed
 - #389 - WIP: xsrv: add show-ssh-config subcommand (display ssh config to use in ~/.ssh/config)
 - #388 - WIP: add libvirt role
@@ -80,8 +84,8 @@
 - #267 - apache: make disabled modules list configurable, disable more modules by default
 - #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
 - #265 - apache: provide custom error pages
-- #263 - Netdata: setup registry - `1.1.0`
-- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS)
+- #263 - Netdata: setup registry - `1.2.0`
+- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS) - `1.1.0`
 - #258 - WIP: add custom info page to netdata
 - #256 - CAS, SAML or Oauth Sigle Sign On (SSO)
 - #255 - new role: custom homepage generation
@@ -119,7 +123,6 @@
 - #210 - xsrv-homepage: add more (optional) features to homepage
 - #208 - netdata: graph/alert on logwatch warnings
 - #207 - netdata: make ping checks configurable
-- #206 - netdata: add https://gitlab.com/nodiscc/netdata-debsecan - `1.1.0`
 - #205 - netdata: monitor debsums warnings/return status
 - #204 - netdata: add custom dashboard with status summary of the host/important logs/reports
 - #203 - netdata: monitor snmpd
@@ -143,7 +146,7 @@
 - #181 - netdata: monitor MySQL server
 - #180 - netdata: graph SCAP workbench warnings
 - #178 - netdata: graph/alert on deborphan matches
-- #177 - common: add lynis audit tool - `1.1.0`
+- #177 - monitoring: add lynis audit tool - `1.1.0`
 - #176 - netdata: add Qualys SSL check module
 - #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
 - #174 - netdata: allow setting a repetition period for alarms
@@ -177,7 +180,7 @@
 - #143 - nextcloud: add mindmap app
 - #142 - nextcloud: add files automated tagging app
 - #141 - nextcloud: add fail2ban to documentation
-- #140 - WIP: add graylog role
+- #140 - WIP: add graylog role - `1.1.0`
 - #138 - apache: rewrite all 500 502 503 errors to generic 50x.html error page
 - #137 - apache: allow setting up HTTP Basic auth and autoindex for specific directories/URLs/virtualhosts
 - #134 - tt-rss: RuntimeWarning during SQL update task
