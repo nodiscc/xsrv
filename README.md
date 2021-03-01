@@ -76,7 +76,7 @@ xsrv deploy
 [![](https://i.imgur.com/lHgDbDC.png)](roles/mumble)
 [![](https://i.imgur.com/PRE7fvn.png)](roles/openldap)
 [![](https://i.imgur.com/WUdwbAX.png)](roles/rocketchat)
-[![](https://i.imgur.com/nNzTiDO.png)](roles/homepage)
+[![](https://i.imgur.com/KDJZuFO.png)](roles/homepage)
 [![](https://i.imgur.com/Fg8uRjL.png)](roles/jellyfin)
 
 ## Source code
