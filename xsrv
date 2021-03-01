@@ -64,7 +64,6 @@ function check_host_name() {
     if [[ -z "$host_name" ]]; then
         host_vars_dirs=$(find "$playbooks_dir/$playbook_name/host_vars/" -maxdepth 1 -type d)
         host_name="${host_vars_dirs##*/}"
-        echo "[xsrv] DEBUG: host_vars_dirs: $host_vars_dirs"
         echo "[xsrv] INFO: no host name provided, using $host_name as host name"
         if [[ ! $(echo "$host_name" | wc -l) -eq 1 ]]; then
             echo "[xsrv] ERROR: no host name specified and multiple hosts found in playbook"; exit 1
