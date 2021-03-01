@@ -127,6 +127,12 @@
       color: #fff;
     }
 
+    .self-service-password:hover a, .self-service-password:hover {
+      background-color: #eb8927;
+      color: #fff;
+    }
+
+
     .icecast:hover a, .icecast:hover {
       background-color: #D0AE21;
       color: #fff;
@@ -189,6 +195,9 @@
       {% endif %}
       {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
       <a class="ldap-account-manager" href="https://{{ ldap_account_manager_fqdn }}"><img src="res/ldap-account-manager.png"/> ldap-account-manager</a>
+      {% endif %}
+      {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_ssp %}
+      <a class="self-service-password" href="https://{{ self_service_password_fqdn }}"><img src="res/self-service-password.png"/> self-service password</a>
       {% endif %}
       {% if 'nodiscc.xsrv.monitoring' in role_names %}
       <a class="netdata" href="https://{{ inventory_hostname }}:19999/#theme=white"><img src="res/netdata.png"/> netdata</a>
