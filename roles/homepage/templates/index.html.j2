@@ -184,10 +184,10 @@
       {% if 'nodiscc.xsrv.gitea' in role_names %}
       <a class="gitea" href="https://{{ gitea_fqdn }}"><img src="res/gitea.png"/> gitea</a>
       {% endif %}
-      {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
-      <a class="mumble" href="https://{{ inventory_hostname }}"><img src="res/mumble.png"/> mumble</a>
+      {% if 'nodiscc.xsrv.mumble' in role_names %}
+      <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ mumble_port }}"><img src="res/mumble.png"/> mumble</code></a>
       {% endif %}
-      {% if 'nodiscc.xsrv.nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
+      {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
       <a class="ldap-account-manager" href="https://{{ ldap_account_manager_fqdn }}"><img src="res/ldap-account-manager.png"/> ldap-account-manager</a>
       {% endif %}
       {% if 'nodiscc.xsrv.monitoring' in role_names %}
