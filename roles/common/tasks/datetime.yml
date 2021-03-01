@@ -11,3 +11,9 @@
     package:
       - ntp
       - ntpdate
+
+- name: start NTP time synchronization service
+  service:
+    name: ntp
+    state: started
+    enabled: yes
