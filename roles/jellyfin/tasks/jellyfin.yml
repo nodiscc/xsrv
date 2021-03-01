@@ -56,7 +56,7 @@
     owner: root
     group: jellyfin
     mode: 0750
-  when: jellyfin_samba_share_enabled|bool
+  when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
 
 - name: mount jellyfin samba share to jellyfin directory
   mount:
@@ -65,7 +65,7 @@
     opts: bind
     state: mounted
     fstype: none
-  when: jellyfin_samba_share_enabled|bool
+  when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
 
 - name: run all notified handlers
   meta: flush_handlers
