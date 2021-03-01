@@ -15,14 +15,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
   - when samba role is enabled, use the LDAP admin DN to access the directory (required to be able to change `sambaNtPassword` attribute)
   - make various settings configurable, add correctness checks for all variables
 - openldap: make log level configurable
+- homepage: add jellyfin/self-service-password links when relevant roles/variables are enabled
 
 **Changed:**
-- update documentation (upgrade procedure, example playbook, mirrors, TOC, links, ansible-collection installation, list of all variables, ansible.cfg)
+- update documentation (upgrade procedure, example playbook, mirrors, TOC, links, ansible-collection installation, list of all variables, ansible.cfg...)
 
 **Fixed:**
 - xsrv: fix show-defaults command (by default display all role defaults for the default playbook)
+- homepage: fix mumble and ldap-account-manager links
 
-**Tools:**
+**Tools/maintenance:**
 - Makefile: add a make changelog target (print commits since last tag)
 - tt-rss: cleanup/grouping
 - roles/*/defaults/main.yml: add header for all defaults files
