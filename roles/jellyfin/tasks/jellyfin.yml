@@ -52,7 +52,7 @@
 - name: create mountpoint for jellyfin samba share
   file:
     state: directory
-    path: /var/lib/jellyfin
+    path: /var/lib/jellyfin/sambashare
     owner: root
     group: jellyfin
     mode: 0750
