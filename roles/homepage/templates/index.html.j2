@@ -117,6 +117,11 @@
       color: #fff;
     }
 
+    .jellyfin:hover a, .jellyfin:hover {
+      background-color: #a25fc4;
+      color: #fff;
+    }
+
     .mumble:hover a, .mumble:hover {
       background-color: #545454;
       color: #fff;
@@ -126,6 +131,12 @@
       background-color: #009587;
       color: #fff;
     }
+
+    .self-service-password:hover a, .self-service-password:hover {
+      background-color: #eb8927;
+      color: #fff;
+    }
+
 
     .icecast:hover a, .icecast:hover {
       background-color: #D0AE21;
@@ -184,11 +195,17 @@
       {% if 'nodiscc.xsrv.gitea' in role_names %}
       <a class="gitea" href="https://{{ gitea_fqdn }}"><img src="res/gitea.png"/> gitea</a>
       {% endif %}
-      {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
-      <a class="mumble" href="https://{{ inventory_hostname }}"><img src="res/mumble.png"/> mumble</a>
+      {% if 'nodiscc.xsrv.jellyfin' in role_names %}
+      <a class="jellyfin" href="https://{{ jellyfin_fqdn }}"><img src="res/jellyfin.png"/> jellyfin</a>
       {% endif %}
-      {% if 'nodiscc.xsrv.nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
+      {% if 'nodiscc.xsrv.mumble' in role_names %}
+      <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ mumble_port }}"><img src="res/mumble.png"/> mumble</code></a>
+      {% endif %}
+      {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
       <a class="ldap-account-manager" href="https://{{ ldap_account_manager_fqdn }}"><img src="res/ldap-account-manager.png"/> ldap-account-manager</a>
+      {% endif %}
+      {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_ssp %}
+      <a class="self-service-password" href="https://{{ self_service_password_fqdn }}"><img src="res/self-service-password.png"/> self-service password</a>
       {% endif %}
       {% if 'nodiscc.xsrv.monitoring' in role_names %}
       <a class="netdata" href="https://{{ inventory_hostname }}:19999/#theme=white"><img src="res/netdata.png"/> netdata</a>

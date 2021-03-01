@@ -40,6 +40,12 @@ os_security_kernel_enable_core_dump: no
 setup_apt: yes
 
 
+##### DATE/TIME #####
+
+# timezone name (if commented out, timezone will not be changed)
+# timezone: "Etc/UTC"
+
+
 ##### SSH SERVER #####
 
 # setup/harden SSH server (yes/no)

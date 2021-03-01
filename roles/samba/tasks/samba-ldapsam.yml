@@ -62,10 +62,6 @@
     mode: 0644
   notify: update ansible facts
 
-- name: set samba LDAP admin dn password (always returns changed)
-  command: "smbpasswd -w {{ openldap_bind_password }}"  # noqa 301
-  when: samba_passdb_backend == 'ldapsam'
-
 # update ansible facts from files in /etc/ansible/facts.d/
 - name: run all notified handlers
   meta: flush_handlers

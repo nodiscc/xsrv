@@ -1,6 +1,9 @@
----
-
 ##### DATE/TIME #####
+
+- name: set timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
+  when: timezone is defined
 
 - name: install NTP time synchronization service
   apt:

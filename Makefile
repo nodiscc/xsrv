@@ -31,7 +31,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint cryptography==3.3.2 yamllint ansible==2.10.5
+	pip3 install isort ansible-lint cryptography==3.3.2 yamllint ansible==2.10.7
 
 # build the ansible collection tag.gz
 build_collection: venv bump_versions
@@ -80,9 +80,15 @@ update_todo:
 	./gitea-cli/bin/gitea issues xsrv/xsrv | jq -r '.[] | "- #\(.number) - \(.title) - `\(.milestone.title)`"'  | sed 's/ - `null`//' >> docs/TODO.md
 	rm -rf gitea-cli
 
+# establish a changelog since the last git tag
+changelog:
+	@tag=$(LAST_TAG) && \
+	echo "[INFO] changes since last tag $$tag" && \
+	git log --oneline $$tag...HEAD
+
 # bump version numbers in repository files
 bump_versions:
-	tag=$(LAST_TAG) && \
+	@tag=$(LAST_TAG) && \
 	sed -i "s/^version:.*/version: $$tag/" galaxy.yml && \
 	sed -i "s/^version=.*/version=\"$$tag\"/" xsrv && \
 	sed -i "s/^version =.*/version = '$$tag'/" docs/conf.py && \

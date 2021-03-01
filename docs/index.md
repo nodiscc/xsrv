@@ -71,7 +71,7 @@ xsrv deploy
 [![](https://i.imgur.com/lHgDbDC.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble)
 [![](https://i.imgur.com/PRE7fvn.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap)
 [![](https://i.imgur.com/WUdwbAX.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat)
-[![](https://i.imgur.com/nNzTiDO.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
+[![](https://i.imgur.com/KDJZuFO.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
 [![](https://i.imgur.com/Fg8uRjL.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
 
 

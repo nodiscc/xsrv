@@ -25,18 +25,19 @@
   when: not ansible_check_mode
 
 # slappasswd uses a new seed every time, hence the hash changes every time the playbook runs
-- name: create LDAP admin account (not idempotent, returns changed every time)
+- name: create LDAP admin account (not idempotent, returns changed every time), set log level
   ldap_attr:
     dn: "{{ item.dn }}"
     name: "{{ item.name }}"
     values: "{{ item.value }}"
     state: 'exact'
-  no_log: True
+  no_log: "{{ item.no_log | default(False) }}"
   with_items:
     - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootDN', value: 'cn=admin,{{ openldap_base_dn }}' }
     - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootDN', value: 'cn=admin,cn=config' }
-    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
-    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}' }
+    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}', no_log: True }
+    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}', no_log: True }
+    - { dn: 'cn=config', name: 'olcLogLevel', value: '{{ openldap_log_level }}' }
   when: not ansible_check_mode
 
 - name: create basic Organizational Units
@@ -77,4 +78,15 @@
     attributes:
       description: "Unprivilegied user for resolving UIDs/GIDs"
       userPassword: "{{ openldap_bind_password }}"
+  when: not ansible_check_mode
+
+- name: set password for unprivilegied LDAP bind user
+  ldap_attr:
+    dn: "cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}"
+    name: "userPassword"
+    values: "{{ openldap_bind_password }}"
+    state: 'exact'
+    server_uri: ldap://localhost/
+    bind_dn: cn=admin,{{ openldap_base_dn }}
+    bind_pw: "{{ openldap_admin_password }}"
   when: not ansible_check_mode
