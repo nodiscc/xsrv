@@ -117,6 +117,11 @@
       color: #fff;
     }
 
+    .jellyfin:hover a, .jellyfin:hover {
+      background-color: #a25fc4;
+      color: #fff;
+    }
+
     .mumble:hover a, .mumble:hover {
       background-color: #545454;
       color: #fff;
@@ -189,6 +194,9 @@
       {% endif %}
       {% if 'nodiscc.xsrv.gitea' in role_names %}
       <a class="gitea" href="https://{{ gitea_fqdn }}"><img src="res/gitea.png"/> gitea</a>
+      {% endif %}
+      {% if 'nodiscc.xsrv.jellyfin' in role_names %}
+      <a class="jellyfin" href="https://{{ jellyfin_fqdn }}"><img src="res/jellyfin.png"/> jellyfin</a>
       {% endif %}
       {% if 'nodiscc.xsrv.mumble' in role_names %}
       <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ mumble_port }}"><img src="res/mumble.png"/> mumble</code></a>
