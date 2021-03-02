@@ -15,7 +15,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
   - when samba role is enabled, use the LDAP admin DN to access the directory (required to be able to change `sambaNtPassword` attribute)
   - make various settings configurable, add correctness checks for all variables
 - openldap: make log level configurable
-- homepage: add jellyfin/self-service-password links when relevant roles/variables are enabled
+- homepage: add jellyfin/self-service-password links (when relevant roles/variables are enabled)
+- common: ensure NTP service is started
 
 **Changed:**
 - update documentation (upgrade procedure, example playbook, mirrors, TOC, links, ansible-collection installation, list of all variables, ansible.cfg...)
@@ -23,6 +24,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - xsrv: fix show-defaults command (by default display all role defaults for the default playbook)
 - homepage: fix mumble and ldap-account-manager links
+- samba: fix duplicate execution of the openldap role when samba uses LDAP passdb backend
+- rocketchat: fix variable checks not being run before applying the role
+- fix error 'Please set SELF_URL_PATH to the correct value detected for your server'
+- jellyfin: only mount jellyfin samba share when the samba role is enabled, fix mountpoint creation
 
 **Tools/maintenance:**
 - Makefile: add a make changelog target (print commits since last tag)
