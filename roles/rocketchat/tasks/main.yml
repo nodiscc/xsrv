@@ -1,3 +1,6 @@
+- include: checks.yml
+  tags: rocketchat
+
 - include: rocketchat.yml
   become: yes
   tags: rocketchat
