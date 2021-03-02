@@ -16,18 +16,22 @@ net.ipv4.conf.all.send_redirects = 0
 net.ipv6.conf.all.disable_ipv6 = 1
 # Disable IPv6 traffic forwarding.
 net.ipv6.conf.all.forwarding = 0
-
 # Limit configuration information disclosed by IPv6
 # Ignore Router Advertisements on IPv6
 net.ipv6.conf.all.accept_ra = 0
 # Ignore Router Solicitations on IPv6
 net.ipv6.conf.all.router_solicitations = 0
-# TODO better documentation
+# Ignore Router Preference in Router Advertisements
 net.ipv6.conf.all.accept_ra_rtr_pref = 0
+# Ignore Prefix Information in Router Advertisement
 net.ipv6.conf.all.accept_ra_pinfo = 0
+# Ignore Default Router Preference in Router Advertisements
 net.ipv6.conf.all.accept_ra_defrtr = 0
+# Do not autoconfigure addresses using Prefix Information in Router Advertisements
 net.ipv6.conf.all.autoconf = 0
+# The amount of Duplicate Address Detection probes to send
 net.ipv6.conf.all.dad_transmits = 0
+# Maximum number of autoconfigured addresses per interface
 net.ipv6.conf.all.max_addresses = 1
 
 # Disable IP Source Routing
