@@ -1,6 +1,6 @@
----
+##### SHAARLI #####
 
-##### PACKAGES #####
+### PACKAGES ###
 
 - name: install required packages for shaarli
   apt:
@@ -17,7 +17,7 @@
       - php-curl
       - php-gettext
 
-###### SHAARLI INSTALLATION #####
+### SHAARLI INSTALLATION ###
 
 - name: check shaarli if installation directory exists
   stat:
@@ -151,7 +151,7 @@
     mode: 0644
 
 
-##### CLEANUP #####
+### CLEANUP ###
 
 - name: remove old shaarli installation
   file:
@@ -180,7 +180,7 @@
   tags: fail2ban
   notify: reload fail2ban
 
-##### BACKUPS #####
+### BACKUPS ###
 
 - name: copy rsnapshot configuration for shaarli backups
   template:
@@ -189,3 +189,15 @@
     mode: 0600
   when: '"nodiscc.xsrv.backup" in role_names'
   notify: check rsnapshot configuration
+
+### RSYSLOG ###
+
+- name: copy rsyslog configuration for shaarli
+  template:
+    src: etc_rsyslog.d_shaarli.conf.j2
+    dest: /etc/rsyslog.d/shaarli.conf.j2
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog
+  when: "'nodiscc.xsrv.common' in role_names"
