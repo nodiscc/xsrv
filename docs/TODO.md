@@ -2,6 +2,13 @@
 
 ### xsrv/xsrv
 
+- #429 - gitea: role is not idempotent?
+- #428 - gitea: document backup restoration procedure
+- #427 - transmission: document restoring backups
+- #426 - samba: add ability to delete a share by setting state: absent
+- #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification?
+- #424 - nextcloud: add templateeditor app?
+- #423 - nextcloud: add documents app?
 - #422 - WIP: makefile: automate release procedure - `1.1.0`
 - #420 - homepage: add favicon - `1.2.0`
 - #419 - tt_rss: pin version to specific commit - `1.2.0`

@@ -66,12 +66,3 @@
     group: sambausers
     mode: 0775
   with_items: "{{ samba_shares }}"
-
-
-###### FAIL2BAN ############
-# copy fail2ban jail config/filters TODO
-
-#- name: copy EXAMPLE fail2ban jail config
-#  template: src=etc_fail2ban_jail.d_EXAMPLE.conf.j2 dest=/etc/fail2ban/jail.d/EXAMPLE.conf mode=0600
-#  tags: debug-config-fail2ban
-#  notify: restart fail2ban

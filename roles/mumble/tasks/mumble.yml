@@ -17,7 +17,7 @@
   notify: restart mumble
   no_log: True
 
-##### FAIL2BAN ##### TODO
+##### FAIL2BAN #####
 
 - name: copy mumble fail2ban jail config
   template:
@@ -40,7 +40,6 @@
 
 ##### COMMAND-LINE/MISC INSTALLATION STEPS #####
 
-# TODO not idempotent
 - name: upate mumble superuser password (not idempotent, returns changed every time)
   become: yes
   become_user: mumble-server

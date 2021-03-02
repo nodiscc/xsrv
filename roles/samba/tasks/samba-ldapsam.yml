@@ -44,7 +44,7 @@
   shell: gunzip -c /usr/share/doc/samba/examples/LDAP/samba.ldif.gz > /root/samba.ldif
   changed_when: False
 
-# TODO use ldap modules
+# DEBT use ldap modules
 - name: import samba schema to LDAP database
   command: ldapadd -Q -Y EXTERNAL -H ldapi:/// -f /root/samba.ldif
   when: (ansible_local.samba.general.ldap_schema_installed is not defined) or (not ansible_local.samba.general.ldap_schema_installed)

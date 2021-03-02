@@ -65,7 +65,6 @@ samba_passdb_backend: "tdbsam"
 # Each item has the following attributes:
 #   username: the username. Do not use a username already in use by a system service or interactive user!
 #   password: password for this user. It is best to store this value in ansible-vault
-#   TODO: state: present/absent. Set to 'absent' to delete the account
 # Example:
 # samba_users:
 #   - username: alice

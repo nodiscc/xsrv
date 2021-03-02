@@ -77,8 +77,6 @@ nextcloud_apps:
   - { state: "enable", app: "notes" }
   - { state: "enable", app: "deck" }
   - { state: "enable", app: "admin_audit" }
-#  - { state: "enable", app: "documents" } #TODO requires download
-#  - { state: "enable", app: "templateeditor" } #TODO requires download
 
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)

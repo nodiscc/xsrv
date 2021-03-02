@@ -54,8 +54,6 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role and [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
 
-Restoring a backup: TODO
-
 
 ### Clients
 

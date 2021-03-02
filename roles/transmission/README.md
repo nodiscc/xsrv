@@ -43,7 +43,6 @@ Usage
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmsssion.conf.j2) for the [backup](../backup) role.
 
-Restoring a backup: TODO
 
 ### Clients
 

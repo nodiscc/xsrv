@@ -1,5 +1,3 @@
----
-
 ##### NETDATA SYSTEM MONITOR #####
 
 - name: install netdata requirements
@@ -79,8 +77,8 @@
   changed_when: False
   when: netdata_install_method == 'binary'
 
-# TODO Not idempotent/overwrites configuration/causes netdata restart
-- name: run netdata installer
+# This always causes a netdata restart, hence the netdata_install_method: packagecloud is preferred
+- name: run netdata installer (always return changed)
   command: /root/netdata-{{ netdata_version }}.gz.run --accept -- --dont-start-it --disable-telemetry
   when: netdata_install_method == 'binary'
   notify: restart netdata

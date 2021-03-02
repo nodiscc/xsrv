@@ -1,6 +1,6 @@
----
+#### NEXTCLOUD #####
 
-##### PACKAGES #####
+### PACKAGES ###
 
 - name: install required packages
   apt:
@@ -24,7 +24,7 @@
       - ffmpeg
       - acl
 
-###### FAIL2BAN ##########
+### FAIL2BAN ###
 
 - name: copy nextcloud fail2ban jail config
   template:
@@ -42,7 +42,7 @@
   tags: fail2ban
   notify: reload fail2ban
 
-##### BACKUPS #####
+### BACKUPS ###
 
 - name: copy rsnapshot configuration for nextcloud backups
   template:
@@ -180,8 +180,7 @@
   when:
     - nextcloud_action == 'upgrade'
 
-# TODO: not idempotent, replace with template-based management of config.php
-# TODO: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
+# Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
 - name: set nextcloud config.php values (not idempotent, returns changed every time - occ doesn't report changed status)
   become: yes
   become_user: www-data
@@ -234,7 +233,7 @@
     job: "/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php"
     name: "run nextcloud background tasks"
 
-##### ANSIBLE FACTS #####
+### ANSIBLE FACTS ###
 
 - name: create ansible facts.d directory
   file:
@@ -248,7 +247,7 @@
     dest: /etc/ansible/facts.d/nextcloud.fact
     mode: 0644
 
-###### NEXTCLOUD APPLICATIONS ######
+### NEXTCLOUD APPLICATIONS ####
 
 - include: nextcloud-applications.yml
 
