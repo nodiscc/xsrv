@@ -4,7 +4,7 @@ This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/Op
 
 [![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](https://screenshots.debian.net/package/ldap-account-manager)
 [![](https://screenshots.debian.net/screenshots/000/016/087/thumb.png)](https://screenshots.debian.net/package/ldap-account-manager)
-[![](TODO)](TODO)
+[![](https://i.imgur.com/loA7FGf.png)](https://i.imgur.com/vaimb8j.png)
 
 
 ## Requirements/dependencies/example playbook
