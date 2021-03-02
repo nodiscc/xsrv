@@ -26,8 +26,6 @@ tt_rss_db_password: "{{ vault_tt_rss_db_password }}"
 
 # tt-rss version (git revision)
 tt_rss_version: "master"
-# Allow users to register themselves (true/false - QUOTED)
-tt_rss_allow_registration: "false"
 # Maximum number of users allowed to register accounts
 tt_rss_account_limit: 10
 # install additional tt-rss themes (yes/no - UNMAINTAINED)
