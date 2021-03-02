@@ -20,4 +20,4 @@ galaxy_info:
 dependencies:
   # - nodiscc.xsrv.common
   # - nodiscc.xsrv.backup
-  - { role: nodiscc.xsrv.openldap, when: samba_passdb_backend == 'ldapsam' }
+  # - nodiscc.xsrv.openldap # when: samba_passdb_backend == 'ldapsam'
