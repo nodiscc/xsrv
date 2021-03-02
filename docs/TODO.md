@@ -2,16 +2,19 @@
 
 ### xsrv/xsrv
 
-- #414 - openldap role runs twice (when samba role is enabled?) - `1.1.0`
-- #413 - nextcloud: database password cannot be changed after initial installation - `1.1.0`
-- #412 - WIP: openldap! add Self Service Password LDAP password reset tool - `1.1.0`
+- #422 - WIP: makefile: automate release procedure - `1.1.0`
+- #420 - homepage: add favicon - `1.2.0`
+- #419 - tt_rss: pin version to specific commit - `1.2.0`
+- #417 - monitoring: add auto-tests for each enabled vhost - `1.2.0`
+- #416 - shaarli: agregate logs to syslog - `1.1.0`
+- #415 - rocketchat: log message: mongo: JOURNAL  [journal writer] warning: open of lsn file failed - `1.1.0`
+- #413 - nextcloud: database password cannot be changed after initial installation - `1.2.0`
 - #410 - upgrade ldap-account-manager to v7.4 - `1.1.0`
-- #409 - automate github/gitlab release generation - `1.1.0`
+- #409 - tools: automate release generation - `1.1.0`
 - #406 - xsrv: self-upgrade subcommand - `1.1.0`
-- #405 - xsrv: replace environment variable based settings with positional arguments or configuration file values - `1.1.0`
+- #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - `2.0.0`
 - #404 - add xsrv info command - `1.1.0`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900 - `1.1.0`
-- #401 - openldap: add self-service-password passwrd reset tool - `1.1.0`
 - #393 - Samba: performance improvements (socket options)?
 - #392 - SSH: harden MaxStartups option? - `1.2.0`
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed
@@ -26,11 +29,11 @@
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ?
 - #377 - rocketchat: enable/configure federation?
 - #376 - netdata: enable samba monitoring when samba role is installed
-- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.1.0`
+- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.2.0`
 - #374 - makefile/readthedocs: include roles documentation in generated docs
 - #372 - WIP: shaarli: make hide_timestamp option configurable
 - #366 - nextcloud: file locking sometimes causes synchronization errors
-- #365 - nextcloud: LDAP user backend - `1.1.0`
+- #365 - nextcloud: LDAP user backend - `1.2.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
 - #362 - netdata: default apache status monitoring jobs trigger error 403
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles
@@ -43,7 +46,7 @@
 - #352 - common: add support for hardware RNG
 - #351 - nextcloud: enable pretty URLs
 - #348 - ldap-account-manager: Unable to set locale
-- #347 - DeprecationWarning for ldap_attr module - `1.1.0`
+- #347 - DeprecationWarning for ldap_attr module - `1.2.0`
 - #345 - openldap: postgresql backend?
 - #344 - nextcloud: add office suite integration
 - #343 - nextcloud: warning on settings/admin/overview: missing bcmath php module
@@ -67,9 +70,9 @@
 - #307 - apache: make certificate status endpoint enable/disable configurable
 - #305 - switch firewall management to firewalld - `2.0.0`
 - #303 - firehol: add example NAT loopback/hairpin rule
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.1.0`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.2.0`
 - #293 - WIP: add nginx role
-- #290 - netdata: monitor number of upgradeable APT packages - `1.1.0`
+- #290 - netdata: monitor number of upgradeable APT packages - `1.2.0`
 - #280 - Samba Directory Controller or other Identity Management solution
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
 - #276 - Samba: protect file shares from cryptolockers
@@ -85,7 +88,7 @@
 - #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
 - #265 - apache: provide custom error pages
 - #263 - Netdata: setup registry - `1.2.0`
-- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS) - `1.1.0`
+- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS) - `1.2.0`
 - #258 - WIP: add custom info page to netdata
 - #256 - CAS, SAML or Oauth Sigle Sign On (SSO)
 - #255 - new role: custom homepage generation
@@ -112,7 +115,7 @@
 - #226 - mysql: update root password for *all* root accounts
 - #224 - mysql: log MariaDB slow queries
 - #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost
-- #221 - apache: add a symlink to /var/www in home directory - `1.1.0`
+- #221 - apache: add a simple public HTTP server/vhost option - `1.2.0`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage
 - #218 - apache: implement modsecurity
 - #216 - xsrv: generate a local copy of the homepage/netdata custom dashboard
@@ -146,7 +149,7 @@
 - #181 - netdata: monitor MySQL server
 - #180 - netdata: graph SCAP workbench warnings
 - #178 - netdata: graph/alert on deborphan matches
-- #177 - monitoring: add lynis audit tool - `1.1.0`
+- #177 - monitoring: add lynis audit tool - `1.2.0`
 - #176 - netdata: add Qualys SSL check module
 - #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
 - #174 - netdata: allow setting a repetition period for alarms
