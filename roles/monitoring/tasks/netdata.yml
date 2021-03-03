@@ -192,6 +192,7 @@
     name: netdata
     state: started
     enabled: yes
+  when: not ansible_check_mode
 
 # Apply IP access restrictions as soon as possible
 - name: run all notified handlers now
