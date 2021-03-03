@@ -26,7 +26,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ## Usage
 
-### Clients
+### Accessing samba shares
 
 - **From Windows clients:** access from the `Network` entry in the Windows file manager sidebar, or directly at `\\SERVER_ADDRESS` in the explorer location bar.
 - **From Mac OSX clients:** access from the `Network` entry in the OSX Finder sidebar, or directly at `smb://SERVER_ADDRESS/` from the `Go > Connect to server...` finder menu entry.
