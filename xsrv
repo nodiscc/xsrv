@@ -4,6 +4,7 @@ set -o nounset
 
 # Configuration / defaults
 venv_dir="${XSRV_VENV_DIR:=$HOME/.local/share/xsrv/venv}"
+xsrv_clone_dir="${XSRV_CLONE_DIR:=$HOME/.local/share/xsrv/git}"
 playbooks_dir="${XSRV_PLAYBOOKS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
@@ -11,6 +12,7 @@ skip_venv="${SKIP_VENV:=no}"
 pager="${PAGER:=less}"
 version="1.0.0"
 ansible_version="2.10.7"
+xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="release"
 local_backups_dir="data/backups"
 ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
@@ -249,8 +251,8 @@ function help() {
 function upgrade_roles() {
     check_playbook_exists
     if [[ ! -f "$playbook_dir"/requirements.yml ]]; then
-        echo "[xsrv] INFO: installing default collection git+https://gitlab.com/nodiscc/xsrv,$xsrv_upgrade_channel"
-        (cd "$playbook_dir" && ansible-galaxy collection install --force --collections-path "$playbook_dir/" git+https://gitlab.com/nodiscc/xsrv,$xsrv_upgrade_channel)
+        echo "[xsrv] INFO: installing default collection git+$xsrv_git_url,$xsrv_upgrade_channel"
+        (cd "$playbook_dir" && ansible-galaxy collection install --force --collections-path "$playbook_dir/" git+$xsrv_git_url,$xsrv_upgrade_channel)
     else
         echo "[xsrv] INFO: upgrading collections from requirements.yml"
         (cd "$playbook_dir" && ansible-galaxy collection install --force -r requirements.yml)
@@ -283,6 +285,33 @@ function show_defaults() {
     fi
 }
 
+function self_upgrade() {
+    script_path="$0"
+    echo "[xsrv] INFO fetching latest release..."
+    if [[ -d "$xsrv_clone_dir/.git" ]]; then
+       git -C "$xsrv_clone_dir" pull
+    else
+      git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
+    fi
+    new_version="$(grep '^version=.*' "$xsrv_clone_dir/xsrv" | cut -d= -f2)"
+    new_commit="$(git -C "$xsrv_clone_dir" rev-parse HEAD)"
+    read -r -p "[xsrv] INFO: this will upgrade the script at $script_path ($version) to $new_version ($new_commit). Type YES to confirm: " confirm_upgrade
+    if [[ "$confirm_upgrade" == "YES" ]]; then
+        if [[ -w "$script_path" ]]; then
+            ls -l $script_path
+            echo "[xsrv] INFO: $script_path is writeable"
+            cp "$xsrv_clone_dir/xsrv" "$script_path"
+        else
+            echo "[xsrv] INFO: $script_path is not writeable. Upgrading with sudo"
+            sudo cp -v "$xsrv_clone_dir/xsrv" "$script_path"
+        fi
+    else
+        echo "[xsrv] ERROR: did not enter YES, aborting"
+        exit 1
+    fi
+    echo "[xsrv] INFO: upgrade complete"
+}
+
 ############################
 
 function _main() {
@@ -303,6 +332,7 @@ function _main() {
         "fetch-backups") init_venv; shift; fetch_backups ;;
         "upgrade") init_venv; shift; upgrade_roles ;;
         "show-defaults") shift; show_defaults "$@";;
+        "self-upgrade") self_upgrade;;
         *) echo "[xsrv] ERROR: unrecognized command $command"; exit 1 ;;
     esac
 }
@@ -331,6 +361,9 @@ upgrade [playbook] [host]        upgrade roles to latest version
 shell [playbook] [host]          open an interactive shell on a host
 logs [playbook] [host]           view system log on a host
 help                             show this message
+
+# OTHER COMMANDS
+self-upgrade                     check for new releases/upgrade the xsrv script in-place
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)

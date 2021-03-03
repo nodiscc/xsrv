@@ -32,6 +32,7 @@ USAGE: xsrv COMMAND [playbook] [host]
 init-playbook [playbook]         initialize a new playbook
 edit-playbook [playbook]         edit/show playbook (list of roles)
 edit-inventory [playbook]        edit/show inventory file (list of hosts)
+show-defaults [playbook] [role]  show all variables and their default values
 
 # HOST-LEVEL COMMANDS
 init-host [playbook] [host]      add a new host to an existing playbook
@@ -43,16 +44,16 @@ fetch-backups [playbook] [host]  fetch backups from a host to the local backups/
 upgrade [playbook] [host]        upgrade roles to latest version
 shell [playbook] [host]          open an interactive shell on a host
 logs [playbook] [host]           view system log on a host
-show-defaults [role]             show all variables and their default values
 help                             show this message
+
+# OTHER COMMANDS
+self-upgrade                     check for new releases/upgrade the xsrv script in-place
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
 SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
 EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: less)
-
-
 ```
 
 Examples:
