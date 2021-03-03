@@ -8,13 +8,13 @@
   file:
     state: directory
     owner: root
-    group: root
+    group: "{{ item.group }}"
     mode: 0770
-    path: "{{ item }}"
+    path: "{{ item.path }}"
   with_items:
-    - /var/lib/rocket.chat/db
-    - /var/lib/rocket.chat/dump
-    - /var/lib/rocket.chat/uploads
+    - { path: "/var/lib/rocket.chat/db", group: "999" }
+    - { path: "/var/lib/rocket.chat/dump", group: "999" }
+    - { path: "/var/lib/rocket.chat/uploads", group: "65533" }
 
 - name: copy compose file
   template:
