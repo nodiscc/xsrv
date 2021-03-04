@@ -1,0 +1,7 @@
+# rsnapshot configuration for jellyfin media server backups
+{% if jellyfin_enable_media_backups %}
+backup	/var/lib/jellyfin/media	localhost/
+{% endif %}
+backup	/var/lib/jellyfin/data	localhost/
+backup	/var/lib/jellyfin/metadata	localhost/
+backup	/var/lib/jellyfin/root	localhost/

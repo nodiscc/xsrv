@@ -55,6 +55,10 @@ Jellyfin lets you watch your media from a web browser on your computer, apps on 
 You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance#Specification)-compatible media player on your local network, or use Jellyfin to play media thorugh any DLNA Media Renderer on your network. To use DLNA you must enable incoming/outgoing `UDP multicast on port 1900` traffic in the [firewall](../common). If you don't use DLNA it is recommended to turn it off completely under `Admin Dashboard > DLNA`.
 
 
+### Backups
+
+See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore, and the `jellyfin_enable_media_backups` [variable](defaults/main.yml) (automatic backups of the default media directory are disabled by default).
+
 
 ## License
 

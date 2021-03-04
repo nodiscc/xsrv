@@ -16,3 +16,9 @@
   tags:
     - jellyfin
     - apache
+
+- include: backups.yml
+  become: yes
+  tags:
+    - jellyfin
+    - backup
