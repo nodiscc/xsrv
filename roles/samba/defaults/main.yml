@@ -51,6 +51,11 @@ samba_hosts_allow:
   - '172.31.0.0/12'
   - '10.0.0.0/8'
 
+# (yes/no) enable automatic backups of samba share directories (when the backup role is enabled)
+# disable this and/or set backup paths manually if samba backups consume too
+# much disk space on the backup storage, or if you don't care about losing the data.
+samba_enable_backups: yes
+
 # list of hosts allowed to access the $IPC share anonymously
 # windows clients require access to $IPC to be able to access any other share,
 # so it is recommended to keep the same value as samba_hosts_allow
