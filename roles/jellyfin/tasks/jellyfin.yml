@@ -70,6 +70,26 @@
 - name: run all notified handlers
   meta: flush_handlers
 
+###### FAIL2BAN ############
+
+- name: copy jellyfin fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_jellyfin.conf.j2
+    dest: /etc/fail2ban/jail.d/jellyfin.conf
+    mode: 0644
+  tags: fail2ban
+  notify: reload fail2ban
+  when: "'nodiscc.xsrv.common' in role_names"
+
+- name: copy fail2ban jellyfin-auth filter
+  template:
+    src: etc_fail2ban_filter.d_jellyfin-auth.conf.j2
+    dest: /etc/fail2ban/filter.d/jellyfin-auth.conf
+    mode: 0644
+  tags: fail2ban
+  notify: reload fail2ban
+  when: "'nodiscc.xsrv.common' in role_names"
+
 ##### SERVICE #####
 
 - name: enable jellyfin service
