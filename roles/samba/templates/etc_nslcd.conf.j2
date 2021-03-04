@@ -140,3 +140,8 @@ base   passwd ou=users,{{ openldap_base_dn }}
 #filter group  (objectClass=aixAccessGroup)
 #map    group  cn               groupName
 #map    group  gidNumber        gid
+
+# This option prevents group membership lookups through LDAP for the
+# specified users. Alternatively, the value ALLLOCAL may be used. With that value
+# nslcd builds a full list of non-LDAP users on startup.
+nss_initgroups_ignoreusers ALLLOCAL
