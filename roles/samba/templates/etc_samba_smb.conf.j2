@@ -321,7 +321,7 @@
 
 {% endfor %}
 
-{% if 'nodiscc.xsrv.jellyfin' in role_name and jellyfin_samba_share_enabled %}
+{% if 'nodiscc.xsrv.jellyfin' in role_names and jellyfin_samba_share_enabled %}
 [jellyfin]
     comment = Jellyfin media server - drop media files here
     path = "/var/lib/samba/shares//jellyfin"

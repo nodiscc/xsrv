@@ -69,8 +69,8 @@
     state: directory
     path: /var/lib/jellyfin/sambashare
     owner: root
-    group: jellyfin
-    mode: 0750
+    group: sambausers
+    mode: 0755
   when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
 
 - name: mount jellyfin samba share to jellyfin directory
@@ -87,8 +87,8 @@
     path: /var/lib/samba/shares/jellyfin/{{ item }}
     state: directory
     owner: jellyfin
-    group: jellyfin
-    mode: 02770
+    group: sambausers
+    mode: 02775
   with_items:
     - movies
     - music

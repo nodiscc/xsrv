@@ -38,8 +38,8 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 After initial installation, open https://media.CHANGEME.org in a web browser, and:
 - set a Jellyfin administrator login/password
 - add media libraries pointing to directories where your media files are stored:
-  - `/var/lib/jellyfin/media`
-  - `/var/lib/jellyfin/sambashare` if the [samba](../samba) role is enabled
+  - `/var/lib/jellyfin/media/{books,mixedcontent,movies,music,musicvideos,photos,shows}`
+  - `/var/lib/jellyfin/sambashare/{books,mixedcontent,movies,music,musicvideos,photos,shows}` if the [samba](../samba) role is enabled
 
 
 ### Uploading media
