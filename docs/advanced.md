@@ -28,12 +28,10 @@ You can further automate deployment procedures using a CI/CD pipeline. See the e
 
 You can either:
 - use the [`xsrv` script](usage.md#command-line-usage) to manage your ansible environments
-- or use components through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
-
-If you just want to integrate the [roles](index.md#roles) in your own playbooks, install them using [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html):
+- or use [roles](index.md#roles) through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html). To download roles to your anisble controller:
 
 ```yaml
-# requirements.yml
+# create requirements.yml
 collections:
   - name: https://gitlab.com/nodiscc/xsrv.git
     type: git
@@ -41,14 +39,16 @@ collections:
 ```
 
 ```bash
-$ ansible-galaxy collection install --update -r requirements.yml
+# install the collection
+$ ansible-galaxy collection install -r requirements.yml
 ```
 
-And include them in your playbooks:
-
-```
+```yaml
+# include the collection and roles in your playbooks
 # playbook.yml
 - hosts: my.CHANGEME.org
+  collections:
+    - nodiscc.xsrv
   roles:
    - nodiscc.xsrv.common
    - nodiscc.xsrv.monitoring
@@ -62,7 +62,7 @@ To upgrade the collection to the latest [release](https://gitlab.com/nodiscc/xsr
 $ ansible-galaxy collection install --force -r requirements.yml
 ```
 
-See [Ansible documentation - Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
+See [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Ansible documentation - Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
 
 
 ## See also
