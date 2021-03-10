@@ -298,7 +298,6 @@ function self_upgrade() {
     read -r -p "[xsrv] INFO: this will upgrade the script at $script_path ($version) to $new_version ($new_commit). Type YES to confirm: " confirm_upgrade
     if [[ "$confirm_upgrade" == "YES" ]]; then
         if [[ -w "$script_path" ]]; then
-            ls -l $script_path
             echo "[xsrv] INFO: $script_path is writeable"
             cp "$xsrv_clone_dir/xsrv" "$script_path"
         else
