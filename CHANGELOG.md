@@ -3,10 +3,12 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.0.1) - UNRELEASED
+#### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.1.0) - 2021-03-14
 
 **Added:**
-- monitoring role: add [netdata-debsecan](https://gitlab.com/nodiscc/netdata-debsecan) module
+- xsrv: add self-upgrade command
+- monitoring: add [netdata-debsecan](https://gitlab.com/nodiscc/netdata-debsecan) module
+- common: ensure NTP service is started
 - common: make timezone configurable (default to not touching the timezone)
 - openldap: add [Self Service Password](https://ltb-project.org/documentation/self-service-password) password reset tool (fixes #401)
   - requires manual configuration of `self_service_password_fqdn` and `vault_self_service_password_keyphrase`
@@ -16,24 +18,39 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
   - make various settings configurable, add correctness checks for all variables
 - openldap: make log level configurable
 - homepage: add jellyfin/self-service-password links (when relevant roles/variables are enabled)
-- common: ensure NTP service is started
+- jellyfin: add LDAP authentication documentation
+- jellyfin: add fail2ban configuration/bruteforce prevention on jellyfin login attempts
+- jellyfin/backup: add automatic backups (only backup db/metadata/configuration by default, allow enabling media directory backups with `jellyfin_enable_media_backups`)
+- jellyfin: create subdirectories for each library type under the default media directory/jellyfin samba share
+- samba/backup: allow disabling automatic backups of samba shares (`samba_enable_backups`)
+- shaarli/monitoring: agregate data/log.txt to syslog using the imfile module
 
 **Changed:**
-- update documentation (upgrade procedure, example playbook, mirrors, TOC, links, ansible-collection installation, list of all variables, ansible.cfg...)
+- update documentation (upgrade procedure, example playbook, mirrors, TOC, links, ansible-collection installation, list of all variables, ansible.cfg, sysctl settings...)
+- openldap: upgrade ldap-account-manager to v7.4 (https://www.ldap-account-manager.org/lamcms/changelog)
+- openldap: prevent LDAP lookups for local user accounts
+- openldap: decrease log verbosity
+- gitea: upgrade to 1.13.3 - https://github.com/go-gitea/gitea/releases 
+- nextcloud: upgrade to 20.0.8 - https://nextcloud.com/changelog/
 
 **Fixed:**
 - xsrv: fix show-defaults command (by default display all role defaults for the default playbook)
 - homepage: fix mumble and ldap-account-manager links
 - samba: fix duplicate execution of the openldap role when samba uses LDAP passdb backend
 - rocketchat: fix variable checks not being run before applying the role
-- fix error 'Please set SELF_URL_PATH to the correct value detected for your server'
-- jellyfin: only mount jellyfin samba share when the samba role is enabled, fix mountpoint creation
+- rocketchat: fix permissions/ownership of mongodb/rocketchat data directories
+- tt_rss: fix error 'Please set SELF_URL_PATH to the correct value detected for your server'
+- samba/jellyfin: fix automatic jellyfin samba share creation, fix permissions on jellyfin samba share
+- monitoring: fix ansible --check mode when netdata is not installed yet
+- shaarli: set apache directoryindex to index.php, prevent error messages in logs at every page access
 
 **Tools/maintenance:**
 - Makefile: add a make changelog target (print commits since last tag)
+- Makefile: automate release procedure `make release`
 - tt-rss: cleanup/grouping
 - roles/*/defaults/main.yml: add header for all defaults files
 - upgrade ansible to 2.10.7 - https://pypi.org/project/ansible/#history
+- move TODOs to issues
 
 
 -------------------------------
