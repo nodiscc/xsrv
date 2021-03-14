@@ -81,6 +81,13 @@ changelog:
 	echo "[INFO] changes since last tag $(LAST_TAG)" && \
 	git log --oneline $(LAST_TAG)...HEAD | cat
 
+# release procedure:
+# - make bump_versions changelog
+# - update changelog.md, add and commit version bumps and changelog updates
+# - git checkout release && git merge master && git checkout master
+# - git tag $new_tag; git push && git push --tags
+# - make release
+# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
 .PHONY: release # run all release generation steps (new_tag=X.Y.Z required)
 release: gitlab_release github_release publish_collection
 
