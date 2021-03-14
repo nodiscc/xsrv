@@ -116,7 +116,7 @@ ifndef GITHUB_PRIVATE_TOKEN
 	$(error GITHUB_PRIVATE_TOKEN is undefined)
 endif
 	curl --user nodiscc:$$GITHUB_PRIVATE_TOKEN --header "Accept: application/vnd.github.v3+json" \
-	--data "{ 'tag_name': "$(new_tag)", 'prerelease': 'true' }" \
+	--data '{ "tag_name": "$(new_tag)", "prerelease": true }' \
 	--request POST https://api.github.com/repos/nodiscc/xsrv/releases
 
 .PHONY: publish_collection # publish the ansible collection (ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment)
