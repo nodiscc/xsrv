@@ -2,34 +2,35 @@
 
 ### xsrv/xsrv
 
-- #429 - gitea: role is not idempotent?
+- #444 - nextcloud: install bcmath php extension? - `1.2.0`
+- #443 - nextcloud: convert columns to bigint - `1.2.0`
+- #442 - nextcloud: add missing primary keys and indices - `1.2.0`
+- #441 - openldap: setup MemberOf overlay
+- #438 - rsnapshot: source directories that have been removed from the configuration, are retained in next backup generations (never deleted) - `1.2.0`
+- #437 - samba failed logins are not logged? - `1.2.0`
+- #436 - openldap failed logins are not logged? - `1.2.0`
+- #433 - docker: additional hardening/CIS guidelines - `2.0.0`
+- #432 - rsyslog: fail2ban log not aggregated to syslog - `1.2.0`
+- #429 - gitea: role is not idempotent
 - #428 - gitea: document backup restoration procedure
 - #427 - transmission: document restoring backups
 - #426 - samba: add ability to delete a share by setting state: absent
 - #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification?
 - #424 - nextcloud: add templateeditor app?
 - #423 - nextcloud: add documents app?
-- #422 - WIP: makefile: automate release procedure - `1.1.0`
 - #420 - homepage: add favicon - `1.2.0`
 - #419 - tt_rss: pin version to specific commit - `1.2.0`
 - #417 - monitoring: add auto-tests for each enabled vhost - `1.2.0`
-- #416 - shaarli: agregate logs to syslog - `1.1.0`
-- #415 - rocketchat: log message: mongo: JOURNAL  [journal writer] warning: open of lsn file failed - `1.1.0`
 - #413 - nextcloud: database password cannot be changed after initial installation - `1.2.0`
-- #410 - upgrade ldap-account-manager to v7.4 - `1.1.0`
-- #409 - tools: automate release generation - `1.1.0`
-- #406 - xsrv: self-upgrade subcommand - `1.1.0`
 - #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - `2.0.0`
-- #404 - add xsrv info command - `1.1.0`
-- #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900 - `1.1.0`
+- #404 - add xsrv info command - `1.2.0`
+- #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900
 - #393 - Samba: performance improvements (socket options)?
 - #392 - SSH: harden MaxStartups option? - `1.2.0`
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed
 - #389 - WIP: xsrv: add show-ssh-config subcommand (display ssh config to use in ~/.ssh/config)
 - #388 - WIP: add libvirt role
-- #387 - jellyfin: monitor logs with rsyslog - `1.1.0`
-- #386 - jellyfin: add fail2ban configuration - `1.1.0`
-- #385 - jellyfin: add rsnapshot configuration - `1.1.0`
+- #387 - jellyfin: monitor logs with rsyslog - `1.2.0`
 - #384 - jellyfin: allow/document uploading files from nextcloud
 - #380 - Enforce DNSSEC for outgoing DNS queries
 - #379 - seup IPV6 support (sysctl, firewal, applications...)?
@@ -69,7 +70,6 @@
 - #329 - redis role?
 - #328 - apache: mpm_event performance tuning
 - #327 - nextcloud: verify gpg signatures
-- #326 - rsyslog/samba: imfile: '/var/log/samba/cores/*mbd' is DIRECTORY but FILE expected
 - #317 - Harden systemd services
 - #316 - WIP: add/remove the ansible user to/from the www-data group
 - #310 - samba: ability to whitelist/blacklist files by extension
@@ -190,7 +190,7 @@
 - #143 - nextcloud: add mindmap app
 - #142 - nextcloud: add files automated tagging app
 - #141 - nextcloud: add fail2ban to documentation
-- #140 - WIP: add graylog role - `1.1.0`
+- #140 - WIP: add graylog role - `1.2.0`
 - #138 - apache: rewrite all 500 502 503 errors to generic 50x.html error page
 - #137 - apache: allow setting up HTTP Basic auth and autoindex for specific directories/URLs/virtualhosts
 - #134 - tt-rss: RuntimeWarning during SQL update task
@@ -217,7 +217,6 @@
 - #110 - common: ssh: add molly-guard
 - #109 - common: check that locale generation works correctly
 - #108 - common: minimize write access to a list of files/directories?
-- #107 - xsrv: add 'version' subcommand
 - #106 - common: apt: switch to HTTPS APT sources
 - #105 - xsrv: add a global download cache dir variable? (instead of /root)
 - #104 - common: rsyslog: watch more log files
@@ -227,12 +226,11 @@
 - #98 - Maps and routing services
 - #97 - openshift role
 - #96 - grafana role?
-- #94 - Kubernetes role
+- #94 - Kubernetes role?
 - #93 - VNC server
 - #92 - Add {{ ansible_managed }} in templates
 - #86 - Peertube
 - #82 - tests: cache gitlab ci dependencies
-- #81 - Mirror neuralnet.xinit.se list of issues to the README of each role
 - #78 - Adminer role
 - #72 - Proxmox role
 - #70 - Setup endlessh
@@ -285,5 +283,5 @@
 - #8 - Proxmox
 - #6 - cockpit role?
 - #5 - Matrix/Synapse server
-- #4 - Graylog role - `1.1.0`
+- #4 - Graylog role - `1.2.0`
 - #3 - Mail server
