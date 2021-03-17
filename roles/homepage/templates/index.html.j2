@@ -66,6 +66,21 @@
       border: 0px solid transparent;
     }
 
+    .message {
+      width: 30%;
+      margin: 0 auto 0 auto;
+      text-align: center;
+      color; #AAA;
+      display: block;
+      background-color: #212527;
+      border-radius: 2px;
+      margin-top: 12px;
+    }
+
+    .message a:hover {
+      text-decoration: underline;
+    }
+
     .admin {
       height: 100%;
       min-width: 330px;
@@ -136,7 +151,6 @@
       background-color: #eb8927;
       color: #fff;
     }
-
 
     .icecast:hover a, .icecast:hover {
       background-color: #D0AE21;
@@ -213,6 +227,9 @@
       <a class="ssh"><img src="res/ssh.png"/> ssh <code>ssh user@{{ inventory_hostname }}</code></a>
       <a class="sftp"><img src="res/sftp.png"/> sftp <code>sftp://user@{{ inventory_hostname }}</code></a>
       <a class="samba"><img src="res/samba.png"/> samba <code>smb://user@{{ inventory_hostname }}</code></a>
+    </div>
+    <div class="message">
+      {{ homepage_message }}
     </div>
 
     </body>

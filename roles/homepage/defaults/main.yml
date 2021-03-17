@@ -5,6 +5,8 @@ homepage_fqdn: "www.CHANGEME.org"
 
 # main title of the homepage
 homepage_title: "{{ homepage_fqdn }}"
+# freeform message/paragraph displayed on the homepage (HTML allowed)
+homepage_message: "<i>Welcome to this server running <a href='https://xsrv.readthedocs.io'>xsrv</a></i>"
 
 # HTTPS and SSL/TLS certificate mode for the homepage webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
@@ -17,3 +19,4 @@ homepage_https_mode: selfsigned
 #   - CHANGEME.org
 #   - 192.168.8.0
 homepage_vhost_aliases: []
+
