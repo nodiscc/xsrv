@@ -10,3 +10,10 @@ homepage_title: "{{ homepage_fqdn }}"
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
 homepage_https_mode: selfsigned
+
+# list of additional aliases/domain names for the homepage, in addition to homepage_fqdn. example:
+# homepage_vhost_aliases:
+#   - www.CHANGEME.org
+#   - CHANGEME.org
+#   - 192.168.8.0
+homepage_vhost_aliases: []

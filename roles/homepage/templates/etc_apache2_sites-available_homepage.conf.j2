@@ -1,6 +1,9 @@
 <VirtualHost *:80>
     ServerName {{ homepage_fqdn }}
     ServerAdmin webmaster@{{ homepage_fqdn }}
+{% for alias in homepage_vhost_aliases %}
+    ServerAlias {{ alias }}
+{% endfor %}
 {% if homepage_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -18,6 +21,9 @@ MDomain {{ homepage_fqdn }}
   ServerAdmin webmaster@{{ homepage_fqdn }}
   SSLEngine on
   DocumentRoot /var/www/{{ homepage_fqdn }}
+{% for alias in homepage_vhost_aliases %}
+  ServerAlias {{ alias }}
+{% endfor %}
 {% if homepage_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ homepage_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ homepage_fqdn }}.key
