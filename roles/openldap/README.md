@@ -26,12 +26,10 @@ openldap_fqdn: "ldap.CHANGEME.org"
 openldap_domain: "CHANGEME.org"
 openldap_organization: "CHANGEME"
 openldap_base_dn: "dc=CHANGEME,dc=org"
-self_service_password_fqdn: "ssp.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 vault_openldap_admin_password: "CHANGEME"
 vault_openldap_bind_password: "CHANGEME"
-vault_self_service_password_keyphrase: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
