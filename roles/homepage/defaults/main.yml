@@ -19,4 +19,3 @@ homepage_https_mode: selfsigned
 #   - CHANGEME.org
 #   - 192.168.8.0
 homepage_vhost_aliases: []
-

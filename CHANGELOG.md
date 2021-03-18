@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.0) - UNRELEASED
+
+**Added:**
+- homepage: add configurable message/paragraph to homepage (homepage_message)
+- add ability to configure multiple aliases/valid domain names for the homepage virtualhost (homepage_vhost_aliases: [])
+
 #### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.1.0) - 2021-03-14
 
 **Added:**
