@@ -57,6 +57,8 @@ netdata_disable_access_log: yes
 #   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
 #   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
 #   - { name: auth, min_count: 1, interval: 20} # openldap server
+#   - { name: media, min_count: 1, interval: 20} # jellyfin media server
+#   - { name: samba, min_count: 2, interval: 20} # samba file sharing server (smbd+nmbd)
 netdata_process_checks: []
 
 # Netdata HTTP/SSL checks
