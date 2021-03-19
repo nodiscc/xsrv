@@ -39,7 +39,6 @@
   assert:
     that:
       - self_service_password_fqdn is not search("CHANGEME")
-      - self_service_password_keyphrase is not search("CHANGEME")
       - self_service_password_install_dir is not search("CHANGEME")
       - self_service_password_version is defined
       - self_service_password_https_mode in ['selfsigned', 'letsencrypt']
