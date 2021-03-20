@@ -75,7 +75,8 @@ net.ipv4.icmp_ignore_bogus_error_responses = 1
 # This feature logs packets with un-routable source addresses to the kernel log.
 # This allows an administrator to investigate the possibility that an attacker
 # is sending spoofed packets to their system.
-net.ipv4.conf.all.log_martians = 0
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.conf.default.log_martians = 1
 
 # Decrease the time default value for tcp_fin_timeout connection
 net.ipv4.tcp_fin_timeout = 15
