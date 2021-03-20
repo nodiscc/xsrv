@@ -13,11 +13,16 @@ net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding|bool) else 
 # Setting net.ipv4.conf.all.secure_redirects to 0 protects the system from routing table updates
 # by possibly compromised known gateways.net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.secure_redirects = 0
+
 # For non-routers: don't send redirects.
 # An attacker could use a compromised host to send invalid ICMP redirects to other
 # router devices in an attempt to corrupt routing and have users access a system
 # set up by the attacker as opposed to a valid system.
 net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
 
 # Disable IPv6
 net.ipv6.conf.all.disable_ipv6 = 1
@@ -49,8 +54,7 @@ net.ipv4.conf.all.accept_source_route = 0
 # If the return packet does not go out the same interface that the corresponding
 # source packet came from, the packet is dropped (and logged if log_martians is set).
 net.ipv4.conf.all.rp_filter = 1
-net.ipv4.conf.all.accept_redirects = 0
-net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.rp_filter = 1
 
 # Accept/Ignore any ICMP ECHO requests (ping)
 net.ipv4.icmp_echo_ignore_all = {{ '0' if (sysctl_answer_ping|bool) else '1' }}
