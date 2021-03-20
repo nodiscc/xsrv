@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 - openldap: remove self_service_password_keyphrase variable, unused sice tokens/SMS/question based password resets are disabled
 
+**Changed:**
+- common: sysctl: enable logging of martian packets
+- common: sysctl: ensure sysctl settings also apply to all network interfaces added in the future
+
 
 #### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.1.0) - 2021-03-14
 
