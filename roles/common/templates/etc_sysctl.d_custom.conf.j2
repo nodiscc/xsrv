@@ -7,9 +7,16 @@ net.ipv4.conf.all.forwarding = {{ '1' if (sysctl_allow_forwarding|bool) else '0'
 # Enable/disable forwarding of multicast packets
 net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding|bool) else '0' }}
 
-# Disable acceptance of all ICMP redirected packets
+# Accepting redirects can lead to malicious networking behavior, so disable
+# it if not needed. Attackers could use bogus ICMP redirect messages to maliciously alter the system
+# routing tables and get them to send packets to incorrect networks and allow your system packets to be captured.
+# Setting net.ipv4.conf.all.secure_redirects to 0 protects the system from routing table updates
+# by possibly compromised known gateways.net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.all.accept_redirects = 0
-# disables sending of all IPv4 ICMP redirected packets
+# For non-routers: don't send redirects.
+# An attacker could use a compromised host to send invalid ICMP redirects to other
+# router devices in an attempt to corrupt routing and have users access a system
+# set up by the attacker as opposed to a valid system.
 net.ipv4.conf.all.send_redirects = 0
 
 # Disable IPv6
@@ -39,11 +46,9 @@ net.ipv6.conf.all.max_addresses = 1
 net.ipv4.conf.all.accept_source_route = 0
 
 # Enable IP spoofing protection, turn on source route verification
-# 1 - Allows you to have multiple network interfaces on the same subnet, and have the ARPs for each interface be answered based on whether or not the kernel would route a packet from the ARP'd IP out that interface (therefore you must use source based routing for this to work). In other words it allows control of which cards (usually 1) will respond to an arp request.
-# 0 - (default) The kernel can respond to arp requests with addresses from other interfaces. This may seem wrong but it usually makes sense, because it increases the chance of successful communication. IP addresses are owned by the complete host on Linux, not by particular interfaces. Only for more complex setups like load- balancing, does this behaviour cause problems.
+# If the return packet does not go out the same interface that the corresponding
+# source packet came from, the packet is dropped (and logged if log_martians is set).
 net.ipv4.conf.all.rp_filter = 1
-
-# Ignore ICMP redirects
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.all.secure_redirects = 0
 
@@ -62,7 +67,10 @@ net.ipv4.icmp_ratemask = 88089
 # There is no reason to accept bogus error responses from ICMP, so ignore them instead.
 net.ipv4.icmp_ignore_bogus_error_responses = 1
 
-# Log Spoofed Packets, Source Routed Packets, Redirect Packets
+# log martian packets
+# This feature logs packets with un-routable source addresses to the kernel log.
+# This allows an administrator to investigate the possibility that an attacker
+# is sending spoofed packets to their system.
 net.ipv4.conf.all.log_martians = 0
 
 # Decrease the time default value for tcp_fin_timeout connection
@@ -82,7 +90,7 @@ net.ipv4.tcp_keepalive_time = 1800
 net.ipv4.tcp_sack = 0
 
 # Turn off TCP timestamps
-# Protect against wrapping sequence numbers at gigabit speeds
+# Disable TCP timestamps in order to not reveal system uptime.
 net.ipv4.tcp_timestamps = 0
 
 # Don't relay BOOTP
