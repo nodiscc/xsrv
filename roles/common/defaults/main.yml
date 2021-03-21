@@ -59,8 +59,8 @@ ssh_authorized_keys: []
 ssh_server_revoked_keys: []
 
 # sshd and SFTP server log levels, respecively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
-ssh_log_level: "INFO"
-ssh_sftp_loglevel: "ERROR"
+ssh_log_level: "VERBOSE"
+ssh_sftp_loglevel: "VERBOSE"
 
 # types of SSH TCP forwarding to allow (no, local, remote, all - QUOTED)
 # remote/all is required to use the host as a jumpbox
