@@ -156,10 +156,6 @@ Subsystem sftp internal-sftp -l {{ ssh_sftp_loglevel }} -f LOCAL6
 # User/group-sepcific configuration
 # These lines must appear at the *end* of sshd_config
 
-# Convert rsync calls to sudo rsync for the rsyncasroot group
-Match Group rsyncasroot
-ForceCommand /usr/local/bin/validate-rsync
-
 # Restrict members of the 'sftponly' group to SFTP subsystem,
 # chroot them to their home directory
 Match Group sftponly
