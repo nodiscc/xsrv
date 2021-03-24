@@ -82,16 +82,14 @@ sudo -u postgres pg_restore /var/backups/rsnapshot/daily.0/localhost/var/backups
 
 Re-apply the role on a regular basis to ensure the application stays up to date.
 
-This role is not always idempotent - tt-rss is always upgraded to the latest available version (git `master` branch).
+_Note: due to TT-RSS "rolling" release model (always install the latest `master` branch), the role may upgrade the application without warning. Pin `tt_rss_version` to a specific commit hash from https://git.tt-rss.org/fox/tt-rss/commits/branch/master if you need to prevent this (but remember to update it manually/periodically).
 
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://stdout.root.sx/links/?searchtag=rss
