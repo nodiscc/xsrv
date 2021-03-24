@@ -13,7 +13,9 @@
 
 		etc.
 
-		See this page for more information: https://tt-rss.org/wiki/GlobalConfig
+		See these pages for more information:
+		  - https://tt-rss.org/wiki/GlobalConfig
+		  - https://git.tt-rss.org/fox/tt-rss/src/branch/master/classes/config.php
 	*/
 	putenv('TTRSS_DB_TYPE=pgsql');
 	putenv('TTRSS_DB_HOST=localhost');
@@ -21,7 +23,20 @@
 	putenv('TTRSS_DB_NAME={{ tt_rss_db_name }}');
 	putenv('TTRSS_DB_PASS={{ tt_rss_db_password }}');
 	putenv('TTRSS_DB_PORT=5432');
+
 	putenv('TTRSS_SELF_URL_PATH={{ tt_rss_full_url }}');
+	// this should be set to a fully qualified URL used to access
+	// your tt-rss instance over the net, such as: https://example.com/tt-rss/
+	// if your tt-rss instance is behind a reverse proxy, use external URL.
+	// tt-rss will likely help you pick correct value for this on startup
+
+	putenv('TTRSS_SMTP_FROM_NAME=tt-rss@{{ tt_rss_fqdn }}');
 	putenv('TTRSS_SMTP_FROM_ADDRESS=noreply@{{ tt_rss_fqdn }}');
+	// send email using this name and address
+
 	putenv('TTRSS_PLUGINS=auth_internal, note');
+	// system plugins enabled for all users, comma separated list, no quotes
+	// keep at least one auth module in there (i.e. auth_internal)
+
 	putenv('TTRSS_LOG_DESTINATION={{ tt_rss_log_destination }}');
+	// available options: sql (default, event log), syslog, stdout (for debugging)
