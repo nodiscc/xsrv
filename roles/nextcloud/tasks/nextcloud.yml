@@ -233,6 +233,18 @@
     job: "/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php"
     name: "run nextcloud background tasks"
 
+- name: add missing primary keys and indices to nextcloud database
+  become: True
+  become_user: www-data
+  command: "/usr/bin/php ./occ --no-interaction db:{{ item }}"
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  register: nextcloud_add_missing_pkeys_indices
+  changed_when: "'Adding' in nextcloud_add_missing_pkeys_indices.stdout"
+  with_items:
+    - add-missing-primary-keys
+    - add-missing-indices
+
 ### ANSIBLE FACTS ###
 
 - name: create ansible facts.d directory
