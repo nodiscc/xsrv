@@ -245,6 +245,15 @@
     - add-missing-primary-keys
     - add-missing-indices
 
+- name: convert columns to bigint in nextcloud database
+  become: True
+  become_user: www-data
+  command: "/usr/bin/php ./occ --no-interaction db:convert-filecache-bigint"
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  register: nextcloud_convert_filecache_bigint
+  changed_when: "'will be updated' in nextcloud_convert_filecache_bigint.stdout"
+
 ### ANSIBLE FACTS ###
 
 - name: create ansible facts.d directory
