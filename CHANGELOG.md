@@ -8,13 +8,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - homepage: add configurable message/paragraph to homepage (homepage_message)
 - add ability to configure multiple aliases/valid domain names for the homepage virtualhost (homepage_vhost_aliases: [])
+- nextcloud: improve performance (auto-add missing primary keys/indices in database, convert columns to bigint)
 
 **Removed:**
 - openldap: remove self_service_password_keyphrase variable, unused sice tokens/SMS/question based password resets are disabled
+- common: ssh: cleanup/remove unused MatchGroup rsyncasroot directive
 
 **Changed:**
 - common: sysctl: enable logging of martian packets
 - common: sysctl: ensure sysctl settings also apply to all network interfaces added in the future
+- common: ssh: set loglevel to VERBOSE by default
+
 
 
 #### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.1.0) - 2021-03-14
