@@ -111,7 +111,7 @@
     vfs objects = full_audit
 
 # full_audit VFS backend log message prefix: username|IPaddress|hostname|servicename
-    vfs_full_audit:prefix = %U|%I|%m|%S
+    vfs_full_audit:prefix = USER=%U|IP=%I|MACHINE=%m|VOLUME=%S
 
 # full_audit VFS backend: log the following functions when successful
 # connect/disconnect, create/delete directory, rename and read/write (open), delete (unlink)

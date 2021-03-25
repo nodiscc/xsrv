@@ -79,6 +79,6 @@ samba_passdb_backend: "tdbsam"
 samba_users: []
 
 # 0-999: nscd debug log level
-samba_nscd_debug_level: 0
+samba_nscd_debug_level: 'log level = 1 passdb:2 auth:2 auth_audit:3'
 # (seconds): time after which user/group/passwords are invalidated in nscd cache
 samba_nscd_cache_time_to_live: 60
