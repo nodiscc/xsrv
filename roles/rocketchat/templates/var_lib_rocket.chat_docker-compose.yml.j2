@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 networks:
   rocketchat:
@@ -18,7 +18,9 @@ services:
     depends_on:
       - mongo
     ports:
-      - 127.0.0.1:3001:3000
+      - mode: host
+        target: 3000
+        published: 3001
     networks:
       - rocketchat
 
