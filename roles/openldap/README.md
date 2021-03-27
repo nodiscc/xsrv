@@ -2,8 +2,8 @@
 
 This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/OpenLDAP), a [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) directory server, and optionally the [LDAP Account Manager](https://ldap-account-manager.org/) web management interface, and the [Self Service Password](https://ltb-project.org/documentation/self-service-password) password change tool.
 
-[![](https://screenshots.debian.net/screenshots/000/006/946/thumb.png)](https://screenshots.debian.net/package/ldap-account-manager)
-[![](https://screenshots.debian.net/screenshots/000/016/087/thumb.png)](https://screenshots.debian.net/package/ldap-account-manager)
+[![](https://screenshots.debian.net/shrine/screenshot/6946/simage/small-58bc88c5ca84c0544180e2c0f7de1445.png)](https://screenshots.debian.net/package/ldap-account-manager)
+[![](https://screenshots.debian.net/shrine/screenshot/16087/simage/small-d9cc1bf64acddc45d98715f41fada68c.png)](https://screenshots.debian.net/package/ldap-account-manager)
 [![](https://i.imgur.com/loA7FGf.png)](https://i.imgur.com/vaimb8j.png)
 
 
@@ -18,7 +18,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # fail2ban bruteforce protection
     - nodiscc.xsrv.monitoring # (optional)
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (optional, if openldap_setup_lam: yes) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (optional, if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.openldap
 
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
