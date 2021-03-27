@@ -7,14 +7,14 @@
 - name: create directories for rocket.chat data
   file:
     state: directory
-    owner: root
+    owner: "{{ item.owner }}"
     group: "{{ item.group }}"
     mode: 0770
     path: "{{ item.path }}"
   with_items:
-    - { path: "/var/lib/rocket.chat/db", group: "999" }
-    - { path: "/var/lib/rocket.chat/dump", group: "999" }
-    - { path: "/var/lib/rocket.chat/uploads", group: "65533" }
+    - { path: "/var/lib/rocket.chat/db", owner: "999", group: "999" }
+    - { path: "/var/lib/rocket.chat/dump", owner: "root", group: "999" }
+    - { path: "/var/lib/rocket.chat/uploads", owner: "root", group: "65533" }
 
 - name: copy compose file
   template:
