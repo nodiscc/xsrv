@@ -2,15 +2,19 @@
 
 ### xsrv/xsrv
 
-- #444 - nextcloud: install bcmath php extension? - `1.2.0`
-- #443 - nextcloud: convert columns to bigint - `1.2.0`
-- #442 - nextcloud: add missing primary keys and indices - `1.2.0`
+- #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)
+- #457 - samba: setup dfs_samba4/acl_xattr VFS modules?
+- #456 - Upgrade to Debian 11 - `2.0.0`
+- #454 - postgresql: add an option to enable pg_stat_statements view
+- #453 - postgresql: enable checksums?
+- #452 - Proxmox hypervisor role
+- #451 - Document management system
+- #450 - netdata: setup ML-based anomaly detection?
+- #448 - Netdata: send notifications using signal-cli
+- #447 - display local mailboxes through netdata static web server, raise alarm if there is unread mail
+- #445 - bookstack role?
 - #441 - openldap: setup MemberOf overlay
-- #438 - rsnapshot: source directories that have been removed from the configuration, are retained in next backup generations (never deleted) - `1.2.0`
-- #437 - samba failed logins are not logged? - `1.2.0`
-- #436 - openldap failed logins are not logged? - `1.2.0`
 - #433 - docker: additional hardening/CIS guidelines - `2.0.0`
-- #432 - rsyslog: fail2ban log not aggregated to syslog - `1.2.0`
 - #429 - gitea: role is not idempotent
 - #428 - gitea: document backup restoration procedure
 - #427 - transmission: document restoring backups
@@ -18,30 +22,29 @@
 - #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification?
 - #424 - nextcloud: add templateeditor app?
 - #423 - nextcloud: add documents app?
-- #420 - homepage: add favicon - `1.2.0`
-- #419 - tt_rss: pin version to specific commit - `1.2.0`
-- #417 - monitoring: add auto-tests for each enabled vhost - `1.2.0`
-- #413 - nextcloud: database password cannot be changed after initial installation - `1.2.0`
+- #420 - homepage: add favicon - `1.3.0`
+- #417 - monitoring: add auto-tests for each enabled vhost - `1.3.0`
+- #413 - nextcloud: database password cannot be changed after initial installation - `1.3.0`
 - #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - `2.0.0`
-- #404 - add xsrv info command - `1.2.0`
+- #404 - add xsrv info command - `1.3.0`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900
 - #393 - Samba: performance improvements (socket options)?
-- #392 - SSH: harden MaxStartups option? - `1.2.0`
+- #392 - SSH: harden MaxStartups option? - `1.3.0`
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed
 - #389 - WIP: xsrv: add show-ssh-config subcommand (display ssh config to use in ~/.ssh/config)
 - #388 - WIP: add libvirt role
-- #387 - jellyfin: monitor logs with rsyslog - `1.2.0`
+- #387 - jellyfin: monitor logs with rsyslog - `1.3.0`
 - #384 - jellyfin: allow/document uploading files from nextcloud
 - #380 - Enforce DNSSEC for outgoing DNS queries
 - #379 - seup IPV6 support (sysctl, firewal, applications...)?
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ?
 - #377 - rocketchat: enable/configure federation?
 - #376 - netdata: enable samba monitoring when samba role is installed
-- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.2.0`
+- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.3.0`
 - #374 - makefile/readthedocs: include roles documentation in generated docs
 - #372 - WIP: shaarli: make hide_timestamp option configurable
-- #366 - nextcloud: file locking sometimes causes synchronization errors
-- #365 - nextcloud: LDAP user backend - `1.2.0`
+- #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis) - `1.3.0`
+- #365 - nextcloud: LDAP user backend - `1.3.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
 - #362 - netdata: default apache status monitoring jobs trigger error 403
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles
@@ -54,7 +57,7 @@
 - #352 - common: add support for hardware RNG
 - #351 - nextcloud: enable pretty URLs
 - #348 - ldap-account-manager: Unable to set locale
-- #347 - DeprecationWarning for ldap_attr module - `1.2.0`
+- #347 - DeprecationWarning for ldap_attr module - `2.0.0`
 - #345 - openldap: postgresql backend?
 - #344 - nextcloud: add office suite integration
 - #343 - nextcloud: warning on settings/admin/overview: missing bcmath php module
@@ -67,7 +70,6 @@
 - #321 - ELK stack?
 - #331 - apache: php-fpm: chroot php pools?
 - #330 - netdata: monitor php-fpm
-- #329 - redis role?
 - #328 - apache: mpm_event performance tuning
 - #327 - nextcloud: verify gpg signatures
 - #317 - Harden systemd services
@@ -77,9 +79,9 @@
 - #307 - apache: make certificate status endpoint enable/disable configurable
 - #305 - switch firewall management to firewalld - `2.0.0`
 - #303 - firehol: add example NAT loopback/hairpin rule
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.2.0`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.3.0`
 - #293 - WIP: add nginx role
-- #290 - netdata: monitor number of upgradeable APT packages - `1.2.0`
+- #290 - netdata: monitor number of upgradeable APT packages - `1.3.0`
 - #280 - Samba Directory Controller or other Identity Management solution
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
 - #276 - Samba: protect file shares from cryptolockers
@@ -94,10 +96,10 @@
 - #267 - apache: make disabled modules list configurable, disable more modules by default
 - #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
 - #265 - apache: provide custom error pages
-- #263 - Netdata: setup registry - `1.2.0`
-- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS) - `1.2.0`
+- #263 - Netdata: setup registry - `1.3.0`
+- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS) - `1.3.0`
 - #258 - WIP: add custom info page to netdata
-- #256 - CAS, SAML or Oauth Sigle Sign On (SSO)
+- #256 - CAS, SAML or Oauth Sigle Sign On (SSO)?
 - #255 - new role: custom homepage generation
 - #254 - apache: LDAP authentication for virtualhosts
 - #253 - lamp: allow setting up HTTP basic auth username/password for virtualhosts
@@ -122,7 +124,7 @@
 - #226 - mysql: update root password for *all* root accounts
 - #224 - mysql: log MariaDB slow queries
 - #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost
-- #221 - apache: add a simple public HTTP server/vhost option - `1.2.0`
+- #221 - apache: add a simple public HTTP server/vhost option - `1.3.0`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage
 - #218 - apache: implement modsecurity
 - #216 - xsrv: generate a local copy of the homepage/netdata custom dashboard
@@ -135,7 +137,6 @@
 - #207 - netdata: make ping checks configurable
 - #205 - netdata: monitor debsums warnings/return status
 - #204 - netdata: add custom dashboard with status summary of the host/important logs/reports
-- #203 - netdata: monitor snmpd
 - #202 - netdata: ability to enable/add eBPF probes?
 - #201 - monitoring: merge role with mrlesmithjr/ansible-netdata
 - #200 - roles for other monitoring software
@@ -156,7 +157,7 @@
 - #181 - netdata: monitor MySQL server
 - #180 - netdata: graph SCAP workbench warnings
 - #178 - netdata: graph/alert on deborphan matches
-- #177 - monitoring: add lynis audit tool - `1.2.0`
+- #177 - monitoring: add lynis audit tool - `1.3.0`
 - #176 - netdata: add Qualys SSL check module
 - #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
 - #174 - netdata: allow setting a repetition period for alarms
@@ -168,7 +169,6 @@
 - #167 - monitoring: add spectre-meltdown-checker
 - #165 - gitea: Enable search/indexing for repository/code/issues
 - #164 - gitea: add CI/CD service
-- #163 - gitea: allow using postgresql
 - #161 - gitea: document how to create a mirror from command line
 - #160 - gitea: HTTP 401 on click on a milestone from the global issues list
 - #159 - nextcloud: add Keeporsweep app
@@ -190,12 +190,11 @@
 - #143 - nextcloud: add mindmap app
 - #142 - nextcloud: add files automated tagging app
 - #141 - nextcloud: add fail2ban to documentation
-- #140 - WIP: add graylog role - `1.2.0`
+- #140 - WIP: add graylog role - `1.3.0`
 - #138 - apache: rewrite all 500 502 503 errors to generic 50x.html error page
 - #137 - apache: allow setting up HTTP Basic auth and autoindex for specific directories/URLs/virtualhosts
 - #134 - tt-rss: RuntimeWarning during SQL update task
 - #133 - tt-rss: add tumblr GDPR plugin
-- #131 - tt-rss: allow using postgresql
 - #130 - tt-rss: role is not idempotent
 - #127 - xsrv: add commands to check firewall/fail2ban status/active TCP/UDP connections
 - #126 - common: firehol/fail2ban: recheck interaction/effect on fail2ban rules when restarting the firewall
@@ -230,7 +229,6 @@
 - #93 - VNC server
 - #92 - Add {{ ansible_managed }} in templates
 - #86 - Peertube
-- #82 - tests: cache gitlab ci dependencies
 - #78 - Adminer role
 - #72 - Proxmox role
 - #70 - Setup endlessh
@@ -246,7 +244,7 @@
 - #59 - Collaborative pad
 - #58 - HTTP downloader
 - #57 - Rundeck
-- #56 - Hypervisor role
+- #56 - Libvirt hypervisor role
 - #55 - Guacamole remote control gateway
 - #54 - bittorrent tracker
 - #53 - Web analytics
@@ -264,7 +262,7 @@
 - #40 - Search engine
 - #39 - Wallabag
 - #38 - Wake on LAN
-- #37 - Replace `ntp` with `chrony`?
+- #37 - Replace `ntp` with `chrony`? - `2.0.0`
 - #36 - RADIUS server
 - #35 - simple git server
 - #34 - CentOS compatibility
@@ -283,5 +281,5 @@
 - #8 - Proxmox
 - #6 - cockpit role?
 - #5 - Matrix/Synapse server
-- #4 - Graylog role - `1.2.0`
+- #4 - Graylog role - `1.3.0`
 - #3 - Mail server
