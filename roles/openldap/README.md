@@ -68,6 +68,9 @@ olcLogLevel: 2040
 EOF
 ```
 
+To look for LDAP authentication failures, set the log level to `256` and search for `err=49` in slapd log messages.
+
+
 **UIDs/GIDs:** For most applications users should be of the [inetOrgPerson](https://ldapwiki.com/wiki/InetOrgPerson) object class. The identifying attribute for numeric user ID lookups is [uid](https://ldapwiki.com/wiki/uid).
 
 LDAP users and groups should be created with a UID/GID above 10000 to **prevent conflicts with local user accounts**.If you have both a local and LDAP user account with the same name and different passwords/UIDs/..., file permissions/ownership/group membership, accepted passwords and privileges will be inconsistent. For this reason all usernames must be **unique** across `/etc/passwd` and LDAP. Do **NOT** add LDAP users with the same name as a local username. For this reason try to stick to `firstname.lastname` for LDAP user names, and `privilege.object` LDAP group names.
