@@ -68,6 +68,7 @@ linux_users:
      sudo_nopasswd_commands: ['/usr/bin/mysqldump']
 ```
 
+**Removing old backups:** if a backup job is added at some point, than later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
 
 References
 ------------
