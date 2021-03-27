@@ -33,7 +33,6 @@ venv:
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
-	make bump_versions new_tag=$(LAST_TAG)
 	source .venv/bin/activate && \
 	ansible-galaxy collection build --force
 
@@ -84,8 +83,8 @@ changelog:
 # release procedure:
 # - make bump_versions changelog
 # - update changelog.md, add and commit version bumps and changelog updates
-# - git checkout release && git merge master && git checkout master
 # - git tag $new_tag; git push && git push --tags
+# - git checkout release && git merge master && git push
 # - make release
 # - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
 .PHONY: release # run all release generation steps (new_tag=X.Y.Z required)
@@ -129,7 +128,7 @@ endif
 .PHONY: publish_collection # publish the ansible collection (ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment)
 publish_collection: build_collection
 	source .venv/bin/activate && \
-	ansible-galaxy collection publish --token "$$ANSIBLE_GALAXY_PRIVATE_TOKEN" nodiscc-xsrv-$(LAST_TAG).tar.gz
+	ansible-galaxy collection publish --token "$$ANSIBLE_GALAXY_PRIVATE_TOKEN" nodiscc-xsrv-$(new_tag).tar.gz
 
 # can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginnning of the role
 .PHONY: list_default_variables # list all variables names from role defaults
