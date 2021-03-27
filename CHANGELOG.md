@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.0) - UNRELEASED
+#### [v1.2.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.0) - 2021-03-27
 
 **Added:**
 - homepage: add configurable message/paragraph to homepage (homepage_message)
@@ -18,7 +18,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: sysctl: enable logging of martian packets
 - common: sysctl: ensure sysctl settings also apply to all network interfaces added in the future
 - common: ssh: set loglevel to VERBOSE by default
+- samba: increase log level, enable detailed authentication success/failure logs, clarify log prefix
+- update documentation
 
+**Fixed:**
+- rocketchat: fix role idempotence (ownership of data directories)
+
+**Security:**
+- rocketchat: fix port 3001 exposed on 0.0.0.0 instead of localhost-only/firewall bypass
+- gitea: update to v1.13.6
 
 
 #### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.1.0) - 2021-03-14
