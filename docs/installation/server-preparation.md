@@ -104,7 +104,7 @@ From the server console, login as `root` and run:
 
 ```bash
 # Install requirements for remote admin/ansible access
-apt install python aptitude sudo
+apt --no-install-recommends install python aptitude sudo
 
 # Create a user account for remote administration (replace 'deploy' with the desired account name)
 useradd  --create-home --groups ssh,sudo --shell /bin/bash deploy
