@@ -2,6 +2,8 @@
 
 ### xsrv/xsrv
 
+- #461 - xsrv init-host breaks inventory formatting when the inventory contains more than one group/is not flat - `1.3.0`
+- #460 - jellyfin: document disabling transcoding in case of high resource usage - `1.3.0`
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)
 - #457 - samba: setup dfs_samba4/acl_xattr VFS modules?
 - #456 - Upgrade to Debian 11 - `2.0.0`
