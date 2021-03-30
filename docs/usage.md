@@ -44,6 +44,7 @@ fetch-backups [playbook] [host]  fetch backups from a host to the local backups/
 upgrade [playbook] [host]        upgrade roles to latest version
 shell [playbook] [host]          open an interactive shell on a host
 logs [playbook] [host]           view system log on a host
+ls                               list files in the playbooks directory (accepts a path)
 help                             show this message
 
 # OTHER COMMANDS
