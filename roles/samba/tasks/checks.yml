@@ -3,7 +3,7 @@
 - name: check that mandatory variables are correctly defined
   assert:
     that:
-      - samba_log_level == samba_log_level|int
+      - samba_log_level is string
       - samba_max_log_size_kb == samba_max_log_size_kb|int
       - samba_netbios_name is string
       - samba_server_string is string
