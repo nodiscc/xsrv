@@ -40,7 +40,7 @@ samba_server_string: "{{ ansible_hostname }} file server"
 samba_max_log_size_kb: 10000
 
 # Samba log level
-samba_log_level: 0
+samba_log_level: 'log level = 1 passdb:2 auth:2 auth_audit:3'
 
 # base path for samba share directories
 samba_shares_path: /var/lib/samba/shares/
@@ -79,6 +79,6 @@ samba_passdb_backend: "tdbsam"
 samba_users: []
 
 # 0-999: nscd debug log level
-samba_nscd_debug_level: 'log level = 1 passdb:2 auth:2 auth_audit:3'
+samba_nscd_debug_level: 0
 # (seconds): time after which user/group/passwords are invalidated in nscd cache
 samba_nscd_cache_time_to_live: 60
