@@ -1,35 +1,39 @@
----
-
 - include: checks.yml
   tags:
     - tt-rss
+    - tt_rss
 
 - include: postgresql.yml
   become: yes
   tags:
     - tt-rss
+    - tt_rss
 
 - include: tt-rss.yml
   become: yes
   tags:
     - tt-rss
+    - tt_rss
 
 - include: ssl-selfsigned.yml
   become: yes
   tags:
     - tt-rss
+    - tt_rss
   when: tt_rss_https_mode == 'selfsigned'
 
 - include: apache.yml
   become: yes
   tags:
     - tt-rss
+    - tt_rss
 
 - include: themes.yml
   become: yes
   tags:
     - tt-rss
     - tt-rss-themes
+    - tt_rss
   when: tt_rss_install_themes|bool
 
 - include: plugins.yml
@@ -37,4 +41,5 @@
   tags:
     - tt-rss
     - tt-rss-plugins
+    - tt_rss
   when: tt_rss_install_plugins|bool
