@@ -46,9 +46,7 @@
   authorized_key:
     user: "{{ item.0.name }}"
     key: "{{ lookup('file', item.1) }}"
-  with_subelements:
-    - "{{ linux_users }}"
-    - ssh_authorized_keys
+  loop: "{{ q('subelements', linux_users, 'ssh_authorized_keys', {'skip_missing': True}) }}"
 
 - name: allow users to run specific commands as root without password
   template:

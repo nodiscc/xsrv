@@ -181,9 +181,9 @@ fail2ban_destemail: "root@localhost"
 ##### USERS #####
 
 # Additional user accounts to create.
-# Supports these user (https://docs.ansible.com/ansible/latest/modules/user_module.html) module parameters:
+# Supports these parameters from the user (https://docs.ansible.com/ansible/latest/modules/user_module.html) module:
 #   name, password, comment, create_home, home, groups, append, generate_ssh_key, update_password
-# Additional supported parameters:
+# In addition these optional parameters are supported:
 #   ssh_authorized_keys: list of public key files to authorize on this account
 #   sudo_nopasswd_commands: list of commands the user should be able to run with sudo without password
 # Example:

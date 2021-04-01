@@ -4,7 +4,7 @@ Defaults:{{ ansible_user }} !requiretty
 {% endif %}
 
 {% for user in linux_users %}
-{% if user.sudo_nopasswd_commands %}
+{% if user.sudo_nopasswd_commands is defined %}
 Defaults:{{ item.username }} !requiretty
 {% for command in user.sudo_nopasswd_commands %}
 {{ item.username }} ALL=(root) NOPASSWD: {{ item.command }}
