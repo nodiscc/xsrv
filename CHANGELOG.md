@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.2.2](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.2) - 2021-04-01
+
+Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the latest release
+
+**Fixed:**
+ - samba: fix nscd default log level, update samba default log level
+
+
+#### [v1.2.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.1) - 2021-04-01
+
+Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the latest release
+
+**Fixed:**
+ - tt_rss: fix initial tt-rss schema installation (file has moved)
+
+samba: fix nscd default log level, update samba default log level
+
+
 #### [v1.2.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.0) - 2021-03-27
 
 **Added:**
