@@ -38,7 +38,7 @@
     groups: "{{ item.groups | default() }}"
     append: "{{ item.append | default(True) }}"
     generate_ssh_key: "{{ item.generate_ssh_key | default(True) }}"
-    password: "{{ item.password | password_hash('sha512') }}"
+    password: "{{ (item.password | password_hash('sha512')) if item.password is defined else '' }}"
     update_password: "{{ item.update_password | default('on_create') }}"
   with_items: "{{ linux_users }}"
 
