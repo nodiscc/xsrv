@@ -2,6 +2,8 @@
 
 ### xsrv/xsrv
 
+- #463 - openldap: upgrade ldap-account-manager to v7.5 - `1.3.0`
+- #462 - xsrv: add xsrv ls subcommand  (list files in the playbooks directory (accepts a path)) - `1.3.0`
 - #461 - xsrv init-host breaks inventory formatting when the inventory contains more than one group/is not flat - `1.3.0`
 - #460 - jellyfin: document disabling transcoding in case of high resource usage - `1.3.0`
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)
