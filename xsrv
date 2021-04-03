@@ -231,7 +231,7 @@ function info() {
 
 function _ls() {
     # list files in the playbooks directory (accepts a path)
-    ls "$playbooks_dir/$@"
+    ls "$playbooks_dir/$1"
 }
 
 function fetch_backups() {
