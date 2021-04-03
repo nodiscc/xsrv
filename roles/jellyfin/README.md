@@ -86,6 +86,14 @@ To allow logins to Jellyfin using LDAP user accounts (for example from [openldap
 - Restart the jellyfin server (`xsrv shell` `sudo systemctl restart jellyfin`)
 
 
+## Performance
+
+When using Jellyfin from a web browser, media will be converted/transcoded on-the-fly to a format supported by the browser. You can also force transcoding to a lower quality directly from the `Settings > Quality` menu directly from the player. Transcoding will consume a noticeable amount of system (CPU/RAM) resources. On resource-constrained systems this may lead to playback issues or freezes and the server becoming unresponsive. To fix this several options exist:
+- Disable `Allow playback of media that requires transcoding` for each user under `Admin > Dashboard > Users`. Currently there is [no global setting](https://github.com/jellyfin/jellyfin/issues/645) to disable transcoding globally for all users.
+- Use a [native client](https://jellyfin.org/clients/) which does not require server-side transcoding
+- Manually setup [hardware acceleration](https://jellyfin.org/docs/general/administration/hardware-acceleration.html)
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)
