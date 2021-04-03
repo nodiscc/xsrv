@@ -40,7 +40,7 @@ samba_server_string: "{{ ansible_hostname }} file server"
 samba_max_log_size_kb: 10000
 
 # Samba log level
-samba_log_level: 'log level = 1 passdb:2 auth:2 auth_audit:3'
+samba_log_level: '1 passdb:2 auth:2 auth_audit:3'
 
 # base path for samba share directories
 samba_shares_path: /var/lib/samba/shares/

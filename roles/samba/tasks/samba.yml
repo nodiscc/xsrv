@@ -36,6 +36,7 @@
     group: root
     mode: 0640
   notify: reload samba
+  tags: samba-config
 
 - name: get samba server SID
   command: net getlocalsid
