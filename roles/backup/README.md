@@ -55,17 +55,16 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
 
 **backup data from remote machines:**
  - configure the list of hosts, SSH users, ports, paths... in  `rsnapshot_remote_backups` in configuration variables
- - setup a user account on the remote machine, authorize the backup server's `root` SSH key (the key is displayed during setup)
+ - setup a user account on the remote machine, authorize the backup server's `root` SSH key (the key is displayed during setup), and allow it to run `sudo rsync` without password.
 
 ```yaml
 # Example using https://gitlab.com/nodiscc/ansible-xsrv-common/
 linux_users:
-   - name: "remotebackup"
-     password: "{{ vault_linux_users_remotebackup_password }}"
+   - name: "rsnapshot"
      groups: [ "ssh", "sudo" ]
      comment: "limited user account for remote backups"
-     ssh_authorized_keys: []
-     sudo_nopasswd_commands: ['/usr/bin/mysqldump']
+     ssh_authorized_keys: ['public_keys/root@backupserver.CHANGEME.org']
+     sudo_nopasswd_commands: ['/usr/bin/rsync']
 ```
 
 **Removing old backups:** if a backup job is added at some point, than later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
