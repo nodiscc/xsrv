@@ -5,8 +5,8 @@
 
 project = 'xsrv'
 author = 'nodiscc@gmail.com'
-version = '1.2.0'
-release = '1.2.0'
+version = '1.2.2'
+release = '1.2.2'
 html_show_copyright = True
 
 # -- General configuration ---------------------------------------------------
