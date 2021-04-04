@@ -109,6 +109,10 @@ rsync -avP --delete /var/backups/rsnapshot/daily.0/localhost/var/nextcloud/data 
 sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 ```
 
+### Other
+
+**Changing database password** is not supported by the role at this time. To change the database password, you must first set the new password manually in `/var/www/$nextcloud_fqdn/config.php`, then change the value of `nexctloud_db_password` in host variables, and run the playbook.
+
 License
 -------
 
