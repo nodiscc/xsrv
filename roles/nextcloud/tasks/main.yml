@@ -23,12 +23,14 @@
   become: yes
   tags:
     - nextcloud
+    - ssl
   when: nextcloud_https_mode == 'selfsigned'
 
 - include: apache.yml
   become: yes
   tags:
     - nextcloud
+    - apache
 
 - include: rsyslog.yml
   become: yes
