@@ -1,0 +1,13 @@
+# rsyslog configuration for apache logs
+
+input(type="imfile"
+      File="/var/log/apache2/access.log"
+      Tag="apache:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/apache2/error.log"
+      Tag="apache:"
+      Facility="daemon"
+      PersistStateInterval="0")

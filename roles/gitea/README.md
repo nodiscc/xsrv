@@ -14,6 +14,11 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 - Markdown rendering and code highlighting
 - Wikis
 
+It will also configure:
+- login bruteforce prevention with fail2ban
+- (optional) agregation of apache log files to syslog
+
+
 [![](https://i.imgur.com/Rks90zV.png)](https://i.imgur.com/2TGIshE.png)
 [![](https://i.imgur.com/cBktctp.png)](https://i.imgur.com/EauaJxq.png)
 [![](https://i.imgur.com/gvcfs6G.png)](https://i.imgur.com/DHku4ke.png)
@@ -28,6 +33,7 @@ See [meta/main.yml](meta/main.yml)
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # bruteforce prevention, SSH
+    - nodiscc.xsrv.monitoring # (optional) server monitoring, log agregation
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.postgresql # database engine

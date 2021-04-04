@@ -1,0 +1,7 @@
+# rsyslog configuration for rsnapshot logs
+
+input(type="imfile"
+      File="/var/log/rsnapshot.log"
+      Tag="rsnapshot:"
+      Facility="daemon"
+      PersistStateInterval="0")

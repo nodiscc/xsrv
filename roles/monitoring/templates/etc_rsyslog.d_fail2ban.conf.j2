@@ -1,0 +1,7 @@
+# rsyslog configuration for fail2ban logs
+
+input(type="imfile"
+      File="/var/log/fail2ban.log"
+      Tag="fail2ban:"
+      Facility="auth"
+      PersistStateInterval="0")

@@ -18,3 +18,12 @@
 - include: backups.yml
   become: yes
   tags: samba
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - samba
+    - rsyslog
+  when:
+    - '"nodiscc.xsrv.monitoring" in role_names'
+    - setup_rsyslog|bool

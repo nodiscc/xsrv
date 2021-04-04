@@ -2,15 +2,28 @@
 
 This role will install [Mumble](https://en.wikipedia.org/wiki/Mumble_(software)) server, a voice chat ([VoIP](https://en.wikipedia.org/wiki/Voice_over_IP)) server. It is primarily designed for use by gamers and can replace commercial programs such as TeamSpeak or Ventrilo.
 
+It also configures:
+- login bruteforce prevention using `fail2ban`
+- (optional) agregation of mumble server logs to syslog
+
 [![](https://i.imgur.com/jYSU9zC.png)](https://i.imgur.com/S5Z6IEw.png)
 
 
-Requirements/Dependencies
+Requirements/Dependencies/Example Playbook
 ------------
 
-- Ansible >= 2.9
-- The [common](../common/README.md) role (hardening/firewall/bruteforce prevention)
-- The [backup](../backup/README.md) role (automatic backups, optional)
+```yaml
+- hosts: my.CHANGEME.org
+  roles:
+    - nodiscc.xsrv.common # hardening/firewall/bruteforce prevention
+    - nodiscc.xsrv.monitoring # optional, server monitoring and log agregation
+    - nodiscc.xsrv.backup # optional, backup of mumble server database
+    - nodiscc.xsrv.mumble
+
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+vault_mumble_password: "CHANGEME"
+vault_mumble_superuser_password: "CHANGEME20"
+```
 
 
 Configuration Variables
@@ -18,22 +31,6 @@ Configuration Variables
 
 See [defaults/main.yml](defaults/main.yml)
 
-
-Example Playbook
-----------------
-
-```yaml
-- hosts: my.CHANGEME.org
-  roles:
-    - nodiscc.xsrv.common
-    - nodiscc.xsrv.monitoring
-    - nodiscc.xsrv.backup
-    - nodiscc.xsrv.mumble
-
-# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_mumble_password: "CHANGEME"
-vault_mumble_superuser_password: "CHANGEME20"
-```
 
 Usage
 -----

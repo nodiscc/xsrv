@@ -1,0 +1,22 @@
+# rsyslog configuration for APT package manager related logs
+
+input(type="imfile"
+      File="/var/log/apt/history.log"
+      readMode="0"
+      Tag="apt:"
+      Facility="local0"
+      PersistStateInterval="0")
+
+# dpkg log - verbose, disabled
+#input(type="imfile"
+#      File="/var/log/dpkg.log"
+#      Tag="dpkg:"
+#      Facility="local0"
+#      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/unattended-upgrades/unattended-upgrades.log"
+      readMode="0"
+      Tag="unattended-upgrades:"
+      Facility="local0"
+      PersistStateInterval="0")

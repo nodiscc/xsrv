@@ -27,3 +27,12 @@
   tags:
     - gitea
     - apache
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - gitea
+    - rsyslog
+  when:
+    - '"nodiscc.xsrv.monitoring" in role_names'
+    - setup_rsyslog|bool

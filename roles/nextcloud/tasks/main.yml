@@ -1,5 +1,3 @@
----
-
 - include: checks.yml
   tags:
     - nextcloud
@@ -31,3 +29,12 @@
   become: yes
   tags:
     - nextcloud
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - nextcloud
+    - rsyslog
+  when:
+    - '"nodiscc.xsrv.monitoring" in role_names'
+    - setup_rsyslog|bool

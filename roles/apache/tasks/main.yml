@@ -1,5 +1,3 @@
----
-
 - include: checks.yml
   tags:
     - apache
@@ -18,6 +16,16 @@
   tags:
     - apache
     - lamp
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - apache
+    - lamp
+    - rsyslog
+  when:
+    - '"nodiscc.xsrv.monitoring" in role_names'
+    - setup_rsyslog|bool
 
 - name: restart apache to apply configuration changes
   meta: flush_handlers

@@ -1,5 +1,3 @@
----
-
 - include: checks.yml
   tags:
     - rsnapshot
@@ -10,3 +8,13 @@
   tags:
     - rsnapshot
     - backup
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - rsnapshot
+    - backup
+    - rsyslog
+  when:
+    - '"nodiscc.xsrv.monitoring" in role_names'
+    - setup_rsyslog|bool

@@ -1,0 +1,7 @@
+# rsyslog configuration for mumble-server logs
+
+input(type="imfile"
+      File="/var/log/mumble-server/mumble-server.log"
+      Tag="mumble-server:"
+      Facility="daemon"
+      PersistStateInterval="0")

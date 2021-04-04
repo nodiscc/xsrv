@@ -1,0 +1,8 @@
+- name: configure rsyslog to agregate samba logs to syslog
+  template:
+    src: etc_rsyslog.d_samba.conf.j2
+    dest: /etc/rsyslog.d/samba.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog

@@ -2,6 +2,8 @@
 
 This role will install [Nextcloud](https://en.wikipedia.org/wiki/Nextcloud), a file hosting, sharing, and synchronization service.
 
+Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/).
+
 Basic functionality includes uploading, viewing, editing, downloading and sharing files from a web interface. Nextcloud [clients](#clients) can be installed on any computer (Linux/OSX/Windows) or mobile device (Android/iOS) and allow automatically synchronizing your files with the server. It can be extended to a full personal cloud/collaborative suite/groupware solution by more than 200 [applications](https://apps.nextcloud.com/).
 
 Default installed applications include:
@@ -18,7 +20,9 @@ Default installed applications include:
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).
 
-Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/).
+It will also configure:
+- bruteforce prevention using fail2ban
+- (optional) agregation of nextcloud logs to syslog
 
 [![](https://i.imgur.com/kQyXV9S.png)](https://i.imgur.com/nCXJMus.png)
 [![](https://i.imgur.com/lXroRsI.png)](https://i.imgur.com/XlDrlS4.png)
@@ -36,8 +40,8 @@ See [meta/main.yml](meta/main.yml)
 ```yaml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # fail2ban bruteforce protection
-    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.common # hardening/firewall/bruteforce prevention
+    - nodiscc.xsrv.monitoring # (optional) server monitoring and log agregation
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.postgresql # database engine

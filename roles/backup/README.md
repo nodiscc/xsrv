@@ -1,5 +1,4 @@
-backup
-=============
+# xsrv.backup
 
 This role will setup [rsnapshot](https://rsnapshot.org), an incremental backup system.
 
@@ -10,10 +9,10 @@ This role will setup [rsnapshot](https://rsnapshot.org), an incremental backup s
 
 - configurable backup sources (local/remote), destinations, scripts and retention policy
 - loads any additional/custom configuration from `/etc/rsnapshot.d/*.conf`
+- (optional) agregation of rsnapshot logs to syslog
 
 
-Requirements/dependencies/example playbook
-------------
+## Requirements/dependencies/example playbook
 
 See [meta/main.yml](meta/main.yml)
 
@@ -22,18 +21,14 @@ See [meta/main.yml](meta/main.yml)
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # (optional) hardening, SSH
+    - nodiscc.xsrv.monitoring # (optional) rsnapshot log agregation
     - nodiscc.xsrv.backup
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-License
--------
 
-[GPLv3](../../LICENSE)
-
-Usage
-------------
+## Usage
 
 - force running backups immediately: `ssh user@my.example.org sudo -u rsnapshot rsnapshot daily`
 - show the size of backups on the host: `ssh user@my.example.org du --human-readable --summarize --time /var/backups/srv01/*`
@@ -69,7 +64,12 @@ linux_users:
 
 **Removing old backups:** if a backup job is added at some point, than later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
 
-References
-------------
+
+## References
 
 - https://stdout.root.sx/links/?searchtag=backups
+
+
+## License
+
+[GPLv3](../../LICENSE)
