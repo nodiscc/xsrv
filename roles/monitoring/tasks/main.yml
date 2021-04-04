@@ -38,3 +38,10 @@
     - monitoring
     - monitoring-utils
   when: setup_monitoring_cli_utils|bool
+
+- include: lynis.yml
+  become: yes
+  tags:
+    - monitoring
+    - lynis
+  when: setup_lynis|bool

@@ -1,0 +1,18 @@
+# Profile name, will be used as title/description
+profile-name=Custom Audit Template
+
+# Skip a test (one per line)
+{% if lynis_skip_tests %}
+{% for test in lynis_skip_tests %}
+skip-test={{ test }}
+{% endfor %}
+{% else %}
+#skip-test=SSH-7408
+{% endif %}
+
+# Skip a particular option within a test (when applicable)
+#skip-test=SSH-7408:loglevel
+#skip-test=SSH-7408:permitrootlogin
+
+# Skip Lynis upgrade availability test (default: no)
+skip-upgrade-test=yes
