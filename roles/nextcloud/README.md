@@ -95,20 +95,15 @@ To restore a backup:
 ```bash
 # Remove the nextcloud database (nextcloud by default)
 mysql -u root -p -e 'DROP database nextcloud;'
-
 # Remove the nextcloud installation directory
 rm -rv /var/www/my.example.org/nextcloud
-
 # Remove the nextcloud data directory
 rm -rv /var/nextcloud/data
-
 # Reinstall nextcloud by running the playbook/nextcloud role, then
 # Restore the database
 mysql -u root -p nextcloud < /var/backups/rsnapshot/daily.0/localhost/var/backups/mysql/nextcloud/nextcloud.sql
-
 # Restore the data directory
 rsync -avP --delete /var/backups/rsnapshot/daily.0/localhost/var/nextcloud/data /var/nextcloud/
-
 # Rescan files
 sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 ```
