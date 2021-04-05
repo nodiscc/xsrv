@@ -12,6 +12,7 @@
       - netdata_disable_debug_log == netdata_disable_debug_log|bool
       - netdata_disable_error_log == netdata_disable_error_log|bool
       - netdata_http_checks|type_debug == "list"
+      - netdata_x509_checks|type_debug == "list"
       - netdata_install_method in ['packagecloud', 'binary']
       - netdata_logcount_error_threshold_crit == netdata_logcount_error_threshold_crit|int
       - netdata_logcount_error_threshold_warn == netdata_logcount_error_threshold_warn|int

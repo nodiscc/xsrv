@@ -61,33 +61,36 @@ netdata_disable_access_log: yes
 #   - { name: samba, min_count: 2, interval: 20} # samba file sharing server (smbd+nmbd)
 netdata_process_checks: []
 
-# Netdata HTTP/SSL checks
-#   name: readable name of the check
-#   url: URL to check for successful HTTP response
-#   timeout: (seconds, default 1) maximum allowed time to return the content
-#   interval: (seconds) interval between HTTP checks
-#   check_x509: (yes/no, default yes for https:// URLs): check x509/SSL certificate time to expiration
+# HTTP checks
+# uses the same syntax and parameters as netdata httpcheck module
+# https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/httpcheck/
+# https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf
 # Example:
 # netdata_http_checks:
 #   - name: example.com
-#     url: https://website.com
-#   - name: example.net
-#     url: http://example.net:8000
-#     timeout: 5
-#     interval: 60
-#   - name: broken-ssl-website
-#     url: https://www.self-signed.dev
-#     check_x509: no
+#     url: https://website.com:444
+#     status_accepted:
+#       - 200
+#       - 401
+#     tls_skip_verify: yes
+#     timeout: 10
+#     update_every: 20
 netdata_http_checks: []
 
-# Netdata x509/SSL checks
-# (seconds) global interval between x509 certificate checks
-netdata_x509_checks_interval: "60"
-# (seconds) global SSL connection timeout value for x509 checks
-netdata_x509_checks_timeout: "60"
-# (days) raise an alarm when a SSL certificate expires in less than this value
-netdata_x509_checks_days_until_expiration_warning: "14"
-netdata_x509_checks_days_until_expiration_critical: "7"
+# X509/SSL/TLS certificate checks
+# uses the same syntax and parameters as netdata x509check module
+# Port is mandatory for all non-file schemes
+# https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/x509check/
+# https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509heck.conf
+# Example:
+# netdata_x509_checks:
+#   - name example-org
+#     source: https://example.org:443
+#     days_until_expiration_critical: 15
+#     timeout: 3
+#     tls_skip_verify: yes
+#     update_every: 20
+netdata_x509_checks: []
 
 # Netdata TCP port checks
 #   name: readable name of the check
