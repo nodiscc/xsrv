@@ -77,7 +77,7 @@ netdata_process_checks: []
 #     update_every: 20
 netdata_http_checks: []
 
-# X509/SSL/TLS certificate checks
+# X509/SSL/TLS certificate checks (time to expiration, revocation status)
 # uses the same syntax and parameters as netdata x509check module
 # Port is mandatory for all non-file schemes
 # https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/x509check/
