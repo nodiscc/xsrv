@@ -106,7 +106,7 @@
     login_user: "{{ tt_rss_db_user }}"
     login_password: "{{ tt_rss_db_password }}"
     db: "{{ tt_rss_db_name }}"
-    path_to_script: "{{ tt_rss_install_dir }}/sql/pgsql/ttrss_schema_pgsql.sql"
+    path_to_script: "{{ tt_rss_install_dir }}/sql/pgsql/schema.sql"
   when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
 
 - name: update tt-rss admin account in postgresql database (always returns changed)
