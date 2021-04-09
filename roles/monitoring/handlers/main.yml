@@ -9,6 +9,17 @@
     state: restarted
     enabled: yes
 
+- name: assemble netdata configuration
+  become: yes
+  assemble:
+    src: /etc/netdata/{{ item }}.d
+    dest: /etc/netdata/{{ item }}
+  with_items:
+    - go.d/httpcheck.conf
+    - go.d/x509check.conf
+    - go.d/portcheck.conf
+  notify: restart netdata
+
 - name: restart netdata
   become: yes
   service:

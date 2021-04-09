@@ -10,40 +10,23 @@ This role will install a lightweight monitoring system on a Linux machine:
 [![](https://screenshots.debian.net/screenshots/000/010/371/thumb.png)](https://screenshots.debian.net/package/lnav)
 [![](https://screenshots.debian.net/screenshots/000/014/778/thumb.png)](https://screenshots.debian.net/package/htop)
 
-Requirements
-------------
+## Requirements/dependencies/example playbook
 
 - Ansible >= 2.8
 - Debian 9/10
-- The service must be reaschable on port tcp/19999 (firewall/NAT)
-
-
-Configuration variables
------------------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Dependencies
-------------
-
-- [`common`](https://gitlab.com/nodiscc/ansible-xsrv-common) role (optional)
-
-
-Example Playbook
-----------------
-
-playbook.yml:
+- The service must be reachable on port `tcp/19999` through firewall/NAT
 
 ```yaml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common
+    - nodiscc.xsrv.common # optional
     - nodiscc.xsrv.monitoring
 ```
 
-Usage
------
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+
+## Usage
 
 ### Netdata
 
@@ -69,6 +52,11 @@ Read [lnav documentation](https://lnav.readthedocs.io/) for more info.
 - Show running processes: `ssh user@my.example.org sudo htop`
 - Analyze disk usage by directory: `ssh user@my.example.org sudo ncdu /`
 - Show network connections on the host `ssh -t user@my.example.org sudo watch -n 2 ss -laptu`
+
+
+### Integration with other roles
+
+Roles that need to install custom `httpcheck`/`x509check`/`portcheck` configurations must create relevant files in `/etc/netadata/go.d/$module_name.conf.d/` and notify the `assemble netadata configuration` handler.
 
 
 License
