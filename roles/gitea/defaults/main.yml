@@ -35,7 +35,7 @@ gitea_enable_service: yes
 
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
+#   selfsigned: generate a self-signed certificate
 gitea_https_mode: selfsigned
 
 

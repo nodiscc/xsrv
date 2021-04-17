@@ -1,0 +1,8 @@
+ alarm: sql_processes
+    on: apps.processes
+  calc: $sql
+ every: 20s
+  crit: ($this < 1) OR ($this = nan)
+ units: processes
+  info: database server running processes
+    to: sysadmin

@@ -13,3 +13,10 @@
 - include: apache.yml
   become: yes
   tags: homepage
+
+- include: monitoring.yml
+  become: yes
+  tags:
+    - homepage
+    - monitoring
+  when: "'nodiscc.xsrv.monitoring' in role_names"

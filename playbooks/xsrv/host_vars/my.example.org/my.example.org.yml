@@ -1,6 +1,6 @@
 ### configuration variables for my.example.org
-# to encrypt a sensitive configuration value, use my_value: {{ vault_my_value }} in this file
-# and store the actual 'vault_my_value: MY_SECRET' in ansible-vault: xsrv edit-vault
+# to store secret/sensitive configuration values, use an encrypted/vaulted host_vars file
+# (xsrv edit-vault default my.example.org, or ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 
 ##### COMMON #####
 # administrator account (sudo) username/password
@@ -91,23 +91,4 @@ firehol_networks:
 
 ##### MONITORING #####
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml
-netdata_process_checks:
-  - { name: ssh, min_count: 1, interval: 20} # SSH server
-  - { name: time, min_count: 1, interval: 20} # NTP daemon
-  - { name: fail2ban, min_count: 1, interval: 20} # bruteforce prevention/IPS
-#   - { name: httpd, min_count: 1, interval: 20} # web server
-#   - { name: sql, min_count: 1, interval: 20} # SQL database engine
-#   - { name: gitea, min_count: 1, interval: 20} # gitea self-hosted software forge
-#   - { name: ezstream, min_count: 1, interval: 20} # icecast/ezstream media streaming server
-#   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
-#   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
-#   - { name: auth, min_count: 1, interval: 20} # openldap server
-#   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
-
-netdata_modtime_checks:
-  - name: rsnapshot_last_success # check successful daily backups
-    path: /var/log/rsnapshot_last_success
-    age_warning: 88200
-    age_critical: 90000
-
 needrestart_autorestart_services: yes

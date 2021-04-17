@@ -1,0 +1,20 @@
+##### MUMBLE MONITORING #####
+
+- name: configure rsyslog to agregate mumble logs to syslog
+  template:
+    src: etc_rsyslog.d_mumble.conf.j2
+    dest: /etc/rsyslog.d/mumble.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog
+  when: setup_rsyslog|bool
+
+- name: install netdata process check for mumble
+  template:
+    src: etc_netdata_health.d_processes.conf.d_mumble.conf.j2
+    dest: /etc/netdata/health.d/processes.conf.d/mumble.conf
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration

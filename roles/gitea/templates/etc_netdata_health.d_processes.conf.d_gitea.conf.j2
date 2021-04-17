@@ -1,0 +1,8 @@
+ alarm: git_services_processes
+    on: apps.processes
+  calc: $git_services
+ every: 20s
+  crit: ($this < 1) OR ($this = nan)
+ units: processes
+  info: git services (gitea) running processes
+    to: sysadmin

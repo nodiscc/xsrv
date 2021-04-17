@@ -22,3 +22,10 @@
   tags:
     - jellyfin
     - backup
+
+- include: monitoring.yml
+  become: yes
+  tags:
+    - jellyfin
+    - monitoring
+  when: "'nodiscc.xsrv.monitoring' in role_names"

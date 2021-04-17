@@ -1,5 +1,10 @@
----
-
 - include: postgresql.yml
   become: yes
   tags: postgresql
+
+- include: monitoring.yml
+  become: yes
+  tags:
+    - postgresql
+    - monitoring
+  when: "'nodiscc.xsrv.monitoring' in role_names"

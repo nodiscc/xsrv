@@ -1,0 +1,26 @@
+##### RSNAPSHOT MONITORING #####
+
+- name: configure rsyslog to agregate rsnapshot logs to syslog
+  template:
+    src: etc_rsyslog.d_rsnapshot.conf.j2
+    dest: /etc/rsyslog.d/rsnapshot.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog
+  when: setup_rsyslog|bool
+  tags: rsyslog
+
+- name: add netdata modtime check and alarm for rsnapshot
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration
+  with_items:
+    - src: etc_netdata_python.d_modtime.conf.d_rsnapshot.conf.j2
+      dest: "{{ netdata_install_prefix }}/etc/netdata/python.d/modtime.conf.d/modtime.conf"
+    - src: etc_netdata_health.d_modtime.conf.d_rsnapshot.conf.j2
+      dest: "{{ netdata_install_prefix }}/etc/netdata/health.d/modtime.conf.d/modtime.conf"

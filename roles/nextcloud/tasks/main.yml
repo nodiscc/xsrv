@@ -32,11 +32,9 @@
     - nextcloud
     - apache
 
-- include: rsyslog.yml
+- include: monitoring.yml
   become: yes
   tags:
     - nextcloud
-    - rsyslog
-  when:
-    - '"nodiscc.xsrv.monitoring" in role_names'
-    - setup_rsyslog|bool
+    - monitoring
+  when: "'nodiscc.xsrv.monitoring' in role_names"

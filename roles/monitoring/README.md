@@ -56,7 +56,7 @@ Read [lnav documentation](https://lnav.readthedocs.io/) for more info.
 
 ### Integration with other roles
 
-Roles that need to install custom `httpcheck`/`x509check`/`portcheck` configurations must create relevant files in `/etc/netadata/go.d/$module_name.conf.d/` and notify the `assemble netadata configuration` handler.
+Roles that need to install custom `httpcheck`/`x509check`/`portcheck`/`modtime`/`processes` module/alarm configurations must create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` handler.
 
 
 License

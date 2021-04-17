@@ -38,3 +38,12 @@
   tags:
     - openldap
     - self-service-password
+
+- include: monitoring.yml
+  become: yes
+  tags:
+    - openldap
+    - monitoring
+    - ldap-account-manager
+    - self-service-password
+  when: "'nodiscc.xsrv.monitoring' in role_names"

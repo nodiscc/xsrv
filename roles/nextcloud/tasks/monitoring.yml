@@ -1,0 +1,21 @@
+##### NEXTCLOUD MONITORING #####
+
+- name: configure rsyslog to agregate nextcloud logs to syslog
+  template:
+    src: etc_rsyslog.d_nextcloud.conf.j2
+    dest: /etc/rsyslog.d/nextcloud.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog
+  when: setup_rsyslog|bool
+  tags: rsyslog
+
+- name: add netdata httpcheck for nextcloud
+  template:
+    src: etc_netdata_go.d_httpcheck.conf.d_nextcloud.conf.j2
+    dest: "{{ netdata_install_prefix }}/etc/netdata/go.d/httpcheck.conf.d/nextcloud.conf"
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration

@@ -1,0 +1,5 @@
+# netdata go.d.plugin configuration for x509check
+jobs:
+{% if netdata_x509_checks %}
+{{ netdata_x509_checks|to_nice_yaml }}
+{% endif %}

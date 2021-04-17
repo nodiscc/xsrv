@@ -1,5 +1,3 @@
----
-
 - include: checks.yml
   tags:
     - mariadb
@@ -10,3 +8,11 @@
   tags:
     - mariadb
     - lamp
+
+- include: monitoring.yml
+  become: yes
+  tags:
+    - mariadb
+    - lamp
+    - monitoring
+  when: "'nodiscc.xsrv.monitoring' in role_names"

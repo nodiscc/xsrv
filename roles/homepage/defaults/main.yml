@@ -10,7 +10,7 @@ homepage_message: "<i>Welcome to this server running <a href='https://xsrv.readt
 
 # HTTPS and SSL/TLS certificate mode for the homepage webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate (will generate warning in bowsers and clients)
+#   selfsigned: generate a self-signed certificate
 homepage_https_mode: selfsigned
 
 # list of additional aliases/domain names for the homepage, in addition to homepage_fqdn. example:

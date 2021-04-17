@@ -1,15 +1,14 @@
----
-
 - include: checks.yml
   tags:
     - monitoring
+    - netdata
+    - rsyslog
 
 - include: rsyslog.yml
   become: yes
   tags:
     - monitoring
     - rsyslog
-    - syslog
   when: setup_rsyslog|bool
 
 - include: netdata.yml
@@ -17,8 +16,17 @@
   tags:
     - monitoring
     - netdata
-
-- include: netdata-modules.yml
+- include: netdata-module-needrestart.yml
+  become: yes
+  tags:
+    - monitoring
+    - netdata
+- include: netdata-module-logcount.yml
+  become: yes
+  tags:
+    - monitoring
+    - netdata
+- include: netdata-module-debsecan.yml
   become: yes
   tags:
     - monitoring

@@ -9,12 +9,11 @@
     - rsnapshot
     - backup
 
-- include: rsyslog.yml
+- include: monitoring.yml
   become: yes
   tags:
     - rsnapshot
     - backup
-    - rsyslog
+    - monitoring
   when:
     - '"nodiscc.xsrv.monitoring" in role_names'
-    - setup_rsyslog|bool

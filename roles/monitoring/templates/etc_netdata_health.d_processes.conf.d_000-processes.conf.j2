@@ -1,0 +1,43 @@
+{% if 'nodiscc.xsrv.common' in role_names %}
+ alarm: ssh_processes
+    on: apps.processes
+  calc: $ssh
+ every: 20s
+  crit: ($this < 1) OR ($this = nan)
+ units: processes
+  info: ssh running processes
+    to: sysadmin
+
+ alarm: time_processes
+    on: apps.processes
+  calc: $time
+ every: 20s
+  crit: ($this < 1) OR ($this = nan)
+ units: processes
+  info: time running processes
+    to: sysadmin
+
+ alarm: fail2ban_processes
+    on: apps.processes
+  calc: $fail2ban
+ every: 20s
+  crit: ($this < 1) OR ($this = nan)
+ units: processes
+  info: fail2ban running processes
+    to: sysadmin
+{% endif %}
+
+{% for job in netdata_process_checks %}
+{% if job.min_count > 0 %}
+ alarm: {{ job.name }}_processes
+    on: apps.processes
+  calc: ${{ job.name }}
+ every: {{ job.interval }}s
+  crit: ($this < {{ job.min_count }}) OR ($this = nan)
+ units: processes
+  info: {{ job.name }} running processes
+    to: sysadmin
+{% endif %}
+
+{% endfor %}
+

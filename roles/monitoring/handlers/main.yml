@@ -18,6 +18,9 @@
     - go.d/httpcheck.conf
     - go.d/x509check.conf
     - go.d/portcheck.conf
+    - python.d/modtime.conf
+    - health.d/modtime.conf
+    - health.d/processes.conf
   notify: restart netdata
 
 - name: restart netdata

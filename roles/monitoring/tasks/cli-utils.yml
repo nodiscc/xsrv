@@ -1,5 +1,3 @@
----
-
 - name: install interactive/command-line monitoring tools
   apt:
     state: present

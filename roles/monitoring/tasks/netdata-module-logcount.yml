@@ -1,0 +1,64 @@
+### NETDATA-LOGCOUNT ###
+
+- name: install lnav log viewer
+  apt:
+    package: lnav
+    state: present
+
+- name: clone netdata-logcount module
+  git:
+    dest: "/root/netdata-logcount"
+    repo: "https://gitlab.com/nodiscc/netdata-logcount"
+    version: "1.0.3"
+    accept_hostkey: yes
+    force: yes # discard modified files
+
+- name: create directory for netdata-logcount lnav script
+  file:
+    path: /opt/netdata-logcount/
+    state: directory
+    mode: 0755
+
+- name: copy configuration/lnav script for netdata-logcount
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: netdata
+    mode: 0640
+  with_items:
+    - { src: 'opt_netdata-logcount_logcount.sql.j2', dest: '/opt/netdata-logcount/logcount.sql' }
+    - { src: 'etc_netdata_python.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/logcount.conf' }
+    - { src: 'etc_netdata_health.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/logcount.conf' }
+  notify: restart netdata
+
+- name: install netdata-logcount module
+  copy:
+    remote_src: yes
+    src: "/root/netdata-logcount/logcount.chart.py"
+    dest: "{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/logcount.chart.py"
+    owner: root
+    group: netdata
+    mode: 0750
+  notify: restart netdata
+
+- name: add a cron job to refresh the logcount state file
+  cron:
+    cron_file: "logcount"
+    month: "*"
+    day: "*"
+    hour: "*"
+    minute: "*/{{ netdata_logcount_update_interval }}"
+    job: script --return --quiet -c "/usr/bin/lnav /var/log/syslog -n -f /opt/netdata-logcount/logcount.sql" > /dev/null
+    name: "logcount"
+    user: root
+
+- name: set read permissions for netdata on /var/cache/logcount
+  file:
+    path: /var/cache/logcount
+    state: touch
+    owner: root
+    group: netdata
+    mode: 0640
+    modification_time: preserve
+    access_time: preserve

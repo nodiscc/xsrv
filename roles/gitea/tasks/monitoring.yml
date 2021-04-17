@@ -1,0 +1,26 @@
+##### GITEA MONITORING #####
+
+- name: configure rsyslog to agregate gitea logs to syslog
+  template:
+    src: etc_rsyslog.d_gitea.conf.j2
+    dest: /etc/rsyslog.d/gitea.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog
+  when: setup_rsyslog|bool
+  tags: rsyslog
+
+- name: add netdata http/process check for gitea
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ netdata_install_prefix }}{{ item.dest }}"
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration
+  with_items:
+    - src: etc_netdata_go.d_httpcheck.conf.d_gitea.conf.j2
+      dest: /etc/netdata/go.d/httpcheck.conf.d/gitea.conf
+    - src: etc_netdata_health.d_processes.conf.d_gitea.conf.j2
+      dest: /etc/netdata/health.d/processes.conf.d/gitea.conf

@@ -1,0 +1,18 @@
+{% if openldap_setup_lam %}
+-   name: ldap-account-manager
+    timeout: 1
+    tls_skip_verify: true
+    update_every: 10
+    url: https://127.0.0.1
+    headers:
+      Host: "{{ ldap_account_manager_fqdn }}"
+{% endif %}
+{% if openldap_setup_ssp %}
+-   name: self-service-password
+    timeout: 1
+    tls_skip_verify: true
+    update_every: 10
+    url: https://127.0.0.1
+    headers:
+      Host: "{{ self_service_password_fqdn }}"
+{% endif %}

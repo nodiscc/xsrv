@@ -1,0 +1,23 @@
+##### APACHE MONITORING #####
+
+- name: configure rsyslog to agregate apache access/error and php-fpm logs to syslog
+  template:
+    src: etc_rsyslog.d_{{ item }}.conf.j2
+    dest: /etc/rsyslog.d/{{ item }}.conf
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - apache
+    - php-fpm
+  notify: restart rsyslog
+  when: setup_rsyslog|bool
+
+- name: install netdata process check for apache
+  template:
+    src: etc_netdata_health.d_processes.conf.d_apache.conf.j2
+    dest: /etc/netdata/health.d/processes.conf.d/apache.conf
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration

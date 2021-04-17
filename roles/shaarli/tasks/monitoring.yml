@@ -1,0 +1,10 @@
+##### SHAARLI MONITORING #####
+
+- name: add netdata httpcheck for shaarli
+  template:
+    src: etc_netdata_go.d_httpcheck.conf.d_shaarli.conf.j2
+    dest: "{{ netdata_install_prefix }}/etc/netdata/go.d/httpcheck.conf.d/shaarli.conf"
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration
