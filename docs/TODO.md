@@ -2,10 +2,25 @@
 
 ### xsrv/xsrv
 
-- #463 - openldap: upgrade ldap-account-manager to v7.5 - `1.3.0`
-- #462 - xsrv: add xsrv ls subcommand  (list files in the playbooks directory (accepts a path)) - `1.3.0`
+- #486 - netdata: remove 'binary' installation mode - `1.3.0`
+- #485 - monitoring: netdata: disable python.d/go.d/aclk self-monitoring charts
+- #484 - monitoring: make netdata modules installation optional
+- #483 - rocketchat: add automatic httpcheck if the monitoring role is enabled
+- #482 - rocketchat: add automatic netdata process check if the monitoring role is enabled
+- #481 - add netdata portchecks for ssh, apache, mumble, samba, openldap
+- #480 - monitoring: use systemd unit instead of process checks/report failed units? - `1.3.0`
+- #479 - monitoring/all roles: add netdata httpchecks for all web applications - `1.3.0`
+- #478 - upgrade to ansible 3.x
+- #475 - ACME certificate authority?
+- #474 - Benchmark performance of web applications?
+- #473 - Docker daemon hardening/container scanner service?
+- #472 - Ansible AWX role?
+- #470 - monitoring: lnav should not interpret ansible log messages with warn=True as warnings - `1.4.0`
+- #469 - ansible-ansible.legacy.command: [WARNING] Unable to use /var/www/.ansible/tmp as temporary directory, failing back to system: [Errno 13] Permission denied: '/var/www/.ansible' - `1.4.0`
+- #466 - netdata: graph lynis warnings/suggestions?
+- #465 - lynis: add detection of SUID files?
+- #464 - monitoring: add (optional) lynis security audit tool and daily scheduled run - `1.4.0`
 - #461 - xsrv init-host breaks inventory formatting when the inventory contains more than one group/is not flat - `1.3.0`
-- #460 - jellyfin: document disabling transcoding in case of high resource usage - `1.3.0`
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)
 - #457 - samba: setup dfs_samba4/acl_xattr VFS modules?
 - #456 - Upgrade to Debian 11 - `2.0.0`
@@ -26,29 +41,26 @@
 - #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification?
 - #424 - nextcloud: add templateeditor app?
 - #423 - nextcloud: add documents app?
-- #420 - homepage: add favicon - `1.3.0`
 - #417 - monitoring: add auto-tests for each enabled vhost - `1.3.0`
-- #413 - nextcloud: database password cannot be changed after initial installation - `1.3.0`
 - #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - `2.0.0`
-- #404 - add xsrv info command - `1.3.0`
+- #404 - add xsrv info command - `1.4.0`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900
 - #393 - Samba: performance improvements (socket options)?
-- #392 - SSH: harden MaxStartups option? - `1.3.0`
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed
 - #389 - WIP: xsrv: add show-ssh-config subcommand (display ssh config to use in ~/.ssh/config)
 - #388 - WIP: add libvirt role
-- #387 - jellyfin: monitor logs with rsyslog - `1.3.0`
+- #387 - jellyfin: monitor logs with rsyslog - `1.4.0`
 - #384 - jellyfin: allow/document uploading files from nextcloud
 - #380 - Enforce DNSSEC for outgoing DNS queries
 - #379 - seup IPV6 support (sysctl, firewal, applications...)?
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ?
 - #377 - rocketchat: enable/configure federation?
 - #376 - netdata: enable samba monitoring when samba role is installed
-- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.3.0`
+- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.4.0`
 - #374 - makefile/readthedocs: include roles documentation in generated docs
 - #372 - WIP: shaarli: make hide_timestamp option configurable
 - #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis) - `1.3.0`
-- #365 - nextcloud: LDAP user backend - `1.3.0`
+- #365 - nextcloud: LDAP user backend - `1.4.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
 - #362 - netdata: default apache status monitoring jobs trigger error 403
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles
@@ -83,7 +95,7 @@
 - #307 - apache: make certificate status endpoint enable/disable configurable
 - #305 - switch firewall management to firewalld - `2.0.0`
 - #303 - firehol: add example NAT loopback/hairpin rule
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.3.0`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.4.0`
 - #293 - WIP: add nginx role
 - #290 - netdata: monitor number of upgradeable APT packages - `1.3.0`
 - #280 - Samba Directory Controller or other Identity Management solution
@@ -100,7 +112,7 @@
 - #267 - apache: make disabled modules list configurable, disable more modules by default
 - #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
 - #265 - apache: provide custom error pages
-- #263 - Netdata: setup registry - `1.3.0`
+- #263 - Netdata: setup registry/streaming - `1.4.0`
 - #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS) - `1.3.0`
 - #258 - WIP: add custom info page to netdata
 - #256 - CAS, SAML or Oauth Sigle Sign On (SSO)?
@@ -110,13 +122,6 @@
 - #250 - WIP: add pulseaudio-server role
 - #248 - WIP: add gitlab-runner role
 - #247 - WIP: add gitlab role
-- #244 - icecast: ezstream 100% usage when playlist is empty
-- #243 - icecast: make playlist storage directory configurable
-- #242 - icecast: add a default/demo audio file
-- #241 - icecast: allow/document streaming from a source client running on another machine
-- #240 - icecast: allow streaming other formats (mp3)
-- #239 - icecast: update stream title metadata with currently playing track?
-- #238 - icecast: firefox stops playing when ezstream skips track
 - #237 - rsyslog: monitor auditd log files
 - #236 - WIP: add icecast role
 - #235 - icecast server role
@@ -128,7 +133,7 @@
 - #226 - mysql: update root password for *all* root accounts
 - #224 - mysql: log MariaDB slow queries
 - #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost
-- #221 - apache: add a simple public HTTP server/vhost option - `1.3.0`
+- #221 - apache: add a simple public HTTP server/vhost option - `1.4.0`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage
 - #218 - apache: implement modsecurity
 - #216 - xsrv: generate a local copy of the homepage/netdata custom dashboard
@@ -161,7 +166,7 @@
 - #181 - netdata: monitor MySQL server
 - #180 - netdata: graph SCAP workbench warnings
 - #178 - netdata: graph/alert on deborphan matches
-- #177 - monitoring: add lynis audit tool - `1.3.0`
+- #177 - monitoring: add lynis audit tool - `1.4.0`
 - #176 - netdata: add Qualys SSL check module
 - #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
 - #174 - netdata: allow setting a repetition period for alarms
@@ -169,7 +174,7 @@
 - #172 - netdata: support long-term archiving
 - #171 - needrestart: add a config variable to automatically reboot when a kernel upgrade is pending
 - #170 - netdata: add support for postgresql monitoring
-- #169 - Netdata: the installer script is not idempotent/no authenticity check for binary
+- #169 - netdata: binary installation method is not idempotent/no authenticity check - drop support for installation from binary - `1.4.0`
 - #167 - monitoring: add spectre-meltdown-checker
 - #165 - gitea: Enable search/indexing for repository/code/issues
 - #164 - gitea: add CI/CD service
@@ -286,4 +291,4 @@
 - #6 - cockpit role?
 - #5 - Matrix/Synapse server
 - #4 - Graylog role - `1.3.0`
-- #3 - Mail server
+- #3 - Mail server?

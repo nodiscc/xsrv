@@ -1,13 +1,73 @@
 # Usage
 
-`xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools. Configuration settings are stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) in simple [YAML](https://en.wikipedia.org/wiki/YAML) files. To change server ([host](installation/server-preparation.md)) configuration and roles, you must first edit the YAML configuration, then apply changes to the host using the `deploy` command.
+`xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools.
+
+Server ([host](installation/server-preparation.md)) configuration is stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) in [YAML](https://en.wikipedia.org/wiki/YAML) text files.
+
+To [enable components or change server configuration](#changing-configuration), edit the relevant YAML configuration file, then apply changes using `xsrv deploy`.
+
+You can also edit files directly from your favorite text editor, use plain [ansible command-line tools](#using-as-ansible-collection) to manage and deploy your playbooks or use [git/version control](#version-control) to manage changes.
+
+
 
 ## Changing configuration
 
-- `xsrv edit-playbook`: edit the list of enabled roles (`playbook`)
-- `xsrv edit-host`: edit configuration settings for the host and its roles (`host_vars`)
-- `xsrv show-defaults`: show all available configuration variables, and their default values (by default, only basic settings are set in `host_vars` to keep the file manageable). To change one of the defaults, simply copy it to your `host_vars` file and edit its value there. [List of all configuration variables](configuration-variables.md)
-- `xsrv edit-vault`: edit secret/encrypted configuration variables. To prevent storing sensitive/secret values such as passwords in plain text, this file is encrypted with [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html), and decrypted on the fly during deployment. The decryption password for the vault must be present in `.ansible-vault-password`
+- `xsrv edit-playbook`: edit the list of enabled roles ([playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html)) for your hosts. Add any [role](index.md#roles) you wish to enable to enable to your host's `roles:` list. Example:
+
+```yaml
+# xsrv edit-playbook
+# or $EDITOR ~/playbooks/default/playbook.yml
+- hosts: my.example.org
+  roles:
+    - nodiscc.xsrv.common
+    - nodiscc.xsrv.monitoring
+    - nodiscc.xsrv.apache
+    - nodiscc.xsrv.openldap
+    - nodiscc.xsrv.nextcloud
+    - nodiscc.xsrv.mumble
+    - nodiscc.xsrv.jellyfin
+```
+
+- `xsrv show-defaults`: show [all available configuration variables](configuration-variables.md), and their default values.
+
+```yaml
+# xsrv show-defaults
+# or cat ansible_collections/nodiscc/xsrv/roles/*/defaults/main.yml
+...
+# HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+gitea_https_mode: selfsigned
+...
+```
+
+
+- `xsrv edit-host`: edit configuration (`host_vars`) for the host and its roles. To change one of the default values listed in `xsrv show-defaults`, add the variable to this file with the desired value. Example:
+
+```yaml
+# xsrv edit-host
+# or $EDITOR ~/playbooks/default/host_vars/my.example.org/my.example.org.yml
+...
+gitea_https_mode: letsencrypt
+...
+```
+
+- `xsrv edit-vault`: edit secret/encrypted configuration variables. Any secret/sensitive variable should not be stored as plain text in `host_vars`. "Vaulted" files are encrypted with [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html), and decrypted on the fly during deployment. The decryption password for the vault must be present in `.ansible-vault-password`
+
+```yaml
+# xsrv edit-vault
+# or ansible-vault edit ~/playbooks/default/host_vars/my.example.org/my.example.org.vault.yml
+ansible_become_pass: "UFjP82CgUT5h7-e"
+nextcloud_user: "myadminusername"
+nextcloud_password: "cyf58eAZFbbEUZ4v3y6B"
+nextcloud_admin_email: "admin@example.org"
+nextcloud_db_password: "ucB77fNLX4qOoj2GhLBy"
+```
+
+```bash
+# $EDITOR ~/playbook/default/.ansible-vault-password
+Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY 
+```
 
 All commands support and additional playbook/host name parameter if you have multiple playbook/hosts. See below for complete usage examples.
 
@@ -18,8 +78,6 @@ xsrv deploy
 ```
 
 ## Command-line usage
-
-Full list of commands:
 
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
@@ -71,12 +129,79 @@ xsrv deploy infra ex1.CHANGEME.org,ex2.CHANGEME.org # deploy only the hosts ex1.
 TAGS=nextcloud,gitea deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud or gitea on ex3.CHANGEME.org
 ```
 
+-------------------------------
 
-## Storing sensitive configuration
+## Advanced
 
-Ensure no sensitive config values/secrets are stored as plaintext! Encrypt secret variables with ansible-vault:
+### Version control
+
+Put your playbook directory (eg. `~/playbooks/default`) under version control/[git](https://stdout.root.sx/?searchtags=git+doc) if you need to track changes to your configuration.
+
+**Reverting changes:**
+
+- (optional) restore a VM snapshot from before the change (will cause loss of all data modified after the snapshot!), OR restore data from last known good backups (see each role's documentation for restoration instructions)
+- `git checkout` your playbook directory as it was before the change
+- run the playbook `xsrv deploy`
+
+Refer to **[ansible documentation](https://docs.ansible.com/)** for more information.
+
+**Uninstalling roles:**
+
+Uninstalling roles is not supported at this time: components must be removed manually or using a ad-hoc playbook. Or a new server must be deployed and data restored from backups. Most roles provide variables to disable their services/functionality.
+
+
+### Using as ansible collection
+
+You can either:
+- use the [`xsrv` script](usage.md#command-line-usage) to manage your ansible environments
+- or use [roles](index.md#roles) through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html). To download roles to your anisble controller:
 
 ```yaml
-# xsrv edit-vault
-xyz_password: "$3CR3T"
+# create requirements.yml
+collections:
+  - name: https://gitlab.com/nodiscc/xsrv.git
+    type: git
+    version: release
 ```
+
+```bash
+# install the collection
+$ ansible-galaxy collection install -r requirements.yml
+```
+
+```yaml
+# include the collection and roles in your playbooks
+# playbook.yml
+- hosts: my.CHANGEME.org
+  collections:
+    - nodiscc.xsrv
+  roles:
+   - nodiscc.xsrv.common
+   - nodiscc.xsrv.monitoring
+   - nodiscc.xsrv.apache
+   - ...
+```
+
+To upgrade the collection to the latest [release](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md):
+
+```bash
+$ ansible-galaxy collection install --force -r requirements.yml
+```
+
+See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html) and [Ansible documentation - Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
+
+
+### Continuous deployment
+
+For production systems, it is strongly recommended to run the playbook and evaluate changes against a testing/staging environment first (eg. create separate `testing`,`prod` groups in `inventory.yml`, deploy changes to the `testing` environmnent with `xsrv deploy PLAYBOOK_NAME testing`). 
+
+You can further automate deployment procedures using a CI/CD pipeline. See the example [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/.gitlab-ci.yml) to get started.
+
+
+## See also
+
+- [awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted)
+- <https://stdout.root.sx/xsrv/xsrv> (upstream)
+- <https://github.com/nodiscc/xsrv> (mirror)
+- <https://gitlab.com/nodiscc/xsrv> (mirror)
+

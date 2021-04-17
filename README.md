@@ -30,7 +30,7 @@
 - [openldap](roles/openldap) - LDAP directory server
 - [docker](roles/docker) - Docker container platform
 
-**End-user web applications/services**
+**End-user applications/services**
 
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt_rss](roles/tt_rss) - RSS feed reader
