@@ -121,7 +121,7 @@ netdata_version: "v1.24.0"
 ### NETDATA EXTRA MODULES ###
 
 # automatically restart services that require it after an upgrade (yes/no)
-needrestart_autorestart_services: no
+needrestart_autorestart_services: yes
 
 # (minutes) interval between updates of log message counts in the logcount module
 netdata_logcount_update_interval: 1

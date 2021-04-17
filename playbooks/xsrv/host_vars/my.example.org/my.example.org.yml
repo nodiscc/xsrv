@@ -87,8 +87,3 @@ firehol_networks:
       # - { name: "smtps", dst: "any" } # nextcloud mail
       # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
       # - { name: "all", dst: "any" } # allow ALL outgoing connections (required for bittorrent/transmission)
-
-
-##### MONITORING #####
-# https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml
-needrestart_autorestart_services: yes
