@@ -13,3 +13,4 @@ test:
     LANG: "C.UTF-8"
   script:
     - make install_deps tests
+  interruptible: true
