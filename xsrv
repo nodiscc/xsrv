@@ -323,6 +323,7 @@ function self_upgrade() {
     echo "[xsrv] INFO fetching latest release..."
     if [[ -d "$xsrv_clone_dir/.git" ]]; then
        git -C "$xsrv_clone_dir" pull
+       git -C "$xsrv_clone_dir" checkout "$xsrv_upgrade_channel"
     else
       git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
     fi
