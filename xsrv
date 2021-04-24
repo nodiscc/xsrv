@@ -309,10 +309,10 @@ function show_defaults() {
         cat "$playbook_dir"/ansible_collections/*/*/roles/"$role"/defaults/main.yml | $pager 2>/dev/null
     else
         # shellcheck disable=SC2002
-        defaults_header="# List of all role configuration variables, and their default values.\n# Copy any variable to your host configuration and edit its value there.\n######################################################\n\n"
+        defaults_header="# List of all role configuration variables, and their default values.\\n# Copy any variable to your host configuration and edit its value there.\\n######################################################\\n\\n"
         default_files=$(find "$playbook_dir"/ansible_collections/*/*/roles/*/defaults/ -name main.yml)
         defaults_list=$(for file in $default_files; do
-            cat "$file"; echo -e "\n\n###################################################################"
+            cat "$file"; echo -e "\\n\\n###################################################################"
         done)
         echo -e "$defaults_header""$defaults_list" | $pager 2>/dev/null
     fi
