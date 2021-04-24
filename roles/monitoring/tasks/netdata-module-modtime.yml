@@ -12,7 +12,7 @@
   copy:
     remote_src: yes
     src: "/root/netdata-modtime/modtime.chart.py"
-    dest: "{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/modtime.chart.py"
+    dest: "/usr/libexec/netdata/python.d/modtime.chart.py"
     owner: root
     group: netdata
     mode: 0750
@@ -28,7 +28,7 @@
     mode: 0640
   with_items:
     - src: 'etc_netdata_python.d_modtime.conf.d_000-modtime.conf.j2'
-      dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/modtime.conf.d/000-modtime.conf'
+      dest: '/etc/netdata/python.d/modtime.conf.d/000-modtime.conf'
     - src: 'etc_netdata_health.d_modtime.conf.d_000-modtime.conf.j2'
-      dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/modtime.conf.d/000-modtime.conf'
+      dest: '/etc/netdata/health.d/modtime.conf.d/000-modtime.conf'
   notify: assemble netdata configuration

@@ -87,16 +87,22 @@ netdata_x509_checks: []
 #     host: 192.168.10.10
 #     ports: [389, 636]
 #     interval: 10
+# Modtime checks
+#   name: a unique name for the job/chart
+#   path: path of the file to monitor
+#   age_warning: raise a warning alert when time since last modification exceeds this value (seconds)
+#   age_critical: raise a critical alert when time since last modification exceeds this value (seconds)
+# Example:
+# netdata_modtime_checks:
+#   - name: rsnapshot_last_success
+#     path: /var/log/rsnapshot_last_success
+#     age_warning: 88200
+#     age_critical: 90000
+netdata_modtime_checks: []
 netdata_port_checks: []
 # Docker container checks
 # expected number of running docker containers
 netdata_min_running_docker_containers: 0
-# netdata installation method (packagecloud/binary)
-#   packagecloud: install signed deb package from packagecloud APT repository (recommended)
-#   binary: install netdata from .run install script
-netdata_install_method: 'packagecloud'
-# Netdata release to install in 'binary' installation mode - https://github.com/netdata/netdata/releases/
-netdata_version: "v1.24.0"
 ## NETDATA MODULES ##
 # automatically restart services that require it after an upgrade (yes/no)
 needrestart_autorestart_services: yes
@@ -110,18 +116,6 @@ netdata_logcount_warning_threshold_warn: 0
 # user to send logcount notifications to (eg. sysadmin, silent...)
 netdata_logcount_notification_to: "silent"
 
-# files to watch with netdata-modtime. each item takes the following parameters;
-#   name: a unique name for the job/chart
-#   path: path of the file to monitor
-#   age_warning: raise a warning alert when time since last modification exceeds this value (seconds)
-#   age_critical: raise a critical alert when time since last modification exceeds this value (seconds)
-# Example:
-# netdata_modtime_checks:
-#   - name: rsnapshot_last_success
-#     path: /var/log/rsnapshot_last_success
-#     age_warning: 88200
-#     age_critical: 90000
-netdata_modtime_checks: []
 ### CLI MONITORING UTILITIES ###
 # install ncdu, nethogs, htop, lnav (yes/no)
 setup_monitoring_cli_utils: yes

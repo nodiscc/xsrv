@@ -3,7 +3,7 @@
 - name: add netdata httpcheck for rocketchat
   template:
     src: etc_netdata_go.d_httpcheck.conf.d_rocketchat.conf.j2
-    dest: "{{ netdata_install_prefix }}/etc/netdata/go.d/httpcheck.conf.d/rocketchat.conf"
+    dest: "/etc/netdata/go.d/httpcheck.conf.d/rocketchat.conf"
     owner: root
     group: netdata
     mode: 0640

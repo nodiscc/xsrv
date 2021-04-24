@@ -28,15 +28,15 @@
     mode: 0640
   with_items:
     - { src: 'opt_netdata-logcount_logcount.sql.j2', dest: '/opt/netdata-logcount/logcount.sql' }
-    - { src: 'etc_netdata_python.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/logcount.conf' }
-    - { src: 'etc_netdata_health.d_logcount.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/logcount.conf' }
+    - { src: 'etc_netdata_python.d_logcount.conf.j2', dest: '/etc/netdata/python.d/logcount.conf' }
+    - { src: 'etc_netdata_health.d_logcount.conf.j2', dest: '/etc/netdata/health.d/logcount.conf' }
   notify: restart netdata
 
 - name: install netdata-logcount module
   copy:
     remote_src: yes
     src: "/root/netdata-logcount/logcount.chart.py"
-    dest: "{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/logcount.chart.py"
+    dest: "/usr/libexec/netdata/python.d/logcount.chart.py"
     owner: root
     group: netdata
     mode: 0750

@@ -28,67 +28,32 @@
   file:
     path: /opt/netdata
     state: absent
-  when: netdata_install_method == 'packagecloud'
   notify: restart netdata
 
 - name: add netdata APT repository signing key
   apt_key:
     url: https://packagecloud.io/netdata/netdata/gpgkey
     state: present
-  when: netdata_install_method == 'packagecloud'
 
 - name: copy netdata/packagecloud APT pinning preferences
   template:
     src: etc_apt_preferences.d_99-netdata-packagecloud.j2
     dest: /etc/apt/preferences.d/99-netdata-packagecloud
     mode: 0644
-  when: netdata_install_method == 'packagecloud'
 
 - name: add netdata repository to APT sources
   apt_repository:
     repo: "deb https://packagecloud.io/netdata/netdata/debian/ buster main"
     state: present
     update_cache: yes
-  when: netdata_install_method == 'packagecloud'
 
 - name: install netdata
   apt:
     package: netdata
     state: present
 
-### INSTALL NETDATA FROM BINARY #####
 
-- name: warn about future deprecation of netdata_install_method == 'binary'
-  debug:
-    msg: "WARNING: netdata_install_method: 'binary' is deprecated and will be removed in a future release. Please use netdata_install_method: packagecloud"
-  when: netdata_install_method == 'binary'
-
-- name: remove netdata installed from APT
-  apt:
-    package: netdata
-    state: absent
-  when: netdata_install_method == 'binary'
-  notify: restart netdata
-
-- name: download netdata binary installer
-  get_url:
-    url: https://github.com/netdata/netdata/releases/download/{{ netdata_version }}/netdata-{{ netdata_version }}.gz.run
-    dest: /root/netdata-{{ netdata_version }}.gz.run
-    mode: 0700
-  when: netdata_install_method == 'binary'
-
-- name: check netdata installer integrity
-  command: /root/netdata-{{ netdata_version }}.gz.run --check
-  changed_when: False
-  when: netdata_install_method == 'binary'
-
-# This always causes a netdata restart, hence the netdata_install_method: packagecloud is preferred
-- name: run netdata installer (always return changed)
-  command: /root/netdata-{{ netdata_version }}.gz.run --accept -- --dont-start-it --disable-telemetry
-  when: netdata_install_method == 'binary'
-  notify: restart netdata
-
-##### SELF-SIGNED SSL CERTIFICATES #####
+    ##### SELF-SIGNED SSL CERTIFICATES #####
 
 - name: install python3-openssl
   apt:
@@ -145,16 +110,6 @@
     mode: 0644
   notify: re-execute the systemd manager
 
-- name: set netdata installation prefix for binary install method
-  set_fact:
-    netdata_install_prefix: "/opt/netdata"
-  when: netdata_install_method == 'binary'
-
-- name: set netdata installation prefix for packagecloud install method
-  set_fact:
-    netdata_install_prefix: ""
-  when: netdata_install_method == 'packagecloud'
-
 - name: create directories for netdata configuration
   file:
     path: "{{ item }}"
@@ -162,17 +117,14 @@
     owner: root
     group: netdata
     mode: 0750
-  when: netdata_install_method == 'packagecloud'
   with_items:
     - /var/lib/netdata/cloud.d
     - /etc/netdata/go.d/httpcheck.conf.d
     - /etc/netdata/go.d/x509check.conf.d
     - /etc/netdata/go.d/portcheck.conf.d
     - /etc/netdata/health.d/processes.conf.d
-    - /etc/netdata/health.d/modtime.conf.d' # modtime module alarms
-    - /etc/netdata/python.d/modtime.conf.d' # modtime module configuration
-
-
+    - /etc/netdata/health.d/modtime.conf.d # modtime module alarms
+    - /etc/netdata/python.d/modtime.conf.d # modtime module configuration
 - name: copy netdata configuration files
   template:
     src: "{{ item.src }}"
@@ -181,16 +133,16 @@
     group: netdata
     mode: 0640
   with_items:
-    - { src: 'etc_netdata_netdata.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/netdata.conf' } # general configuration
-    - { src: 'etc_netdata_health_alarm_notify.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health_alarm_notify.conf' } # health notifications configuration # noqa 204
-    - { src: 'var_lib_netdata_cloud.d_cloud.conf.j2', dest: '{{ netdata_install_prefix }}/var/lib/netdata/cloud.d/cloud.conf' } # cloud/SaaS service configuration # noqa 204
-    - { src: 'etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry # noqa 204
-    - { src: 'etc_netdata_health.d_processes.conf.d_000-processes.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/processes.conf.d/000-processes.conf' } # process health checks
-    - { src: 'etc_netdata_go.d_httpcheck.conf.d_000-httpcheck.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/go.d/httpcheck.conf.d/000-httpcheck.conf' } # HTTP checks
-    - { src: 'etc_netdata_go.d_x509check.conf.d_000-x509check.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/go.d/x509check.conf.d/000-x509check.conf' } # SSL certificate checks
-    - { src: 'etc_netdata_go.d_portcheck.conf.d_000-portcheck.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/go.d/portcheck.conf.d/000-portcheck.conf' } # TCP port checks
-    - { src: 'etc_netdata_health.d_dockerd.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/dockerd.conf' } # docker container checks
-    - { src: 'etc_netdata_python.d_apache.conf.j2', dest: '{{ netdata_install_prefix }}/etc/netdata/python.d/apache.conf' } # apache status checks
+    - { src: 'etc_netdata_netdata.conf.j2', dest: '/etc/netdata/netdata.conf' } # general configuration
+    - { src: 'etc_netdata_health_alarm_notify.conf.j2', dest: '/etc/netdata/health_alarm_notify.conf' } # health notifications configuration # noqa 204
+    - { src: 'var_lib_netdata_cloud.d_cloud.conf.j2', dest: '/var/lib/netdata/cloud.d/cloud.conf' } # cloud/SaaS service configuration # noqa 204
+    - { src: 'etc_netdata_.opt-out-from-anonymous-statistics.j2', dest: '/etc/netdata/.opt-out-from-anonymous-statistics' } # disable telemetry # noqa 204
+    - { src: 'etc_netdata_health.d_processes.conf.d_000-processes.conf.j2', dest: '/etc/netdata/health.d/processes.conf.d/000-processes.conf' } # process health checks
+    - { src: 'etc_netdata_go.d_httpcheck.conf.d_000-httpcheck.conf.j2', dest: '/etc/netdata/go.d/httpcheck.conf.d/000-httpcheck.conf' } # HTTP checks
+    - { src: 'etc_netdata_go.d_x509check.conf.d_000-x509check.conf.j2', dest: '/etc/netdata/go.d/x509check.conf.d/000-x509check.conf' } # SSL certificate checks
+    - { src: 'etc_netdata_go.d_portcheck.conf.d_000-portcheck.conf.j2', dest: '/etc/netdata/go.d/portcheck.conf.d/000-portcheck.conf' } # TCP port checks
+    - { src: 'etc_netdata_health.d_dockerd.conf.j2', dest: '/etc/netdata/health.d/dockerd.conf' } # docker container checks
+    - { src: 'etc_netdata_python.d_apache.conf.j2', dest: '/etc/netdata/python.d/apache.conf' } # apache status checks
   notify:
     - assemble netdata configuration
     - restart netdata

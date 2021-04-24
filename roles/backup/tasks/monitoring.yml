@@ -21,6 +21,6 @@
   notify: assemble netdata configuration
   with_items:
     - src: etc_netdata_python.d_modtime.conf.d_rsnapshot.conf.j2
-      dest: "{{ netdata_install_prefix }}/etc/netdata/python.d/modtime.conf.d/modtime.conf"
+      dest: "/etc/netdata/python.d/modtime.conf.d/modtime.conf"
     - src: etc_netdata_health.d_modtime.conf.d_rsnapshot.conf.j2
-      dest: "{{ netdata_install_prefix }}/etc/netdata/health.d/modtime.conf.d/modtime.conf"
+      dest: "/etc/netdata/health.d/modtime.conf.d/modtime.conf"

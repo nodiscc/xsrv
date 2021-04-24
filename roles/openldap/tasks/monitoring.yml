@@ -3,7 +3,7 @@
 - name: add netdata http (ldap-account-manager/self-service-password)/process checks for openldap
   template:
     src: "{{ item.src }}"
-    dest: "{{ netdata_install_prefix }}{{ item.dest }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: 0640

@@ -51,7 +51,7 @@
     group: netdata
     mode: 0640
   with_items:
-    - { src: '/root/netdata-needrestart/needrestart.chart.py', dest: '{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/needrestart.chart.py' }
-    - { src: '/root/netdata-needrestart/needrestart.conf', dest: '{{ netdata_install_prefix }}/usr/libexec/netdata/python.d/needrestart.conf' }
-    - { src: '/root/netdata-needrestart/health.d_needrestart.conf', dest: '{{ netdata_install_prefix }}/etc/netdata/health.d/needrestart.conf' }
+    - { src: '/root/netdata-needrestart/needrestart.chart.py', dest: '/usr/libexec/netdata/python.d/needrestart.chart.py' }
+    - { src: '/root/netdata-needrestart/needrestart.conf', dest: '/usr/libexec/netdata/python.d/needrestart.conf' }
+    - { src: '/root/netdata-needrestart/health.d_needrestart.conf', dest: '/etc/netdata/health.d/needrestart.conf' }
   notify: restart netdata

@@ -14,7 +14,7 @@
 - name: add netdata http/process check for gitea
   template:
     src: "{{ item.src }}"
-    dest: "{{ netdata_install_prefix }}{{ item.dest }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: 0640
