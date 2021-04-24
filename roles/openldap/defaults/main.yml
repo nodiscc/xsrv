@@ -54,10 +54,6 @@ ldap_account_manager_php_upload_max_filesize: '2M'
 openldap_setup_ssp: no
 # domain name (FQDN) for Self Service Password
 self_service_password_fqdn: "ssp.CHANGEME.org"
-
-# long and random secret for token encryption
-self_service_password_keyphrase: "{{ vault_self_service_password_keyphrase }}"
-
 # comma-separated list of IP addresses/networks allowed to access self service password ((CIDR notation))
 # for security reasons only private/RFC1918 addresses are allowed by default
 self_service_password_allowed_hosts: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"

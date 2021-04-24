@@ -66,4 +66,3 @@ mumble_superuser_password: "{{ xsrv_admin_password }}"
 ##### openldap role #####
 openldap_admin_password: "CHANGEME30"
 openldap_bind_password: "CHANGEME30"
-self_service_password_keyphrase: "CHANGEME40"
