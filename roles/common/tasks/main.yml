@@ -1,5 +1,3 @@
----
-
 - include: checks.yml
   tags:
     - common
@@ -69,7 +67,6 @@
   tags:
     - common
     - mail
-  when: setup_msmtp|bool
 
 - include: packages.yml
   become: yes

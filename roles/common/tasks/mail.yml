@@ -1,15 +1,26 @@
----
+##### SYSTEM MAIL #####
 
-##### OUTGOING SYSTEM MAIL #####
+- name: forward all root mail to {{ mail_root_alias }}
+  lineinfile:
+    path: /etc/aliases
+    state: present
+    create: yes
+    regexp: "^root"
+    line: "root: {{ mail_root_alias }}"
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - not setup_msmtp|bool
 
-- name: copy msmtp configuration files
+##### OUTGOING MAIL/SMARTHOST #####
+
+- name: copy msmtp configuration
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: "etc_msmtprc.j2"
+    dest: "/etc/msmtprc"
     mode: 0600
-  with_items:
-    - { src: "etc_msmtprc.j2", dest: "/etc/msmtprc" }
-    - { src: "etc_aliases.j2", dest: "/etc/aliases" }
+  when: setup_msmtp|bool
 
 - name: install msmtp SMTP client as system MTA
   apt:
@@ -17,3 +28,21 @@
       - msmtp
       - msmtp-mta
     state: present
+  when: setup_msmtp|bool
+
+- name: forward all root mail to msmtp_admin_email
+  lineinfile:
+    path: /etc/aliases
+    state: present
+    create: yes
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - regex: "^root"
+      line: "root: default"
+    - regex: "^default"
+      line: "default: {{ msmtp_admin_email }}"
+  when: setup_msmtp|bool
