@@ -2,12 +2,9 @@
 
 `xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools.
 
-Server ([host](installation/server-preparation.md)) configuration is stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) in [YAML](https://en.wikipedia.org/wiki/YAML) text files.
+Server ([host](installation/server-preparation.md)) configuration is stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) in [YAML](https://en.wikipedia.org/wiki/YAML) files.
 
 To [enable components or change server configuration](#changing-configuration), edit the relevant YAML configuration file, then apply changes using `xsrv deploy`.
-
-You can also edit files directly from your favorite text editor, use plain [ansible command-line tools](#using-as-ansible-collection) to manage and deploy your playbooks or use [git/version control](#version-control) to manage changes.
-
 
 
 ## Changing configuration
@@ -16,7 +13,6 @@ You can also edit files directly from your favorite text editor, use plain [ansi
 
 ```yaml
 # xsrv edit-playbook
-# or $EDITOR ~/playbooks/default/playbook.yml
 - hosts: my.example.org
   roles:
     - nodiscc.xsrv.common
@@ -25,14 +21,13 @@ You can also edit files directly from your favorite text editor, use plain [ansi
     - nodiscc.xsrv.openldap
     - nodiscc.xsrv.nextcloud
     - nodiscc.xsrv.mumble
-    - nodiscc.xsrv.jellyfin
+    # - nodiscc.xsrv.jellyfin # uncomment or add roles to this list to enable additional components
 ```
 
 - `xsrv show-defaults`: show [all available configuration variables](configuration-variables.md), and their default values.
 
 ```yaml
 # xsrv show-defaults
-# or cat ansible_collections/nodiscc/xsrv/roles/*/defaults/main.yml
 ...
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
@@ -41,22 +36,19 @@ gitea_https_mode: selfsigned
 ...
 ```
 
-
 - `xsrv edit-host`: edit configuration (`host_vars`) for the host and its roles. To change one of the default values listed in `xsrv show-defaults`, add the variable to this file with the desired value. Example:
 
 ```yaml
 # xsrv edit-host
-# or $EDITOR ~/playbooks/default/host_vars/my.example.org/my.example.org.yml
 ...
 gitea_https_mode: letsencrypt
 ...
 ```
 
-- `xsrv edit-vault`: edit secret/encrypted configuration variables. Any secret/sensitive variable should not be stored as plain text in `host_vars`. "Vaulted" files are encrypted with [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html), and decrypted on the fly during deployment. The decryption password for the vault must be present in `.ansible-vault-password`
+- `xsrv edit-vault`: edit secret/encrypted configuration variables. Any secret/sensitive variable should not be stored as plain text in `host_vars`. "Vaulted" files are encrypted with [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html), and decrypted on the fly during deployment. Example:
 
 ```yaml
 # xsrv edit-vault
-# or ansible-vault edit ~/playbooks/default/host_vars/my.example.org/my.example.org.vault.yml
 ansible_become_pass: "UFjP82CgUT5h7-e"
 nextcloud_user: "myadminusername"
 nextcloud_password: "cyf58eAZFbbEUZ4v3y6B"
@@ -64,14 +56,21 @@ nextcloud_admin_email: "admin@example.org"
 nextcloud_db_password: "ucB77fNLX4qOoj2GhLBy"
 ```
 
+The decryption password for the vault must be present in `.ansible-vault-password`:
+
 ```bash
 # $EDITOR ~/playbook/default/.ansible-vault-password
 Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY 
 ```
 
+
+
 All commands support and additional playbook/host name parameter if you have multiple playbook/hosts. See below for complete usage examples.
 
-**After any changes to the playbook, inventory or configuration variables**, apply your changes:
+You can also edit files directly from your favorite text editor, use plain [ansible command-line tools](#using-as-ansible-collection) and [git/version control](#version-control) to manage and deploy your playbooks.
+
+
+**After any changes to the playbook, inventory or configuration variables**, apply changes to the target host:
 
 ```bash
 xsrv deploy
@@ -152,9 +151,9 @@ Uninstalling roles is not supported at this time: components must be removed man
 
 ### Using as ansible collection
 
-You can either:
-- use the [`xsrv` script](usage.md#command-line-usage) to manage your ansible environments
-- or use [roles](index.md#roles) through standard `ansible-*` [command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html). To download roles to your anisble controller:
+the [`xsrv` script](usage.md#command-line-usage) ensures your playbooks follow a simple and consistent structure, automates most frequent operations and ansible installation. You can also manage your playbooks manually, using your favorite text editor and standard [`ansible` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
+
+To import roles as a collection to your own playbooks:
 
 ```yaml
 # create requirements.yml
@@ -189,6 +188,37 @@ $ ansible-galaxy collection install --force -r requirements.yml
 ```
 
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html) and [Ansible documentation - Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
+
+
+### Directory structure
+
+The directory structure assumed/enforced by `xsrv` is as follows:
+
+```bash
+$ tree -a ~/playbooks/default/
+├── inventory.yml # inventory of managed hosts
+├── playbook.yml # main entrypoint (assign roles to managed hosts)
+├── group_vars # group variables (file names match group names from inventory.yml)
+│   └── all.yml
+├── host_vars # host variables (file names match host names from inventory.yml)
+│   └── my.example.org
+│       ├── my.example.org.vault.yml # plaintext host variables file
+│       └── my.example.org.yml # encrypted/vaulted host variables file (for sensitive values)
+├── data # local cache and data (should be kept out of version control)
+│   ├── backups
+│   └── cache
+├── playbooks # custom playbooks for one-shot tasks, unused in the default configuration
+│   ├── main.yml
+│   └── operationXYZ.yml
+├── public_keys # directory for additional public SSH keys, unused in the default configuration
+│   └── user@laptop.pub
+├── README.md # store any additional notes/information about your environments there
+├── ansible.cfg # global ansible configuration
+├── requirements.yml # list of required ansible collections and their versions
+└── ansible_collections # directory to store downloaded collections
+    └── nodiscc
+        └── xsrv
+```
 
 
 ### Continuous deployment
