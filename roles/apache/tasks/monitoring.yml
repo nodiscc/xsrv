@@ -1,5 +1,16 @@
 ##### APACHE MONITORING #####
 
+- name: forward all www-data cron jobs mail to root
+  lineinfile:
+    path: /etc/aliases
+    state: present
+    create: yes
+    regexp: "^www-data"
+    line: "www-data: root"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: configure rsyslog to agregate apache access/error and php-fpm logs to syslog
   template:
     src: etc_rsyslog.d_{{ item }}.conf.j2
