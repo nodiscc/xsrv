@@ -1,19 +1,14 @@
 ##### TRANSMISSION BITTORRENT CLIENT #####
-
 # fully qualified domain name for the transmission web interface
 # transmission_fqdn: torrent.CHANGEME.org
-
 # username/password for remote control web interface
 transmission_username: '{{ vault_transmission_username }}'
 transmission_password: "{{ vault_transmission_password }}"
-
 # Torrents download directory for
 transmission_download_dir: '/var/lib/transmission-daemon/downloads'
-
 # HTTPS and SSL/TLS certificate mode for the transmission webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 transmission_https_mode: selfsigned
-
 # yes/no: start/stop the transmission bitorrent client, enable/disable it on boot
 transmission_enable_service: yes

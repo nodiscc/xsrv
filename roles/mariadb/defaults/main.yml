@@ -1,10 +1,7 @@
 ##### MARIADB DATABASE SERVER #####
-
 # root password for the mariadb database service
 mariadb_root_password: "{{ vault_mariadb_root_password }}"
-
 # hostname for the mariadb database service
 mariadb_hostname: "{{ inventory_hostname }}"
-
 # yes/no: start/stop the mysql service, enable/disable it on boot
 mariadb_enable_service: yes

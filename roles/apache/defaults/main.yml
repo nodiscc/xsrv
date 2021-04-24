@@ -1,26 +1,16 @@
 ##### APACHE WEB SERVER #####
-
 # yes/no: listen on port 80 (unencrypted HTTP)
-# (all unencrypted requests will be redirected to HTTPS)
 apache_listen_http: yes
-
 # yes/no: ask search engines/bots that respect the X-Robots-Tag header not to crawl this webserver's sites
 apache_allow_robots: no
-
 # yes/no: start/stop the apache webserver, enable/disable it on boot
 apache_enable_service: yes
-
-# yes/no: enable mod_evasive for basic DoS protection
-# This can interfere with legitimate traffic, so be wary if you decide to enable it
+# yes/no: enable mod_evasive for basic DoS protection (can interfere with legitimate traffic)
 apache_enable_mod_evasive: no
-
 # (optional) e-mail address to register a letsencrypt.org account
 apache_letsencrypt_email: "{{ vault_apache_letsencrypt_email }}"
 
-
 ##### PHP-FPM INTERPRETER #####
-
 # yes/no: enable/disable the default php-fpm pool (www)
-# It is recommended to create separate pools for each application. Disabling the default pool saves some resources
-# The default (www) pool is enabled by default as starting php-fpm without any pool defined will cause the service to fail
+# starting php-fpm without any pool defined will cause the service to fail
 php_fpm_enable_default_pool: yes

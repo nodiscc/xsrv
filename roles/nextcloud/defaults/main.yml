@@ -1,27 +1,21 @@
 ##### NEXTCLOUD #####
-
 # Nextcloud admin username/password
 nextcloud_user: "{{ vault_nextcloud_user }}"
 nextcloud_password: "{{ vault_nextcloud_password }}"
-
 # Fully Qualified Domain Name for the nextcloud instance
 # nextcloud_fqdn: "cloud.CHANGEME.org"
 # Nextcloud installation directory (must be under a valid documentroot)
 nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your tt-rss installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
-
 # mode for SSL/TLS certificates for the nextcloud webserver virtualhost (letsencrypt/selfsigned)
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 nextcloud_https_mode: selfsigned
-
 # nextcloud data storage directory
 nextcloud_data_dir: "/var/nextcloud/data"
-
 # nextcloud adminstrator e-mail address
 nextcloud_admin_email: "{{ vault_nextcloud_admin_email }}"
-
 # nextcloud database type (mysql/pgsql)
 nextcloud_db_type: "pgsql"
 # nextcloud database host
@@ -33,15 +27,12 @@ nextcloud_db_name: "nextcloud"
 nextcloud_db_user: "nextcloud"
 # nextcloud database password
 nextcloud_db_password: "{{ vault_nextcloud_db_password }}"
-
 # nextcloud version to install
 nextcloud_version: "20.0.8"
-
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # workaround for old nextcloud-desktop clients which don't support TLSv1.3
 nextcloud_allow_tls12: true
-
 # Nextcloud applications to enable or disable
 #   state: enable/disable
 #   app: nextcloud app name
@@ -77,7 +68,6 @@ nextcloud_apps:
   - { state: "enable", app: "notes" }
   - { state: "enable", app: "deck" }
   - { state: "enable", app: "admin_audit" }
-
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'

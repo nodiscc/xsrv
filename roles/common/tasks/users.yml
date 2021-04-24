@@ -21,7 +21,7 @@
     group: root
     mode: 0600
 
-- name: ensure ansible user home directory is noit world-readable
+- name: ensure ansible user home directory is not world-readable
   file:
     state: directory
     path: "{{ ansible_env.HOME }}"

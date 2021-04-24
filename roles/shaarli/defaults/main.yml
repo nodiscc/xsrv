@@ -1,5 +1,4 @@
 ##### SHAARLI BOOKMARKING SERVICE #####
-
 # Fully Qualified Domain Name for the shaarli instance
 # shaarli_fqdn: "links.CHANGEME.org"
 
@@ -14,17 +13,14 @@ shaarli_api_secret: "{{ vault_shaarli_api_secret }}"
 shaarli_timezone: "Europe/Amsterdam"
 # overwrite shaarli configuration if it already exists (yes/no - yes will overwrite any changes made from Shaarli tools menu)
 shaarli_overwrite_config: no
-
 # Mode for SSL/TLS certificates for the shaarli webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 shaarli_https_mode: selfsigned
-
 # Shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
 shaarli_version: 'v0.12.1'
-
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)

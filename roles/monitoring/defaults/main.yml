@@ -1,46 +1,33 @@
 ##### MONITORING #####
 
-##### LOGGING (RSYSLOG) #####
-
+### LOGGING (RSYSLOG) ###
 # setup rsyslog (aggregate application/service logs to /var/log/syslog, discard useless messages)
 setup_rsyslog: yes
-
 # agregate netdata logs to main syslog (default disabled, noisy) (yes/no)
 rsyslog_monitor_netdata: no
-
 # aggregate apache access logs to main syslog (default disabled) (yes/no)
 rsyslog_monitor_apache_accesslog: no
 
-
-##### NETDATA MONITORING SYSTEM #####
-
+### NETDATA MONITORING SYSTEM ###
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
-
 # (MiB) amount of memory dedicated to caching metric values
 netdata_dbengine_page_cache_size: 32
 # (MiB) amount of disk space dedicated to storing Netdata metric values/metadata
 netdata_dbengine_disk_space: 256
-
 # space-separated list of IP addresses authorized to access netdata
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-
 # enable netdata self-monitoring charts (yes/no)
 netdata_self_monitoring_enabled: no
-
 # enable/disable netdata debug/error/access logs (yes/no)
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
 netdata_disable_access_log: yes
-
-
-### NETDATA CHECKS ###
-
-# Netdata process checks
+## NETDATA CHECKS ##
+# Process checks
 #   name: process group name to check (apps_groups.conf)
 #   min_count: minimum expected number of processes
 #   interval: time interval (seconds) between checks
@@ -60,7 +47,6 @@ netdata_disable_access_log: yes
 #   - { name: media, min_count: 1, interval: 20} # jellyfin media server
 #   - { name: samba, min_count: 2, interval: 20} # samba file sharing server (smbd+nmbd)
 netdata_process_checks: []
-
 # HTTP checks
 # uses the same syntax and parameters as netdata httpcheck module
 # https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/httpcheck/
@@ -76,7 +62,6 @@ netdata_process_checks: []
 #     timeout: 10
 #     update_every: 20
 netdata_http_checks: []
-
 # X509/SSL/TLS certificate checks (time to expiration, revocation status)
 # uses the same syntax and parameters as netdata x509check module
 # Port is mandatory for all non-file schemes
@@ -91,7 +76,6 @@ netdata_http_checks: []
 #     tls_skip_verify: yes
 #     update_every: 20
 netdata_x509_checks: []
-
 # Netdata TCP port checks
 #   name: readable name of the check
 #   host: hostname or IP address to contact
@@ -104,25 +88,18 @@ netdata_x509_checks: []
 #     ports: [389, 636]
 #     interval: 10
 netdata_port_checks: []
-
-# Netdata Docker container checks
+# Docker container checks
 # expected number of running docker containers
 netdata_min_running_docker_containers: 0
-
 # netdata installation method (packagecloud/binary)
 #   packagecloud: install signed deb package from packagecloud APT repository (recommended)
 #   binary: install netdata from .run install script
 netdata_install_method: 'packagecloud'
-
 # Netdata release to install in 'binary' installation mode - https://github.com/netdata/netdata/releases/
 netdata_version: "v1.24.0"
-
-
-### NETDATA EXTRA MODULES ###
-
+## NETDATA MODULES ##
 # automatically restart services that require it after an upgrade (yes/no)
 needrestart_autorestart_services: yes
-
 # (minutes) interval between updates of log message counts in the logcount module
 netdata_logcount_update_interval: 1
 # maximum acceptable ERROR message in logs over the last period before raising a WARNING or CRITICAL alert
@@ -145,8 +122,6 @@ netdata_logcount_notification_to: "silent"
 #     age_warning: 88200
 #     age_critical: 90000
 netdata_modtime_checks: []
-
-##### CLI MONITORING UTILITIES #####
-
+### CLI MONITORING UTILITIES ###
 # install ncdu, nethogs, htop, lnav (yes/no)
 setup_monitoring_cli_utils: yes

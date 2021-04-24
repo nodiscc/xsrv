@@ -1,14 +1,11 @@
 ##### RSNAPSHOT BACKUP SERVICE #####
-
 # Backups storage directory (with traing slash!)
 rsnapshot_backup_dir: "/var/backups/rsnapshot"
-
 # Number of backup generations to keep
 # for daily, weekly and monthly backups
 rsnapshot_retain_daily: 6
 rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6
-
 # Commands to run before starting backups (database dumps, application exports...)
 # Return codes different from 0 will cause the backup process to abort with an error
 # These commands run as the 'rsnapshot' user locally.
@@ -22,7 +19,6 @@ rsnapshot_retain_monthly: 6
 #   - 'ssh rsnapshot@srv03.example.org /opt/xsrv/openldap-dump.sh'
 #   - /opt/xsrv/nextcloud-mysql-dump.sh
 rsnapshot_backup_execs: []
-
 # Local files/directories to backup
 # The 'rsnapshot' user must have read access to these directories
 # Example:
@@ -36,7 +32,6 @@ rsnapshot_backup_execs: []
 #   - '/etc/letsencrypt/'
 #   - '/etc/ssl/private/'
 rsnapshot_local_backups: []
-
 # Remote files/directories to fetch. Parameters:
 #    user: SSH username to connect with (must have read access to backup paths)
 #    host: host address
@@ -51,7 +46,6 @@ rsnapshot_local_backups: []
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/letsencrypt/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/ssl/private/' }
 rsnapshot_remote_backups: []
-
 # File name patterns to exclude from backups, globally
 # Example:
 # rsnapshot_excludes:

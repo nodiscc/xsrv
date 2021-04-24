@@ -1,13 +1,10 @@
 ##### GITEA SELF-HOSTED GIT SERVICE #####
-
 # fully qualified domain name of the gitea instance
 gitea_fqdn: "git.CHANGEME.org"
-
 # username/password/e-mail address for the gitea admin user
 gitea_admin_username: "{{ vault_gitea_admin_username }}"
 gitea_admin_password: "{{ vault_gitea_admin_password }}"
 gitea_admin_email: "{{ vault_gitea_admin_email }}"
-
 # gitea database settings
 gitea_db_type: "postgres" # postgres/mysql
 gitea_db_name: "gitea"
@@ -15,7 +12,6 @@ gitea_db_user: "gitea"
 gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql database/peer authentication
 gitea_db_password: "{{ vault_gitea_db_password }}" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
-
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
 gitea_version: '1.13.6'
 # 106 character token used for internal API calls authentication
@@ -32,15 +28,10 @@ gitea_user_home: /var/lib/gitea
 gitea_base_url: "/"
 # start/stop the gitea service, enable/disable it on boot (yes/no)
 gitea_enable_service: yes
-
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
 gitea_https_mode: selfsigned
-
-
-### Gitea settings ###
-
 # Default visibility setting when creating a new repository (last/private/public)
 gitea_default_private: "private"
 # force every new repository to be private (true/false - QUOTED)
@@ -69,11 +60,10 @@ gitea_min_password_length: 10
 gitea_password_complexity: "lower,upper,digit,spec"
 # Allow new users to create organizations by default (true/false - QUOTED)
 gitea_default_allow_create_organization: "false"
-
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
 # Mail settings below are required if gitea mailer is enabled
-# 'From:' address used in mails sent by gitea
+# 'From' address used in mails sent by gitea
 # gitea_mail_from: "gitea-noreply@{{ gitea_fqdn }}"
 # SMTP host, username and password for outgoing mail from gitea
 # gitea_mail_host: "{{ vault_gitea_mail_host }}"
