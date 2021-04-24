@@ -2,7 +2,9 @@
 
 A **controller** machine will be used for deployment and remote administration.
 The controller can be any laptop/desktop PC, dedicated server, VM or container where a SSH client, python and bash are available.
+
 The controller will connect to your [hosts](server-preparation.md) using SSH and perform configuration tasks remotely.
+
 On the controller:
 
 
@@ -15,6 +17,9 @@ git clone https://gitlab.com/nodiscc/xsrv
 
 # (optional) install the command line tool to your $PATH (optional)
 sudo cp xsrv/xsrv /usr/local/bin/
+
+# authorize your SSH key on the remote user account (replace 'deploy' with the user you created suring server preparation)
+ssh-copy-id deploy@my.CHANGEME.org
 ```
 
 _Note:_ it is also possible (but not recommended) to use the server itself as a controller. It will then configure itself without need for a SSH connection.

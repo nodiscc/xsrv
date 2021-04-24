@@ -22,7 +22,7 @@ Use low power consumption components. To increase availability, setup the BIOS t
 
 ## Network
 
-The default configuration assumes server has a single network interface.
+The default configuration assumes the server has a single network interface.
 
 
 ### Internet access
@@ -115,7 +115,7 @@ passwd deploy
 logout
 ```
 
-You should now [authorize your SSH key](../README.md#installation) on the server.
+You should now [authorize your SSH key](controller-preparation.md) on the server.
 
 |      |       |
 |------|-------|
