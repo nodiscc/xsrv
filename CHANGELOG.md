@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - UNRELEASE
+
+Upgrade procedure:
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles in your playbook to the latest release
+- remove all `vault_` prefixes from variables in vaulted/encrypted host variables, remove all `variable_name: {{ vault_variable_name }}` indirections from plaintext host variables.
+- `xsrv deploy` to apply changes
+
+
+**Added:**
+- xsrv: add `xsrv ls` subcommand (list files in the playbooks directory (accepts a path))
+- xsrv: add `xsrv edit-group` subcommand (edit variables for a group of hosts (default 'all'))
+- monitoring/netdata: add `netdata_x509_checks` (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
+- monitoring/netdata: allow roles to install their own HTTP/x509/modtime/port checks under `/etc/netdata/{python,go}.d/$module_name.conf.d/`
+- all roles/monitoring: automatically configure HTTP/x509/modtime checks if the `nodiscc.xsrv.monitoring` role is enabled
+- common: users: allow creation of users without a password (login as/sudo from these user accounts will be denied, login using SSH keys is still possible if the user is in the `ssh` group)
+- common: ssh: lower maximum concurrent unauthenticated connections to 60
+- common: cron: ensure only root can access cron job files and directories
+- openldap: upgrade ldap-account-manager to 7.5
+- homepage: add favicon
+- all roles: automatically configure log aggregation to syslog, if the `nodiscc.xsrv.monitoring` role is enabled
+
+**Changed:**
+- monitoring/needrestart: automatically restart services that require it after an upgrade by default.`needrestart_autorestart_services: yes` can be removed from your host variables, or set to `no` if you want to disable this behavior
+- removed support  for `check_x509` parameter in `netdata_httpchecks`. Please port any custom x509 checks to the new `netdata_x509_checks` syntax.
+- all roles/remove `{{ variable_name: vault_variable_name }}` indirections, set values that need to be changed to `*CHANGEME*` (roles will not run if default values have not been changed)
+- update documentation
+- update ansible tags
+- speed up Gtilab CI test suite (prebuild an image with all requireds tools)
+
+**Removed:**
+- default playbook: remove hardcoded monitoring configuration, `netdata_modtime_checks` and `netdata_process_checks` can be safely removed from your hopst_vars if you did not change the values provided by the default playbook
+- monitoring/netdata: removed ability to configure git clone URLs (`netdata_*_git_url`) for netdata modules, always clone from upstream
+- openldap: remove unused variable `self_service_password_keyphrase` (this can be safely removed from your host variables)
+
+**Fixed:**
+- common: fix `linux_users` creation for which no `authorized_ssh_keys`/`sudo_nopasswd_commands` are defined
+- samba: fix default log level
+- tools: Makefile: fix release procedure and ansible-galaxy collection publication
+
+
+
 #### [v1.2.2](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.2) - 2021-04-01
 
 Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the latest release
