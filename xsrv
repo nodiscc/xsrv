@@ -9,7 +9,7 @@ playbooks_dir="${XSRV_PLAYBOOKS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 skip_venv="${SKIP_VENV:=no}"
-pager="${PAGER:=less}"
+pager="${PAGER:=nano --syntax=YAML --view +1 -}"
 version="1.2.2"
 ansible_version="2.10.7"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
@@ -301,11 +301,20 @@ function init_venv() {
 function show_defaults() {
     check_playbook_exists
     role=${2:-}
+    if ! hash "${pager%% *}" 2>/dev/null; then
+        echo "[xsrv] INFO: pager command '$pager' unavailable, falling back to 'less'"
+        pager="less"
+    fi
     if [[ ! -z "$role" ]]; then
-        $pager "$playbook_dir"/ansible_collections/*/*/roles/"$role"/defaults/main.yml
+        cat "$playbook_dir"/ansible_collections/*/*/roles/"$role"/defaults/main.yml | $pager 2>/dev/null
     else
         # shellcheck disable=SC2002
-        cat "$playbook_dir"/ansible_collections/*/*/roles/*/defaults/main.yml | $pager
+        defaults_header="# List of all role configuration variables, and their default values.\n# Copy any variable to your host configuration and edit its value there.\n######################################################\n\n"
+        default_files=$(find "$playbook_dir"/ansible_collections/*/*/roles/*/defaults/ -name main.yml)
+        defaults_list=$(for file in $default_files; do
+            cat "$file"; echo -e "\n\n###################################################################"
+        done)
+        echo -e "$defaults_header""$defaults_list" | $pager 2>/dev/null
     fi
 }
 
@@ -396,7 +405,7 @@ self-upgrade                     check for new releases/upgrade the xsrv script 
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
 SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
 EDITOR             text editor to use (default: nano)
-PAGER              pager to use (default: less)
+PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
 "
 
 command="${1:-}"
