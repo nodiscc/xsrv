@@ -8,46 +8,40 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 - (optional) agregation of apache log files to syslog
 
 
-Requirements/Dependencies
-------------
+## Requirements/dependencies/example playbook
 
-- Ansible => 2.9
-- Debian 10
-- [`common`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) role
-- For Let's Encrypt certificates, port 80/tcp must be reachable from the Internet, and the each virtualhost's FQDN (ServerName) must have a A record in the public DNS system
-- Each role relying on this one must install its own configuration in `/etc/apache2/*-enabled/` and notify the `reload/restart apache` handlers
+- See [meta/main.yml](meta/main.yml)
+- For Let's Encrypt certificates, ports tcp/80 and tcp/443 must be reachable from the Internet, and the each virtualhost's FQDN (ServerName) must have a A or CNAME record in the public DNS system.
 
-
-Configuration Variables
------------------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Example Playbook
-----------------
 
 ```yaml
 - hosts: my.CHANGEME.org
   roles:
-     - nodiscc.xsrv.common
-     - nodiscc.xsrv monitoring # optional, apache/virtualhost monitoring and log agregation
+     - nodiscc.xsrv.common # optional
+     - nodiscc.xsrv monitoring # optional, apache/virtualhost monitoring/log aggregation
      - nodiscc.xsrv.apache
 ```
 
-Usage
------
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+
+## Usage
 
 **Backups:** See the the included [rsnapshot configuration](templates/etc_rsnapshot.d_letsencrypt.conf) for the [backup](../backup/README.md) role
 
-License
--------
+
+**Integration with other roles:**
+
+Each role relying on this one must install its own configuration in `/etc/apache2/*-enabled/` and notify the `reload/restart apache` handlers.
+
+
+
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://stdout.root.sx/links?searchtags=doc+apache
 - https://stdout.root.sx/links?searchtags=doc+ssl

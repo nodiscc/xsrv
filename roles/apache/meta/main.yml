@@ -14,5 +14,4 @@ galaxy_info:
     - php
     - server
     - lamp
-dependencies:
-  - nodiscc.xsrv.common
+dependencies: []
