@@ -8,7 +8,7 @@ apache_enable_service: yes
 # yes/no: enable mod_evasive for basic DoS protection (can interfere with legitimate traffic)
 apache_enable_mod_evasive: no
 # (optional) e-mail address to register a letsencrypt.org account
-apache_letsencrypt_email: "{{ vault_apache_letsencrypt_email }}"
+apache_letsencrypt_email: "CHANGEME"
 
 ##### PHP-FPM INTERPRETER #####
 # yes/no: enable/disable the default php-fpm pool (www)

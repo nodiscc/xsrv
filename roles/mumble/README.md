@@ -21,8 +21,8 @@ Requirements/Dependencies/Example Playbook
     - nodiscc.xsrv.mumble
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_mumble_password: "CHANGEME"
-vault_mumble_superuser_password: "CHANGEME20"
+mumble_password: "CHANGEME"
+mumble_superuser_password: "CHANGEME20"
 ```
 
 

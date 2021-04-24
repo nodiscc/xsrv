@@ -9,11 +9,11 @@ openldap_organization: "CHANGEME"
 openldap_base_dn: "dc=CHANGEME,dc=org"
 # admin username/password for OpenLDAP server
 # the admin DN will be of the form cn=admin,dc=CHANGEME,dc=org
-openldap_admin_password: "{{ vault_openldap_admin_password }}"
+openldap_admin_password: "CHANGEME"
 # Unprivilegied "bind" LDAP account username/password
 # This account will be allowed to to browse the directory/resolve UIDs and GIDs)
 openldap_bind_username: "bind"
-openldap_bind_password: "{{ vault_openldap_bind_password }}"
+openldap_bind_password: "CHANGEME"
 # log level for the openldap server (integer) - https://openldap.org/doc/admin24/slapdconf2.html
 openldap_log_level: 512
 

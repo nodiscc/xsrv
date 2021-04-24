@@ -16,7 +16,7 @@ See [meta/main.yml](defaults/main.yml)
      - nodiscc.xsrv.mariadb
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_mariadb_root_password: "CHANGEME"
+mariadb_root_password: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.

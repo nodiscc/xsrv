@@ -28,8 +28,8 @@ openldap_organization: "CHANGEME"
 openldap_base_dn: "dc=CHANGEME,dc=org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_openldap_admin_password: "CHANGEME"
-vault_openldap_bind_password: "CHANGEME"
+openldap_admin_password: "CHANGEME"
+openldap_bind_password: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables

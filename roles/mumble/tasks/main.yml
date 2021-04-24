@@ -1,3 +1,7 @@
+- include: checks.yml
+  become: yes
+  tags: mumble
+
 - include: mumble.yml
   become: yes
   tags: mumble

@@ -28,10 +28,10 @@ See [meta/main.yml](meta/main.yml)
 shaarli_fqdn: "links.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_shaarli_user: "CHANGEME"
-vault_shaarli_password: "CHANGEME"
-vault_shaarli_password_salt: "CHANGEME"
-vault_shaarli_api_secret: "CHANGEME"
+shaarli_user: "CHANGEME"
+shaarli_password: "CHANGEME"
+shaarli_password_salt: "CHANGEME"
+shaarli_api_secret: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables

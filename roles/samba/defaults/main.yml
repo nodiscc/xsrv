@@ -1,4 +1,7 @@
 ##### SAMBA FILE SHARING SERVER #####
+# Server name and description
+samba_netbios_name: "{{ ansible_hostname }}"
+samba_server_string: "{{ ansible_hostname }} file server"
 # List of samba shares. Each item has the following attributes:
 #   name: (required): unique name for the share
 #   allow_read_users (default none): list of users/groups allowed to read the share (use @groupname for groups)
@@ -30,9 +33,21 @@
 #   - name: a_share_that_will_be_removed
 #     state: absent
 samba_shares: []
-# Server name and description
-samba_netbios_name: "{{ ansible_hostname }}"
-samba_server_string: "{{ ansible_hostname }} file server"
+# user/group storage backend for samba accounts (tdbsam/ldapsam)
+#   tdbsam: use local UNIX user accounts and samba's internal TDB database
+#   ldapsam: use a LDAP server to store users and groups
+samba_passdb_backend: "tdbsam"
+# List of samba_users (only for samba_passdb_backend: "tdbsam")
+# Each item has the following attributes:
+#   username: the username. Do not use a username already in use by a system service or interactive user!
+#   password: password for this user. It is best to store this value in ansible-vault
+# Example:
+# samba_users:
+#   - username: alice
+#     password: "{{ samba_user_password_alice }}"
+#   - username: bob
+#     password: "{{ samba_user_password_bob }}"
+samba_users: []
 # Max size of log files (in KiB)
 samba_max_log_size_kb: 10000
 # Samba log level
@@ -52,21 +67,6 @@ samba_enable_backups: yes
 # windows clients require access to $IPC to be able to access any other share,
 # so it is recommended to keep the same value as samba_hosts_allow
 samba_hosts_allow_ipc: "{{ samba_hosts_allow }}"
-# user/group storage backend for samba accounts (tdbsam/ldapsam)
-#   tdbsam: use local UNIX user accounts and samba's internal TDB database
-#   ldapsam: use a LDAP server to store users and groups
-samba_passdb_backend: "tdbsam"
-# List of samba_users (only for samba_passdb_backend: "tdbsam")
-# Each item has the following attributes:
-#   username: the username. Do not use a username already in use by a system service or interactive user!
-#   password: password for this user. It is best to store this value in ansible-vault
-# Example:
-# samba_users:
-#   - username: alice
-#     password: "{{ vault_samba_user_password_alice }}"
-#   - username: bob
-#     password: "{{ vault_samba_user_password_bob }}"
-samba_users: []
 # 0-999: nscd debug log level
 samba_nscd_debug_level: 0
 # (seconds): time after which user/group/passwords are invalidated in nscd cache

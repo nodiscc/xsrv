@@ -44,12 +44,9 @@ Example playbook
   roles:
      - nodiscc.xsrv.common
 
-# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
-ansible_user: "CHANGEME"
-ansible_become_pass: "{{ vault_ansible_become_pass }}"
-
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_ansible_become_pass: "CHANGEME"
+ansible_user: "CHANGEME"
+ansible_become_pass: "CHANGEME"
 ```
 
 

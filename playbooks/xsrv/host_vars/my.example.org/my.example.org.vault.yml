@@ -4,66 +4,66 @@
 
 ##### global #####
 # sadministrator account (sudo) username/password
-vault_ansible_user: "CHANGEME"
-vault_ansible_become_pass: "CHANGEME"
+ansible_user: "CHANGEME"
+ansible_become_pass: "CHANGEME"
 # default username/password/email for applications/services admin accounts
-vault_xsrv_admin_username: "CHANGEME"
-vault_xsrv_admin_password: "CHANGEME20"
-vault_xsrv_admin_email: "CHANGEME@CHANGEME.org"
+xsrv_admin_username: "CHANGEME"
+xsrv_admin_password: "CHANGEME20"
+xsrv_admin_email: "CHANGEME@CHANGEME.org"
 
 ##### common role #####
 # SMTP server/credentials for outgoing mail (when setup_msmtp is set to yes)
-# vault_msmtp_host: "smtp.CHANGEME.org"
-# vault_msmtp_username: "CHANGEME"
-# vault_msmtp_password: "CHANGEME"
-# vault_msmtp_admin_email: "{{ vault_xsrv_admin_email }}"
+# msmtp_host: "smtp.CHANGEME.org"
+# msmtp_username: "CHANGEME"
+# msmtp_password: "CHANGEME"
+# msmtp_admin_email: "{{ xsrv_admin_email }}"
 
 ##### apache role #####
-vault_apache_letsencrypt_email: "{{ vault_xsrv_admin_email }}"
+apache_letsencrypt_email: "{{ xsrv_admin_email }}"
 
 ##### mariadb role #####
-vault_mariadb_root_password: "CHANGEME20"
+mariadb_root_password: "CHANGEME20"
 
 ##### nextcloud role #####
-vault_nextcloud_user: "{{ vault_xsrv_admin_username }}"
-vault_nextcloud_password: "{{ vault_xsrv_admin_password }}"
-vault_nextcloud_admin_email: "{{ vault_xsrv_admin_email }}"
-vault_nextcloud_db_password: "CHANGEME20"
+nextcloud_user: "{{ xsrv_admin_username }}"
+nextcloud_password: "{{ xsrv_admin_password }}"
+nextcloud_admin_email: "{{ xsrv_admin_email }}"
+nextcloud_db_password: "CHANGEME20"
 
 ##### tt_rss role #####
-vault_tt_rss_user: "{{ vault_xsrv_admin_username }}"
-vault_tt_rss_password: "{{ vault_xsrv_admin_password }}"
-vault_tt_rss_db_password: "CHANGEME20"
-vault_tt_rss_password_salt: "CHANGEME250" # 250 characters
+tt_rss_user: "{{ xsrv_admin_username }}"
+tt_rss_password: "{{ xsrv_admin_password }}"
+tt_rss_db_password: "CHANGEME20"
+tt_rss_password_salt: "CHANGEME250" # 250 characters
 
 ##### shaarli role #####
-vault_shaarli_username: "{{ vault_xsrv_admin_username }}"
-vault_shaarli_password: "{{ vault_xsrv_admin_password }}"
-vault_shaarli_password_salt: "CHANGEME40" # 40 characters
-vault_shaarli_api_secret: "CHANGEME12" # 12 or more characters
+shaarli_username: "{{ xsrv_admin_username }}"
+shaarli_password: "{{ xsrv_admin_password }}"
+shaarli_password_salt: "CHANGEME40" # 40 characters
+shaarli_api_secret: "CHANGEME12" # 12 or more characters
 
 ##### gitea role #####
-vault_gitea_admin_username: "{{ vault_xsrv_admin_username }}"
-vault_gitea_admin_password: "{{ vault_xsrv_admin_password }}"
-vault_gitea_admin_email: "{{ vault_xsrv_admin_email }}"
-vault_gitea_db_password: "" # leave empty when using postgresql
-vault_gitea_internal_token: "CHANGEME106" # 106 characters
-vault_gitea_secret_key: "CHANGEME64" # 64 characters
-vault_gitea_oauth2_jwt_secret: "CHANGEME43" # 43 characters
-vault_gitea_lfs_jwt_secret: "CHANGEME43" # 43 characters
-vault_gitea_mail_host: "{{ vault_msmtp_host }}"
-vault_gitea_mail_user: "{{ vault_msmtp_username }}"
-vault_gitea_mail_password: "{{ vault_msmtp_password }}"
+gitea_admin_username: "{{ xsrv_admin_username }}"
+gitea_admin_password: "{{ xsrv_admin_password }}"
+gitea_admin_email: "{{ xsrv_admin_email }}"
+gitea_db_password: "" # leave empty when using postgresql
+gitea_internal_token: "CHANGEME106" # 106 characters
+gitea_secret_key: "CHANGEME64" # 64 characters
+gitea_oauth2_jwt_secret: "CHANGEME43" # 43 characters
+gitea_lfs_jwt_secret: "CHANGEME43" # 43 characters
+gitea_mail_host: "{{ msmtp_host }}"
+gitea_mail_user: "{{ msmtp_username }}"
+gitea_mail_password: "{{ msmtp_password }}"
 
 ##### transmission role #####
-vault_transmission_username: "{{ vault_xsrv_admin_username }}"
-vault_transmission_password: "{{ vault_xsrv_admin_password }}"
+transmission_username: "{{ xsrv_admin_username }}"
+transmission_password: "{{ xsrv_admin_password }}"
 
 ##### mumble role #####
-vault_mumble_password: "CHANGEME20"
-vault_mumble_superuser_password: "{{ vault_xsrv_admin_password }}"
+mumble_password: "CHANGEME20"
+mumble_superuser_password: "{{ xsrv_admin_password }}"
 
 ##### openldap role #####
-vault_openldap_admin_password: "CHANGEME30"
-vault_openldap_bind_password: "CHANGEME30"
-vault_self_service_password_keyphrase: "CHANGEME40"
+openldap_admin_password: "CHANGEME30"
+openldap_bind_password: "CHANGEME30"
+self_service_password_keyphrase: "CHANGEME40"

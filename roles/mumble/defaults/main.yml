@@ -1,8 +1,8 @@
 ##### MUMBLE VOIP SERVER #####
 # password to join the Mumble server (NO SPACES)
-mumble_password: "{{ vault_mumble_password }}"
+mumble_password: "CHANGEME"
 # administrator password for the mumble server (login as 'superuser' - NO SPACES)
-mumble_superuser_password: "{{ vault_mumble_superuser_password }}"
+mumble_superuser_password: "CHANGEME"
 # exposes current/maximum user count and max bandwidth per client to unauthenticated users (ture/false - QUOTED)
 mumble_allowping: 'false'
 # Welcome message sent to clients when they connect

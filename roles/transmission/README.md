@@ -19,8 +19,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.transmission
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_transmission_username: "CHANGEME"
-vault_transmission_password: "CHANGEME20"
+transmission_username: "CHANGEME"
+transmission_password: "CHANGEME20"
 ```
 
 The firewall must allow incoming traffic on `transmission_port` (by default tcp/52943 and udp/52943), and outgoing traffic on all ports. For example using the `common` role:

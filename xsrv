@@ -223,7 +223,7 @@ function get_ssh_user() {
     # get SSH user from vaulted host_vars file
     cd "$playbooks_dir/$playbook_name"
     vault_vars=$(ansible-vault decrypt --output - "$host_vault_file")
-    ssh_user=$(echo "$vault_vars" | grep "^vault_ansible_user:" | cut -d ' ' -f 2 | tr -d \'\")
+    ssh_user=$(echo "$vault_vars" | grep "^ansible_user:" | cut -d ' ' -f 2 | tr -d \'\")
 
 }
 

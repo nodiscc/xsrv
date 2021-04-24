@@ -153,7 +153,7 @@ fail2ban_destemail: "root@localhost"
 # Example:
 # linux_users:
 #    - name: "remotebackup"
-#      password: "{{ vault_linux_users_remotebackup_password }}"
+#      password: "{{ linux_users_remotebackup_password }}"
 #      groups: [ "ssh", "sudo" ]
 #      comment: "limited user account for remote backups"
 #      ssh_authorized_keys: []
@@ -167,11 +167,11 @@ ansible_user_allow_sudo_rsync_nopasswd: yes
 # install outgoing system mail client/local MTA (yes/no) - the system will not be able to send status/monitoring e-mails unless this is enabled
 setup_msmtp: no
 # System mail relay (SMTP server) to use, and authentication username/password - if msmtp is enabled, the following values must be set
-msmtp_host: "{{ vault_msmtp_host }}"
-msmtp_username: "{{ vault_msmtp_username }}"
-msmtp_password: "{{ vault_msmtp_password }}"
+msmtp_host: "CHANGEME"
+msmtp_username: "CHANGEME"
+msmtp_password: "CHANGEME"
 # Mail address to send all local mail to
-msmtp_admin_email: "{{ vault_msmtp_admin_email }}"
+msmtp_admin_email: "CHANGEME"
 # (optional) TLS certificate fingerprint of the SMTP server - use this to accept a self-signed certificate - get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
 # msmtp_host_fingerprint: '11:22:33:44:55:66:77:88:99:00:13:37:AA:BB:CC:DD:EE:FF:AD:C2'
 

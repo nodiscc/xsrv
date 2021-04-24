@@ -31,10 +31,10 @@ See [meta/main.yml](meta/main.yml)
 tt_rss_fqdn: "rss.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_tt_rss_user: "CHANGEME"
-vault_tt_rss_password: "CHANGEME"
-vault_tt_rss_db_password: "CHANGEME"
-vault_tt_rss_password_salt: "CHANGEME"
+tt_rss_user: "CHANGEME"
+tt_rss_password: "CHANGEME"
+tt_rss_db_password: "CHANGEME"
+tt_rss_password_salt: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables

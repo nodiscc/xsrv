@@ -3,10 +3,8 @@
 # (xsrv edit-vault default my.example.org, or ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 
 ##### COMMON #####
-# administrator account (sudo) username/password
-ansible_user: "{{ vault_ansible_user }}"
-ansible_become_pass: "{{ vault_ansible_become_pass }}"
-ansible_ssh_port: 22
+# ssh port (if different from 22)
+# ansible_ssh_port: 22
 # set to yes to enable outgoing mail
 setup_msmtp: no
 

@@ -1,14 +1,13 @@
 ##### SHAARLI BOOKMARKING SERVICE #####
 # Fully Qualified Domain Name for the shaarli instance
-# shaarli_fqdn: "links.CHANGEME.org"
-
+shaarli_fqdn: "links.CHANGEME.org"
 # Shaarli login and password
-shaarli_username: "{{ vault_shaarli_username }}"
-shaarli_password: "{{ vault_shaarli_password }}"
+shaarli_username: "CHANGEME"
+shaarli_password: "CHANGEME"
 # 40 character random salt used to hash shaarli password
-shaarli_password_salt: "{{ vault_shaarli_password_salt }}"
+shaarli_password_salt: "CHANGEME"
 # 12 character REST API secret
-shaarli_api_secret: "{{ vault_shaarli_api_secret }}"
+shaarli_api_secret: "CHANGEME"
 # shaarli timezone (see https://www.php.net/manual/en/timezones.php)
 shaarli_timezone: "Europe/Amsterdam"
 # overwrite shaarli configuration if it already exists (yes/no - yes will overwrite any changes made from Shaarli tools menu)

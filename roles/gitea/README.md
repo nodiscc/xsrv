@@ -42,13 +42,13 @@ See [meta/main.yml](meta/main.yml)
     gitea_fqdn: "git.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_gitea_admin_username: "CHANGEME"
-vault_gitea_admin_password: "CHANGEME"
-vault_gitea_admin_email: "CHANGEME@CHANGEME.org"
-vault_gitea_secret_key: "CHANGEME64"
-vault_gitea_internal_token: "CHANGEME160"
-vault_gitea_oauth2_jwt_secret: "CHANGEME43"
-vault_gitea_lfs_jwt_secret: "CHANGEME43"
+gitea_admin_username: "CHANGEME"
+gitea_admin_password: "CHANGEME"
+gitea_admin_email: "CHANGEME@CHANGEME.org"
+gitea_secret_key: "CHANGEME64"
+gitea_internal_token: "CHANGEME160"
+gitea_oauth2_jwt_secret: "CHANGEME43"
+gitea_lfs_jwt_secret: "CHANGEME43"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.

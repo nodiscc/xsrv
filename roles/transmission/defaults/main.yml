@@ -1,9 +1,9 @@
 ##### TRANSMISSION BITTORRENT CLIENT #####
-# fully qualified domain name for the transmission web interface
-# transmission_fqdn: torrent.CHANGEME.org
 # username/password for remote control web interface
-transmission_username: '{{ vault_transmission_username }}'
-transmission_password: "{{ vault_transmission_password }}"
+transmission_username: "CHANGEME"
+transmission_password: "CHANGEME"
+# fully qualified domain name for the transmission web interface
+transmission_fqdn: torrent.CHANGEME.org
 # Torrents download directory for
 transmission_download_dir: '/var/lib/transmission-daemon/downloads'
 # HTTPS and SSL/TLS certificate mode for the transmission webserver virtualhost

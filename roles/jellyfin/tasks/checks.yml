@@ -3,6 +3,7 @@
 - name: check that mandatory variables are correctly defined
   assert:
     that:
+      - jellyfin_fqdn is not search("CHANGEME")
       - jellyfin_https_mode in ['selfsigned', 'letsencrypt']
       - jellyfin_enable_service == jellyfin_enable_service|bool
       - jellyfin_samba_share_enabled == jellyfin_samba_share_enabled|bool

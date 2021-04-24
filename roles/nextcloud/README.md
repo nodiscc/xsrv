@@ -51,9 +51,9 @@ See [meta/main.yml](meta/main.yml)
 nextcloud_fqdn: "cloud.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-vault_nextcloud_user: "CHANGEME"
-vault_nextcloud_password: "CHANGEME"
-vault_nextcloud_db_password: "CHANGEME"
+nextcloud_user: "CHANGEME"
+nextcloud_password: "CHANGEME"
+nextcloud_db_password: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configurable variables
