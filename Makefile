@@ -9,7 +9,7 @@ all: tests
 .PHONY: tests # run all tests
 tests: test_shellcheck test_readmes test_jinja2 test_ansible_syntax_check test_ansible_lint test_yamllint
 
-.PHONY: shellcheck # static syntax checker for shell scripts
+.PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
 	shellcheck -e SC1090 xsrv
