@@ -112,7 +112,7 @@ netdata_logcount_update_interval: 1
 netdata_logcount_error_threshold_warn: 0
 netdata_logcount_error_threshold_crit: 10
 # maximum acceptable WARNING message in logs over the last period before raising a WARNING alert
-netdata_logcount_warning_threshold_warn: 0
+netdata_logcount_warning_threshold_warn: 10
 # user to send logcount notifications to (eg. sysadmin, silent...)
 netdata_logcount_notification_to: "silent"
 
