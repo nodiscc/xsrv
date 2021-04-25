@@ -127,23 +127,17 @@ function gen_vault_password_file() {
 function init_playbook() {
     # initialize a new playbook (default roles)
     export playbook_dir="$playbooks_dir/$playbook_name"
-
     echo "[xsrv] INFO: creating playbook $playbook_dir"
     if [[ -e "$playbook_dir" ]]; then
         echo "[xsrv] ERROR: $playbook_dir already exists"; exit 1
     fi
     mkdir "$playbook_dir"
-
     upgrade_roles
     echo "[xsrv] INFO: copying default playbook files and directories"
     cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,group_vars/,host_vars/,public_keys/,playbooks/} "$playbook_dir/"
     rm -r "$playbook_dir/host_vars/my.example.org"
-
     gen_vault_password_file
-
-
     init_host
-
     echo "[xsrv] INFO: playbook '$playbook_name' initialized"
     echo "[xsrv] INFO: run $0 deploy to apply configuration now, or $0 help for more options"
 }
@@ -154,7 +148,6 @@ function gen_random_passwords() {
         echo "[xsrv] WARNING: pwgen not installed, unable to generate random passwords for $host_name. Please manually replace any values labeled CHANGEME!"
         return
     fi
-
     echo "[xsrv] INFO: generating random passwords for $host_name"
     randomized_vault=$(while read -r line; do
         if echo "$line" | grep -E 'CHANGEME[0-9]+' 2>&1 >/dev/null; then
@@ -170,40 +163,33 @@ function gen_random_passwords() {
 function init_host() {
     # add a new host to a playbook (from template files)
     check_playbook_exists
-
     until [[ ! -z "$host_name" ]]; do
         read -r -p "[xsrv] Host name to add to the $playbook_name playbook (ex: my.CHANGEME.org): " host_name
     done
-
     if [[ -e "$playbook_dir/host_vars/$host_name" ]]; then
         echo "[xsrv] ERROR: $playbook_dir/host_vars/$host_name already exists"; exit 1
     fi
-
     # TODO move inventory creation to init_playbook(), only handle adding a single host here
-    # TODO echo "[xsrv] INFO: adding host $host_name to $playbook_name inventory"
     if [[ ! -f "$playbook_dir/inventory.yml" ]]; then
+        echo "[xsrv] INFO: creating inventory for $playbook_name"
         sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/inventory.yml" >> "$playbook_dir/inventory.yml"
     else
-        echo "    $host_name" >> "$playbook_dir/inventory.yml"
+        echo "[xsrv] INFO: adding host $host_name to the last inventory group of $playbook_name"
+        echo "    $host_name:" >> "$playbook_dir/inventory.yml"
     fi
-
     echo "[xsrv] INFO: adding $host_name host to $playbook_name playbook"
     sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/playbook.yml" >> "$playbook_dir/playbook.yml"
-
     echo "[xsrv] INFO: creating host vars/vault files for $host_name"
     host_vars_file="$playbook_dir/host_vars/$host_name/$host_name.yml"
     host_vault_file="$playbook_dir/host_vars/$host_name/$host_name.vault.yml"
     mkdir "$playbook_dir/host_vars/$host_name"
     sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
     sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
-
     gen_random_passwords "$host_vault_file"
-
     read -r -p "[xsrv] Press ENTER to edit the playbook (enable/disable roles)"
     edit_playbook "$playbook_name"
     read -r -p "[xsrv] Press ENTER to edit host variables (replace any values labeled CHANGEME) "
     edit_host "$playbook_name" "$host_name"
-
     echo "[xsrv] INFO: Encrypting secrets file"
     (cd "$playbook_dir/" && ansible-vault encrypt "$playbook_dir/host_vars/$host_name/$host_name.vault.yml")
     read -r -p "[xsrv] Press ENTER to edit secret (vaulted) host variables (replace any values labeled CHANGEME) "
