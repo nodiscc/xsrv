@@ -30,8 +30,8 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ## Usage
 
-- force running backups immediately: `ssh user@my.example.org sudo -u rsnapshot rsnapshot daily`
-- show the size of backups on the host: `ssh user@my.example.org du --human-readable --summarize --time /var/backups/srv01/*`
+- force running backups immediately: `ssh -t user@my.example.org sudo rsnapshot daily`
+- show the size of backups on the host: `ssh -t user@my.example.org sudo du --human-readable --summarize --time /var/backups/srv01/*`
 - transfer latest daily backups to local machine (this may take a while):
 
 ```
