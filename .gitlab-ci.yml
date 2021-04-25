@@ -10,7 +10,7 @@ cache:
     - "$CI_PROJECT_DIR/.venv"
 
 # prebuild a docker image to speed up the test suite
-build_gitlab_ci_test_image:
+build-ci-test-image:
   stage: test
   image: docker:stable
   stage: test
