@@ -33,6 +33,8 @@ Unattended-Upgrade::Origins-Pattern {
         "origin=Debian,codename=${distro_codename},label=Debian-Security";
 {% if 'nodiscc.xsrv.monitoring' in role_names %}        "origin=packagecloud.io/netdata/netdata,label=netdata";
 {% endif %}
+{% if 'nodiscc.xsrv.jellyfin' in role_names and jellyfin_auto_upgrade %}        "origin=Jellyfin,site=repo.jellyfin.org";
+{% endif %}
 
         // Archive or Suite based matching:
         // Note that this will silently match a different release after
