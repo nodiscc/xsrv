@@ -197,29 +197,22 @@ function init_host() {
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $playbook_name $host_name"
 }
 
-function get_ssh_port() {
-    # get SSH port from host_vars file
-	ssh_port=$(grep "^ansible_ssh_port" "$host_vars_file" | cut -d ' ' -f 2 | tr -d \'\")
-    if [[ -z "$ssh_port" ]]; then
-        ssh_port=22
-    fi
-}
-
-function get_ssh_user() {
-    # get SSH user from vaulted host_vars file
-    cd "$playbooks_dir/$playbook_name"
-    vault_vars=$(ansible-vault decrypt --output - "$host_vault_file")
-    ssh_user=$(echo "$vault_vars" | grep "^ansible_user:" | cut -d ' ' -f 2 | tr -d \'\")
-
+function _get_host_var() {
+    # get a host var using ansible -m debug | grep
+    # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
+    (cd "$playbook_dir" && ansible --one-line \
+      --inventory "$playbook_dir"/inventory.yml \
+      --module-name debug --args \
+      "msg={{ "$1" }}" "$host_name" | \
+      grep -oP '(?<="msg": ").*(?="})')
 }
 
 function run_shell() {
     # open a SSH shell on a host
     check_playbook_exists
     check_host_name
-    get_ssh_port
-    get_ssh_user
-
+    ssh_user=$(_get_host_var "ansible_user")
+    ssh_port=$(_get_host_var "ansible_ssh_port|default(22)")
     ssh_command="ssh -t -p $ssh_port $ssh_user@$host_name $ssh_args"
     $ssh_command
 }
@@ -243,8 +236,8 @@ function fetch_backups() {
     # fetch latest daily backups from the host
     check_playbook_exists
     check_host_name
-    get_ssh_port
-    get_ssh_user
+    ssh_port=$(_get_host_var "ansible_ssh_port|default(22)")
+    ssh_user=$(_get_host_var "ansible_user")
 
     backup_date=$(date "+%Y%m%d_%H%M%S")
     rsync_command="rsync --archive --verbose --rsh=\"ssh -p $ssh_port\" --progress --fake-super --rsync-path='/usr/bin/sudo /usr/bin/rsync' $ssh_user@$host_name:/var/backups/rsnapshot/daily.0/ $playbooks_dir/$playbook_name/$local_backups_dir/daily.0.$backup_date"
