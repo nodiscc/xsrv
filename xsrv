@@ -306,15 +306,18 @@ function self_upgrade() {
         if [[ -w "$script_path" ]]; then
             echo "[xsrv] INFO: $script_path is writeable"
             cp "$xsrv_clone_dir/xsrv" "$script_path"
+            echo "[xsrv] INFO: upgrade complete"
+            exit 0
         else
             echo "[xsrv] INFO: $script_path is not writeable. Upgrading with sudo"
             sudo cp -v "$xsrv_clone_dir/xsrv" "$script_path"
+            echo "[xsrv] INFO: upgrade complete"
+            exit 0
         fi
     else
         echo "[xsrv] ERROR: did not enter YES, aborting"
         exit 1
     fi
-    echo "[xsrv] INFO: upgrade complete"
 }
 
 ############################
