@@ -19,51 +19,19 @@ ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
   ╹ ╹┗━┛╹┗╸┗┛ v${version}"
 
-# Functions
+### Helpers ###
+
 function check_playbook_exists() {
     # check that the directory for the specified playbook exists, exit with error if not
-    export playbook_dir="$playbooks_dir/$playbook_name"
     export templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv"
     if [[ ! -e "$playbook_dir" ]]; then
         echo "[xsrv] ERROR: playbook $playbook_dir does not exist"; exit 1;
     fi
 }
 
-function deploy() {
-    # run ansible playbook
-    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
-    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
-    cd "$playbooks_dir/$playbook_name"
-    echo "[xsrv] INFO: deploying playbook $playbook_name"
-    ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
-}
-
-function check() {
-    # run ansible playbook in check mode
-    check_playbook_exists
-    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
-    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
-    cd "$playbooks_dir/$playbook_name"
-    echo "[xsrv] INFO: deploying playbook $playbook_name"
-    ansible-playbook playbook.yml --check --diff $ansible_tags_arg $ansible_host_arg
-}
-
-function edit_playbook() {
-    # edit a playbook file
-    playbook_file="$playbooks_dir/$playbook_name/playbook.yml"
-    echo "[xsrv] INFO: opening playbook file $playbook_file"
-    $editor "$playbook_file"
-}
-
-function edit_inventory() {
-    # edit an inventory file
-    inventory_file="$playbooks_dir/$playbook_name/inventory.yml"
-    echo "[xsrv] INFO: opening inventory file $inventory_file"
-    $editor "$inventory_file"
-}
-
-function check_host_name() {
+function _check_host_name() {
     # check if host_vars files exist for a host, set host_vars_file and host_vault_file global variables
+    check_playbook_exists
     if [[ -z "$host_name" ]]; then
         host_vars_dirs=$(find "$playbooks_dir/$playbook_name/host_vars/" -maxdepth 1 -type d)
         host_name="${host_vars_dirs##*/}"
@@ -81,6 +49,7 @@ function check_host_name() {
 
 function check_group_name() {
     # check if group_vars files exist for a group, set group_vars_file global variable
+    check_playbook_exists
     group_name="$host_name"
     if [[ -z "$group_name" ]]; then
         echo "[xsrv] INFO: no group name provided, editing variables for group 'all'"
@@ -92,28 +61,30 @@ function check_group_name() {
     fi
 }
 
-function edit_host() {
-    # edit a host's vars file
-    check_playbook_exists
-    check_host_name
-    echo "[xsrv] INFO: opening host vars file $host_vars_file"
-    $editor "$host_vars_file"
+
+function init_venv() {
+    # create a virtualenv, activate it and install dependencies
+    if [[ ! "$skip_venv" == "yes" ]]; then
+        echo "[xsrv] INFO: creating virtualenv in $venv_dir"
+        mkdir -p "$venv_dir"
+        python3 -m venv "$venv_dir"
+    fi
+    source "$venv_dir/bin/activate"
+    if [[ ! "$skip_venv" == "yes" ]]; then
+        echo "[xsrv] INFO: installing ansible in $venv_dir"
+        pip3 install wheel
+        pip3 install cryptography==3.3.2 ansible=="$ansible_version"
+    fi
 }
 
-function edit_group() {
-    # edit group variables
-    check_playbook_exists
-    check_group_name
-    echo "[xsrv] INFO: opening group_vars file $group_vars_file"
-    $editor "$group_vars_file"
-}
-
-function edit_vault() {
-    # edit a host's vault file
-    check_playbook_exists
-    check_host_name
-    cd "$playbooks_dir/$playbook_name"
-    EDITOR="$editor" ansible-vault edit "$host_vault_file"
+function _get_host_var() {
+    # get a host var using ansible -m debug | grep
+    # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
+    (cd "$playbook_dir" && ansible --one-line \
+      --inventory "$playbook_dir"/inventory.yml \
+      --module-name debug --args \
+      "msg={{ $1 }}" "$host_name" | \
+      grep -oP '(?<="msg": ").*(?="})')
 }
 
 function gen_vault_password_file() {
@@ -122,24 +93,6 @@ function gen_vault_password_file() {
     openssl rand -base64 32 > "$playbooks_dir/$playbook_name/.ansible-vault-password"
     echo "[xsrv] INFO: vault password stored in $playbooks_dir/$playbook_name/.ansible-vault-password"
     echo "[xsrv] INFO: Keep this file private! Keep backups of this file!"
-}
-
-function init_playbook() {
-    # initialize a new playbook (default roles)
-    export playbook_dir="$playbooks_dir/$playbook_name"
-    echo "[xsrv] INFO: creating playbook $playbook_dir"
-    if [[ -e "$playbook_dir" ]]; then
-        echo "[xsrv] ERROR: $playbook_dir already exists"; exit 1
-    fi
-    mkdir "$playbook_dir"
-    upgrade_roles
-    echo "[xsrv] INFO: copying default playbook files and directories"
-    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,group_vars/,host_vars/,public_keys/,playbooks/} "$playbook_dir/"
-    rm -r "$playbook_dir/host_vars/my.example.org"
-    gen_vault_password_file
-    init_host
-    echo "[xsrv] INFO: playbook '$playbook_name' initialized"
-    echo "[xsrv] INFO: run $0 deploy to apply configuration now, or $0 help for more options"
 }
 
 function gen_random_passwords() {
@@ -158,6 +111,87 @@ function gen_random_passwords() {
         fi
     done < "$host_vault_file")
     echo "$randomized_vault" > "$host_vault_file"
+}
+
+
+### Commands ###
+
+function help() {
+    # show help
+    echo "$usage"
+    exit 1
+}
+
+function check() {
+    # run ansible playbook in check mode
+    check_playbook_exists
+    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
+    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
+    cd "$playbooks_dir/$playbook_name"
+    echo "[xsrv] INFO: deploying playbook $playbook_name"
+    ansible-playbook playbook.yml --check --diff $ansible_tags_arg $ansible_host_arg
+}
+
+function deploy() {
+    # run ansible playbook
+    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
+    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
+    cd "$playbooks_dir/$playbook_name"
+    echo "[xsrv] INFO: deploying playbook $playbook_name"
+    ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
+}
+
+
+function edit_playbook() {
+    # edit a playbook file
+    playbook_file="$playbooks_dir/$playbook_name/playbook.yml"
+    echo "[xsrv] INFO: opening playbook file $playbook_file"
+    $editor "$playbook_file"
+}
+
+function edit_inventory() {
+    # edit an inventory file
+    inventory_file="$playbooks_dir/$playbook_name/inventory.yml"
+    echo "[xsrv] INFO: opening inventory file $inventory_file"
+    $editor "$inventory_file"
+}
+
+function edit_host() {
+    # edit a host's vars file
+    _check_host_name
+    echo "[xsrv] INFO: opening host vars file $host_vars_file"
+    $editor "$host_vars_file"
+}
+
+function edit_group() {
+    # edit group variables
+    check_group_name
+    echo "[xsrv] INFO: opening group_vars file $group_vars_file"
+    $editor "$group_vars_file"
+}
+
+function edit_vault() {
+    # edit a host's vault file
+    _check_host_name
+    cd "$playbooks_dir/$playbook_name"
+    EDITOR="$editor" ansible-vault edit "$host_vault_file"
+}
+
+function init_playbook() {
+    # initialize a new playbook (default roles)
+    echo "[xsrv] INFO: creating playbook $playbook_dir"
+    if [[ -e "$playbook_dir" ]]; then
+        echo "[xsrv] ERROR: $playbook_dir already exists"; exit 1
+    fi
+    mkdir "$playbook_dir"
+    upgrade_roles
+    echo "[xsrv] INFO: copying default playbook files and directories"
+    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,group_vars/,host_vars/,public_keys/,playbooks/} "$playbook_dir/"
+    rm -r "$playbook_dir/host_vars/my.example.org"
+    gen_vault_password_file
+    init_host
+    echo "[xsrv] INFO: playbook '$playbook_name' initialized"
+    echo "[xsrv] INFO: run $0 deploy to apply configuration now, or $0 help for more options"
 }
 
 function init_host() {
@@ -197,58 +231,32 @@ function init_host() {
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $playbook_name $host_name"
 }
 
-function _get_host_var() {
-    # get a host var using ansible -m debug | grep
-    # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
-    (cd "$playbook_dir" && ansible --one-line \
-      --inventory "$playbook_dir"/inventory.yml \
-      --module-name debug --args \
-      "msg={{ "$1" }}" "$host_name" | \
-      grep -oP '(?<="msg": ").*(?="})')
-}
-
 function run_shell() {
     # open a SSH shell on a host
-    check_playbook_exists
-    check_host_name
+    _check_host_name
     ssh_user=$(_get_host_var "ansible_user")
     ssh_port=$(_get_host_var "ansible_ssh_port|default(22)")
     ssh_command="ssh -t -p $ssh_port $ssh_user@$host_name $ssh_args"
     $ssh_command
 }
 
-function utils() {
-    echo "TODO"
-    exit 1
-}
-
-function info() {
-    echo "TODO"
-    exit 1
-}
-
 function _ls() {
     # list files in the playbooks directory (accepts a path)
-    ls "$playbooks_dir/$1"
+    path=${1:-}
+    ls "$playbooks_dir/$path"
 }
 
 function fetch_backups() {
     # fetch latest daily backups from the host
     check_playbook_exists
-    check_host_name
     ssh_port=$(_get_host_var "ansible_ssh_port|default(22)")
     ssh_user=$(_get_host_var "ansible_user")
-
     backup_date=$(date "+%Y%m%d_%H%M%S")
-    rsync_command="rsync --archive --verbose --rsh=\"ssh -p $ssh_port\" --progress --fake-super --rsync-path='/usr/bin/sudo /usr/bin/rsync' $ssh_user@$host_name:/var/backups/rsnapshot/daily.0/ $playbooks_dir/$playbook_name/$local_backups_dir/daily.0.$backup_date"
     echo "[xsrv] INFO: fetching latest daily backups from $host_name in playbook $playbook_name"
-    echo "[xsrv] INFO: running $rsync_command"
-    eval "$rsync_command"
-}
-
-function help() {
-    echo "$usage"
-    exit 1
+    rsync --archive --verbose --rsh="ssh -p $ssh_port" \
+      --progress --fake-super --rsync-path='/usr/bin/sudo /usr/bin/rsync' \
+      "$ssh_user@$host_name:/var/backups/rsnapshot/daily.0/" \
+      "$playbooks_dir/$playbook_name/$local_backups_dir/daily.0.$backup_date"
 }
 
 function upgrade_roles() {
@@ -259,21 +267,6 @@ function upgrade_roles() {
     else
         echo "[xsrv] INFO: upgrading collections from requirements.yml"
         (cd "$playbook_dir" && ansible-galaxy collection install --force -r requirements.yml)
-    fi
-}
-
-function init_venv() {
-    # create a virtualenv, activate it and install dependencies
-    if [[ ! "$skip_venv" == "yes" ]]; then
-        echo "[xsrv] INFO: creating virtualenv in $venv_dir"
-        mkdir -p "$venv_dir"
-        python3 -m venv "$venv_dir"
-    fi
-    source "$venv_dir/bin/activate"
-    if [[ ! "$skip_venv" == "yes" ]]; then
-        echo "[xsrv] INFO: installing ansible in $venv_dir"
-        pip3 install wheel
-        pip3 install cryptography==3.3.2 ansible=="$ansible_version"
     fi
 }
 
@@ -390,6 +383,7 @@ PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
 
 command="${1:-}"
 playbook_name="${2:-default}"
+playbook_dir="$playbooks_dir/$playbook_name"
 host_name="${3:-}"
 ssh_args=""
 
