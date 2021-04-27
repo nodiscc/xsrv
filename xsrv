@@ -204,6 +204,7 @@ function init_host() {
         echo "[xsrv] ERROR: $playbook_dir/host_vars/$host_name already exists"; exit 1
     fi
     # TODO move inventory creation to init_playbook(), only handle adding a single host here
+    # TODO cleaup
     if [[ ! -f "$playbook_dir/inventory.yml" ]]; then
         echo "[xsrv] INFO: creating inventory for $playbook_name"
         sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/inventory.yml" >> "$playbook_dir/inventory.yml"
@@ -271,6 +272,7 @@ function upgrade_roles() {
 }
 
 function show_defaults() {
+    # show all role defaults, accepts a role name
     check_playbook_exists
     role=${2:-}
     if ! hash "${pager%% *}" 2>/dev/null; then
@@ -291,6 +293,7 @@ function show_defaults() {
 }
 
 function self_upgrade() {
+    # upgrade the running xsrv scrip in-place
     script_path="$0"
     echo "[xsrv] INFO fetching latest release..."
     if [[ -d "$xsrv_clone_dir/.git" ]]; then
