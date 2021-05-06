@@ -23,6 +23,9 @@ services:
         published: 3001
     networks:
       - rocketchat
+    deploy:
+      replicas: {{ '1' if rocketchat_enable_service else '0' }}
+
 
   mongo:
     image: mongo:4.0
@@ -34,3 +37,5 @@ services:
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
     networks:
       - rocketchat
+    deploy:
+      replicas: {{ '1' if rocketchat_enable_service else '0' }}

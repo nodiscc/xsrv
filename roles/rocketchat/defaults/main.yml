@@ -6,3 +6,5 @@ rocketchat_fqdn: "chat.CHANGEME.org"
 rocketchat_https_mode: selfsigned
 # Version for the rocketchat docker image
 rocketchat_docker_version: "3.7.1"
+# yes/no: enable rocketchat services
+rocketchat_enable_service: yes
