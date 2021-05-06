@@ -81,6 +81,7 @@ firehol_networks:
       # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
       # - { name: "ldap", src: "{{ firehol_alias_lan }}", } # LDAP (plain/insecure) from LAN
       # - { name: "ldaps", src: "{{ firehol_alias_lan }}" } # LDAP (SSL/secure) from LAN
+      # - { name: "graylogtcp5140", src: "{{ firehol_alias_lan }}" } # graylog syslog input (TCP/SSL)
     allow_output: # outgoing traffic to allow (name: service name, dst: destination IP address/subnet)
       - { name: "dns", dst: "any" } # DNS queries to anywhere
       - { name: "ntp", dst: "any" } # time/date synchronization
@@ -125,6 +126,7 @@ firehol_custom_services:
   - { name: "iscsi", ports: "tcp/3260" } # iSCSI initiator
   - { name: "dropboxlan", ports: "udp/17500" } # Dropbox LAN sync
   - { name: "imaps585", ports: "tcp/585" } # IMAPS on port 585
+  - { name: "graylogtcp5140", ports: "tcp/5140" } # graylog syslog input (TCP/SSL)
 
 ### FAIL2BAN ###
 # setup fail2ban bruteforce detection/prevention system (yes/no)
