@@ -7,8 +7,7 @@ This role will install [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL), a
 [![](https://i.imgur.com/CqoOfXo.png)](https://i.imgur.com/mv2fppi.jpg)
 
 
-Requirements/Dependencies/example playbook
-------------
+## Requirements/Dependencies/example playbook
 
 See [meta/main.yml](meta/main.yml)
 
@@ -17,14 +16,22 @@ See [meta/main.yml](meta/main.yml)
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # bruteforce prevention
-    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.postgresql
+
+# required variables:
+# none
 ```
+
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
 
 ## Usage
 
-**Backups**: See the included [rsnapshot configuration](templates/etc_rsnapshot.d_postgresql.conf.j2) for the [backup](../backup/README.md) role.
+### Backups
+
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_postgresql.conf.j2) for the [backup](../backup/README.md) role.
 
 
 ## License

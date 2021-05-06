@@ -15,6 +15,7 @@ See [meta/main.yml](defaults/main.yml)
      - nodiscc.xsrv.backup # (optional, automatic backups)
      - nodiscc.xsrv.mariadb
 
+# required variables:
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 mariadb_root_password: "CHANGEME"
 ```

@@ -3,7 +3,7 @@
 nextcloud_user: "CHANGEME"
 nextcloud_password: "CHANGEME"
 # nextcloud adminstrator e-mail address
-nextcloud_admin_email: "CHANGEME"
+nextcloud_admin_email: "CHANGEME@CHANGEME.org"
 # Fully Qualified Domain Name for the nextcloud instance
 nextcloud_fqdn: "cloud.CHANGEME.org"
 # nextcloud database type (mysql/pgsql)

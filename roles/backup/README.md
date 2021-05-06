@@ -9,7 +9,7 @@ This role will setup [rsnapshot](https://rsnapshot.org), an incremental backup s
 
 - configurable backup sources (local/remote), destinations, scripts and retention policy
 - loads any additional/custom configuration from `/etc/rsnapshot.d/*.conf`
-- (optional) agregation of rsnapshot logs to syslog
+- (optional) aggregation of rsnapshot logs to syslog
 
 
 ## Requirements/dependencies/example playbook
@@ -20,9 +20,9 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) hardening, SSH
-    - nodiscc.xsrv.monitoring # (optional) rsnapshot log agregation
+    - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, SSH, brutefore prevention
     - nodiscc.xsrv.backup
+    - nodiscc.xsrv.monitoring # (optional) rsnapshot log aggregation
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables

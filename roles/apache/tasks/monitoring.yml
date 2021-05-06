@@ -11,7 +11,7 @@
     group: root
     mode: 0644
 
-- name: configure rsyslog to agregate apache access/error and php-fpm logs to syslog
+- name: configure rsyslog to aggregate apache access/error and php-fpm logs to syslog
   template:
     src: etc_rsyslog.d_{{ item }}.conf.j2
     dest: /etc/rsyslog.d/{{ item }}.conf

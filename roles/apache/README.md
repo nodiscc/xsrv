@@ -5,7 +5,7 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 - [mod_md](https://httpd.apache.org/docs/2.4/mod/mod_md.html) for [Let's Encrypt](https://en.wikipedia.org/wiki/Let's_Encrypt) SSL/TLS certificate management, hardened ([A+](https://www.ssllabs.com/ssltest/)) SSL/TLS configuration
 - [php-fpm](https://php-fpm.org/) PHP interpreter
 - (optional) `mod_evasive` to mitigate basic DoS attack attempts
-- (optional) agregation of apache log files to syslog
+- (optional) aggregation of apache log files to syslog
 
 
 ## Requirements/dependencies/example playbook
@@ -17,8 +17,8 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 ```yaml
 - hosts: my.CHANGEME.org
   roles:
-     - nodiscc.xsrv.common # optional
-     - nodiscc.xsrv monitoring # optional, apache/virtualhost monitoring/log aggregation
+     - nodiscc.xsrv.common # (optional)
+     - nodiscc.xsrv monitoring # (optional) apache/virtualhost monitoring/log aggregation
      - nodiscc.xsrv.apache
 ```
 

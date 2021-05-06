@@ -20,16 +20,16 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # bruteforce prevention
-    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.common # (optional) system hardening, firewall, bruteforce prevention
+    - nodiscc.xsrv.monitoring # (optional) nextcloud/system monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.postgresql # database engine
-    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (enabled automatically) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.postgresql # (enabled automatically) database engine
     - nodiscc.xsrv.tt_rss
 
+# required variables:
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml  
 tt_rss_fqdn: "rss.CHANGEME.org"
-
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 tt_rss_user: "CHANGEME"
 tt_rss_password: "CHANGEME"

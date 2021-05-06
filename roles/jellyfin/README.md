@@ -26,6 +26,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.apache # webserver/reverseproxy and SSL/TLS certificates
     - nodiscc.xsrv.jellyfin
 
+# required variables
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
 jellyfin_fqdn: media.CHANGEME.org
 ```
@@ -101,4 +102,4 @@ When using Jellyfin from a web browser, media will be converted/transcoded on-th
 
 ## References
 
-- https://stdout.root.sx/links/?searchtags=jellyfin
+- https://stdout.root.sx/links/?searchterm=jellyfin

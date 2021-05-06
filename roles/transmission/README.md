@@ -5,19 +5,21 @@ This role will install the [Transmission](https://en.wikipedia.org/wiki/Transmis
 [![](https://i.imgur.com/blWO4LL.png)](https://i.imgur.com/q1gcHRf.png)
 
 
-## Requirements/Dependencies/example playbook
+## Requirements/dependencies/example playbook
 
 See [meta/main.yml](meta/main.yml)
 
 ```yaml
+# playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # bruteforce protection
-    - nodiscc.xsrv.monitoring # (optional)
-    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.common # (optional) basic setup, harding, firewall, bruteforce protection
+    - nodiscc.xsrv.monitoring # (optional) system/server monitoriong and health checks
+    - nodiscc.xsrv.backup # (optional) automatic backups of download/torrent directory
     - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.transmission
 
+# required variables
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 transmission_username: "CHANGEME"
 transmission_password: "CHANGEME20"
@@ -36,13 +38,8 @@ firehol_networks:
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-Usage
------
 
-### Backups
-
-See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmsssion.conf.j2) for the [backup](../backup) role.
-
+## Usage
 
 ### Clients
 
@@ -51,14 +48,16 @@ See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmsssio
 - If the [nextcloud](../nextcloud) role is installed, you may mount the downloads directory as an [External Storage](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage/local.html) (the nextcloud/`www-data` system user must be added to the `transmission-damon` group) and access downloaded files from nextcloud's web interface.
 
 
-License
--------
+### Backups
+
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmsssion.conf.j2) for the [backup](../backup) role.
+
+
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://stdout.root.sx/links/?searchtags=torrent
-

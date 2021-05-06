@@ -27,8 +27,8 @@ galaxy_info:
     - web
 dependencies:
   - nodiscc.xsrv.common
-  # - nodiscc.xsrv.monitoring
-  # - nodiscc.xsrv.backup
+  # - nodiscc.xsrv.backup # optional
+  # - nodiscc.xsrv.monitoring # optional
   - nodiscc.xsrv.apache
   - { role: 'nodiscc.xsrv.postgresql', when: nextcloud_db_type == "psql" }
   - { role: 'nodiscc.xsrv.mariadb', when: nextcloud_db_type == "mysql" }

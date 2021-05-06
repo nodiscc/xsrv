@@ -24,9 +24,9 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.shaarli
 
+# required variables:
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
 shaarli_fqdn: "links.CHANGEME.org"
-
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 shaarli_user: "CHANGEME"
 shaarli_password: "CHANGEME"
@@ -64,13 +64,11 @@ Re-apply the role on a regular basis to ensure the application stays up to date.
 This role is not always idempotent - tt-rss is always upgraded to the latest available version (git `master` branch).
 
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://shaarli.readthedocs.io/en/master/

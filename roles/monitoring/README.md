@@ -12,18 +12,18 @@ This role will install a lightweight monitoring system on a Linux machine:
 
 ## Requirements/dependencies/example playbook
 
-- Ansible >= 2.8
-- Debian 9/10
-- The service must be reachable on port `tcp/19999` through firewall/NAT
+See [meta/main.yml](defaults/main.yml) for all configuration variables
 
 ```yaml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # optional
+    - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall
     - nodiscc.xsrv.monitoring
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+The service must be reachable on port `tcp/19999` through firewall/NAT
 
 
 ## Usage
@@ -37,7 +37,7 @@ Read [netdata documentation](https://docs.netdata.cloud/) for more info.
 
 ### Logs
 
-Navigate/search/filter agregated system logs (using [lnav](https://lnav.org/)): `ssh -t user@my.example.org sudo lnav /var/log/syslog`. Some useful internal lnav [commands](https://lnav.readthedocs.io/en/latest/):
+Navigate/search/filter aggregated system logs (using [lnav](https://lnav.org/)): `ssh -t user@my.example.org sudo lnav /var/log/syslog`. Some useful internal lnav [commands](https://lnav.readthedocs.io/en/latest/):
 
 - `:filter-in <expression>` only display messages matching filter expression
 - `:set-min-log-level debug|info|warning|error` only display messages above a defined log level.
@@ -59,13 +59,11 @@ Read [lnav documentation](https://lnav.readthedocs.io/) for more info.
 Roles that need to install custom `httpcheck`/`x509check`/`portcheck`/`modtime`/`processes` module/alarm configurations must create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` handler.
 
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://stdout.root.sx/links/?searchtags=monitoring

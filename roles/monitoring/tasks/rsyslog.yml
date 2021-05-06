@@ -13,6 +13,7 @@
     - 000-singlefile # log all messages to /var/log/syslog
     - 000-imfile # load the imfile (text file input) module used by other roles
 
+# DEPRECATED this task will be removed in a future version of the role
 - name: remove rsyslog config files from old versions of the role
   file:
     state: absent

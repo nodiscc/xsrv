@@ -20,38 +20,32 @@ This role will install/configure a basic Debian-based server.
 
 All configuration tasks are optional.
 
-Requirements
-------------
+## Requirements/dependencies/example playbook
 
-- Ansible 2.8 or higher
-- Debian 9/10
-- Ansible inventory hostname resolves to the host FQDN (using DNS, /etc/hosts, ansible_host)
-- SSH server reachable from the controller
+- Ansible 2.10 or higher on the controller
+- Debian 9/10 on the target host
+- The hostname in th inventory resolves to the host FQDN (using DNS records, a `hosts` file entry), or the `ansible_host` variable points to the server IP
+- SSH server enabled, reachable from the controller
+- User account on the host, member of the `sudo` group
 - SSH key authorized on the remote `ansible_user` user account (`ssh-copy-id user@host`)
 
 
-Configuration variables
------------------------
-
-See [defaults/main.yml](defaults/main.yml)
-
-
-Example playbook
------------------
-
 ```yaml
+# playbook.yml
 - hosts: my.CHANGEME.org
   roles:
      - nodiscc.xsrv.common
 
+# required variables:
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 ansible_user: "CHANGEME"
 ansible_become_pass: "CHANGEME"
 ```
 
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-Usage
-------------
+
+## Usage
 
  - SSH access: `ssh user@example.org`
  - SFTP access: `sftp://user@example.org` (clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/)), `sftp`, `rsync`, `scp`, Windows: [WinSCP](https://winscp.net/eng/index.php), PuTTY...)
@@ -65,13 +59,12 @@ Usage
 - Backups: nothing to backup. See the [backup](../backup/README.md) role.
 
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
-References
------------------
+
+## References
 
 - https://stdout.root.sx/links/?searchtags=debian
 - https://stdout.root.sx/links/?searchtags=dns

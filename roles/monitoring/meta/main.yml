@@ -18,4 +18,3 @@ galaxy_info:
     - alerts
     - syslog
 dependencies: []
-#   - nodiscc.xsrv.common

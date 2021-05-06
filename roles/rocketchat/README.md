@@ -19,31 +19,38 @@ Rocket.Chat features include:
 
 It provides an alternative to proprietary SaaS software like Slack, Discord, Google Meet...
 
+
 ## Requirements/dependencies
 
 See [meta/main.yml](defaults/main.yml)
-
 
 ```yaml
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # optional
+    - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.apache # webserver and SSL/TLS certificates
-    - nodiscc.xsrv.docker # docker swarm
+    - nodiscc.xsrv.docker # docker container engine
 
+# required variables:
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
 rocketchat_fqdn: chat.CHANGEME.org
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
---------------------
 
 ## Usage
 
-**Post-installation:** After first deployment, access your rocket.chat instance at https://chat.CHANGEME.org, and provide configuration details:
+### Clients
+
+Rocket.chat can be used from any [web browser](https://www.mozilla.org/en-US/firefox/) or one of the mobile clients ([Android](https://f-droid.org/en/packages/chat.rocket.android/), [iOS](https://apps.apple.com/us/app/rocket-chat/id1148741252))
+
+
+### Post-installation
+
+After first deployment, access your rocket.chat instance at https://chat.CHANGEME.org, and provide configuration details:
 - Admin username/password - store these credentials in a password manager!
 - Organization info
 - Register server (recommended: `Keep standalone`)
@@ -91,11 +98,9 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 - Markdown > Markdown parser: `Marked`
 - `Save changes`
 
-**Backups:** see the included [rsnapshot configuration](templates/etc_rsnasphot.d_rocketchat.conf.j2) and [rocketchat dump script](templates/_user_local_bin_rocketchat-dump.sh.j2)
+### Backups
 
-**Mobile clients:**
-- [Android app](https://f-droid.org/en/packages/chat.rocket.android/)
-- [iOS app](https://apps.apple.com/us/app/rocket-chat/id1148741252)
+See the included [rsnapshot configuration](templates/etc_rsnasphot.d_rocketchat.conf.j2) for the [backup](../backup) role and [rocketchat dump script](templates/_user_local_bin_rocketchat-dump.sh.j2)
 
 
 ## License

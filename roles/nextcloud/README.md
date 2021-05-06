@@ -22,7 +22,7 @@ Default installed applications include:
 
 It will also configure:
 - bruteforce prevention using fail2ban
-- (optional) agregation of nextcloud logs to syslog
+- (optional) aggregation of nextcloud logs to syslog
 
 [![](https://i.imgur.com/kQyXV9S.png)](https://i.imgur.com/nCXJMus.png)
 [![](https://i.imgur.com/lXroRsI.png)](https://i.imgur.com/XlDrlS4.png)
@@ -38,29 +38,30 @@ It will also configure:
 See [meta/main.yml](meta/main.yml)
 
 ```yaml
+# playbook.yml
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # hardening/firewall/bruteforce prevention
-    - nodiscc.xsrv.monitoring # (optional) server monitoring and log agregation
+    - nodiscc.xsrv.monitoring # (optional) server monitoring and log aggregation
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
-    - nodiscc.xsrv.postgresql # database engine
+    - nodiscc.xsrv.apache # (enabled automatically) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.postgresql # (enabled automatically) database engine
     - nodiscc.xsrv.nextcloud
 
+# required variables:
 # host_vars/my.example.org/my.example.org.vault.yml
 nextcloud_fqdn: "cloud.CHANGEME.org"
-
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 nextcloud_user: "CHANGEME"
 nextcloud_password: "CHANGEME"
 nextcloud_db_password: "CHANGEME"
+nextcloud_db_password: "CHANGEME@CHANGEME.org"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configurable variables
 
 
-Usage
------
+## Usage
 
 ### Clients
 
@@ -112,14 +113,11 @@ sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 
 **Changing database password** is not supported by the role at this time. To change the database password, you must first set the new password manually in `/var/www/$nextcloud_fqdn/config.php`, then change the value of `nexctloud_db_password` in host variables, and run the playbook.
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
-----------
+## References
 
 - https://stdout.root.sx/links?searchtags=nextcloud
-

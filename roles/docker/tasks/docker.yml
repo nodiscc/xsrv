@@ -13,7 +13,7 @@
     package:
       - apt-transport-https
       - ca-certificates
-      - "gpg" # required for APT key import
+      - gpg # required for APT key import
 
 - name: Add Docker apt key.
   apt_key:

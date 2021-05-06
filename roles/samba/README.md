@@ -7,7 +7,6 @@ The server is set up as a "standalone"/workgroup server (ie. not part of a domai
 
 ## Requirements/dependencies/example playbook
 
-
 See [meta/main.yml](meta/main.yml)
 
 ```yaml
@@ -15,9 +14,9 @@ See [meta/main.yml](meta/main.yml)
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # (optional) hardening, firewall
-    - nodiscc.xsrv.monitoring # (optional)
-    - nodiscc.xsrv.backup # optional
-    - nodiscc.xsrv.apache # (optional) webserver, PHP interpreter and SSL/TLS certificates for ldap-account-manager
+    - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.openldap # (if samba_passdb_backend: ldapsam) LDAP user backend
     - nodiscc.xsrv.samba
 ```
 
@@ -48,13 +47,11 @@ See the included [rsnapshot configuration](templates/etc_rsnapshot.d_samba.conf.
 This role does not remove any user accounts. To remove a samba user account, remove it from the `samba_users` list, and remove their account from the server manually with `sudo deluser my_old_user`
 
 
-License
--------
+## License
 
 [GNU GPLv3](../../LICENSE)
 
 
-References
------------------
+## References
 
 - https://stdout.root.sx/links/?searchtag=samba

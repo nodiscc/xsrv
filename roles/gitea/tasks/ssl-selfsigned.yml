@@ -1,5 +1,3 @@
----
-
 ##### SSL/TLS CERTIFICATES - SELF-SIGNED #####
 
 - name: install requirements for SSL/TLS certificates generation

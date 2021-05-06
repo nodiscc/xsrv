@@ -1,6 +1,4 @@
----
-
-##### SERVICE CONTROL
+##### SERVICE CONTROL #####
 
 - name: apply sysctl configuration
   become: yes

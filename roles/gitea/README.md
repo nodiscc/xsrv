@@ -1,5 +1,4 @@
-gitea
-=============
+# xsrv.gitea
 
 This role will install the [Gitea](https://gitea.io/en-us/) self-hosted Git service.
 Gitea is a lightweight code hosting solution written in Go. Gitea features include:
@@ -16,7 +15,7 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 
 It will also configure:
 - login bruteforce prevention with fail2ban
-- (optional) agregation of apache log files to syslog
+- (optional) aggregation of apache log files to syslog
 
 
 [![](https://i.imgur.com/Rks90zV.png)](https://i.imgur.com/2TGIshE.png)
@@ -33,15 +32,16 @@ See [meta/main.yml](meta/main.yml)
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # bruteforce prevention, SSH
-    - nodiscc.xsrv.monitoring # (optional) server monitoring, log agregation
+    - nodiscc.xsrv.monitoring # (optional) server monitoring, log aggregation
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.postgresql # database engine
     - nodiscc.xsrv.gitea
-  vars:
-    gitea_fqdn: "git.CHANGEME.org"
 
-# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+# required variables:
+# host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
+gitea_fqdn: "git.CHANGEME.org"
+# ansible-vault edit host_vars/my.CHANGEME.org/my.CHANGEME.org.vault.yml
 gitea_admin_username: "CHANGEME"
 gitea_admin_password: "CHANGEME"
 gitea_admin_email: "CHANGEME@CHANGEME.org"
@@ -55,11 +55,6 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 
 ## Usage
-
-### Backups
-
-See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role and [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
-
 
 ### Clients
 
@@ -131,14 +126,16 @@ gitea --description "My new project" --private new myusername/myproject
 
 * Gitea refuses to start with the message `Failed to initialize issue indexer: leveldb: manifest corrupted` in `/var/lib/gitea/log/*log`: delete indexer directories `sudo rm -r /var/lib/gitea/data/indexers/* /var/lib/gitea/indexers/*` ([1](https://github.com/go-gitea/gitea/issues/7013))
 
+### Backups
 
-License
--------
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role and [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
+
+
+## License
 
 [GNU GPLv3](../../LICENSE)
 
-References/Documentation
--------------
+## References/Documentation
 
 - https://github.com/nodiscc/xsrv/tree/master/roles/gitea
 - https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea

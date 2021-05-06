@@ -17,7 +17,7 @@ galaxy_info:
     - feed
     - reader
 dependencies:
-  # - nodiscc.xsrv.common
-  # - nodiscc.xsrv.backup
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.backup # optional
   - nodiscc.xsrv.apache
   - nodiscc.xsrv.postgresql

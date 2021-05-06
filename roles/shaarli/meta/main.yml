@@ -17,7 +17,4 @@ galaxy_info:
     - sharing
     - notes
 dependencies:
-  - nodiscc.xsrv.common
-  # - nodiscc.xsrv.monitoring
-  # - nodiscc.xsrv.backup
   - nodiscc.xsrv.apache

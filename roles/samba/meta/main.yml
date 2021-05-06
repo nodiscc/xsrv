@@ -18,6 +18,3 @@ galaxy_info:
     - ldap
     - mac
 dependencies: []
-# - nodiscc.xsrv.common
-# - nodiscc.xsrv.backup
-# - nodiscc.xsrv.openldap # when: samba_passdb_backend == 'ldapsam'
