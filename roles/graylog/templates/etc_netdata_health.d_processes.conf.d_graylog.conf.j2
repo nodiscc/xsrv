@@ -1,0 +1,17 @@
+ alarm: mongodb_processes
+    on: apps.processes
+  calc: $nosql
+ every: 20s
+  crit: ($this < 1) OR ($this = nan)
+ units: processes
+  info: nosql services (mongodb) running processes
+    to: sysadmin
+
+ alarm: graylog_elasticsearch_processes
+    on: apps.processes
+  calc: $java
+ every: 20s
+  crit: ($this < 2) OR ($this = nan)
+ units: processes
+  info: java (graylog/elasticearch) running processes
+    to: sysadmin

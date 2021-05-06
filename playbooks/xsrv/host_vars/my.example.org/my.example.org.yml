@@ -41,6 +41,9 @@ openldap_domain: "CHANGEME.org"
 openldap_organization: "CHANGEME"
 openldap_base_dn: "dc=CHANGEME,dc=org"
 
+##### GRAYLOG #####
+graylog_fqdn: "logs.CHANGEME.org"
+
 ##### FIREWALL/FAIL2BAN #####
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml
 firehol_alias_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
@@ -65,7 +68,8 @@ firehol_networks:
       # - { name: "transmission", src: "any" } # incoming bittorrent/transmission peer connections
       # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
       # - { name: "ldap", src: "{{ firehol_alias_lan }}", } # LDAP (plain/insecure) from LAN
-      # - { name: "ldaps", src: "{{ firehol_alias_lan }}", } # LDAP (SSL/secure) from LAN
+      # - { name: "ldaps", src: "{{ firehol_alias_lan }}" } # LDAP (SSL/secure) from LAN
+      # - { name: "graylogtcp5140", src: "{{ firehol_alias_lan }}" } # graylog syslog input (TCP/SSL)
     allow_output: # outgoing connections
       - { name: "dns", dst: "any" } # DNS queries to anywhere
       - { name: "ntp", dst: "any" } # time/date synchronization

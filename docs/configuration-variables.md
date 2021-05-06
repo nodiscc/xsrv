@@ -1,6 +1,8 @@
 # All configuration variables
 
-This is a list of all available configuration variables, and their default values. Copy any of these variables to `xsrv edit-host` (`host_vars` file), and edit its value there, then run `xsrv deploy` to apply changes.
+This is a list of all available configuration variables, and their default values.
+Copy any of these variables to `xsrv edit-host` (`host_vars` file) or `xsrv edit-vaulr`, and edit its value there.
+Then run `xsrv deploy` to apply changes.
 
 - [common](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
 - [monitoring](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml)

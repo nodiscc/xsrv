@@ -1,0 +1,17 @@
+- name: reload systemd unit files
+  become: yes
+  systemd: daemon_reload=yes
+
+- name: restart elasticsearch
+  become: yes
+  service:
+    name: elasticsearch
+    state: restarted
+  when: graylog_enable_service|bool
+
+- name: restart graylog-server
+  become: yes
+  service:
+    name: graylog-server
+    state: restarted
+  when: graylog_enable_service|bool

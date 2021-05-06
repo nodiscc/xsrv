@@ -1,0 +1,20 @@
+# rsyslog configuration for graylog logs
+
+
+input(type="imfile"
+      File="/var/log/mongodb/mongod.log"
+      Tag="mongodb:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/elasticsearch/graylog.log"
+      Tag="elasticsearch-graylog:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/graylog-server/server.log"
+      Tag="graylog-server:"
+      Facility="daemon"
+      PersistStateInterval="0")

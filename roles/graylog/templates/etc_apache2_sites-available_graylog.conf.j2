@@ -1,0 +1,37 @@
+<VirtualHost *:80>
+    ServerName {{ graylog_fqdn }}
+    ServerAdmin webmaster@{{ graylog_fqdn }}
+{% if graylog_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if graylog_https_mode == 'letsencrypt' %}
+MDomain {{ graylog_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ graylog_fqdn }}
+  ServerAdmin webmaster@{{ graylog_fqdn }}
+  SSLEngine on
+{% if graylog_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ graylog_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ graylog_fqdn }}.key
+{% endif %}
+    ProxyRequests Off
+
+    <Proxy *>
+        Order deny,allow
+        Allow from all
+    </Proxy>
+
+    <Location />
+        RequestHeader set X-Graylog-Server-URL "https://{{ graylog_fqdn }}/"
+        ProxyPass http://127.0.0.1:9109/
+        ProxyPassReverse http://127.0.0.1:9109/
+    </Location>
+
+</VirtualHost>

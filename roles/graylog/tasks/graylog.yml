@@ -1,0 +1,108 @@
+### GRAYLOG ###
+
+- name: download graylog-4.0-repository deb package
+  get_url:
+    url: "https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb"
+    dest: "/root/graylog-4.0-repository_latest.deb"
+  when: not ansible_check_mode|bool # HEAD requests are forbidden/403
+
+- name: install graylog-4.0-repository package
+  apt:
+    deb: "/root/graylog-4.0-repository_latest.deb"
+    state: present
+    dpkg_options: "force-all"
+  notify: update apt cache
+  ignore_errors: "{{ ansible_check_mode|bool }}"
+
+# update apt cache immediately if graylog-repository package was installed
+- meta: flush_handlers
+
+- name: install graylog-server package
+  apt:
+    pkg: "graylog-server"
+    state: latest
+  ignore_errors: "{{ ansible_check_mode|bool }}"
+
+- name: generate graylog password hash
+  shell: echo -n {{ graylog_root_password }} | sha256sum | cut -d" " -f1
+  register: graylog_root_password_hash
+  changed_when: false
+
+- name: copy graylog server configuration
+  template: "{{ item }}"
+  notify: restart graylog-server
+  ignore_errors: "{{ ansible_check_mode|bool }}"
+  with_items:
+    - src: etc_graylog_server_server.conf.j2
+      dest: /etc/graylog/server/server.conf
+      owner: root
+      group: graylog
+      mode: 0640
+    - src: etc_default_graylog-server.j2
+      dest: /etc/default/graylog-server
+      owner: root
+      group: root
+      mode: 0644
+
+### GRAYLOG SSL/TLS SYSLOG CA CERTIFICATE ###
+
+- name: create directory for graylog certificates/keys
+  file:
+    path: "/etc/graylog/{{ item }}"
+    state: directory
+    owner: root
+    group: graylog
+    mode: 0750
+  with_items:
+    - ssl
+    - ssl/signing
+
+- name: generate openssl CA/server private key
+  openssl_privatekey:
+    path: "/etc/graylog/ssl/graylog-ca.key"
+    owner: root
+    group: graylog
+    mode: 0640
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/graylog/ssl/graylog-ca.csr"
+    privatekey_path: "/etc/graylog/ssl/graylog-ca.key"
+    common_name: "{{ inventory_hostname }}"
+    owner: root
+    group: graylog
+    mode: 0640
+
+- name: generate self-signed openssl CA/server certificate
+  openssl_certificate:
+    path: "/etc/graylog/ssl/graylog-ca.crt"
+    privatekey_path: "/etc/graylog/ssl/graylog-ca.key"
+    csr_path: "/etc/graylog/ssl/graylog-ca.csr"
+    provider: selfsigned
+    owner: root
+    group: graylog
+    mode: 0640
+
+# the certificate will be uploaded to syslog clients (hosts with rsyslog_enable_forwarding: yes)
+- name: download CA/server certificate to the controller
+  fetch:
+    src: /etc/graylog/ssl/graylog-ca.crt
+    dest: "{{ playbook_dir }}/public_keys/{{ inventory_hostname }}-graylog-ca.crt"
+    flat: yes
+
+
+### SERVICE ###
+
+- name: enable/disable start/stop graylog-server service
+  systemd:
+    name: graylog-server
+    enabled: "{{ graylog_enable_service }}"
+    state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode|bool }}"
+
+# - name: configure rsyslog to send logs to local UDP 5140
+#   template:
+#     src: etc_rsyslog.d_local-to-local-udp.conf.j2
+#     dest: /etc/rsyslog.d/local-to-local-udp.conf
+#   notify: restart rsyslog

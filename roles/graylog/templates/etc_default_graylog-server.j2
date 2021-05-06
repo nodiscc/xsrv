@@ -1,0 +1,15 @@
+# Path to the java executable.
+JAVA=/usr/bin/java
+
+# Default Java options for heap and garbage collection.
+GRAYLOG_SERVER_JAVA_OPTS="-Xms{{ graylog_heap_size }} -Xmx{{ graylog_heap_size }} -XX:NewRatio=1 -server -XX:+ResizeTLAB -XX:-OmitStackTraceInFastThrow"
+
+# Avoid endless loop with some TLSv1.3 implementations.
+GRAYLOG_SERVER_JAVA_OPTS="$GRAYLOG_SERVER_JAVA_OPTS -Djdk.tls.acknowledgeCloseNotify=true"
+
+# Pass some extra args to graylog-server. (i.e. "-d" to enable debug mode)
+GRAYLOG_SERVER_ARGS=""
+
+# Program that will be used to wrap the graylog-server command. Useful to
+# support programs like authbind.
+GRAYLOG_COMMAND_WRAPPER=""

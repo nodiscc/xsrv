@@ -1,0 +1,29 @@
+### MONGODB ###
+
+- name: add mongodb repository gpg key
+  apt_key:
+    url: "https://www.mongodb.org/static/pgp/server-4.2.asc"
+    state: present
+
+- name: add mongodb APT repository
+  apt_repository:
+    repo: "deb http://repo.mongodb.org/apt/debian {{ ansible_facts.distribution_release }}/mongodb-org/4.2 main"
+    state: present
+    filename: mongodb
+    update_cache: yes
+
+- name: install mongodb-org package
+  apt:
+    package: mongodb-org
+    state: present
+  ignore_errors: "{{ ansible_check_mode|bool }}"
+
+### SERVICE ###
+
+- name: enable/disable start/stop mongodb service
+  systemd:
+    name: mongod
+    enabled: "{{ graylog_enable_service }}"
+    state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode|bool }}"

@@ -1,0 +1,19 @@
+##### GRAYLOG #####
+# fully qualified domain name of the graylog instance
+graylog_fqdn: "logs.CHANGEME.org"
+# graylog admin username/password, and secret key for hashing passwords
+graylog_root_username: "CHANGEME"
+graylog_root_password: "CHANGEME20"
+graylog_secret_key: "CHANGEME96"
+# HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+graylog_https_mode: selfsigned
+# start/stop the graylog/elasticsearch/mongodb services, enable/disable them on boot (yes/no)
+graylog_enable_service: yes
+# (auto/512m/1g...) JVM memory heap size for graylog
+graylog_heap_size: "1g"
+# (auto/512m/1g...) JVM memory heap size for elasticsearch
+elasticsearch_heap_size: "auto"
+# (auto/seconds) timeout for elasticsearch systemd service startup
+elasticsearch_timeout_start_sec: "auto"

@@ -1,0 +1,58 @@
+### ELASTICSEARCH ###
+
+- name: add elasticsearch APT repository GPG key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+- name: add elasticsearch APT repository
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main"
+    state: present
+    filename: elasticsearch
+    update_cache: yes
+
+- name: install elasticsearch
+  apt:
+    package: elasticsearch-oss
+    state: present
+  ignore_errors: "{{ ansible_check_mode|bool }}"
+
+- name: creat elasticsearch configuration directories # system service override
+  file:
+    state: directory
+    path: /etc/systemd/system/elasticsearch.service.d/
+
+- name: configure elasticsearch
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: "{{ item.group | default('elasticsearch') }}"
+    mode: "{{ item.mode | default('0640') }}"
+  notify:
+    - reload systemd unit files
+    - restart elasticsearch
+  ignore_errors: "{{ ansible_check_mode|bool }}"
+  with_items:
+    - src: etc_elasticsearch_elasticsearch.yml.j2
+      dest: /etc/elasticsearch/elasticsearch.yml
+    - src: etc_elasticsearch_jvm.options.d_heapsize.options.j2
+      dest: /etc/elasticsearch/jvm.options.d/heapsize.options
+    - src: etc_systemd_system_elasticsearch.service.d_timeout-start.conf.j2
+      dest: /etc/systemd/system/elasticsearch.service.d/timeout-start.conf
+      group: root
+      mode: "0644"
+
+# apply configuration changes as soon as possible
+- meta: flush_handlers
+
+### SERVICE ###
+
+- name: enable/disable start/stop elasticsearch service
+  systemd:
+    name: elasticsearch
+    enabled: "{{ graylog_enable_service }}"
+    state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode|bool }}"

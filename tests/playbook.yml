@@ -19,3 +19,4 @@
     - nodiscc.xsrv.openldap
     - nodiscc.xsrv.docker
     - nodiscc.xsrv.rocketchat
+    - nodiscc.xsrv.graylog

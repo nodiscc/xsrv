@@ -68,6 +68,7 @@ ldap.CHANGEME.org # openldap server/LDAP account manager
 ssp.CHANGEME.org # LDAP self-service password
 chat.CHANGEME.org # rocketchat
 media.CHANGEME.org # jellyfin
+logs.CHANGEME.org # graylog
 ```
 
 

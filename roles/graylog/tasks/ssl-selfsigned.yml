@@ -1,0 +1,20 @@
+##### SSL/TLS CERTIFICATES - SELF-SIGNED #####
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/ssl/private/{{ graylog_fqdn }}.key"
+  notify: restart apache
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/ssl/private/{{ graylog_fqdn }}.csr"
+    privatekey_path: "/etc/ssl/private/{{ graylog_fqdn }}.key"
+    common_name: "{{ graylog_fqdn }}"
+
+- name: generate self-signed openssl certificate
+  openssl_certificate:
+    path: "/etc/ssl/certs/{{ graylog_fqdn }}.crt"
+    privatekey_path: "/etc/ssl/private/{{ graylog_fqdn }}.key"
+    csr_path: "/etc/ssl/private/{{ graylog_fqdn }}.csr"
+    provider: selfsigned
+  notify: restart apache

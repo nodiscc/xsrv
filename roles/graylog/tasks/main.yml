@@ -1,0 +1,38 @@
+- include: checks.yml
+  tags:
+    - graylog
+    - checks
+
+- include: requirements.yml
+  become: yes
+  tags: graylog
+
+- include: mongodb.yml
+  become: yes
+  tags: graylog
+
+- include: elasticsearch.yml
+  become: yes
+  tags: graylog
+
+- include: graylog.yml
+  become: yes
+  tags: graylog
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: graylog
+  when: graylog_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags:
+    - graylog
+    - apache
+
+- include: monitoring.yml
+  become: yes
+  tags:
+    - graylog
+    - monitoring
+  when: "'nodiscc.xsrv.monitoring' in role_names"
