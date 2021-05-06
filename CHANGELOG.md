@@ -3,47 +3,75 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - UNRELEASE
+-------------------------------
 
-Upgrade procedure:
-- `xsrv self-upgrade` to upgrade the xsrv script
+#### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script to the latest release
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
-- remove all `vault_` prefixes from variables in vaulted/encrypted host variables, remove all `variable_name: {{ vault_variable_name }}` indirections from plaintext host variables.
+- `xsrv edit-vault`: remove all `vault_` prefixes from encrypted host variables
+- `xsrv edit-host`: remove all variables that are just `variable_name: {{ vault_variable_name }}` indirections
+- (optional) if you had defined custom `netdata_http_checks`, port them to the new `netdata_http_checks`/`netdata_x509_checks` syntax
+- (optional) remove previous default `netdata_modtime_checks` and `netdata_process_checks` from your host variables
+- (optional) `xsrv check` to simulate and review changes
 - `xsrv deploy` to apply changes
 
+**Removed:**
+- default playbook: remove hardcoded `netdata_modtime_checks` and `netdata_process_checks` (roles will automatically configure relevant checks)
+- default playbook/all roles: remove `variable_name: {{vault_variable_name }}` indirections
+- monitoring/netdata: remove ability to configure netdata modules git clone URLs, always clone from upstream. Remove `netdata_*_git_url` variable
+- monitoring/netdata: remove support for `check_x509` parameter in `netdata_httpchecks`
+- monitoring/rsyslog: remove hardcoded, service-specific configuration
 
 **Added:**
-- xsrv: add `xsrv ls` subcommand (list files in the playbooks directory (accepts a path))
-- xsrv: add `xsrv edit-group` subcommand (edit variables for a group of hosts (default 'all'))
-- monitoring/netdata: add `netdata_x509_checks` (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
-- monitoring/netdata: allow roles to install their own HTTP/x509/modtime/port checks under `/etc/netdata/{python,go}.d/$module_name.conf.d/`
-- all roles/monitoring: automatically configure HTTP/x509/modtime checks if the `nodiscc.xsrv.monitoring` role is enabled
-- common: users: allow creation of users without a password (login as/sudo from these user accounts will be denied, login using SSH keys is still possible if the user is in the `ssh` group)
-- common: ssh: lower maximum concurrent unauthenticated connections to 60
-- common: cron: ensure only root can access cron job files and directories
-- openldap: upgrade ldap-account-manager to 7.5
+- add [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) log analyzer role
+- common: firewall: add custom service `graylogtcp5140`
+- common: users: allow creation of `linux_users` without a password (login to these user accounts will be denied, SSH login with authorized keys are still possible if the user is in the `ssh` group)
 - homepage: add favicon
-- all roles: automatically configure log aggregation to syslog, if the `nodiscc.xsrv.monitoring` role is enabled
+- jellyfin/common/apt: add automatic upgrades for jellyfin, enable by default
+- monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in `netdata_http_checks`
+- monitoring/netdata: add `netdata_x509_checks` (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
+- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add `rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port` variables)
+- rocketchat: allow disabling rocketchat/mongodb services (`rocketchat_enable_service: yes/no`)
+- xsrv: add `xsrv edit-group` subcommand (edit group variables - default group: `all`)
+- xsrv: add `xsrv ls` subcommand (list files in the playbooks directory - accepts a path)
+- xsrv: add syntax highlighting to default text editor/pager (nano - requires manual installation of yaml syntax highlighting file), improve display
 
 **Changed:**
-- monitoring/needrestart: automatically restart services that require it after an upgrade by default.`needrestart_autorestart_services: yes` can be removed from your host variables, or set to `no` if you want to disable this behavior
-- removed support  for `check_x509` parameter in `netdata_httpchecks`. Please port any custom x509 checks to the new `netdata_x509_checks` syntax.
-- all roles/remove `{{ variable_name: vault_variable_name }}` indirections, set values that need to be changed to `*CHANGEME*` (roles will not run if default values have not been changed)
-- update documentation
+- apache: forward all local mail from `www-data` to `root` - allows `root` to receive webserver cron jobs output
+- apache/monitoring: disable aggregation of access logs to syslog by default, add variable allowing to enable it (`apache_access_log_to_syslog`)
+- common: cron: ensure only root can access cron job files and directories (CIS 5.1.2 - 5.1.7)
+- common: ssh: lower maximum concurrent unauthenticated connections to 60
+- common/mail: don't overwrite `/etc/aliases`, ensure `root` mail is forwarded to the configured user (set to `ansible_user` by default)
+- docker: speed up role execution - dont't force APT cache update when not necessary
+- gitea: enable API by default (`gitea_enable_api`)
+- monitoring: decrease logcount warning alarm sensitivity, warn when error rate >= 10/min
+- monitoring/all roles: let roles install their own syslog aggregation settings, if the `nodiscc.xsrv.monitoring` role is enabled.
+- monitoring/needrestart: by default, automatically restart services that require it after a security update (`needrestart_autorestart_services: yes`)
+- monitoring/netdata/default playbook: let roles install their own HTTP/x509/modtime/port checks under `/etc/netdata/{python,go}.d/$module_name.conf.d/*.conf`, if the `nodiscc.xsrv.monitoring` role is enabled
+- mumble/checks: ensure that `mumble_welcome_text` is set
+- openldap: upgrade ldap-account-manager to 7.5
+- tools: add Pull Request template, speed up Gitlab CI test suite (prebuild an image with required tools)
 - update ansible tags
-- speed up Gtilab CI test suite (prebuild an image with all requireds tools)
-
-**Removed:**
-- default playbook: remove hardcoded monitoring configuration, `netdata_modtime_checks` and `netdata_process_checks` can be safely removed from your hopst_vars if you did not change the values provided by the default playbook
-- monitoring/netdata: removed ability to configure git clone URLs (`netdata_*_git_url`) for netdata modules, always clone from upstream
-- openldap: remove unused variable `self_service_password_keyphrase` (this can be safely removed from your host variables)
+- update roles metadata, remove coupling/dependencies between roles unless strictly required, make `nodiscc.xsrv.common` role mostly optional
+- xsrv: cleanup/reorder/DRY/refactoring, make `self-upgrade` safer
+- doc: update documentation/formatting, fix manual backup command, fix ssh-copy-id instructions
 
 **Fixed:**
-- common: fix `linux_users` creation for which no `authorized_ssh_keys`/`sudo_nopasswd_commands` are defined
+- common: fix `linux_users` creation when no `authorized_ssh_keys`/`sudo_nopasswd_commands` are defined
+- fix typos
+- nextcloud: fix condition for dependency on postgresql role
+- openldap: fix condition for dependency on apache role
+- remove unused/duplicate/leftover task files
+- rsyslog: fix automatic aggregation fo fail2ban logs to syslog
 - samba: fix default log level
-- tools: Makefile: fix release procedure and ansible-galaxy collection publication
+- samba/rsnapshot/gitea: fix role when runing in 'check' mode, fix idempotence
+- tools: fix release procedure/ansible-galaxy collection publication
+- xsrv: fix inventory update when running `xsrv init-host`
 
 
+-------------------------------
 
 #### [v1.2.2](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.2) - 2021-04-01
 
@@ -63,6 +91,8 @@ Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the lates
 samba: fix nscd default log level, update samba default log level
 
 
+-------------------------------
+
 #### [v1.2.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.0) - 2021-03-27
 
 **Added:**
@@ -71,8 +101,8 @@ samba: fix nscd default log level, update samba default log level
 - nextcloud: improve performance (auto-add missing primary keys/indices in database, convert columns to bigint)
 
 **Removed:**
-- openldap: remove self_service_password_keyphrase variable, unused sice tokens/SMS/question based password resets are disabled
-- common: ssh: cleanup/remove unused MatchGroup rsyncasroot directive
+- openldap: remove `self_service_password_keyphrase` variable (unused since tokens/SMS/question based password resets are disabled)
+- common: ssh: cleanup/remove unused `MatchGroup rsyncasroot` directive
 
 **Changed:**
 - common: sysctl: enable logging of martian packets
@@ -88,6 +118,8 @@ samba: fix nscd default log level, update samba default log level
 - rocketchat: fix port 3001 exposed on 0.0.0.0 instead of localhost-only/firewall bypass
 - gitea: update to v1.13.6
 
+
+-------------------------------
 
 #### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.1.0) - 2021-03-14
 
@@ -109,7 +141,7 @@ samba: fix nscd default log level, update samba default log level
 - jellyfin/backup: add automatic backups (only backup db/metadata/configuration by default, allow enabling media directory backups with `jellyfin_enable_media_backups`)
 - jellyfin: create subdirectories for each library type under the default media directory/jellyfin samba share
 - samba/backup: allow disabling automatic backups of samba shares (`samba_enable_backups`)
-- shaarli/monitoring: agregate data/log.txt to syslog using the imfile module
+- shaarli/monitoring: aggregate data/log.txt to syslog using the imfile module
 
 **Changed:**
 - update documentation (upgrade procedure, example playbook, mirrors, TOC, links, ansible-collection installation, list of all variables, ansible.cfg, sysctl settings...)
@@ -216,7 +248,7 @@ This releases improves usability, portability, standards compliance, separation 
 - netdata: upgrade to latest stable release
 - rsyslog: aggregate all log messages to `/var/log/syslog` by default
 - rsyslog: monitor samba, gitea, mumble-server, openldap, nextcloud, unattended-upgrades and rsnapshot log files with imfile module (when corresponding roles are enabled)
-- rsyslog: make agregation of apache access logs to syslog optional, disable by default
+- rsyslog: make aggregation of apache access logs to syslog optional, disable by default
 - rsyslog: disable aggregation of netdata logs to syslog by default (very noisy, many false-positive ERROR messages)
 - rsyslog: discard apache access logs caused by netdata apche monitoring
 - needrestart: don't auto-restart services by default
