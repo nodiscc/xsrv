@@ -104,6 +104,8 @@ virt-clone --original vm-template --name myclone.example.org --file /path/to/myc
 virsh start myclone.example.org
 ```
 
+Then login to the VM using the console, set its IP address and administrator account.
+
 
 #### Migrating VMs between hypervisors
 
