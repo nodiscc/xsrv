@@ -46,7 +46,7 @@ test_ansible_lint: venv testenv
 	source .venv/bin/activate && \
 	ANSIBLE_COLLECTIONS_PATHS="./" ansible-lint -v test.yml
 
-.PHONY: yamllint # YAML syntax check and linter
+.PHONY: test_yamllint # YAML syntax check and linter
 test_yamllint: venv
 	source .venv/bin/activate && \
 	set -o pipefail && \
