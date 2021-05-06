@@ -1,5 +1,16 @@
 ##### RSYSLOG #####
 
+- name: install rsyslog
+  apt:
+    state: present
+    package:
+      - rsyslog
+      - rsyslog-gnutls # TLS forwarding support
+
+- name: setup keys/certificates for TCP/TLS message forwarding (if forwaring enabled)
+  include_tasks: rsyslog-ssl.yml
+  when: rsyslog_enable_forwarding|bool
+
 - name: configure rsyslog
   template:
     src: etc_rsyslog.d_{{ item }}.conf.j2
@@ -12,6 +23,7 @@
     - 000-discard # discard useless messages
     - 000-singlefile # log all messages to /var/log/syslog
     - 000-imfile # load the imfile (text file input) module used by other roles
+    - 000-forwarding # message forwarding over TCP/TLS, if enabled
     - fail2ban # fail2ban logs aggregation
 
 # DEPRECATED this task will be removed in a future version of the role

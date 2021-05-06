@@ -17,4 +17,5 @@ galaxy_info:
     - graph
     - alerts
     - syslog
+    - rsyslog
 dependencies: []

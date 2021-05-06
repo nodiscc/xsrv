@@ -25,5 +25,13 @@
       - netdata_self_monitoring_enabled == netdata_self_monitoring_enabled|bool
       - netdata_update_every == netdata_update_every|int
       - rsyslog_monitor_netdata == rsyslog_monitor_netdata|bool
+      - rsyslog_enable_forwarding == rsyslog_enable_forwarding|bool
       - setup_rsyslog == setup_rsyslog|bool
       - setup_monitoring_cli_utils == setup_monitoring_cli_utils|bool
+
+- name: check that mandatory variables are correctly defined (syslog forwarding)
+  assert:
+    that:
+      - rsyslog_forward_to_hostname is not search('CHANGEME')
+      - rsyslog_forward_to_port == rsyslog_forward_to_port|int
+  when: rsyslog_enable_forwarding

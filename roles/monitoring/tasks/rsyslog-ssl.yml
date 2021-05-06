@@ -1,0 +1,47 @@
+##### RSYSLOG CLIENT CERTIFICATE GENERATION AND SIGNING #####
+
+- name: create directory for rsyslog certs/keys/CSRs
+  file:
+    state: directory
+    path: /etc/ssl/rsyslog
+    owner: root
+    group: root
+    mode: 0755
+
+# generate a private key and CSR on the syslog client machine
+- name: generate syslog client openssl private key
+  openssl_privatekey:
+    path: "/etc/ssl/rsyslog/rsyslog.key"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart rsyslog
+
+- name: generate syslog client openssl certificate signing request (CSR)
+  openssl_csr:
+    path: "/etc/ssl/rsyslog/rsyslog.csr"
+    privatekey_path: "/etc/ssl/rsyslog/rsyslog.key"
+    common_name: "{{ inventory_hostname }}"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: generate self-signed openssl client certificate
+  openssl_certificate:
+    path: "/etc/ssl/rsyslog/rsyslog.crt"
+    privatekey_path: "/etc/ssl/rsyslog/rsyslog.key"
+    csr_path: "/etc/ssl/rsyslog/rsyslog.csr"
+    provider: selfsigned
+    owner: root
+    group: root
+    mode: 0600
+    force: no
+  notify: restart rsyslog
+
+- name: upload syslog server/CA certificate
+  copy:
+    src: "{{ playbook_dir }}/public_keys/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt"
+    dest: /etc/ssl/rsyslog/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt
+    owner: root
+    group: root
+    mode: 0644

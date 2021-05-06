@@ -5,6 +5,12 @@
 setup_rsyslog: yes
 # aggregate netdata logs to main syslog (default disabled, noisy) (yes/no)
 rsyslog_monitor_netdata: no
+# yes/no: enable forwarding of syslog logs to a syslog server (over TLS/TCP)
+rsyslog_enable_forwarding: no
+# if forwarding is enabled, hostname/port to forward logs to (must be a host with the nodiscc.xrv.graylog role already deployed)
+rsyslog_forward_to_hostname: "my.CHANGEME.org"
+rsyslog_forward_to_port: 5140
+
 
 ### NETDATA MONITORING SYSTEM ###
 # default interval between netdata updates (in seconds)

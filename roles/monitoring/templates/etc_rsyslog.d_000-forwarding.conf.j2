@@ -1,0 +1,38 @@
+{% if rsyslog_enable_forwarding %}
+# Disk-assisted memory message queues:
+# If remote server is unavailable:
+# - keep messages in memory (a couple of hundred messages can be held in memory by default)
+# - if the in-memory queue is full, store messages to disk (spool file)
+# - When the remote server comes back up, send stored messages from disk/memory
+# Disk queues are stored in the $WorkDirectory from rsyslog.conf (default /var/spool/rsyslog)
+# Queue type: dynamically allocated message index
+$ActionQueueType LinkedList
+# Unique name prefix for spool files
+$ActionQueueFileName syslogmemqueue
+# Number of retries if the host is down (-1 = infinite)
+$ActionResumeRetryCount -1
+# Save all memory queues to disk if rsyslog shuts down
+$ActionQueueSaveOnShutdown on
+# Disk space limit for spool files
+$ActionQueueMaxDiskSpace 1g
+# If disk space limit is reached, drop new messages after this delay (ms)
+$ActionQueueTimeoutEnqueue 0
+
+# Message forwarding over TLS/TCP
+# Default to openssl driver
+$DefaultNetstreamDriver gtls
+# Paths to SSL/TLS certificates and keys
+$DefaultNetstreamDriverCAFile /etc/ssl/rsyslog/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt
+$DefaultNetstreamDriverCertFile /etc/ssl/rsyslog/rsyslog.crt
+$DefaultNetstreamDriverKeyFile /etc/ssl/rsyslog/rsyslog.key
+
+# Authentication mode: certificate validation/subject name authentication as described in https://tools.ietf.org/html/draft-ietf-syslog-transport-tls-12
+$ActionSendStreamDriverAuthMode x509/name
+# Common Name for the remote rsyslog server certificate
+$ActionSendStreamDriverPermittedPeer {{ rsyslog_forward_to_hostname }}
+# Enable TLS mode
+$ActionSendStreamDriverMode 1
+
+# Forward everything to remote server over TCP
+*.* @@{{ rsyslog_forward_to_hostname }}:{{ rsyslog_forward_to_port }};RSYSLOG_SyslogProtocol23Format
+{% endif %}
