@@ -67,13 +67,13 @@
     owner: "root"
     group: "{{ item.group }}"
     mode: "{{ item.mode }}"
-    recurse: yes
+    recurse: no
   with_items:
     - { path: "/etc/gitea", group: "gitea", mode: "u=rwX,g=rX" }
     - { path: "{{ gitea_user_home }}/custom", group: "root", mode: "u=rwX" }
     - { path: "{{ gitea_user_home }}/public", group: "root", mode: "u=rwX" }
     - { path: "{{ gitea_user_home }}/data", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: "{{ gitea_user_home }}/indexers", group: "gitea", mode: "u=rwX,g=rwX" } # TODO not idempotent
+    - { path: "{{ gitea_user_home }}/indexers", group: "gitea", mode: "u=rwX,g=rwX" }
     - { path: "{{ gitea_user_home }}/log", group: "gitea", mode: "u=rwX,g=rwX" }
     - { path: '{{ gitea_user_home }}/repos', group: "gitea", mode: "u=rwX,g=rwX" }
 
