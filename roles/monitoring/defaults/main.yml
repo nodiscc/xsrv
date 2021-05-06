@@ -5,8 +5,6 @@
 setup_rsyslog: yes
 # aggregate netdata logs to main syslog (default disabled, noisy) (yes/no)
 rsyslog_monitor_netdata: no
-# aggregate apache access logs to main syslog (default disabled) (yes/no)
-rsyslog_monitor_apache_accesslog: no
 
 ### NETDATA MONITORING SYSTEM ###
 # default interval between netdata updates (in seconds)

@@ -9,6 +9,8 @@ apache_enable_service: yes
 apache_enable_mod_evasive: no
 # e-mail address to register a letsencrypt.org account
 apache_letsencrypt_email: "CHANGEME"
+# yes/no: aggregate apache access logs to syslog (if monitoring role is enabled and setup_rsyslog is true)
+apache_access_log_to_syslog: no
 
 ##### PHP-FPM INTERPRETER #####
 # yes/no: enable/disable the default php-fpm pool (www)
