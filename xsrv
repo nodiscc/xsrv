@@ -95,6 +95,7 @@ function gen_vault_password_file() {
 }
 
 function gen_random_passwords() {
+    # replace CHANGEMEXX values in file $1, where XX is an integer, with random password with length = XX
     host_vault_file="$1"
     if ! command -v pwgen >/dev/null; then
         echo "[xsrv] WARNING: pwgen not installed, unable to generate random passwords for $host_name. Please manually replace any values labeled CHANGEME!"
