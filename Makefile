@@ -71,7 +71,7 @@ test_jinja2: venv
 # - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
-bump_versions:
+bump_versions: doc_md
 ifndef new_tag
 	$(error new_tag is undefined)
 endif
@@ -146,13 +146,19 @@ endif
 	@branch=$$(git rev-parse --abbrev-ref HEAD) && \
 	commit=$$(git rev-parse HEAD) && \
 	curl --silent --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" "https://gitlab.com/api/v4/projects/nodiscc%2Fxsrv/repository/commits/$$commit/statuses?ref=$$branch" | jq  .[].status
-	
+
+.PHONY: doc_md # manual - generate docs/index.md from README.md
+doc_md:
+	cp README.md docs/index.md
+	sed -i 's|(roles/|(https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/|g' docs/index.md
+	sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md
+
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = docs/    # source directory (markdown)
 BUILDDIR      = doc/html  # destination directory (html)
 .PHONY: doc_html # manual - HTML documentation generation (sphinx-build --help)
-doc_html: doc_install_deps
+doc_html: doc_md
 	python3 -m venv .venv/ && \
 	source .venv/bin/activate && \
 	pip3 install sphinx recommonmark sphinx_rtd_theme && \
