@@ -141,7 +141,6 @@ function deploy() {
     ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
 }
 
-
 function edit_playbook() {
     # edit a playbook file
     playbook_file="$playbooks_dir/$playbook_name/playbook.yml"
@@ -179,18 +178,16 @@ function edit_vault() {
 
 function init_playbook() {
     # initialize a new playbook (default roles)
-    echo "[xsrv] INFO: creating playbook $playbook_dir"
     if [[ -e "$playbook_dir" ]]; then
         echo "[xsrv] ERROR: $playbook_dir already exists"; exit 1
     fi
     mkdir "$playbook_dir"
     upgrade_roles
-    echo "[xsrv] INFO: copying default playbook files and directories"
-    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,group_vars/,host_vars/,public_keys/,playbooks/} "$playbook_dir/"
-    rm -r "$playbook_dir/host_vars/my.example.org"
+    echo "[xsrv] INFO: creating files and directories for $playbook_name"
+    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,group_vars/,public_keys/,playbooks/} "$playbook_dir/"
     gen_vault_password_file
     init_host
-    echo "[xsrv] INFO: playbook '$playbook_name' initialized"
+    echo "[xsrv] INFO: playbook $playbook_name initialized in $playbook_dir"
     echo "[xsrv] INFO: run $0 deploy to apply configuration now, or $0 help for more options"
 }
 
@@ -203,31 +200,22 @@ function init_host() {
     if [[ -e "$playbook_dir/host_vars/$host_name" ]]; then
         echo "[xsrv] ERROR: $playbook_dir/host_vars/$host_name already exists"; exit 1
     fi
-    # TODO move inventory creation to init_playbook(), only handle adding a single host here
-    # TODO cleaup
-    if [[ ! -f "$playbook_dir/inventory.yml" ]]; then
-        echo "[xsrv] INFO: creating inventory for $playbook_name"
-        sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/inventory.yml" >> "$playbook_dir/inventory.yml"
-    else
-        echo "[xsrv] INFO: adding host $host_name to the last inventory group of $playbook_name"
-        echo "    $host_name:" >> "$playbook_dir/inventory.yml"
-    fi
-    echo "[xsrv] INFO: adding $host_name host to $playbook_name playbook"
+    echo "[xsrv] INFO: adding $host_name to the last inventory group"
+    echo "    $host_name:" >> "$playbook_dir/inventory.yml"
+    echo "[xsrv] INFO: adding default play for $host_name to the playbook"
     sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/playbook.yml" >> "$playbook_dir/playbook.yml"
-    echo "[xsrv] INFO: creating host vars/vault files for $host_name"
-    host_vars_file="$playbook_dir/host_vars/$host_name/$host_name.yml"
-    host_vault_file="$playbook_dir/host_vars/$host_name/$host_name.vault.yml"
+    echo "[xsrv] INFO: creating default host vars file for $host_name"
     mkdir "$playbook_dir/host_vars/$host_name"
-    sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
-    sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
+    host_vars_file="$playbook_dir/host_vars/$host_name/$host_name.yml"
+    sed "s/my.example.org/$host_name/g" "$playbook_dir/ansible_collections/nodiscc/xsrv/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
+    echo "[xsrv] INFO: creating default vault file for $host_name"
+    host_vault_file="$playbook_dir/host_vars/$host_name/$host_name.vault.yml"
+    sed "s/my.example.org/$host_name/g" "$playbook_dir/ansible_collections/nodiscc/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
     gen_random_passwords "$host_vault_file"
-    read -r -p "[xsrv] Press ENTER to edit the playbook (enable/disable roles)"
     edit_playbook "$playbook_name"
-    read -r -p "[xsrv] Press ENTER to edit host variables (replace any values labeled CHANGEME) "
     edit_host "$playbook_name" "$host_name"
     echo "[xsrv] INFO: Encrypting secrets file"
     (cd "$playbook_dir/" && ansible-vault encrypt "$playbook_dir/host_vars/$host_name/$host_name.vault.yml")
-    read -r -p "[xsrv] Press ENTER to edit secret (vaulted) host variables (replace any values labeled CHANGEME) "
     edit_vault "$playbook_name" "$host_name"
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $playbook_name $host_name"
 }
@@ -242,7 +230,7 @@ function run_shell() {
 }
 
 function _ls() {
-    # list files in the playbooks directory (accepts a path)
+    # list files in the playbooks directory
     path=${1:-}
     ls "$playbooks_dir/$path"
 }
@@ -272,9 +260,9 @@ function upgrade_roles() {
 }
 
 function show_defaults() {
-    # show all role defaults, accepts a role name
-    check_playbook_exists
+    # show all role defaults
     role=${2:-}
+    check_playbook_exists
     if ! hash "${pager%% *}" 2>/dev/null; then
         echo "[xsrv] INFO: pager command '$pager' unavailable, falling back to 'less'"
         pager="less"
@@ -293,7 +281,7 @@ function show_defaults() {
 }
 
 function self_upgrade() {
-    # upgrade the running xsrv scrip in-place
+    # upgrade the running xsrv script in-place
     script_path="$0"
     echo "[xsrv] INFO fetching latest release..."
     if [[ -d "$xsrv_clone_dir/.git" ]]; then
