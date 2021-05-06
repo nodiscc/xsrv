@@ -23,7 +23,6 @@ ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
 
 function check_playbook_exists() {
     # check that the directory for the specified playbook exists, exit with error if not
-    export templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv"
     if [[ ! -e "$playbook_dir" ]]; then
         echo "[xsrv] ERROR: playbook $playbook_dir does not exist"; exit 1;
     fi
@@ -184,7 +183,8 @@ function init_playbook() {
     mkdir "$playbook_dir"
     upgrade_roles
     echo "[xsrv] INFO: creating files and directories for $playbook_name"
-    cp -r "$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv/"{ansible.cfg,README.md,requirements.yml,backups/,group_vars/,public_keys/,playbooks/} "$playbook_dir/"
+    templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
+    cp -rn "$templates_dir"/{ansible.cfg,README.md,requirements.yml,data/,group_vars/,public_keys/,playbooks/} "$playbook_dir/"
     gen_vault_password_file
     init_host
     echo "[xsrv] INFO: playbook $playbook_name initialized in $playbook_dir"
@@ -203,14 +203,15 @@ function init_host() {
     echo "[xsrv] INFO: adding $host_name to the last inventory group"
     echo "    $host_name:" >> "$playbook_dir/inventory.yml"
     echo "[xsrv] INFO: adding default play for $host_name to the playbook"
-    sed "s/my.example.org/$host_name/g" "$templates_dir/playbooks/xsrv/playbook.yml" >> "$playbook_dir/playbook.yml"
+    templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
+    sed "s/my.example.org/$host_name/g" "$templates_dir/playbook.yml" >> "$playbook_dir/playbook.yml"
     echo "[xsrv] INFO: creating default host vars file for $host_name"
-    mkdir "$playbook_dir/host_vars/$host_name"
+    mkdir -p "$playbook_dir/host_vars/$host_name"
     host_vars_file="$playbook_dir/host_vars/$host_name/$host_name.yml"
-    sed "s/my.example.org/$host_name/g" "$playbook_dir/ansible_collections/nodiscc/xsrv/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
+    sed "s/my.example.org/$host_name/g" "$templates_dir/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
     echo "[xsrv] INFO: creating default vault file for $host_name"
     host_vault_file="$playbook_dir/host_vars/$host_name/$host_name.vault.yml"
-    sed "s/my.example.org/$host_name/g" "$playbook_dir/ansible_collections/nodiscc/xsrv/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
+    sed "s/my.example.org/$host_name/g" "$templates_dir/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
     gen_random_passwords "$host_vault_file"
     edit_playbook "$playbook_name"
     edit_host "$playbook_name" "$host_name"
