@@ -1,5 +1,5 @@
+{% if gitea_enable_service %}
 # fail2ban gitea jails
-
 [gitea-auth]
 # gitea login failures
 enabled  = true
@@ -9,3 +9,4 @@ logpath  = {{ gitea_user_home }}/log/gitea.log
 maxretry = 10
 findtime = 3600
 bantime = 900
+{% endif %}
