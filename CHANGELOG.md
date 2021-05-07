@@ -10,48 +10,45 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script to the latest release
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
-- `xsrv edit-vault`: remove all `vault_` prefixes from encrypted host variables
-- `xsrv edit-host`: remove all variables that are just `variable_name: {{ vault_variable_name }}` indirections
-- (optional) if you had defined custom `netdata_http_checks`, port them to the new `netdata_http_checks`/`netdata_x509_checks` syntax
-- (optional) remove previous default `netdata_modtime_checks` and `netdata_process_checks` from your host variables
+- if you had defined custom `netdata_http_checks`, port them to the new [`netdata_http_checks`/`netdata_x509_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml#L64) syntax
+- (optional/cleanup) `xsrv edit-vault`: remove all `vault_` prefixes from encrypted host variables; `xsrv edit-host`: remove all variables that are just `variable_name: {{ vault_variable_name }}` indirections
+- (optional/cleanup) remove previous hardcoded/default `netdata_modtime_checks` and `netdata_process_checks` from your host variables
 - (optional) `xsrv check` to simulate and review changes
 - `xsrv deploy` to apply changes
 
 **Removed:**
 - default playbook: remove hardcoded `netdata_modtime_checks` and `netdata_process_checks` (roles will automatically configure relevant checks)
 - default playbook/all roles: remove `variable_name: {{vault_variable_name }}` indirections
-- monitoring/netdata: remove ability to configure netdata modules git clone URLs, always clone from upstream. Remove `netdata_*_git_url` variable
+- monitoring/netdata: remove ability to configure netdata modules git clone URLs (`netdata_*_git_url` variables), always clone from upstream
 - monitoring/netdata: remove support for `check_x509` parameter in `netdata_httpchecks`
 - monitoring/rsyslog: remove hardcoded, service-specific configuration
 
 **Added:**
 - add [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) log analyzer role
-- common: firewall: add custom service `graylogtcp5140`
-- common: users: allow creation of `linux_users` without a password (login to these user accounts will be denied, SSH login with authorized keys are still possible if the user is in the `ssh` group)
-- homepage: add favicon
+- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add `rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port` variables)
 - jellyfin/common/apt: add automatic upgrades for jellyfin, enable by default
 - monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in `netdata_http_checks`
 - monitoring/netdata: add `netdata_x509_checks` (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
-- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add `rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port` variables)
 - rocketchat: allow disabling rocketchat/mongodb services (`rocketchat_enable_service: yes/no`)
 - xsrv: add `xsrv edit-group` subcommand (edit group variables - default group: `all`)
 - xsrv: add `xsrv ls` subcommand (list files in the playbooks directory - accepts a path)
 - xsrv: add syntax highlighting to default text editor/pager (nano - requires manual installation of yaml syntax highlighting file), improve display
+- homepage: add favicon
 
 **Changed:**
-- apache: forward all local mail from `www-data` to `root` - allows `root` to receive webserver cron jobs output
-- apache/monitoring: disable aggregation of access logs to syslog by default, add variable allowing to enable it (`apache_access_log_to_syslog`)
-- common: cron: ensure only root can access cron job files and directories (CIS 5.1.2 - 5.1.7)
-- common: ssh: lower maximum concurrent unauthenticated connections to 60
-- common/mail: don't overwrite `/etc/aliases`, ensure `root` mail is forwarded to the configured user (set to `ansible_user` by default)
-- docker: speed up role execution - dont't force APT cache update when not necessary
 - gitea: enable API by default (`gitea_enable_api`)
 - monitoring: decrease logcount warning alarm sensitivity, warn when error rate >= 10/min
 - monitoring/all roles: let roles install their own syslog aggregation settings, if the `nodiscc.xsrv.monitoring` role is enabled.
 - monitoring/needrestart: by default, automatically restart services that require it after a security update (`needrestart_autorestart_services: yes`)
 - monitoring/netdata/default playbook: let roles install their own HTTP/x509/modtime/port checks under `/etc/netdata/{python,go}.d/$module_name.conf.d/*.conf`, if the `nodiscc.xsrv.monitoring` role is enabled
-- mumble/checks: ensure that `mumble_welcome_text` is set
+- apache/common/mail: forward all local mail from `www-data` to `root` - allows `root` to receive webserver cron jobs output
+- apache/monitoring: disable aggregation of access logs to syslog by default, add variable allowing to enable it (`apache_access_log_to_syslog`)
+- common: cron: ensure only root can access cron job files and directories (CIS 5.1.2 - 5.1.7)
+- common: ssh: lower maximum concurrent unauthenticated connections to 60
+- common/mail: don't overwrite `/etc/aliases`, ensure `root` mail is forwarded to the configured user (set to `ansible_user` by default)
+- docker: speed up role execution - dont't force APT cache update when not necessary
 - openldap: upgrade ldap-account-manager to 7.5
+- mumble/checks: ensure that `mumble_welcome_text` is set
 - tools: add Pull Request template, speed up Gitlab CI test suite (prebuild an image with required tools)
 - update ansible tags
 - update roles metadata, remove coupling/dependencies between roles unless strictly required, make `nodiscc.xsrv.common` role mostly optional
@@ -60,7 +57,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - common: fix `linux_users` creation when no `authorized_ssh_keys`/`sudo_nopasswd_commands` are defined
-- fix typos
+- common: users: allow creation of `linux_users` without a password (login to these user accounts will be denied, SSH login with authorized keys are still possible if the user is in the `ssh` group)
 - nextcloud: fix condition for dependency on postgresql role
 - openldap: fix condition for dependency on apache role
 - remove unused/duplicate/leftover task files
@@ -69,6 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - samba/rsnapshot/gitea: fix role when runing in 'check' mode, fix idempotence
 - tools: fix release procedure/ansible-galaxy collection publication
 - xsrv: fix inventory update when running `xsrv init-host`
+- fix typos
 
 
 -------------------------------
