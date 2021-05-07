@@ -181,7 +181,7 @@ function init_playbook() {
     if [[ -e "$playbook_dir" ]]; then
         echo "[xsrv] ERROR: $playbook_dir already exists"; exit 1
     fi
-    mkdir "$playbook_dir"
+    mkdir -p "$playbook_dir"
     upgrade_roles
     echo "[xsrv] INFO: creating files and directories for $playbook_name"
     templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
