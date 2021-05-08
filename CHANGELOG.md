@@ -62,7 +62,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: fix condition for dependency on apache role
 - remove unused/duplicate/leftover task files
 - rsyslog: fix automatic aggregation fo fail2ban logs to syslog
-- samba: fix default log level
+- samba: fix error on LDAP domain creation when the LDAP user backend is in use
 - samba/rsnapshot/gitea: fix role when runing in 'check' mode, fix idempotence
 - tools: fix release procedure/ansible-galaxy collection publication
 - xsrv: fix inventory update when running `xsrv init-host`
