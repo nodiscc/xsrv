@@ -2,15 +2,29 @@
 
 ### xsrv/xsrv
 
-- #486 - netdata: remove 'binary' installation mode - `1.3.0`
+- #510 - WIP: add proxmox role:
+- #508 - homepage: switch to grid view - `1.3.0`
+- #507 - all roles/apache: disable reverse proxy rules and redirect to maintenance page when target service is disabled in configuration - `1.4.0`
+- #506 - graylog: add TCP portchecks for mongodb/elasticsearch
+- #505 - graylog: enable automatic upgrades - `1.4.0`
+- #504 - Web-based terminal/console (GoTTY) - `1.3.0`
+- #503 - graylog/rsyslog: authenticate clients using client certificates
+- #502 - xsrv: add list-tags subcommand
+- #500 - docker: drop all capabilities by default, manually whitelist capabilities per-service?
+- #498 - firewall: add GeoIP-based blacklist/whitelist mechanism?
+- #497 - nextcloud: allow enabling 2-factor authentication?
+- #496 - nextcloud: allow enabing antivirus app?
+- #489 - doc: update screencast - `2.0.0`
+- #488 - transmission: add netdata process check - `1.4.0`
+- #487 - jellyfin: add netdata process check - `1.4.0`
 - #485 - monitoring: netdata: disable python.d/go.d/aclk self-monitoring charts
 - #484 - monitoring: make netdata modules installation optional
 - #483 - rocketchat: add automatic httpcheck if the monitoring role is enabled
 - #482 - rocketchat: add automatic netdata process check if the monitoring role is enabled
 - #481 - add netdata portchecks for ssh, apache, mumble, samba, openldap
-- #480 - monitoring: use systemd unit instead of process checks/report failed units? - `1.3.0`
-- #479 - monitoring/all roles: add netdata httpchecks for all web applications - `1.3.0`
+- #480 - monitoring: use systemd unit instead of process checks/report failed units? - `1.4.0`
 - #478 - upgrade to ansible 3.x
+- #476 - postgresql_query fails with 'can't execute an empty query' when a commented out query is present in the script #50 - `1.4.0`
 - #475 - ACME certificate authority?
 - #474 - Benchmark performance of web applications?
 - #473 - Docker daemon hardening/container scanner service?
@@ -20,7 +34,6 @@
 - #466 - netdata: graph lynis warnings/suggestions?
 - #465 - lynis: add detection of SUID files?
 - #464 - monitoring: add (optional) lynis security audit tool and daily scheduled run - `1.4.0`
-- #461 - xsrv init-host breaks inventory formatting when the inventory contains more than one group/is not flat - `1.3.0`
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)
 - #457 - samba: setup dfs_samba4/acl_xattr VFS modules?
 - #456 - Upgrade to Debian 11 - `2.0.0`
@@ -41,7 +54,7 @@
 - #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification?
 - #424 - nextcloud: add templateeditor app?
 - #423 - nextcloud: add documents app?
-- #417 - monitoring: add auto-tests for each enabled vhost - `1.3.0`
+- #413 - nextcloud: database password cannot be changed after initial installation - `1.4.0`
 - #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - `2.0.0`
 - #404 - add xsrv info command - `1.4.0`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900
@@ -59,7 +72,7 @@
 - #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.4.0`
 - #374 - makefile/readthedocs: include roles documentation in generated docs
 - #372 - WIP: shaarli: make hide_timestamp option configurable
-- #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis) - `1.3.0`
+- #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis?) - `2.0.0`
 - #365 - nextcloud: LDAP user backend - `1.4.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
 - #362 - netdata: default apache status monitoring jobs trigger error 403
@@ -97,7 +110,7 @@
 - #303 - firehol: add example NAT loopback/hairpin rule
 - #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.4.0`
 - #293 - WIP: add nginx role
-- #290 - netdata: monitor number of upgradeable APT packages - `1.3.0`
+- #290 - netdata: monitor number of upgradeable APT packages - `1.4.0`
 - #280 - Samba Directory Controller or other Identity Management solution
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
 - #276 - Samba: protect file shares from cryptolockers
@@ -113,7 +126,6 @@
 - #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
 - #265 - apache: provide custom error pages
 - #263 - Netdata: setup registry/streaming - `1.4.0`
-- #261 - WIP: monitoring: add syslog message forwarding support (over SSL/TLS) - `1.3.0`
 - #258 - WIP: add custom info page to netdata
 - #256 - CAS, SAML or Oauth Sigle Sign On (SSO)?
 - #255 - new role: custom homepage generation
@@ -199,7 +211,6 @@
 - #143 - nextcloud: add mindmap app
 - #142 - nextcloud: add files automated tagging app
 - #141 - nextcloud: add fail2ban to documentation
-- #140 - WIP: add graylog role - `1.3.0`
 - #138 - apache: rewrite all 500 502 503 errors to generic 50x.html error page
 - #137 - apache: allow setting up HTTP Basic auth and autoindex for specific directories/URLs/virtualhosts
 - #134 - tt-rss: RuntimeWarning during SQL update task
@@ -290,5 +301,4 @@
 - #8 - Proxmox
 - #6 - cockpit role?
 - #5 - Matrix/Synapse server
-- #4 - Graylog role - `1.3.0`
 - #3 - Mail server?
