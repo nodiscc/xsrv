@@ -161,7 +161,7 @@
 # Distinguished Name (DN) name used by Samba to contact the ldap server when retreiving user account information
 # The ldap admin dn is used in conjunction with the admin dn password stored in the private/secrets.tdb filename
 # See the smbpasswd(8) man page for more information on how to accomplish this.
-   ldap admin dn = cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}
+   ldap admin dn = cn=admin,{{ openldap_base_dn }}
 # where users, groups, and machines mappings are added to the LDAP tree
    ldap user suffix = ou=users
    ldap group suffix = ou=groups

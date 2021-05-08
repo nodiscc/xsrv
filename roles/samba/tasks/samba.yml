@@ -25,8 +25,13 @@
     mode: 0640
 
 - name: set samba LDAP admin dn password (always returns changed)
-  command: "smbpasswd -w {{ openldap_bind_password }}"  # noqa 301
+  command: "smbpasswd -w {{ openldap_admin_password }}"  # noqa 301
   when: samba_passdb_backend == 'ldapsam'
+
+- name: get samba server SID
+  command: net getlocalsid
+  register: samba_localsid
+  changed_when: False
 
 - name: copy samba configuration
   template:
@@ -38,10 +43,6 @@
   notify: reload samba
   tags: samba-config
 
-- name: get samba server SID
-  command: net getlocalsid
-  register: samba_localsid
-  changed_when: False
 
 ##### SHARE DIRECTORIES #####
 
