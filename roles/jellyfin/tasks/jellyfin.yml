@@ -64,13 +64,16 @@
 
 ##### JELLYFIN SAMBA SHARE #####
 
-- name: create mountpoint for jellyfin samba share
+- name: create jellyfin samba share directory and mountpoint
   file:
     state: directory
-    path: /var/lib/jellyfin/sambashare
+    path: "{{ item }}"
     owner: root
     group: sambausers
     mode: 0755
+  with_items:
+    - /var/lib/jellyfin/sambashare
+    - /var/lib/samba/shares/jellyfin
   when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
 
 - name: mount jellyfin samba share to jellyfin directory
