@@ -60,6 +60,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: users: allow creation of `linux_users` without a password (login to these user accounts will be denied, SSH login with authorized keys are still possible if the user is in the `ssh` group)
 - nextcloud: fix condition for dependency on postgresql role
 - openldap: fix condition for dependency on apache role
+- jellyfin: fix automatic samba share creation
 - remove unused/duplicate/leftover task files
 - rsyslog: fix automatic aggregation fo fail2ban logs to syslog
 - samba: fix error on LDAP domain creation when the LDAP user backend is in use
