@@ -13,7 +13,7 @@ This role will install/configure a basic Debian-based server.
 - user accounts, resources, PAM restrictions
 - (optional) creation of a user account for remote backups
 - `sftponly` group: chrooted, SFTP-only accounts
-- outgoing mail (through a SMTP relay)
+- outgoing mail (through a SMTP relay/`msmtp`)
 - basic command-line utilities/diagnostic tools
 - streamlining/Removal of unwanted packages
 - `haveged` random number generator/entropy source for virtual machines
@@ -43,6 +43,8 @@ ansible_become_pass: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+**Sending e-mail** requires an external SMTP server (see `*msmtp*` configuration variables). If you don't already have one you can use a free transactional e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT records for the host), or [use a Gmail account](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access).
 
 
 ## Usage
