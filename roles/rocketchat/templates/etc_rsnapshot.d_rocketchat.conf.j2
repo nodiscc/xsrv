@@ -1,9 +1,13 @@
 # rsnapshot configuration for rocketchat backups
+{% if rocketchat_enable_service %}
 # dump rocketchat mongodb database
 backup_exec	/usr/local/bin/rocketchat-dump-mongodb.sh required
+{% endif %}
 # backup rocketchat mongodb dumps
 backup	/var/lib/rocket.chat/dump	localhost/
+{% if rocketchat_enable_service %}
 # remove temporary dumps
 backup_exec	rm -r /var/lib/rocket.chat/dump/*	required
+{% endif %}
 # backup rocketchat uploads directory
 backup	/var/lib/rocket.chat/uploads	localhost/

@@ -32,7 +32,7 @@
     group: root
     mode: 0644
 
-- name: start rocketchat docker stack
+- name: create/update rocketchat docker stack
   docker_stack:
     name: rocketchat
     prune: yes
