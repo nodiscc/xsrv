@@ -12,3 +12,6 @@ transmission_download_dir: '/var/lib/transmission-daemon/downloads'
 transmission_https_mode: selfsigned
 # yes/no: start/stop the transmission bitorrent client, enable/disable it on boot
 transmission_enable_service: yes
+# yes/no: if the nodiscc.xsrv.backup role is enabled, backup transmission downloads automatically
+# disabled by default as it can consume a lot of disk space
+transmission_backup_downloads: no

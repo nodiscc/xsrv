@@ -9,3 +9,4 @@
       - transmission_https_mode is in ["selfsigned", "letsencrypt"]
       - transmission_password is not search("CHANGEME")
       - transmission_username is not search("CHANGEME")
+      - transmission_backup_downloads == transmission_backup_downloads|bool

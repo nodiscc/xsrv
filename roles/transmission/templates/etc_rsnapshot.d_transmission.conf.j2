@@ -1,5 +1,8 @@
 # rnsapshot configuration for transmission backups
 # backup transmission data directory
+{% if transmission_backup_downloads %}
 backup			{{ transmission_download_dir }}	localhost/
+{% endif %}
 backup			/var/lib/transmission-daemon/.config	localhost/
+backup			/var/lib/transmission-daemon/info	localhost/
 
