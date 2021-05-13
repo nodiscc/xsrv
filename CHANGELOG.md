@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script to the latest release
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - if you had defined custom `netdata_http_checks`, port them to the new [`netdata_http_checks`/`netdata_x509_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml#L64) syntax
-- (optional/cleanup) `xsrv edit-vault`: remove all `vault_` prefixes from encrypted host variables; `xsrv edit-host`: remove all variables that are just `variable_name: {{ vault_variable_name }}` indirections
+- (optional/cleanup) `xsrv edit-vault`: remove all `vault_` prefixes from encrypted host variables; `xsrv edit-host`: remove all variables that are just `variable_name: {{ vault_variable_name }}` references
 - (optional/cleanup) remove previous hardcoded/default `netdata_modtime_checks` and `netdata_process_checks` from your host variables
 - (optional) `xsrv check` to simulate and review changes
 - `xsrv deploy` to apply changes
@@ -37,6 +37,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - gitea: enable API by default (`gitea_enable_api`)
+- openldap: upgrade ldap-account-manager to 7.5
+- homepage: switch to a responsive grid layout
 - monitoring: decrease logcount warning alarm sensitivity, warn when error rate >= 10/min
 - monitoring/all roles: let roles install their own syslog aggregation settings, if the `nodiscc.xsrv.monitoring` role is enabled.
 - monitoring/needrestart: by default, automatically restart services that require it after a security update (`needrestart_autorestart_services: yes`)
@@ -47,7 +49,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh: lower maximum concurrent unauthenticated connections to 60
 - common/mail: don't overwrite `/etc/aliases`, ensure `root` mail is forwarded to the configured user (set to `ansible_user` by default)
 - docker: speed up role execution - dont't force APT cache update when not necessary
-- openldap: upgrade ldap-account-manager to 7.5
 - mumble/checks: ensure that `mumble_welcome_text` is set
 - tools: add Pull Request template, speed up Gitlab CI test suite (prebuild an image with required tools)
 - update ansible tags
@@ -56,19 +57,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - doc: update documentation/formatting, fix manual backup command, fix ssh-copy-id instructions
 
 **Fixed:**
+- jellyfin: fix automatic samba share creation
 - common: fix `linux_users` creation when no `authorized_ssh_keys`/`sudo_nopasswd_commands` are defined
 - common: users: allow creation of `linux_users` without a password (login to these user accounts will be denied, SSH login with authorized keys are still possible if the user is in the `ssh` group)
+- samba: fix error on LDAP domain creation
 - nextcloud: fix condition for dependency on postgresql role
 - openldap: fix condition for dependency on apache role
-- jellyfin: fix automatic samba share creation
-- remove unused/duplicate/leftover task files
 - rsyslog: fix automatic aggregation fo fail2ban logs to syslog
-- samba: fix error on LDAP domain creation when the LDAP user backend is in use
 - samba/rsnapshot/gitea: fix role when runing in 'check' mode, fix idempotence
 - tools: fix release procedure/ansible-galaxy collection publication
-- xsrv: fix inventory update when running `xsrv init-host`
+- xsrv: fix wrong inventory formatting after running `xsrv init-host`
+- remove unused/duplicate/leftover task files
 - fix typos
 
+**Security:**
+- common: fail2ban: fix bantime for ssh jail (~49 days)
 
 -------------------------------
 
