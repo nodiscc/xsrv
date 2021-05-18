@@ -62,6 +62,13 @@
     groups: jellyfin
     append: yes
 
+- name: allow jellyfin to read/write transmission downloads directory
+  user:
+    name: jellyfin
+    group: debian-transmission
+    append: yes
+  when: "'nodiscc.xsrv.transmission' in role_names"
+
 ##### JELLYFIN SAMBA SHARE #####
 
 - name: create jellyfin samba share directory and mountpoint

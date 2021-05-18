@@ -9,13 +9,11 @@
 [![](https://img.shields.io/badge/latest%20release-1.2.2-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 
 
-**Install and manage self-hosted services/applications, on your own server(s).**
+`xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It provides:
 
-`xsrv` provides:
-
-- a comprehensive set of web applications/network services, system/infrastructure tools ([roles](#roles))
-- a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html) based on [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) for easy/fast deployment, configuration and maintenance
-- a basic playbook to [setup a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
+- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install/configure various network services and web applications, system/infrastructure tools
+- an optional [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html) for easy/fast deployment, configuration and maintenance
+- a basic playbook to [get started with a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
 
 
 ## Roles

@@ -39,14 +39,16 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 After initial installation, open https://media.CHANGEME.org in a web browser, and:
 - set a Jellyfin administrator login/password
 - add media libraries pointing to directories where your media files are stored:
-  - `/var/lib/jellyfin/media/{books,mixedcontent,movies,music,musicvideos,photos,shows}`
-  - `/var/lib/jellyfin/sambashare/{books,mixedcontent,movies,music,musicvideos,photos,shows}` if the [samba](../samba) role is enabled
+  - Default media directory: `/var/lib/jellyfin/media/{movies,books,mixedcontent,shows,music,musicvideos,shows,photos}`
+  - Jellyfin samba share (if the [samba](../samba) role is enabled): `/var/lib/jellyfin/sambashare/{movies,books,mixedcontent,shows,music,musicvideos,shows,photos}`
+  - Transmission downloads directory (if the [transmission](../transmission) role is enabled): `/var/lib/transmission-daemon/downloads/{movies,books,mixedcontent,shows,music,musicvideos,shows,photos}`
 
 
 ### Uploading media
 
-- Upload media files over [SFTP](../common#usage) to `~/MEDIA/`
-- If the [samba](../samba) role is enabled and [a list of valid users](defaults/main.yml) is specified, upload files to the `smy://my.CHANGEME.org/jellyfin` samba share
+- Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
+- If the [samba](../samba) role is enabled and [a list of valid users](defaults/main.yml) is specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
+- Download files from bittorrent using [transmission](../transmission)
 
 
 ### Playing media
@@ -58,7 +60,7 @@ You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org
 
 ### Backups
 
-See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore, and the `jellyfin_enable_media_backups` [variable](defaults/main.yml) (automatic backups of the default media directory are disabled by default).
+Automatic backups of the default media directory are disabled by default, see the `jellyfin_enable_media_backups` [variable](defaults/main.yml). See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
 
 
 ### LDAP authentication
@@ -84,7 +86,7 @@ To allow logins to Jellyfin using LDAP user accounts (for example from [openldap
   - LDAP Bind User Password: the value of `{{ openldap_bind_password }}`
   - [x] Enable User Creation
   - Click `Save`
-- Restart the jellyfin server (`xsrv shell` `sudo systemctl restart jellyfin`)
+- Restart the jellyfin server from the `Server > Dashboard` settings page
 
 
 ## Performance
