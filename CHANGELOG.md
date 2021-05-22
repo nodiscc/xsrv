@@ -1,6 +1,6 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.  
+All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
@@ -49,7 +49,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh: lower maximum concurrent unauthenticated connections to 60
 - common/mail: don't overwrite `/etc/aliases`, ensure `root` mail is forwarded to the configured user (set to `ansible_user` by default)
 - docker: speed up role execution - dont't force APT cache update when not necessary
+- transmission: disable automatic backups of the downloads directory by default, add `transmission_backup_downloads: yes/no` variable allowing to enable it
+- rocketchat/monitoring: disable HTTP check when rocketchat service is explicitly disabled in the configuration
 - mumble/checks: ensure that `mumble_welcome_text` is set
+- transmission/jellyfin: allow jellyfin to read/write transmission downloads directory
 - tools: add Pull Request template, speed up Gitlab CI test suite (prebuild an image with required tools)
 - update ansible tags
 - update roles metadata, remove coupling/dependencies between roles unless strictly required, make `nodiscc.xsrv.common` role mostly optional
@@ -64,6 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: fix condition for dependency on postgresql role
 - openldap: fix condition for dependency on apache role
 - rsyslog: fix automatic aggregation fo fail2ban logs to syslog
+- rocketchat: fix automatic backups when the service is disabled
 - samba/rsnapshot/gitea: fix role when runing in 'check' mode, fix idempotence
 - tools: fix release procedure/ansible-galaxy collection publication
 - xsrv: fix wrong inventory formatting after running `xsrv init-host`
@@ -150,7 +154,7 @@ samba: fix nscd default log level, update samba default log level
 - openldap: upgrade ldap-account-manager to v7.4 (https://www.ldap-account-manager.org/lamcms/changelog)
 - openldap: prevent LDAP lookups for local user accounts
 - openldap: decrease log verbosity
-- gitea: upgrade to 1.13.3 - https://github.com/go-gitea/gitea/releases 
+- gitea: upgrade to 1.13.3 - https://github.com/go-gitea/gitea/releases
 - nextcloud: upgrade to 20.0.8 - https://nextcloud.com/changelog/
 
 **Fixed:**
@@ -584,7 +588,7 @@ make deploy
 **docker role:**
  - add docker role (install and configure Docker container platform)
  - add ability to configure a docker swarm orchestrator (default to initialize a new swarm)
- 
+
 **homepage role:**
  - add a role to generate a basic webserver homepage listing URLs/commands to access deployed services
  - automatic apache virtualhost configuration and let's encrypt/self-signed certificate generation
@@ -596,7 +600,7 @@ make deploy
 
 **openldap role:**
  - add a role to install openldap server and optionally ldap-account-manager
- - preconfigure base DN, users and groups OUs, 
+ - preconfigure base DN, users and groups OUs,
  - add rsnapshot backup configuration
  - add apache configuration/host for ldap-account-managaer, add let's encrypt/self-signed certificate generation tasks
  - make ldap-account-manager configuration read-only (must be configured through ansible)
