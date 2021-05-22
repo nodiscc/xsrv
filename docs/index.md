@@ -10,9 +10,8 @@
 
 
 `xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It provides:
-
 - [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install/configure various network services and web applications, system/infrastructure tools
-- an optional [command-line tool](usage.md) for easy/fast deployment, configuration and maintenance
+- an optional [command-line tool](usage.md)/wrapper for common operations, easy/fast deployment, configuration and maintenance
 - a basic playbook to [get started with a single server](installation/first-deployment.md) in a few minutes
 
 

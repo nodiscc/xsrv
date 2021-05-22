@@ -5,7 +5,7 @@
 ```bash
 # generate a SSH key pair if you don't have one
 ssh-keygen -b 4096
-# authorize your SSH key on the remote user account (replace 'deploy' with the user you created suring server preparation)
+# authorize your SSH key on the remote user account (replace 'deploy' with the user you created during server preparation)
 ssh-copy-id deploy@my.CHANGEME.org
 # create a new playbook, enable desired roles (uncomment them), set required variables
 xsrv init-playbook
