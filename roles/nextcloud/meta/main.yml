@@ -26,7 +26,7 @@ galaxy_info:
     - drive
     - web
 dependencies:
-  - nodiscc.xsrv.common
+  # - nodiscc.xsrv.common # optional
   # - nodiscc.xsrv.backup # optional
   # - nodiscc.xsrv.monitoring # optional
   - nodiscc.xsrv.apache

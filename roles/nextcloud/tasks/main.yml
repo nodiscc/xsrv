@@ -32,6 +32,22 @@
     - nextcloud
     - apache
 
+- include: backups.yml
+  become: yes
+  tags:
+    - nextcloud
+    - backup
+  when: "'nodiscc.xsrv.backup' in role_names"
+
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - nextcloud
+    - backup
+  when:
+    - "'nodiscc.xsrv.common' in role_names"
+    - setup_fail2ban|bool
+
 - include: monitoring.yml
   become: yes
   tags:

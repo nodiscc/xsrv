@@ -24,35 +24,6 @@
       - ffmpeg
       - acl
 
-### FAIL2BAN ###
-
-- name: copy nextcloud fail2ban jail config
-  template:
-    src: etc_fail2ban_jail.d_nextcloud.conf.j2
-    dest: /etc/fail2ban/jail.d/nextcloud.conf
-    mode: 0600
-  tags: fail2ban
-  notify: reload fail2ban
-
-- name: copy fail2ban nextcloud-auth filter
-  template:
-    src: etc_fail2ban_filter.d_nextcloud-auth.conf.j2
-    dest: /etc/fail2ban/filter.d/nextcloud-auth.conf
-    mode: 0600
-  tags: fail2ban
-  notify: reload fail2ban
-
-### BACKUPS ###
-
-- name: copy rsnapshot configuration for nextcloud backups
-  template:
-    src: etc_rsnapshot.d_nextcloud.conf.j2
-    dest: /etc/rsnapshot.d/nextcloud.conf
-    mode: 0600
-  when: '"nodiscc.xsrv.backup" in role_names'
-  notify: check rsnapshot configuration
-
-
 ### GET/SET FACTS ###
 
 - name: check if nextcloud installation directory exists
