@@ -15,4 +15,3 @@
     mode: 0600
   tags: fail2ban
   notify: reload fail2ban
-
