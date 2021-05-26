@@ -1,3 +1,5 @@
+# xsrv
+
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
@@ -9,10 +11,10 @@
 [![](https://img.shields.io/badge/latest%20release-1.2.2-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 
 
-`xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It provides:
-- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install/configure various network services and web applications, system/infrastructure tools
-- an optional [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html)/wrapper for common operations, easy/fast deployment, configuration and maintenance
-- a basic playbook to [get started with a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
+`xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It uses [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) and provides:
+- [roles](#roles) to install/configure various network services, web applications, system and infrastructure management tools
+- a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html) for common operations, easy/fast deployment, configuration and maintenance
+- a playbook template to [get started with a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
 
 
 ## Roles
@@ -39,7 +41,7 @@
 - [mumble](roles/mumble) - low-latency voice-over-IP (VoIP) server
 - [rocketchat](roles/rocketchat) - realtime web chat/communication platform
 - [jellyfin](roles/jellyfin) - media System that puts you in control of managing and streaming your media
-- [homepage](roles/homepage) - simple homepage/dashhoard for your services
+- [homepage](roles/homepage) - simple homepage/dashboard for your services
 
 
 ## Quick start
@@ -56,6 +58,12 @@ xsrv init-playbook
 
 # deploy your first server
 xsrv deploy
+
+# change the configuration, add hosts or roles...
+xsrv edit-inventory
+xsrv edit-playbook
+xsrv edit-host
+xsrv edit-vault
 ```
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
