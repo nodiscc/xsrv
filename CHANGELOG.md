@@ -37,7 +37,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - gitea: enable API by default (`gitea_enable_api`)
+- gitea: upgrade gitea to 1.14.0
 - openldap: upgrade ldap-account-manager to 7.5
+- nextcloud: upgrade nextcloud to 21.0.2
 - homepage: switch to a responsive grid layout
 - monitoring: decrease logcount warning alarm sensitivity, warn when error rate >= 10/min
 - monitoring/all roles: let roles install their own syslog aggregation settings, if the `nodiscc.xsrv.monitoring` role is enabled.
