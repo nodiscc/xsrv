@@ -9,7 +9,7 @@
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 [![](https://img.shields.io/badge/latest%20release-1.2.2-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
-
+[![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 `xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It uses [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) and provides:
 - [roles](#roles) to install/configure various network services, web applications, system and infrastructure management tools
@@ -101,7 +101,6 @@ Or include any of the roles in your own ansible playbooks. See [Using as ansible
 
 ## Documentation
 
-- **[Documentation](https://xsrv.readthedocs.io)**
 - [Installation](installation.md)
 - [Server preparation](installation/server-preparation.md)
 - [Controller preparation](installation/controller-preparation.md)
