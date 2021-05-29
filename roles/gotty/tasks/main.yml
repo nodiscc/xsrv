@@ -1,0 +1,24 @@
+- include: checks.yml
+  tags: gotty
+
+- include: gotty.yml
+  become: yes
+  tags: gotty
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags: gotty
+  when: gotty_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags:
+    - gotty
+    - apache
+
+- include: monitoring.yml
+  become: yes
+  tags:
+    - gotty
+    - monitoring
+  when: '"nodiscc.xsrv.monitoring" in role_names'

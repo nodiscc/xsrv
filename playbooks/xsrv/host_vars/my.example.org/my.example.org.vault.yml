@@ -70,3 +70,6 @@ openldap_bind_password: "CHANGEME30"
 graylog_root_username: "{{ xsrv_admin_username }}"
 graylog_root_password: "{{ xsrv_admin_password }}"
 graylog_secret_key: "CHANGEME96"
+
+#### GOTTY ####
+gotty_fqdn: "tty.CHANGEME.org"

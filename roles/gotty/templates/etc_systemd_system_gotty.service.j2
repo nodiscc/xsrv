@@ -1,0 +1,18 @@
+# Systemd unit file for gotty
+# https://github.com/go-gotty/gotty/blob/master/contrib/systemd/gotty.service
+[Unit]
+Description=gotty - share your terminal as a web application
+After=syslog.target
+After=network.target
+
+[Service]
+RestartSec=5s
+Type=simple
+User={{ gotty_run_username }}
+Group={{ gotty_run_username }}
+WorkingDirectory=~
+ExecStart=/usr/local/bin/gotty --config /etc/gotty/gotty.conf  "{{ gotty_run_command }}"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

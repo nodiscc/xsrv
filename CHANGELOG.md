@@ -18,13 +18,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - default playbook: remove hardcoded `netdata_modtime_checks` and `netdata_process_checks` (roles will automatically configure relevant checks)
-- default playbook/all roles: remove `variable_name: {{vault_variable_name }}` indirections
+- default playbook/all roles: remove `variable_name: {{ vault_variable_name }}` indirections/references
 - monitoring/netdata: remove ability to configure netdata modules git clone URLs (`netdata_*_git_url` variables), always clone from upstream
 - monitoring/netdata: remove support for `check_x509` parameter in `netdata_httpchecks`
 - monitoring/rsyslog: remove hardcoded, service-specific configuration
 
 **Added:**
 - add [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) log analyzer role
+- add [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) role
 - monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add `rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port` variables)
 - jellyfin/common/apt: add automatic upgrades for jellyfin, enable by default
 - monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in `netdata_http_checks`

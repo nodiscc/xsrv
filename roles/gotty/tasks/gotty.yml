@@ -1,0 +1,102 @@
+##### PACKAGES #####
+
+##### DOWNLOADS #####
+
+- name: download gotty binary
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { url: "https://github.com/sorenisanerd/gotty/releases/download/v{{ gotty_version }}/gotty_v{{ gotty_version }}_linux_amd64.tar.gz",
+        dest: "/root/gotty_v{{ gotty_version }}_linux_amd64.tar.gz" }
+    - { url: "https://github.com/sorenisanerd/gotty/releases/download/v{{ gotty_version }}/SHA256SUMS",
+        dest: "/root/gotty-SHA256SUMS" }
+
+# TODO CHECK SHA256SUMS
+
+- name: create gotty zip extraction directory
+  file:
+    path: /root/gotty-unpack
+    state: directory
+    mode: 0750
+
+- name: extract gotty tarball
+  unarchive:
+    src: "/root/gotty_v{{ gotty_version }}_linux_amd64.tar.gz"
+    dest: "/root/gotty-unpack"
+    remote_src: yes
+    mode: u=rwX
+  diff: no
+
+##### USER #####
+
+##### FILES/PERMISSIONS #####
+
+- name: copy gotty binary
+  copy:
+    src: "/root/gotty-unpack/gotty"
+    dest: "/usr/local/bin/gotty"
+    mode: 0755
+    remote_src: yes
+    owner: root
+    group: root
+  notify: restart gotty
+  when: not ansible_check_mode
+
+- name: create gotty configuration directory
+  file:
+    state: directory
+    path: /etc/gotty
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy gotty configuration file
+  template:
+    src: 'etc_gotty_gotty.conf.j2'
+    dest: '/etc/gotty/gotty.conf'
+    owner: root
+    group: "{{ gotty_run_username }}"
+    mode: 0640
+  notify: restart gotty
+
+- name: install gotty systemd service/unit file
+  template:
+    src: "etc_systemd_system_gotty.service.j2"
+    dest: "/etc/systemd/system/gotty.service"
+    mode: 0644
+  notify:
+    - reload systemd unit files
+    - restart gotty
+
+- name: apply gotty configuration (flush handlers)
+  meta: flush_handlers
+
+###### FAIL2BAN ############
+
+# todo
+# - name: copy gotty fail2ban jail config
+#   template:
+#     src: etc_fail2ban_jail.d_gotty.conf.j2
+#     dest: /etc/fail2ban/jail.d/gotty.conf
+#     mode: 0600
+#   tags: fail2ban
+#   notify: reload fail2ban
+
+# - name: copy fail2ban gotty-auth filter
+#   template:
+#     src: etc_fail2ban_filter.d_gotty-auth.conf.j2
+#     dest: /etc/fail2ban/filter.d/gotty-auth.conf
+#     mode: 0600
+#   tags: fail2ban
+#   notify: reload fail2ban
+
+##### SERVICE #####
+
+- name: enable/disable start/stop gotty service
+  systemd:
+    name: gotty
+    enabled: "{{ gotty_enable_service }}"
+    state: "{{ 'started' if gotty_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode|bool }}"

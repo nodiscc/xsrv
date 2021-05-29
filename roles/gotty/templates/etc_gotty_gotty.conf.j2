@@ -1,0 +1,9 @@
+// https://github.com/sorenisanerd/gotty/blob/master/.gotty
+address = "{{ gotty_listen_address }}"
+{{ 'permit_write = true' if gotty_permit_write }}
+credential = "{{ gotty_auth_username }}:{{ gotty_auth_password }}"
+port = 3004
+{{ 'reconnect = true' if gotty_reconnect }}
+reconnect_time = {{ gotty_reconnect_time }}
+close_timeout = {{ gotty_close_timeout }}
+timeout = {{ gotty_input_timeout }}

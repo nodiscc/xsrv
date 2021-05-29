@@ -1,0 +1,11 @@
+- name: restart gotty
+  service:
+    name: gotty
+    state: restarted
+    enabled: yes
+  become: yes
+  when: gotty_enable_service
+
+- name: reload systemd unit files
+  become: yes
+  systemd: daemon_reload=yes

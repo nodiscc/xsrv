@@ -19,9 +19,7 @@
 
 ## Roles
 
-**System components/infrastucture/middleware**
-
-- [common](roles/common) - common system components
+- [common](roles/common) - base system setup and hardening
 - [backup](roles/backup) - incremental backup service
 - [monitoring](roles/monitoring) - monitoring, alerting and logging system
 - [apache](roles/apache) - web server and PHP interpreter
@@ -29,9 +27,6 @@
 - [openldap](roles/openldap) - LDAP directory server
 - [docker](roles/docker) - Docker container platform
 - [graylog](roles/graylog) - log management, capture and analysis platform
-
-**End-user applications/services**
-
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization/groupware/"private cloud" service
 - [tt_rss](roles/tt_rss) - RSS feed reader
 - [samba](roles/samba) - cross-platform file and printer sharing service (SMB/CIFS)
@@ -42,6 +37,7 @@
 - [rocketchat](roles/rocketchat) - realtime web chat/communication platform
 - [jellyfin](roles/jellyfin) - media System that puts you in control of managing and streaming your media
 - [homepage](roles/homepage) - simple homepage/dashboard for your services
+- [gotty](roles/gotty) - access a server terminal as a web application
 
 
 ## Quick start
@@ -76,16 +72,18 @@ Or include any of the roles in your own ansible playbooks. See [Using as ansible
 [![](https://i.imgur.com/v9BQYpN.png)](roles/monitoring)
 [![](https://i.imgur.com/PPVIb6V.png)](roles/nextcloud)
 [![](https://i.imgur.com/UoKs3x1.png)](roles/tt_rss)
+
 [![](https://i.imgur.com/gsoh2Mj.png)](roles/shaarli)
 [![](https://i.imgur.com/Rks90zV.png)](roles/gitea)
 [![](https://i.imgur.com/7nJ6cMN.png)](roles/transmission)
+
 [![](https://i.imgur.com/lHgDbDC.png)](roles/mumble)
 [![](https://i.imgur.com/PRE7fvn.png)](roles/openldap)
 [![](https://i.imgur.com/WUdwbAX.png)](roles/rocketchat)
-[![](https://i.imgur.com/KDJZuFO.png)](roles/homepage)
-[![](https://i.imgur.com/Fg8uRjL.png)](roles/jellyfin)
-[![](https://i.imgur.com/6Zu7YKym.png)](roles/graylog)
 
+[![](https://i.imgur.com/Q8LYoEY.png)](roles/homepage)
+[![](https://i.imgur.com/Fg8uRjL.png)](roles/jellyfin)
+[![](https://i.imgur.com/eGCL45L.jpg)](roles/graylog)
 
 ## Source code
 

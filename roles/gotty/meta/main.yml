@@ -1,0 +1,19 @@
+galaxy_info:
+  role_name: gotty
+  author: nodiscc
+  description: goTTY - share your terminal as a web application 
+  license: GPL-3.0
+  min_ansible_version: 2.10
+  platforms:
+    - name: Debian
+      versions:
+        - 10
+  galaxy_tags:
+    - shell
+    - terminal
+    - web
+    - command-line
+dependencies:
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring
+  - nodiscc.xsrv.apache

@@ -1,0 +1,30 @@
+##### GOTTY #####
+# fully qualified domain name of the gotty instance
+gotty_fqdn: "tty.CHANGEME.org"
+# username/password for gotty HTTP basic authentication
+gotty_auth_username: "CHANGEME"
+gotty_auth_password: "CHANGEME"
+# linux username to run the gotty process as
+gotty_run_username: "CHANGEME"
+# command to run as soon as a client connects
+gotty_run_command: "bash"
+# (yes/no) allow users to write to the terminal
+gotty_permit_write: no
+# HTTPS and SSL/TLS certificate mode for the gotty webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+gotty_https_mode: selfsigned
+# start/stop the gotty service, enable/disable it on boot (yes/no)
+gotty_enable_service: yes
+# (seconds) time to wait before killing chil processes after client is disconnected
+gotty_close_timeout: 60
+# (yes/no) enable reconnection
+gotty_reconnect: no
+# (seconds) time to reconnect
+gotty_reconnect_time: 10
+# (seconds) timeout seconds for waiting a client
+gotty_input_timeout: 0
+# IP address to listen on
+gotty_listen_address: "0.0.0.0"
+# gotty release/version number (https://github.com/sorenisanerd/gotty/releases, without leading v)
+gotty_version: "1.2.0"

@@ -1,0 +1,11 @@
+{% if gotty_enable_service %}
+-   name: gotty
+    timeout: 1
+    tls_skip_verify: true
+    update_every: 10
+    url: https://127.0.0.1
+    headers:
+      Host: "{{ gotty_fqdn }}"
+    status_accepted:
+      - 401
+{% endif %}

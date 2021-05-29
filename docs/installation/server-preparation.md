@@ -69,6 +69,7 @@ ssp.CHANGEME.org # LDAP self-service password
 chat.CHANGEME.org # rocketchat
 media.CHANGEME.org # jellyfin
 logs.CHANGEME.org # graylog
+tty.CHANGEME.org # gotty
 ```
 
 

@@ -44,6 +44,12 @@ openldap_base_dn: "dc=CHANGEME,dc=org"
 ##### GRAYLOG #####
 graylog_fqdn: "logs.CHANGEME.org"
 
+#### GOTTY ####
+gotty_auth_username: "CHANGEME"
+gotty_auth_password: "CHANGEME"
+gotty_run_username: "CHANGEME"
+
+
 ##### FIREWALL/FAIL2BAN #####
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml
 firehol_alias_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"

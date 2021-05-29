@@ -96,6 +96,9 @@
             .samba :hover{
                 border-color: #B08F6C;
             }
+            .gotty :hover{
+                border-color: #58FE00;
+            }
         </style>
     </head>
 
@@ -200,6 +203,15 @@
                 <a class="netdata" href="https://{{ inventory_hostname }}:19999/">
                     <div class="content">
                         <p><img src="res/netdata.png"/><br/> Netdata</p>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if 'nodiscc.xsrv.gotty' in role_names %}
+            <div class="col-1-5 mobile-col-1-1">
+                <a class="gotty" href="https://{{ gotty_fqdn }}/">
+                    <div class="content">
+                        <p><img src="res/gotty.png"/><br/> GoTTY</p>
                     </div>
                 </a>
             </div>
