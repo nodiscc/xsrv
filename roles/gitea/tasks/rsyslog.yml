@@ -1,8 +1,0 @@
-- name: configure rsyslog to agregate gitea logs to syslog
-  template:
-    src: etc_rsyslog.d_gitea.conf.j2
-    dest: /etc/rsyslog.d/gitea.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart rsyslog
