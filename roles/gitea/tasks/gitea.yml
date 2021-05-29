@@ -126,7 +126,7 @@
 - name: create gitea admin user
   become: yes
   become_user: gitea
-  command: gitea admin create-user
+  command: gitea admin user create
            --username "{{ gitea_admin_username }}"
            --password "{{ gitea_admin_password }}"
            --email "{{ gitea_admin_email }}"
