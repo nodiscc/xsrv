@@ -48,6 +48,7 @@
     - { src: 'etc_apache2_conf-available_mod-md.conf.j2', dest: '/etc/apache2/conf-available/mod-md.conf' }
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf' }
     - { src: 'etc_php_7.3_fpm_pool.d_www.conf.j2', dest: '/etc/php/7.3/fpm/pool.d/www.conf' }
+    - { src: 'etc_php_7.3_cli_conf.d_20-apcu.ini.j2', dest: 'etc_php_7.3_cli_conf.d_20-apcu.ini' }
   notify:
     - reload apache
     - restart php-fpm

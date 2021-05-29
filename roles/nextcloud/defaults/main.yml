@@ -37,6 +37,7 @@ nextcloud_allow_tls12: true
 #   state: enable/disable
 #   app: nextcloud app name
 nextcloud_apps:
+  - { state: "disable", app: "accessibility" }
   - { state: "disable", app: "encryption" }
   - { state: "disable", app: "files_antivirus" }
   - { state: "disable", app: "files_versions" }
