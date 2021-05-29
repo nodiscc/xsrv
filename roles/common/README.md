@@ -1,33 +1,34 @@
 # xsrv.common
 
-This role will install/configure a basic Debian-based server. 
+This role will install/configure a basic Debian-based server:
 
 - hostname
 - DNS resolution (`/etc/resolv.conf`)
 - sysctl/kernel settings: networking, swap/memory management, security
 - APT package management, automatic daily security updates
 - NTP date/time synchronization
-- SSH server configuration/hardening
-- firewall (`firehol`)
-- Intrusion/bruteforce detention and prevention system (`fail2ban`)
 - user accounts, resources, PAM restrictions
-- (optional) creation of a user account for remote backups
-- `sftponly` group: chrooted, SFTP-only accounts
-- outgoing mail (through a SMTP relay/`msmtp`)
+- SSH server
+ - `sftponly` group (SFTP-only accounts in SSH `chroot`)
+- firewall (`firehol`)
+- intrusion/bruteforce detection and prevention system (`fail2ban`)
+- outgoing mail through an external SMTP relay (`msmtp`)
 - basic command-line utilities/diagnostic tools
-- streamlining/Removal of unwanted packages
+- streamlining/removal of unwanted packages
 - `haveged` random number generator/entropy source for virtual machines
 
-All configuration tasks are optional.
+All sections can be disabled/enabled independently
+
 
 ## Requirements/dependencies/example playbook
 
 - Ansible 2.10 or higher on the controller
 - Debian 9/10 on the target host
-- The hostname in th inventory resolves to the host FQDN (using DNS records, a `hosts` file entry), or the `ansible_host` variable points to the server IP
-- SSH server enabled, reachable from the controller
-- User account on the host, member of the `sudo` group
-- SSH key authorized on the remote `ansible_user` user account (`ssh-copy-id user@host`)
+- The inventory hostname resolves to the host using DNS records, a `hosts` file entry, or the `ansible_host: $HOST_IP_ADDRESS` host variable is set
+- SSH server on the host, reachable from the controller on `ansible_ssh_port` (default `22`)
+- `python3 sudo aptitude` packages installed on the host
+- User account on the host, member of the `sudo` and `ssh` groups
+- Controller SSH key authorized on this user account (`ssh-copy-id myusername@my.CHANGEME.org`)
 
 
 ```yaml
@@ -44,7 +45,7 @@ ansible_become_pass: "CHANGEME"
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-**Sending e-mail** requires an external SMTP server (see `*msmtp*` configuration variables). If you don't already have one you can use a free transactional e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT records for the host), or [use a Gmail account](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access).
+**Sending e-mail** requires an external SMTP server (see `*msmtp*` configuration variables) and is disabled by default. If you don't have a SMTP server, you can use a free transactional e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT records for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other e-mail account.
 
 
 ## Usage

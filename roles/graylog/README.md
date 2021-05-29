@@ -5,7 +5,7 @@ This role will install and configure [Graylog](https://github.com/Graylog2/grayl
 _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-sspl) used by Graylog and MongoDB is [not recognized as an Open-Source license](https://opensource.org/node/1099) by the Open-Source Initiative. Make sure you understand the license before offering a publicly available Graylog-as-a-service instance._
 
 [![](https://i.imgur.com/tC4G9mQm.png)](https://i.imgur.com/tC4G9mQ.png)
-[![](https://i.imgur.com/6Zu7YKym.png)](https://i.imgur.com/6Zu7YKy.png)
+[![](https://i.imgur.com/eGCL45L.jpg)](https://i.imgur.com/6Zu7YKy.png)
 
 
 ## Requirements/dependencies/example playbook
