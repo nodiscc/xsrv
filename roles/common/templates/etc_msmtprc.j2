@@ -6,8 +6,8 @@
 account default
 
 # TCP port to use
-# Usually 25 (SMTP) or 587 (submission)
-port 587
+# Usually 25 (SMTP), 465 (SMTPS) or 587 (submission)
+port {{ msmtp_port }}
 
 # The SMTP smarthost.
 host {{ msmtp_host }}

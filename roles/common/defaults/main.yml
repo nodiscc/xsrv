@@ -93,7 +93,7 @@ firehol_networks:
       # - { name: "imaps", dst: "any" } # nextcloud mail
       # - { name: "imaps585", dst: "any" } # nextcloud mail
       # - { name: "imap", dst: "any" } # nextcloud mail
-      # - { name: "smtps", dst: "any" } # nextcloud mail
+      # - { name: "smtps", dst: "any" } # nextcloud mail, outgoing mail/port 465
       # - { name: "smtp", dst: "any" } # nextcloud mail
       # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
       # - { name: "all", dst: "any" } # allow ALL outgoing connections
@@ -170,10 +170,11 @@ linux_users: []
 ansible_user_allow_sudo_rsync_nopasswd: yes
 
 ### OUTGOING MAIL ###
-# install outgoing system mail client/local MTA (yes/no) - the system will not be able to send status/monitoring e-mails unless this is enabled
+# (yes/no) install outgoing system mail (msmtp)
 setup_msmtp: no
-# System mail relay (SMTP server) to use, and authentication username/password - if msmtp is enabled, the following values must be set
+# Mail relay (SMTP server) address/port/username/password, if msmtp is enabled
 msmtp_host: "CHANGEME"
+msmtp_port: 587
 msmtp_username: "CHANGEME"
 msmtp_password: "CHANGEME"
 # Mail address to send all local mail to
