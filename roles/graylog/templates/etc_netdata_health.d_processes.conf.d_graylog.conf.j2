@@ -1,3 +1,4 @@
+{% if graylog_enable_service %}
  alarm: mongodb_processes
     on: apps.processes
   calc: $nosql
@@ -15,3 +16,4 @@
  units: processes
   info: java (graylog/elasticearch) running processes
     to: sysadmin
+{% endif %}

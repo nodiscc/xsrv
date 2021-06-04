@@ -1,3 +1,4 @@
+{% if graylog_enable_service %}
 -   name: graylog
     timeout: 1
     tls_skip_verify: true
@@ -5,3 +6,4 @@
     url: https://127.0.0.1
     headers:
       Host: "{{ graylog_fqdn }}"
+{% endif %}
