@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: upgrade gitea to 1.14.2
 - openldap: upgrade ldap-account-manager to 7.5
 - nextcloud: upgrade nextcloud to 21.0.2
+- rocketchat: update rocket.chat to 3.15.0
 - homepage: switch to a responsive grid layout
 - monitoring: decrease logcount warning alarm sensitivity, warn when error rate >= 10/min
 - monitoring/all roles: let roles install their own syslog aggregation settings, if the `nodiscc.xsrv.monitoring` role is enabled.
