@@ -35,10 +35,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: add `xsrv ls` subcommand (list files in the playbooks directory - accepts a path)
 - xsrv: add syntax highlighting to default text editor/pager (nano - requires manual installation of yaml syntax highlighting file), improve display
 - homepage: add favicon
+- common: msmtp: make outgoing mail port configurable (`msmtp_port`, default `587`)
 
 **Changed:**
 - gitea: enable API by default (`gitea_enable_api`)
-- gitea: upgrade gitea to 1.14.0
+- gitea: upgrade gitea to 1.14.2
 - openldap: upgrade ldap-account-manager to 7.5
 - nextcloud: upgrade nextcloud to 21.0.2
 - homepage: switch to a responsive grid layout
@@ -62,12 +63,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: cleanup/reorder/DRY/refactoring, make `self-upgrade` safer
 - doc: update documentation/formatting, fix manual backup command, fix ssh-copy-id instructions
 
+
 **Fixed:**
 - jellyfin: fix automatic samba share creation
 - common: fix `linux_users` creation when no `authorized_ssh_keys`/`sudo_nopasswd_commands` are defined
 - common: users: allow creation of `linux_users` without a password (login to these user accounts will be denied, SSH login with authorized keys are still possible if the user is in the `ssh` group)
 - samba: fix error on LDAP domain creation
 - nextcloud: fix condition for dependency on postgresql role
+- nextcloud: fix `allowed memory size exhausted` during nextcloud upgrades
 - openldap: fix condition for dependency on apache role
 - rsyslog: fix automatic aggregation fo fail2ban logs to syslog
 - rocketchat: fix automatic backups when the service is disabled
