@@ -1,13 +1,13 @@
 ##### TRANSMISSION - APACHE CONFIGURATION #####
 
-- name: enable apache2 modules
+- name: enable required apache modules
   command: a2enmod {{ item }}
   with_items:
     - proxy
     - proxy_http
   args:
     creates: /etc/apache2/mods-enabled/{{ item }}.load
-  notify: reload apache
+  notify: restart apache
 
 - name: install requirements for ansible htpasswd module
   apt:
@@ -26,7 +26,7 @@
     mode: 0640
   notify: reload apache
 
-- name: copy apache2 virtualhost configuration
+- name: copy apache virtualhost configuration
   template:
     src: etc_apache2_sites-available_transmission.conf.j2
     dest: /etc/apache2/sites-available/transmission.conf
@@ -39,5 +39,5 @@
     creates: "/etc/apache2/sites-enabled/transmission.conf"
   notify: reload apache
 
-- name: ensure apache configuration is applied (flush handlers)
+- name: apply apache configuration (flush handlers)
   meta: flush_handlers
