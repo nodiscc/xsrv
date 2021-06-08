@@ -8,7 +8,7 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.2.2-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.3.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 `xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It provides:
