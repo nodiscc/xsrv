@@ -2,12 +2,17 @@
 
 ### xsrv/xsrv
 
+- #522 - openldap: performance optimizations?
+- #521 - nextcloud: add whiteboard integration app - `1.4.0`
+- #518 - Mumble web interface - `1.4.0`
+- #517 - Custom MOTD?
+- #516 - TICK stack? (Telegraf/InfluxDB/Chronograf/Kapacitor)
+- #514 - doc: gitea: mirroring method should not try to mirror internal/pull requests refs
+- #513 - doc: screenshots slideshow on main page instead of thumbnails?
 - #510 - WIP: add proxmox role:
-- #508 - homepage: switch to grid view - `1.3.0`
 - #507 - all roles/apache: disable reverse proxy rules and redirect to maintenance page when target service is disabled in configuration - `1.4.0`
 - #506 - graylog: add TCP portchecks for mongodb/elasticsearch
 - #505 - graylog: enable automatic upgrades - `1.4.0`
-- #504 - Web-based terminal/console (GoTTY) - `1.3.0`
 - #503 - graylog/rsyslog: authenticate clients using client certificates
 - #502 - xsrv: add list-tags subcommand
 - #500 - docker: drop all capabilities by default, manually whitelist capabilities per-service?
@@ -19,7 +24,6 @@
 - #487 - jellyfin: add netdata process check - `1.4.0`
 - #485 - monitoring: netdata: disable python.d/go.d/aclk self-monitoring charts
 - #484 - monitoring: make netdata modules installation optional
-- #483 - rocketchat: add automatic httpcheck if the monitoring role is enabled
 - #482 - rocketchat: add automatic netdata process check if the monitoring role is enabled
 - #481 - add netdata portchecks for ssh, apache, mumble, samba, openldap
 - #480 - monitoring: use systemd unit instead of process checks/report failed units? - `1.4.0`
@@ -93,7 +97,7 @@
 - #341 - nextcloud: warning on settings/admin/overview: Some app directories are owned by a different user than the web server one
 - #339 - WIP: speed up ansible execution with mitogen
 - #337 - nextcloud: maps: enable OSRM demo servers by default
-- #324 - Jitsi Meet role
+- #324 - Jitsi Meet role - `1.4.0`
 - #323 - prometheus role?
 - #322 - Frontail role?
 - #321 - ELK stack?
@@ -152,7 +156,6 @@
 - #215 - xsrv-homepage: add ability to set a custom title/message/footer
 - #214 - mysql: improve MySQL/Mariadb server hardening
 - #212 - apache: PHP OPCache tuning?
-- #211 - xsrv-homepage: add mumble server address/port
 - #210 - xsrv-homepage: add more (optional) features to homepage
 - #208 - netdata: graph/alert on logwatch warnings
 - #207 - netdata: make ping checks configurable

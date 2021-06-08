@@ -1,22 +1,16 @@
 # Controller preparation
 
 A **controller** machine will be used for deployment and remote administration.
-The controller can be any laptop/desktop PC, dedicated server, VM or container where a SSH client, python and bash are available.
 
-The controller will connect to your [hosts](server-preparation.md) using SSH and perform configuration tasks remotely.
-
-On the controller:
-
+The controller can be any laptop/desktop PC, dedicated server, VM or container where a SSH client, python and bash are available. It will connect to your [hosts](server-preparation.md) using SSH and perform configuration tasks remotely. On the controller:
 
 ```bash
 # install requirements (example for debian-based systems)
 sudo apt update && sudo apt install git bash python3-venv python3-pip ssh pwgen
 # on macOS: sudo easy_install pip; sudo pip install ansible
-
 # clone the repository
 git clone https://gitlab.com/nodiscc/xsrv
-
-# (optional) install the command line tool to your $PATH (optional)
+# (optional) install the command line tool to your $PATH
 sudo cp xsrv/xsrv /usr/local/bin/
 ```
 

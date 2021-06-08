@@ -105,14 +105,12 @@ or your private DNS server ([pfSense](../advanced/pfsense.md) is a good start to
 From the server console, login as `root` and run:
 
 ```bash
-# Install requirements for remote admin/ansible access
-apt --no-install-recommends install python aptitude sudo
-
-# Create a user account for remote administration (replace 'deploy' with the desired account name)
-useradd  --create-home --groups ssh,sudo --shell /bin/bash deploy
-# Set the sudo password for this user account
+# install requirements for remote admin/ansible access
+apt update && apt --no-install-recommends install python aptitude sudo openssh-server
+# create a user account for remote administration (replace 'deploy' with the desired account name)
+useradd --create-home --groups ssh,sudo --shell /bin/bash deploy
+# set the sudo password for this user account
 passwd deploy
-
 # lock the console
 logout
 ```

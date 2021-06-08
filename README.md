@@ -11,10 +11,12 @@
 [![](https://img.shields.io/badge/latest%20release-1.2.2-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
-`xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It uses [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) and provides:
+`xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It provides:
 - [roles](#roles) to install/configure various network services, web applications, system and infrastructure management tools
 - a [command-line tool](https://xsrv.readthedocs.io/en/latest/usage.html) for common operations, easy/fast deployment, configuration and maintenance
-- a playbook template to [get started with a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
+- a playbook [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv) to [get started with a single server](https://xsrv.readthedocs.io/en/latest/installation/first-deployment.html) in a few minutes
+
+`xsrv` uses [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29), a [configuration management](https://en.wikipedia.org/wiki/Software_configuration_management) system for reproducible and automated deployments/change management. You can use the provided command-tool to manage your setup, or [include the roles in your own ansible playbooks](https://xsrv.readthedocs.io/en/latest/usage.html#using-as-ansible-collection).
 
 
 ## Roles
@@ -42,19 +44,27 @@
 
 ## Quick start
 
+[Prepare the remote server](https://xsrv.readthedocs.io/en/latest/installation/server-preparation.html), then, on the controller:
+
 ```bash
+# install requirements (example for debian-based systems)
+sudo apt update && sudo apt install git bash python3-venv python3-pip ssh pwgen
 # clone the repository
 git clone https://gitlab.com/nodiscc/xsrv
-
-# (optional) install the program to your $PATH
+# (optional) install the command line tool to your $PATH
 sudo cp xsrv/xsrv /usr/local/bin/
-
+# authorize your SSH key on the remote user account
+ssh-copy-id deploy@my.CHANGEME.org
 # initialize the playbook, provide basic settings and roles to enable
 xsrv init-playbook
-
 # deploy your first server
 xsrv deploy
+```
 
+[![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
+
+
+```bash
 # change the configuration, add hosts or roles...
 xsrv edit-inventory
 xsrv edit-playbook
@@ -62,9 +72,7 @@ xsrv edit-host
 xsrv edit-vault
 ```
 
-[![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
-
-Or include any of the roles in your own ansible playbooks. See [Using as ansible collection](https://xsrv.readthedocs.io/en/latest/usage.html#using-as-ansible-collection).
+See the full [usage documentation](https://xsrv.readthedocs.io/en/latest/usage.html).
 
 
 ## Screenshots

@@ -93,16 +93,9 @@ virt-install --name mynew.example.org --os-type linux --ram 1024M --vcpu 2 --dis
 
 #### Cloning VMs
 
-It is common practice to setup a virtual machine with the bare minimum components required to access it over SSH,
-then use [configuration management](configuration-management.md) to manage all other software components.
+It is common practice to setup a virtual machine with the bare minimum components required to access it over SSH, then use [configuration management](configuration-management.md) to manage all other software components. Once the template VM has been set up ([server-preparation.md](server-preparation.md)), clone it to a new VM:
 
-Once the template VM has been set up ([server-preparation.md](server-preparation.md)), clone it to a new VM:
 
-```bash
-virt-clone --original vm-template --name myclone.example.org --file /path/to/myclone.example.org.qcow2
-# start the new VM
-virsh start myclone.example.org
-```
 
 Then login to the VM using the console, set its IP address and administrator account.
 
