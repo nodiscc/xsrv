@@ -15,12 +15,13 @@
 
 ##### OUTGOING MAIL/SMARTHOST #####
 
-- name: install msmtp SMTP client as system MTA
+- name: install msmtp SMTP client/MTA
   apt:
     package:
       - msmtp
       - msmtp-mta
     state: present
+    default_release: buster-backports
   when: setup_msmtp|bool
 
 - name: copy msmtp configuration
