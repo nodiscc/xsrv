@@ -172,19 +172,22 @@ ansible_user_allow_sudo_rsync_nopasswd: yes
 ### OUTGOING MAIL ###
 # (yes/no) install outgoing system mail (msmtp)
 setup_msmtp: no
-# Mail relay (SMTP server) address/port/username/password, if msmtp is enabled
+# mail relay (SMTP server) address/port/username/password
 msmtp_host: "CHANGEME"
 msmtp_port: 587
 msmtp_username: "CHANGEME"
 msmtp_password: "CHANGEME"
-# yes/no: use STARTTLS
-msmtp_starttls: yes
-# Mail address to send all local mail to
+# mail address to redirect all local mail to
 msmtp_admin_email: "CHANGEME"
-# (optional) TLS certificate fingerprint of the SMTP server - use this to accept a self-signed certificate - get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
-# msmtp_host_fingerprint: '11:22:33:44:55:66:77:88:99:00:13:37:AA:BB:CC:DD:EE:FF:AD:C2'
 # the user to forward all local root mail to, if msmtp setup is disabled
 mail_root_alias: "{{ ansible_user }}"
+# (auto/admin@CHANGEME.org) sender address for outgoing mail
+msmtp_from: 'auto'
+# yes/no: use STARTTLS
+msmtp_starttls: yes
+# (optional) TLS certificate fingerprint of the SMTP server. use this to accept a self-signed certificate. get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
+# msmtp_host_fingerprint: '11:22:33:44:55:66:77:88:99:00:13:37:AA:BB:CC:DD:EE:FF:AD:C2'
+
 
 ### PACKAGES ###
 # install a basic set of interactive command-line diagnostic/file manipulation/shell utilities (yes/no) - see tasks/50utilities.yml for the full list

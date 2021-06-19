@@ -12,9 +12,11 @@ port {{ msmtp_port }}
 # The SMTP smarthost.
 host {{ msmtp_host }}
 
-# Construct envelope-from addresses of the form "user@oursite.example".
-auto_from on
-maildomain {{ inventory_hostname }}
+{% if msmtp_from == 'auto' %}
+from %U@%H
+{% else %}
+from {{ msmtp_from }}
+{% endif %}
 
 # Enable authentication
 auth on
