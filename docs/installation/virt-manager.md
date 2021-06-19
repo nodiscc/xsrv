@@ -20,7 +20,7 @@ Advantages of virtualization include:
 libvirt/virt-manager can be installed on a dedicated machine, or on any GNU/Linux desktop computer.
 
 
-#### Installation
+## Installation
 
 On Debian-based systems:
 
@@ -35,7 +35,7 @@ sudo usermod -G $USER libvirt
 ```
 
 
-#### Virtual machine creation
+## VM creation
 
 Run virt-manager from the main menu and click `New virtual machine`
 
@@ -72,7 +72,54 @@ virt-install --name mynew.example.org --os-type linux --ram 1024M --vcpu 2 --dis
 ```
 
 
-#### Managing resources
+## Cloning VMs
+
+It is common practice to setup a virtual machine with the bare minimum components required to access it over SSH, then use [configuration management](configuration-management.md) to manage all other software components. Once the template VM has been set up ([server-preparation.md](server-preparation.md)), clone it to a new VM and update its IP address, and administrator/root passwords. You can do this manually from `virt-manager` and the VM console, or using basic scripting:
+
+```bash
+TEMPLATE_NAME=debian10-base
+TEMPLATE_IP=10.0.0.200
+TEMPLATE_ADMIN_USER=USERNAME
+TEMPLATE_ADMIN_PASSWORD=PASSWORD
+VM_NAME=newvm.CHANGEME.org
+VM_IP=10.0.0.205
+VM_ADMIN_PASSWORD=NEWPASSWORD
+VM_ROOT_PASSWORD=NEWROOTPASSWORD
+# clone the template to a new VM
+virt-clone --original "$TEMPLATE_NAME" --name "$VM_NAME" --file "/path/to/$VM_NAME.qcow2"
+# start the new VM
+virsh start "$VM_NAME"
+# authorize your SSH key on the new VM
+echo "$TEMPLATE_ADMIN_PASSWORD" | sshpass ssh-copy-id -i ~/.ssh/id_rsa "$ADMIN_USER"@"$TEMPLATE_IP"
+# update the IP address on the new VM
+echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo sed -i "s/$TEMPLATE_IP/$VM_IP/g" /etc/network/interfaces
+echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo systemctl restart networking
+# update the admin user and root passwords on the new VM
+echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$VM_IP" "echo -e '$VM_ADMIN_PASSWORD\n$VM_ADMIN_PASSWORD' | sudo passwd $TEMPLATE_ADMIN_USER"
+echo "$VM_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$VM_IP" "echo -e '$VM_ROOT_PASSWORD\n$VM_ROOT_PASSWORD' | sudo passwd root"
+```
+
+Your new VM is ready to use.
+
+
+## Migrating VMs between hypervisors
+
+```bash
+# dump the VM xml definition
+srvadmin@hv1:~$ virsh dumpxml my.virtual.machine > my.virtual.machine.xml
+# copy the VM XML definition to the destination host
+srvadmin@hv1:~$ rsync -avP my.virtual.machine.xml srvadmin@hv2.example.org:my.virtual.machine.xml
+# copy the VM disks to the destination host (same directory)
+srvadmin@hv1:~$ rsync -avP /var/lib/libvirt/images/my.virtual.machine.qcow2 srvadmin@hv2.example.org:/var/lib/libvirt/images/my.virtual.machine.qcow2
+# ssh to the destination host
+srvadmin@hv1:~$ ssh srvadmin@hv2.example.org
+# create a VM from the XML definition
+srvadmin@hv2:~$ virsh define my.virtual.machine.xml
+# start the VM
+srvadmin@hv2:~$ virsh start my.virtual.machine.xml
+```
+
+## Managing resources
 
 **CPU:** TODO
 
@@ -91,33 +138,8 @@ virt-install --name mynew.example.org --os-type linux --ram 1024M --vcpu 2 --dis
 **Bridged:** TODO
 
 
-#### Cloning VMs
 
-It is common practice to setup a virtual machine with the bare minimum components required to access it over SSH, then use [configuration management](configuration-management.md) to manage all other software components. Once the template VM has been set up ([server-preparation.md](server-preparation.md)), clone it to a new VM:
-
-
-
-Then login to the VM using the console, set its IP address and administrator account.
-
-
-#### Migrating VMs between hypervisors
-
-```bash
-# dump the VM xml definition
-srvadmin@hv1:~$ virsh dumpxml my.virtual.machine > my.virtual.machine.xml
-# copy the VM XML definition to the destination host
-srvadmin@hv1:~$ rsync -avP my.virtual.machine.xml srvadmin@hv2.example.org:my.virtual.machine.xml
-# copy the VM disks to the destination host (same directory)
-srvadmin@hv1:~$ rsync -avP /var/lib/libvirt/images/my.virtual.machine.qcow2 srvadmin@hv2.example.org:/var/lib/libvirt/images/my.virtual.machine.qcow2
-# ssh to the destination host
-srvadmin@hv1:~$ ssh srvadmin@hv2.example.org
-# create a VM from the XML definition
-srvadmin@hv2:~$ virsh define my.virtual.machine.xml
-# start the VM
-srvadmin@hv2:~$ virsh start my.virtual.machine.xml
-```
-
-#### Alternatives
+## Alternatives
 
 [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), a dedicated hypervisor manager based on Debian/KVM
 
