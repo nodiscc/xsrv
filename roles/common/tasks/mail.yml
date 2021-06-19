@@ -15,19 +15,21 @@
 
 ##### OUTGOING MAIL/SMARTHOST #####
 
-- name: copy msmtp configuration
-  template:
-    src: "etc_msmtprc.j2"
-    dest: "/etc/msmtprc"
-    mode: 0600
-  when: setup_msmtp|bool
-
 - name: install msmtp SMTP client as system MTA
   apt:
     package:
       - msmtp
       - msmtp-mta
     state: present
+  when: setup_msmtp|bool
+
+- name: copy msmtp configuration
+  template:
+    src: "etc_msmtprc.j2"
+    dest: "/etc/msmtprc"
+    mode: 0640
+    owner: root
+    group: msmtp
   when: setup_msmtp|bool
 
 - name: forward all root mail to msmtp_admin_email
