@@ -177,6 +177,8 @@ msmtp_host: "CHANGEME"
 msmtp_port: 587
 msmtp_username: "CHANGEME"
 msmtp_password: "CHANGEME"
+# yes/no: use STARTTLS
+msmtp_starttls: yes
 # Mail address to send all local mail to
 msmtp_admin_email: "CHANGEME"
 # (optional) TLS certificate fingerprint of the SMTP server - use this to accept a self-signed certificate - get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
