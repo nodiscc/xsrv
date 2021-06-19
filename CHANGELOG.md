@@ -5,6 +5,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
 
+#### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles in your playbook to the latest release
+- `xsrv deploy` to apply changes
+
+**Fixed:**
+- common: msmtp: fix msmtp unable to read /etc/aliases (`/etc/aliases: line 1: invalid address`)
+- common: msmtp: fix unreadable /etc/msmtprc configuration for un privileged users
+- nextcloud/apache/php: fix path to PHP APCU configuration file (really fix `cannot allocate memory` errors on nextcloud upgrades)
+
+**Added:**
+- common: msmtp: allow disabling STARTTLS (`msmtp_starttls: yes/no`)
+
+**Changed:**
+- nextcloud: upgrade to 20.0.10
+- update documentation (virt-manager/aadd VM provisioning procedure)
+
+
 #### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - 2021-06-08
 
 **Upgrade procedure:**
