@@ -59,22 +59,14 @@ See the included [rsnapshot configuration](templates/etc_rsnapshot.tt-rss.conf.j
 To restore backups:
 
 ```bash
-# remove the file indicating the database is populated
-sudo rm /etc/ansible/facts.d/tt_rss.fact
-
-# remove cached database credentials
-sudo rm /root/tt_rss_admin_user_info.sql
-
-# remove the application
-sudo rm -r /var/www/my.example.com/tt-rss/
-
-# remove the database and user
-sudo -u postgres psql -c "DROP DATABASE ttrss; DROP USER ttrss;"
-
-# from the ansible controller, reinstall the application, eg. ansible-playbook playbook.yml
-
-# restore database backups
-sudo -u postgres pg_restore /var/backups/rsnapshot/daily.0/localhost/var/backups/postgresql/ttrss.sql
+# copy the last dump somewhere readable by the postgres user
+sudo cp /var/backups/rsnapshot/daily.0/localhost/var/backups/postgresql/ttrss.sql /tmp/
+# create a plaintext sql dump from the custom-formatted dump
+sudo -u postgres pg_restore --clean --create /tmp/ttrss.sql > /tmp/ttrss.txt.sql
+# restore the plaintext sql dump
+sudo -u postgres psql --echo-errors --file /tmp/ttrss.txt.sql
+# remove temporary files
+sudo rm /tmp/ttrss.sql /tmp/ttrss.sql.txt
 ```
 
 

@@ -115,7 +115,21 @@
     db: "{{ tt_rss_db_name }}"
     query: UPDATE ttrss_users SET login = '{{ tt_rss_user }}', pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}', salt     = '{{ tt_rss_password_salt }}' WHERE id = 1; # noqa 204
 
-### FINALIZE ###
+- name: load/upgrade tt-rss database schema
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php {{ tt_rss_install_dir }}/update.php --update-schema=force-yes
+  register: tt_rss_db_upgrade
+  changed_when: "'Database schema is already at latest version.' not in tt_rss_db_upgrade.stdout"
+
+- name: create tt-rss installed fact file
+  template:
+    src: etc_ansible_facts.d_tt_rss.fact.j2
+    dest: /etc/ansible/facts.d/tt_rss.fact
+    mode: 0644
+
+
+### SCHEDULING ###
 
 - name: setup tt-rss feed update cron job
   cron:
@@ -125,15 +139,3 @@
     hour: '*'
     minute: '0'
     job: '/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet'
-
-- name: create ansible local facts directory
-  file:
-    path: "/etc/ansible/facts.d"
-    state: directory
-    mode: 0755
-
-- name: create tt-rss installed fact file
-  template:
-    src: etc_ansible_facts.d_tt_rss.fact.j2
-    dest: /etc/ansible/facts.d/tt_rss.fact
-    mode: 0644
