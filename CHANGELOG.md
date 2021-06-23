@@ -15,13 +15,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: msmtp: fix msmtp unable to read /etc/aliases (`/etc/aliases: line 1: invalid address`)
 - common: msmtp: fix unreadable /etc/msmtprc configuration for un privileged users
 - nextcloud/apache/php: fix path to PHP APCU configuration file (really fix `cannot allocate memory` errors on nextcloud upgrades)
+- tt_rss: fix/automate initial database population and schema upgrades, update documentation
 
 **Added:**
 - common: msmtp: allow disabling STARTTLS (`msmtp_starttls: yes/no`)
+- backup: rsnapshot: don't update timestamp file after weekly/monthly backups (monitoring only measures time since the last successful **daily** backup)
 
 **Changed:**
 - nextcloud: upgrade to 20.0.10
-- update documentation (virt-manager/aadd VM provisioning procedure)
+- update documentation (virt-manager/add basic VM provisioning procedure)
+
 
 
 #### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - 2021-06-08
