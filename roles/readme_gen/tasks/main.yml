@@ -1,0 +1,3 @@
+- name: include readme generation tasks
+  import_tasks: readme_gen.yml
+  tags: readme_gen

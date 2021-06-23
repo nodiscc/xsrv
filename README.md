@@ -44,6 +44,7 @@ This project provides:
 - [openldap](roles/openldap) - LDAP directory server and web management tools
 - [postgresql](roles/postgresql) - PostgreSQL database engine
 - [proxmox](roles/proxmox) - Proxmox VE hypervisor configuration
+- [readme_gen](roles/readme_gen) - add an inventory of hosts and services to the project's README.md
 - [rocketchat](roles/rocketchat) - Instant messaging & communication platform
 - [samba](roles/samba) - Cross-platform file sharing server
 - [shaarli](roles/shaarli) - Bookmarking & link sharing web application
@@ -67,6 +68,7 @@ This project provides:
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
 [![](https://i.imgur.com/g0jUMXE.jpg)](roles/jitsi)
+[![](https://i.imgur.com/v3lHJGx.png)](roles/readme_gen)
 
 ## Source code
 

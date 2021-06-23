@@ -136,7 +136,9 @@ Encryption successful
 xsrv deploy
 ```
 
-**Your services are now ready to use.** Access your services and web applications from domain names configured earlier. The [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) role provides useful links and information at `homepage_fqdn`. <!--TODO The autoreadme role will generate a section with useful information in your project's README.md.-->
+**Your services are now ready to use.** Access your services and web applications from domain names configured earlier. You can get a human-readable list of installed services, their URLs and other useful information using:
+- the [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) role
+- the [readme_gen](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) role
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq?speed=2&theme=monokai&autoplay=true)
 

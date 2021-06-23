@@ -7,13 +7,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.11.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.0) - UNRELEASED
 
 **Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **nextcloud:** if you changed [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml) from its default value, remove `files_videoplayer` from the list (`xsrv edit-host/edit-group`)
 - **jitsi:** set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
 - **rss_bridge:** if you are using the [`rss_bridge`](https://gitlab.com/nodiscc/xsrv/-/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. Thins can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
 - **gitea:** if `gitea_mailer_enabled` is set to `yes`, add the new [`gitea_mail_protocol/gitea_mail_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml) settings to your host configuration.
+- **readme_gen:** if you want to use the [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command, make sure `fact_caching_timeout` is commented out in your project's `ansible.cfg` (`xsrv edit-cfg`) - or at least set to a large value like `86400`, and that your project's `README.md` contains the markers `<!-- BEGIN/END AUTOMATICALLY GENERATED CONTENT - README_GEN ROLE -->`
+
 
 **Added:**
+- add [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command and role - generate a markdown inventory in the project's README.md
 - netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 - common: make the timeout for interactive bash sessions configurable ([`bash_timeout`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml), default 900s)
