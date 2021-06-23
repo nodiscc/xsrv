@@ -105,7 +105,7 @@
     hour: '0'
     minute: '30'
     weekday: '0'
-    job: 'rsnapshot weekly >/dev/null && touch /var/log/rsnapshot_last_success'
+    job: 'rsnapshot weekly >/dev/null'
 
 - name: setup monthly backup cron job
   cron:
@@ -115,4 +115,4 @@
     hour: '0'
     minute: '1'
     day: '1'
-    job: 'rsnapshot monthly >/dev/null && touch /var/log/rsnapshot_last_success'
+    job: 'rsnapshot monthly >/dev/null'
