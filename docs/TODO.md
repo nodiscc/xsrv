@@ -2,6 +2,8 @@
 
 ### xsrv/xsrv
 
+- #525 - Use ansible_facts to reference facts
+- #523 - openldap: upgrade self-service-password to 1.4.3 - `1.4.0`
 - #522 - openldap: performance optimizations?
 - #521 - nextcloud: add whiteboard integration app - `1.4.0`
 - #518 - Mumble web interface - `1.4.0`
@@ -27,7 +29,7 @@
 - #482 - rocketchat: add automatic netdata process check if the monitoring role is enabled
 - #481 - add netdata portchecks for ssh, apache, mumble, samba, openldap
 - #480 - monitoring: use systemd unit instead of process checks/report failed units? - `1.4.0`
-- #478 - upgrade to ansible 3.x
+- #478 - upgrade to ansible 4.x - `1.4.0`
 - #476 - postgresql_query fails with 'can't execute an empty query' when a commented out query is present in the script #50 - `1.4.0`
 - #475 - ACME certificate authority?
 - #474 - Benchmark performance of web applications?
@@ -64,7 +66,7 @@
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900
 - #393 - Samba: performance improvements (socket options)?
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed
-- #389 - WIP: xsrv: add show-ssh-config subcommand (display ssh config to use in ~/.ssh/config)
+- #389 - WIP: add show-ssh-config subcommand
 - #388 - WIP: add libvirt role
 - #387 - jellyfin: monitor logs with rsyslog - `1.4.0`
 - #384 - jellyfin: allow/document uploading files from nextcloud

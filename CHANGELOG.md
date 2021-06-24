@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
 
-#### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - UNRELEASED
+#### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
