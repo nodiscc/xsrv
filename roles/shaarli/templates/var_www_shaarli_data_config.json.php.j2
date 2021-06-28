@@ -1,5 +1,4 @@
-<?php /*
-{
+<?php /*{
     "resource": {
         "data_dir": "data",
         "config": "data\/config.php",
@@ -27,8 +26,11 @@
         ],
         "markdown_escape": true
     },
+    "dev": {
+        "debug": {{ shaarli_debug | lower}}
+    },
     "general": {
-        "header_link": "?",
+        "header_link": "{{ shaarli_header_link }}",
         "links_per_page": 20,
         "enabled_plugins": [
             "qrcode"
@@ -38,7 +40,9 @@
         "timezone": "{{ shaarli_timezone }}",
         "title": "{{ shaarli_fqdn }}",
         "download_max_size": 4194304,
-        "download_timeout": 30
+        "download_timeout": 30,
+        "enable_async_metadata": true,
+        "tags_separator": " "
     },
     "updates": {
         "check_updates": true,
@@ -53,7 +57,7 @@
         "default_private_links": false,
         "hide_public_links": false,
         "force_login": false,
-        "hide_timestamps": {{ shaarli_hide_timestamp | lower }},
+        "hide_timestamps": {{ shaarli_hide_timestamps | lower }},
         "remember_user_default": true
     },
     "thumbnails": {
@@ -75,6 +79,6 @@
     "api": {
         "enabled": true,
         "secret": "{{ shaarli_api_secret }}"
-    }
-}
-*/ ?>
+    },
+    "formatter": "{{ shaarli_formatter }}"
+}*/ ?>

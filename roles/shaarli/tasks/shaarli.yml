@@ -126,6 +126,7 @@
     group: www-data
     mode: 0660
     force: "{{ shaarli_overwrite_config }}"
+  tags: shaarli-config
 
 # fail2ban jail requires an existsing log file, but shaarli oly creates this on first access
 - name: create initial shaarli log.txt

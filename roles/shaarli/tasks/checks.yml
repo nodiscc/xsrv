@@ -11,6 +11,10 @@
       - shaarli_password is not search("CHANGEME")
       - shaarli_password_salt is not search("CHANGEME")
       - shaarli_timezone is string
+      - shaarli_debug == shaarli_debug|bool
+      - shaarli_header_link is string
+      - shaarli_hide_timestamps == shaarli_hide_timestamps|bool
+      - shaarli_formatter in ['default', 'markdown', 'markdownExtra']
       - shaarli_username is not search("CHANGEME")
       - shaarli_version is string
       - shaarli_php_memory_limit|regex_search('[KMG]$')

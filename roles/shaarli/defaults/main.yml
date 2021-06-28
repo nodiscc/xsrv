@@ -9,7 +9,15 @@ shaarli_password_salt: "CHANGEME"
 # 12 character REST API secret
 shaarli_api_secret: "CHANGEME"
 # shaarli timezone (see https://www.php.net/manual/en/timezones.php)
-shaarli_timezone: "Europe/Amsterdam"
+shaarli_timezone: "Europe\\/Paris"
+# location of the shaarli "home" link
+shaarli_header_link: "?"
+# hide timestamps (yes/no)
+shaarli_hide_timestamps: no
+# enable debug log messages (yes/no)
+shaarli_debug: no
+# shaarli description formatter (default/markdown/markdownExtra)
+shaarli_formatter: "markdown"
 # overwrite shaarli configuration if it already exists (yes/no - yes will overwrite any changes made from Shaarli tools menu)
 shaarli_overwrite_config: no
 # Mode for SSL/TLS certificates for the shaarli webserver virtualhost
