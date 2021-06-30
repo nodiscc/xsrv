@@ -50,6 +50,8 @@ gitea_offline_mode: "true"
 gitea_disable_gravatar: "true"
 # global limit of repositories per user, applied at creation time. -1 means no limit
 gitea_user_repo_limit: -1
+# number of issues that are displayed on one page
+gitea_issue_paging_num: 20
 # enable/disable gitea REST API (true/false - QUOTED)
 gitea_enable_api: "true"
 # max number of items in API responses
