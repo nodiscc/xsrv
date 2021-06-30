@@ -2,16 +2,22 @@
 
 ### xsrv/xsrv
 
+- #532 - proxmox: allow defining lxc containers from ansible variables
+- #531 - proxmox: allow disabling the subscription message?
+- #530 - proxmox: enable/configure firewall at datacenter/node level
+- #529 - proxmox backup server?
+- #528 - proxmox: setup a non-root proxmox user
+- #527 - gitea: add `gitea_issue_paging_num` configuration variable (number of issues per page), increase to 20 by default - `1.4.0`
+- #526 - common/monitoring: fix lynis warnings - `1.4.0`
 - #525 - Use ansible_facts to reference facts
 - #523 - openldap: upgrade self-service-password to 1.4.3 - `1.4.0`
 - #522 - openldap: performance optimizations?
-- #521 - nextcloud: add whiteboard integration app - `1.4.0`
+- #521 - nextcloud: add whiteboard integration app - `2.0.0`
 - #518 - Mumble web interface - `1.4.0`
 - #517 - Custom MOTD?
 - #516 - TICK stack? (Telegraf/InfluxDB/Chronograf/Kapacitor)
 - #514 - doc: gitea: mirroring method should not try to mirror internal/pull requests refs
 - #513 - doc: screenshots slideshow on main page instead of thumbnails?
-- #510 - WIP: add proxmox role:
 - #507 - all roles/apache: disable reverse proxy rules and redirect to maintenance page when target service is disabled in configuration - `1.4.0`
 - #506 - graylog: add TCP portchecks for mongodb/elasticsearch
 - #505 - graylog: enable automatic upgrades - `1.4.0`
@@ -39,13 +45,11 @@
 - #469 - ansible-ansible.legacy.command: [WARNING] Unable to use /var/www/.ansible/tmp as temporary directory, failing back to system: [Errno 13] Permission denied: '/var/www/.ansible' - `1.4.0`
 - #466 - netdata: graph lynis warnings/suggestions?
 - #465 - lynis: add detection of SUID files?
-- #464 - monitoring: add (optional) lynis security audit tool and daily scheduled run - `1.4.0`
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)
 - #457 - samba: setup dfs_samba4/acl_xattr VFS modules?
 - #456 - Upgrade to Debian 11 - `2.0.0`
 - #454 - postgresql: add an option to enable pg_stat_statements view
 - #453 - postgresql: enable checksums?
-- #452 - Proxmox hypervisor role
 - #451 - Document management system
 - #450 - netdata: setup ML-based anomaly detection?
 - #448 - Netdata: send notifications using signal-cli
@@ -77,7 +81,6 @@
 - #376 - netdata: enable samba monitoring when samba role is installed
 - #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.4.0`
 - #374 - makefile/readthedocs: include roles documentation in generated docs
-- #372 - WIP: shaarli: make hide_timestamp option configurable
 - #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis?) - `2.0.0`
 - #365 - nextcloud: LDAP user backend - `1.4.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
@@ -115,7 +118,6 @@
 - #305 - switch firewall management to firewalld - `2.0.0`
 - #303 - firehol: add example NAT loopback/hairpin rule
 - #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.4.0`
-- #293 - WIP: add nginx role
 - #290 - netdata: monitor number of upgradeable APT packages - `1.4.0`
 - #280 - Samba Directory Controller or other Identity Management solution
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
@@ -140,7 +142,7 @@
 - #250 - WIP: add pulseaudio-server role
 - #248 - WIP: add gitlab-runner role
 - #247 - WIP: add gitlab role
-- #237 - rsyslog: monitor auditd log files
+- #237 - WIP: install and configure auditd (Linux Auditing Framework)
 - #236 - WIP: add icecast role
 - #235 - icecast server role
 - #234 - mysql: use percona-xtrabackup to perform non-locking backups?
@@ -183,7 +185,6 @@
 - #181 - netdata: monitor MySQL server
 - #180 - netdata: graph SCAP workbench warnings
 - #178 - netdata: graph/alert on deborphan matches
-- #177 - monitoring: add lynis audit tool - `1.4.0`
 - #176 - netdata: add Qualys SSL check module
 - #175 - netdata: allow specifying downtimes/silence alarms/silence notifications
 - #174 - netdata: allow setting a repetition period for alarms
@@ -255,7 +256,7 @@
 - #92 - Add {{ ansible_managed }} in templates
 - #86 - Peertube
 - #78 - Adminer role
-- #72 - Proxmox role
+- #72 - proxmox: allow defining VMs from ansible variables - `2.0.0`
 - #70 - Setup endlessh
 - #69 - IDS/IPS
 - #68 - Automate playbook deployment/testing
@@ -295,7 +296,6 @@
 - #32 - Minetest server
 - #31 - Add bash completion to xsrv script
 - #30 - Gitlab role
-- #27 - nginx role
 - #26 - Dynamic DNS updater
 - #25 - DNS Server
 - #24 - DHCP/TFTP/PXE server
@@ -303,7 +303,6 @@
 - #16 - Automated performance benchmarks
 - #12 - go-shiori
 - #9 - openvpn-server role
-- #8 - Proxmox
 - #6 - cockpit role?
 - #5 - Matrix/Synapse server
 - #3 - Mail server?
