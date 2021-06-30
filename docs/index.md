@@ -16,8 +16,6 @@
 - a [command-line tool](usage.md) for common operations, easy/fast deployment, configuration and maintenance
 - a playbook [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv) to [get started with a single server](installation/first-deployment.md) in a few minutes
 
-`xsrv` uses [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29), a [configuration management](https://en.wikipedia.org/wiki/Software_configuration_management) system for reproducible and automated deployments/change management. You can use the provided command-tool to manage your setup, or [include the roles in your own ansible playbooks](usage.md#using-as-ansible-collection).
-
 
 ## Roles
 
@@ -73,6 +71,8 @@ xsrv edit-vault
 ```
 
 See the full [usage documentation](usage.md).
+
+`xsrv` uses [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29), a [configuration management](https://en.wikipedia.org/wiki/Software_configuration_management) system for reproducible and automated deployments, configuration and change management. You can use the provided command-line tool to manage your setup, or [include the roles in your own ansible playbooks](usage.md#using-as-ansible-collection).
 
 
 ## Screenshots
