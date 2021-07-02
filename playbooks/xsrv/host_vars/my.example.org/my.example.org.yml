@@ -1,6 +1,4 @@
 ### configuration variables for my.example.org (plaintext)
-##### COMMON #####
-# ansible_ssh_port: 22
 
 ##### GITEA #####
 # https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml

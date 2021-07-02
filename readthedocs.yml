@@ -13,4 +13,5 @@ sphinx:
 # https://github.com/rtfd/readthedocs.org/issues/5250
 python:
   version: 3.5
-
+  install:
+    - requirements: docs/requirements.txt
