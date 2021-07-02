@@ -8,6 +8,7 @@
     package:
       - postgresql
       - postgresql-client
+      - python3-psycopg2
 
 ##### BACKUPS #####
 
