@@ -3,7 +3,9 @@
 ##### USER ACCOUNTS ####
 
 - name: enable root and current user account logins (local)
-  user: name={{ item }} password_lock=no
+  user:
+    name: "{{ item }}"
+    password_lock: no
   with_items:
     - "root"
     - "{{ ansible_user }}"
