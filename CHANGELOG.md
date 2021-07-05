@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: add `gitea_issue_paging_num` configuration variable (number of issues per page), increase to 20 by default
 - upgrade gitea to [v1.14.3](https://github.com/go-gitea/gitea/releases/tag/v1.14.3)
 
+**Fixed:**
+- homepage: really update page title from `homepage_title` variable
+
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
 
