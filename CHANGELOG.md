@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - homepage: really update page title from `homepage_title` variable
-
+- jellyfin: use `samba_shares_path` variable to determine samba shares path
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
 

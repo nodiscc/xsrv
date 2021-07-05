@@ -324,7 +324,7 @@
 {% if 'nodiscc.xsrv.jellyfin' in role_names and jellyfin_samba_share_enabled %}
 [jellyfin]
     comment = Jellyfin media server - drop media files here
-    path = "/var/lib/samba/shares//jellyfin"
+    path = "{{ samba_shares_path }}/jellyfin"
     available = yes
     browseable = yes
     guest ok = no
