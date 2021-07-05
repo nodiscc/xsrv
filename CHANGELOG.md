@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
 - gitea: add `gitea_issue_paging_num` configuration variable (number of issues per page), increase to 20 by default
+- upgrade gitea to [v1.14.3](https://github.com/go-gitea/gitea/releases/tag/v1.14.3)
 
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
