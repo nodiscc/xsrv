@@ -90,7 +90,7 @@ virt-clone --original "$TEMPLATE_NAME" --name "$VM_NAME" --file "/path/to/$VM_NA
 # start the new VM
 virsh start "$VM_NAME"
 # authorize your SSH key on the new VM
-echo "$TEMPLATE_ADMIN_PASSWORD" | sshpass ssh-copy-id -i ~/.ssh/id_rsa "$ADMIN_USER"@"$TEMPLATE_IP"
+echo "$TEMPLATE_ADMIN_PASSWORD" | sshpass ssh-copy-id -i ~/.ssh/id_rsa "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP"
 # update the IP address on the new VM
 echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo sed -i "s/$TEMPLATE_IP/$VM_IP/g" /etc/network/interfaces
 echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo systemctl restart networking
