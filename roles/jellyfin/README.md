@@ -97,6 +97,11 @@ When using Jellyfin from a web browser, media will be converted/transcoded on-th
 - Manually setup [hardware acceleration](https://jellyfin.org/docs/general/administration/hardware-acceleration.html)
 
 
+## Subtitles
+
+To search and download video subtitles, you must register an account on https://opensubtitles.org, enable the `Opensubtitles` plugin from `Admin > Plugins` and set your opensubtitles.org username/password in the plugin preferences. You will then be able to use right-click > `Edit subtitles` on any video from your library.
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)
