@@ -69,8 +69,8 @@ nextcloud_apps:
   - { state: "enable", app: "notes" }
   - { state: "enable", app: "deck" }
   - { state: "enable", app: "admin_audit" }
-  - { state: "enable", app: "documentserver_community" }
-  - { state: "enable", app: "onlyoffice" }
+  - { state: "disable", app: "documentserver_community" }
+  - { state: "disable", app: "onlyoffice" }
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'
