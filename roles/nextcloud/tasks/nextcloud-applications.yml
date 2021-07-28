@@ -1,3 +1,10 @@
+- name: update nextcloud applications (not imdepotent, always upgrade to latest version) # noqa 301
+  become: yes
+  become_user: www-data
+  command: /usr/bin/php ./occ app:update --all
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+
 - name: install nextcloud applications
   become: yes
   become_user: www-data
@@ -24,10 +31,3 @@
   changed_when:
     - not 'No such app enabled' in nextcloud_app_enable_disable.stdout
     - not 'already enabled' in nextcloud_app_enable_disable.stdout
-
-- name: update nextcloud applications (not imdepotent, always upgrade to latest version) # noqa 301
-  become: yes
-  become_user: www-data
-  command: /usr/bin/php ./occ app:update --all
-  args:
-    chdir: "{{ nextcloud_install_dir }}"
