@@ -201,7 +201,7 @@
     user: www-data
     cron_file: nextcloud
     minute: "*/5"
-    job: "/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php"
+    job: "/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php >/dev/null"
     name: "run nextcloud background tasks"
 
 - name: add missing primary keys and indices to nextcloud database
