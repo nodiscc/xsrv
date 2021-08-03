@@ -12,7 +12,7 @@ Default installed applications include:
 - [Contacts](https://apps.nextcloud.com/apps/contacts):E dit, view, share address books and synchronize them across devices (CardDav)
 - [Tasks](https://apps.nextcloud.com/apps/tasks): Task/todo-list management (supports due dates, reminders, priorities, comments, tasks sharing, sub-tasks), and synchronize them across devices (CalDAV)
 - [Music](https://apps.nextcloud.com/apps/music): Play audio files directly from teh file list or in a library view (supports playlists, search, ampache and more)
-- [Photos](https://github.com/nextcloud/photos): Media gallery with previews for all media types
+- [Photos](https://github.com/nextcloud/photos#readme): Media gallery with previews for all media types
 - [Notes](https://apps.nextcloud.com/apps/notes): Note taking app with markdown support, notes are saved as files in your Nextcloud so you can view and edit them from anywhere.
 - [Maps](https://apps.nextcloud.com/apps/maps): Map and routing service using [OpenStreetMap](https://www.openstreetmap.org/)
 - Viewers and editors for common file types (PDF, text, video...)
@@ -23,14 +23,19 @@ It will also configure:
 - bruteforce prevention using fail2ban
 - (optional) aggregation of nextcloud logs to syslog
 
-[![](https://i.imgur.com/kQyXV9S.png)](https://i.imgur.com/nCXJMus.png)
+[![](https://i.imgur.com/PPVIb6V.png)](https://i.imgur.com/1YaT357.png)
+[![](https://i.imgur.com/URs7XH5.png)](https://i.imgur.com/V6CR3we.png)
+[![](https://i.imgur.com/bVMzmr1.png)](https://github.com/nextcloud/photos#readme)
+[![](https://i.imgur.com/Co3DHUr.png)](https://f-droid.org/en/packages/com.nextcloud.client/)
+[![](https://i.imgur.com/wJEAiab.png)](https://f-droid.org/en/packages/it.niedermann.owncloud.notes/)
+[![](https://i.imgur.com/89xj4sa.png)](https://f-droid.org/en/packages/org.tasks/)
+[![](https://i.imgur.com/GFthLWl.png)](https://f-droid.org/packages/at.bitfire.davdroid/)
 [![](https://i.imgur.com/lXroRsI.png)](https://i.imgur.com/XlDrlS4.png)
 [![](https://i.imgur.com/cCg6HgB.png)](https://i.imgur.com/iuWdvKG.png)
-[![](https://i.imgur.com/URs7XH5.png)](https://i.imgur.com/V6CR3we.png)
-[![](https://i.imgur.com/0ALCk1W.png)](https://i.imgur.com/qRYPBdU.png)
-[![](https://i.imgur.com/PPVIb6V.png)](https://i.imgur.com/1YaT357.png)
-[![](https://i.imgur.com/Co3DHUr.png)](https://i.imgur.com/Tu1lVHo.png)
+[![](https://i.imgur.com/kQyXV9S.png)](https://i.imgur.com/nCXJMus.png)
 [![](https://i.imgur.com/TJTvqtd.png)](https://i.imgur.com/ztI0rJz.png)
+
+
 
 ## Requirements/dependencies/example playbook
 
@@ -67,18 +72,16 @@ See [defaults/main.yml](defaults/main.yml) for all configurable variables
 Access Nextcloud from any Web browser or from one of the available clients:
 
 File synchronization:
- * [Desktop application (Linux/OSX/Windows)](https://nextcloud.com/install/#install-clients)
- * [Android app](https://f-droid.org/repository/browse/?fdid=com.nextcloud.android)
- * [iOS app](https://itunes.apple.com/us/app/nextcloud/id1125420102)
+ * [Nextcloud Desktop](https://nextcloud.com/install/#install-clients) (Linux/OSX/Windows)
+ * [Nextcloud Android](https://f-droid.org/en/packages/com.nextcloud.client/)
+ * [Nextcloud iOS](https://itunes.apple.com/us/app/nextcloud/id1125420102)
 
 Calendar, contacts and tasks synchronization:
- * [Thunderbird](https://www.mozilla.org/en-US/thunderbird/) + [Lightning](https://www.mozilla.org/en-US/projects/calendar/) (Linux/OSX/Windows)
- * [DAVDroid](https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid) (Android)
- * [OpenTasks](https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks) (Android)
+ * Desktop (Linux/OSX/Windows): [Thunderbird](https://www.mozilla.org/en-US/thunderbird/) + [Lightning](https://www.mozilla.org/en-US/projects/calendar/) [CardBook](https://addons.thunderbird.net/en-US/thunderbird/addon/cardbook/)
+ * Android: [DAVx⁵](https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid) + [Tasks.org](https://f-droid.org/en/packages/org.tasks/) (Android)
 
 Other:
  * [Notes](https://f-droid.org/en/packages/it.niedermann.owncloud.notes/) (Android)
- * [Deck](https://f-droid.org/en/packages/it.niedermann.nextcloud.deck/) (Android)
 
 ### Useful commands
 
