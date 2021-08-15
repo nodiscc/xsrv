@@ -53,12 +53,16 @@ KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
 
 # Don't process environment variables passed by the client except locale variables
 PermitUserEnvironment LANG,LC_*
+
+# The server disconnects after this time if the user has not successfully logged in
 LoginGraceTime 30s
 
 # maximum number of authentication attempts permitted per connection.
 # Once the number of failures reaches half this value, additional failures are logged.
 # Causes 'Too Many Authentication Failures' error when set to a low value and the user tries several keys.
 MaxAuthTries 5
+
+# Maximum number of open shell, login or subsystem (e.g. sftp) sessions permitted per network connection.
 MaxSessions 10
 
 # maximum number of concurrent unauthenticated connections to the SSH daemon, in the format X:Y:Z
@@ -133,7 +137,8 @@ AllowGroups ssh sftponly git
 # Misc. configuration
 # ===================
 
-# file to send to the remote user before authentication
+# The contents of the specified file are sent to the remote user before authentication is allowed.
+# If the argument is none then no banner is displayed.
 Banner none
 
 #UseDNS yes
