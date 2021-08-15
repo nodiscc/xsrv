@@ -2,9 +2,9 @@
 
 `xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools.
 
-Server ([host](installation/server-preparation.md)) configuration is stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) in [YAML](https://en.wikipedia.org/wiki/YAML) files.
+Server ([host](installation/server-preparation.md)) configuration is stored  [YAML](https://en.wikipedia.org/wiki/YAML) files in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md).
 
-To [enable components or change server configuration](#changing-configuration), edit the relevant YAML configuration file, then apply changes using `xsrv deploy`.
+To [enable components or change server configuration](#changing-configuration), edit the relevant configuration file, then apply changes using `xsrv deploy`.
 
 
 ------------------------
@@ -63,9 +63,14 @@ TAGS=nextcloud,gitea deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud 
 
 -----------------------
 
-## Changing configuration
+## Create a playbook/environment
 
-- `xsrv edit-playbook`: edit the list of enabled roles ([playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html)) for your hosts. Add any [role](index.md#roles) you wish to enable to enable to your host's `roles:` list. Example:
+`xsrv init-playbook` creates the basic directory structure, inventory, playbook and host_vars files, as described in [First deployment](first-deployment.md)
+
+
+## Change configuration
+
+- `xsrv edit-playbook` edits the list of enabled roles attached to hosts ([playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html)). Add any [role](index.md#roles) you wish to enable to enable to your host's `roles:` list. Example:
 
 ```yaml
 # xsrv edit-playbook
@@ -138,6 +143,8 @@ ansible_become_pass: "CHANGEME" # sudo password for the deployment user account
 ansible_ssh_port: 123 # (optional, if different from the default 22) SSH port used to access the host
 ansible_host: 1.2.3.4 # (optional, if the host's inventory hostname cannot be resolved) IP address or hostname used to contact the host
 ```
+
+
 
 ## Adding a new role to a host
 

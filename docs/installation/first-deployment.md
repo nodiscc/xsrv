@@ -25,8 +25,6 @@ xsrv deploy
 - **Your first server is ready to use!**
 
 
-## Initial setup screencast
-
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
 
 
