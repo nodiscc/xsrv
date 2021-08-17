@@ -117,6 +117,7 @@ logout
 
 You should now [authorize your SSH key](controller-preparation.md) on the server.
 
-|      |       |
-|------|-------|
-|  ♦  | At this point, if your server is a virtual machine, it is a good moment to stop the VM and use it as a template. Every time you need to deploy a new server, clone the template, boot the clone, from the console edit the IP address in `/etc/network/interfaces`, `systemctl restart networking`, and set new passwords `passwd root && passwd deploy`. |
+
+## VM templates
+
+At this point you may want to stop your newly created VM, and use it as a template for future virtual machines. Every time you need to deploy a new server, clone the template, boot the clone, from the console edit the IP address in `/etc/network/interfaces`, `systemctl restart networking`, and set new passwords `passwd root && passwd deploy`. See [virt-manager / Cloning VMs](virt-manager.md#cloning-vms).
