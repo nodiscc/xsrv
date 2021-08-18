@@ -7,10 +7,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - UNRELEASED
 
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles in your playbook to the latest release
+- `xsrv deploy` to apply changes
+
 **Added:**
 - [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
 - gitea: add `gitea_issue_paging_num` configuration variable (number of issues per page), increase to 20 by default
 - upgrade gitea to [v1.14.3](https://github.com/go-gitea/gitea/releases/tag/v1.14.3)
+
+**Changed:**
+- switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3)
 
 **Fixed:**
 - homepage: really update page title from `homepage_title` variable
