@@ -74,6 +74,7 @@
     state: directory
     mode: 0750
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
+  check_mode: no # create even in check mode so that following tasks don't fail
 
 - name: extract nextcloud zip
   unarchive:
@@ -83,6 +84,7 @@
     mode: u=rwX
   no_log: True
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: give write permissions to the webserver
   file:
@@ -96,6 +98,7 @@
     - { path: "/root/nextcloud-unpack/nextcloud/themes", mode: "g+w" }
     - { path: "/root/nextcloud-unpack/nextcloud/occ", mode: "g+X" }
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: move old nextcloud installation to temporary dir
   command: mv '{{ nextcloud_install_dir }}' '{{ nextcloud_install_dir }}.old'
@@ -150,6 +153,7 @@
     mode: 0660
   when:
     - nextcloud_action == 'upgrade'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
 - name: set nextcloud config.php values (not idempotent, returns changed every time - occ doesn't report changed status)
