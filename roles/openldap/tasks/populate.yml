@@ -26,18 +26,29 @@
 
 # slappasswd uses a new seed every time, hence the hash changes every time the playbook runs
 - name: create LDAP admin account (not idempotent, returns changed every time), set log level
-  ldap_attr:
+  ldap_attrs:
     dn: "{{ item.dn }}"
-    name: "{{ item.name }}"
-    values: "{{ item.value }}"
+    attributes: "{{ item.attributes }}"
     state: 'exact'
   no_log: "{{ item.no_log | default(False) }}"
   with_items:
-    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootDN', value: 'cn=admin,{{ openldap_base_dn }}' }
-    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootDN', value: 'cn=admin,cn=config' }
-    - { dn: 'olcDatabase={1}mdb,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}', no_log: True }
-    - { dn: 'olcDatabase={0}config,cn=config', name: 'olcRootPW', value: '{{ slapd_admin_password.stdout }}', no_log: True }
-    - { dn: 'cn=config', name: 'olcLogLevel', value: '{{ openldap_log_level }}' }
+    - dn: 'olcDatabase={1}mdb,cn=config'
+      attributes:
+        olcRootDN: 'cn=admin,{{ openldap_base_dn }}'
+    - dn: 'olcDatabase={0}config,cn=config'
+      attributes:
+        olcRootDN: 'cn=admin,cn=config'
+    - dn: 'olcDatabase={1}mdb,cn=config'
+      no_log: True
+      attributes:
+        olcRootPW: '{{ slapd_admin_password.stdout }}'
+    - dn: 'olcDatabase={0}config,cn=config'
+      no_log: True
+      attributes:
+        olcRootPW: '{{ slapd_admin_password.stdout }}'
+    - dn: 'cn=config'
+      attributes:
+        olcLogLevel: '{{ openldap_log_level }}'
   when: not ansible_check_mode
 
 - name: create basic Organizational Units
@@ -81,10 +92,10 @@
   when: not ansible_check_mode
 
 - name: set password for unprivilegied LDAP bind user
-  ldap_attr:
+  ldap_attrs:
     dn: "cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}"
-    name: "userPassword"
-    values: "{{ openldap_bind_password }}"
+    attributes:
+      userPassword: "{{ openldap_bind_password }}"
     state: 'exact'
     server_uri: ldap://localhost/
     bind_dn: cn=admin,{{ openldap_base_dn }}

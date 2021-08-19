@@ -80,27 +80,26 @@
       sambaSID: '{{ samba_localsid.stdout.split(" ") | last }}'
   when: not ansible_check_mode|bool # samba_localsid.stdout is never set in check mode as the command doesn't run
 
-# ldapsearch -Q -Y EXTERNAL -H ldapi:/// '(objectClass=sambaDomain)'
+# ldapsearch -Q -Y EXTERNAL -H ldapi:/// '(objectClass\=sambaDomain)'
 - name: Set LDAP attributes of the samba domain
-  ldap_attr:
+  ldap_attrs:
     dn: 'sambaDomainName={{ openldap_domain }},ou=domains,{{ openldap_base_dn }}'
-    name: "{{ item.name }}"
-    values: "{{ item.value }}"
+    attributes: "{{ item }}"
     state: exact
     server_uri: ldap://localhost/
     bind_dn: "cn=admin,{{ openldap_base_dn }}"
     bind_pw: "{{ openldap_admin_password }}"
   with_items:
-    - { name: 'sambaAlgorithmicRidBase', value: '1000' }
-    - { name: 'sambaNextUserRid', value: '1000' } # TODO don't reinitialize this
-    - { name: 'sambaNextGroupRid', value: '1000' } # TODO don't reinitialize this
-    - { name: 'sambaMinPwdLength', value: '5' } # TODO description? make this configurable?
-    - { name: 'sambaPwdHistoryLength', value: '0' } # TODO description? make this configurable?
-    - { name: 'sambaLogonToChgPwd', value: '0' } # TODO description? make this configurable?
-    - { name: 'sambaMaxPwdAge', value: '-1' }
-    - { name: 'sambaMinPwdAge', value: '0' }
-    - { name: 'sambaLockoutDuration', value: '60' } # TODO description? make this configurable?
-    - { name: 'sambaLockoutObservationWindow', value: '10' } # TODO description? make this configurable?
-    - { name: 'sambaLockoutThreshold', value: '5' } # TODO description? make this configurable?
-    - { name: 'sambaForceLogoff', value: '-1' }  # TODO description? make this configurable?
-    - { name: 'sambaRefuseMachinePwdChange', value: '0' } # TODO description? make this configurable?
+    - sambaAlgorithmicRidBase: '1000'
+    - sambaNextUserRid: '1000' # TODO don't reinitialize this
+    - sambaNextGroupRid: '1000' # TODO don't reinitialize this
+    - sambaMinPwdLength: '5' # TODO description? make this configurable?
+    - sambaPwdHistoryLength: '0' # TODO description? make this configurable?
+    - sambaLogonToChgPwd: '0' # TODO description? make this configurable?
+    - sambaMaxPwdAge: '-1'
+    - sambaMinPwdAge: '0'
+    - sambaLockoutDuration: '60' # TODO description? make this configurable?
+    - sambaLockoutObservationWindow: '10' # TODO description? make this configurable?
+    - sambaLockoutThreshold: '5' # TODO description? make this configurable?
+    - sambaForceLogoff: '-1'  # TODO description? make this configurable?
+    - sambaRefuseMachinePwdChange: '0' # TODO description? make this configurable?
