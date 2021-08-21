@@ -27,6 +27,8 @@ os_security_kernel_enable_core_dump: no
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
 setup_apt: yes
+# yes/no: enable 'contrib' and 'non-free' software sections in debian APT repositories
+apt_enable_nonfree: no
 
 ### DATE/TIME ###
 # timezone name (if commented out, timezone will not be changed)
