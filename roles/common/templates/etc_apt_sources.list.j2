@@ -1,8 +1,13 @@
 deb http://deb.debian.org/debian/ {{ ansible_facts.distribution_release }} main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
 # deb-src http://deb.debian.org/debian/ {{ ansible_facts.distribution_release }} main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
 
+{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye' %}
+deb http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}-security main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
+# deb-src http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}-security main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
+{% elif ansible_facts.distribution == 'Debian' %}
 deb http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}/updates main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
 # deb-src http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}/updates main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
+{% endif %}
 
 deb http://deb.debian.org/debian/ {{ ansible_facts.distribution_release }}-updates main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
 # deb-src http://deb.debian.org/debian/ {{ ansible_facts.distribution_release }}-updates main{% if apt_enable_nonfree %} contrib non-free{% endif +%}
