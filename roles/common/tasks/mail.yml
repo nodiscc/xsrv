@@ -15,14 +15,27 @@
 
 ##### OUTGOING MAIL/SMARTHOST #####
 
-- name: install msmtp SMTP client/MTA
+- name: install msmtp SMTP client/MTA (Ubuntu/Debian 9)
+  apt:
+    package:
+      - msmtp
+      - msmtp-mta
+    state: present
+  when:
+    - setup_msmtp|bool
+    - ansible_distribution == 'Ubuntu' or (ansible_distribution == 'Debian' and not ansible_distribution_release == 'buster')
+
+- name: install msmtp SMTP client/MTA (Debian 9)
   apt:
     package:
       - msmtp
       - msmtp-mta
     state: present
     default_release: buster-backports
-  when: setup_msmtp|bool
+  when:
+    - setup_msmtp|bool
+    - ansible_distribution == 'Debian' and ansible_distribution_release == 'buster'
+
 
 - name: copy msmtp configuration
   template:
