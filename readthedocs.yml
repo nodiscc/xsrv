@@ -11,7 +11,7 @@ sphinx:
 
 # Optionally set the version of Python and requirements required to build your docs
 # https://github.com/rtfd/readthedocs.org/issues/5250
-python:
-  version: 3.5
-  install:
-    - requirements: docs/requirements.txt
+# python:
+#   version: 3.5
+#   install:
+#     - requirements: docs/requirements.txt
