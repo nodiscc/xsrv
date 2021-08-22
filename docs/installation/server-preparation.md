@@ -17,7 +17,7 @@ Computer with x86/64 compatible CPU
 1-∞ GB storage space for user data
 ```
 
-Use low power consumption components. To increase availability, setup the BIOS to reboot after a power loss, setup an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
+Prefer low power consumption hardware. To increase availability, setup the BIOS to reboot after a power loss, setup an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
 
 
 ## Network
@@ -32,9 +32,7 @@ The server must have Internet access during deployment and upgrades. Prefer fast
 
 ### NAT/port forwarding
 
-If the network interface is in a [private network](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) behind a router, setup [port forwarding (NAT)](https://en.wikipedia.org/wiki/Port_forwarding) on the router if you need to access your services from other networks/Internet.
-
-Forward the following ports to your server's private IP address (if corresponding services are installed):
+If the network interface is in a [private network](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) behind a router, setup [port forwarding (NAT)](https://en.wikipedia.org/wiki/Port_forwarding) on the router if you need to access your services from other networks/Internet. Forward the following ports to your server's private IP address (if corresponding services are installed):
 
 ```
 SSH server:                      TCP 22
@@ -46,10 +44,7 @@ Mumble VoIP server:              TCP/UDP 64738
 
 ### Domain names
 
-Clients (and the controller) must be able to resolve the server's IP address by its ([Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Separate domain or subdomain names are required for each service/application.
-
-- Setup `A` or `CNAME` DNS records at a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar),
-a [free subdomain service](https://freedns.afraid.org/domain/registry/) or on a [private DNS resolver](PFSENSE.md#dns).
+Clients (and the controller) must be able to resolve the server's IP address by its ([Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Separate domain or subdomain names are required for each service/application. Point `A` or `CNAME` DNS records to the public IP address of your server using a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar), a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your [private DNS resolver](PFSENSE.md#dns).
 
 By default the following subdomains are required (if corresponding roles are enabled):
 
@@ -95,9 +90,6 @@ passwd deploy
 logout
 ```
 
+At this point you may stop your newly created VM, and use it as a [template](virt-manager.md#cloning-vms) for future deployments.
+
 You should now [authorize your SSH key](controller-preparation.md) on the server.
-
-
-## VM templates
-
-At this point you may stop your newly created VM, and use it as a [template]((virt-manager.md#cloning-vms) for future deployments.
