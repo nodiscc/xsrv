@@ -14,11 +14,11 @@ or your private DNS server ([pfSense](../advanced/pfsense.md) is a good start to
   - Enable the `root` account, set a strong password and store it somewhere safe like a Keepass database
   - Do **not** create an additional user account yet
   - Any disk partitioning scheme is OK, here are some generic recommendations:
-    - Use LVM if possible. This will greatly facilitate disk management if the need arises.
-    - Define a separate `/var` partition, make it as large as possible (user data is stored under `/var/`).
     - 10-15GB should be enough for the root `/` partition.
-    - Set the `/boot` partition to 1GB.
+    - Set a size of 1GB for the `/boot` partition.
+    - Define a separate `/var` partition, make it as large as possible (user data is stored under `/var/`).
     - Add a swap partition with a size of 1.5x your RAM if the RAM is less than 8GB, or 2GB if the RAM is more than 8GB.
+    - Use LVM (Logical Volumes) instead of raw partitions/disks if possible. This will greatly facilitate disk management (resizing, adding drives...).
     - Setup RAID to increase availability (RAID is not a backup)
     - `noatime` and `nodiratime` mount options are recommended for better disk performance
   - When asked, only install `Standard system utilities` and `SSH server`

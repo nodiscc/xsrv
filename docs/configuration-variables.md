@@ -1,7 +1,7 @@
 # All configuration variables
 
 This is a list of all available configuration variables, and their default values.
-Copy any of these variables to `xsrv edit-host` (`host_vars` file) or `xsrv edit-vaulr`, and edit its value there.
+Copy any of these variables to `xsrv edit-host` (`host_vars` file) or `xsrv edit-vault`, and edit its value there.
 Then run `xsrv deploy` to apply changes.
 
 - [common](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
@@ -22,5 +22,5 @@ Then run `xsrv deploy` to apply changes.
 - [jellyfin](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml)
 - [samba](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml)
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
-- [gotty](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml) - access a server terminal as a web application
-- [proxmox](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/proxmox/defaults/main.yml) - basic setup for Proxmox VE hypervisors
+- [gotty](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml)
+- [proxmox](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/proxmox/defaults/main.yml)
