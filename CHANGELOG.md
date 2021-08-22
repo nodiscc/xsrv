@@ -14,15 +14,32 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
-- gitea: add `gitea_issue_paging_num` configuration variable (number of issues per page), increase to 20 by default
-- upgrade gitea to [v1.14.3](https://github.com/go-gitea/gitea/releases/tag/v1.14.3)
+- gitea: make number of issues per page configurable (`gitea_issue_paging_num` , increase to 20 by default)
+- gitea: upgrade to [v1.14.6](https://github.com/go-gitea/gitea/releases/tag/v1.14.6)
+- shaarli: make `hide_timestamp,header_link,debug,formatter` [settings](https://shaarli.readthedocs.io/en/master/Shaarli-configuration/) configurable
+- monitoring: add (optional, default disabled) lynis security audit tool, schedule a daily run/report
+- postgresql/monitoring: allow monitoring of postgresql server from netdata
+- nextcloud: upgrade to 22.1.0
+- nextcloud: allow installation of [ONLYOFFICE](https://nextcloud.com/onlyoffice/) realtime collaborative document edition tools
+- nextcloud: disable deck app by default
+- common: apt: allow enabling contrib and non-free software sections (`apt_enable_nonfree`)
+- common: make role compatible with debian 11 "bullseye"
 
 **Changed:**
-- switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3)
+- nextcloud: silence cron/background tasks output to prevent mail notification spam
+- common: sysctl: disable IP source routing for ipv6 (already disabled for ipv4)
+- xsrv: switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3), update playbook for compatibility
+- update documentation
 
 **Fixed:**
 - homepage: really update page title from `homepage_title` variable
 - jellyfin: use `samba_shares_path` variable to determine samba shares path
+- nextcloud: fix upgrade procedure order (upgrade incompatible apps)
+- nextcloud: fix `check` mode on upgrades
+
+**Security:**
+- nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
+
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
 
