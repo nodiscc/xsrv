@@ -15,21 +15,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
 - gitea: make number of issues per page configurable (`gitea_issue_paging_num` , increase to 20 by default)
-- gitea: upgrade to [v1.14.6](https://github.com/go-gitea/gitea/releases/tag/v1.14.6)
 - shaarli: make `hide_timestamp,header_link,debug,formatter` [settings](https://shaarli.readthedocs.io/en/master/Shaarli-configuration/) configurable
-- monitoring: add (optional, default disabled) lynis security audit tool, schedule a daily run/report
-- postgresql/monitoring: allow monitoring of postgresql server from netdata
-- nextcloud: upgrade to 22.1.0
-- nextcloud: allow installation of [ONLYOFFICE](https://nextcloud.com/onlyoffice/) realtime collaborative document edition tools
-- nextcloud: disable deck app by default
+- monitoring: add (optional, default disabled) [lynis](https://cisofy.com/lynis/) security audit tool, schedule a daily run/report
+- monitoring/postgresql: allow netdata to monitor postgresql server
 - common: apt: allow enabling contrib and non-free software sections (`apt_enable_nonfree`)
 - common: make role compatible with debian 11 "bullseye"
 
 **Changed:**
+- nextcloud: upgrade to [22.1.1](https://github.com/nextcloud/server/tags)
 - nextcloud: silence cron/background tasks output to prevent mail notification spam
-- common: sysctl: disable IP source routing for ipv6 (already disabled for ipv4)
+- nextcloud: allow installation of [ONLYOFFICE](https://nextcloud.com/onlyoffice/) realtime collaborative document edition tools
+- gitea: upgrade to [1.15.2](https://github.com/go-gitea/gitea/releases)
+- common: sysctl: disable IP source routing for IPv6 (was already disabled for IPv4)
 - xsrv: switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3), update playbook for compatibility
 - update documentation
+
+**Removed:**
+- nextcloud: disable [deck](https://apps.nextcloud.com/apps/deck) app by default
 
 **Fixed:**
 - homepage: really update page title from `homepage_title` variable
@@ -39,6 +41,57 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Security:**
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
+
+
+e74131b 
+34c335d gitea: upgrade to 1.15.2 - https://github.com/go-gitea/gitea/releases
+151d170 doc: fix typos
+e2b0969 doc:cleanup documentation
+cdfbf4c doc: fix readthedocs configuration
+db7bcef doc: update CHANGELOG.md
+f1e7a11 doc: update install documentation, split debian installation to dedicated page
+a9618c2 common: apt: support debian-security APT repository for debian 11
+b5aec30 common: msmtp: make role compatible with debian 11 "bullseye"
+8f6ee08 common: apt: allow enabling contrib and non-free software sections (apt_enable_nonfree)
+b58ffbe nextcloud: fix check mode on upgrades - don't fail on tasks that are expected to fail during upgrades in check mode - create /root/nextcloud-unpack even in check mode
+7ede104 openldap/samba: migrate ldap_attr module to community.general.ldap_attrs - https://docs.ansible.com/ansible/latest/collections/community/general/ldap_attrs_module.html
+193f5cf switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3): - https://github.com/ansible/ansible/blob/stable-2.11/changelogs/CHANGELOG-v2.11.rst - https://github.com/ansible-community/ansible-build-data/blob/main/4/CHANGELOG-v4.rst - https://www.ansible.com/blog/ansible-3.0.0-qa
+33b825a Merge pull request 'doc: refactor documentation' (#533)
+9fb931d doc: VM templates/cloning
+bfce6ea doc: refactor usage documentation
+888eea8 doc: tt-rss: update/fix task description
+a4ec8da nextcloud: update nextcloud to 22.1.0
+bc06f64 gitea: update gitea to 1.14.6
+ffa44e7 common: sysctl: disable IP source routing for ipv6 (already disabled for ipv4) - ensure source routing is disabled by default on newly added interfaces
+37d6921 doc: common: update ssh configuration comments
+342034c doc: update usage documentation
+0ef43b6 nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
+9c0a611 doc: nexctloud: update 3rd party applications/screenshots
+d63ed0e nextcloud: disable deck app by default
+0643fc2 nextcloud: silence cron/background tasks output to prevent mail notification spam
+611ac54 nextcloud: apps: update applications berfore installing new apps - incompatible app versions need to be upgraded before the install command is issued
+e88eafa nextcloud: disable documentserver/onlyoffice app by default - App "documentserver_community" cannot be installed because appinfo file cannot be read. - https://github.com/nextcloud/documentserver_community/issues/26 - https://github.com/nextcloud/documentserver_community/issues/160
+d3f5bf5 doc: gitrea opensubtitles plugin usage (an opensubtitles account is required)
+8bf2892 gitea: update to 1.14.4
+2109473 nextcloud: install and enable [ONLYOFFICE](https://nextcloud.com/onlyoffice/) integration (realtime collaboratiove document edition) - https://nextcloud.com/blog/how-to-install-onlyoffice-in-nextcloud-hub-and-new-integration-feature/
+5e9cd76 nextcloud: upgrade to nextcloud [22.0.0](https://nextcloud.com/changelog/#latest22)
+59ae980 default playbook: allow outgoing SMTPS on port 445 by default (msmtp)
+cdd0ac1 doc: fix vm/template creation example
+c90bf52 jellyfin: use `samba_shares_path` variable to determine samba shares path
+9a9fee5 doc: fix proxmox role link
+4535bb5 homepage: really update page title from `homepage_title` variable
+843f1fa gitea: upgrade to 1.14.3 - https://github.com/go-gitea/gitea/releases/tag/v1.14.3
+d217377 doc: backup: cleanup comments
+1483739 cleanup: users: use standard yaml syntax
+82d7d5f postgresql/monitoring: allow monitoring of postgresql server from netdata (add `python3-psycopg2`)
+829df26 Merge branch 'gitea-config-issues-page-num'
+515310b gitea: add `gitea_issue_paging_num` configuration variable (number of issues per page), increase to 20 by default
+2cbf42b doc: update TODO.md
+0b3d28f Add proxmox role:  - setup `pve-no-subscription` APT repositories  - setup fail2ban on web UI login form, if the `nodiscc.xsrv.common` role is enabled  - setup automatic upgrades from proxmox repos by default, if the `nodiscc.xsrv.common` role is enabled  - add documentation/role metadata  - enable tests for proxmox role  - fixes #452  - update CHANGELOG
+859c01f default playbook: reorder variables in template vault file
+3396a4b doc: update README/formatting
+0b60a6f monitoring: add (optional, default disabled) lynis security audit tool, schedule a daily run - send warnings/suggestions/errors report by mail to root - make report generation regex configurable - make list of lynis tests to skip configurable, depending on security policy - adapted from https://github.com/libre-logic/ansible-collection-librelogic/ - ref. #177
+2cf75ba shaarli: make `header_link`, `debug` and `formatter` settings configurable from host variables - include enable_async_metadata and tags_separator in config - add shaarli-config ansible tag
 
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
