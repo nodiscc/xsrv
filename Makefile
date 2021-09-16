@@ -91,7 +91,7 @@ update_todo:
 
 .PHONY: changelog # manual - establish a changelog since the last git tag
 changelog:
-	echo "[INFO] changes since last tag $(LAST_TAG)" && \
+	@echo "[INFO] changes since last tag $(LAST_TAG)" && \
 	git log --oneline $(LAST_TAG)...HEAD | cat
 
 .PHONY: gitlab_release # create a new gitlab release (new_tag=X.Y.Z required, GITLAB_PRIVATE_TOKEN must be defined in the environment)

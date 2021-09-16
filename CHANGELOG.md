@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: make `hide_timestamp,header_link,debug,formatter` [settings](https://shaarli.readthedocs.io/en/master/Shaarli-configuration/) configurable
 - monitoring: add (optional, default disabled) [lynis](https://cisofy.com/lynis/) security audit tool, schedule a daily run/report
 - monitoring/postgresql: allow netdata to monitor postgresql server
-- common: apt: allow enabling contrib and non-free software sections (`apt_enable_nonfree`)
+- common: apt: allow enabling `contrib` and `non-free` software sections (`apt_enable_nonfree`)
 - common: make role compatible with debian 11 "bullseye"
 
 **Changed:**
