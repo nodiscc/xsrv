@@ -3,7 +3,7 @@
     - apache
     - lamp
 
-- include: apache-ssl-selfsigned.yml
+- include: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
