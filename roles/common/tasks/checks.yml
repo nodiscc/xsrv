@@ -28,3 +28,16 @@
       - sysctl_answer_ping == sysctl_answer_ping|bool
       - sysctl_vm_swappiness|int
       - sysctl_vm_vfs_cache_pressure|int
+
+- name: check that mandatory variables are correctly defined
+  assert:
+    that:
+      - msmtp_host is not search("CHANGEME")
+      - msmtp_port == msmtp_port|int
+      - msmtp_username is not search("CHANGEME")
+      - msmtp_password is not search("CHANGEME")
+      - msmtp_admin_email not search("CHANGEME")
+      - msmtp_from is string
+      - msmtp_starttls == msmtp_starttls|bool
+  when:
+    - setup_msmtp == setup_msmtp|bool

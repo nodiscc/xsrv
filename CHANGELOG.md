@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: allow installation of [ONLYOFFICE](https://nextcloud.com/onlyoffice/) realtime collaborative document edition tools
 - gitea: upgrade to [1.15.2](https://github.com/go-gitea/gitea/releases)
 - common: sysctl: disable IP source routing for IPv6 (was already disabled for IPv4)
+- common: msmtp: check that configuration variables have correct values/types when `msmtp_setup: yes`
 - xsrv: switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3), update playbook for compatibility
 - update documentation
 
