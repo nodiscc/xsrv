@@ -1,3 +1,5 @@
+##### SSL/TLS CERTIFICATES - SELF-SIGNED #####
+
 - name: install requirements for SSL/TLS certificates generation
   apt:
     state: present
@@ -15,6 +17,8 @@
     path: "/etc/ssl/private/{{ rocketchat_fqdn }}.csr"
     privatekey_path: "/etc/ssl/private/{{ rocketchat_fqdn }}.key"
     common_name: "{{ rocketchat_fqdn }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:

@@ -17,6 +17,8 @@
     path: "/etc/ssl/private/{{ transmission_fqdn }}.csr"
     privatekey_path: "/etc/ssl/private/{{ transmission_fqdn }}.key"
     common_name: "{{ transmission_fqdn }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:

@@ -1,5 +1,12 @@
 ##### SSL/TLS CERTIFICATES - SELF-SIGNED #####
 
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
 - name: generate openssl private key
   openssl_privatekey:
     path: "/etc/ssl/private/{{ graylog_fqdn }}.key"
@@ -10,6 +17,8 @@
     path: "/etc/ssl/private/{{ graylog_fqdn }}.csr"
     privatekey_path: "/etc/ssl/private/{{ graylog_fqdn }}.key"
     common_name: "{{ graylog_fqdn }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:

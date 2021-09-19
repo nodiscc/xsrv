@@ -17,6 +17,8 @@
     path: "/etc/ssl/private/{{ ldap_account_manager_fqdn }}.csr"
     privatekey_path: "/etc/ssl/private/{{ ldap_account_manager_fqdn }}.key"
     common_name: "{{ ldap_account_manager_fqdn }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:

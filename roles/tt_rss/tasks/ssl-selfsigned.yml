@@ -1,5 +1,3 @@
----
-
 ##### SSL/TLS CERTIFICATES - SELF-SIGNED #####
 
 - name: install requirements for SSL/TLS certificates generation
@@ -19,6 +17,8 @@
     path: "/etc/ssl/private/{{ tt_rss_fqdn }}.csr"
     privatekey_path: "/etc/ssl/private/{{ tt_rss_fqdn }}.key"
     common_name: "{{ tt_rss_fqdn }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:

@@ -1,5 +1,3 @@
----
-
 ##### PACKAGES ###################
 
 - name: configure APT to install apache and modules from buster-backports
