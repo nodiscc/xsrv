@@ -1,5 +1,12 @@
 ##### RSYSLOG CLIENT CERTIFICATE GENERATION AND SIGNING #####
 
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
 - name: create directory for rsyslog certs/keys/CSRs
   file:
     state: directory

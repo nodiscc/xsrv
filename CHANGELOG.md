@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: fix upgrade procedure order (upgrade incompatible apps)
 - nextcloud: fix `check` mode on upgrades
 - graylog: respect `elasticsearch_timeout_start_sec` value
+- monitoring: rsyslog: ensure that requirements for self-signed certificates generation are installed
 
 **Security:**
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
