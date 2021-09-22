@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: upgrade to [1.15.2](https://github.com/go-gitea/gitea/releases)
 - common: sysctl: disable IP source routing for IPv6 (was already disabled for IPv4)
 - common: msmtp: check that configuration variables have correct values/types when `msmtp_setup: yes`
+- xsrv: logs: don't ask for sudo password if syslog is readable without it
 - xsrv: switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3), update playbook for compatibility
 - update documentation
 
@@ -39,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jellyfin: use `samba_shares_path` variable to determine samba shares path
 - nextcloud: fix upgrade procedure order (upgrade incompatible apps)
 - nextcloud: fix `check` mode on upgrades
+- graylog: respect `elasticsearch_timeout_start_sec` value
 
 **Security:**
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
