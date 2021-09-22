@@ -1,4 +1,4 @@
 {% if elasticsearch_timeout_start_sec != "auto" %}
 [Service]
-TimeoutStartSec=500
+TimeoutStartSec={{ elasticsearch_timeout_start_sec }}
 {% endif %}
