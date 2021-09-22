@@ -1,7 +1,9 @@
-- name: update nextcloud applications (not imdepotent, always upgrade to latest version) # noqa 301
+# not idempotent, always upgrade to latest versions
+- name: update nextcloud applications (always returns changed)
   become: yes
   become_user: www-data
   command: /usr/bin/php ./occ app:update --all
+  changed_when: yes
   args:
     chdir: "{{ nextcloud_install_dir }}"
 
