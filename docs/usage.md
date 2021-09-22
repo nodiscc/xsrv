@@ -1,10 +1,66 @@
 # Usage
 
-[hosts (server)](installation/server-preparation.md) configuration is stored on the [controller](installation/controller-preparation.md) machine in the `~/playbooks/` directory. Configuration files use the [YAML](https://en.wikipedia.org/wiki/YAML) syntax.
+[Hosts (servers)](installation/server-preparation.md) configuration is stored on the [controller](installation/controller-preparation.md) machine, in [YAML](https://en.wikipedia.org/wiki/YAML) files in the `~/playbooks/` directory.
 
 To [add roles or change configuration settings](#changing-configuration), edit the relevant configuration file, then [apply changes](#applying-configuration) using `xsrv deploy`.
 
-Most commands support and additional `playbook` and `host` parameters if you have multiple playbook/hosts. See [command-line usage](#command-line-usage) for complete examples. You may also edit files directly in the `playbooks/PLAYBOOK_NAME` directory and use [ansible command-line tools](#using-as-ansible-collection) to manage and deploy your configuration.
+
+-----------------------
+
+## Command-line usage
+
+Most commands support optional `playbook` and `host` parameters if you have multiple playbooks/hosts. You may also edit files directly in the playbook directory, and use [ansible command-line tools](#using-as-ansible-collection) to manage and deploy your configuration.
+
+```bash
+  ╻ ╻┏━┓┏━┓╻ ╻
+░░╺╋╸┗━┓┣┳┛┃┏┛
+  ╹ ╹┗━┛╹┗╸┗┛ vX.Y.Z
+
+USAGE: xsrv COMMAND [playbook] [host]
+
+# PLAYBOOK-LEVEL COMMANDS
+init-playbook [playbook]         initialize a new playbook
+edit-playbook [playbook]         edit/show playbook (list of roles)
+edit-inventory [playbook]        edit/show inventory file (list of hosts)
+show-defaults [playbook] [role]  show all variables and their default values
+
+# HOST-LEVEL COMMANDS
+init-host [playbook] [host]      add a new host to an existing playbook
+check [playbook] [host]          simulate deployment, report what would be changed
+deploy [playbook] [host]         deploy a playbook (apply configuration/roles)
+edit-host [playbook] [host]      edit host configuration (host_vars)
+edit-vault [playbook] [host]     edit encrypted (vault) host configuration
+fetch-backups [playbook] [host]  fetch backups from a host to the local backups/ directory
+upgrade [playbook] [host]        upgrade roles to latest version
+shell [playbook] [host]          open an interactive shell on a host
+logs [playbook] [host]           view system log on a host
+ls                               list files in the playbooks directory (accepts a path)
+help                             show this message
+
+# OTHER COMMANDS
+self-upgrade                     check for new releases/upgrade the xsrv script in-place
+
+# ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
+TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
+EDITOR             text editor to use (default: nano)
+PAGER              pager to use (default: less)
+```
+
+Examples:
+
+```bash
+xsrv deploy default # deploy all hosts in the 'default' playbook
+xsrv deploy # deploy all hosts in the default playbook (default is assumed when no playbook name is specified)
+xsrv init-playbook infra # initialize a new playbook/environment named 'infra'
+xsrv deploy infra # deploy all hosts in the playbook named 'infra'
+xsrv init-host infra ex2.CHANGEME.org # add a new host 'ex2.CHANGEME.org' to the playbook named 'infra'
+xsrv edit-host infra ex2.CHANGEME.org # edit host variables for the host 'ex2.CHANGEME.org' in the playbook 'infra'
+xsrv edit-vault infra ex2.CHANGEME.org # edit secret/vaulted variables for 'ex2.CHANGEME.org' in the playbook 'infra'
+xsrv deploy infra ex1.CHANGEME.org,ex2.CHANGEME.org # deploy only the hosts ex1.CHANGEME.org and ex2.CHANGEME.org in the playbook 'infra'
+TAGS=nextcloud,gitea deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud or gitea on ex3.CHANGEME.org
+```
+
 
 ------------------------
 
@@ -162,57 +218,6 @@ See [YAML inventory](https://docs.ansible.com/ansible/latest/collections/ansible
 
 -------------------------------
 
-## Command-line usage
-
-```bash
-  ╻ ╻┏━┓┏━┓╻ ╻
-░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ vX.Y.Z
-
-USAGE: xsrv COMMAND [playbook] [host]
-
-# PLAYBOOK-LEVEL COMMANDS
-init-playbook [playbook]         initialize a new playbook
-edit-playbook [playbook]         edit/show playbook (list of roles)
-edit-inventory [playbook]        edit/show inventory file (list of hosts)
-show-defaults [playbook] [role]  show all variables and their default values
-
-# HOST-LEVEL COMMANDS
-init-host [playbook] [host]      add a new host to an existing playbook
-check [playbook] [host]          simulate deployment, report what would be changed
-deploy [playbook] [host]         deploy a playbook (apply configuration/roles)
-edit-host [playbook] [host]      edit host configuration (host_vars)
-edit-vault [playbook] [host]     edit encrypted (vault) host configuration
-fetch-backups [playbook] [host]  fetch backups from a host to the local backups/ directory
-upgrade [playbook] [host]        upgrade roles to latest version
-shell [playbook] [host]          open an interactive shell on a host
-logs [playbook] [host]           view system log on a host
-ls                               list files in the playbooks directory (accepts a path)
-help                             show this message
-
-# OTHER COMMANDS
-self-upgrade                     check for new releases/upgrade the xsrv script in-place
-
-# ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
-TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
-SKIP_VENV          advanced: skip installation of pip dependencies (yes/no, default: no)
-EDITOR             text editor to use (default: nano)
-PAGER              pager to use (default: less)
-```
-
-Examples:
-
-```bash
-xsrv deploy default # deploy all hosts in the 'default' playbook
-xsrv deploy # deploy all hosts in the default playbook (default is assumed when no playbook name is specified)
-xsrv init-playbook infra # initialize a new playbook/environment named 'infra'
-xsrv deploy infra # deploy all hosts in the playbook named 'infra'
-xsrv init-host infra ex2.CHANGEME.org # add a new host 'ex2.CHANGEME.org' to the playbook named 'infra'
-xsrv edit-host infra ex2.CHANGEME.org # edit host variables for the host 'ex2.CHANGEME.org' in the playbook 'infra'
-xsrv edit-vault infra ex2.CHANGEME.org # edit secret/vaulted variables for 'ex2.CHANGEME.org' in the playbook 'infra'
-xsrv deploy infra ex1.CHANGEME.org,ex2.CHANGEME.org # deploy only the hosts ex1.CHANGEME.org and ex2.CHANGEME.org in the playbook 'infra'
-TAGS=nextcloud,gitea deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud or gitea on ex3.CHANGEME.org
-```
 
 
 -------------------------------
