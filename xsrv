@@ -329,7 +329,7 @@ function _main() {
         "edit-group") shift; edit_group;;
         "edit-vault") init_venv; shift; edit_vault ;;
         "shell") init_venv; shift; run_shell ;;
-        "logs") init_venv; shift; ssh_args="sudo lnav /var/log/syslog"; run_shell ;;
+        "logs") init_venv; shift; ssh_args="bash -c 'if [[ -r /var/log/syslog ]]; then lnav /var/log/syslog; else sudo lnav /var/log/syslog; fi'"; run_shell ;;
         "ls") shift; _ls "$@" ;;
         "help") echo "$usage" ;;
         "fetch-backups") init_venv; shift; fetch_backups ;;
