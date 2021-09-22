@@ -36,7 +36,7 @@
       - msmtp_port == msmtp_port|int
       - msmtp_username is not search("CHANGEME")
       - msmtp_password is not search("CHANGEME")
-      - msmtp_admin_email not search("CHANGEME")
+      - msmtp_admin_email is not search("CHANGEME")
       - msmtp_from is string
       - msmtp_starttls == msmtp_starttls|bool
   when:
