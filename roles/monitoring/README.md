@@ -13,7 +13,9 @@ This role will install a lightweight monitoring system on a Linux machine:
 
 ## Requirements/dependencies/example playbook
 
-See [meta/main.yml](defaults/main.yml) for all configuration variables
+The service must be reachable on port `tcp/19999` through firewall/NAT.
+
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
 - hosts: my.CHANGEME.org
@@ -23,8 +25,6 @@ See [meta/main.yml](defaults/main.yml) for all configuration variables
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
-
-The service must be reachable on port `tcp/19999` through firewall/NAT
 
 
 ## Usage
