@@ -11,7 +11,7 @@ graylog_secret_key: "CHANGEME96"
 graylog_https_mode: selfsigned
 # start/stop the graylog/elasticsearch/mongodb services, enable/disable them on boot (yes/no)
 graylog_enable_service: yes
-# (auto/512m/1g...) JVM memory heap size for graylog
+# (512m/1g...) JVM memory heap size for graylog
 graylog_heap_size: "1g"
 # (auto/512m/1g...) JVM memory heap size for elasticsearch
 elasticsearch_heap_size: "auto"
