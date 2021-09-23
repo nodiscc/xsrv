@@ -85,6 +85,9 @@
             .netdata :hover{
                 border-color: #45DB73;
             }
+            .graylog :hover{
+                border-color: #E84139;
+            }
             .ssh :hover {
                 border-color: #4E4E4E;
             }
@@ -201,6 +204,15 @@
                 <a class="netdata" href="https://{{ inventory_hostname }}:19999/">
                     <div class="content">
                         <p><img src="res/netdata.png"/><br/> Netdata</p>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if 'nodiscc.xsrv.graylog' in role_names %}
+            <div class="col-1-3 mobile-col-1-1">
+                <a class="graylog" href="https://{{ graylog_fqdn }}/">
+                    <div class="content">
+                        <p><img src="res/graylog.png"/><br/> Graylog</p>
                     </div>
                 </a>
             </div>
