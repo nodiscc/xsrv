@@ -13,13 +13,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
-- [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
+- add [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
 - gitea: make number of issues per page configurable (`gitea_issue_paging_num` , increase to 20 by default)
 - shaarli: make `hide_timestamp,header_link,debug,formatter` [settings](https://shaarli.readthedocs.io/en/master/Shaarli-configuration/) configurable
-- monitoring: add (optional, default disabled) [lynis](https://cisofy.com/lynis/) security audit tool, schedule a daily run/report
+- monitoring: add [lynis](https://cisofy.com/lynis/) security audit tool (optional, default disabled), schedule a daily report
 - monitoring/postgresql: allow netdata to monitor postgresql server
 - common: apt: allow enabling `contrib` and `non-free` software sections (`apt_enable_nonfree`)
-- common: make role compatible with debian 11 "bullseye"
+- common: make role compatible with Debian 11 "Bullseye"
 
 **Changed:**
 - nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)
@@ -31,7 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: msmtp: check that configuration variables have correct values/types when `msmtp_setup: yes`
 - monitoring: increate netdata retention persion to ~7 days
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
-- xsrv: switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3), update playbook for compatibility
+- xsrv: switch to ansible "distribution" versioning, upgrade to [4.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/4/CHANGELOG-v4.rst) ([ansible-core](https://github.com/ansible/ansible) 2.11.5), update playbook for compatibility
 - homepage: update theme (use light theme), use web safe fonts
 - apache: make role compatible with Debian 11 "Bullseye"
 - update documentation
