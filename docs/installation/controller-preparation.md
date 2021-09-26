@@ -14,7 +14,6 @@ git clone https://gitlab.com/nodiscc/xsrv
 sudo cp xsrv/xsrv /usr/local/bin/
 ```
 
-_Note:_ it is also possible (but not recommended) to use the server itself as a controller. It will then configure itself without need for a SSH connection.
-In that case, clone and install `xsrv` directly on the host, and set `connection: local` in the playbook for this host (on the same level as `roles:`) during playbook initialization, or with `xsrv edit-playbook`.
+It is also possible (but not recommended) to use the server itself as a controller. It will then configure itself without need for a SSH connection/separate administration machine. Clone and install `xsrv` directly on the host, and set `connection: local` in the playbook for this host (on the same level as `roles:`) during playbook initialization, or with `xsrv edit-playbook`.
 
-Once the controller has been set up, it is time to [deploy](first-deployment.md) configuration to your hosts.
+Once the controller has been set up, [deploy](first-deployment.md) roles and configuration to your hosts.
