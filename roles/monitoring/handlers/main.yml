@@ -36,5 +36,10 @@
   systemd:
     daemon_reexec: yes
 
+- name: update apt cache
+  become: yes
+  apt:
+    update_cache: yes
+
 - name: update ansible facts
   setup:

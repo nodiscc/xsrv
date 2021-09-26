@@ -1,5 +1,15 @@
 ##### NETDATA SYSTEM MONITOR #####
 
+- name: detect ipaddr/ipaddress python package name
+  set_fact:
+    python3_ipaddr_package: "{{ item.name }}"
+  when: "{{ item.condition }}"
+  with_items:
+    - name: python-ipaddress
+      condition: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
+    - name: python3-ipaddr
+      condition: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye'
+
 - name: install netdata requirements
   apt:
     package:
@@ -9,7 +19,7 @@
       - python3
       - python3-yaml
       - python3-dnspython
-      - python-ipaddress
+      - "{{ python3_ipaddr_package }}"
       - python3-mysqldb
       - lm-sensors
       - libmnl0
@@ -20,7 +30,7 @@
       - liblz4-1
       - gnupg
       - git # required to clone additional modules
-      - python-psycopg2 # postgresql support
+      - python3-psycopg2 # postgresql support
     state: present
 
 ### INSTALL NETDATA FROM PACKAGECLOUD APT REPOSITORY #####
@@ -36,17 +46,28 @@
     url: https://packagecloud.io/netdata/netdata/gpgkey
     state: present
 
-- name: copy netdata/packagecloud APT pinning preferences
-  template:
-    src: etc_apt_preferences.d_99-netdata-packagecloud.j2
-    dest: /etc/apt/preferences.d/99-netdata-packagecloud
-    mode: 0644
+- name: remove APT configuration from old versions of the role
+  file:
+    path: /etc/apt/sources.list.d/packagecloud_io_netdata_netdata_debian.list
+    state: absent
+  notify: update apt cache
 
-- name: add netdata repository to APT sources
-  apt_repository:
-    repo: "deb https://packagecloud.io/netdata/netdata/debian/ buster main"
-    state: present
-    update_cache: yes
+- name: copy netdata/packagecloud APT sources/pinning configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: etc_apt_preferences.d_99-netdata-packagecloud.j2
+      dest: /etc/apt/preferences.d/99-netdata-packagecloud
+    - src: etc_apt_sources.list.d_netdata-packagecloud.list.j2
+      dest: /etc/apt/sources.list.d/netdata-packagecloud.list
+  notify: update apt cache
+
+- name: update APT cache to apply configuration changes
+  meta: flush_handlers
 
 - name: install netdata
   apt:

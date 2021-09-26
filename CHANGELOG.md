@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/postgresql: allow netdata to monitor postgresql server
 - docker: allow enabling unattended upgrades of docker engine packages (`docker_auto_upgrade: yes/no`)
 - common: apt: allow enabling `contrib` and `non-free` software sections (`apt_enable_nonfree`)
-- common: make role compatible with Debian 11 "Bullseye"
+- common, monitoring: make roles compatible with Debian 11 "Bullseye"
 - homepage: add link to graylog instance (when graylog role is enabled)
 - monitoring: allow configuration of syslog retention duration, default to 186 days instead of 7
 - monitoring: allow defining a number of maximum expected running docker containers (`netdata_max_running_docker_containers`)
