@@ -6,11 +6,11 @@
       - bash
       - curl
       - iproute2
-      - python
-      - python-yaml
-      - python-dnspython
+      - python3
+      - python3-yaml
+      - python3-dnspython
       - python-ipaddress
-      - python-mysqldb
+      - python3-mysqldb
       - lm-sensors
       - libmnl0
       - netcat
