@@ -16,4 +16,5 @@ graylog_heap_size: "1g"
 # (auto/512m/1g...) JVM memory heap size for elasticsearch
 elasticsearch_heap_size: "auto"
 # (auto/seconds) timeout for elasticsearch systemd service startup
-elasticsearch_timeout_start_sec: "auto"
+# set a longer value if the elasticsearch systemd service fails to start/times out
+elasticsearch_timeout_start_sec: auto
