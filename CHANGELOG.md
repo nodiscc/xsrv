@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: silence cron/background tasks output to prevent mail notification spam
 - nextcloud: allow installation of [ONLYOFFICE](https://nextcloud.com/onlyoffice/) realtime collaborative document edition tools
 - gitea: upgrade to [1.15.2](https://github.com/go-gitea/gitea/releases)
+- gitea update fail2ban [login failure detection](https://docs.gitea.io/en-us/fail2ban-setup/) for gitea v1.15+
 - common: sysctl: disable IP source routing for IPv6 (was already disabled for IPv4)
 - common: msmtp: check that configuration variables have correct values/types when `msmtp_setup: yes`
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
