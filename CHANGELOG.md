@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: increate netdata retention persion to ~7 days
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
 - xsrv: switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3), update playbook for compatibility
+- homepage: update theme (use light theme), use web safe fonts
 - apache: make role compatible with Debian 11 "Bullseye"
 - update documentation
 

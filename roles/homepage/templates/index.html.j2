@@ -10,9 +10,9 @@
         <link rel="stylesheet" type="text/css" href="res/simplegrid.css" />
         <style>
             body {
-                background: #1c1f20;
-                color: #FFF;
-                font-family: "monospace";
+                background: #ffffff;
+                color: rgb(15, 15, 15);
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
                 font-size: 85%;
                 line-height: 1.5;
             }
@@ -20,34 +20,32 @@
                 text-align: center;
             }
             .content {
-                background: #282c2e;
+                background: #ffffff;
                 margin-top: 1px;
                 margin-bottom: 5px;
                 text-align: center;
-                border-radius: 2px;
-                border: #282c2e 2px solid;
+                border-radius: 0px;
+                border: #DFDFDF 1px solid;
                 height: 80px;
+                box-shadow: 3px 6px 30px -14px rgba(0,0,0,.25);
+                
             }
             a {
-                color: #FFF;
+                color: rgb(15, 15, 15);
                 text-decoration: none;
-            }
-            code {
-                word-wrap: break-word;
             }
             input {
                 width: 90%;
-                background-color: #1c1f20;
+                background-color: #f4f4f4;
                 border: 0px;
                 border-radius: 2px;
-                color:  #96a9af;
+                color:  #474747;
                 font-family: monospace;
             }
             .message {
                 text-align: center;
                 color; #AAA;
                 display: block;
-                background-color: #1c1f20;
                 border-radius: 2px;
                 margin-top: 12px;
             }
@@ -109,7 +107,7 @@
                 <h1>{{ homepage_title }}</h1>
             </div>
 {% if 'nodiscc.xsrv.nextcloud' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 nextcloud">
+            <div class="col-1-3 mobile-col-1-1 nextcloud">
                 <a href="https://{{ nextcloud_fqdn }}">
                     <div class="content">
                         <p><img src="res/nextcloud.png"/><br/> Nextcloud</p>
@@ -118,7 +116,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.rocketchat' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 rocketchat">
+            <div class="col-1-3 mobile-col-1-1 rocketchat">
                 <a href="https://{{ rocketchat_fqdn }}">
                     <div class="content">
                         <p><img src="res/rocketchat.png"/><br/> Rocket.Chat</p>
@@ -127,7 +125,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.shaarli' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 shaarli">
+            <div class="col-1-3 mobile-col-1-1 shaarli">
                 <a href="https://{{ shaarli_fqdn }}">
                     <div class="content">
                         <p><img src="res/shaarli.png"/><br/> Shaarli</p>
@@ -136,7 +134,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.tt_rss' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 tt-rss">
+            <div class="col-1-3 mobile-col-1-1 tt-rss">
                 <a href="https://{{ tt_rss_fqdn }}">
                     <div class="content">
                         <p><img src="res/tt-rss.png"/><br/> Tiny Tiny RSS</p>
@@ -145,7 +143,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.transmission' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 transmission">
+            <div class="col-1-3 mobile-col-1-1 transmission">
                 <a href="https://{{ transmission_fqdn }}">
                     <div class="content">
                         <p><img src="res/transmission.png"/><br/> Transmission</p>
@@ -154,7 +152,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.gitea' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 gitea">
+            <div class="col-1-3 mobile-col-1-1 gitea">
                 <a href="https://{{ gitea_fqdn }}">
                     <div class="content">
                         <p><img src="res/gitea.png"/><br/> Gitea</p>
@@ -163,7 +161,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.jellyfin' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 jellyfin">
+            <div class="col-1-3 mobile-col-1-1 jellyfin">
                 <a href="https://{{ jellyfin_fqdn }}">
                     <div class="content">
                         <p><img src="res/jellyfin.png"/><br/> Jellyfin</p>
@@ -172,7 +170,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.mumble' in role_names %}
-            <div class="col-1-5 mobile-col-1-1">
+            <div class="col-1-3 mobile-col-1-1">
                 <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ mumble_port }}">
                     <div class="content">
                         <p><img src="res/mumble.png"/><br/> Mumble</p>
@@ -181,7 +179,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
-            <div class="col-1-5 mobile-col-1-1">
+            <div class="col-1-3 mobile-col-1-1">
                 <a class="ldap-account-manager" href="https://{{ ldap_account_manager_fqdn }}">
                     <div class="content">
                         <p><img src="res/ldap-account-manager.png"/><br/> LDAP Account Manager</p>
@@ -190,7 +188,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_ssp %}
-            <div class="col-1-5 mobile-col-1-1">
+            <div class="col-1-3 mobile-col-1-1">
                 <a class="self-service-password" href="https://{{ self_service_password_fqdn }}">
                     <div class="content">
                         <p><img src="res/self-service-password.png"/><br/> Self-Service Password</p>
@@ -199,7 +197,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.monitoring' in role_names %}
-            <div class="col-1-5 mobile-col-1-1">
+            <div class="col-1-3 mobile-col-1-1">
                 <a class="netdata" href="https://{{ inventory_hostname }}:19999/">
                     <div class="content">
                         <p><img src="res/netdata.png"/><br/> Netdata</p>
@@ -208,7 +206,7 @@
             </div>
 {% endif %}
 {% if 'nodiscc.xsrv.gotty' in role_names %}
-            <div class="col-1-5 mobile-col-1-1">
+            <div class="col-1-3 mobile-col-1-1">
                 <a class="gotty" href="https://{{ gotty_fqdn }}/">
                     <div class="content">
                         <p><img src="res/gotty.png"/><br/> GoTTY</p>
@@ -216,18 +214,18 @@
                 </a>
             </div>
 {% endif %}
-            <div class="col-1-5 mobile-col-1-1 ssh">
+            <div class="col-1-3 mobile-col-1-1 ssh">
                 <div class="content">
                     <p><img src="res/ssh.png"/><br/>SSH<br/><input type="text" readonly value="ssh -p {{ ansible_ssh_port|default('22')}} {{ ansible_user }}@{{ inventory_hostname }}"></input></p>
                 </div>
             </div>
-            <div class="col-1-5 mobile-col-1-1 sftp">
+            <div class="col-1-3 mobile-col-1-1 sftp">
                 <div class="content">
                     <p><img src="res/sftp.png"/><br/>SFTP<br/><input type="text" readonly value="sftp://{{ ansible_user }}@{{ inventory_hostname }}:{{ ansible_ssh_port|default('22')}}"></input></p>
                 </div>
             </div>
 {% if 'nodiscc.xsrv.samba' in role_names %}
-            <div class="col-1-5 mobile-col-1-1 samba">
+            <div class="col-1-3 mobile-col-1-1 samba">
                 <div class="content">
                     <p><img src="res/samba.png"/><br/>Samba<br/><input type="text" readonly value="smb://{{ inventory_hostname }}"></input></p>
                 </div>
