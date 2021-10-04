@@ -3,7 +3,7 @@
 This role will setup a simple webserver homepage/dashboard:
 - list and shortcuts to services installed on the host ([ssh/sftp (common)](../common), [nextcloud](../nextcloud), [rocketchat](../rocketchat), [shaarli](../shaarli), [tt-rss](../tt_rss), [transmission](../transmission), [gitea](../gitea), [mumble](../mumble), [netdata (monitoring)](../monitoring), [samba](../samba), [ldap-account-manager (openldap)](../openldap)...), [jellyfin](../jellyfin)
 
-[![](https://i.imgur.com/Q8LYoEY.png)](https://i.imgur.com/LiQ6Dab.png)
+[![](https://i.imgur.com/OWOH8LI.png)](https://i.imgur.com/PTeVCM1.png)
 
 
 ## Requirements/dependencies/example playbook

@@ -92,7 +92,7 @@ See the full [usage documentation](https://xsrv.readthedocs.io/en/latest/usage.h
 [![](https://i.imgur.com/PRE7fvn.png)](roles/openldap)
 [![](https://i.imgur.com/WUdwbAX.png)](roles/rocketchat)
 
-[![](https://i.imgur.com/Q8LYoEY.png)](roles/homepage)
+[![](https://i.imgur.com/OWOH8LI.png)](roles/homepage)
 [![](https://i.imgur.com/Fg8uRjL.png)](roles/jellyfin)
 [![](https://i.imgur.com/eGCL45L.jpg)](roles/graylog)
 

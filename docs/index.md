@@ -11,10 +11,12 @@
 [![](https://img.shields.io/badge/latest%20release-1.3.1-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
-`xsrv` is a tool to **install and manage self-hosted services/applications on your own server(s)**, from single-machine homeserver/lab setups to large scale infrastructures. It provides:
+**Install, manage and run self-hosted network services and applications on your own server(s)** (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, IT infrastructure and more).
+
+ `xsrv` provides:
 - [roles](#roles) to install/configure various network services, web applications, system and infrastructure management tools
 - a [command-line tool](usage.md) for common operations, easy/fast deployment, configuration and maintenance
-- a playbook [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv) to [get started with a single server](installation/first-deployment.md) in a few minutes
+- a template to [get started with a single server](installation/first-deployment.md) in a few minutes
 
 
 ## Roles
@@ -90,7 +92,7 @@ See the full [usage documentation](usage.md).
 [![](https://i.imgur.com/PRE7fvn.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap)
 [![](https://i.imgur.com/WUdwbAX.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat)
 
-[![](https://i.imgur.com/Q8LYoEY.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
+[![](https://i.imgur.com/OWOH8LI.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
 [![](https://i.imgur.com/Fg8uRjL.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
 [![](https://i.imgur.com/eGCL45L.jpg)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog)
 
