@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: msmtp: check that configuration variables have correct values/types when `msmtp_setup: yes`
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
 - xsrv: switch to ansible "distribution" versioning, upgrade to 4.4.0 (`ansible-core` 2.11.3), update playbook for compatibility
+- apache: make role compatible with Debian 11 "Bullseye"
 - update documentation
 
 **Removed:**

@@ -1,15 +1,15 @@
 ##### PACKAGES ###################
 
-- name: configure APT to install apache and modules from buster-backports
+- name: configure APT to install apache and modules from backports (Debian 10)
   template:
     src: etc_apt_preferences.d_99-apache2-buster-backports.j2
     dest: /etc/apt/preferences.d/99-apache2-buster-backports
     mode: 0644
   register: apache_apt_pinning
+  when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
 
 # refresh APT cache after updating APT preferences
 - name: update apt cache # noqa 503
-  become: yes
   apt:
     update_cache: yes
   when: apache_apt_pinning.changed
