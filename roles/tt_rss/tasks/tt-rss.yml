@@ -72,13 +72,10 @@
     state: directory
     owner: root
     group: www-data
-    mode: g=rwX
+    mode: g+rwX
+    recurse: yes
   with_items:
     - cache
-    - cache/export
-    - cache/images
-    - cache/feeds
-    - cache/upload
     - feed-icons
     - lock
 
