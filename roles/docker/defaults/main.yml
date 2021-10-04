@@ -8,6 +8,8 @@ docker_users: []
 docker_enable_service: yes
 # the log driver for the docker daemon (none/local/json-file/syslog/journaled/gelf/fluentd/awslogs/splunk/etwlogs/gcplogs/logentries)
 docker_log_driver: "syslog"
+# yes/no: allow automatic/unattended upgrades of docker engine packages
+docker_auto_upgrade: no
 # docker swarm settings (accepts all parameters from https://docs.ansible.com/ansible/latest/collections/community/general/docker_swarm_module.html)
 docker_swarm:
   state: "present"

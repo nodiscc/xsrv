@@ -38,6 +38,8 @@ Unattended-Upgrade::Origins-Pattern {
 {% endif %}
 {% if 'nodiscc.xsrv.proxmox' in role_names and proxmox_auto_upgrade %}        "o=Proxmox,site=download.proxmox.com";
 {% endif %}
+{% if 'nodiscc.xsrv.docker' in role_names and docker_auto_upgrade %}        "o=Docker,site=download.docker.com";
+{% endif %}
 
         // Archive or Suite based matching:
         // Note that this will silently match a different release after

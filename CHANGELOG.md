@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: make `hide_timestamp,header_link,debug,formatter` [settings](https://shaarli.readthedocs.io/en/master/Shaarli-configuration/) configurable
 - monitoring: add [lynis](https://cisofy.com/lynis/) security audit tool (optional, default disabled), schedule a daily report
 - monitoring/postgresql: allow netdata to monitor postgresql server
+- docker: allow enabling unattended upgrades of docker engine packages (`docker_auto_upgrade: yes/no`)
 - common: apt: allow enabling `contrib` and `non-free` software sections (`apt_enable_nonfree`)
 - common: make role compatible with Debian 11 "Bullseye"
 
