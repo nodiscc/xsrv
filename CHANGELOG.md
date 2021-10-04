@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: make role compatible with debian 11 "bullseye"
 
 **Changed:**
-- nextcloud: upgrade to [22.1.1](https://github.com/nextcloud/server/tags)
+- nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)
 - nextcloud: silence cron/background tasks output to prevent mail notification spam
 - nextcloud: allow installation of [ONLYOFFICE](https://nextcloud.com/onlyoffice/) realtime collaborative document edition tools
 - gitea: upgrade to [1.15.3](https://github.com/go-gitea/gitea/releases)
