@@ -115,6 +115,20 @@ sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 
 **Changing database password** is not supported by the role at this time. To change the database password, you must first set the new password manually in `/var/www/$nextcloud_fqdn/config.php`, then change the value of `nexctloud_db_password` in host variables, and run the playbook.
 
+**LDAP authentication support:**
+- Create a group (eg. `posixGroup: access_nextcloud`) in your LDAP directory and add users that should be able to access Nextcloud to this group
+- Access your Nextcloud LDAP settings (https://cloud.CHANGEME.org/index.php/settings/admin/ldap):
+  - `Server > Host: ldap.CHANGEME.org`
+  - click `Detect port`
+  - `Server > User DN: cn=bind,ou=system,dc=CHANGEME,dc=org` the DN for your unprivilegied/bind LDAP user
+  - `Server > Password:` the password for your bind LDAP user
+  - `Server > Base DN: dc=CHANGEME,dc=org` the base DN for the LDAP directory (or click `Detect base DN`)
+  - click `Test base DN`
+  - `Users > Object classes: inetOrgPerson` if using OpenLDAP
+  - `Users > Groups:` (your LDAP server must support the memberOf overlay)
+  - `Login attributes: [x] LDAP/AD user name`
+  - `Groups: Only in groups: access_nextcloud`
+
 ## License
 
 [GNU GPLv3](../../LICENSE)
