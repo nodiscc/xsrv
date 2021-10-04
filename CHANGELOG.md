@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: fix upgrade procedure order (upgrade incompatible apps)
 - nextcloud: fix `check` mode on upgrades
 - graylog: respect `elasticsearch_timeout_start_sec` value
+- monitoring: fix netdata modtime module installation, remove obsolete tasks file
 - monitoring: rsyslog: ensure that requirements for self-signed certificates generation are installed
 
 **Security:**

@@ -123,8 +123,11 @@
     - /etc/netdata/go.d/x509check.conf.d
     - /etc/netdata/go.d/portcheck.conf.d
     - /etc/netdata/health.d/processes.conf.d
+    - /usr/libexec/netdata/python.d/
+    - /etc/netdata/health.d/
     - /etc/netdata/health.d/modtime.conf.d # modtime module alarms
     - /etc/netdata/python.d/modtime.conf.d # modtime module configuration
+
 - name: copy netdata configuration files
   template:
     src: "{{ item.src }}"
