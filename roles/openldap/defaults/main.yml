@@ -33,7 +33,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # ldap account manager version
-ldap_account_manager_version: "7.5"
+ldap_account_manager_version: "7.7"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
