@@ -51,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Security:**
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
+- common: automatically apply security updates for packages installed from Debian Backports
 
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24

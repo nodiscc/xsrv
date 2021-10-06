@@ -29,6 +29,7 @@ Unattended-Upgrade::Origins-Pattern {
         // but the Debian release itself will not be automatically upgraded.
         "origin=Debian,codename=${distro_codename}-updates";
 //      "origin=Debian,codename=${distro_codename}-proposed-updates";
+        "origin=Debian Backports,codename=${distro_codename}-backports";
         "origin=Debian,codename=${distro_codename},label=Debian";
         "origin=Debian,codename=${distro_codename},label=Debian-Security";
 {% if 'nodiscc.xsrv.monitoring' in role_names %}        "origin=packagecloud.io/netdata/netdata,label=netdata";
