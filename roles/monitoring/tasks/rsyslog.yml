@@ -7,7 +7,7 @@
       - rsyslog
       - rsyslog-gnutls # TLS forwarding support
 
-- name: setup keys/certificates for TCP/TLS message forwarding (if forwaring enabled)
+- name: setup keys/certificates for TCP/TLS message forwarding
   include_tasks: rsyslog-ssl.yml
   when: rsyslog_enable_forwarding|bool
 
