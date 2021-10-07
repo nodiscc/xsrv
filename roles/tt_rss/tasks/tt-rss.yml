@@ -70,7 +70,7 @@
   file:
     path: "{{ tt_rss_install_dir }}/{{ item }}"
     state: directory
-    owner: root
+    owner: www-data
     group: www-data
     mode: g+rwX
     recurse: yes
