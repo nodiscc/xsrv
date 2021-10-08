@@ -2,25 +2,62 @@
 
 ### xsrv/xsrv
 
+- #592 - tt-rss: fix permissions/ownership on feed-icons/ - `1.4.0`
+- #591 - tt_rss: schema might not be updated when the playbook runs while a feed update is in progress - `1.5.0`
+- #590 - update ldap-account-manager to 7.7 - `1.5.0`
+- #589 - homepage: add a button to download all self-signed certificates - `1.5.0`
+- #586 - xsrv: improve startup time/attempt to skip virtualenv creation - `1.5.0`
+- #582 - make proxmox role compatible with Debian 11/Proxmox 7 - `1.5.0`
+- #581 - make monitoring role compatible with Debian 11 - `1.5.0`
+- #580 - make tt_rss role compatible with Debian 11 - `1.5.0`
+- #579 - make transmission role compatible with Debian 11 - `1.5.0`
+- #578 - make shaarli role compatible with Debian 11 - `1.5.0`
+- #577 - make samba role compatible with Debian 11 - `1.5.0`
+- #576 - make rocketchat role compatible with Debian 11 - `1.5.0`
+- #575 - make postgresql role compatible with Debian 11 - `1.5.0`
+- #574 - make openldap role compatible with Debian 11 - `1.5.0`
+- #573 - make nextcloud role compatible with debian 11 - `1.5.0`
+- #572 - make mumble role compatiable with Debian 11 - `1.5.0`
+- #571 - make homepage role compatible with Debian 11 - `1.5.0`
+- #570 - make gotty role compatible with Debian 11 - `1.5.0`
+- #569 - make gitea role compatible with debian 11 - `1.5.0`
+- #568 - make docker role compatible with Debian 11 - `1.5.0`
+- #567 - make backup role compatible with Debian 11 - `1.5.0`
+- #565 - doc: update installation documentation - `1.4.0`
+- #561 - homepage: add a "copy to clipboard" button next to input fields
+- #560 - monitoring: replace netdata-modtime with netdata file module checks - `1.4.0`
+- #559 - add utils subcommand - `1.5.0`
+- #556 - WIP: make monitoring role compatible with Debian 11 - `1.5.0`
+- #550 - tt_rss: remove workaround for postgresql_query module bug
+- #548 - jellyfin:  android client unable to connect
+- #546 - nextcloud: allow optional configuration of server-side encryption?
+- #545 - doc: gitea: repo mirrorring is now possible without custom hooks
+- #543 - homepage: add (optional) links section with links to recommendend mobile/desktop software
+- #541 - use ansible role argument validation in stead of checks.yml?
+- #540 - tt-rss: add an option to silence feed update error reports mail
+- #539 - gitea: apache: optionally allow TLSv1.2 for gittouch compatibility
+- #538 - transmission: link ~/TORRENTS to /var/lib/transmission-daemon/
+- #537 - docker: add a daily 'docker system prune --all' cron job
+- #535 - Add hardening measures from ANSSI guidelines
+- #534 - common: sysctl: Add CVE-2021-33909 mitigations
 - #532 - proxmox: allow defining lxc containers from ansible variables
 - #531 - proxmox: allow disabling the subscription message?
 - #530 - proxmox: enable/configure firewall at datacenter/node level
 - #529 - proxmox backup server?
 - #528 - proxmox: setup a non-root proxmox user
-- #527 - gitea: add `gitea_issue_paging_num` configuration variable (number of issues per page), increase to 20 by default - `1.4.0`
-- #526 - common/monitoring: fix lynis warnings - `1.4.0`
+- #526 - common/monitoring: fix lynis warnings - `1.5.0`
 - #525 - Use ansible_facts to reference facts
-- #523 - openldap: upgrade self-service-password to 1.4.3 - `1.4.0`
+- #523 - openldap: upgrade self-service-password to 1.4.3 - `2.0.0`
 - #522 - openldap: performance optimizations?
 - #521 - nextcloud: add whiteboard integration app - `2.0.0`
-- #518 - Mumble web interface - `1.4.0`
+- #518 - Mumble web interface - `2.0.0`
 - #517 - Custom MOTD?
 - #516 - TICK stack? (Telegraf/InfluxDB/Chronograf/Kapacitor)
 - #514 - doc: gitea: mirroring method should not try to mirror internal/pull requests refs
 - #513 - doc: screenshots slideshow on main page instead of thumbnails?
-- #507 - all roles/apache: disable reverse proxy rules and redirect to maintenance page when target service is disabled in configuration - `1.4.0`
+- #507 - all roles/apache: disable reverse proxy rules and redirect to maintenance page when target service is disabled in configuration - `1.5.0`
 - #506 - graylog: add TCP portchecks for mongodb/elasticsearch
-- #505 - graylog: enable automatic upgrades - `1.4.0`
+- #505 - graylog: enable automatic upgrades - `1.5.0`
 - #503 - graylog/rsyslog: authenticate clients using client certificates
 - #502 - xsrv: add list-tags subcommand
 - #500 - docker: drop all capabilities by default, manually whitelist capabilities per-service?
@@ -28,21 +65,19 @@
 - #497 - nextcloud: allow enabling 2-factor authentication?
 - #496 - nextcloud: allow enabing antivirus app?
 - #489 - doc: update screencast - `2.0.0`
-- #488 - transmission: add netdata process check - `1.4.0`
-- #487 - jellyfin: add netdata process check - `1.4.0`
+- #488 - transmission: add netdata process check - `1.5.0`
+- #487 - jellyfin: add netdata process check - `1.5.0`
 - #485 - monitoring: netdata: disable python.d/go.d/aclk self-monitoring charts
 - #484 - monitoring: make netdata modules installation optional
 - #482 - rocketchat: add automatic netdata process check if the monitoring role is enabled
 - #481 - add netdata portchecks for ssh, apache, mumble, samba, openldap
-- #480 - monitoring: use systemd unit instead of process checks/report failed units? - `1.4.0`
-- #478 - upgrade to ansible 4.x - `1.4.0`
-- #476 - postgresql_query fails with 'can't execute an empty query' when a commented out query is present in the script #50 - `1.4.0`
+- #480 - monitoring: use systemd unit instead of process checks/report failed units? - `1.5.0`
 - #475 - ACME certificate authority?
 - #474 - Benchmark performance of web applications?
 - #473 - Docker daemon hardening/container scanner service?
 - #472 - Ansible AWX role?
-- #470 - monitoring: lnav should not interpret ansible log messages with warn=True as warnings - `1.4.0`
-- #469 - ansible-ansible.legacy.command: [WARNING] Unable to use /var/www/.ansible/tmp as temporary directory, failing back to system: [Errno 13] Permission denied: '/var/www/.ansible' - `1.4.0`
+- #470 - monitoring: lnav should not interpret ansible log messages with warn=True as warnings - `1.5.0`
+- #469 - ansible-ansible.legacy.command: [WARNING] Unable to use /var/www/.ansible/tmp as temporary directory, failing back to system: [Errno 13] Permission denied: '/var/www/.ansible' - `1.5.0`
 - #466 - netdata: graph lynis warnings/suggestions?
 - #465 - lynis: add detection of SUID files?
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)
@@ -52,7 +87,7 @@
 - #453 - postgresql: enable checksums?
 - #451 - Document management system
 - #450 - netdata: setup ML-based anomaly detection?
-- #448 - Netdata: send notifications using signal-cli
+- #448 - Netdata: send notifications using signal-cli or telegram
 - #447 - display local mailboxes through netdata static web server, raise alarm if there is unread mail
 - #445 - bookstack role?
 - #441 - openldap: setup MemberOf overlay
@@ -64,25 +99,22 @@
 - #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification?
 - #424 - nextcloud: add templateeditor app?
 - #423 - nextcloud: add documents app?
-- #413 - nextcloud: database password cannot be changed after initial installation - `1.4.0`
 - #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - `2.0.0`
-- #404 - add xsrv info command - `1.4.0`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900
 - #393 - Samba: performance improvements (socket options)?
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed
-- #389 - WIP: add show-ssh-config subcommand
+- #389 - WIP: add autoreadme role
 - #388 - WIP: add libvirt role
-- #387 - jellyfin: monitor logs with rsyslog - `1.4.0`
+- #387 - jellyfin: monitor logs with rsyslog - `1.5.0`
 - #384 - jellyfin: allow/document uploading files from nextcloud
 - #380 - Enforce DNSSEC for outgoing DNS queries
 - #379 - seup IPV6 support (sysctl, firewal, applications...)?
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ?
 - #377 - rocketchat: enable/configure federation?
 - #376 - netdata: enable samba monitoring when samba role is installed
-- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.4.0`
+- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - `1.5.0`
 - #374 - makefile/readthedocs: include roles documentation in generated docs
 - #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis?) - `2.0.0`
-- #365 - nextcloud: LDAP user backend - `1.4.0`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone
 - #362 - netdata: default apache status monitoring jobs trigger error 403
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles
@@ -100,9 +132,8 @@
 - #344 - nextcloud: add office suite integration
 - #343 - nextcloud: warning on settings/admin/overview: missing bcmath php module
 - #341 - nextcloud: warning on settings/admin/overview: Some app directories are owned by a different user than the web server one
-- #339 - WIP: speed up ansible execution with mitogen
 - #337 - nextcloud: maps: enable OSRM demo servers by default
-- #324 - Jitsi Meet role - `1.4.0`
+- #324 - Jitsi Meet role - `1.5.0`
 - #323 - prometheus role?
 - #322 - Frontail role?
 - #321 - ELK stack?
@@ -111,14 +142,14 @@
 - #328 - apache: mpm_event performance tuning
 - #327 - nextcloud: verify gpg signatures
 - #317 - Harden systemd services
-- #316 - WIP: add/remove the ansible user to/from the www-data group
+- #316 - WIP: add a basic, static website virtualhost - `1.5.0`
 - #310 - samba: ability to whitelist/blacklist files by extension
 - #309 - apply postgresqltuner recommended settings?
 - #307 - apache: make certificate status endpoint enable/disable configurable
 - #305 - switch firewall management to firewalld - `2.0.0`
 - #303 - firehol: add example NAT loopback/hairpin rule
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.4.0`
-- #290 - netdata: monitor number of upgradeable APT packages - `1.4.0`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - `1.5.0`
+- #290 - netdata: monitor number of upgradeable APT packages - `1.5.0`
 - #280 - Samba Directory Controller or other Identity Management solution
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban
 - #276 - Samba: protect file shares from cryptolockers
@@ -133,15 +164,13 @@
 - #267 - apache: make disabled modules list configurable, disable more modules by default
 - #266 - firewall: prevent temporary ALLOW ALL state during firehol restart
 - #265 - apache: provide custom error pages
-- #263 - Netdata: setup registry/streaming - `1.4.0`
-- #258 - WIP: add custom info page to netdata
+- #263 - Netdata: setup registry/streaming - `1.5.0`
 - #256 - CAS, SAML or Oauth Sigle Sign On (SSO)?
-- #255 - new role: custom homepage generation
 - #254 - apache: LDAP authentication for virtualhosts
 - #253 - lamp: allow setting up HTTP basic auth username/password for virtualhosts
 - #250 - WIP: add pulseaudio-server role
-- #248 - WIP: add gitlab-runner role
-- #247 - WIP: add gitlab role
+- #248 - WIP: add gitlab-runner role - `1.5.0`
+- #247 - WIP: add gitlab role - `1.5.0`
 - #237 - WIP: install and configure auditd (Linux Auditing Framework)
 - #236 - WIP: add icecast role
 - #235 - icecast server role
@@ -153,18 +182,15 @@
 - #226 - mysql: update root password for *all* root accounts
 - #224 - mysql: log MariaDB slow queries
 - #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost
-- #221 - apache: add a simple public HTTP server/vhost option - `1.4.0`
+- #221 - apache: add a simple public HTTP server/vhost option - `1.5.0`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage
 - #218 - apache: implement modsecurity
 - #216 - xsrv: generate a local copy of the homepage/netdata custom dashboard
-- #215 - xsrv-homepage: add ability to set a custom title/message/footer
 - #214 - mysql: improve MySQL/Mariadb server hardening
 - #212 - apache: PHP OPCache tuning?
-- #210 - xsrv-homepage: add more (optional) features to homepage
 - #208 - netdata: graph/alert on logwatch warnings
 - #207 - netdata: make ping checks configurable
 - #205 - netdata: monitor debsums warnings/return status
-- #204 - netdata: add custom dashboard with status summary of the host/important logs/reports
 - #202 - netdata: ability to enable/add eBPF probes?
 - #201 - monitoring: merge role with mrlesmithjr/ansible-netdata
 - #200 - roles for other monitoring software
@@ -192,7 +218,6 @@
 - #172 - netdata: support long-term archiving
 - #171 - needrestart: add a config variable to automatically reboot when a kernel upgrade is pending
 - #170 - netdata: add support for postgresql monitoring
-- #169 - netdata: binary installation method is not idempotent/no authenticity check - drop support for installation from binary - `1.4.0`
 - #167 - monitoring: add spectre-meltdown-checker
 - #165 - gitea: Enable search/indexing for repository/code/issues
 - #164 - gitea: add CI/CD service
@@ -296,8 +321,9 @@
 - #32 - Minetest server
 - #31 - Add bash completion to xsrv script
 - #30 - Gitlab role
+- #27 - nginx role
 - #26 - Dynamic DNS updater
-- #25 - DNS Server
+- #25 - DNS Server - `1.5.0`
 - #24 - DHCP/TFTP/PXE server
 - #22 - Add molecule tests
 - #16 - Automated performance benchmarks
