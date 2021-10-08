@@ -48,6 +48,8 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
 
 **Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep renaming/editing large files.
 
+**Local backups** are inherently not secure, because the device being backed up is able to delete/compromise its own backup. Prefer remote _pull_ backups from another machine.
+
 **backup data from remote machines:**
  - configure the list of hosts, SSH users, ports, paths... in  `rsnapshot_remote_backups` in configuration variables
  - setup a user account on the remote machine, authorize the backup server's `root` SSH key (the key is displayed during setup), and allow it to run `sudo rsync` without password.
@@ -63,6 +65,7 @@ linux_users:
 ```
 
 **Removing old backups:** if a backup job is added at some point, than later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
+
 
 
 ## References

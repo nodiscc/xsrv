@@ -1,5 +1,3 @@
----
-
 ##### USER ACCOUNTS ####
 
 - name: enable root and current user account logins (local)
