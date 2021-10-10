@@ -147,3 +147,5 @@ lynis_skip_tests:
   - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by netdata)
   - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers wil be selected automatically)
   - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
+  - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
+  - "FIRE-4512" # broken check, does not detect firehol rules (https://github.com/CISOfy/lynis/issues/461, https://github.com/CISOfy/lynis/issues/767)
