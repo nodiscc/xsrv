@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: apt: allow enabling `contrib` and `non-free` software sections (`apt_enable_nonfree`)
 - common: make role compatible with Debian 11 "Bullseye"
 - homepage: add graylog application link when graylog role is enabled
+- monitoring: allow configuration of syslog retention duration, default to 186 days instead of 7
 
 **Changed:**
 - nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)

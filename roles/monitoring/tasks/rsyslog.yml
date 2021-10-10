@@ -11,6 +11,12 @@
   include_tasks: rsyslog-ssl.yml
   when: rsyslog_enable_forwarding|bool
 
+- name: set retention/rotation policy for rsyslog logs
+  template:
+    src: etc_logrotate.d_rsyslog.j2
+    dest: /etc/logrotate.d/rsyslog
+    mode: 0644
+
 - name: configure rsyslog
   template:
     src: etc_rsyslog.d_{{ item }}.conf.j2

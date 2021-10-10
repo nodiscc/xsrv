@@ -1,0 +1,41 @@
+/var/log/syslog
+{
+	rotate {{ syslog_retention_days }}
+	daily
+	missingok
+	notifempty
+	delaycompress
+	compress
+	postrotate
+{% if ansible_distribution == "Debian" and ansible_distribution_release == "stretch" %}		invoke-rc.d rsyslog rotate > /dev/null
+{% else %}		/usr/lib/rsyslog/rsyslog-rotate
+{% endif %}
+	endscript
+}
+
+/var/log/mail.info
+/var/log/mail.warn
+/var/log/mail.err
+/var/log/mail.log
+/var/log/daemon.log
+/var/log/kern.log
+/var/log/auth.log
+/var/log/user.log
+/var/log/lpr.log
+/var/log/cron.log
+/var/log/debug
+/var/log/messages
+{
+	rotate 4
+	weekly
+	missingok
+	notifempty
+	compress
+	delaycompress
+	sharedscripts
+	postrotate
+{% if ansible_distribution == "Debian" and ansible_distribution_release == "stretch" %}		invoke-rc.d rsyslog rotate > /dev/null
+{% else %}		/usr/lib/rsyslog/rsyslog-rotate
+{% endif %}
+	endscript
+}

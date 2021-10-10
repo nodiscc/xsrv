@@ -3,6 +3,8 @@
 ### LOGGING (RSYSLOG) ###
 # setup rsyslog (aggregate application/service logs to /var/log/syslog, discard useless messages)
 setup_rsyslog: yes
+# number of daily /var/log/syslog archives to retain
+syslog_retention_days: 186
 # aggregate netdata logs to main syslog (default disabled, noisy) (yes/no)
 rsyslog_monitor_netdata: no
 # yes/no: enable forwarding of syslog logs to a syslog server (over TLS/TCP)
@@ -10,7 +12,6 @@ rsyslog_enable_forwarding: no
 # if forwarding is enabled, hostname/port to forward logs to (must be a host with the nodiscc.xrv.graylog role already deployed)
 rsyslog_forward_to_hostname: "my.CHANGEME.org"
 rsyslog_forward_to_port: 5140
-
 
 ### NETDATA MONITORING SYSTEM ###
 # default interval between netdata updates (in seconds)
@@ -24,7 +25,7 @@ netdata_dbengine_disk_space: 800
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# enable netdata self-monitoring charts (yes/no)
+# enable netdata self-monitoring charts/alarms (yes/no)
 netdata_self_monitoring_enabled: no
 # enable/disable netdata debug/error/access logs (yes/no)
 netdata_disable_debug_log: yes
