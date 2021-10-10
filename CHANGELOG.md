@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: decrease alarm sensitivity for logcount module (warning on 10 alarms/min, critical on 100 errors/min)
 - monitoring: disable lynis checks AUTH-9283 and FIRE-4512 by default (false positives)
 - monitoring: only enable "number of running docker container" checks when the nodiscc.xsrv.docker role is enabled
+- monitoring: update configuration for netdata > 1.30
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
 - xsrv: switch to ansible "distribution" versioning, upgrade to [4.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/4/CHANGELOG-v4.rst) ([ansible-core](https://github.com/ansible/ansible) 2.11.5), update playbook for compatibility
 - homepage: update theme (use light theme), use web safe fonts
