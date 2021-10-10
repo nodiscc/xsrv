@@ -105,9 +105,11 @@ netdata_x509_checks: []
 #     age_critical: 90000
 netdata_modtime_checks: []
 netdata_port_checks: []
-# Docker container checks
-# expected number of running docker containers
-netdata_min_running_docker_containers: 0
+# Netdata Docker container checks
+# Expected minimum/maximum number of running docker containers (if the host has the docker role)
+netdata_min_running_docker_containers: '0'
+netdata_max_running_docker_containers: '99999'
+
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)
 setup_needrestart: yes

@@ -13,7 +13,7 @@ template: docker_unhealthy_containers
    units: running containers
    every: 10s
   lookup: average -10s
-    crit: $this < {{ netdata_min_running_docker_containers }}
+    crit: ($this < {{ netdata_min_running_docker_containers }}) OR ($this > {{ netdata_max_running_docker_containers }})
     info: number of running containers
       to: sysadmin
 {% endif %}
