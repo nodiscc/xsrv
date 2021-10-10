@@ -113,6 +113,8 @@ netdata_min_running_docker_containers: 0
 setup_needrestart: yes
 # automatically restart services that require it after an upgrade (yes/no)
 needrestart_autorestart_services: yes
+# setup netdata-logcount module (yes/no)
+setup_netdata_logcount: yes
 # (minutes) interval between updates of log message counts in the logcount module
 netdata_logcount_update_interval: 1
 # maximum acceptable ERROR message in logs over the last period before raising a WARNING or CRITICAL alert
