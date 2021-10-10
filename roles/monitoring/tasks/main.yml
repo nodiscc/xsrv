@@ -21,6 +21,7 @@
   tags:
     - monitoring
     - netdata
+  when: setup_needrestart|bool
 - include: netdata-module-logcount.yml
   become: yes
   tags:

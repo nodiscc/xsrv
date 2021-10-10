@@ -109,6 +109,8 @@ netdata_port_checks: []
 # expected number of running docker containers
 netdata_min_running_docker_containers: 0
 ## NETDATA MODULES ##
+# setup needrestart and netdata-needrestart module (yes/no)
+setup_needrestart: yes
 # automatically restart services that require it after an upgrade (yes/no)
 needrestart_autorestart_services: yes
 # (minutes) interval between updates of log message counts in the logcount module

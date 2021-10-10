@@ -33,7 +33,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea update fail2ban [login failure detection](https://docs.gitea.io/en-us/fail2ban-setup/) for gitea v1.15+
 - common: sysctl: disable IP source routing for IPv6 (was already disabled for IPv4)
 - common: msmtp: check that configuration variables have correct values/types when `msmtp_setup: yes`
-- monitoring: increate netdata retention persion to ~7 days
+- monitoring: increate netdata charts retention duration to ~7 days
+- monitoring: allow disabling needrestart installation
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
 - xsrv: switch to ansible "distribution" versioning, upgrade to [4.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/4/CHANGELOG-v4.rst) ([ansible-core](https://github.com/ansible/ansible) 2.11.5), update playbook for compatibility
 - homepage: update theme (use light theme), use web safe fonts
