@@ -124,6 +124,8 @@ netdata_logcount_error_threshold_crit: 100
 netdata_logcount_warning_threshold_warn: 10
 # user to send logcount notifications to (eg. sysadmin, silent...)
 netdata_logcount_notification_to: "silent"
+# setup netdata-debsecan module (yes/no)
+setup_netdata_debsecan: yes
 
 ### CLI MONITORING UTILITIES ###
 # install ncdu, nethogs, htop, lnav (yes/no)

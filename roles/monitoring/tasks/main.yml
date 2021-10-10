@@ -33,6 +33,7 @@
   tags:
     - monitoring
     - netdata
+  when: setup_netdata_debsecan|bool
 - include: netdata-module-modtime.yml
   become: yes
   tags:
