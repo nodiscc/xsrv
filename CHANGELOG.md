@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: allow enabling unattended upgrades of docker engine packages (`docker_auto_upgrade: yes/no`)
 - common: apt: allow enabling `contrib` and `non-free` software sections (`apt_enable_nonfree`)
 - common: make role compatible with Debian 11 "Bullseye"
+- homepage: add graylog application link when graylog role is enabled
 
 **Changed:**
 - nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)
@@ -49,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: fix netdata modtime module installation, remove obsolete tasks file
 - monitoring: rsyslog: ensure that requirements for self-signed certificates generation are installed
 - tt_rss: fix permission denied errors when updating feeds
+- homepage: fix grid responsiveness on mobile devices
 
 **Security:**
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
