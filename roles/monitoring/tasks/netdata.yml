@@ -56,9 +56,11 @@
 
     ##### SELF-SIGNED SSL CERTIFICATES #####
 
-- name: install python3-openssl
+- name: install requirements for self-signed certificates generation
   apt:
-    package: python3-openssl
+    package:
+      - python3-openssl
+      - python3-cryptography
     state: present
 
 - name: create directory for netdata SSL certs/keys

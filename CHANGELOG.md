@@ -56,6 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - graylog: respect `elasticsearch_timeout_start_sec` value
 - monitoring: fix netdata modtime module installation, remove obsolete tasks file
 - monitoring: rsyslog: ensure that requirements for self-signed certificates generation are installed
+- monitoring: ensure requirements for self-signed certificate generation are installed
 - tt_rss: fix permission denied errors when updating feeds
 - homepage: fix grid responsiveness on mobile devices
 
