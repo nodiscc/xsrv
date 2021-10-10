@@ -8,3 +8,10 @@
       - lsof # list open files
       - strace # trace system calls
       - lnav # enhanced log file viewer
+      - logwatch
+      - libdate-manip-perl
+
+- name: remove default logwatch cron job
+  file:
+    path: /etc/cron.daily/00logwatch
+    state: absent
