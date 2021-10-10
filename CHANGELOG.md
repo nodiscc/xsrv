@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - homepage: add graylog application link when graylog role is enabled
 - monitoring: allow configuration of syslog retention duration, default to 186 days instead of 7
 - monitoring: add [lowgatch](https://packages.debian.org/bullseye/logwatch) log analyzer, disable scheduled execution
+- monitoring: install requirements for postgresql monitoring
 
 **Changed:**
 - nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)

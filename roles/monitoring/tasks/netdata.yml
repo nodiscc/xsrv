@@ -19,8 +19,9 @@
       - openssl
       - liblz4-1
       - gnupg
+      - git # required to clone additional modules
+      - python-psycopg2 # postgresql support
     state: present
-
 
 ### INSTALL NETDATA FROM PACKAGECLOUD APT REPOSITORY #####
 
