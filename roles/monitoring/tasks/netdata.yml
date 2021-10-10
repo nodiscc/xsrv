@@ -67,6 +67,7 @@
     owner: root
     group: netdata
     mode: 0750
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl private key
   openssl_privatekey:
@@ -75,12 +76,14 @@
     group: netdata
     mode: 0640
   notify: restart netdata
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl certificate signing request (CSR)
   openssl_csr:
     path: "/etc/ssl/netdata/netdata-csr.pem"
     privatekey_path: "/etc/ssl/netdata/netdata-key.pem"
     common_name: "{{ inventory_hostname }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:
@@ -93,6 +96,7 @@
     mode: 0640
     force: no
   notify: restart netdata
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### NETDATA CONFIGURATION ###
 
@@ -109,6 +113,7 @@
     dest: '/etc/systemd/system.conf.d/accounting.conf'
     mode: 0644
   notify: re-execute the systemd manager
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create directories for netdata configuration
   file:
@@ -127,6 +132,7 @@
     - /etc/netdata/health.d/
     - /etc/netdata/health.d/modtime.conf.d # modtime module alarms
     - /etc/netdata/python.d/modtime.conf.d # modtime module configuration
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy netdata configuration files
   template:
@@ -148,7 +154,7 @@
     - { src: 'etc_netdata_python.d_apache.conf.j2', dest: '/etc/netdata/python.d/apache.conf' } # apache status checks
   notify:
     - assemble netdata configuration
-    - restart netdata
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create mysql user for netdata (if mariadb role is enabled)
   mysql_user:
@@ -163,7 +169,7 @@
     name: netdata
     state: started
     enabled: yes
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # Apply IP access restrictions as soon as possible
 - name: run all notified handlers now

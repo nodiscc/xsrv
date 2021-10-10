@@ -25,6 +25,7 @@
     - health.d/modtime.conf
     - health.d/processes.conf
   notify: restart netdata
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart netdata
   become: yes
@@ -32,7 +33,7 @@
     name: netdata
     state: restarted
     enabled: yes
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: re-execute the systemd manager
   become: yes

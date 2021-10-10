@@ -1,3 +1,4 @@
+{% if 'nodiscc.xsrv.docker' in role_names %}
 template: docker_unhealthy_containers
       on: docker.unhealthy_containers
    units: unhealthy containers
@@ -15,4 +16,4 @@ template: docker_unhealthy_containers
     crit: $this < {{ netdata_min_running_docker_containers }}
     info: number of running containers
       to: sysadmin
-
+{% endif %}
