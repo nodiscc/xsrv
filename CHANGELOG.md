@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: make role compatible with Debian 11 "Bullseye"
 - homepage: add graylog application link when graylog role is enabled
 - monitoring: allow configuration of syslog retention duration, default to 186 days instead of 7
+- monitoring: allow defining a number of maximum expected running docker containers (`netdata_max_running_docker_containers`)
 - monitoring: add [lowgatch](https://packages.debian.org/bullseye/logwatch) log analyzer, disable scheduled execution
 - monitoring: install requirements for postgresql monitoring
 
@@ -58,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: fix netdata modtime module installation, remove obsolete tasks file
 - monitoring: rsyslog: ensure that requirements for self-signed certificates generation are installed
 - monitoring: ensure requirements for self-signed certificate generation are installed
+- monitoring: also allow access to netdata.conf from `netdata_allow_connections_from` addresses
 - tt_rss: fix permission denied errors when updating feeds
 - homepage: fix grid responsiveness on mobile devices
 
