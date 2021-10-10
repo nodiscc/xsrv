@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - `xsrv deploy` to apply changes
 - (optional) `TAGS=debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html)
+- (optional) remove custom `netdata_modtime_checks` from your configuration, if any (the [modtime](https://github.com/nodiscc/netdata-modtime) module was removed, use the [filecheck](https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/filecheck) module instead)
+
 
 **Added:**
 - add [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
@@ -48,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: disable lynis checks AUTH-9283 and FIRE-4512 by default (false positives)
 - monitoring: only enable "number of running docker container" checks when the nodiscc.xsrv.docker role is enabled
 - monitoring: update configuration for netdata > 1.30
+- backup, monitoring: replace custom [modtime](https://github.com/nodiscc/netdata-modtime) module with built-in netdata [filecheck](https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/filecheck) module
 - xsrv: rename top-level directory concept (playbook -> project)
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
 - xsrv: switch to ansible "distribution" versioning, upgrade to [4.9.0](https://github.com/ansible-community/ansible-build-data/blob/main/4/CHANGELOG-v4.rst) ([ansible-core](https://github.com/ansible/ansible) 2.11.6), update playbook for compatibility

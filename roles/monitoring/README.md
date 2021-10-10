@@ -3,7 +3,7 @@
 This role will install a lightweight monitoring system on a Linux machine:
  - (Optional) [rsyslog](https://en.wikipedia.org/wiki/Rsyslog) basic log aggregation, logrotate retention, and log forwarding over TCP/SSL/TLS
  - [Netdata](https://my-netdata.io/), a real-time, efficient, distributed performance and health monitoring system.
- - (Optional) netdata modules/graphs: [needrestart](https://gitlab.com/nodiscc/netdata-needrestart), [logcount](https://gitlab.com/nodiscc/netdata-logcount), [modtime](https://gitlab.com/nodiscc/netdata-modtime), [debsecan](https://gitlab.com/nodiscc/netdata-debsecan)
+ - (Optional) netdata modules/graphs: [needrestart](https://gitlab.com/nodiscc/netdata-needrestart), [logcount](https://gitlab.com/nodiscc/netdata-logcount), [debsecan](https://gitlab.com/nodiscc/netdata-debsecan)
  - (Optional) [lnav](http://lnav.org/) log viewer, [htop](https://hisham.hm/htop/) system monitor/process manager, [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor, [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer, logwatch log analyzer
  - (Optional) [lynis](https://cisofy.com/lynis/) security audit tool
 
@@ -55,7 +55,7 @@ Read [lnav documentation](https://lnav.readthedocs.io/) for more info.
 
 ### Integration with other roles
 
-Roles that need to install custom `httpcheck`/`x509check`/`portcheck`/`modtime`/`processes` module/alarm configurations must create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` handler.
+Roles that need to install custom `httpcheck`/`x509check`/`portcheck`/`processes` module/alarm configurations must create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` handler.
 
 
 ## License

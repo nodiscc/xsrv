@@ -18,7 +18,6 @@
       - netdata_logcount_update_interval == netdata_logcount_update_interval|int
       - netdata_logcount_warning_threshold_warn == netdata_logcount_warning_threshold_warn|int
       - netdata_min_running_docker_containers == netdata_min_running_docker_containers|int
-      - netdata_modtime_checks|type_debug == "list"
       - netdata_port_checks|type_debug == "list"
       - netdata_process_checks|type_debug == "list"
       - netdata_self_monitoring_enabled == netdata_self_monitoring_enabled|bool

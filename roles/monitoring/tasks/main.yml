@@ -39,12 +39,6 @@
     - netdata
   when: setup_netdata_debsecan|bool
 
-- include: netdata-module-modtime.yml
-  become: yes
-  tags:
-    - monitoring
-    - netdata
-
 - include: cli-utils.yml
   become: yes
   tags:
@@ -58,11 +52,3 @@
     - monitoring
     - lynis
   when: setup_lynis|bool
-
-- include: fact.yml
-  become: yes
-  tags: monitoring
-
-- name: apply configuration (flush handlers)
-  meta: flush_handlers
-  tags: monitoring

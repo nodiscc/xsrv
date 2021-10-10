@@ -14,11 +14,11 @@
     group: netdata
     mode: 0640
   with_items:
+    - go.d/filecheck.conf
     - go.d/httpcheck.conf
     - go.d/x509check.conf
     - go.d/portcheck.conf
-    - python.d/modtime.conf
-    - health.d/modtime.conf
+    - health.d/filecheck.conf
     - health.d/processes.conf
   notify: restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
