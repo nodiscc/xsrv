@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: make role compatible with Debian 11 "Bullseye"
 - backup: make dependency on monitoring role optional
 - backup: ensure only `root` can read the rsnapshot configuration file
+- backup: re-schedule monthly backups at 04:01 on the first day of the month
 - update documentation
 
 **Removed:**

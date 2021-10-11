@@ -126,7 +126,7 @@
     user: root
     cron_file: '/etc/cron.d/rsnapshot'
     name: rsnapshot-monthly
-    hour: '0'
+    hour: '4'
     minute: '1'
     day: '1'
     job: 'rsnapshot monthly >/dev/null'
