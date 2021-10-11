@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: allow defining a number of maximum expected running docker containers (`netdata_max_running_docker_containers`)
 - monitoring: add [lowgatch](https://packages.debian.org/bullseye/logwatch) log analyzer, disable scheduled execution
 - monitoring: install requirements for postgresql monitoring
+- postgresql: add ability to enable/disable the service and enforce started/stopped/enabled/disabled state
 
 **Changed:**
 - nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)

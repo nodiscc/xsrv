@@ -1,0 +1,2 @@
+# start/stop the postgresql service, enable/disable it on boot (yes/no)
+postgresql_enable_service: yes

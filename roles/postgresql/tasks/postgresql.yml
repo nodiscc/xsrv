@@ -35,3 +35,11 @@
     mode: 0600
   when: '"nodiscc.xsrv.backup" in role_names'
   notify: check rsnapshot configuration
+
+- name: enable/disable start/stop postgresql service
+  systemd:
+    name: postgresql
+    enabled: "{{ postgresql_enable_service }}"
+    state: "{{ 'started' if postgresql_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode|bool }}"
