@@ -19,3 +19,4 @@ galaxy_info:
     - rsnapshot
 dependencies: []
 #   - nodiscc.xsrv.common
+#   - nodiscc.xsrv.monitoring

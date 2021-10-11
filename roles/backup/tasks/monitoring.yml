@@ -8,7 +8,9 @@
     group: root
     mode: 0644
   notify: restart rsyslog
-  when: setup_rsyslog|bool
+  when:
+    - "'nodiscc.xsrv.monitoring' in role_names"
+    - setup_rsyslog|bool
   tags: rsyslog
 
 - name: add netdata modtime check and alarm for rsnapshot
