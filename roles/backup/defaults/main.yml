@@ -5,6 +5,8 @@ rsnapshot_backup_dir: "/var/backups/rsnapshot"
 rsnapshot_retain_daily: 6
 rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6
+# rsnapshot verbosity level (1-5)
+rsnapshot_verbose_level: 3
 # Commands to run before starting backups (database dumps, application exports...)
 # Return codes different from 0 will cause the backup process to abort with an error
 # These commands run as the 'rsnapshot' user locally.
@@ -13,9 +15,9 @@ rsnapshot_retain_monthly: 6
 # - For remote backups, 'rsnapshot' user's SSH key must be authorized on the remote host, the remote user must have appropriate permissions to run the script
 # Example:
 # rsnapshot_backup_execs:
-#   - 'ssh rsnapshot@srv01.example.org /opt/xsrv/nextcloud-mysql-dump.sh'
-#   - 'ssh rsnapshot@srv02.example.org /opt/xsrv/ttrss-mysql-dump.sh'
-#   - 'ssh rsnapshot@srv03.example.org /opt/xsrv/openldap-dump.sh'
+#   - 'ssh -oStrictHostKeyChecking=no rsnapshot@srv01.example.org /opt/xsrv/nextcloud-mysql-dump.sh'
+#   - 'ssh -oStrictHostKeyChecking=no rsnapshot@srv02.example.org /opt/xsrv/ttrss-mysql-dump.sh'
+#   - 'ssh -oStrictHostKeyChecking=no rsnapshot@srv03.example.org /opt/xsrv/openldap-dump.sh'
 #   - /opt/xsrv/nextcloud-mysql-dump.sh
 rsnapshot_backup_execs: []
 # Local files/directories to backup

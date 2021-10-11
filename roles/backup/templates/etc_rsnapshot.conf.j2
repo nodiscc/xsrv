@@ -106,13 +106,13 @@ retain	monthly	{{ rsnapshot_retain_monthly }}
 # 4     Extra Verbose   Show extra verbose information
 # 5     Debug mode      Everything
 #
-verbose		3
+verbose		{{ rsnapshot_verbose_level }}
 
 # Same as "verbose" above, but controls the amount of data sent to the
 # logfile, if one is being used. The default is 3.
 # If you want the rsync output, you have to set it to 4
 #
-loglevel	3
+loglevel	{{ rsnapshot_verbose_level }}
 
 # If you enable this, data will be written to the file you specify. The
 # amount of data written is controlled by the "loglevel" parameter.
@@ -237,12 +237,10 @@ backup	/var/log/syslog	localhost/
 backup_exec	{{ command }}	required
 {% endfor %}
 
-# Local directories to backup
 {% for local_path in rsnapshot_local_backups %}
 backup	{{ local_path }}	localhost/
 {% endfor %}
 
-# Remote directories to backup
 {% for remote_backup in rsnapshot_remote_backups %}
 backup	{{ remote_backup.user }}@{{ remote_backup.host }}:{{ remote_backup.path }}	{{ remote_backup.host }}/
 {% endfor %}
