@@ -28,7 +28,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: install requirements for postgresql monitoring
 - postgresql: add ability to enable/disable the service and enforce started/stopped/enabled/disabled state
 - backup: make rsnapshot verbosity configurable
-- backup: make dependency on monitoring role optional
 
 **Changed:**
 - nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)
@@ -48,6 +47,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: switch to ansible "distribution" versioning, upgrade to [4.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/4/CHANGELOG-v4.rst) ([ansible-core](https://github.com/ansible/ansible) 2.11.5), update playbook for compatibility
 - homepage: update theme (use light theme), use web safe fonts
 - apache: make role compatible with Debian 11 "Bullseye"
+- backup: make dependency on monitoring role optional
+- backup: ensure only `root` can read the rsnapshot configuration file
 - update documentation
 
 **Removed:**

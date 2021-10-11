@@ -29,6 +29,8 @@
   template:
     src: etc_rsnapshot.conf.j2
     dest: /etc/rsnapshot.conf
+    owner: root
+    group: root
     mode: 0600
   notify: check rsnapshot configuration
 
