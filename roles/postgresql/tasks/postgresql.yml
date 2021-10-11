@@ -42,4 +42,4 @@
     enabled: "{{ postgresql_enable_service }}"
     state: "{{ 'started' if postgresql_enable_service else 'stopped' }}"
     daemon_reload: yes
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"

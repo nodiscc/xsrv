@@ -16,7 +16,7 @@
   apt:
     package: elasticsearch-oss
     state: present
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: creat elasticsearch configuration directories # system service override
   file:
@@ -33,7 +33,7 @@
   notify:
     - reload systemd unit files
     - restart elasticsearch
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - src: etc_elasticsearch_elasticsearch.yml.j2
       dest: /etc/elasticsearch/elasticsearch.yml
@@ -55,4 +55,4 @@
     enabled: "{{ graylog_enable_service }}"
     state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
     daemon_reload: yes
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"

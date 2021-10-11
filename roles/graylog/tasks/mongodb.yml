@@ -16,7 +16,7 @@
   apt:
     package: mongodb-org
     state: present
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### SERVICE ###
 
@@ -26,4 +26,4 @@
     enabled: "{{ graylog_enable_service }}"
     state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
     daemon_reload: yes
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"

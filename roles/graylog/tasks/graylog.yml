@@ -4,7 +4,7 @@
   get_url:
     url: "https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb"
     dest: "/root/graylog-4.0-repository_latest.deb"
-  when: not ansible_check_mode|bool # HEAD requests are forbidden/403
+  ignore_errors: "{{ ansible_check_mode }}" # HEAD requests are forbidden/403
 
 - name: install graylog-4.0-repository package
   apt:
@@ -12,7 +12,7 @@
     state: present
     dpkg_options: "force-all"
   notify: update apt cache
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # update apt cache immediately if graylog-repository package was installed
 - meta: flush_handlers
@@ -21,7 +21,7 @@
   apt:
     pkg: "graylog-server"
     state: latest
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate graylog password hash
   shell: echo -n {{ graylog_root_password }} | sha256sum | cut -d" " -f1
@@ -31,7 +31,7 @@
 - name: copy graylog server configuration
   template: "{{ item }}"
   notify: restart graylog-server
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - src: etc_graylog_server_server.conf.j2
       dest: /etc/graylog/server/server.conf
@@ -99,7 +99,7 @@
     enabled: "{{ graylog_enable_service }}"
     state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
     daemon_reload: yes
-  ignore_errors: "{{ ansible_check_mode|bool }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # - name: configure rsyslog to send logs to local UDP 5140
 #   template:

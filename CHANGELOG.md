@@ -68,6 +68,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: also allow access to netdata.conf from `netdata_allow_connections_from` addresses
 - tt_rss: fix permission denied errors when updating feeds
 - homepage: fix grid responsiveness on mobile devices
+- don't ignore some errors when not running in check mode 
 
 **Security:**
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban

@@ -78,7 +78,7 @@
     attributes:
       sambaDomainName: '{{ openldap_domain }}'
       sambaSID: '{{ samba_localsid.stdout.split(" ") | last }}'
-  when: not ansible_check_mode|bool # samba_localsid.stdout is never set in check mode as the command doesn't run
+  ignore_errors: "{{ ansible_check_mode }}" # samba_localsid.stdout is never set in check mode as the command doesn't run
 
 # ldapsearch -Q -Y EXTERNAL -H ldapi:/// '(objectClass\=sambaDomain)'
 - name: Set LDAP attributes of the samba domain
