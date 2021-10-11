@@ -43,6 +43,8 @@
     state: directory
     mode: 0700
 
+##### SSH KEYS #####
+
 - name: create ssh client configuration directory for root
   file:
     state: directory
@@ -50,6 +52,7 @@
     owner: root
     group: root
     mode: 0600
+  tags: rsnapshot-ssh-key
 
 - name: create a SSH key pair for root
   openssh_keypair:
@@ -57,6 +60,7 @@
     mode: 0600
     size: 4096
   register: root_ssh_key
+  tags: rsnapshot-ssh-key
 
 - name: store root public SSH key to local fact file
   block:
@@ -73,6 +77,13 @@
       notify: update ansible facts
       when: not ansible_check_mode|bool # root_ssh_key.public_key is never set in check mode, always returns empty/changed
 
+- name: copy root public SSH key to the controller
+  fetch:
+    src: /root/.ssh/id_rsa.pub
+    dest: "public_keys/root@{{ inventory_hostname }}.pub"
+    flat: yes
+  tags: rsnapshot-ssh-key
+
 - name: ensure ansible local facts are up to date (flush handlers)
   meta: flush_handlers
 
@@ -81,12 +92,14 @@
     msg: >
       Please authorize this key on remote machines backup user accounts:
       {{ ansible_local.rsnapshot.ssh.public_key }}
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: ensure rsnapshot configuration is valid (flush handlers)
   meta: flush_handlers
 
 ##### SCHEDULING #####
 
+# At 01:00 every day
 - name: setup daily backup cron job
   cron:
     user: root
@@ -97,6 +110,7 @@
     day: '*'
     job: 'rsnapshot daily >/dev/null && touch /var/log/rsnapshot_last_success'
 
+# At 00:30 every sunday
 - name: setup weekly backup cron job
   cron:
     user: root
