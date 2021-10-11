@@ -107,8 +107,8 @@ netdata_modtime_checks: []
 netdata_port_checks: []
 # Netdata Docker container checks
 # Expected minimum/maximum number of running docker containers (if the host has the docker role)
-netdata_min_running_docker_containers: '0'
-netdata_max_running_docker_containers: '99999'
+netdata_min_running_docker_containers: 0
+netdata_max_running_docker_containers: 99999
 
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)
