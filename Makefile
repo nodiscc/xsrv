@@ -148,6 +148,7 @@ doc_md:
 	cp README.md docs/index.md
 	sed -i 's|(roles/|(https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/|g' docs/index.md
 	sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md
+	sed -i 's|docs/||g' docs/index.md
 
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
