@@ -41,6 +41,15 @@
   become: yes
   tags: graylog
 
+- include: firewalld.yml
+  become: yes
+  tags:
+    - graylog
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: graylog

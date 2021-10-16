@@ -4,10 +4,6 @@
     that:
       - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd|bool
       - dns_nameservers|type_debug == "list"
-      - firehol_custom_services|type_debug == "list"
-      - firehol_networks|type_debug == "list"
-      - firehol_routers|type_debug == "list"
-      - firehol_docker_swarm_compat == firehol_docker_swarm_compat|bool
       - linux_users|type_debug == "list"
       - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump|bool
       - setup_apt == setup_apt|bool
@@ -15,6 +11,7 @@
       - setup_dns == setup_dns|bool
       - setup_hosts == setup_hosts|bool
       - setup_firewall == setup_firewall|bool
+      - firewalld|type_debug == "list"
       - setup_fail2ban == setup_fail2ban|bool
       - setup_haveged == setup_haveged|bool
       - setup_msmtp == setup_msmtp|bool
@@ -56,3 +53,35 @@
   with_items: "{{ hosts }}"
   when: setup_hosts|bool
   tags: hosts
+
+- name: check that variables are correctly defined (firewalld_zone_sources)
+  assert:
+    quiet: yes
+    that:
+      - item.zone is string
+      - item.sources|type_debug == "list"
+      - (item.state is not defined) or (item.state in ['enabled','disabled'])
+      - (item.permanent is not defined) or (item.permanent == item.permanent|bool)
+      - (item.immediate is not defined) or (item.immediate == item.permanent|bool)
+  with_items: "{{ firewalld_zone_sources }}"
+  when:
+    - setup_firewall|bool
+    - (item.delete is not defined) or (not item.delete)
+  tags:
+    - firewall
+    - firewalld
+
+- name: check that variables are correctly defined (firewalld_zone_services)
+  assert:
+    quiet: yes
+    that:
+      - item.zone is string
+      - item.services|type_debug == "list"
+      - (item.state is not defined) or (item.state in ['enabled','disabled'])
+      - (item.permanent is not defined) or (item.permanent == item.permanent|bool)
+      - (item.immediate is not defined) or (item.immediate == item.permanent|bool)
+  with_items: "{{ firewalld_zone_services }}"
+  when: setup_firewall|bool
+  tags:
+    - firewall
+    - firewalld

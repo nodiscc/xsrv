@@ -1,0 +1,139 @@
+- name: stop firehol
+  command: /usr/sbin/firehol stop
+  args:
+    removes: /usr/sbin/firehol # only run if firehol is currently installed
+
+- name: remove other firewall management tools
+  apt:
+    package:
+      - ufw
+      - firehol
+      - firehol-tools
+    state: absent
+    autoremove: yes
+    purge: yes
+
+- name: remove other firewall management tools configuration
+  file:
+    state: absent
+    path:
+      - /etc/firehol
+      - /etc/systemd/system/firehol.service
+      - /etc/default/firehol
+  notify: reload systemd unit files
+
+##### FIREWALLD #####
+
+- name: configure APT to install iptables from backports (Debian 10)
+  template:
+    src: etc_apt_preferences.d_99-iptables-buster-backports.j2
+    dest: /etc/apt/preferences.d/99-iptables-buster-backports
+    mode: 0644
+  when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
+
+- name: force upgrade of iptables to buster-backports (Debian 10)
+  apt:
+    package: iptables
+    state: latest
+    default_release: buster-backports
+  when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
+
+- name: install firewalld
+  apt:
+    package:
+      - iptables
+      - firewalld
+      - nftables
+      - ipset
+    state: present
+
+- name: set iptables/ebtables alternatives to nftables versions
+  alternatives:
+    name: "{{ item.name }}"
+    path: "{{ item.path }}"
+  with_items:
+    - name: iptables
+      path: /usr/sbin/iptables-nft
+    - name: ebtables
+      path: /usr/sbin/ebtables-nft
+
+- name: configure firewalld
+  template:
+    src: etc_firewalld_firewalld.conf.j2
+    dest: /etc/firewalld/firewalld.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# apply firewalld configuration/default zone
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: create/delete firewall zones
+  firewalld:
+    zone: "{{ item.zone }}"
+    state: "{{ 'present' if (item.delete is not defined) or (not item.delete) else 'absent' }}"
+    permanent: yes
+    immediate: no
+  with_items: "{{ firewalld_zone_sources }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: reload firewalld
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: configure firewalld zone sources
+  firewalld:
+    zone: "{{ item.0.zone }}"
+    state: "{{ item.0.state|default('enabled') }}"
+    permanent: "{{ item.0.permanent|default('yes') }}"
+    immediate: "{{ item.0.immediate|default('yes') }}"
+    source: "{{ item.1 }}"
+  when: (item.0.delete is not defined) or (not item.0.delete)
+  loop: "{{   q('subelements', firewalld_zone_sources, 'sources', {'skip_missing': True}) }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure firewalld zone services
+  firewalld:
+    zone: "{{ item.0.zone }}"
+    state: "{{ item.0.state|default('enabled') }}"
+    permanent: "{{ item.0.permanent|default('yes') }}"
+    immediate: "{{ item.0.immediate|default('yes') }}"
+    service: "{{ item.1 }}"
+  with_subelements:
+    - "{{ firewalld_zone_services }}"
+    - services
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure additional firewalld rules
+  firewalld: "{{ item }}"
+  with_items: "{{ firewalld }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+#### SERVICE #####
+
+- name: enable firewalld service
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### FACTS #####
+
+- name: create ansible facts.d directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+    mode: 0755
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create firewalld fact file
+  template:
+    src: etc_ansible_facts.d_firewalld.fact.j2
+    dest: /etc/ansible/facts.d/firewalld.fact
+    mode: 0644
+  notify: update ansible facts
+  ignore_errors: "{{ ansible_check_mode }}"

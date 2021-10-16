@@ -24,21 +24,6 @@ A [Steam](https://store.steampowered.com/) account is required. It is recommende
 
 On first deployment, leave `steamcmd_guard_code: "CHANGEME"`. The role will fail and a guard code will be sent to you by mail - then set `steamcmd_guard_code` to the correct value (example `steam_guard_code: "ZBLX6UY"`) and apply the role again.
 
-Inoming traffic on Valheim server ports must be allowed through the firewall. For example using the [common](../common) role:
-
-```yaml
-firehol_custom_services:
-  - ...
-  - { name: "valheim", ports: "tcp/2456:2457 tcp/27015:27030 tcp/27036:27037 udp/2456:2457 udp/4380 udp/27000:27031 udp/27036" }
-
-firehol_networks:
-  - ...
-    allow_input:
-      - { name: "ssh", src: "any" }
-      - { name: "valheim", src: "any" }
-```
-
-
 ## Backups
 
 `/home/steam/.config/unity3d/IronGate/Valheim` must be backed up. Example using the `backup` role from a remote server:

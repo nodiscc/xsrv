@@ -1,5 +1,3 @@
-##### SSH SERVER #####
-
 - name: create revoked keys file
   template:
     src: 'etc_ssh_revoked_keys.j2'

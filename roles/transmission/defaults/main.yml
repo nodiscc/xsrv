@@ -15,3 +15,8 @@ transmission_enable_service: yes
 # yes/no: if the nodiscc.xsrv.backup role is enabled, backup transmission downloads automatically
 # disabled by default as it can consume a lot of disk space
 transmission_backup_downloads: no
+# firewall zones for the transmission bittorrent service (peer communication), if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+transmission_firewalld_zones:
+  - zone: public
+    state: enabled

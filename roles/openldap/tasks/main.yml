@@ -48,6 +48,15 @@
   become: yes
   tags: openldap
 
+- include: firewalld.yml
+  become: yes
+  tags:
+    - openldap
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: openldap

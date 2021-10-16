@@ -30,6 +30,17 @@
     - valheim-server
     - valheim_server
 
+- include: firewalld.yml
+  become: yes
+  tags:
+    - valheim
+    - valheim-server
+    - valheim_server
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags:

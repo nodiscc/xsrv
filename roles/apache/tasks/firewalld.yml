@@ -1,0 +1,10 @@
+- name: setup apache firewalld rules
+  firewalld:
+    zone: "{{ item[0].zone }}"
+    service: "{{ item[1] }}"
+    state: "{{ item[0].state }}"
+    permanent: yes
+    immediate: yes
+  with_nested:
+    - "{{ apache_firewalld_zones }}"
+    - ['http', 'https']

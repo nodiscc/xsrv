@@ -54,11 +54,20 @@ samba_max_log_size_kb: 10000
 samba_log_level: '1 passdb:2 auth:2 auth_audit:3'
 # base path for samba share directories
 samba_shares_path: /var/lib/samba/shares/
-# list of hosts allowed to connect to samba services
+# list of hosts allowed to connect to samba services (CIDR)
+# do not expose samba on the Internet/public networks!
 samba_hosts_allow:
   - '192.168.0.0/16'
   - '172.31.0.0/12'
   - '10.0.0.0/8'
+# firewall zones for the apache service, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+# never expose the samba service to the public zone
+samba_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: disabled
 # (yes/no) enable automatic backups of samba share directories (when the backup role is enabled)
 # disable this and/or set backup paths manually if samba backups consume too
 # much disk space on the backup storage, or if you don't care about losing the data.

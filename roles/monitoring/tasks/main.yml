@@ -39,6 +39,16 @@
     - netdata
   when: setup_netdata_debsecan|bool
 
+- include: firewalld.yml
+  become: yes
+  tags:
+    - monitoring
+    - netdata
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
 - include: cli-utils.yml
   become: yes
   tags:
@@ -59,3 +69,4 @@
     - monitoring
     - rsyslog
     - netdata
+    - firewall

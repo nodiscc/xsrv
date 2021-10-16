@@ -11,3 +11,4 @@
       - (elasticsearch_heap_size == 'auto') or (elasticsearch_heap_size|regex_search('[mg]$'))
       - graylog_heap_size|regex_search('[mg]$')
       - (elasticsearch_timeout_start_sec == 'auto') or (elasticsearch_timeout_start_sec == elasticsearch_timeout_start_sec|int)
+      - graylog_tcp_firewalld_zones|type_debug == "list"

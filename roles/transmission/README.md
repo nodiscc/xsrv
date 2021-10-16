@@ -25,17 +25,6 @@ transmission_username: "CHANGEME"
 transmission_password: "CHANGEME20"
 ```
 
-The firewall must allow incoming traffic on `transmission_port` (by default tcp/52943 and udp/52943), and outgoing traffic on all ports. For example using the `common` role:
-
-```yaml
-firehol_networks:
-  - name: "global"
-    allow_input:
-      - { name: "transmission", src: "any" }
-    allow_output: # outgoing connections
-      - { name: "all", dst: "any"}
-```
-
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 

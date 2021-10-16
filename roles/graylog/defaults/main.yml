@@ -18,3 +18,8 @@ elasticsearch_heap_size: "auto"
 # (auto/seconds) timeout for elasticsearch systemd service startup
 # set a longer value if the elasticsearch systemd service fails to start/times out
 elasticsearch_timeout_start_sec: auto
+# firewall zones for graylog TCP inputs, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+graylog_tcp_firewalld_zones:
+  - zone: internal
+    state: enabled

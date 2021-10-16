@@ -66,7 +66,6 @@
         limit_item: core
         value: '0'
         comment: Prevent core dumps for all users. These are usually not needed and may contain sensitive information
-
     - name: set 10.hardcore.conf perms to 0400 and root ownership
       file:
         path: /etc/security/limits.d/10.hardcore.conf
@@ -74,7 +73,6 @@
         group: 'root'
         mode: '0440'
       when: not ansible_check_mode
-
   when: not os_security_kernel_enable_core_dump | bool
 
 - name: remove 10.hardcore.conf config file

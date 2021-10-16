@@ -41,6 +41,18 @@
   become: yes
   tags: apache
 
+- include: firewalld.yml
+  become: yes
+  tags:
+    - apache
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
-  tags: apache
+  tags:
+    - apache
+    - monitoring
+    - fail2ban

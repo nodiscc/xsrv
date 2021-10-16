@@ -6,3 +6,4 @@
       - mumble_superuser_password is not search(" ")
       - mumble_password is not search("CHANGEME")
       - mumble_welcome_text is string
+      - mumble_firewalld_zones|type_debug == "list"

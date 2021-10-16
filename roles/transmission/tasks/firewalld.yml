@@ -1,0 +1,22 @@
+- name: copy transmission firewalld service definition
+  template:
+    src: etc_firewalld_services_transmission-daemon.xml.j2
+    dest: /etc/firewalld/services/transmission-daemon.xml
+    owner: root
+    group: adm
+    mode: 0640
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# reload firewalld service definitions
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: setup transmission firewalld rules
+  firewalld:
+    zone: "{{ item.zone }}"
+    service: transmission-daemon
+    state: "{{ item.state }}"
+    permanent: yes
+    immediate: yes
+  with_items: "{{ apache_firewalld_zones }}"

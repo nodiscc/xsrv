@@ -15,3 +15,8 @@ mumble_client_max_bandwidth: 72000
 mumble_max_users: 100
 # yes/no: start/stop the mumble VoIP server, enable/disable it on boot
 mumble_enable_service: yes
+# firewall zones for the mumble service, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+mumble_firewalld_zones:
+  - zone: public
+    state: enabled

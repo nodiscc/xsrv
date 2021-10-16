@@ -13,3 +13,8 @@ valheim_world_name: "world"
 valheim_server_password: "CHANGEME"
 # yes/no: enable/disable valheim server service, start it at boot
 valheim_enable_service: yes
+# firewall zones for the valheim-server service, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+valheim_server_firewalld_zones:
+  - zone: public
+    state: enabled

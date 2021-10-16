@@ -29,6 +29,15 @@
   become: yes
   tags: transmission
 
+- include: firewalld.yml
+  become: yes
+  tags:
+    - transmission
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: transmission

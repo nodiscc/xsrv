@@ -32,11 +32,11 @@
   when: setup_fail2ban|bool
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: restart firewall
+- name: reload firewalld
   become: yes
   service:
-    name: firehol
-    state: restarted
+    name: firewalld
+    state: reloaded
     enabled: yes
   when: setup_firewall|bool
   ignore_errors: "{{ ansible_check_mode }}"

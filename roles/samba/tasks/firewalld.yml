@@ -1,0 +1,8 @@
+- name: setup firewalld rules for samba
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: samba
+    state: "{{ item.state }}"
+    permanent: yes
+    immediate: yes
+  with_items: "{{ samba_firewalld_zones }}"

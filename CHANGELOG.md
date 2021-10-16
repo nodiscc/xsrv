@@ -7,8 +7,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - UNRELEASED
 
+**Upgrade procedure:**
+- remove `firehol_*` variables from your configuration (`firehol_networks, firehol_routers, firehol_docker_swarm_compat, firehol_custom_services`).
+- if you had custom firewall rules in place please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74)). Roles from the `nodiscc.xsrv` collection will automatically insert their own rules, if the `common/firewalld` role is deployed.
+
+**Added:**
+- common: add [firewalld](https://firewalld.org/) firewall management tool
+
+**Removed:**
+- common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
+- common: firewall: remove ability to filter outgoing traffic, will be re-added later
 
 **Changed:**
+- manual firewall configuration is no longer required in the default setup/when only `xsrv` roles are enabled
+- let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
 - refactor/performance: only flush handlers once, unless required otherwise
 
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17

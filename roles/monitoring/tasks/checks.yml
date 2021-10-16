@@ -26,6 +26,7 @@
       - rsyslog_enable_forwarding == rsyslog_enable_forwarding|bool
       - setup_rsyslog == setup_rsyslog|bool
       - setup_monitoring_cli_utils == setup_monitoring_cli_utils|bool
+      - netdata_firewalld_zones|type_debug == "list"
 
 - name: check that mandatory variables are correctly defined (syslog forwarding)
   assert:

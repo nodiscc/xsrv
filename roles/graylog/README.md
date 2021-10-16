@@ -34,16 +34,7 @@ graylog_secret_key: "CHANGEME96"
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 
-- Firewall/NAT must allow incoming connections to all ports configured as [inputs](#usage) (eg. `tcp/5140`)
-
-```yaml
-firehol_networks:
-  - name: ...
-    allow_input: # incoming traffic
-      - { name: "graylogtcp5140", src: "{{ my_trusted_syslog_ip_addresses }}" } # graylog syslog input (TCP/SSL) from trusted addresses
-```
-
-- Remote hosts must be configured to send their logs to the graylog instance. For example with the [monitoring](../monitoring) role:
+Remote hosts must be configured to send their logs to the graylog instance. For example with the [monitoring](../monitoring) role:
 
 ```yaml
 ### LOGGING (RSYSLOG) ###
@@ -68,26 +59,13 @@ Login to your graylog instance and configure a basic **[input](https://docs.gray
 - [x] Allow overriding date?
 - Save
 
-Add **[Extractors](https://docs.graylog.org/en/4.0/pages/extractors.html)** to the input to build meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages (using regex or _Grok patterns_). Example grok pattern for [firehol](../common/) messages:
+Add **[Extractors](https://docs.graylog.org/en/4.0/pages/extractors.html)** to the input to build meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages (using regex or _Grok patterns_).
 
-- Source field: `message`
-- [x] Named captures only
-- Pattern: `\[ *%{NUMBER}\] \[firehol\]%{WORD:action} %{WORD:rule} (?<chain>.....)IN=%{WORD:in-interface}? OUT=%{WORD:out_interface}? (MAC=(?<mac_address>[a-f0-9:]*) )?SRC=%{IPV4:source_ip} DST=%{IPV4:destination_ip} LEN=%{NUMBER:length} TOS=0x%{NUMBER} PREC=0x%{NUMBER} TTL=%{NUMBER:ttl} ID=%{NUMBER:id} %{WORD} PROTO=%{WORD:protocol} SPT=%{NUMBER:source_port} DPT=%{NUMBER:destination_port} (WINDOW=%{NUMBER:window} RES=0x%{NUMBER} %{DATA:flags} )?(LEN=%{NUMBER} )?(URGP=%{NUMBER})?`
-- Condition: `Only attempt extraction if field contains string`
-- Field contains string: `[firehol]`
-- Extractor title: `firehol message extractor`
+<!--TODO ADD EXAMPLE GROK PATTERN SETUP -->
 
-Create **[streams](https://docs.graylog.org/en/latest/pages/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select wether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.  For example, setup a basic filter to copy all firehol messages to a separate stream:
+Create **[streams](https://docs.graylog.org/en/latest/pages/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select wether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
 
-- Create stream
-  - Title: `firewall messages`
-  - Description: `firewall messages`
-  - [ ] Remove matches from 'All messages' stream
-- More Actions > Quick Add Rule
-  - Field: `message`
-  - Type: `contain`
-  - Value: `firehol`
-- Start Stream
+<!-- TODO ADD EXAMPLE STREAM SETUP -->
 
 Start using Graylog to [search and filter](https://docs.graylog.org/en/4.0/pages/searching/query_language.html) through messages, edit table fields, create aggregations (bar/area/line/pie charts, tables...) and progressively build useful **[dashboards](https://docs.graylog.org/en/latest/pages/dashboards.html)** showing important indicators for your specific setup.
 

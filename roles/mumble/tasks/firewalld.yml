@@ -1,0 +1,22 @@
+- name: copy mumble firewalld service definition
+  template:
+    src: etc_firewalld_services_mumble.xml.j2
+    dest: /etc/firewalld/services/mumble.xml
+    owner: root
+    group: adm
+    mode: 0640
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# reload firewalld service definitions
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: setup firewalld rules for mumble
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: mumble
+    state: "{{ item.state }}"
+    permanent: yes
+    immediate: yes
+  with_items: "{{ mumble_firewalld_zones }}"

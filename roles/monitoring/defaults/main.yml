@@ -31,6 +31,12 @@ netdata_self_monitoring_enabled: no
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
 netdata_disable_access_log: yes
+# firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+netdata_firewalld_zones:
+  - zone: internal
+    state: enabled
+
 ## NETDATA CHECKS ##
 # Process checks
 #   name: process group name to check (apps_groups.conf)
@@ -138,4 +144,3 @@ lynis_skip_tests:
   - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers wil be selected automatically)
   - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
   - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
-  - "FIRE-4512" # broken check, does not detect firehol rules (https://github.com/CISOfy/lynis/issues/461, https://github.com/CISOfy/lynis/issues/767)

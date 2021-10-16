@@ -12,6 +12,8 @@
       - samba_passdb_backend in ['tdbsam', 'ldapsam']
       - samba_nscd_debug_level == samba_nscd_debug_level|int
       - samba_nscd_cache_time_to_live == samba_nscd_cache_time_to_live|int
+      - samba_hosts_allow|type_debug == "list"
+      - samba_firewalld_zones|type_debug == "list"
 
 - name: check that role requirements are met
   assert:

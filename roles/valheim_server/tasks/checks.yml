@@ -9,3 +9,4 @@
       - valheim_world_name is string
       - valheim_server_password is not search("CHANGEME")
       - valheim_enable_service == valheim_enable_service|bool
+      - valheim_server_firewalld_zones|type_debug == "list"

@@ -21,4 +21,3 @@
   args:
     creates: "/etc/apache2/sites-enabled/tt-rss.conf"
   notify: reload apache
-

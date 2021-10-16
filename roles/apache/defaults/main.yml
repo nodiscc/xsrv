@@ -11,6 +11,12 @@ apache_enable_mod_evasive: no
 apache_letsencrypt_email: "CHANGEME"
 # yes/no: aggregate apache access logs to syslog (if monitoring role is enabled and setup_rsyslog is true)
 apache_access_log_to_syslog: no
+# firewall zones for the apache service, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+# apache access must be allowed from the 'public' zone to use Let's Encrypt certificates
+apache_firewalld_zones:
+  - zone: public
+    state: enabled
 
 ##### PHP-FPM INTERPRETER #####
 # yes/no: enable/disable the default php-fpm pool (www)

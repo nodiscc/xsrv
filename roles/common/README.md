@@ -11,7 +11,7 @@ This role will install/configure a basic Debian-based server:
 - user accounts, resources, PAM restrictions
 - SSH server
  - `sftponly` group (SFTP-only accounts in SSH `chroot`)
-- firewall (`firehol`)
+- firewall ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
 - intrusion/bruteforce detection and prevention system (`fail2ban`)
 - outgoing mail through an external SMTP relay (`msmtp`)
 - basic command-line utilities/diagnostic tools
@@ -43,6 +43,8 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 **Sending e-mail** requires an external SMTP server (see `*msmtp*` configuration variables) and is disabled by default. If you don't have a SMTP server, you can use a free transactional e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT records for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other e-mail account.
 
+**Firewall:** All roles from the `nodiscc.xsrv` collection will setup appropriate rules when this role is deployed. See each role's `*_firewall_zones` configuration variables.
+
 
 ## Usage
 
@@ -54,9 +56,9 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Force rotation of system logs: `ssh user@my.example.org sudo logrotate -f /etc/logrotate.conf`
 - If running in a KVM virtual machine in libvirt/virt-manager, to share a directory from the hypervisor to the VM: access VM settings in `virt-manager`. Click `Add hardware > Filesystem`, Set Mode: `Mapped`, Source path: `/path/to/the/directory/to/share` (on the hypervisor), Target path: `/exampleshareddirectory` (in the VM), then inside the VM run `sudo apt install 9mount, mount -t 9p /exampleshareddirectory /mnt/example`.
 - Upgrade all packages without waiting for unattended-upgrades `ssh user@my.example.org 'sudo apt update && sudo apt upgrade'`
-- Stop the firewall, allow all connections incoming/outgoing connections (be careful) `ssh user@my.example.org sudo firehol stop # or start` - or set `policy: ACCEPT` in firehol definitions for permanent effect
 - Backups: nothing to backup. See the [backup](../backup/README.md) role.
 - Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
+- Get current firewall configuration: `ansible-playbook --tags utils-firewalld-info playbook.yml`
 
 
 ## License

@@ -73,84 +73,69 @@ ssh_password_authentication: "no"
 ### FIREWALL ###
 # setup firewall (yes/no)
 setup_firewall: yes
-# alias for LAN addresses (CIDR notation,comma-separated values)
-firehol_alias_lan: "10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
-# Firewall rules
-# By default a single global network chain is defined (traffic on any interface, from any source)
-# Restrict traffic to individual source/destination IPs in earch rule's src/dst value
-# Or create additional network definitions for more complex setups.
-firehol_networks:
-  - name: "global" # a name for this rule set
-    src: "any" # traffic to/from any IP address
-    interface: "any" # traffic to/from any network interface
-    policy: "RETURN" # policy to apply for traffic that matches no rules match (one of DROP/RETURN/ACCEPT/REJECT)
-    allow_input: # incoming traffic to allow (name: service name, src: source IP address/subnet)
-      - { name: "ssh", src: "any" } # ssh from anywhere
-      # - { name: "netdata", src: "{{ firehol_alias_lan }}" } # monitoring dashboard
-      # - { name: "http", src: "{{ firehol_alias_lan }}" } # web server
-      # - { name: "https", src: "{{ firehol_alias_lan }}" } # web server
-      # - { name: "mumble", src: "{{ firehol_alias_lan }}" } # mumble voip server
-      # - { name: "ping", src: "{{ firehol_alias_lan }}" } # incoming ICMP pings
-      # - { name: "samba", src: "{{ firehol_alias_lan }}" } # samba file sharing
-      # - { name: "pulseaudio", src: "{{ firehol_alias_lan }}" } # pulseaudio sound server
-      # - { name: "mdns", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src: any
-      # - { name: "multicast", src: "any" } # avahi/zeroconf/MDNS/DNS-SD/uPnP, requires src=any
-      # - { name: "sshcustom", src: "any" } # SSH server on custom port
-      # - { name: "transmission", src: "any", } # incoming bittorrent peer connections
-      # - { name: "rtc", src: "any", } # jitsi meet audio/video conferencing
-      # - { name: "ldap", src: "{{ firehol_alias_lan }}", } # LDAP (plain/insecure) from LAN
-      # - { name: "ldaps", src: "{{ firehol_alias_lan }}" } # LDAP (SSL/secure) from LAN
-      # - { name: "graylogtcp5140", src: "{{ firehol_alias_lan }}" } # graylog syslog input (TCP/SSL)
-    allow_output: # outgoing traffic to allow (name: service name, dst: destination IP address/subnet)
-      - { name: "dns", dst: "any" } # DNS queries to anywhere
-      - { name: "ntp", dst: "any" } # time/date synchronization
-      - { name: "dhcp", dst: "{{ firehol_alias_lan }}" } # DHCP requests on LAN
-      - { name: "http", dst: "any" } # outgoing HTTP requests
-      - { name: "https", dst: "any" } # outgoing HTTPS requests
-      - { name: "ping", dst: "any" } # outgoing ICMP pings
-      - { name: "submission", dst: "any" } # outgoing mail/port 587
-      # - { name: "imaps", dst: "any" } # nextcloud mail
-      # - { name: "imaps585", dst: "any" } # nextcloud mail
-      # - { name: "imap", dst: "any" } # nextcloud mail
-      # - { name: "smtps", dst: "any" } # nextcloud mail, outgoing mail/port 465
-      # - { name: "smtp", dst: "any" } # nextcloud mail
-      # - { name: "ssh", dst: "any" } # ssh/git access to anywhere
-      # - { name: "all", dst: "any" } # allow ALL outgoing connections
-# Router definitions - traffic forwarding between network interfaces
+# log rejected/dropped packets (all/unicast/broadcast/multicast/off)
+firewalld_log_denied: all
+# Firewalld zones
 # Example:
-# firehol_routers:
-#   - name: "docker" # arbitrary name for the router, example for docker
-#     allow_route_to: # forward these services from any interface, to the interface specified
-#       - { name: "http", to_interface: "docker_gwbridge" }
-#       - { name: "https", to_interface: "docker_gwbridge" }
-#       - { name: "git", to_interface: "docker_gwbridge" }
-#     allow_route_from: # forward these services to any interface, from the interface specified
-#       - { name: "any", from_interface: "docker_gwbridge" }
-#       - { name: "any", from_interface: "docker0" }
-firehol_routers: []
-# if docker role is enabled, add relevant firewall/router rules (yes/no):
-# - allow traffic from host to containers
-# - allow traffic between containers
-# - allow all outgoing swarm traffic
-# - insert SNAT rules for outgoing swarm traffic
-firehol_docker_swarm_compat: yes
-# custom services definitions, in addition to https://firehol.org/services/
-firehol_custom_services:
-  - { name: "sshcustom", ports: "tcp/722" } # SSH server on custom port
-  - { name: "mumble", ports: "tcp/64738 udp/64738" } # mumble voip server
-  - { name: "netdata", ports: "tcp/19999" } # netdata monitoring dashboard/API
-  - { name: "mdns", ports: "udp/5353" } # avahi/zeroconf/MDNS/DNS-SD
-  - { name: "pulseaudio", ports: "tcp/4713" } # pulseaudio sound server
-  - { name: "transmission", ports: "tcp/52943 udp/52943" } # incoming bittorrent/transmission peer connections
-  - { name: "iscsi", ports: "tcp/3260" } # iSCSI initiator
-  - { name: "dropboxlan", ports: "udp/17500" } # Dropbox LAN sync
-  - { name: "imaps585", ports: "tcp/585" } # IMAPS on port 585
-  - { name: "graylogtcp5140", ports: "tcp/5140" } # graylog syslog input (TCP/SSL)
+# firewalld_zone_sources:
+#   - zone: internal # add 192.168.0.0/16 and 10.0.0.0/8 to the internal zone
+#     sources: # list of IP addresses or networks (CIDR)
+#       - 192.168.0.0/16
+#       - 10.0.0.0/8
+#     state: enabled # optional, enabled/disabled, default enabled
+#     permanent: yes # optional, yes/no, default yes
+#     immediate: yes # optional, yes/no, default yes
+#   - zone: internal # remove 172.16.0.0/12 from the internal zone
+#     sources:
+#       - 172.16.0.0/12
+#     state: disabled
+#   - zone: drop # drop all traffic coming from these addresses
+#     sources:
+#       - 10.11.12.13/24
+#       - 15.8.4.6
+#   - zone: ldap-clients # custom zone, incoming traffic from specific hosts
+#     sources:
+#       - 192.168.1.2
+#       - 192.168.1.3
+#   - zone: delete-this-zone
+#     delete: yes # set delete: yes to completely delete the zone
+firewalld_zone_sources:
+  - zone: internal # add all RFC1918 addresses to the internal zone
+    sources:
+      - 192.168.0.0/24
+      - 172.16.0.0/12
+      - 10.0.0.0/8
+# Services to allow in firewalld zones
+# Example:
+# firewalld_zone_services:
+#   - zone: public # firewall zone to configure
+#     services: # list of services to add/remove from the zone
+#       - ssh
+#     state: disabled # optional, enabled/disabled, default enabled, set to disabled to remove a rule
+#     permanent: yes # optional, yes/no, default yes
+#     immediate: yes # optional, yes/no, default yes
+#   - zone: internal
+#     services:
+#       - dns # allow DNS from the internal zone
+#   - zone: ldap-clients # allow traffic for a specific service from a zone
+#     services:
+#       - ldap
+#       - ldaps
+firewalld_zone_services:
+  - zone: public
+    services:
+      - ssh # allow SSH from anywhere
+  - zone: public
+    services:
+      - dhcpv6-client # remove dhcpv6-client rule from the default public zone
+    state: disabled
+# additional firewalld configuration - https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
+firewalld: []
 
 ### FAIL2BAN ###
 # setup fail2ban bruteforce detection/prevention system (yes/no)
 setup_fail2ban: yes
-# list of IPs to never ban - 127.0.0.1 is always ignored
+# list of IPs to never ban - 127.0.0.1 is always whitelisted
 fail2ban_ignoreip:
   - '10.0.0.0/8'
   - '192.168.0.0/16'
@@ -207,7 +192,6 @@ msmtp_from: 'auto'
 msmtp_starttls: yes
 # (optional) TLS certificate fingerprint of the SMTP server. use this to accept a self-signed certificate. get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout
 # msmtp_host_fingerprint: '11:22:33:44:55:66:77:88:99:00:13:37:AA:BB:CC:DD:EE:FF:AD:C2'
-
 # the user to forward all local root mail to, if msmtp setup is disabled
 mail_root_alias: "{{ ansible_user }}"
 

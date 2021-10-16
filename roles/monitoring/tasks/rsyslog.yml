@@ -52,7 +52,3 @@
     state: absent
     regexp: '^\*\.\*'
   notify: restart rsyslog
-
-# apply rsyslog configuration
-- name: run all notified handlers now
-  meta: flush_handlers
