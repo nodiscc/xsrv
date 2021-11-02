@@ -100,11 +100,11 @@
 
 ##### CRON #####
 
-- name: restrict cron jobs creation to root only
-  copy:
-    src: etc_cron.allow
+- name: only allow select users to use crontab
+  template:
+    src: etc_cron.allow.j2
     dest: /etc/cron.allow
-    mode: 0600
+    mode: 0644
 
 # Granting write access to this directory for non-privileged users could provide
 # them the means for gaining unauthorized elevated privileges.
