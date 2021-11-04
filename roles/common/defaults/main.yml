@@ -31,6 +31,8 @@ setup_apt: yes
 apt_enable_nonfree: no
 
 ### DATE/TIME ###
+# yes/no: setup ntp time service
+setup_datetime: yes
 # timezone name (if commented out, timezone will not be changed)
 # timezone: "Etc/UTC"
 

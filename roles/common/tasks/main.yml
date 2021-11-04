@@ -34,6 +34,7 @@
   tags:
     - common
     - datetime
+  when: setup_datetime|bool
 
 - include: ssh.yml
   become: yes
