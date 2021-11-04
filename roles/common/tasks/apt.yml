@@ -1,7 +1,3 @@
----
-
-##### PACKAGE MANAGEMENT/APT/UPGRADES #####
-
 - name: copy apt sources lists (debian + security + backports)
   template:
     src: "etc_apt_sources.list.j2"
@@ -15,11 +11,20 @@
     dest: "{{ item.dest }}"
     mode: 0644
   with_items:
-    - { src: 'etc_apt_apt.conf.d_99-no-overwrite-conffiles.j2', dest: '/etc/apt/apt.conf.d/99-no-overwrite-conffiles' }
-    - { src: 'etc_apt_apt.conf.d_99-norecommends.j2', dest: '/etc/apt/apt.conf.d/99-norecommends' }
+    - { src: 'etc_apt_apt.conf.d_99no-overwrite-conffiles.j2', dest: '/etc/apt/apt.conf.d/99no-overwrite-conffiles' }
+    - { src: 'etc_apt_apt.conf.d_99norecommends.j2', dest: '/etc/apt/apt.conf.d/99norecommends' }
     - { src: 'etc_apt_apt.conf.d_50unattended-upgrades.j2', dest: '/etc/apt/apt.conf.d/50unattended-upgrades' }
   register: apt_config
   when: ansible_facts.distribution == 'Debian'
+  notify: update apt cache
+
+- name: remove files from old versions of the role
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/apt/apt.conf.d/99-norecommends
+    - /etc/apt/apt.conf.d/99-no-overwrite-conffiles
   notify: update apt cache
 
 # update apt cache before trying to install packages
