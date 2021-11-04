@@ -20,7 +20,7 @@
 // Within lines unattended-upgrades allows 2 macros whose values are
 // derived from /etc/debian_version:
 //   ${distro_id}            Installed origin.
-//   ${distro_codename}      Installed codename (eg, "buster")
+//   ${distro_codename}      Installed codename (eg, "{{ ansible_facts.distribution_release }}")
 Unattended-Upgrade::Origins-Pattern {
         // Codename based matching:
         // This will follow the migration of a release through different
