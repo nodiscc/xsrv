@@ -7,16 +7,12 @@ all: tests
 ##### TESTS #####
 
 .PHONY: tests # run all tests
-tests: test_shellcheck test_readmes test_jinja2 test_ansible_syntax_check test_ansible_lint test_yamllint
+tests: test_shellcheck test_jinja2 test_ansible_syntax_check test_ansible_lint test_yamllint
 
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
 	shellcheck -e SC1090 xsrv
-
-.PHONY: test_readmes # check that all roles README.md contains expected sections/info
-test_readmes:
-	for i in roles/*/README.md; do grep '../../LICENSE' "$$i" >/dev/null || (echo "ERROR: missing license information in $$i"; exit 1); done
 
 .PHONY: venv # install dev tools in virtualenv
 venv:
