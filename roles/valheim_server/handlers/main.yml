@@ -1,0 +1,12 @@
+- name: reload systemd units
+  become: yes
+  systemd:
+    daemon_reload: yes
+
+- name: restart valheim server
+  become: yes
+  service:
+    name: valheim-server
+    state: restarted
+    enabled: yes
+  when: valheim_enable_service|bool

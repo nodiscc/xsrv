@@ -1,0 +1,10 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    that:
+      - steamcmd_username is not search("CHANGEME")
+      - steamcmd_password is not search("CHANGEME")
+      - valheim_server_name is string
+      - valheim_server_port == valheim_server_port|int
+      - valheim_world_name is string
+      - valheim_server_password is not search("CHANGEME")
+      - valheim_enable_service == valheim_enable_service|bool

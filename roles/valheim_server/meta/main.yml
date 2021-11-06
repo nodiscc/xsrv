@@ -1,0 +1,19 @@
+galaxy_info:
+  role_name: valheim_server
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Valheim multiplayer server"
+  license: GPL-3.0
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - 10
+  galaxy_tags:
+    - game
+    - valheim
+    - server
+    - steam
+dependencies: []
+#   - nodiscc.xsrv.common
+#   - nodiscc.xsrv.monitoring
+#   - nodiscc.xsrv.backup

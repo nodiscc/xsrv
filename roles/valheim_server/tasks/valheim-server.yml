@@ -1,0 +1,36 @@
+# https://valheim.fandom.com/wiki/Valheim_Dedicated_Server
+- name: install/update valheim server - this can take a while
+  become_user: steam
+  command: >
+    /usr/games/steamcmd
+    +@sSteamCmdForcePlatformType linux
+    +login {{ steamcmd_username }} {{ steamcmd_password }}
+    +force_install_dir /home/steam/valheim
+    +app_update 896660 validate
+    +quit
+  register: update_valheim_server
+  changed_when: "'downloading' in update_valheim_server.stdout"
+  notify: restart valheim server
+
+
+- name: install valheim-server systemd service
+  template:
+    src: etc_systemd_system_valheim-server.service.j2
+    dest: /etc/systemd/system/valheim-server.service
+    mode: 0644
+  notify:
+    - reload systemd units
+    - restart valheim server
+
+##### SERVICE
+
+- name: start/stop/enable/disable valheim-server service
+  service:
+    name: valheim-server
+    state: "{{ 'started' if valheim_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if valheim_enable_service else 'no' }}"
+  tags: valheim-service
+
+# - name: open firewall ports # TODO
+#   - { name: "valheim", ports: "tcp/2456:2457 tcp/27015:27030 tcp/27036:27037 udp/2456:2457 udp/4380 udp/27000:27031 udp/27036" }
+# https://support.steampowered.com/kb_article.php?ref=8571-GLVN-8711

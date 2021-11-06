@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - add [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
+- add [valheim_server](roles/valheim_server) role (Valheim multiplayer game server)
 - gitea: make number of issues per page configurable (`gitea_issue_paging_num` , increase to 20 by default)
 - shaarli: make `hide_timestamp,header_link,debug,formatter` [settings](https://shaarli.readthedocs.io/en/master/Shaarli-configuration/) configurable
 - monitoring: add [lynis](https://cisofy.com/lynis/) security audit tool (optional, default disabled), schedule a daily report

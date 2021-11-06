@@ -1,0 +1,14 @@
+[Unit]
+Description=Valheim server
+After=network-online.target
+
+[Service]
+User=steam
+WorkingDirectory=/home/steam/valheim/
+KillSignal=SIGINT
+ExecStart=/home/steam/valheim/valheim_server.x86_64 -name "{{ valheim_server_name }}" -port "{{ valheim_server_port }}" -nographics -batchmode -world "{{ valheim_world_name }}" -password "{{ valheim_server_password }}" -public 1  
+Environment="LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH"
+Environment="SteamAppId=892970"
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+# steam account username/password
+steamcmd_username: "CHANGEME"
+steamcmd_password: "CHANGEME"
+# first deployment will fail and a guard code will be sent to your e-mail, set it here
+steamcmd_guard_code: "CHANGEME"
+# the server name as shown in the server list
+valheim_server_name: "Valheim server"
+# server port
+valheim_server_port: 2456
+# world name/filename
+valheim_world_name: "world"
+# password used to connect to the server
+valheim_server_password: "CHANGEME"
+# yes/no: enable/disable valheim server service, start it at boot
+valheim_enable_service: yes
