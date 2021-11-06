@@ -21,3 +21,5 @@
     - nodiscc.xsrv.rocketchat
     - nodiscc.xsrv.graylog
     - nodiscc.xsrv.proxmox
+    - nodiscc.xsrv.gotty
+    - nodiscc.xsrv.jellyfin
