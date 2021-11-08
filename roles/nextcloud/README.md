@@ -1,6 +1,6 @@
 # xsrv.nextcloud
 
-This role will install [Nextcloud](https://en.wikipedia.org/wiki/Nextcloud), a file hosting, sharing, and synchronization service.
+This role will install [Nextcloud](https://en.wikipedia.org/wiki/Nextcloud), a private file hosting/sharing/synchronization service and groupware/collaboration platform.
 
 Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/).
 

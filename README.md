@@ -20,28 +20,29 @@
 
 
 ## Roles
-
-- [common](roles/common) - base system setup and hardening
-- [backup](roles/backup) - incremental backup service
-- [monitoring](roles/monitoring) - monitoring, alerting and logging system
-- [apache](roles/apache) - web server and PHP interpreter
-- [postgresql](roles/postgresql) or [mariadb](roles/mariadb) database server
+<!--BEGIN ROLES LIST-->
+- [apache](roles/apache) - Apache web server + PHP-FPM interpreter
+- [backup](roles/backup) - Remote/local backup service (rsnapshot)
+- [common](roles/common) - Base setup for Debian servers
+- [docker](roles/docker) - Open source application containerization technology
+- [gitea](roles/gitea) - Self-hosted Git service/software forge
+- [gotty](roles/gotty) - Share your terminal as a web application
+- [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
+- [homepage](roles/homepage) - Simple webserver homepage/dashboard
+- [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
+- [mariadb](roles/mariadb) - MariaDB database engine
+- [monitoring](roles/monitoring) - Real-time monitoring, alerting and logging system
+- [mumble](roles/mumble) - Low-latency VoIP/voice chat server
+- [nextcloud](roles/nextcloud) - private file hosting/sharing/synchronization service and groupware/collaboration platform
 - [openldap](roles/openldap) - LDAP directory server
-- [docker](roles/docker) - Docker container platform
-- [graylog](roles/graylog) - log management, capture and analysis platform
-- [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization/groupware/"private cloud" service
-- [tt_rss](roles/tt_rss) - RSS feed reader
-- [samba](roles/samba) - cross-platform file and printer sharing service (SMB/CIFS)
-- [shaarli](roles/shaarli) - personal, minimalist, super-fast bookmarking service
-- [gitea](roles/gitea) - lightweight self-hosted Git service/software forge
-- [transmission](roles/transmission) - bittorrent peer-to-peer client web interface (seedbox) service
-- [mumble](roles/mumble) - low-latency voice-over-IP (VoIP) server
-- [rocketchat](roles/rocketchat) - realtime web chat/communication platform
-- [jellyfin](roles/jellyfin) - media System that puts you in control of managing and streaming your media
-- [homepage](roles/homepage) - simple homepage/dashboard for your services
-- [gotty](roles/gotty) - access a server terminal as a web application
-- [proxmox](roles/proxmox) - basic setup for Proxmox VE hypervisors
-
+- [postgresql](roles/postgresql) - PostgreSQL database engine
+- [proxmox](roles/proxmox) - Proxmox VE hypervisor configuration
+- [rocketchat](roles/rocketchat) - Instant messaging & communication platform
+- [samba](roles/samba) - Cross-platform file sharing server
+- [shaarli](roles/shaarli) - Bookmarking & link sharing web application
+- [transmission](roles/transmission) - Transmission Bittorrent client/web interface
+- [tt_rss](roles/tt_rss) - Tiny Tiny RSS web-based news feed reader
+<!--END ROLES LIST-->
 
 ## Quick start
 

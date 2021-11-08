@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: "common"
+  role_name: common
   author: "nodiscc <nodiscc@gmail.com>"
   description: "Base setup for Debian servers"
   license: GPL-3.0
