@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: gitea
-  author: nodiscc
-  description: Gitea self-hosted Git service/software forge
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Self-hosted Git service/software forge"
   license: GPL-3.0
   min_ansible_version: 2.9
   platforms:
