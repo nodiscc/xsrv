@@ -145,10 +145,23 @@ endif
 
 .PHONY: doc_md # manual - generate docs/index.md from README.md
 doc_md:
-	cp README.md docs/index.md
-	sed -i 's|(roles/|(https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/|g' docs/index.md
-	sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md
-	sed -i 's|docs/||g' docs/index.md
+	@roles_list_md=$$(for i in roles/*/meta/main.yml; do \
+		name=$$(grep "role_name: " "$$i" | awk -F': ' '{print $$2}'); \
+		description=$$(grep "description: " "$$i" | awk -F': ' '{print $$2}' | sed 's/"//g'); \
+		echo "- [$$name](roles/$$name) - $$description"; \
+		done) && \
+		echo "$$roles_list_md" >| roles-list.tmp.md
+	@awk ' \
+		BEGIN {p=1} \
+		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list.tmp.md");p=0} \
+		/^<!--END ROLES LIST-->/ {p=1} \
+		p' README.md >> README.tmp.md
+	@rm roles-list.tmp.md
+	@mv README.tmp.md README.md
+	@cp README.md docs/index.md
+	@sed -i 's|(roles/|(https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/|g' docs/index.md
+	@sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md
+	@sed -i 's|docs/||g' docs/index.md
 
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
