@@ -1,3 +1,5 @@
 .ansible-vault-password
 ansible.log
 .venv/
+cache/
+data/backups
