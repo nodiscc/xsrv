@@ -4,7 +4,7 @@ set -o nounset
 
 # Configuration / defaults
 xsrv_clone_dir="${XSRV_CLONE_DIR:=$HOME/.local/share/xsrv/git}"
-playbooks_dir="${XSRV_PLAYBOOKS_DIR:=$HOME/playbooks}"
+projects_dir="${XSRV_projects_dir:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
@@ -20,26 +20,26 @@ ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
 
 ### Helpers ###
 
-function check_playbook_exists() {
+function check_project_exists() {
     # check that the directory for the specified playbook exists, exit with error if not
-    if [[ ! -e "$playbook_dir" ]]; then
-        echo "[xsrv] ERROR: playbook $playbook_dir does not exist"; exit 1;
+    if [[ ! -e "$project_dir" ]]; then
+        echo "[xsrv] ERROR: project $project_dir does not exist"; exit 1;
     fi
 }
 
 function _check_host_name() {
     # check if host_vars files exist for a host, set host_vars_file and host_vault_file global variables
-    check_playbook_exists
+    check_project_exists
     if [[ -z "$host_name" ]]; then
-        host_vars_dirs=$(find "$playbooks_dir/$playbook_name/host_vars/" -maxdepth 1 -type d)
+        host_vars_dirs=$(find "$projects_dir/$project_name/host_vars/" -maxdepth 1 -type d)
         host_name="${host_vars_dirs##*/}"
         echo "[xsrv] INFO: no host name provided, using $host_name as host name"
         if [[ ! $(echo "$host_name" | wc -l) -eq 1 ]]; then
-            echo "[xsrv] ERROR: no host name specified and multiple hosts found in playbook"; exit 1
+            echo "[xsrv] ERROR: no host name specified and multiple hosts found in project"; exit 1
         fi
     fi
-    host_vars_file="$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.yml"
-    host_vault_file="$playbooks_dir/$playbook_name/host_vars/$host_name/$host_name.vault.yml"
+    host_vars_file="$projects_dir/$project_name/host_vars/$host_name/$host_name.yml"
+    host_vault_file="$projects_dir/$project_name/host_vars/$host_name/$host_name.vault.yml"
     if [[ ! -f "$host_vars_file" ]]; then
         echo "[xsrv] ERROR: $host_vars_file does not exist"; exit 1
     fi
@@ -47,13 +47,13 @@ function _check_host_name() {
 
 function check_group_name() {
     # check if group_vars files exist for a group, set group_vars_file global variable
-    check_playbook_exists
+    check_project_exists
     group_name="$host_name"
     if [[ -z "$group_name" ]]; then
         echo "[xsrv] INFO: no group name provided, editing variables for group 'all'"
         group_name="all"
     fi
-    group_vars_file="$playbooks_dir/$playbook_name/group_vars/$group_name.yml"
+    group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
     if [[ ! -f "$group_vars_file" ]]; then
         echo "[xsrv] INFO: $group_vars_file does not exist, will be created";
     fi
@@ -73,7 +73,7 @@ function init_venv() {
     # check if a working ansible virtualenv exists, 
     # check if the installed ansible version matches the expected version,
     # otherwise create/activate the virtualenv and install ansible
-    check_playbook_exists
+    check_project_exists
     {
         source "$venv_dir/bin/activate" 2>/dev/null
         ansible_installed_version=$(ansible --version 2>/dev/null | head -n1 | grep --only-matching '[0-9]*\.[0-9]*\.[0-9]*')
@@ -84,8 +84,8 @@ function init_venv() {
 function _get_host_var() {
     # get a host var using ansible -m debug | grep
     # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
-    (cd "$playbook_dir" && ansible --one-line \
-      --inventory "$playbook_dir"/inventory.yml \
+    (cd "$project_dir" && ansible --one-line \
+      --inventory "$project_dir"/inventory.yml \
       --module-name debug --args \
       "msg={{ $1 }}" "$host_name" | \
       grep -oP '(?<="msg": ").*(?="})')
@@ -94,8 +94,8 @@ function _get_host_var() {
 function gen_vault_password_file() {
     # generate a random password for ansible-vault and store it in a file
     echo "[xsrv] INFO: Generating random password for ansible-vault"
-    openssl rand -base64 32 > "$playbooks_dir/$playbook_name/.ansible-vault-password"
-    echo "[xsrv] INFO: vault password stored in $playbooks_dir/$playbook_name/.ansible-vault-password"
+    openssl rand -base64 32 > "$projects_dir/$project_name/.ansible-vault-password"
+    echo "[xsrv] INFO: vault password stored in $projects_dir/$project_name/.ansible-vault-password"
     echo "[xsrv] INFO: Keep this file private! Keep backups of this file!"
 }
 
@@ -129,11 +129,11 @@ function help() {
 
 function check() {
     # run ansible playbook in check mode
-    check_playbook_exists
+    check_project_exists
     if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
     if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
-    cd "$playbooks_dir/$playbook_name"
-    echo "[xsrv] INFO: deploying playbook $playbook_name"
+    cd "$projects_dir/$project_name"
+    echo "[xsrv] INFO: deploying main playbook for project $project_name"
     ansible-playbook playbook.yml --check --diff $ansible_tags_arg $ansible_host_arg
 }
 
@@ -141,21 +141,21 @@ function deploy() {
     # run ansible playbook
     if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
     if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
-    cd "$playbooks_dir/$playbook_name"
-    echo "[xsrv] INFO: deploying playbook $playbook_name"
+    cd "$projects_dir/$project_name"
+    echo "[xsrv] INFO: deploying main playbook for project $project_name"
     ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
 }
 
 function edit_playbook() {
     # edit a playbook file
-    playbook_file="$playbooks_dir/$playbook_name/playbook.yml"
+    playbook_file="$projects_dir/$project_name/playbook.yml"
     echo "[xsrv] INFO: opening playbook file $playbook_file"
     $editor "$playbook_file"
 }
 
 function edit_inventory() {
     # edit an inventory file
-    inventory_file="$playbooks_dir/$playbook_name/inventory.yml"
+    inventory_file="$projects_dir/$project_name/inventory.yml"
     echo "[xsrv] INFO: opening inventory file $inventory_file"
     $editor "$inventory_file"
 }
@@ -177,54 +177,61 @@ function edit_group() {
 function edit_vault() {
     # edit a host's vault file
     _check_host_name
-    cd "$playbooks_dir/$playbook_name"
+    echo "[xsrv] INFO: opening vault file $host_vault_file"
+    cd "$projects_dir/$project_name"
     EDITOR="$editor" ansible-vault edit "$host_vault_file"
 }
 
-function init_playbook() {
-    # initialize a new playbook (default roles)
-    if [[ -e "$playbook_dir" ]]; then
-        echo "[xsrv] ERROR: $playbook_dir already exists"; exit 1
+function legacy_init_playbook() {
+    echo "[xsrv] WARNING: init-playbook is deprecated and will be removed in a future release. Use init-project"
+    init_project
+}
+
+function init_project() {
+    # initialize a new project
+    if [[ -e "$project_dir" ]]; then
+        echo "[xsrv] ERROR: $project_dir already exists"; exit 1
     fi
-    mkdir -p "$playbook_dir"
+    mkdir -p "$project_dir"
+    init_venv
     upgrade_roles
-    echo "[xsrv] INFO: creating files and directories for $playbook_name"
-    templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
-    cp -rn "$templates_dir"/{ansible.cfg,README.md,requirements.yml,data/,group_vars/,public_keys/,playbooks/} "$playbook_dir/"
+    echo "[xsrv] INFO: creating files and directories for $project_name"
+    templates_dir="$project_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
+    cp -rn "$templates_dir"/{ansible.cfg,README.md,requirements.yml,data/,group_vars/,public_keys/,playbooks/} "$project_dir/"
     gen_vault_password_file
     init_host
-    echo "[xsrv] INFO: playbook $playbook_name initialized in $playbook_dir"
-    echo "[xsrv] INFO: run $0 deploy to apply configuration now, or $0 help for more options"
+    echo "[xsrv] INFO: project $project_name initialized in $project_dir"
+    echo "[xsrv] INFO: run xsrv deploy to apply configuration now, or xsrv help for more options"
 }
 
 function init_host() {
-    # add a new host to a playbook (from template files)
-    check_playbook_exists
+    # add a new host to a project (from template files)
+    check_project_exists
     until [[ ! -z "$host_name" ]]; do
-        read -r -p "[xsrv] Host name to add to the $playbook_name playbook (ex: my.CHANGEME.org): " host_name
+        read -r -p "[xsrv] Host name to add to the $project_name project (ex: my.CHANGEME.org): " host_name
     done
-    if [[ -e "$playbook_dir/host_vars/$host_name" ]]; then
-        echo "[xsrv] ERROR: $playbook_dir/host_vars/$host_name already exists"; exit 1
+    if [[ -e "$project_dir/host_vars/$host_name" ]]; then
+        echo "[xsrv] ERROR: $project_dir/host_vars/$host_name already exists"; exit 1
     fi
     echo "[xsrv] INFO: adding $host_name to the last inventory group"
-    echo "    $host_name:" >> "$playbook_dir/inventory.yml"
-    echo "[xsrv] INFO: adding default play for $host_name to the playbook"
-    templates_dir="$playbook_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
-    sed "s/my.example.org/$host_name/g" "$templates_dir/playbook.yml" >> "$playbook_dir/playbook.yml"
+    echo "    $host_name:" >> "$project_dir/inventory.yml"
+    echo "[xsrv] INFO: adding default play for $host_name to project $project_name"
+    templates_dir="$project_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
+    sed "s/my.example.org/$host_name/g" "$templates_dir/playbook.yml" >> "$project_dir/playbook.yml"
     echo "[xsrv] INFO: creating default host vars file for $host_name"
-    mkdir -p "$playbook_dir/host_vars/$host_name"
-    host_vars_file="$playbook_dir/host_vars/$host_name/$host_name.yml"
+    mkdir -p "$project_dir/host_vars/$host_name"
+    host_vars_file="$project_dir/host_vars/$host_name/$host_name.yml"
     sed "s/my.example.org/$host_name/g" "$templates_dir/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
     echo "[xsrv] INFO: creating default vault file for $host_name"
-    host_vault_file="$playbook_dir/host_vars/$host_name/$host_name.vault.yml"
+    host_vault_file="$project_dir/host_vars/$host_name/$host_name.vault.yml"
     sed "s/my.example.org/$host_name/g" "$templates_dir/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
     gen_random_passwords "$host_vault_file"
-    edit_playbook "$playbook_name"
-    edit_host "$playbook_name" "$host_name"
+    edit_playbook "$project_name"
+    edit_host "$project_name" "$host_name"
     echo "[xsrv] INFO: Encrypting secrets file"
-    (cd "$playbook_dir/" && ansible-vault encrypt "$playbook_dir/host_vars/$host_name/$host_name.vault.yml")
-    edit_vault "$playbook_name" "$host_name"
-    echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $playbook_name $host_name"
+    (cd "$project_dir/" && ansible-vault encrypt "$project_dir/host_vars/$host_name/$host_name.vault.yml")
+    edit_vault "$project_name" "$host_name"
+    echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $project_name $host_name"
 }
 
 function run_shell() {
@@ -237,49 +244,49 @@ function run_shell() {
 }
 
 function _ls() {
-    # list files in the playbooks directory
+    # list files in the projects directory
     path=${1:-}
-    ls "$playbooks_dir/$path"
+    ls "$projects_dir/$path"
 }
 
 function fetch_backups() {
     # fetch latest daily backups from the host
-    check_playbook_exists
+    check_project_exists
     ssh_port=$(_get_host_var "ansible_ssh_port|default(22)")
     ssh_user=$(_get_host_var "ansible_user")
     backup_date=$(date "+%Y%m%d_%H%M%S")
-    echo "[xsrv] INFO: fetching latest daily backups from $host_name in playbook $playbook_name"
+    echo "[xsrv] INFO: fetching latest daily backups from $host_name in project $project_name"
     rsync --archive --verbose --rsh="ssh -p $ssh_port" \
       --progress --fake-super --rsync-path='/usr/bin/sudo /usr/bin/rsync' \
       "$ssh_user@$host_name:/var/backups/rsnapshot/daily.0/" \
-      "$playbooks_dir/$playbook_name/$local_backups_dir/daily.0.$backup_date"
+      "$projects_dir/$project_name/$local_backups_dir/daily.0.$backup_date"
 }
 
 function upgrade_roles() {
-    check_playbook_exists
-    if [[ ! -f "$playbook_dir"/requirements.yml ]]; then
+    check_project_exists
+    if [[ ! -f "$project_dir"/requirements.yml ]]; then
         echo "[xsrv] INFO: installing default collection git+$xsrv_git_url,$xsrv_upgrade_channel"
-        (cd "$playbook_dir" && ansible-galaxy collection install --force --collections-path "$playbook_dir/" git+$xsrv_git_url,$xsrv_upgrade_channel)
+        (cd "$project_dir" && ansible-galaxy collection install --force --collections-path "$project_dir/" git+$xsrv_git_url,$xsrv_upgrade_channel)
     else
         echo "[xsrv] INFO: upgrading collections from requirements.yml"
-        (cd "$playbook_dir" && ansible-galaxy collection install --force -r requirements.yml)
+        (cd "$project_dir" && ansible-galaxy collection install --force -r requirements.yml)
     fi
 }
 
 function show_defaults() {
     # show all role defaults
     role=${2:-}
-    check_playbook_exists
+    check_project_exists
     if ! hash "${pager%% *}" 2>/dev/null; then
         echo "[xsrv] INFO: pager command '$pager' unavailable, falling back to 'less'"
         pager="less"
     fi
     if [[ ! -z "$role" ]]; then
-        cat "$playbook_dir"/ansible_collections/*/*/roles/"$role"/defaults/main.yml | $pager 2>/dev/null
+        cat "$project_dir"/ansible_collections/*/*/roles/"$role"/defaults/main.yml | $pager 2>/dev/null
     else
         # shellcheck disable=SC2002
         defaults_header="# List of all role configuration variables, and their default values.\\n# Copy any variable to your host configuration and edit its value there.\\n######################################################\\n\\n"
-        default_files=$(find "$playbook_dir"/ansible_collections/*/*/roles/*/defaults/ -name main.yml)
+        default_files=$(find "$project_dir"/ansible_collections/*/*/roles/*/defaults/ -name main.yml)
         defaults_list=$(for file in $default_files; do
             cat "$file"; echo -e "\\n\\n###################################################################"
         done)
@@ -324,9 +331,9 @@ function _main() {
     echo "$ascii_banner"
     if [[ -z "$command" ]]; then echo "[xsrv] ERROR: no command provided"; echo "$usage"; exit 1; fi
     case "$command" in
-        "init-playbook") init_venv; shift; init_playbook ;;
+        "init-project") shift; init_project ;;
         "init-host") init_venv; shift; init_host ;;
-        "deploy") check_playbook_exists; init_venv; shift; deploy ;;
+        "deploy") check_project_exists; init_venv; shift; deploy ;;
         "check") init_venv; shift; check ;;
         "edit-playbook") shift; edit_playbook ;;
         "edit-inventory") shift; edit_inventory ;;
@@ -341,6 +348,7 @@ function _main() {
         "upgrade") init_venv; shift; upgrade_roles ;;
         "show-defaults") shift; show_defaults "$@";;
         "self-upgrade") self_upgrade;;
+        "init-playbook") init_venv; shift; legacy_init_playbook;;
         *) echo "[xsrv] ERROR: unrecognized command $command"; exit 1 ;;
     esac
 }
@@ -350,27 +358,27 @@ function _main() {
 
 # Usage
 usage="
-USAGE: xsrv COMMAND [playbook] [host]
+USAGE: xsrv COMMAND [project] [host]
 
-# PLAYBOOK-LEVEL COMMANDS
-init-playbook [playbook]         initialize a new playbook
-edit-playbook [playbook]         edit/show playbook (list of roles)
-edit-inventory [playbook]        edit/show inventory file (list of hosts)
-show-defaults [playbook] [role]  show all variables and their default values
-edit-group [playbook] [group]    edit variables for a group of hosts (default 'all')
+# PROJECT-LEVEL COMMANDS
+init-project [project]          initialize a new project
+edit-inventory [project]        edit/show inventory file (hosts/groups)
+edit-playbook [project]         edit/show playbook (roles for each host)
+show-defaults [project] [role]  show all variables and their default values
+edit-group [project] [group]    edit variables for a group of hosts (default 'all')
 
 # HOST-LEVEL COMMANDS
-init-host [playbook] [host]      add a new host to an existing playbook
-check [playbook] [host]          simulate deployment, report what would be changed
-deploy [playbook] [host]         deploy a playbook (apply configuration/roles)
-edit-host [playbook] [host]      edit host configuration (host_vars)
-edit-vault [playbook] [host]     edit encrypted (vault) host configuration
-fetch-backups [playbook] [host]  fetch backups from a host to the local backups/ directory
-upgrade [playbook] [host]        upgrade roles to latest version
-shell [playbook] [host]          open an interactive shell on a host
-logs [playbook] [host]           view system log on a host
-ls                               list files in the playbooks directory (accepts a path)
-help                             show this message
+init-host [project] [host]      add a new host to an existing project
+check [project] [host]          simulate deployment, report what would be changed
+deploy [project] [host]         deploy a project's main playbook (apply configuration/roles)
+edit-host [project] [host]      edit host configuration (host_vars)
+edit-vault [project] [host]     edit encrypted (vault) host configuration
+fetch-backups [project] [host]  fetch backups from a host to the local backups/ directory
+upgrade [project] [host]        upgrade roles to latest version
+shell [project] [host]          open an interactive shell on a host
+logs [project] [host]           view system log on a host
+ls                              list files in the projects directory (accepts a path)
+help                            show this message
 
 # OTHER COMMANDS
 self-upgrade                     check for new releases/upgrade the xsrv script in-place
@@ -382,9 +390,9 @@ PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
 "
 
 command="${1:-}"
-playbook_name="${2:-default}"
-playbook_dir="$playbooks_dir/$playbook_name"
-venv_dir="$playbooks_dir/$playbook_name/.venv"
+project_name="${2:-default}"
+project_dir="$projects_dir/$project_name"
+venv_dir="$project_dir/.venv"
 host_name="${3:-}"
 ssh_args=""
 
