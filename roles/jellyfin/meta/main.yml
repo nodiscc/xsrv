@@ -16,6 +16,6 @@ galaxy_info:
     - movies
     - music
 dependencies:
-    # - nodiscc.xsrv.common
-    # - nodiscc.xsrv..monitoring
-    - nodiscc.xsrv.apache
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv..monitoring
+  - nodiscc.xsrv.apache
