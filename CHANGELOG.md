@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: disable lynis checks AUTH-9283 and FIRE-4512 by default (false positives)
 - monitoring: only enable "number of running docker container" checks when the nodiscc.xsrv.docker role is enabled
 - monitoring: update configuration for netdata > 1.30
+- xsrv: rename top-level directory concept (playbook -> project)
 - xsrv: logs: don't ask for sudo password if syslog is readable without it
 - xsrv: switch to ansible "distribution" versioning, upgrade to [4.7.0](https://github.com/ansible-community/ansible-build-data/blob/main/4/CHANGELOG-v4.rst) ([ansible-core](https://github.com/ansible/ansible) 2.11.6), update playbook for compatibility
 - xsrv: store virtualenv inside the project directory, improve startup time
@@ -53,7 +54,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - backup: make dependency on monitoring role optional
 - backup: ensure only `root` can read the rsnapshot configuration file
 - backup: re-schedule monthly backups at 04:01 on the first day of the month
-- update documentation
+- default playbook: .gitignore data/ and cache/ directories
+- doc: update/refactor documentation and roles metadata
+- tools: improve automatic doc generation
 
 **Removed:**
 - nextcloud: disable [deck](https://apps.nextcloud.com/apps/deck) app by default
@@ -64,6 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: fix upgrade procedure order (upgrade incompatible apps)
 - nextcloud: fix `check` mode on upgrades
 - graylog: respect `elasticsearch_timeout_start_sec` value
+- monitoring: netdata: enable gzip compression on web server responses, fix empty dashboard
 - monitoring: fix netdata modtime module installation, remove obsolete tasks file
 - monitoring: rsyslog: ensure that requirements for self-signed certificates generation are installed
 - monitoring: ensure requirements for self-signed certificate generation are installed
