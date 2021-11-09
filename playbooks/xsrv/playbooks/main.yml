@@ -1,4 +1,0 @@
-# add extra tasks (not part of any role) here
-# - hosts: my.example.org
-#   tasks:
-#     - command: "echo 'hello world'"
