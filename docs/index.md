@@ -11,12 +11,13 @@
 [![](https://img.shields.io/badge/latest%20release-1.3.1-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
-**Install, manage and run self-hosted network services and applications on your own server(s)** (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, IT infrastructure and more).
+**Install, manage and run self-hosted network services and applications on your own server(s).**
 
- `xsrv` provides:
-- [roles](#roles) to install/configure various network services, web applications, system and infrastructure management tools
-- a [command-line tool](usage.md) for common operations, easy/fast deployment, configuration and maintenance
-- a template to [get started with a single server](installation/first-deployment.md) in a few minutes
+This project provides:
+
+- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install/configure various network services, applications and management tools (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, infrastructure...)
+- an optional [command-line tool](usage.md) for common operations, configuration, deployment and maintenance of your servers
+- a template to [get started with a single server](installation.md) in a few minutes
 
 
 ## Roles
@@ -33,7 +34,7 @@
 - [mariadb](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mariadb) - MariaDB database engine
 - [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - Real-time monitoring, alerting and logging system
 - [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - Low-latency VoIP/voice chat server
-- [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - private file hosting/sharing/synchronization service and groupware/collaboration platform
+- [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - file hosting/sharing/synchronization service and collaboration platform
 - [openldap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap) - LDAP directory server
 - [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) - PostgreSQL database engine
 - [proxmox](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/proxmox) - Proxmox VE hypervisor configuration
@@ -44,58 +45,20 @@
 - [tt_rss](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss) - Tiny Tiny RSS web-based news feed reader
 <!--END ROLES LIST-->
 
-## Quick start
-
-[Prepare the remote server](installation/server-preparation.md), then, on the controller:
-
-```bash
-# install requirements (example for debian-based systems)
-sudo apt update && sudo apt install git bash python3-venv python3-pip ssh pwgen
-# clone the repository
-git clone https://gitlab.com/nodiscc/xsrv
-# (optional) install the command line tool to your $PATH
-sudo cp xsrv/xsrv /usr/local/bin/
-# authorize your SSH key on the remote user account
-ssh-copy-id deploy@my.CHANGEME.org
-# initialize the playbook, provide basic settings and roles to enable
-xsrv init-playbook
-# deploy your first server
-xsrv deploy
-```
-
-[![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq)
-
-
-```bash
-# change the configuration, add hosts or roles...
-xsrv edit-inventory
-xsrv edit-playbook
-xsrv edit-host
-xsrv edit-vault
-```
-
-See the full [usage documentation](usage.md).
-
-`xsrv` uses [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29), a [configuration management](https://en.wikipedia.org/wiki/Software_configuration_management) system for reproducible and automated deployments, configuration and change management. You can use the provided command-line tool to manage your setup, or [include the roles in your own ansible playbooks](usage.md#using-as-ansible-collection).
-
-
 ## Screenshots
 
-[![](https://i.imgur.com/v9BQYpN.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring)
-[![](https://i.imgur.com/PPVIb6V.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud)
-[![](https://i.imgur.com/UoKs3x1.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss)
-
-[![](https://i.imgur.com/gsoh2Mj.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli)
-[![](https://i.imgur.com/Rks90zV.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea)
-[![](https://i.imgur.com/7nJ6cMN.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission)
-
-[![](https://i.imgur.com/lHgDbDC.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble)
-[![](https://i.imgur.com/PRE7fvn.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap)
-[![](https://i.imgur.com/WUdwbAX.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat)
-
-[![](https://i.imgur.com/OWOH8LI.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
-[![](https://i.imgur.com/Fg8uRjL.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
-[![](https://i.imgur.com/eGCL45L.jpg)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog)
+[![](https://i.imgur.com/pG1xnig.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring)
+[![](https://i.imgur.com/LNaAH2L.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud)
+[![](https://i.imgur.com/5TXg6vm.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss)
+[![](https://i.imgur.com/Jlmj0iE.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli)
+[![](https://i.imgur.com/8cAGkf2.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea)
+[![](https://i.imgur.com/Imb0dqO.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission)
+[![](https://i.imgur.com/6Im61B0.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble)
+[![](https://i.imgur.com/REzcZVh.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap)
+[![](https://i.imgur.com/Mib9YkX.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat)
+[![](https://i.imgur.com/5KDvL9Z.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
+[![](https://i.imgur.com/H3PIWrt.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
+[![](https://i.imgur.com/wa3pkyJ.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog)
 
 ## Source code
 
@@ -114,10 +77,14 @@ See the full [usage documentation](usage.md).
 - [Installation](installation.md)
 - [Server preparation](installation/server-preparation.md)
 - [Controller preparation](installation/controller-preparation.md)
-- [First deployment](installation/first-deployment.md)
+- [First project](installation/first-project.md)
 - [Usage](usage.md)
 - [List of all configuration variables](configuration-variables.md)
 - [Maintenance](maintenance.md)
 - [Advanced usage](advanced.md)
 - [Contributing](contributing.md)
+- [Appendices](appendices.md)
 - [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)
+
+
+
