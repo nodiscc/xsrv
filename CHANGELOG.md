@@ -21,10 +21,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: allow enabling unattended upgrades of docker engine packages (`docker_auto_upgrade: yes/no`)
 - common: apt: allow enabling `contrib` and `non-free` software sections (`apt_enable_nonfree`)
 - common: make role compatible with Debian 11 "Bullseye"
-- homepage: add graylog application link when graylog role is enabled
+- homepage: add link to graylog instance (when graylog role is enabled)
 - monitoring: allow configuration of syslog retention duration, default to 186 days instead of 7
 - monitoring: allow defining a number of maximum expected running docker containers (`netdata_max_running_docker_containers`)
-- monitoring: add [lowgatch](https://packages.debian.org/bullseye/logwatch) log analyzer, disable scheduled execution
+- monitoring: add [logwatch](https://packages.debian.org/bullseye/logwatch) log analyzer, disable scheduled execution
 - monitoring: install requirements for postgresql monitoring
 - postgresql: add ability to enable/disable the service and enforce started/stopped/enabled/disabled state
 - backup: make rsnapshot verbosity configurable
