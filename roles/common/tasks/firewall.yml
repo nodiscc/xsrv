@@ -1,11 +1,11 @@
----
-
-#### FIREWALL #####
-
-- name: ensure ufw is not installed
+- name: remove other firewall management tools
   apt:
-    package: ufw
+    package:
+      - ufw
+      - firewalld
     state: absent
+    purge: yes
+    autoremove: yes
 
 - name: load nf_conntrack module
   modprobe:
@@ -25,8 +25,7 @@
     mode: 0644
   notify: reload systemd unit files
 
-# reload systemd unit files before attempting to start/stop the service
-- name: run all notified handlers now
+- name: reload systemd unit files (flush handlers)
   meta: flush_handlers
 
 - name: copy firehol configuration
