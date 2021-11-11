@@ -1,24 +1,24 @@
 - include: checks.yml
   tags:
-   - valheim
-   - valheim-server
-   - valheim_server
-   - steam
-   - steamcmd
-   - checks
+    - valheim
+    - valheim-server
+    - valheim_server
+    - steam
+    - steamcmd
+    - checks
 
 - include: steam.yml
   become: yes
   tags:
-   - valheim
-   - valheim-server
-   - valheim_server
-   - steam
-   - steamcmd
+    - valheim
+    - valheim-server
+    - valheim_server
+    - steam
+    - steamcmd
 
 - include: valheim-server.yml
   become: yes
   tags:
-   - valheim
-   - valheim-server
-   - valheim_server
+    - valheim
+    - valheim-server
+    - valheim_server
