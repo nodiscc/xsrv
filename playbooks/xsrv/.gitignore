@@ -2,4 +2,6 @@
 ansible.log
 .venv/
 cache/
-data/backups
+data/backups/*
+ansible_collections/*/*/FILES.json
+ansible_collections/*/*/MANIFEST.json
