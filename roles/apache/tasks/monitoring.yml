@@ -1,5 +1,3 @@
-##### APACHE MONITORING #####
-
 - name: forward all www-data cron jobs mail to root
   lineinfile:
     path: /etc/aliases
@@ -32,3 +30,6 @@
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
+
+- name: ensure rsyslog/netdata configuration is applied (flush handlers)
+  meta: flush_handlers

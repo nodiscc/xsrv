@@ -55,6 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - backup: make dependency on monitoring role optional
 - backup: ensure only `root` can read the rsnapshot configuration file
 - backup: re-schedule monthly backups at 04:01 on the first day of the month
+- all roles/monitoring: apply role-specific netdata/rsyslog configuration immediately after installing it
 - default playbook: .gitignore data/ and cache/ directories
 - doc: update/refactor documentation and roles metadata
 - tools: improve automatic doc generation

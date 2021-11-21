@@ -1,5 +1,3 @@
-##### OPENLDAP MONITORING #####
-
 - name: add netdata http (ldap-account-manager/self-service-password)/process checks for openldap
   template:
     src: "{{ item.src }}"
@@ -13,3 +11,6 @@
       dest: /etc/netdata/go.d/httpcheck.conf.d/openldap.conf
     - src: etc_netdata_health.d_processes.conf.d_openldap.conf.j2
       dest: /etc/netdata/health.d/processes.conf.d/openldap.conf
+
+- name: ensure netdata configuration is applied (flush handlers)
+  meta: flush_handlers

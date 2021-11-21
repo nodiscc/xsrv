@@ -1,5 +1,3 @@
-##### GRAYLOG MONITORING #####
-
 - name: configure rsyslog to aggregate graylog/elasticsearch logs to syslog
   template:
     src: etc_rsyslog.d_graylog.conf.j2
@@ -23,3 +21,6 @@
       module: httpcheck
     - plugin: health.d
       module: processes
+
+- name: ensure rsyslog/netdata configuration is applied (flush handlers)
+  meta: flush_handlers

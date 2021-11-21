@@ -1,5 +1,3 @@
-##### NEXTCLOUD MONITORING #####
-
 - name: configure rsyslog to aggregate nextcloud logs to syslog
   template:
     src: etc_rsyslog.d_nextcloud.conf.j2
@@ -19,3 +17,6 @@
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
+
+- name: ensure rsyslog/netdata configuration is applied (flush handlers)
+  meta: flush_handlers

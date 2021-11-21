@@ -1,5 +1,3 @@
-##### SHAARLI MONITORING #####
-
 - name: add netdata httpcheck for shaarli
   template:
     src: etc_netdata_go.d_httpcheck.conf.d_shaarli.conf.j2
@@ -8,3 +6,6 @@
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
+
+- name: ensure netdata configuration is applied (flush handlers)
+  meta: flush_handlers

@@ -1,5 +1,3 @@
-##### POSTGRESQL MONITORING #####
-
 - name: install netdata process check for postgresql
   template:
     src: etc_netdata_health.d_processes.conf.d_postgresql.conf.j2
@@ -8,3 +6,6 @@
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
+
+- name: ensure netdata configuration is applied (flush handlers)
+  meta: flush_handlers

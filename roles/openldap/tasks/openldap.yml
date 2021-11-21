@@ -35,7 +35,6 @@
       - ldapscripts
       - python3-pyldap
 
-
 ### CONFIGURATION ###
 
 - name: create LDAP database directory
@@ -54,3 +53,6 @@
     group: root
     mode: 0644
   notify: restart slapd
+
+- name: ensure slapd configuration is applied (flush handlers)
+  meta: flush_handlers
