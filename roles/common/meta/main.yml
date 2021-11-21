@@ -28,7 +28,10 @@ galaxy_info:
     - time
     - date
     - ssh
+    - firewall
+    - fail2ban
     - hardening
+    - security
     - utilities
     - users
     - sudo
