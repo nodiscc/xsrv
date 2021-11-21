@@ -26,19 +26,21 @@ build_collection: venv
 	source .venv/bin/activate && \
 	ansible-galaxy collection build --force
 
-.PHONY: testenv # prepare the test environment
+.PHONY: install_collection # prepare the test environment/install the collection
 install_collection: venv build_collection
 	cp tests/playbook.yml test.yml
 	source .venv/bin/activate && \
 	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
 
 .PHONY: ansible_syntax_check # ansible playbook syntax check
-test_ansible_syntax_check: venv testenv install_collection
+test_ansible_syntax_check: venv install_collection
 	source .venv/bin/activate && \
 	ANSIBLE_COLLECTIONS_PATHS="./" ansible-playbook --syntax-check --inventory tests/inventory.yml test.yml
 
-.PHONY: ansible_lint # qnsible syntax linter
-test_ansible_lint: venv testenv
+test_ansible_check_localhost: install_collection
+
+.PHONY: ansible_lint # ansible syntax linter
+test_ansible_lint: venv install_collection
 	source .venv/bin/activate && \
 	ANSIBLE_COLLECTIONS_PATHS="./" ansible-lint -v test.yml
 
