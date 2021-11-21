@@ -17,6 +17,16 @@
     - apache
     - lamp
 
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - apache
+    - lamp
+    - fail2ban
+  when:
+    - "'nodiscc.xsrv.common' in role_name"
+    - setup_fail2ban|bool
+
 - include: monitoring.yml
   become: yes
   tags:

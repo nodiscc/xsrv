@@ -1,0 +1,10 @@
+- name: copy apache fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_apache.conf.j2
+    dest: /etc/fail2ban/jail.d/apache.conf
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban
+
+- name: ensure fail2ban configuration is applied (flush handlers)
+  meta: flush_handlers
