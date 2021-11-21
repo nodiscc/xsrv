@@ -24,8 +24,6 @@ See [meta/main.yml](meta/main.yml)
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-The service must be reachable on port `tcp/19999` through firewall/NAT
-
 
 ## Usage
 

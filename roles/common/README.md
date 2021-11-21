@@ -17,18 +17,12 @@ This role will install/configure a basic Debian-based server:
 - streamlining/removal of unwanted packages
 - `haveged` random number generator/entropy source for virtual machines
 
-All sections can be disabled/enabled independently
+All sections can be disabled/enabled independently.
 
 
 ## Requirements/dependencies/example playbook
 
-- Ansible 2.10 or higher on the controller
-- Debian 9/10 on the target host
-- The inventory hostname resolves to the host using DNS records, a `hosts` file entry, or the `ansible_host: $HOST_IP_ADDRESS` host variable is set
-- SSH server on the host, reachable from the controller on `ansible_ssh_port` (default `22`)
-- `python3 sudo aptitude` packages installed on the host
-- User account on the host, member of the `sudo` and `ssh` groups
-- Controller SSH key authorized on this user account (`ssh-copy-id myusername@my.CHANGEME.org`)
+See [meta/main.yml](meta/main.yml)
 
 
 ```yaml
@@ -74,5 +68,6 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - https://stdout.root.sx/links/?searchtags=ssh
 - https://stdout.root.sx/links/?searchtags=security
 - https://stdout.root.sx/links/?searchtags=network
+- https://stdout.root.sx/links/?searchtags=firewall
 - https://stdout.root.sx/links/?searchtags=linux
 - https://stdout.root.sx/links/?searchtags=admin

@@ -21,7 +21,7 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, SSH, brutefore prevention
+    - nodiscc.xsrv.common # (optional) base setup, hardening, SSH, firewall bruteforce prevention
     - nodiscc.xsrv.backup
     - nodiscc.xsrv.monitoring # (optional) rsnapshot log aggregation
 ```

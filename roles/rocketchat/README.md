@@ -28,7 +28,7 @@ See [meta/main.yml](defaults/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, bruteforce prevention
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.apache # webserver and SSL/TLS certificates
     - nodiscc.xsrv.docker # docker container engine

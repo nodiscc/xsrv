@@ -17,7 +17,7 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) hardening/firewall/bruteforce prevention
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring and log aggregation
     - nodiscc.xsrv.backup # (optional) backup of mumble server database
     - nodiscc.xsrv.mumble

@@ -20,8 +20,8 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) system hardening, firewall, bruteforce prevention
-    - nodiscc.xsrv.monitoring # (optional) nextcloud/system monitoring and health checks
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, bruteforce prevention
+    - nodiscc.xsrv.monitoring # (optional) system monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.apache # (enabled automatically) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.postgresql # (enabled automatically) database engine

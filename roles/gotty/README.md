@@ -12,7 +12,7 @@ See [meta/main.yml](meta/main.yml)
 ```yaml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) basic server setup/hardening, firewall, bruteforce prvention
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring, log aggregation
     - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.gotty

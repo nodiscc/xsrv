@@ -13,7 +13,7 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) hardening, firewall
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.openldap # (if samba_passdb_backend: ldapsam) LDAP user backend

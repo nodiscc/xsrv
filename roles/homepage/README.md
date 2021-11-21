@@ -13,7 +13,7 @@ See [meta/main.yml](meta/main.yml)
 ```yaml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall
+    - nodiscc.xsrv.common # (optional) base server setup, hardening
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.apache # (enabled automatically) web server and SSL/TLS certificates
     - nodiscc.xsrv.shaarli # (example) any supported role, a link to this application on the homepage will be added

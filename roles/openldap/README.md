@@ -15,7 +15,7 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.example.org
   roles:
-    - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, bruteforce protection
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce protection
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.apache # (if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates

@@ -13,7 +13,7 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional) basic setup, harding, firewall, bruteforce protection
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) system/server monitoriong and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups of download/torrent directory
     - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
