@@ -13,7 +13,6 @@
       - samba_passdb_backend in ['tdbsam', 'ldapsam']
       - samba_nscd_debug_level == samba_nscd_debug_level|int
       - samba_nscd_cache_time_to_live == samba_nscd_cache_time_to_live|int
-    msg:
 
 - name: check that role requirements are met
   assert:
