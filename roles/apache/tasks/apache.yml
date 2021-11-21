@@ -122,12 +122,10 @@
 
 ##### SERVICE #####
 
-- name: enable apache service
-  service: name=apache2 state=started enabled=yes
-  when: apache_enable_service|bool
-  tags: services
-
-- name: disable apache service
-  service: name=apache2 state=stopped enabled=no
-  when: not apache_enable_service|bool
-  tags: services
+- name: enable/disable start/stop apache2 service
+  systemd:
+    name: apache2
+    enabled: "{{ apache_enable_service }}"
+    state: "{{ 'started' if apache_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode }}"
