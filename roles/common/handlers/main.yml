@@ -6,7 +6,8 @@
 
 - name: update apt cache
   become: yes
-  apt: update_cache=yes
+  apt:
+    update_cache: yes
 
 - name: update pam configuration
   become: yes
@@ -14,11 +15,15 @@
 
 - name: restart ssh
   become: yes
-  service: name=ssh state=restarted enabled=yes
+  service:
+    name: ssh
+    state: restarted
+    enabled: yes
 
 - name: reload systemd unit files
   become: yes
-  systemd: daemon_reload=yes
+  systemd:
+    daemon_reload: yes
 
 - name: reload fail2ban
   become: yes
