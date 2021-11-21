@@ -27,8 +27,18 @@
 
 - name: reload fail2ban
   become: yes
-  service: name=fail2ban state=reloaded enabled=yes
+  service:
+    name: fail2ban
+    state: reloaded
+    enabled: yes
+  when: setup_fail2ban|bool
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart firewall
   become: yes
-  service: name=firehol state=restarted enabled=yes
+  service:
+    name: firehol
+    state: restarted
+    enabled: yes
+  when: setup_firewall|bool
+  ignore_errors: "{{ ansible_check_mode }}"
