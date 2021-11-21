@@ -35,9 +35,3 @@
     - monitoring
   when:
     - '"nodiscc.xsrv.monitoring" in role_names'
-
-- name: restart apache to apply configuration changes
-  meta: flush_handlers
-  tags:
-    - apache
-    - lamp
