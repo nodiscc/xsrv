@@ -350,6 +350,9 @@ collections:
     type: git
     version: master
   - name: chocolatey.chocolatey # role from https://galaxy.ansible.com/
+  - name: git+file:///home/user/GIT/xsrv-devel.git # role from a local git repository
+    type: git
+    version: firewalld
 
 ```
 
