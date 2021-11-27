@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint cryptography==3.3.2 yamllint ansible==2.10.7
+	pip3 install isort ansible-lint cryptography==3.3.2 yamllint ansible==4.9.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
