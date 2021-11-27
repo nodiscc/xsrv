@@ -33,7 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: allow configuring the list of users allowed to use `crontab` (`linux_users_crontab_allow`)
 
 **Changed:**
-- nextcloud: upgrade to [22.2.0](https://nextcloud.com/changelog/#latest22)
+- nextcloud: upgrade to [22.2.3](https://nextcloud.com/changelog/#latest22)
 - nextcloud: silence cron/background tasks output to prevent mail notification spam
 - nextcloud: allow installation of [ONLYOFFICE](https://nextcloud.com/onlyoffice/) realtime collaborative document edition tools
 - gitea: upgrade to [1.15.6](https://github.com/go-gitea/gitea/releases)
