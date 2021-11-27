@@ -1,5 +1,6 @@
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - nextcloud_admin_email is not search("CHANGEME")
       - nextcloud_apps|type_debug == "list"

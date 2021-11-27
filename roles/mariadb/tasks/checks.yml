@@ -1,7 +1,6 @@
-##### CHECKS FOR MARIADB ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - mariadb_enable_service == mariadb_enable_service|bool
       - mariadb_hostname == mariadb_hostname|string

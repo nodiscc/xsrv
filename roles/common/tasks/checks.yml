@@ -1,7 +1,6 @@
-##### CHECKS FOR COMMON ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd|bool
       - dns_nameservers|type_debug == "list"
@@ -33,6 +32,7 @@
 
 - name: check that mandatory variables are correctly defined (msmtp)
   assert:
+    quiet: yes
     that:
       - msmtp_host is not search("CHANGEME")
       - msmtp_port == msmtp_port|int
@@ -41,5 +41,4 @@
       - msmtp_admin_email is not search("CHANGEME")
       - msmtp_from is string
       - msmtp_starttls == msmtp_starttls|bool
-  when:
-    - setup_msmtp == setup_msmtp|bool
+  when: setup_msmtp == setup_msmtp|bool

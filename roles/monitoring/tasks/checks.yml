@@ -1,7 +1,6 @@
-##### CHECKS FOR MONITORING ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - needrestart_autorestart_services == needrestart_autorestart_services|bool
       - netdata_allow_connections_from is string
@@ -31,6 +30,7 @@
 
 - name: check that mandatory variables are correctly defined (syslog forwarding)
   assert:
+    quiet: yes
     that:
       - rsyslog_forward_to_hostname is not search('CHANGEME')
       - rsyslog_forward_to_port == rsyslog_forward_to_port|int
@@ -38,6 +38,7 @@
 
 - name: check that mandatory variables are correctly defined (lynis)
   assert:
+    quiet: yes
     that:
       - lynis_report_regex is string
       - lynis_skip_tests|type_debug == "list"

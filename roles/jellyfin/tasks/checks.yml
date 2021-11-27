@@ -1,7 +1,6 @@
-##### CHECKS FOR JELLYFIN ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - jellyfin_fqdn is not search("CHANGEME")
       - jellyfin_https_mode in ['selfsigned', 'letsencrypt']

@@ -1,7 +1,6 @@
-##### CHECKS FOR GRAYLOG ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - graylog_fqdn is not search("CHANGEME")
       - graylog_root_username is not search("CHANGEME")

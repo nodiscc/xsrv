@@ -1,7 +1,6 @@
-##### CHECKS FOR ROCKETCHAT ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - rocketchat_docker_version is string
       - rocketchat_fqdn is not search("CHANGEME")

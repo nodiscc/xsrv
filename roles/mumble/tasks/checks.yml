@@ -1,7 +1,6 @@
-##### CHECKS FOR MUMBLE ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - mumble_superuser_password is not search("CHANGEME")
       - mumble_superuser_password is not search(" ")
