@@ -1,7 +1,6 @@
-##### CHECKS FOR HOMEPAGE ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - homepage_fqdn is not search("CHANGEME")
       - homepage_title is not search("CHANGEME")

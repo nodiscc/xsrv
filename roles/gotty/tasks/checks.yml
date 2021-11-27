@@ -1,7 +1,6 @@
-##### CHECKS FOR GOTTY ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - gotty_fqdn is not search("CHANGEME")
       - gotty_auth_username is not search("CHANGEME")

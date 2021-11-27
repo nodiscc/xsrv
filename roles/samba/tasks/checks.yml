@@ -1,7 +1,6 @@
-##### CHECKS FOR SAMBA ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - samba_log_level is string
       - samba_max_log_size_kb == samba_max_log_size_kb|int
@@ -16,7 +15,7 @@
 
 - name: check that role requirements are met
   assert:
+    quiet: yes
     that: "'nodiscc.xsrv.openldap' in role_names"
-    success_msg: "Role requirements are met."
     fail_msg: "The nodiscc.xsrv.openldap role is required when samba_passdb_backend is 'smbldap'."
   when: samba_passdb_backend == 'ldapsam'

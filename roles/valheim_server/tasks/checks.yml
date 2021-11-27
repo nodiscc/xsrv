@@ -1,5 +1,6 @@
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - steamcmd_username is not search("CHANGEME")
       - steamcmd_password is not search("CHANGEME")

@@ -1,7 +1,6 @@
-##### CHECKS FOR TT_RSS ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - tt_rss_account_limit == tt_rss_account_limit|int
       - tt_rss_db_name is string

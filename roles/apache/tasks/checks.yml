@@ -1,7 +1,6 @@
-##### CHECKS FOR APACHE ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - apache_enable_mod_evasive == apache_enable_mod_evasive|bool
       - apache_enable_service == apache_enable_service|bool

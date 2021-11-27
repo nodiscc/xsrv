@@ -1,7 +1,6 @@
-##### CHECKS FOR GITEA ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - gitea_admin_email is not search("CHANGEME")
       - gitea_admin_password is not search("CHANGEME")

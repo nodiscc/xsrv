@@ -1,7 +1,6 @@
-##### CHECKS FOR SHAARLI ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - shaarli_api_secret|length >= 12
       - shaarli_fqdn is not search("CHANGEME")

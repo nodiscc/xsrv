@@ -1,7 +1,6 @@
-##### CHECKS FOR BACKUP ROLE #####
-
 - name: check that mandatory variables are correctly defined
   assert:
+    quiet: yes
     that:
       - rsnapshot_backup_dir is string
       - rsnapshot_backup_execs|type_debug == "list"

@@ -1,7 +1,6 @@
-##### CHECKS FOR TRANSMISSION ROLE #####
-
 - name: check that required variables/roles are correctly defined/enabled
   assert:
+    quiet: yes
     that:
       - transmission_download_dir is string
       - transmission_enable_service == transmission_enable_service|bool
