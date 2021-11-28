@@ -1,6 +1,8 @@
 - include: checks.yml
   become: yes
-  tags: mumble
+  tags:
+    - mumble
+    - checks
 
 - include: mumble.yml
   become: yes
@@ -11,5 +13,4 @@
   tags:
     - mumble
     - monitoring
-  when:
-    - '"nodiscc.xsrv.monitoring" in role_names'
+  when: '"nodiscc.xsrv.monitoring" in role_names'

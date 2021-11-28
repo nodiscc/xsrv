@@ -1,17 +1,13 @@
 - include: checks.yml
-  tags: openldap
-
-- include: openldap.yml
-  become: yes
-  tags: openldap
+  tags:
+    - openldap
+    - checks
 
 - include: ssl-selfsigned.yml
   become: yes
   tags: openldap
 
-# restart slapd to apply configuration
-- name: run all notified handlers
-  meta: flush_handlers
+- include: openldap.yml
   become: yes
   tags: openldap
 

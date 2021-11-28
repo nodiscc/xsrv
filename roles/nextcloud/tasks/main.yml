@@ -1,29 +1,25 @@
 - include: checks.yml
   tags:
     - nextcloud
+    - checks
 
 - include: mysql.yml
   become: yes
-  tags:
-    - nextcloud
+  tags: nextcloud
   when: nextcloud_db_type == 'mysql'
 
 - include: postgresql.yml
   become: yes
-  tags:
-    - nextcloud
+  tags: nextcloud
   when: nextcloud_db_type == 'pgsql'
 
 - include: nextcloud.yml
   become: yes
-  tags:
-    - nextcloud
+  tags: nextcloud
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags:
-    - nextcloud
-    - ssl
+  tags: nextcloud
   when: nextcloud_https_mode == 'selfsigned'
 
 - include: apache.yml
@@ -43,7 +39,7 @@
   become: yes
   tags:
     - nextcloud
-    - backup
+    - fail2ban
   when:
     - "'nodiscc.xsrv.common' in role_names"
     - setup_fail2ban|bool

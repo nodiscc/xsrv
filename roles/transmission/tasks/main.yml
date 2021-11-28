@@ -1,5 +1,7 @@
 - include: checks.yml
-  tags: transmission
+  tags:
+    - transmission
+    - checks
 
 - include: transmission.yml
   become: yes
@@ -12,7 +14,9 @@
 
 - include: apache.yml
   become: yes
-  tags: transmission
+  tags:
+    - transmission
+    - apache
 
 - include: monitoring.yml
   become: yes

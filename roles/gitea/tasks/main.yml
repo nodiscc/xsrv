@@ -1,5 +1,7 @@
 - include: checks.yml
-  tags: gitea
+  tags:
+    - gitea
+    - checks
 
 - include: mysql.yml
   become: yes

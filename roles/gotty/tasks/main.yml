@@ -1,5 +1,7 @@
 - include: checks.yml
-  tags: gotty
+  tags:
+    - gotty
+    - checks
 
 - include: gotty.yml
   become: yes

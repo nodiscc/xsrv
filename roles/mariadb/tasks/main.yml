@@ -2,6 +2,7 @@
   tags:
     - mariadb
     - lamp
+    - checks
 
 - include: mariadb.yml
   become: yes

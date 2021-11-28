@@ -1,5 +1,7 @@
 - include: checks.yml
-  tags: samba
+  tags:
+    - samba
+    - checks
 
 - include: samba.yml
   become: yes
@@ -17,13 +19,16 @@
 
 - include: backups.yml
   become: yes
-  tags: samba
+  tags:
+    - samba
+    - backup
 
 - include: rsyslog.yml
   become: yes
   tags:
     - samba
     - rsyslog
+    - monitoring
   when:
     - '"nodiscc.xsrv.monitoring" in role_names'
     - setup_rsyslog|bool

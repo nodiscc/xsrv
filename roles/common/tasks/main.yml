@@ -1,6 +1,7 @@
 - include: checks.yml
   tags:
     - common
+    - checks
 
 - include: hostname.yml
   become: yes

@@ -2,6 +2,7 @@
   tags:
     - apache
     - lamp
+    - checks
 
 - include: ssl-selfsigned.yml
   become: yes

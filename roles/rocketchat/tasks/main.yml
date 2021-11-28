@@ -1,5 +1,7 @@
 - include: checks.yml
-  tags: rocketchat
+  tags:
+    - rocketchat
+    - checks
 
 - include: rocketchat.yml
   become: yes
@@ -12,7 +14,9 @@
 
 - include: apache.yml
   become: yes
-  tags: rocketchat
+  tags:
+    - rocketchat
+    - apache
 
 - include: monitoring.yml
   become: yes

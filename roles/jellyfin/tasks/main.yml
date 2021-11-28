@@ -1,10 +1,12 @@
 - include: checks.yml
-  tags: jellyfin
   become: yes
+  tags:
+    - jellyfin
+    - checks
 
 - include: jellyfin.yml
-  tags: jellyfin
   become: yes
+  tags: jellyfin
 
 - include: ssl-selfsigned.yml
   become: yes

@@ -1,5 +1,7 @@
 - include: checks.yml
-  tags: shaarli
+  tags:
+    - shaarli
+    - checks
 
 - include: shaarli.yml
   become: yes
@@ -12,7 +14,9 @@
 
 - include: apache.yml
   become: yes
-  tags: shaarli
+  tags:
+    - shaarli
+    - apache
 
 - include: monitoring.yml
   become: yes

@@ -1,5 +1,3 @@
-# tasks for docker role
-
 - include: docker.yml
   become: yes
   tags: docker
