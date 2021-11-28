@@ -42,3 +42,6 @@
       - msmtp_from is string
       - msmtp_starttls == msmtp_starttls|bool
   when: setup_msmtp == setup_msmtp|bool
+  tags:
+    - mail
+    - msmtp

@@ -68,6 +68,7 @@
   tags:
     - common
     - mail
+    - msmtp
 
 - include: packages.yml
   become: yes
