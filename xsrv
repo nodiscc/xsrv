@@ -239,6 +239,7 @@ function run_shell() {
     _check_host_name
     ssh_user=$(_get_host_var "ansible_user")
     ssh_port=$(_get_host_var "ansible_ssh_port|default(22)")
+    echo "[xsrv] INFO: connecting to $ssh_user@$host_name port $ssh_port"
     ssh_command="ssh -t -p $ssh_port $ssh_user@$host_name $ssh_args"
     $ssh_command
 }
