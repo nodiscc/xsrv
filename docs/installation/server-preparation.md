@@ -36,6 +36,7 @@ Netdata monitoring system:       TCP 19999
 Web server:                      TCP 80/443
 BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738
+Graylog TCP input:               TCP 5140
 ```
 
 ### Domain names
