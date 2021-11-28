@@ -41,7 +41,7 @@
       - msmtp_admin_email is not search("CHANGEME")
       - msmtp_from is string
       - msmtp_starttls == msmtp_starttls|bool
-  when: setup_msmtp == setup_msmtp|bool
+  when: setup_msmtp|bool
   tags:
     - mail
     - msmtp
