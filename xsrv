@@ -160,6 +160,13 @@ function edit_inventory() {
     $editor "$inventory_file"
 }
 
+function edit_requirements() {
+    # edit requirements.yml file
+    requirements_file="$projects_dir/$project_name/requirements.yml"
+    echo "[xsrv] INFO: opening requirements file $requirements_file"
+    $editor "$requirements_file"
+}
+
 function edit_host() {
     # edit a host's vars file
     _check_host_name
@@ -338,6 +345,7 @@ function _main() {
         "check") init_venv; shift; check ;;
         "edit-playbook") shift; edit_playbook ;;
         "edit-inventory") shift; edit_inventory ;;
+        "edit-requirements") shift; edit_requirements;;
         "edit-host") shift; edit_host ;;
         "edit-group") shift; edit_group;;
         "edit-vault") init_venv; shift; edit_vault ;;
@@ -367,6 +375,7 @@ edit-inventory [project]        edit/show inventory file (hosts/groups)
 edit-playbook [project]         edit/show playbook (roles for each host)
 show-defaults [project] [role]  show all variables and their default values
 edit-group [project] [group]    edit variables for a group of hosts (default 'all')
+edit-requirements [project]     edit ansible requirements/collections
 
 # HOST-LEVEL COMMANDS
 init-host [project] [host]      add a new host to an existing project

@@ -4,3 +4,10 @@ collections:
   - name: https://gitlab.com/nodiscc/xsrv.git
     type: git
     version: release
+  # - name: https://gitlab.com/nodiscc/toolbox.git#/ANSIBLE_COLLECTION/ # role from a directory in a git repository
+  #   type: git
+  #   version: master
+  # - name: chocolatey.chocolatey # role from https://galaxy.ansible.com/
+  # - name: git+file:///home/user/GIT/xsrv-devel.git # role from a local git repository
+  #   type: git
+  #   version: firewalld

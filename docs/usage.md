@@ -23,6 +23,7 @@ edit-inventory [project]        edit/show inventory file (hosts/groups)
 edit-playbook [project]         edit/show playbook (roles for each host)
 show-defaults [project] [role]  show all variables and their default values
 edit-group [project] [group]    edit variables for a group of hosts (default 'all')
+edit-requirements [project]     edit ansible requirements/collections
 
 # HOST-LEVEL COMMANDS
 init-host [project] [host]      add a new host to an existing project
@@ -338,7 +339,7 @@ TODO-->
 
 The main [`xsrv` script](command-line-usage) maintains a simple and consistent structure for your projects, automates frequent operations, and manages ansible installation/environments. You can also manage your playbooks manually using your favorite text editor and [`ansible-*` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
 
-To import roles as a [collection](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) to your own playbooks, [install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) and create `requirements.yml` in your playbook directory:
+To import roles as a [collection](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in your own playbooks, [install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) and create `requirements.yml` in your playbook directory:
 
 ```yaml
 # cat requirements.yml
@@ -346,14 +347,6 @@ collections:
   - name: https://gitlab.com/nodiscc/xsrv.git
     type: git
     version: release
-  - name: https://gitlab.com/nodiscc/toolbox.git#/ANSIBLE_COLLECTION/ # role from a directory in a git repository
-    type: git
-    version: master
-  - name: chocolatey.chocolatey # role from https://galaxy.ansible.com/
-  - name: git+file:///home/user/GIT/xsrv-devel.git # role from a local git repository
-    type: git
-    version: firewalld
-
 ```
 
 Install the collection:
@@ -504,7 +497,7 @@ The pipeline run time can be optimized by pre-building a CI image that already i
 
 ## Use the development version
 
-To use the development version of the roles, replace `release` with `master` (or any other branch/tag) in [requirements.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) and run `xsrv upgrade [project]`. You can also add other collections to this file.
+To use the development version of the roles, replace `release` with `master` (or any other branch/tag) in the [requirements.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) file of your project (`xsrv edit-requirements [project]`), then run `xsrv upgrade [project]`. Other collections can also be added to this file.
 
 
 ## External links
