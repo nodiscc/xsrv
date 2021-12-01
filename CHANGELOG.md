@@ -136,6 +136,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: add `xsrv edit-group` subcommand (edit group variables - default group: `all`)
 - xsrv: add `xsrv ls` subcommand (list files in the playbooks directory - accepts a path)
 - xsrv: add `edit-requirements` subcommand (edit ansible collections/requirements)
+- xsrv: add `edit-cfg` subcommand (edit ansible configuration/`ansible.cfg`)
 - xsrv: add syntax highlighting to default text editor/pager (nano - requires manual installation of yaml syntax highlighting file), improve display
 - homepage: add favicon
 - common: msmtp: make outgoing mail port configurable (`msmtp_port`, default `587`)

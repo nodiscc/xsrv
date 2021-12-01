@@ -24,6 +24,7 @@ edit-playbook [project]         edit/show playbook (roles for each host)
 show-defaults [project] [role]  show all variables and their default values
 edit-group [project] [group]    edit variables for a group of hosts (default 'all')
 edit-requirements [project]     edit ansible requirements/collections
+edit-cfg [project]              edit ansible configuration (ansible.cfg)
 
 # HOST-LEVEL COMMANDS
 init-host [project] [host]      add a new host to an existing project
@@ -32,7 +33,7 @@ deploy [project] [host]         deploy a project's main playbook (apply configur
 edit-host [project] [host]      edit host configuration (host_vars)
 edit-vault [project] [host]     edit encrypted (vault) host configuration
 fetch-backups [project] [host]  fetch backups from a host to the local backups/ directory
-upgrade [project] [host]        upgrade roles to latest version
+upgrade [project] [host]        upgrade collections to latest versions
 shell [project] [host]          open an interactive shell on a host
 logs [project] [host]           view system log on a host
 ls                              list files in the projects directory (accepts a path)
@@ -45,6 +46,9 @@ self-upgrade                     check for new releases/upgrade the xsrv script 
 TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
 EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
+
+# DOCUMENTATION
+https://xsrv.readthedocs.io/en/master/usage.html
 ```
 
 If no `[project]` is specified, the `default` project is assumed. If no `[limit]` is specified, `all` hosts are assumed.
