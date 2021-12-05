@@ -63,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: upgrade to v1.15.10 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.15.8), [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.15.9), [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.15.10)
 - xsrv: upgrade ansible to [5.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - apache: relax permissions on apache virtualhost config files (make them world-readable)
+- nextcloud: upgrade to [23.0.1](https://nextcloud.com/changelog/#latest23) [[1]](https://nextcloud.com/blog/nextcloud-hub-2-brings-major-overhaul-introducing-nextcloud-office-p2p-backup-and-more/)
 - nextcloud: add [Nextcloud Bookmarks](https://apps.nextcloud.com/apps/bookmarks) to the default list of apps (default disabled)
 - xsrv/tools/doc: don't install python3-cryptography from pip, install from OS packages
 - gitea/nextcloud/tt_rss: remove hard dependency on postgresql role
