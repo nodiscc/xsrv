@@ -58,3 +58,11 @@
     - monitoring
     - lynis
   when: setup_lynis|bool
+
+- include: fact.yml
+  become: yes
+  tags: monitoring
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: monitoring

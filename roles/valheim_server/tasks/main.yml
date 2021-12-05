@@ -22,3 +22,17 @@
     - valheim
     - valheim-server
     - valheim_server
+
+- include: fact.yml
+  become: yes
+  tags:
+    - valheim
+    - valheim-server
+    - valheim_server
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - valheim
+    - valheim-server
+    - valheim_server

@@ -24,3 +24,11 @@
     - transmission
     - monitoring
   when: "'nodiscc.xsrv.monitoring' in role_names"
+
+- include: fact.yml
+  become: yes
+  tags: transmission
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: transmission

@@ -12,9 +12,6 @@
     - smbd
     - nmbd
 
-- name: update ansible facts
-  setup:
-
 - name: restart nslcd
   become: yes
   service:
@@ -28,3 +25,6 @@
     name: nscd
     state: restarted
     enabled: yes
+
+- name: update ansible facts
+  setup:

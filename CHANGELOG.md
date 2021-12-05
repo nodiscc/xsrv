@@ -59,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - default playbook: .gitignore data/ and cache/ directories
 - doc: update/refactor documentation and roles metadata
 - tools: improve automatic doc generation
+- refactor: refactor integration between roles (use ansible_local facts, fix intergation when roles are not part of the same play)
 
 **Removed:**
 - nextcloud: disable [deck](https://apps.nextcloud.com/apps/deck) app by default

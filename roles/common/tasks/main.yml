@@ -76,3 +76,11 @@
   tags:
     - common
     - packages
+
+- include: fact.yml
+  become: yes
+  tags: common
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: common

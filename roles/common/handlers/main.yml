@@ -1,5 +1,3 @@
-##### SERVICE CONTROL #####
-
 - name: apply sysctl configuration
   become: yes
   command: sysctl --load /etc/sysctl.d/custom.conf
@@ -42,3 +40,6 @@
     enabled: yes
   when: setup_firewall|bool
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: update ansible facts
+  setup:

@@ -1,3 +1,6 @@
 - name: display jellyfin first run message
   debug:
     msg: "Jellyfin has been installed. Please secure your installation at https://{{ jellyfin_fqdn }} !"
+
+- name: update ansible facts
+  setup:

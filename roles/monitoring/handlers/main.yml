@@ -1,7 +1,3 @@
-##### SERVICE CONTROL #####
-
-# roles that need to install their own imfile/other rsyslog configuration should create a file
-# '/etc/rsyslog.d/COMPONENT_NAME.conf' and notify the 'restart rsyslog' handler
 - name: restart rsyslog
   become: yes
   service:
@@ -39,3 +35,6 @@
   become: yes
   systemd:
     daemon_reexec: yes
+
+- name: update ansible facts
+  setup:

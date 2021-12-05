@@ -1,3 +1,11 @@
 - include: docker.yml
   become: yes
   tags: docker
+
+- include: fact.yml
+  become: yes
+  tags: docker
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: docker

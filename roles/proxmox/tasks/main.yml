@@ -7,3 +7,11 @@
   tags:
     - proxmox
     - fail2ban
+
+- include: fact.yml
+  become: yes
+  tags: proxmox
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: proxmox

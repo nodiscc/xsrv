@@ -34,3 +34,11 @@
     - gitea
     - monitoring
   when: '"nodiscc.xsrv.monitoring" in role_names'
+
+- include: fact.yml
+  become: yes
+  tags: gitea
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: gitea

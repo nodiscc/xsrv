@@ -15,3 +15,6 @@
     name: graylog-server
     state: restarted
   when: graylog_enable_service|bool
+
+- name: update ansible facts
+  setup:

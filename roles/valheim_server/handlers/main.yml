@@ -10,3 +10,6 @@
     state: restarted
     enabled: yes
   when: valheim_enable_service|bool
+
+- name: update ansible facts
+  setup:

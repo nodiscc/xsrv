@@ -32,3 +32,11 @@
   when:
     - '"nodiscc.xsrv.monitoring" in role_names'
     - setup_rsyslog|bool
+
+- include: fact.yml
+  become: yes
+  tags: samba
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: samba

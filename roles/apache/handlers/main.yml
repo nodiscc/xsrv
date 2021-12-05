@@ -1,5 +1,3 @@
----
-
 - name: restart apache
   service:
     name: apache2
@@ -22,3 +20,6 @@
     state: restarted
     enabled: yes
   become: yes
+
+- name: update ansible facts
+  setup:
