@@ -75,6 +75,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: rsyslog: ensure that requirements for self-signed certificates generation are installed
 - monitoring: ensure requirements for self-signed certificate generation are installed
 - monitoring: also allow access to netdata.conf from `netdata_allow_connections_from` addresses
+- monitoring: fix APT package manager logs aggregation to syslog
 - tt_rss: fix permission denied errors when updating feeds
 - homepage: fix grid responsiveness on mobile devices
 - transmission: don't attempt to reload the service when it is disabled in host configuration

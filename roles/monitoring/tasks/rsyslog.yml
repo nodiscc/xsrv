@@ -31,6 +31,7 @@
     - 000-imfile # load the imfile (text file input) module used by other roles
     - 000-forwarding # message forwarding over TCP/TLS, if enabled
     - fail2ban # fail2ban logs aggregation
+    - apt # apt logs aggregation
 
 # DEPRECATED this task will be removed in a future version of the role
 - name: remove rsyslog config files from old versions of the role

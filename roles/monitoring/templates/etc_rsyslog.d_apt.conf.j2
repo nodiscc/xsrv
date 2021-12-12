@@ -7,6 +7,13 @@ input(type="imfile"
       Facility="local0"
       PersistStateInterval="0")
 
+input(type="imfile"
+      File="/var/log/apt/term.log"
+      readMode="2"
+      Tag="apt:"
+      Facility="local0"
+      PersistStateInterval="0")
+
 # dpkg log - verbose, disabled
 #input(type="imfile"
 #      File="/var/log/dpkg.log"
