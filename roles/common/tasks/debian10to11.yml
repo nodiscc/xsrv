@@ -1,0 +1,36 @@
+- name: check if host is already running the target distribution
+  debug:
+    msg: "Host is already running Debian 11. Nothing to do."
+  when: ansible_distribution_release == "bullseye"
+
+- name: upgrade Debian 10 to 11
+  when: ansible_distribution_release == "buster"
+  block:
+    - name: upgrade all packages to latest Debian 10 versions
+      apt:
+        upgrade: safe
+        autoremove: yes
+        purge: yes
+        update_cache: yes
+    - name: replace buster with bullseye in APT sources list
+      replace:
+        path: /etc/apt/sources.list
+        regexp: "buster"
+        replace: "bullseye"
+    - name: update Debian security APT source URL for Debian 11
+      replace:
+        path: /etc/apt/sources.list
+        regexp: "deb http://security.debian.org/debian-security bullseye/updates"
+        replace: "deb http://security.debian.org/debian-security bullseye-security"
+    - name: upgrade all packages to Debian 11 versions
+      apt:
+        upgrade: dist
+        update_cache: yes
+        autoremove: yes
+        purge: yes
+    - name: reboot host
+      reboot:
+        reboot_timeout: 6000
+    - name: show upgrade completion message
+      debug:
+        msg: "Upgrade to Debian 11 complete. Please run the playbook against this host to apply up-to-date configuration for Debian 11."

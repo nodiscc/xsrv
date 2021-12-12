@@ -19,6 +19,7 @@ This role will install/configure a basic Debian-based server:
 
 All sections can be disabled/enabled independently.
 
+In addition, this role provides a procedure to upgrade Debian 10 hosts to Debian 11. The tag `debian10to11` must be passed explicitly for this procedure to run.
 
 ## Requirements/dependencies/example playbook
 
@@ -54,6 +55,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Upgrade all packages without waiting for unattended-upgrades `ssh user@my.example.org 'sudo apt update && sudo apt upgrade'`
 - Stop the firewall, allow all connections incoming/outgoing connections (be careful) `ssh user@my.example.org sudo firehol stop # or start` - or set `policy: ACCEPT` in firehol definitions for permanent effect
 - Backups: nothing to backup. See the [backup](../backup/README.md) role.
+- Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
 
 
 ## License

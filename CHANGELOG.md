@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - `xsrv deploy` to apply changes
+- (optional) `TAGS=debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html)
 
 **Added:**
 - add [proxmox](roles/proxmox) role (basic Proxmox VE hypervisor setup)
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - backup: make rsnapshot verbosity configurable
 - backup: download rsnapshot's/root SSH public key to the controller (public_keys/ directory)
 - common: allow configuring the list of users allowed to use `crontab` (`linux_users_crontab_allow`)
+- common: add an procedure for Debian 10 -> 11 upgrades
 
 **Changed:**
 - nextcloud: upgrade to [22.2.3](https://nextcloud.com/changelog/#latest22)

@@ -84,3 +84,9 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: common
+
+- include: debian10to11.yml
+  become: yes
+  tags:
+    - never
+    - debian10to11
