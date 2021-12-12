@@ -6,5 +6,4 @@ This tool runs on an administration machine (_controller_) and configures one or
 
 - [Server preparation](installation/server-preparation.md)
 - [Controller preparation](installation/controller-preparation.md)
-- [First deployment](installation/first-deployment.md)
-
+- [Initial configuration and deployment](installation/first-project.md)
