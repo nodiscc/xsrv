@@ -30,12 +30,19 @@
 
 - name: copy firehol configuration
   template:
-    src: 'etc_firehol_firehol.conf.j2'
-    dest: '/etc/firehol/firehol.conf'
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0600
+    mode: "{{ item.mode }}"
   notify: restart firewall
+  with_items:
+    - src: etc_firehol_firehol.conf.j2
+      dest: /etc/firehol/firehol.conf
+      mode: "0600"
+    - src: etc_default_firehol.j2
+      dest: /etc/default/firehol
+      mode: "0644"
 
 # first firewall startup may cause the SSH connection to hang
 - name: install firehol
