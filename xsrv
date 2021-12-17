@@ -285,6 +285,7 @@ function upgrade_roles() {
         echo "[xsrv] INFO: upgrading collections from requirements.yml"
         (cd "$project_dir" && ansible-galaxy collection install --force -r requirements.yml)
     fi
+    create_venv
 }
 
 function show_defaults() {
