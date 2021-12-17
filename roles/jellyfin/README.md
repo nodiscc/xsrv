@@ -99,7 +99,7 @@ When using Jellyfin from a web browser, media will be converted/transcoded on-th
 
 ## Subtitles
 
-To search and download video subtitles, you must register an account on https://opensubtitles.org, enable the `Opensubtitles` plugin from `Admin > Plugins` and set your opensubtitles.org username/password in the plugin preferences. You will then be able to use right-click > `Edit subtitles` on any video from your library.
+To search and download video subtitles, register an account on https://opensubtitles.com, enable the `Opensubtitles` plugin from `Admin > Plugins` and set your opensubtitles.org username/password in the plugin preferences. Then obtain an API key by following the link the plugin settings. You will then be able to use right-click > `Edit subtitles` on any video from your library and search for matching subtitles.
 
 
 ## License
