@@ -61,11 +61,13 @@ test_jinja2: venv
 
 
 ##### RELEASE PROCEDURE #####
-# - make bump_versions update_todo changelog
+# - make bump_versions update_todo changelog new_tag=$new_tag
 # - update changelog.md, add and commit version bumps and changelog updates
 # - git tag $new_tag; git push && git push --tags
 # - git checkout release && git merge master && git push
-# - make gitlab_release github_release publish_collection
+# - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag
+# - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tags
+# - ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
 # - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
@@ -118,6 +120,12 @@ endif
 
 .PHONY: publish_collection # publish the ansible collection (ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment)
 publish_collection: build_collection
+ifndef new_tag
+	$(error new_tag is undefined)
+endif
+ifndef ANSIBLE_GALAXY_PRIVATE_TOKEN
+	$(error ANSIBLE_GALAXY_PRIVATE_TOKEN is undefined)
+endif
 	source .venv/bin/activate && \
 	ansible-galaxy collection publish --token "$$ANSIBLE_GALAXY_PRIVATE_TOKEN" nodiscc-xsrv-$(new_tag).tar.gz
 
