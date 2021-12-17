@@ -2,18 +2,18 @@
 
 ### xsrv/xsrv
 
-- #625 - WIP refactor integration between roles: - **`1.4.0`** `maintenance`
+- #632 - refactor integration between roles (part 2): - **`-`** `maintenance`
+- #628 - limit fact gathering inside roles to ansible_local facts (speed up setup: tasks) - **`-`** `enhancement,performance`
+- #627 - WIP implement molecule testing - **`1.5.0`** `enhancement,maintenance,tools`
 - #624 - update nextcloud to 23.0.0 - **`-`** `enhancement,maintenance`
 - #623 - upgrade ansible to 5.0.0 - **`1.5.0`** `maintenance`
 - #622 - tt_rss: log cron job errors to syslog instead of sending them by mail - **`-`** `configuration,easy,enhancement,monitoring`
-- #621 - xsrv: add edit-cfg subcommand (edit ansible configuration) - **`1.4.0`** `easy,enhancement`
-- #617 - upgrade ansible to 4.9.0 - **`1.4.0`** `easy,maintenance`
 - #616 - common: ssh: make SSH port configurable - **`-`** `enhancement`
 - #615 - WIP nfs-server role + ability to mount filesystems from the common role - **`-`** `feature`
 - #614 - common: allow disabling ctrl+alt+del combination - **`-`** `enhancement,security`
 - #613 - common - implement sysctl-34 - link protection settings - **`-`** `enhancement,security`
 - #612 - xsrv: allow wildcards in host names for edit-host, edit-vault,check, deploy... - **`-`** `feature`
-- #611 - when: "'..." in role_names' condition checks do not detect roles deployed in other plays - **`-`** `bug,maintenance,performance`
+- #611 - when: "'..." in role_names' condition checks do not detect roles deployed in other plays - **`1.4.0`** `bug,maintenance,performance`
 - #608 - monitroing: updating `netdata.conf` does not restart netdata automatically - **`1.5.0`** `bug,monitoring`
 - #605 - WIP xsrv: rewrite the main script with python - **`-`** `enhancement,maintenance`
 - #604 - use j2cli for init-playbook/init-host templating? - **`-`** `question`
@@ -21,14 +21,14 @@
 - #599 - WIP: xsrv! ask for ansible_host/port during project initialization - **`-`** `enhancement`
 - #598 - CI/CD: automate checks form newer upstream versions of software - **`1.5.0`** `enhancement,tools`
 - #597 - WIP monitoring: netdata: implement streaming to/from other netdata nodes - **`1.5.0`** `feature,monitoring`
-- #596 - remove netdata modtime custom module, replace with native filecheck module - **`1.4.0`** `enhancement,maintenance,monitoring`
 - #593 - tt_rss: role/permission setup tasks are not idempotent - **`1.5.0`** `bug`
 - #591 - tt_rss: schema might not be updated when the playbook runs while a feed update is in progress - **`1.5.0`** `bug`
 - #590 - update ldap-account-manager to 7.7 - **`1.5.0`** `enhancement,maintenance`
 - #589 - homepage: add a button to download all self-signed certificates - **`1.5.0`** `enhancement`
 - #586 - xsrv: improve startup time/attempt to skip virtualenv creation - **`1.5.0`** `enhancement,performance`
 - #582 - make proxmox role compatible with Debian 11/Proxmox 7 - **`1.5.0`** `maintenance`
-- #581 - make monitoring role compatible with Debian 11 - **`1.5.0`** `maintenance,monitoring,upstream`
 - #580 - make tt_rss role compatible with Debian 11 - **`1.5.0`** `maintenance`
 - #579 - make transmission role compatible with Debian 11 - **`1.5.0`** `maintenance`
 - #578 - make shaarli role compatible with Debian 11 - **`1.5.0`** `maintenance`
+- #577 - make samba role compatible with Debian 11 - **`1.5.0`** `maintenance`
+- #576 - make rocketchat role compatible with Debian 11 - **`1.5.0`** `maintenance`
