@@ -9,6 +9,13 @@
     - common
     - hostname
 
+- include: hosts.yml
+  become: yes
+  tags:
+    - common
+    - hosts
+  when: setup_hosts|bool
+
 - include: dns.yml
   become: yes
   tags:

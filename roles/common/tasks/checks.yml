@@ -13,6 +13,7 @@
       - setup_apt == setup_apt|bool
       - setup_cli_utils == setup_cli_utils|bool
       - setup_dns == setup_dns|bool
+      - setup_hosts == setup_hosts|bool
       - setup_firewall == setup_firewall|bool
       - setup_fail2ban == setup_fail2ban|bool
       - setup_haveged == setup_haveged|bool
@@ -45,3 +46,13 @@
   tags:
     - mail
     - msmtp
+
+- name: check that variables are correctly defined (hosts)
+  assert:
+    quiet: yes
+    that:
+      - item.ip_address|ansible.netcommon.ipaddr
+      - (item.state is not defined) or (item.state in ['present', 'absent'])
+  with_items: "{{ hosts }}"
+  when: setup_hosts|bool
+  tags: hosts

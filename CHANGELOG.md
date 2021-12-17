@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - backup: download rsnapshot's/root SSH public key to the controller (public_keys/ directory)
 - common: allow configuring the list of users allowed to use `crontab` (`linux_users_crontab_allow`)
 - common: add an procedure for Debian 10 -> 11 upgrades
+- common: add ability to add/remove entries from the hosts (`/etc/hosts`) file
 
 **Changed:**
 - nextcloud: upgrade to [22.2.3](https://nextcloud.com/changelog/#latest22)

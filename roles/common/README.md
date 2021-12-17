@@ -4,6 +4,7 @@ This role will install/configure a basic Debian-based server:
 
 - hostname
 - DNS resolution (`/etc/resolv.conf`)
+- hosts file (`/etc/hosts`)
 - sysctl/kernel settings: networking, swap/memory management, security
 - APT package management, automatic daily security updates
 - NTP date/time synchronization
