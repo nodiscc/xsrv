@@ -54,5 +54,5 @@
     mode: 0644
   notify: restart slapd
 
-- name: ensure slapd configuration is applied (flush handlers)
+- name: apply configuration (flush handlers)
   meta: flush_handlers
