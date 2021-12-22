@@ -52,3 +52,10 @@
     - monitoring
     - lynis
   when: setup_lynis|bool
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - monitoring
+    - rsyslog
+    - netdata
