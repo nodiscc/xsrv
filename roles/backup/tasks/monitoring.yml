@@ -11,7 +11,6 @@
     - setup_rsyslog|bool
   tags: rsyslog
 
-
 - name: add netdata filecheck and alarm for rsnapshot
   template:
     src: "{{ item.src }}"
@@ -33,6 +32,3 @@
   with_items:
     - /etc/netdata/python.d/modtime.conf.d/modtime.conf
     - /etc/netdata/health.d/modtime.conf.d/modtime.conf
-
-- name: apply rsyslog/netdata configuration (flush handlers)
-  meta: flush_handlers

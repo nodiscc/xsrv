@@ -5,6 +5,3 @@
     mode: 0600
   tags: fail2ban
   notify: reload fail2ban
-
-- name: ensure fail2ban configuration is applied (flush handlers)
-  meta: flush_handlers

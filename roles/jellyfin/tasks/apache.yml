@@ -1,5 +1,3 @@
-##### APACHE CONFIG #####
-
 - name: enable required apache modules
   command: a2enmod {{ item }}
   with_items:
@@ -23,6 +21,3 @@
   args:
     creates: "/etc/apache2/sites-enabled/jellyfin.conf"
   notify: reload apache
-
-- name: ensure apache configuration is applied (flush handlers)
-  meta: flush_handlers

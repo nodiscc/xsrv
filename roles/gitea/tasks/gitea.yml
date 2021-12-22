@@ -84,8 +84,8 @@
     mode: 0644
   notify: reload systemd unit files
 
-# reload systemd unit files as soon as possible
-- name: run all notified handlers now
+# re-read systemd service configuration
+- name: apply configuration (flush handlers)
   meta: flush_handlers
 
 - name: copy gitea binary

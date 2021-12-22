@@ -109,9 +109,6 @@
     - mixedcontent
   when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
 
-- name: run all notified handlers
-  meta: flush_handlers
-
 ###### FAIL2BAN #####
 
 - name: copy jellyfin fail2ban jail config

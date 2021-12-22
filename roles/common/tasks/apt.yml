@@ -27,8 +27,8 @@
     - /etc/apt/apt.conf.d/99-no-overwrite-conffiles
   notify: update apt cache
 
-# update apt cache before trying to install packages
-- name: run all notified handlers
+# update apt cache
+- name: apply configuration (flush handlers)
   meta: flush_handlers
 
 - name: install unattended-upgrades

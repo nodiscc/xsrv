@@ -117,9 +117,6 @@
     - /etc/php/7.3/apache2/conf.d/30-hide-header.ini
   notify: reload apache
 
-- name: ensure apache configuration is applied (flush handlers)
-  meta: flush_handlers
-
 ##### SERVICE #####
 
 - name: enable/disable start/stop apache2 service

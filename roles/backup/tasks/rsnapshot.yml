@@ -34,6 +34,7 @@
     mode: 0600
   notify: check rsnapshot configuration
 
+# DEBT use ansible template module/validate parameter
 - name: ensure rsnapshot configuration is valid (flush handlers)
   meta: flush_handlers
 
@@ -77,6 +78,10 @@
       notify: update ansible facts
       ignore_errors: "{{ ansible_check_mode }}" # root_ssh_key.public_key is never set in check mode, always returns empty/changed
 
+# reload ansible local facts
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
 - name: copy root public SSH key to the controller
   fetch:
     src: /root/.ssh/id_rsa.pub
@@ -84,18 +89,12 @@
     flat: yes
   tags: rsnapshot-ssh-key
 
-- name: ensure ansible local facts are up to date (flush handlers)
-  meta: flush_handlers
-
 - name: display root public SSH key
   debug:
     msg: >
       Please authorize this key on remote machines backup user accounts:
       {{ ansible_local.rsnapshot.ssh.public_key }}
   ignore_errors: "{{ ansible_check_mode }}"
-
-- name: ensure rsnapshot configuration is valid (flush handlers)
-  meta: flush_handlers
 
 ##### SCHEDULING #####
 

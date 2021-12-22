@@ -15,7 +15,8 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 # update apt cache immediately if graylog-repository package was installed
-- meta: flush_handlers
+- name: apply APT configuration (flush handlers)
+  meta: flush_handlers
 
 - name: install graylog-server package
   apt:

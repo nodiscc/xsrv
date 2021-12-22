@@ -44,8 +44,9 @@
       group: root
       mode: "0644"
 
-# apply configuration changes as soon as possible
-- meta: flush_handlers
+# re-read systemd service configuration
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
 
 ### SERVICE ###
 

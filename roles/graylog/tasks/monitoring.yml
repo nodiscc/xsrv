@@ -21,6 +21,3 @@
       module: httpcheck
     - plugin: health.d
       module: processes
-
-- name: ensure rsyslog/netdata configuration is applied (flush handlers)
-  meta: flush_handlers

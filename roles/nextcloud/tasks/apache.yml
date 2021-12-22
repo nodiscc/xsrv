@@ -1,5 +1,3 @@
----
-
 - name: enable apache2 modules
   command: a2enmod {{ item }}
   with_items:
@@ -31,6 +29,3 @@
   args:
     creates: "/etc/apache2/sites-enabled/nextcloud.conf"
   notify: restart apache
-
-- name: ensure apache configuration is applied (flush handlers)
-  meta: flush_handlers

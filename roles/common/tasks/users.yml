@@ -94,8 +94,8 @@
     - { name: 'libpam-tmpdir', state: 'present' }
   notify: update pam configuration
 
-# update pam configuration as soon as possible
-- name: force all notified handlers to run now
+# update pam configuration
+- name: apply configuration (flush handlers)
   meta: flush_handlers
 
 ##### CRON #####

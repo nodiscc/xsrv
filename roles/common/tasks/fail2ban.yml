@@ -42,5 +42,5 @@
     dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
   notify: reload systemd unit files
 
-- name: ensure fail2ban configuration changes are applied (flush handlers)
+- name: apply configuration (flush handlers)
   meta: flush_handlers

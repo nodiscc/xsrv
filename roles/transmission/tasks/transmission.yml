@@ -43,11 +43,7 @@
   notify: check rsnapshot configuration
   when: '"nodiscc.xsrv.backup" in role_names'
 
-
 ##### SERVICES #####
-
-- name: ensure transmission configuration is applied (flush handlers)
-  meta: flush_handlers
 
 - name: enable transmission-daemon service
   service:

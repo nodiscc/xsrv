@@ -52,6 +52,7 @@
     state: absent
   notify: update apt cache
 
+# DEBT replace with apt_repository module and automatic update_cache
 - name: copy netdata/packagecloud APT sources/pinning configuration
   template:
     src: "{{ item.src }}"
@@ -65,7 +66,6 @@
     - src: etc_apt_sources.list.d_netdata-packagecloud.list.j2
       dest: /etc/apt/sources.list.d/netdata-packagecloud.list
   notify: update apt cache
-
 - name: update APT cache to apply configuration changes
   meta: flush_handlers
 

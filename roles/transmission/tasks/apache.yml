@@ -38,6 +38,3 @@
   args:
     creates: "/etc/apache2/sites-enabled/transmission.conf"
   notify: reload apache
-
-- name: apply apache configuration (flush handlers)
-  meta: flush_handlers

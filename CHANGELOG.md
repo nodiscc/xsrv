@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
 
+#### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - UNRELEASED
+
+
+**Changed:**
+- refactor/performance: only flush handlers once, unless required otherwise
+
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17
 
 **Upgrade procedure:**

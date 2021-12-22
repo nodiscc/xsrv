@@ -1,5 +1,3 @@
----
-
 ##### SSH SERVER #####
 
 - name: create revoked keys file
@@ -50,6 +48,6 @@
   notify: restart ssh
   when: sshd_register_moduli.stdout
 
-# We want SSH configuration applied as soon as possible
-- name: run all notified handlers now
+# apply ssh configuration
+- name: apply configuration (flush handlers)
   meta: flush_handlers
