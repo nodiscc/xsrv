@@ -4,6 +4,7 @@
     dest: "/etc/apt/sources.list"
     mode: 0644
   when: ansible_facts.distribution == 'Debian'
+  notify: update apt cache
 
 - name: copy apt config (automatic upgrades, no recommended packages)
   template:
@@ -14,9 +15,7 @@
     - { src: 'etc_apt_apt.conf.d_99no-overwrite-conffiles.j2', dest: '/etc/apt/apt.conf.d/99no-overwrite-conffiles' }
     - { src: 'etc_apt_apt.conf.d_99norecommends.j2', dest: '/etc/apt/apt.conf.d/99norecommends' }
     - { src: 'etc_apt_apt.conf.d_50unattended-upgrades.j2', dest: '/etc/apt/apt.conf.d/50unattended-upgrades' }
-  register: apt_config
   when: ansible_facts.distribution == 'Debian'
-  notify: update apt cache
 
 - name: remove files from old versions of the role
   file:
@@ -25,7 +24,6 @@
   with_items:
     - /etc/apt/apt.conf.d/99-norecommends
     - /etc/apt/apt.conf.d/99-no-overwrite-conffiles
-  notify: update apt cache
 
 # update apt cache
 - name: apply configuration (flush handlers)
