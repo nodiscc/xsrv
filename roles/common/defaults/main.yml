@@ -22,6 +22,7 @@ setup_hosts: yes
 #     hostname: "srv02.example.org mail.example.org"
 #   - ip_address: "1.2.3.4"
 #     state: absent
+hosts: []
 
 ##### SYSCTL (NETWORKING/MEMORY) #####
 # update sysctl settings (yes/no)
