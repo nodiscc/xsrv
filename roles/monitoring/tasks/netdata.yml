@@ -75,7 +75,7 @@
     state: present
 
 
-    ##### SELF-SIGNED SSL CERTIFICATES #####
+##### SELF-SIGNED SSL CERTIFICATES #####
 
 - name: install requirements for self-signed certificates generation
   apt:

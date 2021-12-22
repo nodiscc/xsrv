@@ -18,7 +18,7 @@
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: creat elasticsearch configuration directories # system service override
+- name: create elasticsearch configuration directories # system service override
   file:
     state: directory
     path: /etc/systemd/system/elasticsearch.service.d/

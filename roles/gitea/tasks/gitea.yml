@@ -1,11 +1,7 @@
-##### PACKAGES #####
-
 - name: install git
   apt:
     package: git
     state: present
-
-##### DOWNLOADS #####
 
 - name: download gitea binary
   get_url:
@@ -37,15 +33,13 @@
   command: gpg --verify /root/gitea-{{ gitea_version }}-linux-amd64.asc /root/gitea-{{ gitea_version }}-linux-amd64
   changed_when: no
 
-##### USER #####
-
 - name: create gitea group
   group:
     name: gitea
     state: present
     system: yes
 
-- name: add gitea user
+- name: create gitea user
   user:
     name: 'gitea'
     system: yes
@@ -56,9 +50,6 @@
     groups:
       - 'gitea'
       - 'ssh'
-
-
-##### FILES/PERMISSIONS #####
 
 - name: create gitea directories
   file:

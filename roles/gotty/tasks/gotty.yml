@@ -1,7 +1,3 @@
-##### PACKAGES #####
-
-##### DOWNLOADS #####
-
 - name: download gotty binary
   get_url:
     url: "{{ item.url }}"
@@ -27,10 +23,6 @@
     remote_src: yes
     mode: u=rwX
   diff: no
-
-##### USER #####
-
-##### FILES/PERMISSIONS #####
 
 - name: copy gotty binary
   copy:
@@ -74,7 +66,7 @@
 
 ###### FAIL2BAN ############
 
-# todo
+# TODO
 # - name: copy gotty fail2ban jail config
 #   template:
 #     src: etc_fail2ban_jail.d_gotty.conf.j2
