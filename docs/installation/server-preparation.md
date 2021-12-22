@@ -37,6 +37,7 @@ Web server:                      TCP 80/443
 BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738
 Graylog TCP input:               TCP 5140
+Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456-2457/4380/27000-27031/27036
 ```
 
 ### Domain names
