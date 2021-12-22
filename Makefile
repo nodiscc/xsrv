@@ -37,8 +37,6 @@ test_ansible_syntax_check: venv install_collection
 	source .venv/bin/activate && \
 	ANSIBLE_COLLECTIONS_PATHS="./" ansible-playbook --syntax-check --inventory tests/inventory.yml test.yml
 
-test_ansible_check_localhost: install_collection
-
 .PHONY: ansible_lint # ansible syntax linter
 test_ansible_lint: venv install_collection
 	source .venv/bin/activate && \
