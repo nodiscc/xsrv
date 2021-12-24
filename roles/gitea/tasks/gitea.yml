@@ -8,12 +8,12 @@
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64",
-        dest: "/root/gitea-{{ gitea_version }}-linux-amd64" }
-    - { url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.asc",
-        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.asc" }
-    - { url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.sha256",
-        dest: "/root/gitea-{{ gitea_version }}-linux-amd64.sha256" }
+    - url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64"
+      dest: "/root/gitea-{{ gitea_version }}-linux-amd64"
+    - url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.asc"
+      dest: "/root/gitea-{{ gitea_version }}-linux-amd64.asc"
+    - url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64.sha256"
+      dest: "/root/gitea-{{ gitea_version }}-linux-amd64.sha256"
 
 # Key from 'gpg --keyserver pgp.mit.edu --recv 7C9E68152594688862D62AF62D9AE806EC1592E2; gpg --export --armor 7C9E68152594688862D62AF62D9AE806EC1592E2'
 - name: copy gitea GPG key
