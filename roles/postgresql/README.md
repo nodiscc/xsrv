@@ -2,6 +2,8 @@
 
 This role will install [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL), a relational database management system (RDBMS) emphasizing extensibility and SQL compliance.
 
+It allows running [pgmetrics](https://pgmetrics.io/) against the PostgreSQL instance.
+
 [![](https://i.imgur.com/UoKs3x1.png)](https://i.imgur.com/yDozQPU.jpg)
 [![](https://i.imgur.com/7oO67Xq.png)](https://i.imgur.com/rNTiRva.png)
 [![](https://i.imgur.com/CqoOfXo.png)](https://i.imgur.com/mv2fppi.jpg)
@@ -32,6 +34,14 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_postgresql.conf.j2) for the [backup](../backup/README.md) role.
+
+### Metrics
+
+To install and run [pgmetrics](https://pgmetrics.io/) agains the installed PostgreSQL instance, pass the `utils-pgmetrics` tag to ansible-playbook:
+
+```bash
+ansible-playbook playbook.yml --tags=utils-pgmetrics
+```
 
 
 ## License

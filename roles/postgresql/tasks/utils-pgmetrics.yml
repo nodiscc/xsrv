@@ -1,0 +1,35 @@
+- name: download pgmetrics
+  get_url:
+    url: https://github.com/rapidloop/pgmetrics/releases/download/v1.12.0/pgmetrics_1.12.0_linux_amd64.tar.gz
+    dest: /root/pgmetrics_1.12.0_linux_amd64.tar.gz
+
+- name: create pgmetrics tarball extraction directory
+  file:
+    path: /root/pgmetrics-unpack
+    state: directory
+    mode: 0750
+  check_mode: no # create even in check mode so that following tasks don't fail
+
+- name: extract pgmetrics tar.gz
+  unarchive:
+    src: "/root/pgmetrics_1.12.0_linux_amd64.tar.gz"
+    dest: "/root/pgmetrics-unpack"
+    remote_src: yes
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
+
+- name: copy pgmetrics binary in place
+  copy:
+    remote_src: yes
+    src: /root/pgmetrics-unpack/pgmetrics_1.12.0_linux_amd64/pgmetrics
+    dest: /usr/local/bin/pgmetrics
+    owner: root
+    group: root
+    mode: 0755
+
+- name: run pgmetrics
+  become: yes
+  become_user: postgres
+  command: /usr/local/bin/pgmetrics --no-password
+  changed_when: no
