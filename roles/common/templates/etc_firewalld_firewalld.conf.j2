@@ -5,6 +5,14 @@
 # Default: public
 DefaultZone=public
 
+{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster' %}
+# Minimal mark
+# Marks up to this minimum are free for use for example in the direct 
+# interface. If more free marks are needed, increase the minimum
+# Default: 100
+MinimalMark=100
+{% endif %}
+
 # Clean up on exit
 # If set to no or false the firewall configuration will not get cleaned up
 # on exit or stop of firewalld
@@ -40,6 +48,18 @@ IndividualCalls=no
 # Default: off
 LogDenied={{ firewalld_log_denied }}
 
+{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster' %}
+# AutomaticHelpers
+# For the secure use of iptables and connection tracking helpers it is
+# recommended to turn AutomaticHelpers off. But this might have side effects on
+# other services using the netfilter helpers as the sysctl setting in
+# /proc/sys/net/netfilter/nf_conntrack_helper will be changed.
+# With the system setting, the default value set in the kernel or with sysctl
+# will be used. Possible values are: yes, no and system.
+# Default: system
+AutomaticHelpers=system
+{% endif %}
+
 # FirewallBackend
 # Selects the firewall backend implementation.
 # Choices are:
@@ -47,6 +67,7 @@ LogDenied={{ firewalld_log_denied }}
 #	- iptables (iptables, ip6tables, ebtables and ipset)
 FirewallBackend=iptables
 
+{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye' %}
 # FlushAllOnReload
 # Flush all runtime rules on a reload. In previous releases some runtime
 # configuration was retained during a reload, namely; interface to zone
@@ -73,3 +94,4 @@ RFC3964_IPv4=yes
 # based zones to other interfaces based zones (including the default zone).
 # Possible values; "yes", "no". Defaults to "no".
 AllowZoneDrifting=no
+{% endif %}
