@@ -23,6 +23,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
 - refactor/performance: only flush handlers once, unless required otherwise
 
+**Fixed:**
+- proxmox: fix missing ansible fact file template
+
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17
 
 **Upgrade procedure:**
