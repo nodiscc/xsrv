@@ -2,7 +2,7 @@
 
 # Installation
 
-- Download a [Debian 10 netinstall image](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/)
+- Download a [Debian 11 netinstall image](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/)
 - Load the ISO image in your virtual machine's CD drive, or write the image to a 1GB+ USB drive (Linux: [`dd`](https://wiki.archlinux.org/index.php/USB_flash_installation_media#In_GNU.2FLinux), [GNOME disks](https://www.techrepublic.com/article/how-to-create-disk-images-using-gnome-disk/). Windows: [win32diskimager](http://sourceforge.net/projects/win32diskimager/))
 - Boot your server/VM from the Debian installer ISO image/USB.
 - Select `Advanced > Graphical advanced install`.
