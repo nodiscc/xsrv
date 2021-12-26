@@ -41,5 +41,14 @@
   when: setup_firewall|bool
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: restart firewalld
+  become: yes
+  service:
+    name: firewalld
+    state: restarted
+    enabled: yes
+  when: setup_firewall|bool
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: update ansible facts
   setup:

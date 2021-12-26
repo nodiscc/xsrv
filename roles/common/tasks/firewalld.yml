@@ -64,7 +64,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: reload firewalld
+  notify: restart firewalld
   ignore_errors: "{{ ansible_check_mode }}"
 
 # apply firewalld configuration/default zone
