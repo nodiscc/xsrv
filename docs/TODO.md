@@ -2,6 +2,14 @@
 
 ### xsrv/xsrv
 
+- #641 - common: implement manual reboot/shudown (utils-reboot/utils-shutdown ansible tags) - **`-`** `easy,enhancement,feature`
+- #640 - common: apt: enable purging data/configuration files by default - **`-`** `configuration,enhancement`
+- #639 - common: apt: enable autoremove by default - **`-`** `configuration,easy`
+- #638 - common: apt: implement forced/manual apt upgrade (utils-apt-upgrade ansible tag) - **`-`** `easy,feature`
+- #637 - firewalld: implement DNAT/SNAT - **`1.5.0`** `enhancement`
+- #636 - proxmox: aggregate proxmox  logs to syslog - **`-`** `configuration,easy,enhancement,monitoring`
+- #635 - firewalld: implement outbound traffic filtering - **`1.5.0`** `enhancement,security`
+- #634 - postgresql: add ability to run pgmetrics against the postgresql instance - **`1.5.0`** `easy,feature,monitoring,performance`
 - #632 - refactor integration between roles (part 2): - **`-`** `maintenance`
 - #628 - limit fact gathering inside roles to ansible_local facts (speed up setup: tasks) - **`-`** `enhancement,performance`
 - #627 - WIP implement molecule testing - **`1.5.0`** `enhancement,maintenance,tools`
@@ -13,13 +21,13 @@
 - #614 - common: allow disabling ctrl+alt+del combination - **`-`** `enhancement,security`
 - #613 - common - implement sysctl-34 - link protection settings - **`-`** `enhancement,security`
 - #612 - xsrv: allow wildcards in host names for edit-host, edit-vault,check, deploy... - **`-`** `feature`
-- #611 - when: "'..." in role_names' condition checks do not detect roles deployed in other plays - **`1.4.0`** `bug,maintenance,performance`
+- #611 - when: "'..." in role_names' condition checks do not detect roles deployed in other plays - **`1.5.0`** `bug,maintenance,performance`
 - #608 - monitroing: updating `netdata.conf` does not restart netdata automatically - **`1.5.0`** `bug,monitoring`
 - #605 - WIP xsrv: rewrite the main script with python - **`-`** `enhancement,maintenance`
 - #604 - use j2cli for init-playbook/init-host templating? - **`-`** `question`
-- #600 - WIP replace firehol with firewalld - **`2.0.0`** `enhancement,maintenance,security`
+- #600 - WIP replace firehol with firewalld - **`1.5.0`** `enhancement,maintenance,security`
 - #599 - WIP: xsrv! ask for ansible_host/port during project initialization - **`-`** `enhancement`
-- #598 - CI/CD: automate checks form newer upstream versions of software - **`1.5.0`** `enhancement,tools`
+- #598 - CI/CD: automate checks for newer upstream versions of software - **`1.5.0`** `enhancement,tools`
 - #597 - WIP monitoring: netdata: implement streaming to/from other netdata nodes - **`1.5.0`** `feature,monitoring`
 - #593 - tt_rss: role/permission setup tasks are not idempotent - **`1.5.0`** `bug`
 - #591 - tt_rss: schema might not be updated when the playbook runs while a feed update is in progress - **`1.5.0`** `bug`
@@ -290,7 +298,7 @@
 - #94 - Kubernetes role? - **`-`** `question`
 - #93 - VNC server - **`-`** `feature`
 - #92 - Add {{ ansible_managed }} in templates - **`-`** `enhancement`
-- #86 - Peertube - **`-`** `feature`
+- #86 - Peertube role - **`-`** `feature`
 - #78 - Adminer role - **`-`** `feature`
 - #72 - proxmox: allow defining VMs from ansible variables - **`2.0.0`** `enhancement,feature`
 - #70 - Setup endlessh - **`-`** `feature,security`

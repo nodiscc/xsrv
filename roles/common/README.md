@@ -48,15 +48,11 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ## Usage
 
- - SSH access: `ssh user@example.org`
- - SFTP access: `sftp://user@example.org` (clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/)), `sftp`, `rsync`, `scp`, Windows: [WinSCP](https://winscp.net/eng/index.php), PuTTY...)
-- Force a power off: `ssh user@my.example.org sudo poweroff`
-- Force an immediate reboot: `ssh user@my.example.org sudo reboot`
-- Force purge of unused configuration files: `ssh user@my.example.org sudo aptitude -y purge ~c`
-- Force rotation of system logs: `ssh user@my.example.org sudo logrotate -f /etc/logrotate.conf`
-- If running in a KVM virtual machine in libvirt/virt-manager, to share a directory from the hypervisor to the VM: access VM settings in `virt-manager`. Click `Add hardware > Filesystem`, Set Mode: `Mapped`, Source path: `/path/to/the/directory/to/share` (on the hypervisor), Target path: `/exampleshareddirectory` (in the VM), then inside the VM run `sudo apt install 9mount, mount -t 9p /exampleshareddirectory /mnt/example`.
-- Upgrade all packages without waiting for unattended-upgrades `ssh user@my.example.org 'sudo apt update && sudo apt upgrade'`
-- Backups: nothing to backup. See the [backup](../backup/README.md) role.
+- SSH access: `ssh user@example.org`
+  - Windows clients: [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)
+- SFTP access: `sftp://user@example.org`
+  - Linux clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/)), `sftp`, `rsync`, `scp`,
+  - Windows clients: [WinSCP](https://winscp.net/eng/index.php)
 - Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
 - Get current firewall configuration: `ansible-playbook --tags utils-firewalld-info playbook.yml`
 

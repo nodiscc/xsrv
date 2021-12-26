@@ -139,6 +139,14 @@ srvadmin@hv2:~$ virsh start my.virtual.machine.xml
 
 **Bridged:** TODO
 
+#### Share a directory form the hypervisor/host to the VM/guest
+
+- Access VM settings in `virt-manager`
+- Click `Add hardware > Filesystem`
+  - Mode: `Mapped`
+  - Source path: `/path/to/the/directory/to/share` (on the hypervisor)
+  - Target path: `/exampleshareddirectory` (in the VM)
+- Inside the VM run `sudo apt install 9mount, mount -t 9p /exampleshareddirectory /mnt/example`
 
 
 ## Alternatives
