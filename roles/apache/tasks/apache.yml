@@ -28,9 +28,15 @@
 
 - name: remove mod-php (replaced with php-fpm)
   apt:
-    package: libapache2-mod-php
+    package:
+      - libapache2-mod-php
+      - libapache2-mod-php7.4
     state: absent
   notify: restart apache
+
+# restart apache to apply mod-php removal
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
 
 ##### APACHE MODULES/CONFIGURATON #####
 
@@ -58,6 +64,7 @@
   with_items:
     - 'cgi'
     - 'php7.3' # conflicts with mpm_event
+    - 'php7.4' # conflicts with mpm_event
     - 'mpm_prefork' # conflicts with mpm_event
   notify: restart apache
 
