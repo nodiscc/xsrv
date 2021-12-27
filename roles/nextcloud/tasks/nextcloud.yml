@@ -18,7 +18,6 @@
       - php-xml
       - php-zip
       - php-bz2
-      - php-smbclient
       - php-imap
       - php-apcu
       - ffmpeg
