@@ -246,6 +246,7 @@
 ### NEXTCLOUD APPLICATIONS ####
 
 - include: nextcloud-applications.yml
+  tags: nextcloud-applications
 
 ### CLEANUP ###
 
