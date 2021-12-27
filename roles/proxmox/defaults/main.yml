@@ -6,3 +6,5 @@ proxmox_auto_upgrade: yes
 proxmox_web_firewalld_zones:
   - zone: internal
     state: enabled
+  - zone: internal
+    state: enabled

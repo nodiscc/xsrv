@@ -20,3 +20,5 @@ mumble_enable_service: yes
 mumble_firewalld_zones:
   - zone: public
     state: enabled
+  - zone: internal
+    state: enabled

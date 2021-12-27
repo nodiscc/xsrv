@@ -17,6 +17,8 @@ apache_access_log_to_syslog: no
 apache_firewalld_zones:
   - zone: public
     state: enabled
+  - zone: internal
+    state: enabled
 
 ##### PHP-FPM INTERPRETER #####
 # yes/no: enable/disable the default php-fpm pool (www)

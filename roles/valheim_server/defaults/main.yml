@@ -18,3 +18,5 @@ valheim_enable_service: yes
 valheim_server_firewalld_zones:
   - zone: public
     state: enabled
+  - zone: internal
+    state: enabled
