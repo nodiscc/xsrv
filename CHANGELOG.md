@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
 - common: firewall: remove ability to filter outgoing traffic, will be re-added later
+- common/apache/nextcloud: drop compatibility with Debian 10
 
 **Changed:**
 - manual firewall configuration is no longer required in the default setup/when only `xsrv` roles are enabled
