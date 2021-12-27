@@ -25,7 +25,7 @@
   when: not ansible_check_mode
 
 # slappasswd uses a new seed every time, hence the hash changes every time the playbook runs
-- name: create LDAP admin account (not idempotent, returns changed every time), set log level
+- name: create LDAP admin account (always returns changed), set log level
   ldap_attrs:
     dn: "{{ item.dn }}"
     attributes: "{{ item.attributes }}"

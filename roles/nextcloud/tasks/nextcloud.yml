@@ -155,8 +155,9 @@
     - nextcloud_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
 
+# occ doesn't report changed status, not idempotent, alwyas returns changd
 # Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
-- name: set nextcloud config.php values (not idempotent, returns changed every time - occ doesn't report changed status)
+- name: set nextcloud config.php values (always returns changed)
   become: yes
   become_user: www-data
   command: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301

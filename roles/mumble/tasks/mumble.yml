@@ -40,7 +40,7 @@
 
 ##### COMMAND-LINE/MISC INSTALLATION STEPS #####
 
-- name: update mumble superuser password (not idempotent, returns changed every time)
+- name: update mumble superuser password (always returns changed)
   become: yes
   become_user: mumble-server
   command: murmurd -ini /etc/mumble-server.ini -supw {{ mumble_superuser_password }} # noqa 301
