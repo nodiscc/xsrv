@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - UNRELEASED
 
 **Upgrade procedure:**
+- `TAGS=debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html). Debian 10 compatibility will not be maintained after this release.
 - remove `firehol_*` variables from your configuration (`firehol_networks, firehol_routers, firehol_docker_swarm_compat, firehol_custom_services`).
 - if you had custom firewall rules in place please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74)). Roles from the `nodiscc.xsrv` collection will automatically insert their own rules, if the `common/firewalld` role is deployed.
 
