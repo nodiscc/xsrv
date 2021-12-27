@@ -52,9 +52,6 @@ gitea_lfs_jwt_secret: "CHANGEME43" # 43 characters
 mumble_password: "CHANGEME20"
 mumble_superuser_password: "{{ xsrv_admin_password }}"
 
-##### MARIADB - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mariadb/defaults/main.yml
-mariadb_root_password: "CHANGEME20"
-
 ##### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
 openldap_admin_password: "CHANGEME30"
 openldap_bind_password: "CHANGEME30"

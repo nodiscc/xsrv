@@ -31,7 +31,6 @@ This project provides:
 - [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
-- [mariadb](roles/mariadb) - MariaDB database engine
 - [monitoring](roles/monitoring) - Real-time monitoring, alerting and logging system
 - [mumble](roles/mumble) - Low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization service and collaboration platform

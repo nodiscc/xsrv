@@ -7,7 +7,6 @@
     - nodiscc.xsrv.monitoring
     - nodiscc.xsrv.apache
     - nodiscc.xsrv.homepage
-    - nodiscc.xsrv.mariadb
     - nodiscc.xsrv.postgresql
     - nodiscc.xsrv.nextcloud
     - nodiscc.xsrv.tt_rss

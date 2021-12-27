@@ -47,7 +47,6 @@ nodiscc.xsrv:1.3.1 was installed successfully
     # - nodiscc.xsrv.backup
     # - nodiscc.xsrv.apache
     # - nodiscc.xsrv.openldap
-    # - nodiscc.xsrv.mariadb
     # - nodiscc.xsrv.postgresql
     # - nodiscc.xsrv.nextcloud
     # - nodiscc.xsrv.tt_rss

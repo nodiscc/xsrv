@@ -1,8 +1,0 @@
-- name: install netdata process check for mariadb
-  template:
-    src: etc_netdata_health.d_processes.conf.d_mariadb.conf.j2
-    dest: /etc/netdata/health.d/processes.conf.d/mariadb.conf
-    owner: root
-    group: netdata
-    mode: 0640
-  notify: assemble netdata configuration

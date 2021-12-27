@@ -197,14 +197,6 @@
     - assemble netdata configuration
     - restart netdata
 
-- name: create mysql user for netdata (if mariadb role is enabled)
-  mysql_user:
-    name: netdata
-    state: present
-    priv: '*.*:USAGE/*.*:REPLICATION CLIENT'
-  no_log: True
-  when: '"nodiscc.xsrv.mariadb" in role_names'
-
 - name: start and enable netdata
   service:
     name: netdata

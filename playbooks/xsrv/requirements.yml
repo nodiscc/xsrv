@@ -4,7 +4,8 @@ collections:
   - name: https://gitlab.com/nodiscc/xsrv.git
     type: git
     version: release
-  # - name: https://gitlab.com/nodiscc/toolbox.git#/ANSIBLE_COLLECTION/ # role from a directory in a git repository
+  # - name: nodiscc.toolbox
+  #   source: git+https://gitlab.com/nodiscc/toolbox.git#/ARCHIVE/ANSIBLE-COLLECTION/ # role from a directory in a git repository
   #   type: git
   #   version: master
   # - name: chocolatey.chocolatey # role from https://galaxy.ansible.com/

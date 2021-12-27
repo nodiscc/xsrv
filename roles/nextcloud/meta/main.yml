@@ -30,4 +30,3 @@ dependencies:
   # - nodiscc.xsrv.monitoring # optional
   - nodiscc.xsrv.apache
   - { role: 'nodiscc.xsrv.postgresql', when: nextcloud_db_type == "pgsql" }
-  - { role: 'nodiscc.xsrv.mariadb', when: nextcloud_db_type == "mysql" }

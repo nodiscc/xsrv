@@ -21,5 +21,4 @@ dependencies:
   # - nodiscc.xsrv.monitoring
   # - nodiscc.xsrv.backup
   - nodiscc.xsrv.apache
-  - { role: nodiscc.xsrv.mariadb, when: gitea_db_type == "mysql" }
   - { role: nodiscc.xsrv.postgresql, when: gitea_db_type == "postgres" }

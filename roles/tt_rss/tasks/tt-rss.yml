@@ -36,11 +36,6 @@
   tags: fail2ban
   notify: reload fail2ban
 
-##### BACKUPS #####
-
-# there are no files to backup
-# database dumps are managed by the postgresql/mariadb role
-
 ##### TT-RSS INSTALLATION #####
 
 - name: clone/upgrade tt-rss
