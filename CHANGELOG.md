@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - manual firewall configuration is no longer required in the default setup/when only `xsrv` roles are enabled
 - let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
 - refactor/performance: only flush handlers once, unless required otherwise
+- apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
 
 **Fixed:**
 - proxmox: fix missing ansible fact file template

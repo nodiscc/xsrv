@@ -16,7 +16,7 @@
 
 - name: restart php-fpm
   service:
-    name: php7.3-fpm
+    name: php7.4-fpm
     state: restarted
     enabled: yes
   become: yes

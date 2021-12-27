@@ -45,8 +45,8 @@
     - { src: 'etc_apache2_conf-available_ssl-common.conf.j2', dest: '/etc/apache2/conf-available/ssl-common.conf' }
     - { src: 'etc_apache2_conf-available_mod-md.conf.j2', dest: '/etc/apache2/conf-available/mod-md.conf' }
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf' }
-    - { src: 'etc_php_7.3_fpm_pool.d_www.conf.j2', dest: '/etc/php/7.3/fpm/pool.d/www.conf' }
-    - { src: 'etc_php_7.3_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/7.3/cli/conf.d/20-apcu.ini' }
+    - { src: 'etc_php_7.4_fpm_pool.d_www.conf.j2', dest: '/etc/php/7.4/fpm/pool.d/www.conf' }
+    - { src: 'etc_php_7.4_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/7.4/cli/conf.d/20-apcu.ini' }
   notify:
     - reload apache
     - restart php-fpm
@@ -86,7 +86,7 @@
     - 'logging'
     - 'ssl-common'
     - 'mod-md'
-    - 'php7.3-fpm'
+    - 'php7.4-fpm'
   notify: reload apache
 
 - include: apache-mod-evasive.yml
@@ -114,7 +114,7 @@
     - /etc/apache2/sites-enabled/default-ssl.conf
     - /etc/apache2/sites-available/sites.conf
     - /var/www/html/index.html
-    - /etc/php/7.3/apache2/conf.d/30-hide-header.ini
+    - /etc/php/7.4/apache2/conf.d/30-hide-header.ini
   notify: reload apache
 
 ##### SERVICE #####

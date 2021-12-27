@@ -8,14 +8,14 @@
     update_cache: yes
     cache_valid_time: 900
     package:
-      - php7.3-common
-      - php7.3-xml
-      - php7.3-json
-      - php7.3-intl
-      - php7.3-mbstring
-      - php7.3-curl
-      - php7.3-gd
-      - php7.3-opcache
+      - php7.4-common
+      - php7.4-xml
+      - php7.4-json
+      - php7.4-intl
+      - php7.4-mbstring
+      - php7.4-curl
+      - php7.4-gd
+      - php7.4-opcache
       - php-zip # required for data_migration plugin
 
 ##### FAIL2BAN #####

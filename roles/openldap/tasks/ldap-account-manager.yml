@@ -54,8 +54,8 @@
 
 - name: copy php-fpm configuration
   template:
-    src: etc_php_7.3_fpm_pool.d_ldap-account-manager.conf.j2
-    dest: /etc/php/7.3/fpm/pool.d/ldap-account-manager.conf
+    src: etc_php_7.4_fpm_pool.d_ldap-account-manager.conf.j2
+    dest: /etc/php/7.4/fpm/pool.d/ldap-account-manager.conf
     mode: 0644
   notify: restart php-fpm
 

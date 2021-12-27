@@ -1,7 +1,7 @@
-[tt-rss]
+[ldap-account-manager]
 user = www-data
 group = www-data
-listen = /run/php/php7.3-fpm-tt-rss.sock
+listen = /run/php/php7.4-fpm-ldap-account-manager.sock
 listen.owner = www-data
 listen.group = www-data
 listen.allowed_clients = 127.0.0.1
@@ -29,11 +29,11 @@ pm.process_idle_timeout = 20s
 ;php_flag[display_errors] = off
 
 ;;; LIMITS
-php_admin_value[max_execution_time] = {{ tt_rss_php_max_execution_time }}
-php_admin_value[max_input_time] = {{ tt_rss_php_max_input_time }}
-php_admin_value[memory_limit] = {{ tt_rss_php_memory_limit }}
-php_admin_value[post_max_size] = {{ tt_rss_php_post_max_size }}
-php_admin_value[upload_max_filesize] = {{ tt_rss_php_upload_max_filesize }}
+php_admin_value[max_execution_time] = {{ ldap_account_manager_php_max_execution_time }}
+php_admin_value[max_input_time] = {{ ldap_account_manager_php_max_input_time }}
+php_admin_value[memory_limit] = {{ ldap_account_manager_php_memory_limit }}
+php_admin_value[post_max_size] = {{ ldap_account_manager_php_post_max_size }}
+php_admin_value[upload_max_filesize] = {{ ldap_account_manager_php_upload_max_filesize }}
 ;rlimit_files = 1024
 ;chroot =
 ;chdir = /
