@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - homepage: improve homepage styling/layout, link directly to `ssh://` and `sftp://` URIs
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
+- netdata: disable metrics gathering for `/dev` and `/dev/shm` virtual filesystems
 - all roles: checks: don't exit immediately when a variable is not correctly defined, only fail after checking all variables
 - monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - tt_rss: don't send feed update errors by mail, log them to syslog
