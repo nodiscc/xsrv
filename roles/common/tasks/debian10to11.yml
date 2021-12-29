@@ -12,16 +12,23 @@
         autoremove: yes
         purge: yes
         update_cache: yes
+    - name: list APT sources configuration files
+      find:
+        path: /etc/apt/sources.list.d/
+        patterns: '*.list'
+      register: apt_sources_files
     - name: replace buster with bullseye in APT sources list
       replace:
-        path: /etc/apt/sources.list
+        path: "{{ item }}"
         regexp: "buster"
         replace: "bullseye"
+      with_items: "{{ apt_sources_files.files | map(attribute='path') | list + ['/etc/apt/sources.list'] }}"
     - name: update Debian security APT source URL for Debian 11
       replace:
-        path: /etc/apt/sources.list
-        regexp: "deb http://security.debian.org/debian-security bullseye/updates"
-        replace: "deb http://security.debian.org/debian-security bullseye-security"
+        path: "{{ item }}"
+        regexp: "deb https?://security.debian.org/debian-security bullseye/updates"
+        replace: "deb https://security.debian.org/debian-security bullseye-security"
+      with_items: "{{ apt_sources_files.files | map(attribute='path') | list + ['/etc/apt/sources.list'] }}"
     - name: upgrade all packages to Debian 11 versions
       apt:
         upgrade: dist
