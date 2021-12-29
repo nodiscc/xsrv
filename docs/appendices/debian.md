@@ -4,7 +4,7 @@
 
 ## Installation
 
-### From ISO image
+### Manual, from ISO image
 
 - Download a [Debian 11 netinstall image](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/)
 - Load the ISO image in your virtual machine's CD drive, or write the image to a 1GB+ USB drive (Linux: [`dd`](https://wiki.archlinux.org/index.php/USB_flash_installation_media#In_GNU.2FLinux), [GNOME disks](https://www.techrepublic.com/article/how-to-create-disk-images-using-gnome-disk/). Windows: [win32diskimager](http://sourceforge.net/projects/win32diskimager/))
@@ -28,7 +28,7 @@ or your private DNS server ([pfSense](pfsense.md) is a good start to boostrap a 
   - When asked, only install `Standard system utilities` and `SSH server`
   - Finish installation and reboot to disk.
 
-#### Ansible requirements
+**Ansible requirements**:
 
 - From the server console, login as `root`
 - Install ansible requirements: `apt update && apt --no-install-recommends install python3 aptitude sudo openssh-server`
@@ -37,9 +37,26 @@ or your private DNS server ([pfSense](pfsense.md) is a good start to boostrap a 
 - Lock the console: `logout`
 
 
-### From a VM template
+### Automated, from preseed file
 
-If you already have a [libvirt](virt-manager.md) Debian VM set up as described above, it can be reused as a template for other VMs. Using templates significantly reduces the time needed to setup a new VM and make it ready for deployment. Using `xsrv init-vm`:
+`xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be installed installed on the machine where these commands are run.
+
+The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/bullseye/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
+
+```bash
+$ xsrv init-vm-template --help
+USAGE: xsrv init-vm-template --name TEMPLATE_NAME [--root-password TEMPLATE_ROOT_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
+        Initialize a libvirt VM template from a Debian netinstall image + a preseed file. This template can be reused from xsrv init-vm
+        Requirements: libvirt, current user in the libvirt group
+        If not specified, a random root password will be generated automatically and displayed once after VM creation
+```
+
+Most options are self-explanatory. The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overriden using `--preseed /path/to/custom/preseed.cfg`.
+
+
+### Automated, from a VM template
+
+If you already have a [libvirt](virt-manager.md) Debian VM set up as described above, it can be reused as a template for other VMs. This significantly reduces the time needed to setup a new VM and make it ready for deployment. The time required to provision a new host using this method should not exceed 1 minute.
 
 ```bash
 $ ./xsrv init-vm --help
@@ -55,7 +72,7 @@ USAGE: ./xsrv init-vm --template TEMPLATE_NAME --name VM_NAME --ip VM_IP --netma
 
 ### From a hosting provider
 
-Most VPS providers allow you to install a preconfigured Debian system with basic SSH `root` access. Follow your hosting provider's documentation - make sure requirements  above are met (user account in the `sudo` group).
+Most VPS providers allow you to install a preconfigured Debian system with basic SSH `root` access. Follow your hosting provider's documentation - make sure requirements above are met (`python apotitude sudo` installed, user account in the `sudo` group).
 
 
 ## See also

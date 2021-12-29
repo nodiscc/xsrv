@@ -377,6 +377,18 @@ _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2
 
 -----------------------------------------
 
+## Provision hosts
+
+`xsrv` allows automated creation/provisioning of minimal Debian VMs using these commands:
+
+- [`xsrv init-vm-template`](appendices/debian.md)
+- [`xsrv init-vm`](appendices/debian.md)
+
+VMs created using this method can then be added to your project using [`xsrv init-host`](#xsrv-init-host) or equivalent, at which point you can start deploying your configuration/services to them.
+
+
+-----------------------------------------
+
 ## Upgrading
 
 **Upgrade roles to the latest release:** (this is the default) run `xsrv upgrade` to upgrade to the latest stable [release](https://gitlab.com/nodiscc/xsrv/-/releases) at any point in time (please read release notes/upgrade procedures and check if manual steps are required).
