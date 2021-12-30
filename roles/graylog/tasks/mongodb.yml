@@ -5,9 +5,21 @@
     url: "https://www.mongodb.org/static/pgp/server-4.2.asc"
     state: present
 
+- name: set distribution for mongodb APT repository
+  set_fact:
+    mongodb_apt_repo_distribution: "{{ item.apt_repository }}"
+  when: ansible_facts.distribution_release == "{{ item.distribution_release }}"
+  with_items:
+    - apt_repository: stretch
+      distribution_release: stretch
+    - apt_repository: buster
+      distribution_release: buster
+    - apt_repository: buster
+      distribution_release: bullseye
+
 - name: add mongodb APT repository
   apt_repository:
-    repo: "deb http://repo.mongodb.org/apt/debian {{ ansible_facts.distribution_release }}/mongodb-org/4.2 main"
+    repo: "deb http://repo.mongodb.org/apt/debian {{ mongodb_apt_repo_distribution }}/mongodb-org/4.2 main"
     state: present
     filename: mongodb
     update_cache: yes
