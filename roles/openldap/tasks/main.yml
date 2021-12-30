@@ -5,7 +5,10 @@
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags: openldap
+  tags:
+    - apache
+    - ssl
+    - openldap
 
 - include: openldap.yml
   become: yes

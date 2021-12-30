@@ -19,7 +19,10 @@
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags: gitea
+  tags:
+    - apache
+    - ssl
+    - gitea
   when: gitea_https_mode == 'selfsigned'
 
 - include: apache.yml

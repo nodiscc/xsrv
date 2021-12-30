@@ -202,6 +202,7 @@
     state: started
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
+  tags: services
 
 # Apply IP access restrictions as soon as possible
 - name: run all notified handlers now

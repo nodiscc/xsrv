@@ -1,3 +1,6 @@
+# @tag backup - setup rsnapshot backup utility
+# @tag rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
+
 galaxy_info:
   role_name: backup
   author: "nodiscc <nodiscc@gmail.com>"

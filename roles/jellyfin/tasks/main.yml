@@ -10,7 +10,10 @@
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags: jellyfin
+  tags:
+    - apache
+    - ssl
+    - jellyfin
   when: jellyfin_https_mode == 'selfsigned'
 
 - include: apache.yml

@@ -1,3 +1,5 @@
+# @tag graylog - setup graylog log analyzer
+
 galaxy_info:
   role_name: graylog
   author: "nodiscc <nodiscc@gmail.com>"

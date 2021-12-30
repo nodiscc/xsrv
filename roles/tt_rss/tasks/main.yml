@@ -13,12 +13,17 @@
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags: tt_rss
+  tags:
+    - apache
+    - ssl
+    - tt_rss
   when: tt_rss_https_mode == 'selfsigned'
 
 - include: apache.yml
   become: yes
-  tags: tt_rss
+  tags:
+    - tt_rss
+    - apache
 
 - include: themes.yml
   become: yes

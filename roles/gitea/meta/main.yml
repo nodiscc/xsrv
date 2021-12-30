@@ -1,3 +1,5 @@
+# @tag gitea - setup gitea git service/software forge
+
 galaxy_info:
   role_name: gitea
   author: "nodiscc <nodiscc@gmail.com>"

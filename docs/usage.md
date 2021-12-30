@@ -13,37 +13,33 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ vX.Y.Z
+  ╹ ╹┗━┛╹┗╸┗┛ v1.4.0
 
 USAGE: xsrv COMMAND [project] [host]
 
-# PROJECT-LEVEL COMMANDS
 init-project [project]          initialize a new project
 edit-inventory [project]        edit/show inventory file (hosts/groups)
 edit-playbook [project]         edit/show playbook (roles for each host)
 show-defaults [project] [role]  show all variables and their default values
-edit-group [project] [group]    edit variables for a group of hosts (default 'all')
 edit-requirements [project]     edit ansible requirements/collections
 edit-cfg [project]              edit ansible configuration (ansible.cfg)
-
-# HOST-LEVEL COMMANDS
+help-tags [project]             show the list of ansible tags and their descriptions
 init-host [project] [host]      add a new host to an existing project
 check [project] [host]          simulate deployment, report what would be changed
 deploy [project] [host]         deploy a project's main playbook (apply configuration/roles)
 edit-host [project] [host]      edit host configuration (host_vars)
 edit-vault [project] [host]     edit encrypted (vault) host configuration
+edit-group [project] [group]    edit variables for a group of hosts (default 'all')
 fetch-backups [project] [host]  fetch backups from a host to the local backups/ directory
-upgrade [project] [host]        upgrade collections to latest versions
 shell [project] [host]          open an interactive shell on a host
 logs [project] [host]           view system log on a host
 ls                              list files in the projects directory (accepts a path)
 help                            show this message
-
-# OTHER COMMANDS
-self-upgrade                     check for new releases/upgrade the xsrv script in-place
+upgrade [project]               upgrade roles/collections to latest versions
+self-upgrade                    check for new releases/upgrade the xsrv script in-place
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
-TAGS               comma-separated list of ansible tags (eg. TAGS=common,monitoring xsrv deploy)
+TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
 EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
 

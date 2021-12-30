@@ -131,12 +131,9 @@
 
 ##### SERVICE #####
 
-- name: enable jellyfin service
-  service: name=jellyfin state=started enabled=yes
-  when: jellyfin_enable_service|bool
-  tags: services
-
-- name: disable jellyfin service
-  service: name=jellyfin state=stopped enabled=no
-  when: not jellyfin_enable_service|bool
+- name: start/stop/enable/disable jellyfin service
+  service:
+    name: jellyfin
+    state: "{{ 'started' if jellyfin_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if jellyfin_enable_service else 'no' }}"
   tags: services

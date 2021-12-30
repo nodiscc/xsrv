@@ -1,3 +1,6 @@
+# @tag apache - setup the apache web server
+# @tag ssl - setup SSL certificates and configuration
+
 galaxy_info:
   role_name: apache
   author: "nodiscc <nodiscc@gmail.com>"

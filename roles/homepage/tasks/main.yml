@@ -9,7 +9,10 @@
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags: homepage
+  tags:
+    - apache
+    - ssl
+    - homepage
   when: homepage_https_mode == 'selfsigned'
 
 - include: apache.yml

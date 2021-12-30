@@ -1,3 +1,5 @@
+# @tag transmission - setup transmission bittorrent client
+
 galaxy_info:
   role_name: transmission
   author: "nodiscc <nodiscc@gmail.com>"

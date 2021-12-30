@@ -1,3 +1,5 @@
+# @tag tt_rss - setup tt-rss feed reader
+
 galaxy_info:
   role_name: tt_rss
   author: "nodiscc <nodiscc@gmail.com>"

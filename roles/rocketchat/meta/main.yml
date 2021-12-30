@@ -1,3 +1,5 @@
+# @tag rocketchat - setup rocketchat communication platforl
+
 galaxy_info:
   role_name: rocketchat
   author: "nodiscc <nodiscc@gmail.com>"

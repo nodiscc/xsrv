@@ -1,3 +1,22 @@
+# @tag common - setup base system
+# @tag apt - setup APT package management
+# @tag checks - check that variables are correctly defined
+# @tag datetime - setup date/time configuration
+# @tag dns - setup DNS resolution
+# @tag fail2ban - setup fail2ban intrusion prevention system
+# @tag firewall - setup firewall
+# @tag firewalld - setup firewall
+# @tag hostname - setup hostname
+# @tag hosts - setup /etc/hosts entries
+# @tag packages - additional package istallation/removal
+# @tag sysctl - setup sysctl kernel configuration
+# @tag users - setup users and groups
+# @tags ssh - setup SSH server
+# @tags ssh-authorized-keys - setup ssh authorized keys
+# @tags mail - setup outgoing system mail
+# @tags msmtp - setup outgoing system mail
+# @tag services - start/stop/enable/disable services
+
 galaxy_info:
   role_name: common
   author: "nodiscc <nodiscc@gmail.com>"

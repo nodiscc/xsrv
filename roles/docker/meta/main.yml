@@ -1,3 +1,5 @@
+# @tag docker - setup docker engine
+
 galaxy_info:
   role_name: docker
   author: "geerlingguy, nodiscc <nodiscc@gmail.com>"

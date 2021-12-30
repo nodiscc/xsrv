@@ -1,3 +1,6 @@
+# @tag valheim_server - setup valheim multiplayer server
+# @tag steamcmd - setup steamcmd steam client
+
 galaxy_info:
   role_name: valheim_server
   author: "nodiscc <nodiscc@gmail.com>"

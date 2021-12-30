@@ -25,6 +25,7 @@
       - php-apcu
       - php
       - php-fpm
+  tags: ssl
 
 - name: remove mod-php (replaced with php-fpm)
   apt:
@@ -56,6 +57,7 @@
   notify:
     - reload apache
     - restart php-fpm
+  tags: ssl
 
 - name: disable unnecessary apache modules
   command: a2dismod {{ item }}
@@ -83,6 +85,7 @@
     - 'proxy_fcgi'
     - 'http2'
   notify: restart apache
+  tags: ssl
 
 - name: enable apache configuration snippets
   command: a2enconf {{ item }}
@@ -95,6 +98,7 @@
     - 'mod-md'
     - 'php7.4-fpm'
   notify: reload apache
+  tags: ssl
 
 - include: apache-mod-evasive.yml
 
@@ -123,6 +127,7 @@
     - /var/www/html/index.html
     - /etc/php/7.4/apache2/conf.d/30-hide-header.ini
   notify: reload apache
+  tags: ssl
 
 ##### SERVICE #####
 

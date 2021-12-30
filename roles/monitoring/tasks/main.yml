@@ -71,7 +71,6 @@
     - netdata
     - firewall
 
-
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
 - include: utils-netdata-test-notifications.yml

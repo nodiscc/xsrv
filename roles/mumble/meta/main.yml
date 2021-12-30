@@ -1,3 +1,5 @@
+# @tag mumble - setup mumble voip server
+
 galaxy_info:
   role_name: mumble
   author: "nodiscc <nodiscc@gmail.com>"

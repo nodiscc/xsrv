@@ -179,8 +179,7 @@
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
     - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
   no_log: "{{ item.no_log | default(False) }}"
-  tags: nextcloud_config_php
-
+  tags: nextcloud-config
 
 # trashbin_retention_obligation:
 #   auto: keep for 30 days, then delete IF space needed

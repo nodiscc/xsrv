@@ -12,7 +12,6 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-
 - name: setup valheim server firewalld rules
   firewalld:
     zone: "{{ item.zone }}"

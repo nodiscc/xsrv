@@ -1,3 +1,7 @@
+# @tag nextcloud - setup nextcloud file sharing/collaboration platform
+# @tag nextcloud-applications - setup nextcloud applications
+# @tag nextcloud-config - setup main nextcloud configuration settings
+
 galaxy_info:
   role_name: nextcloud
   author: "nodiscc <nodiscc@gmail.com>"

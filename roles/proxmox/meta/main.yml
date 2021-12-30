@@ -1,3 +1,5 @@
+# @tag proxmox - setup proxmox hypervisor
+
 galaxy_info:
   role_name: proxmox
   author: "nodiscc <nodiscc@gmail.com>"

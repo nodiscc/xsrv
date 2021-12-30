@@ -21,7 +21,10 @@
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags: graylog
+  tags:
+    - apache
+    - ssl
+    - graylog
   when: graylog_https_mode == 'selfsigned'
 
 - include: apache.yml

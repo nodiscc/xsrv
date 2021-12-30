@@ -45,16 +45,9 @@
 
 ##### SERVICE #####
 
-- name: enable transmission-daemon service
+- name: start/stop/enable/disable transmission-daemon service
   service:
     name: transmission-daemon
-    state: started
-    enabled: yes
-  when: transmission_enable_service
-
-- name: disable transmission-daemon service
-  service:
-    name: transmission-daemon
-    state: stopped
-    enabled: no
-  when: not transmission_enable_service
+    state: "{{ 'started' if transmission_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if transmission_enable_service else 'no' }}"
+  tags: services

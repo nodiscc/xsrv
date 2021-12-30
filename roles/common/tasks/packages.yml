@@ -1,19 +1,11 @@
----
-
-#### MINIMIZE INSTALLED SOFTWARE #####
-
-# remove rpcbind/nfs-common since we are not an NFS server
-# remove exim4-base since we use a smarthost
-- name: remove unwanted packages from base installation
+- name: remove unwanted packages
   apt:
     state: absent
     package:
       - snapd
-      # - rpcbind
-      # - nfs-common
-      # - exim4-base
-
-##### ANSIBLE REQUIREMENTS #####
+      # - rpcbind # not an NFS server
+      # - nfs-common # not an NFS server
+      # - exim4-base # use a smarthost/msmtp
 
 - name: install ansible modules requirements
   apt:
@@ -28,11 +20,7 @@
       - unzip # unarchive module
       - zip # unarchive module
 
-
-##### EXTRA PACKAGES/UTILITIES #####
-
-# nice to have in interactive ssh troublehooting sessions
-- name: install interactive command-line utilities
+- name: install additional packages
   apt:
     state: present
     update_cache: yes

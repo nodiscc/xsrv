@@ -1,3 +1,5 @@
+# @tag gotty - setup gotty web terminal
+
 galaxy_info:
   role_name: gotty
   author: "nodiscc <nodiscc@gmail.com>"

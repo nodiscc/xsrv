@@ -1,40 +1,26 @@
 - include: checks.yml
   tags:
-    - valheim
-    - valheim-server
     - valheim_server
-    - steam
     - steamcmd
     - checks
 
 - include: steam.yml
   become: yes
   tags:
-    - valheim
-    - valheim-server
     - valheim_server
-    - steam
     - steamcmd
 
 - include: valheim-server.yml
   become: yes
-  tags:
-    - valheim
-    - valheim-server
-    - valheim_server
+  tags: valheim_server
 
 - include: fact.yml
   become: yes
-  tags:
-    - valheim
-    - valheim-server
-    - valheim_server
+  tags: valheim_server
 
 - include: firewalld.yml
   become: yes
   tags:
-    - valheim
-    - valheim-server
     - valheim_server
     - firewall
   when:
@@ -43,7 +29,4 @@
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
-  tags:
-    - valheim
-    - valheim-server
-    - valheim_server
+  tags: valheim_server

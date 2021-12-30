@@ -176,16 +176,9 @@
 
 ##### SERVICE #####
 
-- name: disable gitea now
+- name: start/stop/enable/disable gitea service
   service:
     name: gitea
-    state: stopped
-    enabled: no
-  when: not gitea_enable_service
-
-- name: enable gitea now
-  service:
-    name: gitea
-    state: started
-    enabled: yes
-  when: gitea_enable_service
+    state: "{{ 'started' if gitea_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if gitea_enable_service else 'no' }}"
+  tags: services

@@ -1,3 +1,5 @@
+# @tag homepage - setup simple webserevr homepage
+
 galaxy_info:
   role_name: homepage
   author: "nodiscc <nodiscc@gmail.com>"

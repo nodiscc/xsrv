@@ -1,3 +1,5 @@
+# @tag postgresql - setup postgresql database server
+
 galaxy_info:
   role_name: postgresql
   author: "nodiscc <nodiscc@gmail.com>"

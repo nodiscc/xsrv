@@ -1,3 +1,6 @@
+# @tag samba - setup samba file server
+# @tag samba-config - setup main samba configuration
+
 galaxy_info:
   role_name: samba
   author: "nodiscc <nodiscc@gmail.com>"

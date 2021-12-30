@@ -29,4 +29,4 @@
     name: valheim-server
     state: "{{ 'started' if valheim_enable_service else 'stopped' }}"
     enabled: "{{ 'yes' if valheim_enable_service else 'no' }}"
-  tags: valheim-service
+  tags: services

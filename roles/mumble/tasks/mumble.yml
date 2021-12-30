@@ -52,16 +52,9 @@
 
 ##### SERVICE #####
 
-- name: enable mumble service
+- name: start/stop/enable/disable mumble-server service
   service:
     name: mumble-server
-    state: started
-    enabled: yes
-  when: mumble_enable_service|bool
-
-- name: disable mumble service
-  service:
-    name: mumble-server
-    state: stopped
-    enabled: no
-  when: not mumble_enable_service|bool
+    state: "{{ 'started' if mumble_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if mumble_enable_service else 'no' }}"
+  tags: services

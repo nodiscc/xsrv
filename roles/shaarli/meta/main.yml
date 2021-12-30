@@ -1,3 +1,6 @@
+# @tag shaarli - setup shaarli bookmark service
+# @tag shaarli-config - setup main shaarli configuration
+
 galaxy_info:
   role_name: shaarli
   author: "nodiscc <nodiscc@gmail.com>"

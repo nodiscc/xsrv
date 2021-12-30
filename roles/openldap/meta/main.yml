@@ -1,3 +1,7 @@
+# @tag openldap - setup LDAP server
+# @tag ldap-account-manager - setup LDAP account manager
+# @tag self-service-password - setup LDAP self-service password
+
 galaxy_info:
   role_name: openldap
   author: "nodiscc <nodiscc@gmail.com>"

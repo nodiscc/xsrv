@@ -77,10 +77,12 @@
         mode: 0644
       notify: update ansible facts
       ignore_errors: "{{ ansible_check_mode }}" # root_ssh_key.public_key is never set in check mode, always returns empty/changed
+  tags: rsnapshot-ssh-key
 
 # reload ansible local facts
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+  tags: rsnapshot-ssh-key
 
 - name: copy root public SSH key to the controller
   fetch:
@@ -95,6 +97,7 @@
       Please authorize this key on remote machines backup user accounts:
       {{ ansible_local.rsnapshot.ssh.public_key }}
   ignore_errors: "{{ ansible_check_mode }}"
+  tags: rsnapshot-ssh-key
 
 ##### SCHEDULING #####
 

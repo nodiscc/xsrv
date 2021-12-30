@@ -9,7 +9,10 @@
 
 - include: ssl-selfsigned.yml
   become: yes
-  tags: shaarli
+  tags:
+    - apache
+    - ssl
+    - shaarli
   when: shaarli_https_mode == 'selfsigned'
 
 - include: apache.yml

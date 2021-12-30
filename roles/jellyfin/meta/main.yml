@@ -1,3 +1,5 @@
+# @tag jellyfin - setup jellyfin media server
+
 galaxy_info:
   role_name: jellyfin
   author: "nodiscc <nodiscc@gmail.com>"

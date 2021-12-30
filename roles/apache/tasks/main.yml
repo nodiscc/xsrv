@@ -1,28 +1,23 @@
 - include: checks.yml
   tags:
     - apache
-    - lamp
     - checks
 
 - include: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
-    - lamp
-    - certificates
     - ssl
 
 - include: apache.yml
   become: yes
   tags:
     - apache
-    - lamp
 
 - include: fail2ban.yml
   become: yes
   tags:
     - apache
-    - lamp
     - fail2ban
   when:
     - "'nodiscc.xsrv.common' in role_name"
@@ -32,7 +27,6 @@
   become: yes
   tags:
     - apache
-    - lamp
     - monitoring
   when:
     - '"nodiscc.xsrv.monitoring" in role_names'

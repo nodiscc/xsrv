@@ -87,16 +87,9 @@
 
 ##### SERVICE #####
 
-- name: enable docker service
+- name: start/stop/enable/disable docker service
   service:
     name: docker
-    state: started
-    enabled: yes
-  when: docker_enable_service|bool
-
-- name: disable docker service
-  service:
-    name: docker
-    state: stopped
-    enabled: no
-  when: not docker_enable_service|bool
+    state: "{{ 'started' if docker_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if docker_enable_service else 'no' }}"
+  tags: services

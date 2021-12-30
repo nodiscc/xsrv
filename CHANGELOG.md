@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: mail/msmtp: allow disabling TLS (`msmtp_tls_enabled`)
 - monitoring: netdata: allow automated testing of netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
 - docker: add a nightly cleanup of unused docker images/containers/networks/build cache, allow disabling it through `docker_prune_nighlty: no`
+- xsrv: add `xsrv help-tags` subcommand (show the list of ansible tags in the play and their descriptions)
 
 
 **Removed:**
@@ -36,11 +37,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: firewall: remove ability to filter outgoing traffic, will be re-added later
 - common/apache/nextcloud: drop compatibility with Debian 10
 - mariadb: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- remove ansible tags `certificates lamp valheim valheim-server`
 
 **Changed:**
-- manual firewall configuration is no longer required in the default setup/when only `xsrv` roles are enabled
-- let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
-- refactor/performance: only flush handlers once, unless required otherwise
+- common/firewall/all roles: manual firewall configuration is no longer required in the default setup/when only `xsrv` roles are enabled, let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
+- all roles: refactor/performance: only flush handlers once, unless required otherwise, refactor service start/stop/enable/disable tasks
 - common: fail2ban: ban offenders on all ports
 - proxmox: make role compatible with Debian 11
 - apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
@@ -57,7 +58,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: add [Nextcloud Bookmarks](https://apps.nextcloud.com/apps/bookmarks) to the default list of apps (default disabled)
 - xsrv/tools/doc: don't install python3-cryptography from pip, install from OS packages
 - gitea/nextcloud/tt_rss: remove hard dependency on postgresql role
-
+- doc: update documentation, document all ansible tags, refactor command-line usage doc
+- tags: add `ssl` tag to all ssl-related tasks, add `rsnapshot-ssh-key` tag to all ssh-key-related tasks
 
 **Fixed:**
 - proxmox: fix missing ansible fact file template
@@ -66,7 +68,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh: fix creation of SFTP-only accounts
 - common: ssh: ssh: fix root ssh logins when `ssh_permit_root_login: without-password/prohibit-password/forced-commands-only`
 - monitoring: netdata: fix chart values incorrectly increased by 1 in debsecan module
-
 
 
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17
