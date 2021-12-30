@@ -1,6 +1,4 @@
 ##### PROXMOX HYPERVISOR #####
-# allow automatic security upgrades of proxmox packages
-proxmox_auto_upgrade: yes
 # firewall zones for the proxmox Web UI service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 proxmox_web_firewalld_zones:

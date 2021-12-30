@@ -44,6 +44,18 @@ os_security_kernel_enable_core_dump: no
 setup_apt: yes
 # yes/no: enable 'contrib' and 'non-free' software sections in debian APT repositories
 apt_enable_nonfree: no
+# automatic upgrades: allow unattended upgrades from the following sources (see 50unattended-upgrades.j2)
+# these settings have no effect if corresponding repositories are not enabled/configured
+apt_unattended_upgrades_origins_patterns:
+  - "origin=Debian,codename=${distro_codename},label=Debian" # Debian stable
+  - "origin=Debian,codename=${distro_codename}-updates" # Debian stable point release
+  - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
+  - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
+  - "origin=Debian,codename=${distro_codename},label=Debian Backports" # Debian backports
+  - "origin=packagecloud.io/netdata/netdata,label=netdata" # nodiscc.xsrv.monitoring_netdata
+  - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
+  - "o=Proxmox,site=download.proxmox.com" # nodiscc.xsrv.proxmox
+  - "o=Docker,site=download.docker.com" # nodiscc.xsrv.docker
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service

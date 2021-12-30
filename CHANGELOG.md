@@ -8,13 +8,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - UNRELEASED
 
 **Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - `TAGS=debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html). Debian 10 compatibility will not be maintained after this release.
-- remove `firehol_*` variables from your configuration (`firehol_networks, firehol_routers, firehol_docker_swarm_compat, firehol_custom_services`).
-- if you had custom firewall rules in place please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74)). Roles from the `nodiscc.xsrv` collection will automatically insert their own rules, if the `common/firewalld` role is deployed.
-- if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
+- common/firewall: remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if the `common/firewalld` role is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74))
+- mariadb: if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
+- jellyfin, proxmox, docker: remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48) variable/list.
+- (optional) `xsrv check` to simulate changes
+- `xsrv deploy` to apply changes
 
 **Added:**
 - common: add [firewalld](https://firewalld.org/) firewall management tool
+- common: apt: allow configuration of allowed origins for unattended-upgrades
 
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
@@ -27,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
 - refactor/performance: only flush handlers once, unless required otherwise
 - apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
+- remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of allowed origins
 
 **Fixed:**
 - proxmox: fix missing ansible fact file template

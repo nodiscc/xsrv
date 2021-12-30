@@ -6,7 +6,11 @@ This role will install/configure a basic Debian-based server:
 - DNS resolution (`/etc/resolv.conf`)
 - hosts file (`/etc/hosts`)
 - sysctl/kernel settings: networking, swap/memory management, security
-- APT package management, automatic daily security updates
+- **APT package manager** configuration:
+  - Debian stable + Debian security + Debian backports [repositories](https://wiki.debian.org/SourcesList)
+  - Automatic security updates ([`unattended-upgrades`](https://wiki.debian.org/UnattendedUpgrades))
+  - Preserve manually changed [`conffiles`](https://www.debian.org/doc/manuals/maint-guide/dother.en.html#conffiles) during upgrades
+  - Don't install [`recommended`](https://www.debian.org/doc/debian-policy/ch-relationships.html#binary-dependencies-depends-recommends-suggests-enhances-pre-depends) packages
 - NTP date/time synchronization
 - user accounts, resources, PAM restrictions
 - SSH server

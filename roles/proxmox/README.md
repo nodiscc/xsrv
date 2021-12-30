@@ -2,10 +2,8 @@
 
 This role will perform basic setup steps for a [Proxmox](https://www.proxmox.com/en/proxmox-ve) hypervisor:
 - setup `pve-no-subscription` APT repositories
+- protect from bruteforce on the login form using `fail2ban` (if `nodiscc.xsrv.common` role is deployed)
 
-If the `nodiscc.xsrv.common` role is enabled:
-- protect the login form from brutefore using `fail2ban`
-- automatic security upgrades for proxmox packages
 
 [![](https://www.proxmox.com/images/proxmox/screenshots/Proxmox-VE-6-1-Cluster-Summary-small.png)](https://www.proxmox.com/images/proxmox/screenshots/Proxmox-VE-6-1-Cluster-Summary.png)
 

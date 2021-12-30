@@ -27,19 +27,9 @@ Unattended-Upgrade::Origins-Pattern {
         // archives (e.g. from testing to stable and later oldstable).
         // Software will be the latest available for the named release,
         // but the Debian release itself will not be automatically upgraded.
-        "origin=Debian,codename=${distro_codename}-updates";
-//      "origin=Debian,codename=${distro_codename}-proposed-updates";
-        "origin=Debian Backports,codename=${distro_codename}-backports";
-        "origin=Debian,codename=${distro_codename},label=Debian";
-        "origin=Debian,codename=${distro_codename},label=Debian-Security";
-{% if 'nodiscc.xsrv.monitoring' in role_names %}        "origin=packagecloud.io/netdata/netdata,label=netdata";
-{% endif %}
-{% if 'nodiscc.xsrv.jellyfin' in role_names and jellyfin_auto_upgrade %}        "origin=Jellyfin,site=repo.jellyfin.org";
-{% endif %}
-{% if 'nodiscc.xsrv.proxmox' in role_names and proxmox_auto_upgrade %}        "o=Proxmox,site=download.proxmox.com";
-{% endif %}
-{% if 'nodiscc.xsrv.docker' in role_names and docker_auto_upgrade %}        "o=Docker,site=download.docker.com";
-{% endif %}
+{% for origin in apt_unattended_upgrades_origins_patterns %}
+        "{{ origin }}";
+{% endfor %}
 
         // Archive or Suite based matching:
         // Note that this will silently match a different release after
