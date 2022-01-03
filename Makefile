@@ -32,7 +32,7 @@ install_collection: venv build_collection
 	source .venv/bin/activate && \
 	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
 
-.PHONY: ansible_syntax_check # ansible playbook syntax check
+.PHONY: test_ansible_syntax_check # ansible playbook syntax check
 test_ansible_syntax_check: venv install_collection
 	source .venv/bin/activate && \
 	ANSIBLE_COLLECTIONS_PATHS="./" ansible-playbook --syntax-check --inventory tests/inventory.yml test.yml
