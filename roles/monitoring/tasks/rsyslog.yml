@@ -43,6 +43,7 @@
     - services-imfile
     - discard
     - singlefile
+    - netdata
 
 # rsyslog is configured to send all messages to /var/log/syslog in singlefile.conf
 # if a '*.*' filter is present in main rsyslog.conf, messages will be logged twice
