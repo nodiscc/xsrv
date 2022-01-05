@@ -28,9 +28,10 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-- name: install unattended-upgrades
+- name: install aptitude and unattended-upgrades
   apt:
     state: present
     package:
+      - aptitude
       - unattended-upgrades
       - apt-listchanges
