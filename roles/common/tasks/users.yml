@@ -47,6 +47,7 @@
     user: "{{ item.0.name }}"
     key: "{{ lookup('file', item.1) }}"
   loop: "{{ q('subelements', linux_users, 'ssh_authorized_keys', {'skip_missing': True}) }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: allow users to run specific commands as root without password
   template:
