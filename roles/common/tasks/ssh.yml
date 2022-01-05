@@ -20,6 +20,16 @@
     groups: "ssh"
     name: "{{ ansible_user }}"
 
+- name: create sftponly group (members of this group are only to use SFTP, not SSH)
+  group:
+    name: sftponly
+
+- name: create /var/lib/sftp (base directory for sftponly accounts homes)
+  file:
+    path: /var/lib/sftp
+    state: directory
+    mode: 0755
+
 - name: copy sshd configuration
   template:
     src: etc_ssh_sshd_config.j2

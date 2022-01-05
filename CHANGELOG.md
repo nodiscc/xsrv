@@ -38,6 +38,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - proxmox: fix missing ansible fact file template
 - fix `check` mode compatibility issues
+- common: ssh: fix creation of SFTP-only accounts
+
 
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17
 
