@@ -11,6 +11,7 @@
     state: present
     key: "{{ item }}"
   with_file: "{{ ssh_authorized_keys }}"
+  tags: ssh-authorized-keys
 
 # SSH configuration only allows users in the ssh group
 - name: ensure the ansible user belongs to the ssh group
