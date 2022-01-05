@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
 - remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of `apt_unattended_upgrades_origins_patterns`
 - common: apt: explicitly install aptitude
+- common: fail2ban: increase maximum IP/attempts count retention to 1 year
 
 **Fixed:**
 - proxmox: fix missing ansible fact file template
