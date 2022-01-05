@@ -200,7 +200,7 @@ linux_users_crontab_allow: ['root']
 setup_msmtp: no
 # following msmtp_* variables are required is setup_msmtp: yes
 # mail relay (SMTP server) address/port/username/password
-msmtp_host: "CHANGEME"
+msmtp_host: "smtp.CHANGEME.org"
 msmtp_port: 587
 msmtp_username: "CHANGEME"
 msmtp_password: "CHANGEME"
