@@ -6,7 +6,7 @@
 - name: update /etc/hosts with new hostname
   lineinfile:
     dest: '/etc/hosts'
-    line: '{{ item }}	{{ inventory_hostname }}' # noqa 203
+    line: '{{ item }}	{{ inventory_hostname }}' # noqa no-tabs
     regexp: '^{{ item }}'
     owner: root
     group: root
