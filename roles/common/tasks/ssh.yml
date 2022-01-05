@@ -57,6 +57,15 @@
   notify: restart ssh
   when: sshd_register_moduli.stdout
 
+# lynis: FILE-7524|Incorrect permissions for file /root/.ssh
+- name: ensure /root/.ssh is mode 0700
+  file:
+    state: directory
+    path: /root/.ssh
+    mode: 0700
+    owner: root
+    group: root
+
 # apply ssh configuration
 - name: apply configuration (flush handlers)
   meta: flush_handlers

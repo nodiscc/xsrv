@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: apt: allow configuration of allowed origins for unattended-upgrades
 - monitoring: netdata: allow disabling specific plugins (`netdata_disabled_plugins`), disable `ebpf` plugin by default
 - monitoring: lynis: enable lynis installation and daily reports by default
+- common: ssh: fix lynis warning FILE-7524 (ensure `/root/.ssh` is mode 0700)
 
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
