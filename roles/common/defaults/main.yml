@@ -175,8 +175,15 @@ fail2ban_destemail: "root@localhost"
 #      password: "{{ linux_users_remotebackup_password }}"
 #      groups: [ "ssh", "sudo" ]
 #      comment: "limited user account for remote backups"
-#      ssh_authorized_keys: []
+#      ssh_authorized_keys: ['public_keys/root@backup.EXAMPLE.org.pub']
+#      home: "/home/remotebackup"
 #      sudo_nopasswd_commands: ['/usr/bin/rsync']
+#    - name: "my-sftp-account"
+#      password: "{{ linux_users_mysftpaccount_password }}"
+#      home: "/var/lib/sftp/my-sftp-account"
+#      comment: "SFTP-only account"
+#      ssh_authorized_keys: [ "public_keys/gitlab-runner@my.EXAMPLE.org.pub", "public_keys/client1@EXAMPLE.org.pub" ]
+#      groups: [ 'ssh', 'sftponly' ]
 #    - name: "{{ ansible_user }}"
 #      groups: adm
 #      append: yes
