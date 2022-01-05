@@ -22,6 +22,10 @@
    web files owner = root
    web files group = netdata
 
+[plugins]
+{% for plugin in netdata_disabled_plugins %}
+   {{ plugin }} = no
+{% endfor %}
 
 {% if not netdata_self_monitoring_enabled %}
 ##### DISABLE NETDATA SELF-MONITORING CHARTS #####

@@ -31,6 +31,9 @@ netdata_self_monitoring_enabled: no
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
 netdata_disable_access_log: yes
+# netdata plugins to disable
+netdata_disabled_plugins:
+  - ebpf
 # firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 netdata_firewalld_zones:
