@@ -1,7 +1,7 @@
 # Default Fail2ban configuration values
 
 [DEFAULT]
-# list of IPs not to ban
+# list of IPs that should never be banned
 ignoreip  = 127.0.0.1 {{ ' '.join(fail2ban_ignoreip) }}
 # time interval (in seconds or time abbreviation format) before the current time where failures will count towards a ban
 findtime  = {{ fail2ban_default_findtime }}
