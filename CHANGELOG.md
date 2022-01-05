@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: add [firewalld](https://firewalld.org/) firewall management tool
 - common: apt: allow configuration of allowed origins for unattended-upgrades
 - monitoring: netdata: allow disabling specific plugins (`netdata_disabled_plugins`), disable `ebpf` plugin by default
+- monitoring: lynis: enable lynis installation and daily reports by default
 
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables

@@ -133,7 +133,7 @@ setup_monitoring_cli_utils: yes
 
 ##### LYNIS SECURITY AUDIT #####
 # setup lynis security audit tool (yes/no)
-setup_lynis: no
+setup_lynis: yes
 # list of strings to extract from lynis reports and forward by mail
 lynis_report_regex: 'warning|suggestion|manual'
 # list of lynis tests to ignore/skip (https://cisofy.com/lynis/controls/)
