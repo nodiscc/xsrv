@@ -68,6 +68,7 @@ setup_datetime: yes
 setup_ssh: yes
 # List of public SSH key files to authorize on the server for the ansible user
 # Example: ['public_keys/john.pub', 'public_keys/jane.pub']
+# Removing a key here does not remove it on the server!
 ssh_authorized_keys: []
 # a list of public keys that are never accepted by the ssh server
 ssh_server_revoked_keys: []
