@@ -128,7 +128,7 @@ X11Forwarding no
 X11UseLocalhost yes
 
 # Only allow login for users from authorized groups
-{% if ssh_permit_root_login == 'yes' %}
+{% if ssh_permit_root_login in ['yes', 'without-password', 'prohibit-password', 'forced-commands-only'] %}
 AllowGroups ssh sftponly git root
 {% else %}
 AllowGroups ssh sftponly git
@@ -162,7 +162,7 @@ PrintLastLog yes
 # SFTP configuration
 Subsystem sftp internal-sftp -l {{ ssh_sftp_loglevel }} -f LOCAL6
 
-# User/group-sepcific configuration
+# User/group-specific configuration
 # These lines must appear at the *end* of sshd_config
 
 # Restrict members of the 'sftponly' group to SFTP subsystem,
