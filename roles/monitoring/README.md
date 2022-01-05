@@ -34,6 +34,15 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 Read [netdata documentation](https://docs.netdata.cloud/) for more info.
 
+**Test netdata e-mail notifications:**
+
+```bash
+# using https://xsrv.readthedocs.io/en/
+TAGS=utils-netdata-test-notifications xsrv deploy [project] [group/host]
+# using ansible-playbook
+ansible-playbook playbook.yml --tags=utils-netdata-test-notifications
+```
+
 ### Logs
 
 Navigate/search/filter aggregated system logs (using [lnav](https://lnav.org/)): `ssh -t user@my.example.org sudo lnav /var/log/syslog`. Some useful internal lnav [commands](https://lnav.readthedocs.io/en/latest/):

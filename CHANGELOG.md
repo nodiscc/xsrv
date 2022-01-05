@@ -26,6 +26,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh: fix lynis warning FILE-7524 (ensure `/root/.ssh` is mode 0700)
 - common: mail/msmtp: allow disabling SMTP authentication/LOGIN (`msmtp_auth_enabled`)
 - common: mail/msmtp: allow disabling TLS (`msmtp_tls_enabled`)
+- monitoring: netdata: allow automated testing of netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
+
 
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables

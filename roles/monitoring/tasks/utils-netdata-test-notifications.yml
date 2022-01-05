@@ -1,0 +1,13 @@
+- name: install acl package # required to use "become" as a non-root user
+  become: yes
+  apt:
+    package: acl
+    state: present
+
+- name: send test netdata notification
+  become: yes
+  become_user: netdata
+  command: /usr/libexec/netdata/plugins.d/alarm-notify.sh test
+  environment:
+    NETDATA_ALARM_NOTIFY_DEBUG: 1
+  changed_when: True
