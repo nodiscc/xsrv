@@ -44,6 +44,7 @@
       - rsync # fast/powerful file transfer utility
       - locate # maintain and query an index of a directory tree
       - man # view manual pages
+      - at # task scheduler - required for ansible at module/one-shot job scheduling
       #- autojump # jump to frequently used directories
       #- secure-delete # securely erase data
       #- pwgen # generate memorable random passwords
