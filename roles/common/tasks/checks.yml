@@ -17,7 +17,7 @@
       - setup_haveged == setup_haveged|bool
       - setup_msmtp == setup_msmtp|bool
       - setup_ssh == setup_ssh|bool
-      - ssh_permit_root_login in ['yes', 'no, 'without-password', 'prohibit-password', 'forced-commands-only']
+      - ssh_permit_root_login in ['yes', 'no', 'without-password', 'prohibit-password', 'forced-commands-only']
       - setup_datetime == setup_datetime|bool
       - setup_sysctl == setup_sysctl|bool
       - ssh_allow_tcp_forwarding in ['no', 'local', 'remote', 'all']
