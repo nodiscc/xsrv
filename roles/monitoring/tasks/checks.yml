@@ -20,6 +20,7 @@
       - netdata_min_running_docker_containers == netdata_min_running_docker_containers|int
       - netdata_port_checks|type_debug == "list"
       - netdata_process_checks|type_debug == "list"
+      - netdata_disabled_plugins|type_debug == "list"
       - netdata_self_monitoring_enabled == netdata_self_monitoring_enabled|bool
       - netdata_update_every == netdata_update_every|int
       - rsyslog_monitor_netdata == rsyslog_monitor_netdata|bool
