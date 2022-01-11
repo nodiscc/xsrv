@@ -9,7 +9,7 @@
   git:
     dest: "/root/netdata-debsecan"
     repo: "https://gitlab.com/nodiscc/netdata-debsecan"
-    version: "1.0.2"
+    version: "1.0.3"
     accept_hostkey: yes
     force: yes # discard modified files
 
