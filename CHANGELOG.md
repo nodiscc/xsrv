@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: netdata: allow disabling specific plugins (`netdata_disabled_plugins`), disable `ebpf` plugin by default
 - monitoring: lynis: enable lynis installation and daily reports by default
 - common: ssh: fix lynis warning FILE-7524 (ensure `/root/.ssh` is mode 0700)
+- common: mail/msmtp: allow disabling SMTP authentication/LOGIN (`msmtp_auth_enabled`)
+- common: mail/msmtp: allow disabling TLS (`msmtp_tls_enabled`)
 
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
@@ -42,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: apt: explicitly install aptitude
 - common: fail2ban: increase maximum IP/attempts count retention to 1 year
 - common: ssh: decrease SFTP logs verbosity to INFO by default
+- common: msmtp: make role compatible with Debian 10/11
 
 **Fixed:**
 - proxmox: fix missing ansible fact file template

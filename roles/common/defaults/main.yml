@@ -208,6 +208,10 @@ msmtp_password: "CHANGEME"
 msmtp_admin_email: "CHANGEME"
 # (auto/admin@CHANGEME.org) sender address for outgoing mail
 msmtp_from: 'auto'
+# enable SMTP authentication (LOGIN) (yes/no)
+msmtp_auth_enabled: yes
+# yes/no: enable STARTTLS connection to the SMTP server
+msmtp_tls_enabled: yes
 # yes/no: use STARTTLS
 msmtp_starttls: yes
 # (optional) TLS certificate fingerprint of the SMTP server. use this to accept a self-signed certificate. get the server's certificate fingerprint with openssl s_client -connect $smtp_host:587 -starttls smtp < /dev/null 2>/dev/null |openssl x509 -fingerprint -noout

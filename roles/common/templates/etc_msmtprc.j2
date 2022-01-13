@@ -13,22 +13,30 @@ port {{ msmtp_port }}
 host {{ msmtp_host }}
 
 {% if msmtp_from == 'auto' %}
-from %U@%H
+{% if (ansible_distribution == 'Debian' and ansible_distribution_release == 'buster') %}from %U@%H
+{% else %}auto_from on
+{% endif %}
 {% else %}
 from {{ msmtp_from }}
 {% endif %}
 
+{% if msmtp_auth_enabled %}
 # Enable authentication
 auth on
-
-# SMTP authentications username/password
+# Set SMTP username/password
 user {{ msmtp_username }}
 password {{ msmtp_password }}
+{% endif %}
 
 # Use TLS.
+{% if msmtp_tls_enabled %}
 tls on
-{% if msmtp_smtp_host_tls_fingerprint is defined %}tls_fingerprint {{ msmtp_smtp_host_tls_fingerprint }}{% endif %}
+{% if msmtp_smtp_host_tls_fingerprint is defined %}tls_fingerprint {{ msmtp_smtp_host_tls_fingerprint }}
+{% else %}tls_trust_file /etc/ssl/certs/ca-certificates.crt
+{% endif %}
 tls_starttls {{ 'on' if msmtp_starttls else 'off' }}
+{% endif %}
+
 
 # Syslog logging with facility LOG_MAIL instead of the default LOG_USER.
 syslog LOG_MAIL

@@ -36,12 +36,25 @@
     that:
       - msmtp_host is not search("CHANGEME")
       - msmtp_port == msmtp_port|int
-      - msmtp_username is not search("CHANGEME")
-      - msmtp_password is not search("CHANGEME")
+      - msmtp_auth_enabled == msmtp_auth_enabled|bool
+      - msmtp_tls_enabled == msmtp_tls_enabled|bool
       - msmtp_admin_email is not search("CHANGEME")
       - msmtp_from is string
       - msmtp_starttls == msmtp_starttls|bool
   when: setup_msmtp|bool
+  tags:
+    - mail
+    - msmtp
+
+- name: check that mandatory variables are correctly defined (msmtp authentication)
+  assert:
+    quiet: yes
+    that:
+      - msmtp_username is not search("CHANGEME")
+      - msmtp_password is not search("CHANGEME")
+  when:
+    - setup_msmtp|bool
+    - msmtp_auth_enabled|bool
   tags:
     - mail
     - msmtp

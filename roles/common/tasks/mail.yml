@@ -15,7 +15,7 @@
 
 ##### OUTGOING MAIL/SMARTHOST #####
 
-- name: install msmtp SMTP client/MTA (Ubuntu/Debian 9/11)
+- name: install msmtp SMTP client/MTA (Debian 9/11)
   apt:
     package:
       - msmtp
@@ -23,9 +23,9 @@
     state: present
   when:
     - setup_msmtp|bool
-    - ansible_distribution == 'Ubuntu' or (ansible_distribution == 'Debian' and not ansible_distribution_release == 'buster')
+    - ansible_distribution == 'Debian' and not ansible_distribution_release == 'buster'
 
-- name: install msmtp SMTP client/MTA (Debian 10)
+- name: install msmtp SMTP client/MTA (Debian 10 + backports)
   apt:
     package:
       - msmtp
@@ -40,9 +40,9 @@
   template:
     src: "etc_msmtprc.j2"
     dest: "/etc/msmtprc"
-    mode: 0640
+    mode: "{{ '0640' if (ansible_distribution == 'Debian' and ansible_distribution_release in ['buster', 'bullseye']) else '0644' }}"
     owner: root
-    group: msmtp
+    group: "{{ 'msmtp' if (ansible_distribution == 'Debian' and ansible_distribution_release in ['buster', 'bullseye']) else 'root' }}"
   when: setup_msmtp|bool
 
 - name: forward all root mail to msmtp_admin_email
