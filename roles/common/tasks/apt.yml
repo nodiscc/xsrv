@@ -15,6 +15,7 @@
     - { src: 'etc_apt_apt.conf.d_99no-overwrite-conffiles.j2', dest: '/etc/apt/apt.conf.d/99no-overwrite-conffiles' }
     - { src: 'etc_apt_apt.conf.d_99norecommends.j2', dest: '/etc/apt/apt.conf.d/99norecommends' }
     - { src: 'etc_apt_apt.conf.d_50unattended-upgrades.j2', dest: '/etc/apt/apt.conf.d/50unattended-upgrades' }
+    - { src: 'etc_apt_apt.conf.d_99-autoremove.j2', dest: '/etc/apt/apt.conf.d/99-autoremove' }
 
 - name: remove files from old versions of the role
   file:
