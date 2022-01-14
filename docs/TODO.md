@@ -2,6 +2,20 @@
 
 ### xsrv/xsrv
 
+- #671 - firewalld blocks traffic from docker containers - **`1.5.0`** `bug`
+- #670 - gitea: upgrade to v1.15.9 - **`1.5.0`** `easy,maintenance`
+- #669 - update ansible to 5.2.0 - **`1.5.0`** `easy,maintenance`
+- #668 - apache: allow defining custom ErrorDocuments - **`-`** `enhancement`
+- #654 - WIP add apt-listbugs - **`1.5.0`** `enhancement`
+- #653 - [WARNING]: Found variable using reserved name: hosts - **`1.5.0`** `bug,easy`
+- #652 - libvirt: allow setting up hooks to forward ports to VMs - **`-`** `enhancement`
+- #649 - WIP: xsrv: add help-tags subcommand (show the list of ansible tags in the play and their descriptions) - **`1.5.0`** `easy,enhancement`
+- #648 - graylog: setup authentication fro mongodb - **`-`** `easy,enhancement,security`
+- #647 - WIP tests/Makefile: add test_ansible_check_localhost target (run check mode against localhost) - **`-`** `enhancement,tools`
+- #646 - WIPautomate test VM setup - **`-`** `enhancement,tools`
+- #645 - WIP netdata: exclude /dev/ and /dev/shm from disk space metrics - **`-`** `configuration,enhancement,monitoring`
+- #644 - WIP split monitoring roles to `monitoring_rsyslog,netdata,lynis` - **`1.5.0`** `maintenance,performance`
+- #642 - mumble: LDAP user backend - **`-`** `enhancement`
 - #641 - common: implement manual reboot/shudown (utils-reboot/utils-shutdown ansible tags) - **`-`** `easy,enhancement,feature`
 - #640 - common: apt: enable purging data/configuration files by default - **`-`** `configuration,enhancement`
 - #639 - common: apt: enable autoremove by default - **`-`** `configuration,easy`
@@ -10,7 +24,6 @@
 - #636 - proxmox: aggregate proxmox  logs to syslog - **`-`** `configuration,easy,enhancement,monitoring`
 - #635 - firewalld: implement outbound traffic filtering - **`1.5.0`** `enhancement,security`
 - #634 - postgresql: add ability to run pgmetrics against the postgresql instance - **`1.5.0`** `easy,feature,monitoring,performance`
-- #632 - refactor integration between roles (part 2): - **`-`** `maintenance`
 - #628 - limit fact gathering inside roles to ansible_local facts (speed up setup: tasks) - **`-`** `enhancement,performance`
 - #627 - WIP implement molecule testing - **`1.5.0`** `enhancement,maintenance,tools`
 - #624 - update nextcloud to 23.0.0 - **`-`** `enhancement,maintenance`
@@ -25,7 +38,6 @@
 - #608 - monitroing: updating `netdata.conf` does not restart netdata automatically - **`1.5.0`** `bug,monitoring`
 - #605 - WIP xsrv: rewrite the main script with python - **`-`** `enhancement,maintenance`
 - #604 - use j2cli for init-playbook/init-host templating? - **`-`** `question`
-- #600 - WIP replace firehol with firewalld - **`1.5.0`** `enhancement,maintenance,security`
 - #599 - WIP: xsrv! ask for ansible_host/port during project initialization - **`-`** `enhancement`
 - #598 - CI/CD: automate checks for newer upstream versions of software - **`1.5.0`** `enhancement,tools`
 - #597 - WIP monitoring: netdata: implement streaming to/from other netdata nodes - **`1.5.0`** `feature,monitoring`
@@ -200,13 +212,11 @@
 - #229 - apache: add a config variable to log times taken to serve requests - **`-`** `enhancement,monitoring,performance`
 - #228 - apache: additional hardening measures - **`-`** `enhancement,security`
 - #226 - mysql: update root password for *all* root accounts - **`-`** `enhancement,security`
-- #224 - mysql: log MariaDB slow queries - **`-`** `enhancement,monitoring`
 - #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost - **`-`** `feature,security`
 - #221 - apache: add a simple public HTTP server/vhost option - **`1.5.0`** `easy,enhancement`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage - **`-`** `feature`
 - #218 - apache: implement modsecurity - **`-`** `feature,security`
 - #216 - xsrv: generate a local copy of the homepage/netdata custom dashboard - **`-`** `enhancement`
-- #214 - mysql: improve MySQL/Mariadb server hardening - **`-`** `enhancement,security`
 - #212 - apache: PHP OPCache tuning? - **`-`** `performance,question`
 - #208 - netdata: graph/alert on logwatch warnings - **`-`** `feature,monitoring,security`
 - #207 - netdata: make ping checks configurable - **`-`** `documentation,enhancement,monitoring`
@@ -318,9 +328,9 @@
 - #55 - Guacamole remote control gateway - **`-`** `feature`
 - #54 - bittorrent tracker - **`-`** `feature`
 - #53 - Web analytics - **`-`** `feature`
-- #52 - blogging engine/static site generator - **`-`** `feature`
-- #51 - Dokuwiki - **`-`** `feature,wontfix`
-- #49 - Caching HTTP proxy - **`-`** `feature`
+- #52 - blogging engine/static site generator? - **`-`** `feature`
+- #51 - dokuwiki role? - **`-`** `feature,wontfix`
+- #49 - caching HTTP proxy/squid role? - **`-`** `question`
 - #48 - FTP server - **`-`** `feature,wontfix`
 - #47 - distributed filesystem (ceph, glusterfs) - **`-`** `question`
 - #46 - Printer sharing server? - **`-`** `question`
@@ -330,7 +340,7 @@
 - #42 - OpenStreetMap tileserver - **`-`** `feature`
 - #41 - Network scanner (SANE) server? - **`-`** `question`
 - #40 - Search engine - **`-`** `feature`
-- #39 - Wallabag - **`-`** `feature`
+- #39 - wallabag role? - **`-`** `feature`
 - #38 - Wake on LAN - **`-`** `feature`
 - #37 - Replace `ntp` with `chrony`? - **`2.0.0`** `question`
 - #36 - RADIUS server - **`-`** `feature`
