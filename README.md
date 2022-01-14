@@ -33,7 +33,7 @@ This project provides:
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
 - [monitoring](roles/monitoring) - Real-time monitoring, alerting and logging system
 - [mumble](roles/mumble) - Low-latency VoIP/voice chat server
-- [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization service and collaboration platform
+- [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [openldap](roles/openldap) - LDAP directory server
 - [postgresql](roles/postgresql) - PostgreSQL database engine
 - [proxmox](roles/proxmox) - Proxmox VE hypervisor configuration
