@@ -47,6 +47,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: fail2ban: increase maximum IP/attempts count retention to 1 year
 - common: ssh: decrease SFTP logs verbosity to INFO by default
 - common: msmtp: make role compatible with Debian 10/11
+- gitea: upgrade to v1.15.9 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.15.8), [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.15.9)
+
 
 **Fixed:**
 - proxmox: fix missing ansible fact file template
