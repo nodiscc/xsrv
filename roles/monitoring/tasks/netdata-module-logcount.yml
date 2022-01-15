@@ -12,6 +12,7 @@
     version: "1.0.3"
     accept_hostkey: yes
     force: yes # discard modified files
+  check_mode: no # run even in check mode so that following tasks don't fail
 
 - name: create directory for netdata-logcount lnav script
   file:
