@@ -126,20 +126,22 @@ function help() {
     exit 1
 }
 
+# shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
 function check() {
     # run ansible playbook in check mode
     check_project_exists
-    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
-    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
+    if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
+    if [[ -n "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
     cd "$projects_dir/$project_name"
     echo "[xsrv] INFO: deploying main playbook for project $project_name"
     ansible-playbook playbook.yml --check --diff $ansible_tags_arg $ansible_host_arg
 }
 
+# shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
 function deploy() {
     # run ansible playbook
-    if [[ ! -z "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
-    if [[ ! -z "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
+    if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
+    if [[ -n "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
     cd "$projects_dir/$project_name"
     echo "[xsrv] INFO: deploying main playbook for project $project_name"
     ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
@@ -220,7 +222,7 @@ function init_project() {
 function init_host() {
     # add a new host to a project (from template files)
     check_project_exists
-    until [[ ! -z "$host_name" ]]; do
+    until [[ -n "$host_name" ]]; do
         read -r -p "[xsrv] Host name to add to the $project_name project (ex: my.CHANGEME.org): " host_name
     done
     if [[ -e "$project_dir/host_vars/$host_name" ]]; then
@@ -296,7 +298,7 @@ function show_defaults() {
         echo "[xsrv] INFO: pager command '$pager' unavailable, falling back to 'less'"
         pager="less"
     fi
-    if [[ ! -z "$role" ]]; then
+    if [[ -n "$role" ]]; then
         cat "$project_dir"/ansible_collections/*/*/roles/"$role"/defaults/main.yml | $pager 2>/dev/null
     else
         # shellcheck disable=SC2002
