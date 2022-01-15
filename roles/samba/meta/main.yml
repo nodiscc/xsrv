@@ -17,4 +17,5 @@ galaxy_info:
     - filesharing
     - ldap
     - mac
-dependencies: []
+dependencies:
+  - nodiscc.xsrv.handlers

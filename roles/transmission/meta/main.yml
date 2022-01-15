@@ -16,4 +16,5 @@ galaxy_info:
     - download
     - filesharing
 dependencies:
+  - nodiscc.xsrv.handlers
   - nodiscc.xsrv.apache

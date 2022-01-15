@@ -1,11 +1,6 @@
 - name: apply sysctl configuration
   become: yes
-  command: sysctl --load /etc/sysctl.d/custom.conf
-
-- name: update apt cache
-  become: yes
-  apt:
-    update_cache: yes
+  command: sysctl --load /etc/sysctl.d/custom.con
 
 - name: update pam configuration
   become: yes
@@ -17,38 +12,3 @@
     name: ssh
     state: restarted
     enabled: yes
-
-- name: reload systemd unit files
-  become: yes
-  systemd:
-    daemon_reload: yes
-
-- name: reload fail2ban
-  become: yes
-  service:
-    name: fail2ban
-    state: reloaded
-    enabled: yes
-  when: setup_fail2ban|bool
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: reload firewalld
-  become: yes
-  service:
-    name: firewalld
-    state: reloaded
-    enabled: yes
-  when: setup_firewall|bool
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: restart firewalld
-  become: yes
-  service:
-    name: firewalld
-    state: restarted
-    enabled: yes
-  when: setup_firewall|bool
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: update ansible facts
-  setup:

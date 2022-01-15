@@ -17,6 +17,7 @@ galaxy_info:
     - backup
     - incremental
     - rsnapshot
-dependencies: []
-#   - nodiscc.xsrv.common
-#   - nodiscc.xsrv.monitoring
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring

@@ -17,6 +17,7 @@ galaxy_info:
     - vcs
     - web
 dependencies:
+  - nodiscc.xsrv.handlers
   # - nodiscc.xsrv.common
   # - nodiscc.xsrv.monitoring
   # - nodiscc.xsrv.backup

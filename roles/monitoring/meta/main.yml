@@ -19,4 +19,5 @@ galaxy_info:
     - alerts
     - syslog
     - rsyslog
-dependencies: []
+dependencies:
+  - nodiscc.xsrv.handlers

@@ -13,6 +13,7 @@ galaxy_info:
     - lapp
     - postgresql
     - database
-dependencies: []
-#   - nodiscc.xsrv.common
-#   - nodiscc.xsrv.monitoring
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring

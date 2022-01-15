@@ -5,6 +5,3 @@
     state: reloaded
     enabled: yes
   when: transmission_enable_service|bool
-
-- name: update ansible facts
-  setup:

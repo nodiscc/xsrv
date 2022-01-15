@@ -13,6 +13,7 @@ galaxy_info:
     - directory
     - authentication
 dependencies:
+  - nodiscc.xsrv.handlers
   - nodiscc.xsrv.common
   # - nodiscc.xsrv.monitoring
   # - nodiscc.xsrv.backup

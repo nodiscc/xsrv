@@ -18,4 +18,5 @@ galaxy_info:
     - discord
     - game
     - audio
-dependencies: []
+dependencies:
+  - nodiscc.xsrv.handlers

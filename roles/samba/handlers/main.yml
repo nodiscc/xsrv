@@ -25,6 +25,3 @@
     name: nscd
     state: restarted
     enabled: yes
-
-- name: update ansible facts
-  setup:

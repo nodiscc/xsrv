@@ -16,6 +16,7 @@ galaxy_info:
     - orchestration
     - compose
     - server
-dependencies: []
-#   - nodiscc.xsrv.common # optional
-#   - nodiscc.xsrv.monitoring # optional
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring

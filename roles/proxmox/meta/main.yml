@@ -14,5 +14,6 @@ galaxy_info:
     - hypervisor
     - kvm
     - lxc
-dependencies: []
-#  - nodiscc.xsrv.common # optional, unattended upgrades
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common

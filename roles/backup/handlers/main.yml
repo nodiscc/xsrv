@@ -1,6 +1,3 @@
-- name: update ansible facts
-  setup:
-
 - name: check rsnapshot configuration
   become: yes
   command: rsnapshot configtest

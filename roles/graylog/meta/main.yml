@@ -18,5 +18,6 @@ galaxy_info:
     - analyzer
     - siem
 dependencies:
-  # - nodiscc.xsrv.monitoring # optional
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.monitoring
   - nodiscc.xsrv.apache

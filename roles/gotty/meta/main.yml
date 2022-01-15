@@ -14,6 +14,7 @@ galaxy_info:
     - web
     - command-line
 dependencies:
+  - nodiscc.xsrv.handlers
   # - nodiscc.xsrv.common
   # - nodiscc.xsrv.monitoring
   - nodiscc.xsrv.apache

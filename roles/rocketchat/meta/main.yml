@@ -15,5 +15,6 @@ galaxy_info:
     - instant
     - messaging
 dependencies:
+  - nodiscc.xsrv.handlers
   - nodiscc.xsrv.apache
   - nodiscc.xsrv.docker

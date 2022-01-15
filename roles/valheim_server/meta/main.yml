@@ -13,7 +13,8 @@ galaxy_info:
     - valheim
     - server
     - steam
-dependencies: []
-#   - nodiscc.xsrv.common
-#   - nodiscc.xsrv.monitoring
-#   - nodiscc.xsrv.backup
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring
+  # - nodiscc.xsrv.backup

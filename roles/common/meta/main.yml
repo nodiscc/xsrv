@@ -35,4 +35,5 @@ galaxy_info:
     - utilities
     - users
     - sudo
-dependencies: []
+dependencies:
+  - nodiscc.xsrv.handlers

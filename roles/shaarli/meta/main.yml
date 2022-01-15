@@ -17,4 +17,5 @@ galaxy_info:
     - sharing
     - notes
 dependencies:
+  - nodiscc.xsrv.handlers
   - nodiscc.xsrv.apache

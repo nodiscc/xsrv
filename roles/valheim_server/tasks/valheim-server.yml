@@ -19,7 +19,7 @@
     dest: /etc/systemd/system/valheim-server.service
     mode: 0644
   notify:
-    - reload systemd units
+    - reload systemd unit files
     - restart valheim server
 
 ##### SERVICE

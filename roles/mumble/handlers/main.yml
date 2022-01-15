@@ -5,6 +5,3 @@
     state: restarted
     enabled: yes
   when: mumble_enable_service|bool
-
-- name: update ansible facts
-  setup:
