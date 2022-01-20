@@ -11,3 +11,5 @@ docker_log_driver: "syslog"
 # docker swarm settings (accepts all parameters from https://docs.ansible.com/ansible/latest/collections/community/general/docker_swarm_module.html)
 docker_swarm:
   state: "present"
+# enable nightly prune of unused networks/images/stopped containers/build cache (yes/no)
+docker_prune_nightly: yes

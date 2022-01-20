@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: mail/msmtp: allow disabling SMTP authentication/LOGIN (`msmtp_auth_enabled`)
 - common: mail/msmtp: allow disabling TLS (`msmtp_tls_enabled`)
 - monitoring: netdata: allow automated testing of netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
+- docker: add a nightly cleanup of unused docker images/containers/networks/build cache, allow disabling it through `docker_prune_nighlty: no`
 
 
 **Removed:**
