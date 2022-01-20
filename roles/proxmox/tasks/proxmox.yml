@@ -1,23 +1,26 @@
-- name: enable contrib section in debian apt repository
-  apt_repository:
-    repo: deb https://deb.debian.org/debian {{ ansible_facts.distribution_release }} contrib
-    state: present
-    filename: debian-contrib
-
-- name: enable contrib section in debian updates apt repository
-  apt_repository:
-    repo: deb https://deb.debian.org/debian {{ ansible_facts.distribution_release }}-updates contrib
-    state: present
-    filename: debian-updates-contrib
-
-- name: enable contrib sections in debian security apt repository
-  apt_repository:
-    repo: deb https://security.debian.org/debian-security {{ ansible_facts.distribution_release }}/updates contrib
-    state: present
-    filename: debian-updates-contrib
+- name: enable contrib section in debian APT sources
+  template:
+    src: etc_apt_sources.list.d_proxmox-debian.list.j2
+    dest: /etc/apt/sources.list.d/proxmox-debian.list
+    owner: root
+    group: root
+    mode: 0644
+  notify: update apt cache
 
 - name: enable proxmox no-subscription apt repository
-  apt_repository:
-    repo: deb http://download.proxmox.com/debian/pve {{ ansible_facts.distribution_release }} pve-no-subscription
-    state: present
-    filename: proxmox-no-subscription
+  template:
+    src: etc_apt_sources.list.d_proxmox-no-subscription.list.j2
+    dest: /etc/apt/sources.list.d/proxmox-no-subscription.list
+    owner: root
+    group: root
+    mode: 0644
+  notify: update apt cache
+
+- name: romve files from old versions of the role
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /etc/apt/sources.list.d/debian-contrib.list
+    - /etc/apt/sources.list.d/debian-updates-contrib.list
+  notify: update apt cache
