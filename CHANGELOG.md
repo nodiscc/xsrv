@@ -52,6 +52,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: msmtp: make role compatible with Debian 10/11
 - gitea: upgrade to v1.15.10 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.15.8), [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.15.9), [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.15.10)
 - xsrv: upgrade ansible to [5.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+- apache: relax permissions on apache virtualhost config files (make them world-readable)
 
 
 **Fixed:**
