@@ -23,18 +23,18 @@ edit-playbook [project]         edit/show playbook (roles for each host)
 show-defaults [project] [role]  show all variables and their default values
 edit-requirements [project]     edit ansible requirements/collections
 edit-cfg [project]              edit ansible configuration (ansible.cfg)
-help-tags [project]             show the list of ansible tags and their descriptions
 init-host [project] [host]      add a new host to an existing project
 check [project] [host]          simulate deployment, report what would be changed
-deploy [project] [host]         deploy a project's main playbook (apply configuration/roles)
+deploy [project] [host]         deploy the main playbook in a project (apply configuration/roles)
 edit-host [project] [host]      edit host configuration (host_vars)
-edit-vault [project] [host]     edit encrypted (vault) host configuration
-edit-group [project] [group]    edit variables for a group of hosts (default 'all')
-fetch-backups [project] [host]  fetch backups from a host to the local backups/ directory
-shell [project] [host]          open an interactive shell on a host
-logs [project] [host]           view system log on a host
+edit-vault [project] [host]     edit encrypted (vault) host configuration (host_vars)
+edit-group [project] [group]    edit group configuration (default group: all) (group_vars)
+fetch-backups [project] [host]  fetch backups from a host to the local backups directory
+shell [project] [host]          open interactive shell on a host
+logs [project] [host]           view system logs on a host
 ls                              list files in the projects directory (accepts a path)
 help                            show this message
+help-tags [project]             show the list of ansible tags and their descriptions
 upgrade [project]               upgrade roles/collections to latest versions
 self-upgrade                    check for new releases/upgrade the xsrv script in-place
 
