@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint cryptography==3.3.2 yamllint ansible==5.2.0
+	pip3 install isort ansible-lint yamllint ansible==5.2.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -138,7 +138,7 @@ endif
 
 .PHONY: install_deps # manual - install requirements for test suite
 install_deps:
-	apt update && apt -y install git bash python3-venv python3-pip ssh pwgen shellcheck jq
+	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq
 
 # can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginnning of the role
 .PHONY: list_default_variables # manual - list all variables names from role defaults

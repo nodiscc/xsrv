@@ -8,7 +8,7 @@ Any PC, dedicated server, VM or container where a SSH client, Python and Bash ar
 
 ```bash
 # install requirements (example for debian-based systems)
-sudo apt update && sudo apt install git bash python3-venv python3-pip ssh pwgen wget
+sudo apt update && sudo apt install git bash python3-venv python3-pip python3-cryptography ssh pwgen wget
 # download the main script
 wget https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
 # (optional) copy the script to your $PATH
