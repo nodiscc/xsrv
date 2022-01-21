@@ -1,20 +1,20 @@
 # enable additional roles by uncommenting them
 - hosts: my.example.org
   roles:
-    - nodiscc.xsrv.common
-    - nodiscc.xsrv.monitoring
-    # - nodiscc.xsrv.backup
-    # - nodiscc.xsrv.apache
-    # - nodiscc.xsrv.openldap
-    # - nodiscc.xsrv.postgresql
-    # - nodiscc.xsrv.nextcloud
-    # - nodiscc.xsrv.tt_rss
-    # - nodiscc.xsrv.shaarli
-    # - nodiscc.xsrv.gitea
-    # - nodiscc.xsrv.transmission
-    # - nodiscc.xsrv.mumble
-    # - nodiscc.xsrv.docker
-    # - nodiscc.xsrv.rocketchat
-    # - nodiscc.xsrv.jellyfin
-    # - nodiscc.xsrv.samba
-    # - nodiscc.xsrv.homepage
+    - nodiscc.xsrv.common # base setup
+    - nodiscc.xsrv.monitoring # monitoring, alerting and logging
+    # - nodiscc.xsrv.backup # backup service
+    # - nodiscc.xsrv.apache # web server + PHP interpreter
+    # - nodiscc.xsrv.openldap # LDAP directory server
+    # - nodiscc.xsrv.postgresql # database engine
+    # - nodiscc.xsrv.nextcloud # file hosting/sharing/synchronization and collaboration
+    # - nodiscc.xsrv.tt_rss # news feed reader
+    # - nodiscc.xsrv.shaarli # bookmarking & link sharing
+    # - nodiscc.xsrv.gitea # git service/software forge
+    # - nodiscc.xsrv.transmission # bittorrent client
+    # - nodiscc.xsrv.mumble # VoIP/voice chat server
+    # - nodiscc.xsrv.docker # application containerization
+    # - nodiscc.xsrv.rocketchat # instant messaging & communication platform
+    # - nodiscc.xsrv.jellyfin # media server
+    # - nodiscc.xsrv.samba # file sharing server
+    # - nodiscc.xsrv.homepage # simple webserver homepage
