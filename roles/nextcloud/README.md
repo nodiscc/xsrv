@@ -48,8 +48,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring and log aggregation
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (enabled automatically) webserver, PHP interpreter and SSL certificates
-    - nodiscc.xsrv.postgresql # (enabled automatically) database engine
+    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.postgresql # database engine
     - nodiscc.xsrv.nextcloud
 
 # required variables:

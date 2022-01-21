@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `TAGS=debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html). Debian 10 compatibility will not be maintained after this release.
 - common/firewall: remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if the `common/firewalld` role is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74))
 - mariadb: if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
+- gitea/nextcloud/tt_rss: if any of these roles is listed in your playbook, ensure `nodiscc.xsrv.postgresql` is explicitely deployed before it.
 - jellyfin, proxmox, docker: remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48) variable/list.
 - (optional) `xsrv check` to simulate changes
 - `xsrv deploy` to apply changes
@@ -55,6 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: relax permissions on apache virtualhost config files (make them world-readable)
 - nextcloud: add [Nextcloud Bookmarks](https://apps.nextcloud.com/apps/bookmarks) to the default list of apps (default disabled)
 - xsrv/tools/doc: don't install python3-cryptography from pip, install from OS packages
+- gitea/nextcloud/tt_rss: remove hard dependency on postgresql role
 
 
 **Fixed:**
