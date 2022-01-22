@@ -1,4 +1,6 @@
-##### TT_RSS - APACHE CONFIGURATION #####
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
 
 - name: copy tt-rss apache virtualhost configuration
   template:

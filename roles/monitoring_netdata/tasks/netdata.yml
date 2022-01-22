@@ -1,14 +1,6 @@
-##### NETDATA SYSTEM MONITOR #####
-
-- name: detect ipaddr/ipaddress python package name
-  set_fact:
-    python3_ipaddr_package: "{{ item.name }}"
-  when: "{{ item.condition }}"
-  with_items:
-    - name: python-ipaddress
-      condition: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
-    - name: python3-ipaddr
-      condition: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye'
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
 
 - name: install netdata requirements
   apt:
@@ -73,7 +65,6 @@
   apt:
     package: netdata
     state: present
-
 
 ##### SELF-SIGNED SSL CERTIFICATES #####
 
@@ -207,6 +198,5 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: services
 
-# Apply IP access restrictions as soon as possible
-- name: run all notified handlers now
+- name: apply netdata configuration (flush handlers)
   meta: flush_handlers

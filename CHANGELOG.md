@@ -71,12 +71,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - doc: update documentation, document all ansible tags, refactor command-line usage doc
 - refactoring: move fail2ban/samba/rsyslog/netdata/... tasks to separate task files inside each role
 - tags: add `ssl` tag to all ssl-related tasks, add `rsnapshot-ssh-key` tag to all ssh-key-related tasks
+- cleanup: remove unused tasks/improve deployment times
 
 **Fixed:**
 - fix integration between roles when roles are part of different plays: use ansible local facts installed by other roles to detect installed components, instead of checking the list of roles in the current play
 - proxmox: fix missing ansible fact file template
 - proxmox: fix APT configuration on Debian 10/11
-- fix `check` mode compatibility issues
+- fix `check` mode compatibility issues, fix ansible-lint warnings
 - common: ssh: fix creation of SFTP-only accounts (`bad ownership or modes for chroot directory`)
 - common: ssh: ssh: fix root ssh logins when `ssh_permit_root_login: without-password/prohibit-password/forced-commands-only`
 - monitoring: netdata: fix chart values incorrectly increased by 1 in debsecan module

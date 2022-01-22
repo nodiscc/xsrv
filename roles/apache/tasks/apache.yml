@@ -1,18 +1,11 @@
-##### PACKAGES ###################
+##### PACKAGES #####
 
 - name: configure APT to install apache and modules from backports (Debian 10)
   template:
     src: etc_apt_preferences.d_99-apache2-buster-backports.j2
     dest: /etc/apt/preferences.d/99-apache2-buster-backports
     mode: 0644
-  register: apache_apt_pinning
   when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
-
-# refresh APT cache after updating APT preferences
-- name: update apt cache # noqa 503
-  apt:
-    update_cache: yes
-  when: apache_apt_pinning.changed
 
 - name: install apache/php packages
   apt:
@@ -42,13 +35,9 @@
 
 ##### APACHE MODULES/CONFIGURATON #####
 
-- name: detect php-fpm version
-  set_fact:
-    php_fpm_version: "{{ item.value }}"
-  when: "{{ item.condition }}" # noqa no-jinja-when
-  with_items:
-    - { value: "7.3", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'buster')" }
-    - { value: "7.4", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'bullseye')" }
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
 
 - name: copy apache2/php configuration
   template:
