@@ -43,7 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common/firewall/all roles: manual firewall configuration is no longer required in the default setup/when only `xsrv` roles are enabled, let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
 - all roles: refactor/performance: only flush handlers once, unless required otherwise, refactor service start/stop/enable/disable tasks
 - common: fail2ban: ban offenders on all ports
-- proxmox: make role compatible with Debian 11
+- proxmox, backup: make roles compatible with Debian 11
 - apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
 - remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of `apt_unattended_upgrades_origins_patterns`
 - common: apt: explicitly install aptitude
