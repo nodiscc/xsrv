@@ -29,7 +29,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh: fix lynis warning FILE-7524 (ensure `/root/.ssh` is mode 0700)
 - common: mail/msmtp: allow disabling SMTP authentication/LOGIN (`msmtp_auth_enabled`), allow disabling SMTP server TLS certificate verification completely (`msmtp_tls_certcheck: yes/no`)
 - common: mail/msmtp: allow disabling TLS (`msmtp_tls_enabled`)
-- monitoring: netdata: allow automated testing of netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
+- monitoring: netdata: automate testing netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
+- monitoring: netdata: monitor systemd units state (timers/services/sockets)
 - docker: add a nightly cleanup of unused docker images/containers/networks/build cache, allow disabling it through `docker_prune_nighlty: no`
 - xsrv: add `xsrv help-tags` subcommand (show the list of ansible tags in the play and their descriptions)
 - install ansible local fact files for each deployed role/component

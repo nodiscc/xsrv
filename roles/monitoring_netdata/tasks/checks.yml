@@ -16,6 +16,7 @@
       - netdata_logcount_notification_to is string
       - netdata_logcount_update_interval == netdata_logcount_update_interval|int
       - netdata_logcount_warning_threshold_warn == netdata_logcount_warning_threshold_warn|int
+      - netdata_monitor_systemd_units == netdata_monitor_systemd_units|bool
       - netdata_port_checks|type_debug == "list"
       - netdata_process_checks|type_debug == "list"
       - netdata_disabled_plugins|type_debug == "list"
