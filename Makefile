@@ -167,7 +167,7 @@ doc_md:
 		echo "$$roles_list_md" >| roles-list.tmp.md
 	@awk ' \
 		BEGIN {p=1} \
-		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list.tmp.md");p=0} \
+		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list.tmp.md | sort --version-sort");p=0} \
 		/^<!--END ROLES LIST-->/ {p=1} \
 		p' README.md >> README.tmp.md
 	@rm roles-list.tmp.md
