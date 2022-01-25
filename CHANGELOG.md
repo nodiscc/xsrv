@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - `TAGS=debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html). Debian 10 compatibility will not be maintained after this release.
-- **common/firewall:** remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if the `common/firewalld` role is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74))
+- **common/firewall:** remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if firewalld is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74))
 - **mariadb:** if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
 - **gitea/nextcloud/tt_rss:** if any of these roles is listed in your playbook, ensure `nodiscc.xsrv.postgresql` is explicitly deployed before it.
 - **jellyfin/proxmox/docker:** remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48) list, automatic upgrades are enabled by default for these components.
@@ -43,13 +43,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - remove ansible tags `certificates lamp valheim valheim-server`
 
 **Changed:**
-- common/firewall/all roles: manual firewall configuration is no longer required in the default setup/when only `xsrv` roles are enabled, let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
+- common/firewall/all roles: let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
 - all roles: refactor/performance: only flush handlers once, unless required otherwise, refactor service start/stop/enable/disable tasks
 - common: fail2ban: ban offenders on all ports
 - proxmox, backup: make roles compatible with Debian 11
 - jellyfin: the jellyfin samba share automatic setup is now disabled by default (`jellyfin_samba_share_enabled: no`)
 - apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
-- remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of `apt_unattended_upgrades_origins_patterns`
+- jellyfin/proxmox/docker: remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of `apt_unattended_upgrades_origins_patterns`
 - monitoring: split role to smaller `monitoring_rsyslog`/`monitoring_netdata`/`monitoring_utils` roles, make the `monitoring` role an alias for these 3 roles
 - common: apt: explicitly install aptitude
 - common: apt: remove unused packages after automatic upgrades
