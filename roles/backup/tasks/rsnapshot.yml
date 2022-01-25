@@ -66,7 +66,7 @@
     path: /root/.ssh
     owner: root
     group: root
-    mode: 0600
+    mode: 0700
   tags: rsnapshot-ssh-key
 
 - name: create a SSH key pair for root
