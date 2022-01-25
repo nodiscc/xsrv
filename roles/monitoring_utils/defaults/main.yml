@@ -1,0 +1,16 @@
+##### LYNIS SECURITY AUDIT #####
+# setup lynis security audit tool (yes/no)
+setup_lynis: yes
+# list of strings to extract from lynis reports and forward by mail
+lynis_report_regex: 'warning|suggestion|manual'
+# list of lynis tests to ignore/skip (https://cisofy.com/lynis/controls/)
+lynis_skip_tests:
+  - "CUST-0285" # Install libpam-usb to enable multi-factor authentication for PAM sessions (we don't use multi-factor auth for SSH)
+  - "CUST-0830" # Install debian-goodies so that you can run checkrestart (needrestart is used instead)
+  - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
+  - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
+  - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
+  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by netdata)
+  - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers wil be selected automatically)
+  - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
+  - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)

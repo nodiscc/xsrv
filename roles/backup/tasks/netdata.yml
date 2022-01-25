@@ -1,0 +1,21 @@
+- name: add netdata filecheck and alarm for rsnapshot
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: netdata
+    mode: 0640
+  with_items:
+    - src: etc_netdata_go.d_filecheck.conf.d_rsnapshot.conf.j2
+      dest: /etc/netdata/go.d/filecheck.conf.d/filecheck.conf
+    - src: etc_netdata_health.d_filecheck.conf.d_rsnapshot.conf.j2
+      dest: /etc/netdata/health.d/filecheck.conf.d/filecheck.conf
+  notify: assemble netdata configuration
+
+- name: remove files from old versions of the role
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /etc/netdata/python.d/modtime.conf.d/modtime.conf
+    - /etc/netdata/health.d/modtime.conf.d/modtime.conf

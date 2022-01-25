@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - **mariadb:** if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
 - **gitea/nextcloud/tt_rss:** if any of these roles is listed in your playbook, ensure `nodiscc.xsrv.postgresql` is explicitly deployed before it.
 - **jellyfin/proxmox/docker:** remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48) list, automatic upgrades are enabled by default for these components.
+- **monitoring:** remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables from your configuration, if any. If you don't want monitoring utilities or rsyslog set up, enable individual `monitoring_netdata/rsyslog/utils` roles, instead of the global `monitoring` role
 - (optional) `xsrv check` to simulate changes
 - `xsrv deploy` to apply changes
 
@@ -30,12 +31,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: netdata: allow automated testing of netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
 - docker: add a nightly cleanup of unused docker images/containers/networks/build cache, allow disabling it through `docker_prune_nighlty: no`
 - xsrv: add `xsrv help-tags` subcommand (show the list of ansible tags in the play and their descriptions)
-
+- fail2ban: install ansible fact file when fail2ban is deployed
 
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
 - common: firewall: remove ability to filter outgoing traffic, will be re-added later
 - common/apache/nextcloud: drop compatibility with Debian 10
+- monitoring: remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables
 - mariadb: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - remove ansible tags `certificates lamp valheim valheim-server`
 
@@ -46,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - proxmox, backup: make roles compatible with Debian 11
 - apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
 - remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of `apt_unattended_upgrades_origins_patterns`
+- monitoring: split role to smaller `monitoring_rsyslog`/`monitoring_netdata`/`monitoring_utils` roles, make the `monitoring` role an alias for these 3 roles
 - common: apt: explicitly install aptitude
 - common: apt: remove unused packages after automatic upgrades
 - common: apt: automatically remove unused dependency packages on every install/upgrade/remove operation
@@ -58,10 +61,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: add [Nextcloud Bookmarks](https://apps.nextcloud.com/apps/bookmarks) to the default list of apps (default disabled)
 - xsrv/tools/doc: don't install python3-cryptography from pip, install from OS packages
 - gitea/nextcloud/tt_rss: remove hard dependency on postgresql role
+- netdata/docker: move `netdata_min/max_running_docker_containers` configuration variables to the `docker` role
 - doc: update documentation, document all ansible tags, refactor command-line usage doc
+- refactoring: move fail2ban/samba/rsyslog/netdata/... tasks to separate task files inside each role
 - tags: add `ssl` tag to all ssl-related tasks, add `rsnapshot-ssh-key` tag to all ssh-key-related tasks
 
 **Fixed:**
+- fix integration between roles when roles are part of different plays: use ansible local facts installed by other roles to detect installed components, instead of checking the list of roles in the current play
 - proxmox: fix missing ansible fact file template
 - proxmox: fix APT configuration on Debian 10/11
 - fix `check` mode compatibility issues

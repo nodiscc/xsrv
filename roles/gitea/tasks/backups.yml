@@ -1,0 +1,6 @@
+- name: copy rsnapshot configuration for gitea backups
+  template:
+    src: etc_rsnapshot.d_gitea.conf.j2
+    dest: /etc/rsnapshot.d/gitea.conf
+    mode: 0600
+  notify: check rsnapshot configuration

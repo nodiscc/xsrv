@@ -2,12 +2,21 @@
   become: yes
   tags: postgresql
 
-- include: monitoring.yml
+- include: backups.yml
+  become: yes
+  tags:
+    - postgresql
+    - backup
+
+- include: netdata.yml
   become: yes
   tags:
     - postgresql
     - monitoring
-  when: "'nodiscc.xsrv.monitoring' in role_names"
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes
@@ -19,7 +28,6 @@
 
 ##### UTILITIES #####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-
 - include: utils-pgmetrics.yml
   become: yes
   tags:

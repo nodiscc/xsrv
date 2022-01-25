@@ -1,0 +1,25 @@
+- name: copy script to dump all databases to separate files
+  template:
+    src: usr_local_bin_postgres-dump-all-databases.sh.j2
+    dest: /usr/local/bin/postgres-dump-all-databases.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create directory for postgresql dumps
+  file:
+    state: directory
+    path: /var/backups/postgresql/
+    owner: root
+    group: postgres
+    mode: 0770
+
+- name: copy rsnapshot configuration for postgresql backups
+  template:
+    src: etc_rsnapshot.d_postgresql.conf.j2
+    dest: /etc/rsnapshot.d/postgresql.conf
+    mode: 0600
+  notify: check rsnapshot configuration
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool

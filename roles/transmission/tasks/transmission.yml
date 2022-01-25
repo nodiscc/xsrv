@@ -29,20 +29,6 @@
     src: "{{ transmission_download_dir }}"
     dest: "/home/{{ ansible_user }}/TORRENTS"
 
-##### FAIL2BAN #####
-# transmission login failures are logged by apache
-# bans are enforced by the apache-auth jail (see apache role)
-
-##### BACKUPS #####
-
-- name: copy rsnapshot configuration for transmission backups
-  template:
-    src: etc_rsnapshot.d_transmission.conf.j2
-    dest: /etc/rsnapshot.d/transmission.conf
-    mode: 0600
-  notify: check rsnapshot configuration
-  when: '"nodiscc.xsrv.backup" in role_names'
-
 ##### SERVICE #####
 
 - name: start/stop/enable/disable transmission-daemon service

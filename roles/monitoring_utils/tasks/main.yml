@@ -1,0 +1,19 @@
+- include: monitoring-utils.yml
+  become: yes
+  tags:
+    - monitoring
+    - monitoring_utils
+
+- include: lynis.yml
+  become: yes
+  tags:
+    - monitoring
+    - monitoring_utils
+    - lynis
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - monitoring
+    - monitoring_utils
+    - lynis

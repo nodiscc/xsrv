@@ -1,0 +1,13 @@
+- name: install netdata process/http checks for graylog/elasticsearch/mongodb
+  template:
+    src: etc_netdata_{{ item.plugin }}_{{ item.module }}.conf.d_graylog.conf.j2
+    dest: /etc/netdata/{{ item.plugin }}/{{ item.module }}.conf.d/graylog.conf
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration
+  with_items:
+    - plugin: go.d
+      module: httpcheck
+    - plugin: health.d
+      module: processes

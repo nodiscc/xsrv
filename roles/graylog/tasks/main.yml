@@ -33,12 +33,25 @@
     - graylog
     - apache
 
-- include: monitoring.yml
+- include: rsyslog.yml
   become: yes
   tags:
     - graylog
     - monitoring
-  when: "'nodiscc.xsrv.monitoring' in role_names"
+    - rsyslog
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - graylog
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes

@@ -1,7 +1,3 @@
----
-
-##### PACKAGES #####
-
 - name: install postgresql
   apt:
     state: present
@@ -9,32 +5,6 @@
       - postgresql
       - postgresql-client
       - python3-psycopg2
-
-##### BACKUPS #####
-
-- name: copy script to dump all databases to separate files
-  template:
-    src: usr_local_bin_postgres-dump-all-databases.sh.j2
-    dest: /usr/local/bin/postgres-dump-all-databases.sh
-    owner: root
-    group: root
-    mode: 0755
-
-- name: create directory for postgresql dumps
-  file:
-    state: directory
-    path: /var/backups/postgresql/
-    owner: root
-    group: postgres
-    mode: 0770
-
-- name: copy rsnapshot configuration for postgresql backups
-  template:
-    src: etc_rsnapshot.d_postgresql.conf.j2
-    dest: /etc/rsnapshot.d/postgresql.conf
-    mode: 0600
-  when: '"nodiscc.xsrv.backup" in role_names'
-  notify: check rsnapshot configuration
 
 - name: enable/disable start/stop postgresql service
   systemd:

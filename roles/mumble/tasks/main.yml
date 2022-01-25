@@ -8,16 +8,43 @@
   become: yes
   tags: mumble
 
-- include: monitoring.yml
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - mumble
+    - fail2ban
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
+
+- include: backups.yml
+  become: yes
+  tags:
+    - mumble
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool
+
+- include: rsyslog.yml
   become: yes
   tags:
     - mumble
     - monitoring
-  when: '"nodiscc.xsrv.monitoring" in role_names'
+    - rsyslog
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed|bool
 
-- include: fact.yml
+- include: netdata.yml
   become: yes
-  tags: mumble
+  tags:
+    - mumble
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: firewalld.yml
   become: yes
@@ -27,6 +54,10 @@
   when:
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed|bool
+
+- include: fact.yml
+  become: yes
+  tags: mumble
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

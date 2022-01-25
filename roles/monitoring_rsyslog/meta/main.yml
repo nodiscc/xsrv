@@ -1,0 +1,20 @@
+galaxy_info:
+  role_name: monitoring_rsyslog
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Log aggregation, processing and forwarding system"
+  license: GPL-3.0
+  min_ansible_version: 2.8
+  platforms:
+    - name: Debian
+      versions:
+        - 9
+        - 10
+        - 11
+  galaxy_tags:
+    - system
+    - monitoring
+    - syslog
+    - rsyslog
+    - logging
+dependencies:
+  - nodiscc.xsrv.handlers

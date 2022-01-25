@@ -67,67 +67,9 @@
     name: jellyfin
     group: debian-transmission
     append: yes
-  when: "'nodiscc.xsrv.transmission' in role_names"
-
-##### JELLYFIN SAMBA SHARE #####
-
-- name: create jellyfin samba share directory and mountpoint
-  file:
-    state: directory
-    path: "{{ item }}"
-    owner: root
-    group: sambausers
-    mode: 0755
-  with_items:
-    - /var/lib/jellyfin/sambashare
-    - "{{ samba_shares_path }}/jellyfin"
-  when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
-
-- name: mount jellyfin samba share to jellyfin directory
-  mount:
-    path: /var/lib/jellyfin/sambashare
-    src: "{{ samba_shares_path }}/jellyfin"
-    opts: bind
-    state: mounted
-    fstype: none
-  when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
-
-- name: create jellyfin samba share subdirectories
-  file:
-    path: "{{ samba_shares_path }}/jellyfin/{{ item }}"
-    state: directory
-    owner: jellyfin
-    group: sambausers
-    mode: 02775
-  with_items:
-    - movies
-    - music
-    - shows
-    - books
-    - photos
-    - musicvideos
-    - mixedcontent
-  when: "'nodiscc.xsrv.samba' in role_names and jellyfin_samba_share_enabled|bool"
-
-###### FAIL2BAN #####
-
-- name: copy jellyfin fail2ban jail config
-  template:
-    src: etc_fail2ban_jail.d_jellyfin.conf.j2
-    dest: /etc/fail2ban/jail.d/jellyfin.conf
-    mode: 0644
-  tags: fail2ban
-  notify: reload fail2ban
-  when: "'nodiscc.xsrv.common' in role_names"
-
-- name: copy fail2ban jellyfin-auth filter
-  template:
-    src: etc_fail2ban_filter.d_jellyfin-auth.conf.j2
-    dest: /etc/fail2ban/filter.d/jellyfin-auth.conf
-    mode: 0644
-  tags: fail2ban
-  notify: reload fail2ban
-  when: "'nodiscc.xsrv.common' in role_names"
+  when:
+    - ansible_local.transmission.ansible_managed is defined
+    - ansible_local.transmission.ansible_managed|bool
 
 ##### SERVICE #####
 

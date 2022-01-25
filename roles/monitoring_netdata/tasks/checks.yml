@@ -1,0 +1,25 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that:
+      - netdata_allow_connections_from is string
+      - netdata_cloud_enabled == netdata_cloud_enabled|bool
+      - netdata_dbengine_disk_space == netdata_dbengine_disk_space|int
+      - netdata_dbengine_page_cache_size == netdata_dbengine_page_cache_size|int
+      - netdata_disable_access_log == netdata_disable_access_log|bool
+      - netdata_disable_debug_log == netdata_disable_debug_log|bool
+      - netdata_disable_error_log == netdata_disable_error_log|bool
+      - netdata_http_checks|type_debug == "list"
+      - netdata_x509_checks|type_debug == "list"
+      - netdata_logcount_error_threshold_crit == netdata_logcount_error_threshold_crit|int
+      - netdata_logcount_error_threshold_warn == netdata_logcount_error_threshold_warn|int
+      - netdata_logcount_notification_to is string
+      - netdata_logcount_update_interval == netdata_logcount_update_interval|int
+      - netdata_logcount_warning_threshold_warn == netdata_logcount_warning_threshold_warn|int
+      - netdata_port_checks|type_debug == "list"
+      - netdata_process_checks|type_debug == "list"
+      - netdata_disabled_plugins|type_debug == "list"
+      - netdata_self_monitoring_enabled == netdata_self_monitoring_enabled|bool
+      - netdata_update_every == netdata_update_every|int
+      - netdata_firewalld_zones|type_debug == "list"
+      - needrestart_autorestart_services == needrestart_autorestart_services|bool

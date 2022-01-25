@@ -3,13 +3,6 @@
     - openldap
     - checks
 
-- include: ssl-selfsigned.yml
-  become: yes
-  tags:
-    - apache
-    - ssl
-    - openldap
-
 - include: openldap.yml
   become: yes
   tags: openldap
@@ -24,32 +17,40 @@
     - openldap
     - backup
 
+- include: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - apache
+    - ssl
+    - openldap
+    - ldap-account-manager
+    - self-service-password
+
 - include: ldap-account-manager.yml
   become: yes
-  when: openldap_setup_lam|bool
   tags:
     - openldap
     - ldap-account-manager
+  when: openldap_setup_lam|bool
 
 - include: self-service-password.yml
   become: yes
-  when: openldap_setup_ssp|bool
   tags:
     - openldap
     - self-service-password
+  when: openldap_setup_ssp|bool
 
-- include: monitoring.yml
+- include: netdata.yml
   become: yes
   tags:
     - openldap
     - monitoring
+    - netdata
     - ldap-account-manager
     - self-service-password
-  when: "'nodiscc.xsrv.monitoring' in role_names"
-
-- include: fact.yml
-  become: yes
-  tags: openldap
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: firewalld.yml
   become: yes
@@ -59,6 +60,10 @@
   when:
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed|bool
+
+- include: fact.yml
+  become: yes
+  tags: openldap
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

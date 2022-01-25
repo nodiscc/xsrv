@@ -1,0 +1,9 @@
+- name: add netdata alarms for docker engine
+  template:
+    src: "etc_netdata_health.d_dockerd.conf.j2"
+    dest: "/etc/netdata/health.d/dockerd.conf"
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: restart netdata
+  ignore_errors: "{{ ansible_check_mode }}"

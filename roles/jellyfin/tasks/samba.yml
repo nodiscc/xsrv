@@ -1,0 +1,36 @@
+##### JELLYFIN SAMBA SHARE #####
+
+- name: create jellyfin samba share directory and mountpoint
+  file:
+    state: directory
+    path: "{{ item }}"
+    owner: root
+    group: sambausers
+    mode: 0755
+  with_items:
+    - /var/lib/jellyfin/sambashare
+    - "{{ samba_shares_path }}/jellyfin"
+
+- name: mount jellyfin samba share to jellyfin directory
+  mount:
+    path: /var/lib/jellyfin/sambashare
+    src: "{{ samba_shares_path }}/jellyfin"
+    opts: bind
+    state: mounted
+    fstype: none
+
+- name: create jellyfin samba share subdirectories
+  file:
+    path: "{{ samba_shares_path }}/jellyfin/{{ item }}"
+    state: directory
+    owner: jellyfin
+    group: sambausers
+    mode: 02775
+  with_items:
+    - movies
+    - music
+    - shows
+    - books
+    - photos
+    - musicvideos
+    - mixedcontent

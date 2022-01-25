@@ -21,12 +21,15 @@
     - transmission
     - apache
 
-- include: monitoring.yml
+- include: netdata.yml
   become: yes
   tags:
     - transmission
     - monitoring
-  when: "'nodiscc.xsrv.monitoring' in role_names"
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes

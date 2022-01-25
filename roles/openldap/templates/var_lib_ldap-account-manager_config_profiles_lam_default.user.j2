@@ -26,7 +26,7 @@ posixAccount_primaryGroup: users
 posixAccount_homeDirectory: /home/$user
 posixAccount_loginShell: /bin/bash
 
-{% if 'nodiscc.xsrv.samba' in role_names and samba_passdb_backend == 'ldapsam' %}
+{% if samba_passdb_backend is defined and samba_passdb_backend == 'ldapsam' %}
 sambaSamAccount_addExt: true
 sambaSamAccount_displayName: 
 sambaSamAccount_sambaAcctFlagsN: false

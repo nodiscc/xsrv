@@ -22,6 +22,9 @@
   tags:
     - samba
     - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool
 
 - include: rsyslog.yml
   become: yes
@@ -30,12 +33,8 @@
     - rsyslog
     - monitoring
   when:
-    - '"nodiscc.xsrv.monitoring" in role_names'
-    - setup_rsyslog|bool
-
-- include: fact.yml
-  become: yes
-  tags: samba
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed|bool
 
 - include: firewalld.yml
   become: yes
@@ -45,6 +44,10 @@
   when:
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed|bool
+
+- include: fact.yml
+  become: yes
+  tags: samba
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

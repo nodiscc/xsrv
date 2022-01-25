@@ -1,9 +1,6 @@
-###### BACKUPS #####
-
 - name: copy rsnapshot configuration for jellyfin backups
   template:
     src: etc_rsnapshot.d_jellyfin.conf.j2
     dest: /etc/rsnapshot.d/jellyfin.conf
     mode: 0600
-  when: '"nodiscc.xsrv.backup" in role_names'
   notify: check rsnapshot configuration

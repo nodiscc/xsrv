@@ -1,5 +1,3 @@
-##### OPENLDAP BACKUPS #####
-
 - name: create directory for openldap backups
   file:
     path: /var/backups/openldap/
@@ -21,5 +19,7 @@
     src: etc_rsnapshot.d_openldap.conf.j2
     dest: /etc/rsnapshot.d/openldap.conf
     mode: 0600
-  when: '"nodiscc.xsrv.backup" in role_names'
   notify: check rsnapshot configuration
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool

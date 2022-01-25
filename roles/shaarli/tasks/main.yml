@@ -21,12 +21,43 @@
     - shaarli
     - apache
 
-- include: monitoring.yml
+- include: backups.yml
+  become: yes
+  tags:
+    - shaarli
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool
+
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - shaarli
+    - fail2ban
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
+
+- include: rsyslog.yml
   become: yes
   tags:
     - shaarli
     - monitoring
-  when: "'nodiscc.xsrv.monitoring' in role_names"
+    - rsyslog
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - shaarli
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes

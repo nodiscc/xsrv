@@ -8,6 +8,13 @@
   become: yes
   tags: jellyfin
 
+- include: samba.yml
+  become: yes
+  tags:
+    - jellyfin
+    - samba
+  when: jellyfin_samba_share_enabled|bool
+
 - include: ssl-selfsigned.yml
   become: yes
   tags:
@@ -22,18 +29,33 @@
     - jellyfin
     - apache
 
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - jellyfin
+    - fail2ban
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
+
 - include: backups.yml
   become: yes
   tags:
     - jellyfin
     - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool
 
-- include: monitoring.yml
+- include: netdata.yml
   become: yes
   tags:
     - jellyfin
     - monitoring
-  when: "'nodiscc.xsrv.monitoring' in role_names"
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes

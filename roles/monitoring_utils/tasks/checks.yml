@@ -1,0 +1,6 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that:
+      - lynis_report_regex is string
+      - lynis_skip_tests|type_debug == "list"

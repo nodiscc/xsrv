@@ -7,6 +7,12 @@
   become: yes
   tags: rocketchat
 
+- include: backups.yml
+  become: yes
+  tags:
+    - rocketchat
+    - backup
+
 - include: ssl-selfsigned.yml
   become: yes
   tags:
@@ -21,12 +27,15 @@
     - rocketchat
     - apache
 
-- include: monitoring.yml
+- include: netdata.yml
   become: yes
   tags:
     - rocketchat
     - monitoring
-  when: "'nodiscc.xsrv.monitoring' in role_names"
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes

@@ -31,12 +31,34 @@
     - gitea
     - apache
 
-- include: monitoring.yml
+- include: backups.yml
   become: yes
   tags:
     - gitea
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - gotty
     - monitoring
-  when: '"nodiscc.xsrv.monitoring" in role_names'
+    - rsyslog
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - gotty
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes

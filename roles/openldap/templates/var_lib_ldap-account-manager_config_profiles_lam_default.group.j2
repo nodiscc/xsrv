@@ -1,7 +1,6 @@
 profname: default
 ldap_suffix: ou=groups,{{ openldap_base_dn }}
 ldap_rdn: cn
-{% if 'nodiscc.xsrv.samba' in role_names and samba_passdb_backend == 'ldapsam' %}
+{% if samba_passdb_backend is defined and samba_passdb_backend == 'ldapsam' %}
 sambaGroupMapping_sambaDomainName: {{ openldap_domain }}
 {% endif %}
-

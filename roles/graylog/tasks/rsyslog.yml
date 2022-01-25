@@ -1,0 +1,8 @@
+- name: configure rsyslog to aggregate graylog/elasticsearch logs to syslog
+  template:
+    src: etc_rsyslog.d_graylog.conf.j2
+    dest: /etc/rsyslog.d/graylog.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog

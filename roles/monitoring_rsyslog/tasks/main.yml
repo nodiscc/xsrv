@@ -1,0 +1,23 @@
+- include: checks.yml
+  tags:
+    - monitoring
+    - rsyslog
+    - checks
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - monitoring
+    - rsyslog
+
+- include: fact.yml
+  become: yes
+  tags:
+    - monitoring
+    - rsyslog
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - monitoring
+    - rsyslog

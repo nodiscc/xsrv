@@ -17,27 +17,6 @@
   notify: restart mumble
   no_log: True
 
-##### FAIL2BAN #####
-
-- name: copy mumble fail2ban jail config
-  template:
-    src: etc_fail2ban_jail.d_mumble.conf.j2
-    dest: /etc/fail2ban/jail.d/mumble.conf
-    mode: 0600
-  tags: fail2ban
-  notify: reload fail2ban
-
-
-##### BACKUPS #####
-
-- name: copy rsnapshot configuration for mumble-server backups
-  template:
-    src: etc_rsnapshot.d_mumble-server.conf.j2
-    dest: /etc/rsnapshot.d/mumble-server.conf
-    mode: 0600
-  when: '"nodiscc.xsrv.backup" in role_names'
-  notify: check rsnapshot configuration
-
 ##### COMMAND-LINE/MISC INSTALLATION STEPS #####
 
 - name: update mumble superuser password (always returns changed)

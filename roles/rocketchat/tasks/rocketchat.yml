@@ -37,24 +37,3 @@
     name: rocketchat
     prune: yes
     compose: /var/lib/rocket.chat/docker-compose.yml
-
-
-##### BACKUPS #####
-
-- name: copy mongodb dump script
-  template:
-    src: usr_local_bin_rocketchat-dump-mongodb.sh.j2
-    dest: /usr/local/bin/rocketchat-dump-mongodb.sh
-    mode: 0755
-    owner: root
-    group: root
-
-- name: copy rsnapshot configuration for rocketchat backups
-  template:
-    src: etc_rsnapshot.d_rocketchat.conf.j2
-    dest: /etc/rsnapshot.d/rocketchat.conf
-    mode: 0644
-    owner: root
-    group: root
-  when: '"nodiscc.xsrv.backup" in role_names'
-  notify: check rsnapshot configuration

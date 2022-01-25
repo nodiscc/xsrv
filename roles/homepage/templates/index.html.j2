@@ -110,7 +110,7 @@
             <div class="col-1-1 mobile-col-1-1">
                 <h1>{{ homepage_title }}</h1>
             </div>
-{% if 'nodiscc.xsrv.nextcloud' in role_names %}
+{% if ansible_local.nextcloud.ansible_managed is defined and ansible_local.nextcloud.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 nextcloud">
                 <a href="https://{{ nextcloud_fqdn }}">
                     <div class="content">
@@ -119,7 +119,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.rocketchat' in role_names %}
+{% if ansible_local.rocketchat.ansible_managed is defined and ansible_local.rocketchat.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 rocketchat">
                 <a href="https://{{ rocketchat_fqdn }}">
                     <div class="content">
@@ -128,7 +128,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.shaarli' in role_names %}
+{% if ansible_local.shaarli.ansible_managed is defined and ansible_local.shaarli.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 shaarli">
                 <a href="https://{{ shaarli_fqdn }}">
                     <div class="content">
@@ -137,7 +137,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.tt_rss' in role_names %}
+{% if ansible_local.tt_rss.ansible_managed is defined and ansible_local.tt_rss.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 tt-rss">
                 <a href="https://{{ tt_rss_fqdn }}">
                     <div class="content">
@@ -146,7 +146,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.transmission' in role_names %}
+{% if ansible_local.transmission.ansible_managed is defined and ansible_local.transmission.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 transmission">
                 <a href="https://{{ transmission_fqdn }}">
                     <div class="content">
@@ -155,7 +155,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.gitea' in role_names %}
+{% if ansible_local.gitea.ansible_managed is defined and ansible_local.gitea.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 gitea">
                 <a href="https://{{ gitea_fqdn }}">
                     <div class="content">
@@ -164,7 +164,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.jellyfin' in role_names %}
+{% if ansible_local.jellyfin.ansible_managed is defined and ansible_local.nextcloud.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 jellyfin">
                 <a href="https://{{ jellyfin_fqdn }}">
                     <div class="content">
@@ -173,7 +173,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.mumble' in role_names %}
+{% if ansible_local.mumble.ansible_managed is defined and ansible_local.mumble.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ mumble_port }}">
                     <div class="content">
@@ -182,7 +182,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_lam %}
+{% if ansible_local.ldap_account_manager.ansible_managed is defined and ansible_local.ldap_account_manager.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="ldap-account-manager" href="https://{{ ldap_account_manager_fqdn }}">
                     <div class="content">
@@ -191,7 +191,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.openldap' in role_names and openldap_setup_ssp %}
+{% if ansible_local.self_service_password.ansible_managed is defined and ansible_local.self_service_password.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="self-service-password" href="https://{{ self_service_password_fqdn }}">
                     <div class="content">
@@ -200,7 +200,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.monitoring' in role_names %}
+{% if ansible_local.netdata.ansible_managed is defined and ansible_local.netdata.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="netdata" href="https://{{ inventory_hostname }}:19999/">
                     <div class="content">
@@ -209,7 +209,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.graylog' in role_names %}
+{% if ansible_local.graylog.ansible_managed is defined and ansible_local.graylog.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="graylog" href="https://{{ graylog_fqdn }}/">
                     <div class="content">
@@ -218,7 +218,7 @@
                 </a>
             </div>
 {% endif %}
-{% if 'nodiscc.xsrv.gotty' in role_names %}
+{% if ansible_local.gotty.ansible_managed is defined and ansible_local.gotty.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="gotty" href="https://{{ gotty_fqdn }}/">
                     <div class="content">
@@ -237,7 +237,7 @@
                     <p><img src="res/sftp.png"/><br/>SFTP<br/><input type="text" readonly value="sftp://{{ ansible_user }}@{{ inventory_hostname }}:{{ ansible_ssh_port|default('22')}}"></input></p>
                 </div>
             </div>
-{% if 'nodiscc.xsrv.samba' in role_names %}
+{% if ansible_local.samba.ansible_managed is defined and ansible_local.samba.ansible_managed %}
             <div class="col-1-3 mobile-col-1-1 samba">
                 <div class="content">
                     <p><img src="res/samba.png"/><br/>Samba<br/><input type="text" readonly value="smb://{{ inventory_hostname }}"></input></p>

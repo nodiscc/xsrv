@@ -14,6 +14,12 @@
   tags:
     - apache
 
+- include: mail.yml
+  become: yes
+  tags:
+    - apache
+    - mail
+
 - include: fail2ban.yml
   become: yes
   tags:
@@ -23,13 +29,25 @@
     - "'nodiscc.xsrv.common' in role_name"
     - setup_fail2ban|bool
 
-- include: monitoring.yml
+- include: rsyslog.yml
   become: yes
   tags:
     - apache
     - monitoring
+    - rsyslog
   when:
-    - '"nodiscc.xsrv.monitoring" in role_names'
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - apache
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
 
 - include: fact.yml
   become: yes
