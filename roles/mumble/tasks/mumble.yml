@@ -19,7 +19,7 @@
 
 ##### COMMAND-LINE/MISC INSTALLATION STEPS #####
 
-- name: update mumble superuser password (always returns changed)
+- name: update mumble superuser password (does not report changes)
   become: yes
   become_user: mumble-server
   command: murmurd -ini /etc/mumble-server.ini -supw {{ mumble_superuser_password }} # noqa 301
@@ -28,6 +28,7 @@
   failed_when:
     - 'mumble_update_superuser.rc not in [0, 1]'
     - '"Superuser password set on server" not in mumble_update_superuser.stdout'
+  changed_when: no # never return changed, murmurd always returns 'Superuser password set' regardless of if password was changed or not # TODO report issue
 
 ##### SERVICE #####
 

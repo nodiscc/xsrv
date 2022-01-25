@@ -65,6 +65,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea/nextcloud/tt_rss: remove hard dependency on postgresql role
 - transmission: log/show diff on configuration file changes
 - netdata/docker: move `netdata_min/max_running_docker_containers` configuration variables to the `docker` role
+- mumble: force superuser password change task to *never* return "changed" (instead of always)
 - doc: update documentation, document all ansible tags, refactor command-line usage doc
 - refactoring: move fail2ban/samba/rsyslog/netdata/... tasks to separate task files inside each role
 - tags: add `ssl` tag to all ssl-related tasks, add `rsnapshot-ssh-key` tag to all ssh-key-related tasks
