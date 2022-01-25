@@ -232,6 +232,7 @@ function init_host() {
     echo "    $host_name:" >> "$project_dir/inventory.yml"
     echo "[xsrv] INFO: adding default play for $host_name to project $project_name"
     templates_dir="$project_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
+    echo "" >> "$project_dir/playbook.yml"
     sed "s/my.example.org/$host_name/g" "$templates_dir/playbook.yml" >> "$project_dir/playbook.yml"
     echo "[xsrv] INFO: creating default host vars file for $host_name"
     mkdir -p "$project_dir/host_vars/$host_name"
