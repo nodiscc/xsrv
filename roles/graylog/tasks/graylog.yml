@@ -28,6 +28,7 @@
   shell: echo -n {{ graylog_root_password }} | sha256sum | cut -d" " -f1
   register: graylog_root_password_hash
   changed_when: false
+  check_mode: no # run even in check mode, does not change anything
 
 - name: copy graylog server configuration
   template: "{{ item }}"
