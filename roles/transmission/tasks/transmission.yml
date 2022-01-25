@@ -15,7 +15,7 @@
     group: debian-transmission
     mode: 0600
   notify: reload transmission-daemon
-  no_log: True
+  # no_log: True
 
 - name: add ansible user to debian-transmission group
   user:
