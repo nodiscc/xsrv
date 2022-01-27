@@ -10,8 +10,6 @@
 - name: install ansible modules requirements
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - aptitude # apt module
       - curl # http modules
@@ -23,8 +21,6 @@
 - name: install additional packages
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - atool # single tool to manipulate all archives/compressed file formats
       - less # a pager like 'more'
