@@ -65,7 +65,7 @@
 - name: allow jellyfin to read/write transmission downloads directory
   user:
     name: jellyfin
-    group: debian-transmission
+    groups: debian-transmission
     append: yes
   when:
     - ansible_local.transmission.ansible_managed is defined
