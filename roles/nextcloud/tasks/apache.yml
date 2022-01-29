@@ -1,3 +1,11 @@
+- name: detect php-fpm version
+  set_fact:
+    php_fpm_version: "{{ item.value }}"
+  when: "{{ item.condition }}" # noqa no-jinja-when
+  with_items:
+    - { value: "7.3", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'buster')" }
+    - { value: "7.4", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'bullseye')" }
+
 - name: enable apache2 modules
   command: a2enmod {{ item }}
   with_items:
@@ -12,8 +20,8 @@
 
 - name: copy php-fpm configuration
   template:
-    src: etc_php_7.4_fpm_pool.d_nextcloud.conf.j2
-    dest: /etc/php/7.4/fpm/pool.d/nextcloud.conf
+    src: etc_php_PHPVERSION_fpm_pool.d_nextcloud.conf.j2
+    dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/nextcloud.conf
     mode: 0644
   notify: restart php-fpm
 

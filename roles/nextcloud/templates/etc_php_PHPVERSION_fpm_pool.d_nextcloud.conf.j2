@@ -1,7 +1,7 @@
 [nextcloud]
 user = www-data
 group = www-data
-listen = /run/php/php7.4-fpm-nextcloud.sock
+listen = /run/php/php{{ php_fpm_version }}-fpm-nextcloud.sock
 listen.owner = www-data
 listen.group = www-data
 listen.allowed_clients = 127.0.0.1
