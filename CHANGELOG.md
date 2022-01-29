@@ -9,10 +9,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 
+**Added:**
+- common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+
+
 **Changed:**
 - xsrv: upgrade ansible to [v6.0.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
-
 
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-04
 

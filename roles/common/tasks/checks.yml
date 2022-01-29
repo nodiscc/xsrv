@@ -10,6 +10,7 @@
     - linux_users|type_debug == "list"
     - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump|bool
     - setup_apt == setup_apt|bool
+    - apt_listbugs == apt_listbugs|bool
     - apt_clean_days == apt_clean_days|int
     - apt_unattended_upgrades_origins_patterns|type_debug == "list"
     - apt_purge_nightly == apt_purge_nightly|bool
@@ -87,6 +88,18 @@
   when: setup_hosts_file|bool
   with_items: "{{ hosts_file_entries }}"
   tags: hosts
+
+- name: check that variables are correctly defined (apt-listbugs)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    that:
+      - apt_listbugs_action in ['force-no', 'force-yes', 'force-default']
+      - apt_listbugs_ignore_list|type_debug == "list"
+  when: apt_listbugs|bool
+  tags:
+    - apt
+    - apt-listbugs
 
 - name: check that obsolete variables have been removed
   assert:

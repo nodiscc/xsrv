@@ -76,6 +76,51 @@ apt_unattended_upgrades_origins_patterns:
   - "o=mongodb,a=buster,site=repo.mongodb.org" # nodiscc.xsrv.graylog
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
 
+# yes/no: setup apt-listbugs
+apt_listbugs: no
+# what to do when apt-listbugs finds a bug in a package about to be installed (force-no (default), force-yes/force-default)
+# force-no: abort the installation/upgrade as soon as bugs are found, unless bugs are listed in apt_listbugs_ignore_list
+# force-yes/force-default: accept to continue with the installation/upgrade even when bugs are found
+apt_listbugs_action: "force-no"
+# Debian bug numbers/packages to ignore for apt-listbugs (don't let these bugs block package installation)
+apt_listbugs_ignore_list:
+  - 909750 # https://bugs.debian.org/909750 - reason: FHS violation, not critical
+  - 933001 # https://bugs.debian.org/933001 - reason: plymouth is not installed
+  - 933749 # https://bugs.debian.org/933749 - reason: disk space not a problem on most hosts
+  - 935042 # https://bugs.debian.org/935042 - reason: skip-upgrade-test=yes set in monitoring role
+  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 935182 # https://bugs.debian.org/935182 - reason: only affects files on samba shares in specific setups
+  - 928963 # https://bugs.debian.org/928963 - reason: only affects sparc64, powerpc64, and s390x architectures
+  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 918012 # https://bugs.debian.org/918012 - reason: only affects debian 9
+  - 969072 # https://bugs.debian.org/969072 - reason: only happens during groff build, not when running the command
+  - 987570 # https://bugs.debian.org/987570 - reason: packaging bug, no impact
+  - 922981 # https://bugs.debian.org/922981 - reason: impact limited to new certificates, patch pending upload
+  - 929685 # https://bugs.debian.org/929685 - packaging bug, no impact
+  - 991449 # https://bugs.debian.org/991449 - not using bsd-mailx
+  - 994510 # https://bugs.debian.org/994510 - only affects i386 architecture
+  - 1000826 # https://bugs.debian.org/1000826 - only affects python 3.10
+  - 1003150 # https://bugs.debian.org/1003150 - distutils already installed
+  - 1000796 # https://bugs.debian.org/1000796 - no impact on common use cases
+  - 993716 # https://bugs.debian.org/993716 - IPv6 is disabled
+  - 945001 # https://bugs.debian.org/945001 - only affects hosts with multiple OS in grub
+  - 948318 # https://bugs.debian.org/948318 - old lbc6 versions are automatically removed
+  - 998516 # https://bugs.debian.org/998516 - only affects bridged interfaces, workaround in bug report
+  - 990026 # https://bugs.debian.org/990026 - MAILTO not used in cron jobs
+  - 1004111 # https://bugs.debian.org/1004111 - unconfirmed, unattended-upgrades failure will trigger an error report by mail
+  - 1003012 # https://bugs.debian.org/1003012 - fixed in point release
+  - 995387 # https://bugs.debian.org/994971 - only affects #994971/nvidia-driver not in use
+  - 992045 # https://bugs.debian.org/992045 - fixed in debian-security, local only, high RAM usage noticeable by monitoring
+  - 968368 # https://bugs.debian.org/968368 - option bond-master not in use
+  - 990428 # https://bugs.debian.org/990428 - option bond-slaves not in use
+  - 984574 # https://bugs.debian.org/984574 - fixed in point release, workaround in bug report
+  - 998008 # https://bugs.debian.org/998008 - NIS not in use
+  - 993578 # https://bugs.debian.org/993578 - fixed in point release, gpgconf --check-programs not used
+  - 990318 # https://bugs.debian.org/990318 - no impact, incomplete removal of python2
+  - 995115 # https://bugs.debian.org/995115 - unconfirmed, workaround is to comment out DPkg::Pre-Install-Pkgs in /etc/apt/apt.conf.d/10apt-listbugs
+  - 991936 # https://bugs.debian.org/991936 - fixed in point release, no workaround available
+
+
 ### DATE/TIME ###
 # yes/no: setup ntp time service
 setup_datetime: yes
