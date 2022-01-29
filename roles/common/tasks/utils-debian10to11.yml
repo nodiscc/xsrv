@@ -3,10 +3,27 @@
     msg: "Host is already running Debian 11. Nothing to do."
   when: ansible_distribution_release == "bullseye"
 
+- name: run pre-upgrade steps on Proxmox hosts
+  when: ansible_distribution_release == "buster"
+  block:
+    - name: check for presence of proxmox update check script
+      stat: path=/usr/bin/pve6to7
+      register: pve6to7
+    - name: run proxmox update check script
+      command: /usr/bin/pve6to7
+      when: pve6to7.stat.exists
+      check_mode: no # run even in check mode, does not change anything
+      changed_when: no
+    - name: show message when manual upgrade is required
+      debug:
+        msg: "WARNING: {{ inventory_hostname }} is a proxmox node and must be upgraded manually https://pve.proxmox.com/wiki/Upgrade_from_6.x_to_7.0"
+      changed_when: yes
+      when: pve6to7.stat.exists
+
 - name: upgrade Debian 10 to 11
   when: ansible_distribution_release == "buster"
   block:
-    - name: upgrade all packages to latest Debian 10 versions
+    - name: upgrade all packages to latest versions
       apt:
         upgrade: safe
         autoremove: yes
@@ -29,15 +46,18 @@
         regexp: "deb https?://security.debian.org/debian-security bullseye/updates"
         replace: "deb https://security.debian.org/debian-security bullseye-security"
       with_items: "{{ apt_sources_files.files | map(attribute='path') | list + ['/etc/apt/sources.list'] }}"
-    - name: upgrade all packages to Debian 11 versions
+    - name: upgrade all packages to latest versions
       apt:
         upgrade: dist
         update_cache: yes
         autoremove: yes
         purge: yes
+      when: not pve6to7.stat.exists
     - name: reboot host
       reboot:
         reboot_timeout: 6000
+      when: not pve6to7.stat.exists
     - name: show upgrade completion message
       debug:
         msg: "Upgrade to Debian 11 complete. Please run the playbook against this host to apply up-to-date configuration for Debian 11."
+      when: not pve6to7.stat.exists
