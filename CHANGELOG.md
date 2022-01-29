@@ -76,7 +76,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - proxmox: fix missing ansible fact file template
 - proxmox: fix APT configuration on Debian 10/11
 - fix `check` mode compatibility issues
-- common: ssh: fix creation of SFTP-only accounts
+- common: ssh: fix creation of SFTP-only accounts (`bad ownership or modes for chroot directory`)
 - common: ssh: ssh: fix root ssh logins when `ssh_permit_root_login: without-password/prohibit-password/forced-commands-only`
 - monitoring: netdata: fix chart values incorrectly increased by 1 in debsecan module
 - backup: fix mode/idempotence for `/root/.ssh` directory creation
