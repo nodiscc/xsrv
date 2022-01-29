@@ -12,6 +12,7 @@ galaxy_info:
       versions:
         - 9
         - 10
+        - 11
   galaxy_tags:
     - server
     - bookmarks

@@ -2,20 +2,28 @@
 
 ### PACKAGES ###
 
+- name: detect php-fpm version
+  set_fact:
+    php_fpm_version: "{{ item.value }}"
+  when: "{{ item.condition }}" # noqa no-jinja-when
+  with_items:
+    - { value: "7.3", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'buster')" }
+    - { value: "7.4", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'bullseye')" }
+
 - name: install required packages for tt-rss
   apt:
     state: present
     update_cache: yes
     cache_valid_time: 900
     package:
-      - php7.4-common
-      - php7.4-xml
-      - php7.4-json
-      - php7.4-intl
-      - php7.4-mbstring
-      - php7.4-curl
-      - php7.4-gd
-      - php7.4-opcache
+      - php-common
+      - php-xml
+      - php-json
+      - php-intl
+      - php-mbstring
+      - php-curl
+      - php-gd
+      - php-apcu
       - php-zip # required for data_migration plugin
 
 ##### TT-RSS INSTALLATION #####

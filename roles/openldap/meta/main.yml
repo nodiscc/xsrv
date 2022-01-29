@@ -11,7 +11,8 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - buster
+        - 10
+        - 11
   galaxy_tags:
     - ldap
     - directory

@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
 - common: firewall: remove ability to filter outgoing traffic, will be re-added later
-- common/apache: drop compatibility with Debian 10
+- drop compatibility with Debian 9
 - monitoring: remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables
 - mariadb: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - remove ansible tags `certificates lamp valheim valheim-server`
@@ -48,7 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: fail2ban: ban offenders on all ports
 - proxmox, backup: make roles compatible with Debian 11
 - jellyfin: the jellyfin samba share automatic setup is now disabled by default (`jellyfin_samba_share_enabled: no`)
-- apache/tt-rss/shaarli/nextcloud: migrate to php 7.4
+- apache/tt_rss/shaarli/nextcloud: make roles compatible with Debian 11 (PHP 7.4))
 - jellyfin/proxmox/docker: remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of `apt_unattended_upgrades_origins_patterns`
 - monitoring: split role to smaller `monitoring_rsyslog`/`monitoring_netdata`/`monitoring_utils` roles, make the `monitoring` role an alias for these 3 roles
 - common: apt: explicitly install aptitude

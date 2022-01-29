@@ -25,7 +25,7 @@ MDomain {{ shaarli_fqdn }}
 {% endif %}
 
   <FilesMatch \.php$>
-    SetHandler "proxy:unix:/run/php/php7.4-fpm-shaarli.sock|fcgi://localhost"
+    SetHandler "proxy:unix:/run/php/php{{ php_fpm_version }}-fpm-shaarli.sock|fcgi://localhost"
   </FilesMatch>
 
   <Directory {{ shaarli_install_dir }}>

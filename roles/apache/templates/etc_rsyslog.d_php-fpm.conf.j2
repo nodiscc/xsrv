@@ -1,7 +1,7 @@
 # rsyslog configuration for php-fpm logs
 
 input(type="imfile"
-      File="/var/log/php7.4-fpm.log"
+      File="/var/log/php{{ php_fpm_version }}-fpm.log"
       Tag="php-fpm:"
       Facility="daemon"
       PersistStateInterval="0")

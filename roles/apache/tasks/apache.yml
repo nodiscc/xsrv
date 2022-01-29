@@ -31,6 +31,7 @@
   apt:
     package:
       - libapache2-mod-php
+      - libapache2-mod-php7.3
       - libapache2-mod-php7.4
     state: absent
   notify: restart apache
@@ -40,6 +41,14 @@
   meta: flush_handlers
 
 ##### APACHE MODULES/CONFIGURATON #####
+
+- name: detect php-fpm version
+  set_fact:
+    php_fpm_version: "{{ item.value }}"
+  when: "{{ item.condition }}" # noqa no-jinja-when
+  with_items:
+    - { value: "7.3", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'buster')" }
+    - { value: "7.4", condition: "(ansible_distribution == 'Debian') and (ansible_distribution_release == 'bullseye')" }
 
 - name: copy apache2/php configuration
   template:
@@ -52,8 +61,8 @@
     - { src: 'etc_apache2_conf-available_ssl-common.conf.j2', dest: '/etc/apache2/conf-available/ssl-common.conf' }
     - { src: 'etc_apache2_conf-available_mod-md.conf.j2', dest: '/etc/apache2/conf-available/mod-md.conf' }
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf' }
-    - { src: 'etc_php_7.4_fpm_pool.d_www.conf.j2', dest: '/etc/php/7.4/fpm/pool.d/www.conf' }
-    - { src: 'etc_php_7.4_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/7.4/cli/conf.d/20-apcu.ini' }
+    - { src: 'etc_php_PHPVERSION_fpm_pool.d_www.conf.j2', dest: '/etc/php/{{ php_fpm_version }}/fpm/pool.d/www.conf' }
+    - { src: 'etc_php_PHPVERSION_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/{{ php_fpm_version }}/cli/conf.d/20-apcu.ini' }
   notify:
     - reload apache
     - restart php-fpm
