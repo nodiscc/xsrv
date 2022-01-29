@@ -20,11 +20,11 @@
     groups: "ssh"
     name: "{{ ansible_user }}"
 
-- name: create sftponly group (members of this group are only to use SFTP, not SSH)
+- name: create sftponly group
   group:
     name: sftponly
 
-- name: create /var/lib/sftp (base directory for sftponly accounts homes)
+- name: create base directory for sftponly accounts homes
   file:
     path: /var/lib/sftp
     state: directory
