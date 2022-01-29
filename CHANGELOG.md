@@ -27,7 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: netdata: allow disabling specific plugins (`netdata_disabled_plugins`), disable `ebpf` plugin by default
 - monitoring: lynis: enable lynis installation and daily reports by default
 - common: ssh: fix lynis warning FILE-7524 (ensure `/root/.ssh` is mode 0700)
-- common: mail/msmtp: allow disabling SMTP authentication/LOGIN (`msmtp_auth_enabled`)
+- common: mail/msmtp: allow disabling SMTP authentication/LOGIN (`msmtp_auth_enabled`), allow disabling SMTP server TLS certificate verification completely (`msmtp_tls_certcheck: yes/no`)
 - common: mail/msmtp: allow disabling TLS (`msmtp_tls_enabled`)
 - monitoring: netdata: allow automated testing of netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
 - docker: add a nightly cleanup of unused docker images/containers/networks/build cache, allow disabling it through `docker_prune_nighlty: no`

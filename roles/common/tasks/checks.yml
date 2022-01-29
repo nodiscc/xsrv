@@ -40,8 +40,9 @@
       - msmtp_auth_enabled == msmtp_auth_enabled|bool
       - msmtp_tls_enabled == msmtp_tls_enabled|bool
       - msmtp_admin_email is not search("CHANGEME")
-      - msmtp_from is string
+      - msmtp_from is not search("CHANGEME")
       - msmtp_starttls == msmtp_starttls|bool
+      - msmtp_tls_certcheck == msmtp_tls_certcheck|bool
   when: setup_msmtp|bool
   tags:
     - mail
