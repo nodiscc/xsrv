@@ -1,6 +1,6 @@
 # xsrv.common
 
-This role will install/configure a basic Debian-based server:
+This role will configure a basic Debian-based server:
 
 - hostname
 - DNS resolution (`/etc/resolv.conf`)
@@ -8,9 +8,9 @@ This role will install/configure a basic Debian-based server:
 - sysctl/kernel settings: networking, swap/memory management, security
 - **APT package manager** configuration:
   - Debian stable + Debian security + Debian backports [repositories](https://wiki.debian.org/SourcesList)
-  - Automatic security updates ([`unattended-upgrades`](https://wiki.debian.org/UnattendedUpgrades))
-  - Preserve manually changed [`conffiles`](https://www.debian.org/doc/manuals/maint-guide/dother.en.html#conffiles) during upgrades
-  - Don't install [`recommended`](https://www.debian.org/doc/debian-policy/ch-relationships.html#binary-dependencies-depends-recommends-suggests-enhances-pre-depends) packages
+  - automatic security updates ([`unattended-upgrades`](https://wiki.debian.org/UnattendedUpgrades))
+  - preserve manually changed [`conffiles`](https://www.debian.org/doc/manuals/maint-guide/dother.en.html#conffiles) during upgrades
+  - don't install [`recommended`](https://www.debian.org/doc/debian-policy/ch-relationships.html#binary-dependencies-depends-recommends-suggests-enhances-pre-depends) packages
 - NTP date/time synchronization
 - user accounts, resources, PAM restrictions
 - SSH server
@@ -18,11 +18,12 @@ This role will install/configure a basic Debian-based server:
 - firewall ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
 - intrusion/bruteforce detection and prevention system (`fail2ban`)
 - outgoing mail through an external SMTP relay (`msmtp`)
-- basic command-line utilities/diagnostic tools
 - streamlining/removal of unwanted packages
 - `haveged` random number generator/entropy source for virtual machines
+- installation of basic command-line utilities/diagnostic tools
 
-All sections can be disabled/enabled independently.
+
+All components can be disabled/enabled independently.
 
 In addition, this role provides a procedure to upgrade Debian 10 hosts to Debian 11. The tag `debian10to11` must be passed explicitly for this procedure to run.
 
@@ -41,6 +42,13 @@ See [meta/main.yml](meta/main.yml)
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 ansible_user: "CHANGEME"
 ansible_become_pass: "CHANGEME"
+
+# if setup_msmtp: yes
+setup_msmtp: yes
+msmtp_host: "smtp.CHANGEME.org"
+msmtp_username: "CHANGEME"
+msmtp_password: "CHANGEME"
+msmtp_admin_email: "CHANGEME@CHANGEME.org"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
