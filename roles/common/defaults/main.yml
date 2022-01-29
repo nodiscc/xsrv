@@ -1,4 +1,8 @@
 ##### COMMON/GENERAL SYSTEM SETTINGS #####
+##### HOSTNAME #####
+# yes/no: update hostname using ansible inventory name
+setup_hostname: yes
+
 ##### DNS RESOLVER #####
 # update DNS nameserver settings (resolv.conf) (yes/no)
 setup_dns: no

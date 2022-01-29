@@ -10,6 +10,7 @@
       - apt_unattended_upgrades_origins_patterns|type_debug == "list"
       - setup_cli_utils == setup_cli_utils|bool
       - setup_dns == setup_dns|bool
+      - setup_hostname == setup_hostname|bool
       - setup_hosts == setup_hosts|bool
       - setup_firewall == setup_firewall|bool
       - firewalld|type_debug == "list"
