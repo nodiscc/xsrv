@@ -32,13 +32,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: netdata: allow automated testing of netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
 - docker: add a nightly cleanup of unused docker images/containers/networks/build cache, allow disabling it through `docker_prune_nighlty: no`
 - xsrv: add `xsrv help-tags` subcommand (show the list of ansible tags in the play and their descriptions)
-- fail2ban: install ansible fact file when fail2ban is deployed
+- install ansible local fact files for each deployed role/component
 
 **Removed:**
 - common: remove [firehol](https://firehol.org/) firewall management tool, remove `firehol_*` configuration variables
 - common: firewall: remove ability to filter outgoing traffic, will be re-added later
 - drop compatibility with Debian 9
 - monitoring: remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables
+- common: fail2ban: remove `fail2ban_destemail` variable, always send mail to root
 - mariadb: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - remove ansible tags `certificates lamp valheim valheim-server`
 

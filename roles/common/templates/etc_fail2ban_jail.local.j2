@@ -10,7 +10,7 @@ maxretry  = {{ fail2ban_default_maxretry }}
 # effective ban duration (in seconds or time abbreviation format)
 bantime   = {{ fail2ban_default_bantime }}
 # destination email address used for banactions 'action_m*' which trigger sending an email
-destemail = {{ fail2ban_destemail }}
+destemail = root
 # default banning action
 banaction = iptables-ipset-proto6-allports
 
