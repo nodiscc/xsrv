@@ -7,6 +7,7 @@ This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a m
 - automatic local [backups](tasks/backup.yml)
 - [fail2ban](tasks/fail2ban.yml) login bruteforce prevention
 - monitoring and log aggregation through [netdata](tasks/netdata.yml) and [rsyslog](tasks/rsyslog.yml)
+- [python client for the Shaarli API](https://github.com/shaarli/python-shaarli-client/)
 
 
 ## Requirements/dependencies/example playbook
@@ -58,6 +59,7 @@ To restore backups, deploy the role and restore the `data/` directory:
 ```bash
 sudo rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/www/links.CHANGEME.org/data /var/www/links.CHANGEME.org/
 ```
+
 
 ### Upgrades
 

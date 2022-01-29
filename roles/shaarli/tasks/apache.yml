@@ -30,3 +30,9 @@
   args:
     creates: "/etc/apache2/sites-enabled/shaarli.conf"
   notify: reload apache
+
+- name: add shaarli instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ shaarli_fqdn }}" # noqa 203

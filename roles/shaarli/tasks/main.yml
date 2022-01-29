@@ -63,6 +63,13 @@
   become: yes
   tags: shaarli
 
+- include: shaarli-client.yml
+  become: yes
+  tags:
+    - shaarli
+    - shaarli-client
+  when: shaarli_setup_python_client|bool
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: shaarli

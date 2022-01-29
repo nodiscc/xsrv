@@ -28,6 +28,8 @@ shaarli_overwrite_config: no
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 shaarli_https_mode: selfsigned
+# install python-shaarli-client, dump all shaarli data to /var/shaarli/shaarli.json every hour (yes/no)
+shaarli_setup_python_client: no
 # Shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
