@@ -1,10 +1,10 @@
 # rsyslog configuration for gitea logs
 
-input(type="imfile"
-      File="/var/lib/gitea/log/access.log"
-      Tag="gitea:"
-      Facility="daemon"
-      PersistStateInterval="0")
+# input(type="imfile"
+#       File="/var/lib/gitea/log/access.log"
+#       Tag="gitea:"
+#       Facility="daemon"
+#       PersistStateInterval="0")
 
 input(type="imfile"
       File="/var/lib/gitea/log/gitea.log"
