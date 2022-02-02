@@ -2,19 +2,27 @@
 
 ### xsrv/xsrv
 
+- #697 - WIP: make netdata filechecks configurable - **`-`** `enhancement,monitoring`
+- #691 - common: ssh: make default SSH HMACs/KEX algorithms configurable - **`-`** `enhancement`
+- #689 - WIP: shaarli add python API client - **`-`** `feature`
+- #686 - samba: announce shares over  MDNS - **`-`** `enhancement`
+- #685 - apache: automate running SSLLabs scans against all virtualhosts - **`-`** `feature`
+- #684 - alltube role? - **`-`** `feature,question`
+- #683 - [DEPRECATION WARNING]: "include" is deprecated, use include_tasks/import_tasks instead. - **`2.0.0`** `maintenance`
+- #682 - xsrv: xinit-host: host_vars file is not templated properly - **`1.5.0`** `bug`
+- #681 - doc: all screenshots.debian.net thumbs are broken - **`-`** `bug,documentation`
+- #678 - WIP allow whitelisting debsecan bugs - **`-`** `enhancement,security`
+- #675 - pgmetrics: write results to file on the controller - **`-`** `enhancement`
+- #672 - [DEPRECATION WARNING]: "include" is deprecated, use include_tasks/import_tasks instead - **`-`** `maintenance`
 - #671 - firewalld blocks traffic from docker containers - **`1.5.0`** `bug`
-- #670 - gitea: upgrade to v1.15.9 - **`1.5.0`** `easy,maintenance`
-- #669 - update ansible to 5.2.0 - **`1.5.0`** `easy,maintenance`
 - #668 - apache: allow defining custom ErrorDocuments - **`-`** `enhancement`
-- #654 - WIP add apt-listbugs - **`1.5.0`** `enhancement`
+- #654 - WIP add apt-listbugs - **`-`** `easy,enhancement`
 - #653 - [WARNING]: Found variable using reserved name: hosts - **`1.5.0`** `bug,easy`
 - #652 - libvirt: allow setting up hooks to forward ports to VMs - **`-`** `enhancement`
-- #649 - WIP: xsrv: add help-tags subcommand (show the list of ansible tags in the play and their descriptions) - **`1.5.0`** `easy,enhancement`
 - #648 - graylog: setup authentication fro mongodb - **`-`** `easy,enhancement,security`
 - #647 - WIP tests/Makefile: add test_ansible_check_localhost target (run check mode against localhost) - **`-`** `enhancement,tools`
-- #646 - WIPautomate test VM setup - **`-`** `enhancement,tools`
+- #646 - WIP automate test VM setup - **`-`** `enhancement,tools`
 - #645 - WIP netdata: exclude /dev/ and /dev/shm from disk space metrics - **`-`** `configuration,enhancement,monitoring`
-- #644 - WIP split monitoring roles to `monitoring_rsyslog,netdata,lynis` - **`1.5.0`** `maintenance,performance`
 - #642 - mumble: LDAP user backend - **`-`** `enhancement`
 - #641 - common: implement manual reboot/shudown (utils-reboot/utils-shutdown ansible tags) - **`-`** `easy,enhancement,feature`
 - #640 - common: apt: enable purging data/configuration files by default - **`-`** `configuration,enhancement`
@@ -23,7 +31,6 @@
 - #637 - firewalld: implement DNAT/SNAT - **`1.5.0`** `enhancement`
 - #636 - proxmox: aggregate proxmox  logs to syslog - **`-`** `configuration,easy,enhancement,monitoring`
 - #635 - firewalld: implement outbound traffic filtering - **`1.5.0`** `enhancement,security`
-- #634 - postgresql: add ability to run pgmetrics against the postgresql instance - **`1.5.0`** `easy,feature,monitoring,performance`
 - #628 - limit fact gathering inside roles to ansible_local facts (speed up setup: tasks) - **`-`** `enhancement,performance`
 - #627 - WIP implement molecule testing - **`1.5.0`** `enhancement,maintenance,tools`
 - #624 - update nextcloud to 23.0.0 - **`-`** `enhancement,maintenance`
@@ -175,7 +182,7 @@
 - #330 - netdata: monitor php-fpm - **`-`** `enhancement,monitoring`
 - #328 - apache: mpm_event performance tuning - **`-`** `enhancement,performance`
 - #327 - nextcloud: verify gpg signatures - **`-`** `enhancement,security`
-- #317 - Harden systemd services - **`-`** `enhancement,security`
+- #317 - Harden systemd services - **`1.5.0`** `enhancement,security`
 - #316 - WIP: add a basic, static website virtualhost - **`-`** `easy,enhancement,feature`
 - #310 - samba: ability to whitelist/blacklist files by extension - **`-`** `enhancement,security`
 - #309 - apply postgresqltuner recommended settings? - **`-`** `enhancement,performance`
@@ -350,7 +357,7 @@
 - #32 - Minetest server - **`-`** `feature`
 - #31 - Add bash completion to xsrv script - **`-`** `enhancement`
 - #30 - Gitlab role - **`-`** `feature`
-- #27 - nginx role - **`-`** `feature,question`
+- #27 - nginx role? - **`-`** `feature,question`
 - #26 - Dynamic DNS updater - **`-`** `feature`
 - #25 - DNS Server - **`1.5.0`** `feature`
 - #24 - DHCP/TFTP/PXE server - **`-`** `feature`
