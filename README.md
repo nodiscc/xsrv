@@ -31,7 +31,10 @@ This project provides:
 - [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
-- [monitoring](roles/monitoring) - Real-time monitoring, alerting and logging system
+- [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
+- [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
+- [monitoring_rsyslog](roles/monitoring_rsyslog) - Log aggregation, processing and forwarding system
+- [monitoring_utils](roles/monitoring_utils) - Various monitoring and audit utilities
 - [mumble](roles/mumble) - Low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [openldap](roles/openldap) - LDAP directory server
