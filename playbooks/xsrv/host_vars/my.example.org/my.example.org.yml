@@ -1,7 +1,5 @@
 # configuration variables for my.example.org
-# Set required configuration variables
-# Please set all values labeled CHANGEME.
-# You may remove variables for roles you don't use
+# please set required configuration variables (CHANGEME), and remove variables for roles you don't use
 
 ansible_host: "%%ANSIBLE_HOST%%"
 ansible_port: "%%ANSIBLE_PORT%%"
@@ -28,7 +26,7 @@ openldap_organization: "CHANGEME"
 openldap_base_dn: "dc=CHANGEME,dc=org"
 ##### GRAYLOG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml
 graylog_fqdn: "logs.CHANGEME.org"
-#### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
+##### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_auth_username: "CHANGEME"
 gotty_auth_password: "CHANGEME"
 gotty_run_username: "CHANGEME"

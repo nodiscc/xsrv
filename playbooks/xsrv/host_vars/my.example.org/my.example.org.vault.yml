@@ -1,43 +1,36 @@
-# encrypted configuration variables for my.example.org
-# Set required (encrypted) secrets.
-# Random values are generated where possible
-# Please set all values labeled CHANGEME.
-# You may remove variables for roles you don't use
+# encrypted configuration variables for my.example.org (ansible-vault)
+# please set required configuration variables (CHANGEME), and remove variables for roles you don't use
+# random values are generated where possible
 
-##### GENERAL #####
+##### CONNECTION
 # administrator account (sudo) username/password
 ansible_user: "CHANGEME"
 ansible_become_pass: "CHANGEME"
+##### GENERAL
 # default global username/password/email for applications/services admin accounts
 xsrv_admin_username: "CHANGEME"
 xsrv_admin_password: "CHANGEME20"
 xsrv_admin_email: "CHANGEME@CHANGEME.org"
-
 ##### APACHE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml
 apache_letsencrypt_email: "{{ xsrv_admin_email }}"
-
 ##### NEXTCLOUD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml
 nextcloud_user: "{{ xsrv_admin_username }}"
 nextcloud_password: "{{ xsrv_admin_password }}"
 nextcloud_admin_email: "{{ xsrv_admin_email }}"
 nextcloud_db_password: "CHANGEME20"
-
 ##### SHAARLI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml
 shaarli_username: "{{ xsrv_admin_username }}"
 shaarli_password: "{{ xsrv_admin_password }}"
 shaarli_password_salt: "CHANGEME40" # 40 characters
 shaarli_api_secret: "CHANGEME12" # 12 or more characters
-
 ##### TT_RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt-rss/defaults/main.yml
 tt_rss_user: "{{ xsrv_admin_username }}"
 tt_rss_password: "{{ xsrv_admin_password }}"
 tt_rss_db_password: "CHANGEME20"
 tt_rss_password_salt: "CHANGEME250" # 250 characters
-
 ##### TRANSMISSION - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml
 transmission_username: "{{ xsrv_admin_username }}"
 transmission_password: "{{ xsrv_admin_password }}"
-
 ##### GITEA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml
 gitea_admin_username: "{{ xsrv_admin_username }}"
 gitea_admin_password: "{{ xsrv_admin_password }}"
@@ -47,19 +40,15 @@ gitea_internal_token: "CHANGEME106" # 106 characters
 gitea_secret_key: "CHANGEME64" # 64 characters
 gitea_oauth2_jwt_secret: "CHANGEME43" # 43 characters
 gitea_lfs_jwt_secret: "CHANGEME43" # 43 characters
-
 ##### MUMBLE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mumble/defaults/main.yml
 mumble_password: "CHANGEME20"
 mumble_superuser_password: "{{ xsrv_admin_password }}"
-
 ##### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
 openldap_admin_password: "CHANGEME30"
 openldap_bind_password: "CHANGEME30"
-
 #### GRAYLOG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml
 graylog_root_username: "{{ xsrv_admin_username }}"
 graylog_root_password: "{{ xsrv_admin_password }}"
 graylog_secret_key: "CHANGEME96"
-
 #### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_fqdn: "tty.CHANGEME.org"
