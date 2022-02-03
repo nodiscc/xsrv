@@ -83,6 +83,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: netdata: fix chart values incorrectly increased by 1 in debsecan module
 - backup: fix mode/idempotence for `/root/.ssh` directory creation
 - graylog: fix configuration file templating always returning changed in check mode
+- default playbook/xsrv: fix invalid `"%%ANSIBLE_HOST%%"` value set by `xsrv init-host`
 
 
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17

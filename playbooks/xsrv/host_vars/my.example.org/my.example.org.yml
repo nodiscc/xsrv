@@ -1,8 +1,10 @@
 # configuration variables for my.example.org
 # please set required configuration variables (CHANGEME), and remove variables for roles you don't use
 
-ansible_host: "%%ANSIBLE_HOST%%"
-ansible_port: "%%ANSIBLE_PORT%%"
+##### CONNNECTION
+# SSH host/port, if different from my.example.org/22
+# ansible_host: "my.example.org"
+# ansible_port: 22
 ##### GITEA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml
 gitea_fqdn: "git.CHANGEME.org"
 ##### HOMEPAGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml
