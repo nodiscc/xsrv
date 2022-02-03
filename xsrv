@@ -230,23 +230,29 @@ function init_host() {
     fi
     echo "[xsrv] INFO: adding $host_name to the last inventory group"
     echo "    $host_name:" >> "$project_dir/inventory.yml"
+
     echo "[xsrv] INFO: adding default play for $host_name to project $project_name"
     templates_dir="$project_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
     echo "" >> "$project_dir/playbook.yml"
     sed "s/my.example.org/$host_name/g" "$templates_dir/playbook.yml" >> "$project_dir/playbook.yml"
+
     echo "[xsrv] INFO: creating default host vars file for $host_name"
     mkdir -p "$project_dir/host_vars/$host_name"
     host_vars_file="$project_dir/host_vars/$host_name/$host_name.yml"
     sed "s/my.example.org/$host_name/g" "$templates_dir/host_vars/my.example.org/my.example.org.yml" > "$host_vars_file"
+
     echo "[xsrv] INFO: creating default vault file for $host_name"
     host_vault_file="$project_dir/host_vars/$host_name/$host_name.vault.yml"
     sed "s/my.example.org/$host_name/g" "$templates_dir/host_vars/my.example.org/my.example.org.vault.yml" > "$host_vault_file"
+
     gen_random_passwords "$host_vault_file"
     edit_playbook "$project_name"
     edit_host "$project_name" "$host_name"
+
     echo "[xsrv] INFO: Encrypting secrets file"
     (cd "$project_dir/" && ansible-vault encrypt "$project_dir/host_vars/$host_name/$host_name.vault.yml")
     edit_vault "$project_name" "$host_name"
+
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $project_name $host_name"
 }
 
