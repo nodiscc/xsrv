@@ -15,7 +15,7 @@
   tags:
     - common
     - hosts
-  when: setup_hosts|bool
+  when: setup_hosts_file|bool
 
 - include: dns.yml
   become: yes

@@ -13,12 +13,12 @@ setup_dns: no
 #   - "1.0.0.1"
 dns_nameservers: []
 
-##### HOSTS #####
+##### HOSTS FILE #####
 # update hosts file (yes/no)
-setup_hosts: yes
+setup_hosts_file: yes
 # list of hosts to add/remove from the hosts file
 # Example:
-# hosts:
+# hosts_file_entries:
 #   - ip_address: "10.0.0.1"
 #     hostname: "srv01.example.org"
 #     state: present # optional, absent/present, default present
@@ -26,7 +26,7 @@ setup_hosts: yes
 #     hostname: "srv02.example.org mail.example.org"
 #   - ip_address: "1.2.3.4"
 #     state: absent
-hosts: []
+hosts_file_entries: []
 
 ##### SYSCTL (NETWORKING/MEMORY) #####
 # update sysctl settings (yes/no)

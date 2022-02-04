@@ -11,7 +11,7 @@
       - setup_cli_utils == setup_cli_utils|bool
       - setup_dns == setup_dns|bool
       - setup_hostname == setup_hostname|bool
-      - setup_hosts == setup_hosts|bool
+      - setup_hosts_file == setup_hosts_file|bool
       - setup_firewall == setup_firewall|bool
       - firewalld|type_debug == "list"
       - setup_fail2ban == setup_fail2ban|bool
@@ -67,8 +67,8 @@
     that:
       - item.ip_address|ansible.netcommon.ipaddr
       - (item.state is not defined) or (item.state in ['present', 'absent'])
-  with_items: "{{ hosts }}"
-  when: setup_hosts|bool
+  with_items: "{{ hosts_file_entries }}"
+  when: setup_hosts_file|bool
   tags: hosts
 
 - name: check that variables are correctly defined (firewalld_zone_sources)
