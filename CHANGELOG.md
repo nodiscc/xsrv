@@ -46,10 +46,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - remove ansible tags `certificates lamp valheim valheim-server`
 
 **Changed:**
+- make all roles compatible with Debian 11
 - common/firewall/all roles: let roles manage their own firewall rules if the `nodiscc.xsrv.firewalld` role is deployed
 - all roles: refactor/performance: only flush handlers once, unless required otherwise, refactor service start/stop/enable/disable tasks
 - common: fail2ban: ban offenders on all ports
-- proxmox, backup: make roles compatible with Debian 11
 - jellyfin: the jellyfin samba share automatic setup is now disabled by default (`jellyfin_samba_share_enabled: no`)
 - apache/tt_rss/shaarli/nextcloud: make roles compatible with Debian 11 (PHP 7.4))
 - jellyfin/proxmox/docker: remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade`, `docker_auto_upgrade` variables, add these origins to the default list of `apt_unattended_upgrades_origins_patterns`
@@ -59,7 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: apt: automatically remove unused dependency packages on every install/upgrade/remove operation
 - common: fail2ban: increase maximum IP/attempts count retention to 1 year
 - common: ssh: decrease SFTP logs verbosity to INFO by default
-- common: msmtp: make role compatible with Debian 10/11
+- common/graylog: apt: enable automatic upgrades for graylog/mongodb/elasticsearch packages by default
 - gitea: upgrade to v1.15.10 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.15.8), [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.15.9), [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.15.10)
 - xsrv: upgrade ansible to [5.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - apache: relax permissions on apache virtualhost config files (make them world-readable)
