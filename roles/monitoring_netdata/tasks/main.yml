@@ -10,6 +10,12 @@
     - monitoring
     - netdata
 
+- include: fact.yml
+  become: yes
+  tags:
+    - monitoring
+    - netdata
+
 - include: netdata-module-needrestart.yml
   become: yes
   tags:
