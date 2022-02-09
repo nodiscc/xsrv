@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
 - xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple group_vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
 - netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
+- doc: update documentation, improve default playbook template README.md
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
