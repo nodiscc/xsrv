@@ -19,6 +19,12 @@ netdata_disable_access_log: yes
 # netdata plugins to disable
 netdata_disabled_plugins:
   - ebpf
+# Netdata notification downtimes (list), no notifications will be sent during these intervals
+# start/end: cron expression for downtime start/end time. Example:
+# netdata_notification_downtimes:
+#   - start: "01 19 * * *"
+#     end: "00 07 * * *"
+netdata_notification_downtimes: []
 # firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 netdata_firewalld_zones:

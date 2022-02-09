@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - monitoring_utils: install [debsums](https://packages.debian.org/sid/debsums) utility for the verification of packages with known good database (by default, run weekly)
 - common: cron: allow disabling cron setup (`setup_cron: yes/no`)
+- monitoring_netdata: allow configuring netdata notification downtime periods (start/end)
+
 
 **Changed:**
 - common: cron: include the FDQN in subject when sending mail

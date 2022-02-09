@@ -175,6 +175,15 @@
     - restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: install netdata downtime cron jobs
+  template:
+    src: etc_cron.d_netdata-downtime.j2
+    dest: /etc/cron.d/netdata-downtime
+    owner: root
+    group: root
+    mode: 0644
+  tags: netdata-downtime
+
 - name: remove files from old versions of the role
   file:
     state: absent
