@@ -204,6 +204,8 @@
 # This also disables share-level authentication.
   client NTLMv2 auth = yes
 
+# Allow NTLMv1 auth (required for legacy clients), even though it is known to be insecure
+#    ntlm auth = yes
 
 ########## Domains ###########
 
