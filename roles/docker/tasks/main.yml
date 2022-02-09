@@ -12,6 +12,15 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed|bool
 
+- include: firewalld.yml
+  become: yes
+  tags:
+    - docker
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
 - include: fact.yml
   become: yes
   tags: docker

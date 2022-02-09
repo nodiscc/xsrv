@@ -1,0 +1,18 @@
+- name: add docker interfaces to the docker zone
+  ansible.posix.firewalld:
+    zone: docker
+    interface: "{{ item }}"
+    permanent: yes
+    state: enabled
+  with_items:
+    - docker0
+    - docker_gwbridge
+  notify: reload firewalld
+
+- name: enable masquerade for outbound packets from the public zone
+  ansible.posix.firewalld:
+    masquerade: yes
+    zone: public
+    permanent: yes
+    state: enabled
+  notify: reload firewalld
