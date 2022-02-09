@@ -1,0 +1,23 @@
+# examples:
+# alarm: filecheck_file1_exists
+#    on: filecheck_file1.file_existence
+#  calc: $_path_to_file1
+# every: 5m
+#  crit: $this = 0
+#  info: existence of /path/to/file1
+
+# alarm: filecheck_file1_max_age
+#    on: filecheck_file1.file_mtime_ago
+#  calc: $_path_to_file1
+# every: 5m
+# units: seconds
+#  warn: $this > 88200 # 24h
+#  crit: $this > 90000 # 25h
+#  info: time since last modification of /path/to/file1
+
+# alarm: filecheck_dir2_numfiles
+#    on: filecheck_dir2_dir_num_of_files
+#  calc: $_path_to_dir2
+# every: 5m
+#  warn: $this > 0
+#  info: number of files in /path/to/dir2/
