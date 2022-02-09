@@ -349,6 +349,11 @@ function self_upgrade() {
     fi
 }
 
+function format_ansible_tags() {
+    # format ansible-playbook --list tags output as a list, one item per line
+    grep 'TASK TAGS:' | sed 's/      TASK TAGS: \[//' | sed 's/\]$//' | sed 's/, /\n/g' | sort --unique
+}
+
 function help_tags() {
     # show the list of tags and their descriptions
     check_project_exists
@@ -361,14 +366,11 @@ function help_tags() {
     echo "TAGS:"
     echo "$tags_doc"
     tags_doc_short=$(echo "$tags_doc" | cut -d " " -f 1 | sort --unique)
-    tags_discovered=$(ansible-playbook playbook.yml --list-tags | \
-        grep 'TASK TAGS:' | \
-        sed 's/      TASK TAGS: \[//' | \
-        sed 's/\]$//' | \
-        sed 's/, /\n/g' | \
-        sort --unique)
+    tags_discovered_regular=$(ansible-playbook playbook.yml --list-tags | format_ansible_tags )
+    tags_discovered_never=$(ansible-playbook playbook.yml --list-tags --tags never | format_ansible_tags )
+    tags_discovered_all=$(echo "$tags_discovered_regular" "$tags_discovered_never" | sort --unique)
     echo "OTHER TAGS:"
-    diff --changed-group-format='%<%>' --unchanged-group-format='' <(echo "$tags_doc_short") <(echo "$tags_discovered")
+    diff --changed-group-format='%<%>' --unchanged-group-format='' <(echo "$tags_doc_short") <(echo "$tags_discovered_all")
 }
 
 
