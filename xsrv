@@ -366,9 +366,7 @@ function help_tags() {
     echo "TAGS:"
     echo "$tags_doc"
     tags_doc_short=$(echo "$tags_doc" | cut -d " " -f 1 | sort --unique)
-    tags_discovered_regular=$(ansible-playbook playbook.yml --list-tags | format_ansible_tags )
-    tags_discovered_never=$(ansible-playbook playbook.yml --list-tags --tags never | format_ansible_tags )
-    tags_discovered_all=$(echo "$tags_discovered_regular" "$tags_discovered_never" | sort --unique)
+    tags_discovered_all=$(ansible-playbook playbook.yml --list-tags --tags never,all | format_ansible_tags )
     echo "OTHER TAGS:"
     diff --changed-group-format='%<%>' --unchanged-group-format='' <(echo "$tags_doc_short") <(echo "$tags_discovered_all")
 }
