@@ -13,13 +13,13 @@
   when: not ansible_check_mode
 
 - name: hash LDAP admin password
-  shell: slappasswd -s {{ openldap_admin_password }} # noqa 305
+  shell: slappasswd -s {{ openldap_admin_password }} # noqa command-instead-of-shell
   register: slapd_admin_password
   changed_when: False # does not change anything
   when: not ansible_check_mode
 
 - name: hash LDAP 'bind' user password
-  shell: slappasswd -s {{ openldap_bind_password }} # noqa 305
+  shell: slappasswd -s {{ openldap_bind_password }} # noqa command-instead-of-shell
   register: slapd_bind_password
   changed_when: False # does not change anything
   when: not ansible_check_mode
