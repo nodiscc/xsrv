@@ -12,7 +12,6 @@ This role will install and configure [Netdata](https://my-netdata.io/), a real-t
 See [meta/main.yml](meta/main.yml)
 
 ```yaml
-```yaml
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall
