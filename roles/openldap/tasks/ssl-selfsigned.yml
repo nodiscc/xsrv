@@ -14,13 +14,12 @@
     owner: root
     group: root
     mode: 0750
-  check_mode: no
 
 - name: generate openssl private key
   openssl_privatekey:
     path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
   notify: restart apache
-  check_mode: no
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl certificate signing request
   openssl_csr:
@@ -29,7 +28,7 @@
     common_name: "{{ openldap_base_dn }}"
     key_usage: "digitalSignature,keyEncipherment"
     basicConstraints: "CA:TRUE"
-  check_mode: no # TODO replace by allow_failure: "{{ ansible_check_mode }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:
@@ -38,3 +37,4 @@
     csr_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.csr"
     provider: selfsigned
   notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
