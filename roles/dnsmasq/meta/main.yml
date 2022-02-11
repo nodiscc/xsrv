@@ -1,0 +1,19 @@
+# @tag dnsmasq - setup dnsmasq DNS server
+
+galaxy_info:
+  role_name: dnsmasq
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Lightweight DNS server"
+  license: GPL-3.0
+  min_ansible_version: 2.12
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+  galaxy_tags:
+    - dns
+    - server
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring

@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
+- add [dnsmasq](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq) lightweight DNS server role
 - common: add [firewalld](https://firewalld.org/) firewall management tool
 - common: apt: allow configuration of allowed origins for unattended-upgrades
 - common: packages: add `at` task scheduler

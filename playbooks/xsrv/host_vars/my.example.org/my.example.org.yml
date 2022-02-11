@@ -32,3 +32,7 @@ graylog_fqdn: "logs.CHANGEME.org"
 gotty_auth_username: "CHANGEME"
 gotty_auth_password: "CHANGEME"
 gotty_run_username: "CHANGEME"
+##### DNSMASQ - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml
+##### COMMON - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml
+##### NETDATA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml
+##### SAMBA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml

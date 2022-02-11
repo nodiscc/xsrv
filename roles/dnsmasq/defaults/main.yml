@@ -1,0 +1,35 @@
+# List of recursive DNS servers to forward DNS requests to
+# Example:
+# dnsmasq_upstream_servers:
+#   - 1.1.1.1
+#   - 1.0.0.1
+dnsmasq_upstream_servers:
+  - CHANGEME
+  - CHANGEME
+# List of DNS A records
+# Example:
+# dnsmasq_records:
+#   - name: my.example.org # the record name
+#     ip: 1.2.3.4 # IP address to return for this name
+dnsmasq_records: []
+# firewall zones for the DNS service, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+dnsmasq_firewalld_zones:
+  - zone: internal
+    state: enabled
+# yes/no: enable/disable the dsnmasq service
+dnsmasq_enable_service: yes
+# list of network interfaces dnsmasq should listen on. Leave empty to listen on all interfaces
+# Example:
+# dnsmasq_listen_interfaces:
+#   - eth0
+#   - eth1
+dnsmasq_listen_interfaces: []
+# list of Ip addresses dnsmasq should listen on. Leave empty to listen on all addresses
+# Example:
+# dnsmasq_listen_addresses:
+#   - 127.0.0.1
+dnsmasq_listen_addresses: []
+# yes/no: use DNSSEC to validate answers to DNS queries
+# if enabled, dig @127.0.1.1 dnssec-failed.org should return SERVFAIL
+dnsmasq_dnssec: yes

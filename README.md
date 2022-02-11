@@ -25,6 +25,7 @@ This project provides:
 - [apache](roles/apache) - Apache web server + PHP-FPM interpreter
 - [backup](roles/backup) - Remote/local backup service (rsnapshot)
 - [common](roles/common) - Base setup for Debian servers
+- [dnsmasq](roles/dnsmasq) - Lightweight DNS server
 - [docker](roles/docker) - Open source application containerization technology
 - [gitea](roles/gitea) - Self-hosted Git service/software forge
 - [gotty](roles/gotty) - Share your terminal as a web application

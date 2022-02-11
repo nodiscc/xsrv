@@ -1,0 +1,21 @@
+- name: install dnsmasq
+  apt:
+    package: dnsmasq
+    state: present
+
+- name: copy dnsmasq configuration
+  template:
+    src: etc_dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart dnsmasq
+
+- name: enable/disable start/stop dnsmasq service
+  systemd:
+    name: dnsmasq
+    enabled: "{{ dnsmasq_enable_service }}"
+    state: "{{ 'started' if dnsmasq_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode }}"

@@ -1,0 +1,7 @@
+- name: restart dnsmasq
+  become: yes
+  service:
+    name: dnsmasq
+    state: restarted
+    enabled: yes
+  when: dnsmasq_enable_service|bool

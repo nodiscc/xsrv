@@ -1,0 +1,8 @@
+- name: setup firewalld rules for dnsmasq
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: "dns"
+    state: "{{ item.state }}"
+    permanent: yes
+    immediate: yes
+  with_items: "{{ dnsmasq_firewalld_zones }}"

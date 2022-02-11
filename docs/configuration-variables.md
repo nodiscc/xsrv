@@ -7,6 +7,7 @@ Then run `xsrv deploy` to apply changes.
 - [apache](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/apache/main.yml)
 - [backup](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/backup/main.yml)
 - [common](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
+- [dsnmasq](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml)
 - [docker](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml)
 - [gitea](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml)
 - [gotty](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml)
