@@ -67,6 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: add [Nextcloud Bookmarks](https://apps.nextcloud.com/apps/bookmarks) to the default list of apps (default disabled)
 - xsrv/tools/doc: don't install python3-cryptography from pip, install from OS packages
 - gitea/nextcloud/tt_rss: remove hard dependency on postgresql role
+- openldap: remove hard dependency on common role
 - transmission: log/show diff on configuration file changes
 - netdata/docker: move `netdata_min/max_running_docker_containers` configuration variables to the `docker` role
 - netdata: no longer install `python3-mysqldb`/mysql support packages
