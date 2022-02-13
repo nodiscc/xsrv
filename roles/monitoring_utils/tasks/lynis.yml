@@ -21,6 +21,6 @@
     day: "*"
     name: "daily lynis audit"
     job: >
-      /usr/sbin/lynis audit system --profile custom --warnings-only --cronjob --report-file /var/log/lynis-report.txt >/dev/null &&
+      /usr/sbin/lynis audit system --profile /etc/lynis/custom.prf --warnings-only --cronjob --report-file /var/log/lynis-report.txt >/dev/null &&
       grep -i -E '{{ lynis_report_regex }}' /var/log/lynis-report.txt
     user: root
