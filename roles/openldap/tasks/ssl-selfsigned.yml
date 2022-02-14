@@ -36,5 +36,5 @@
     privatekey_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
     csr_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.csr"
     provider: selfsigned
-  notify: restart apache
+  notify: restart slapd
   ignore_errors: "{{ ansible_check_mode }}"
