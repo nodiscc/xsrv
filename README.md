@@ -37,7 +37,7 @@ This project provides:
 - [monitoring_utils](roles/monitoring_utils) - Various monitoring and audit utilities
 - [mumble](roles/mumble) - Low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
-- [openldap](roles/openldap) - LDAP directory server
+- [openldap](roles/openldap) - LDAP directory server and web management tools
 - [postgresql](roles/postgresql) - PostgreSQL database engine
 - [proxmox](roles/proxmox) - Proxmox VE hypervisor configuration
 - [rocketchat](roles/rocketchat) - Instant messaging & communication platform
