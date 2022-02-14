@@ -20,11 +20,8 @@
 - include: ssl-selfsigned.yml
   become: yes
   tags:
-    - apache
     - ssl
     - openldap
-    - ldap-account-manager
-    - self-service-password
 
 - include: ldap-account-manager.yml
   become: yes
