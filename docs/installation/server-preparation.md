@@ -4,7 +4,7 @@
 
 The server (_host_) machine can be:
 - a physical computer (dedicated server, repurposed desktop/laptop, small factor board...)
-- a [virtual machine](https://en.wikipedia.org/wiki/Virtualization) (virtualization software: [libvirt/virt-manager](../../appendices/virt-manager.md), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox), ...) or a [VPS](https://en.wikipedia.org/wiki/Virtual_private_server) from a hosting service.
+- a [virtual machine](https://en.wikipedia.org/wiki/Virtualization) (virtualization software: [libvirt/virt-manager](../appendices/virt-manager.md), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox), ...) or a [VPS](https://en.wikipedia.org/wiki/Virtual_private_server) from a hosting service.
 
 Resource usage will vary depending on installed components (read each role's documentation), the number of concurrent users, and how much user data you need to store. Example minimal configuration for a personal/small team server with 2-10 users:
 
@@ -70,7 +70,7 @@ _Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certifi
 
 ## Operating System
 
-Roles in this collection are designed to run against minimal [Debian](https://www.debian.org/) [_Stable_](https://wiki.debian.org/DebianStable) systems: [Install Debian](../../appendices/debian.md) or use a preconfigured Debian installation image from your hosting provider.
+Roles in this collection are designed to run against minimal [Debian](https://www.debian.org/) [_Stable_](https://wiki.debian.org/DebianStable) systems: [Install Debian](../appendices/debian.md) or use a preconfigured Debian installation image from your hosting provider.
 
 
 ## Ansible requirements
