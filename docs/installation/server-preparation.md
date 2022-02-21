@@ -42,7 +42,7 @@ Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456
 
 ### Domain names
 
-The controller must be able to resolve the server's _host name_ ([Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Separate domain/subdomain names are required for web applications. Point `A` or `CNAME` DNS records to the public IP address of your server using a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar), a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your [private DNS resolver](PFSENSE.md#dns).
+The controller must be able to resolve the server's _host name_ ([Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Separate domain/subdomain names are required for web applications. Point `A` or `CNAME` DNS records to the public IP address of your server using a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar), a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your [private DNS resolver](../appendices/pfsense.md).
 
 By default the following subdomains are configured (if corresponding roles are enabled):
 

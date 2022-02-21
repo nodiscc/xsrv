@@ -10,7 +10,7 @@
   - Set the machine's locale/language to English (`en_US.UTF-8`)
   - IP address: preferably a static IP address and the correct network mask/gateway, or use automatic configuration/DHCP
   - DNS server: specify your ISP/hoster's DNS server, a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server),
-or your private DNS server ([pfSense](../advanced/pfsense.md) is a good start to boostrap a private DNS server)
+or your private DNS server ([pfSense](pfsense.md) is a good start to boostrap a private DNS server)
   - Enable the `root` account, set a strong password and store it somewhere safe like a Keepass database
   - Do **not** create an additional user account yet
   - Any disk partitioning scheme is OK, here are some generic recommendations:
