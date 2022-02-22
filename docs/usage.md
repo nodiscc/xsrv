@@ -60,7 +60,8 @@ xsrv init-host infra ex2.CHANGEME.org # add a new host ex2.CHANGEME.org to proje
 xsrv edit-host infra ex2.CHANGEME.org # edit host variables for the host'ex2.CHANGEME.org in project infra
 xsrv edit-vault infra ex2.CHANGEME.org # edit secret/vaulted variables for ex2.CHANGEME.org in project infra
 xsrv deploy infra ex1.CHANGEME.org,ex2.CHANGEME.org # deploy only the hosts ex1.CHANGEME.org and ex2.CHANGEME.org in project infra
-TAGS=nextcloud,gitea deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud or gitea on ex3.CHANGEME.org in project infra
+TAGS=nextcloud,gitea xsrv deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud or gitea on ex3.CHANGEME.org in project infra
+xsrv deploy default '!ex1.CHANGEME.org,!ex7.CHANGEME.org' # deploy all hosts except ex1 and ex7.CHANGEME.org
 ```
 
 
