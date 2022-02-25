@@ -2,8 +2,19 @@
 
 ### xsrv/xsrv
 
-- #708 - common: add a warning/fail if any of the obsolete firehol_* variables are defined - **`1.5.0`** `bug,enhancement`
-- #707 - docker/firewalld: fix outbound traffic form docker swarm containers blocked by firewalld - **`1.5.0`** `bug`
+- #723 - Automate DNS scans with dnsspy.io? - **`-`** `feature,question,security`
+- #722 - Allow hdparm/disk spindown time configuration? - **`-`** `feature,question`
+- #721 - Browser synchornization service? - **`-`** `feature,question`
+- #720 - podman role/replace docker with podman? - **`-`** `enhancement,feature,question`
+- #719 - sysctl: hardening: disable unprivileged bpf - **`1.6.0`** `easy,enhancement,security`
+- #718 - sysctl: hardening: disable unprivileged userns clone - **`1.6.0`** `enhancement,security`
+- #717 - transmission: configuration templating task always returns changed (cleartext/hashed password) - **`1.6.0`** `enhancement`
+- #716 - xsrv: reorder functions - **`1.6.0`** `easy,maintenance`
+- #715 - dnsmasq: DNS-over-HTTPS support? - **`-`** `feature,question`
+- #714 - dnsmasq: DNS-based ad blocking/fitering? - **`-`** `feature,question`
+- #711 - common: cron: Include  the FQDN in the subject when sending mails. - **`1.6.0`** `configuration,easy,enhancement`
+- #710 - common: cron: make log level configurable - **`1.6.0`** `configuration,easy,enhancement`
+- #709 - IMAP (MDA) server role (dovecot) - **`1.6.0`** `feature`
 - #706 - WIP doc: improve default playbook markdown template - **`-`** `documentation`
 - #705 - WIP netdata: make netdata filechecks configurable - **`1.6.0`** `enhancement,monitoring`
 - #704 - netdata: allow configuring notification downtime periods - **`1.6.0`** `easy,enhancement,monitoring`
@@ -19,7 +30,6 @@
 - #678 - WIP allow whitelisting debsecan bugs - **`-`** `enhancement,security`
 - #675 - pgmetrics: write results to file on the controller - **`-`** `enhancement`
 - #672 - [DEPRECATION WARNING]: "include" is deprecated, use include_tasks/import_tasks instead - **`-`** `maintenance`
-- #671 - firewalld blocks outgoing traffic from docker containers - **`1.5.0`** `bug`
 - #668 - apache: allow defining custom ErrorDocuments - **`-`** `enhancement`
 - #654 - WIP add apt-listbugs - **`-`** `easy,enhancement`
 - #652 - libvirt: allow setting up hooks to forward ports to VMs - **`-`** `enhancement`
@@ -32,9 +42,9 @@
 - #640 - common: apt: enable purging data/configuration files by default - **`-`** `configuration,enhancement`
 - #639 - common: apt: enable autoremove by default - **`-`** `configuration,easy`
 - #638 - common: apt: implement forced/manual apt upgrade (utils-apt-upgrade ansible tag) - **`-`** `easy,feature`
-- #637 - firewalld: implement DNAT/SNAT - **`1.5.0`** `enhancement`
+- #637 - firewalld: implement DNAT/SNAT - **`1.6.0`** `enhancement`
 - #636 - proxmox: aggregate proxmox  logs to syslog - **`-`** `configuration,easy,enhancement,monitoring`
-- #635 - firewalld: implement outbound traffic filtering - **`1.5.0`** `enhancement,security`
+- #635 - firewalld: implement outbound traffic filtering - **`1.6.0`** `enhancement,security`
 - #628 - limit fact gathering inside roles to ansible_local facts (speed up setup: tasks) - **`-`** `enhancement,performance`
 - #627 - WIP implement molecule testing - **`1.6.0`** `enhancement,maintenance,tools`
 - #623 - upgrade ansible to 5.0.0 - **`1.6.0`** `maintenance`
@@ -44,7 +54,6 @@
 - #614 - common: allow disabling ctrl+alt+del combination - **`-`** `enhancement,security`
 - #613 - common - implement sysctl-34 - link protection settings - **`-`** `enhancement,security`
 - #612 - xsrv: allow wildcards in host names for edit-host, edit-vault,check, deploy... - **`-`** `feature`
-- #611 - when: "'..." in role_names' condition checks do not detect roles deployed in other plays - **`1.5.0`** `bug,maintenance,performance`
 - #605 - WIP xsrv: rewrite the main script with python - **`-`** `enhancement,maintenance`
 - #604 - use j2cli for init-playbook/init-host templating? - **`-`** `question`
 - #599 - WIP: xsrv! ask for ansible_host/port during project initialization - **`-`** `enhancement`
@@ -64,7 +73,6 @@
 - #540 - tt-rss: add an option to silence feed update error reports mail - **`-`** `enhancement,monitoring`
 - #539 - gitea: apache: optionally allow TLSv1.2 for gittouch compatibility - **`-`** `configuration,enhancement,security`
 - #538 - transmission: link ~/TORRENTS to /var/lib/transmission-daemon/ - **`-`** `configuration,easy,enhancement`
-- #537 - docker: add a daily 'docker system prune --all' cron job - **`-`** `configuration,enhancement,performance`
 - #535 - Add hardening measures from ANSSI guidelines - **`-`** `enhancement,security`
 - #534 - common: sysctl: Add CVE-2021-33909 mitigations - **`-`** `configuration,enhancement,question,security`
 - #532 - proxmox: allow defining lxc containers from ansible variables - **`-`** `question`
@@ -131,7 +139,6 @@
 - #388 - WIP: add libvirt role - **`-`** `feature`
 - #387 - jellyfin: monitor logs with rsyslog - **`1.6.0`** `enhancement,monitoring,upstream`
 - #384 - jellyfin: allow/document uploading files from nextcloud - **`-`** `documentation,enhancement`
-- #380 - Enforce DNSSEC for outgoing DNS queries - **`-`** `enhancement,security`
 - #379 - seup IPV6 support (sysctl, firewal, applications...)? - **`-`** ``
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ? - **`-`** `monitoring`
 - #377 - rocketchat: enable/configure federation? - **`-`** `configuration,question`
@@ -171,13 +178,13 @@
 - #309 - apply postgresqltuner recommended settings? - **`-`** `enhancement,performance`
 - #307 - apache: make certificate status endpoint enable/disable configurable - **`-`** `enhancement,monitoring`
 - #303 - firehol: add example NAT loopback/hairpin rule - **`-`** `documentation`
-- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - **`1.5.0`** `enhancement,security`
+- #295 - WIP: add more hardening measures from https://github.com/konstruktoid/ansible-role-hardening - **`1.6.0`** `enhancement,security`
 - #290 - netdata: monitor number of upgradeable APT packages - **`1.6.0`** `feature,monitoring,security`
 - #280 - Samba Directory Controller or other Identity Management solution - **`-`** `feature`
 - #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban - **`-`** `enhancement,security`
 - #276 - Samba: protect file shares from cryptolockers - **`-`** `enhancement,security`
 - #275 - Samba: implement filesystem/size quotas - **`-`** `enhancement`
-- #274 - Samba: advertise samba server over avahi/zeroconf - **`-`** `configuration,enhancement`
+- #274 - Samba: advertise samba server over avahi/zeroconf? - **`-`** `configuration,enhancement`
 - #273 - OpenLDAP: secure connections with SSL/TLS (LDAPS) - **`-`** `enhancement,security`
 - #272 - postgresql: hardening - **`-`** `enhancement,security`
 - #271 - apache: enable mod-md status handler - **`-`** `enhancement,monitoring`
@@ -210,7 +217,7 @@
 - #212 - apache: PHP OPCache tuning? - **`-`** `performance,question`
 - #208 - netdata: graph/alert on logwatch warnings - **`-`** `feature,monitoring,security`
 - #207 - netdata: make ping checks configurable - **`-`** `documentation,enhancement,monitoring`
-- #205 - netdata: monitor debsums warnings/return status - **`-`** `feature,monitoring,security`
+- #205 - netdata: monitor debsums warnings/return status - **`1.6.0`** `easy,feature,monitoring,security`
 - #202 - netdata: ability to enable/add eBPF probes? - **`-`** `monitoring,question`
 - #201 - monitoring: merge role with mrlesmithjr/ansible-netdata - **`-`** `question`
 - #200 - roles for other monitoring software - **`-`** `feature,monitoring,question`
@@ -310,7 +317,6 @@
 - #63 - pfSense role? - **`-`** `question,wontfix`
 - #62 - IPBX/SIP Server - **`-`** `question,wontfix`
 - #61 - GDPR compliance? - **`-`** `question`
-- #60 - doc: screenshots - **`-`** `documentation`
 - #59 - Collaborative pad - **`-`** `feature`
 - #58 - HTTP downloader - **`-`** `feature`
 - #57 - Rundeck - **`-`** `feature`
@@ -342,7 +348,6 @@
 - #30 - Gitlab role - **`-`** `feature`
 - #27 - nginx role? - **`-`** `feature,question`
 - #26 - Dynamic DNS updater - **`-`** `feature`
-- #25 - DNS Server - **`1.6.0`** `feature`
 - #24 - DHCP/TFTP/PXE server - **`-`** `feature`
 - #22 - Add molecule tests - **`-`** `enhancement,question,tools`
 - #16 - Automated performance benchmarks - **`-`** `feature`
