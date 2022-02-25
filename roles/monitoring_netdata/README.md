@@ -5,7 +5,8 @@ This role will install and configure [Netdata](https://my-netdata.io/), a real-t
  - [logcount](https://gitlab.com/nodiscc/netdata-logcount)
  - [debsecan](https://gitlab.com/nodiscc/netdata-debsecan)
 
-[![](https://screenshots.debian.net/screenshots/000/015/229/thumb.png)](https://screenshots.debian.net/package/netdata)
+[![](https://i.imgur.com/vqfWelH.png)](https://i.imgur.com/vqfWelH.png)
+
 
 ## Requirements/dependencies/example playbook
 

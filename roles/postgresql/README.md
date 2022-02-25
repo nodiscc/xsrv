@@ -4,10 +4,6 @@ This role will install [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL), a
 
 It allows running [pgmetrics](https://pgmetrics.io/) against the PostgreSQL instance.
 
-[![](https://i.imgur.com/UoKs3x1.png)](https://i.imgur.com/yDozQPU.jpg)
-[![](https://i.imgur.com/7oO67Xq.png)](https://i.imgur.com/rNTiRva.png)
-[![](https://i.imgur.com/CqoOfXo.png)](https://i.imgur.com/mv2fppi.jpg)
-
 
 ## Requirements/Dependencies/example playbook
 

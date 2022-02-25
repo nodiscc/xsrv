@@ -2,7 +2,8 @@
 
 This rolle will setup [rsyslog](https://en.wikipedia.org/wiki/Rsyslog) basic log aggregation, logrotate retention, and log forwarding over TCP/SSL/TLS, and [lnav](http://lnav.org/) log file viewer.
  
-[![](https://screenshots.debian.net/screenshots/000/010/371/thumb.png)](https://screenshots.debian.net/package/lnav)
+[![](https://screenshots.debian.net/shrine/screenshot/10371/simage/large-24897d7d91b1b5fc33cca4accd70781b.png)](https://screenshots.debian.net/package/lnav)
+
 
 ## Requirements/dependencies/example playbook
 

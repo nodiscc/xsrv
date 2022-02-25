@@ -51,7 +51,7 @@ This project provides:
 
 ## Screenshots
 
-[![](https://i.imgur.com/pG1xnig.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring)
+[![](https://i.imgur.com/pG1xnig.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata)
 [![](https://i.imgur.com/LNaAH2L.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud)
 [![](https://i.imgur.com/5TXg6vm.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss)
 [![](https://i.imgur.com/Jlmj0iE.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli)

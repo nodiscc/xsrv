@@ -51,7 +51,7 @@ This project provides:
 
 ## Screenshots
 
-[![](https://i.imgur.com/pG1xnig.png)](roles/monitoring)
+[![](https://i.imgur.com/pG1xnig.png)](roles/monitoring_netdata)
 [![](https://i.imgur.com/LNaAH2L.png)](roles/nextcloud)
 [![](https://i.imgur.com/5TXg6vm.png)](roles/tt_rss)
 [![](https://i.imgur.com/Jlmj0iE.png)](roles/shaarli)

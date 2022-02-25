@@ -6,7 +6,7 @@ It also configures:
 - login bruteforce prevention using `fail2ban`
 - (optional) aggregation of mumble server logs to syslog
 
-[![](https://i.imgur.com/jYSU9zC.png)](https://i.imgur.com/S5Z6IEw.png)
+[![](https://i.imgur.com/S5Z6IEw.png)](https://i.imgur.com/S5Z6IEw.png)
 
 
 ## Requirements/eependencies/example playbook

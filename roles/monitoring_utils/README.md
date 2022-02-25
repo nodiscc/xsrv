@@ -6,8 +6,8 @@ This role will install and configure various [monitoring](../monitoring) and aud
 - [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor
 - [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer, logwatch log analyzer
 
-[![](https://screenshots.debian.net/screenshots/000/014/778/thumb.png)](https://screenshots.debian.net/package/htop)
-[![](https://screenshots.debian.net/screenshots/000/014/778/thumb.png)](https://screenshots.debian.net/package/ncdu)
+[![](https://screenshots.debian.net/shrine/screenshot/14778/simage/small-452873bef369d0f5e75810ae017f68a8.png)](https://screenshots.debian.net/package/htop)
+[![](https://screenshots.debian.net/shrine/screenshot/1778/simage/small-0c752cadb8feb5a6b61ce71ac57297de.png)](https://screenshots.debian.net/package/ncdu)
 
 ## Requirements/dependencies/example playbook
 
