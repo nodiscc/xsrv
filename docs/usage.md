@@ -13,7 +13,7 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.4.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.5.0
 
 USAGE: xsrv COMMAND [project] [host]
 

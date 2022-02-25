@@ -5,21 +5,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
 
-#### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - UNRELEASED
+#### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - 2022-02-25
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - `TAGS=utils-debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html). Debian 10 compatibility will not be maintained after this release.
 - **common/firewall:** remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if firewalld is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/firewalld/roles/common/defaults/main.yml#L74))
-- **common/hosts:** if the `hosts:` variable (hosts file entries) is used in your `host/group_vars`, rename it to  `host_file_entries`. If `setup_hosts` is used in your `host/group_vars`, rename it to `setup_hosts_file`
-- **mariadb:** if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
+- **common/hosts:** if the `hosts:` variable (hosts file entries) is used in your `host/group_vars`, rename it to  `host_file_entries`. If `setup_hosts` is used in your `host/group_vars`, rename it to `setup_hosts_file`.
+- **mariadb:** if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION).
 - **gitea/nextcloud/tt_rss:** if any of these roles is listed in your playbook, ensure `nodiscc.xsrv.postgresql` is explicitly deployed before it.
 - **jellyfin/proxmox/docker:** remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48) list, automatic upgrades are enabled by default for these components.
-- **jellyfin/samba:** if you have both the `samba` and `jellyfin` roles enabled on a host, and want to keep using the jellyfin samba share for media storage, explicitly set `jellyfin_samba_share: yes` in the host's configuration variables
-- **monitoring:** remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables from your configuration, if any. If you don't want monitoring utilities or rsyslog set up, enable individual `monitoring_netdata/rsyslog/utils` roles, instead of the global `monitoring` role
-- (optional) `xsrv check` to simulate changes
-- `xsrv deploy` to apply changes
+- **jellyfin/samba:** if you have both the `samba` and `jellyfin` roles enabled on a host, and want to keep using the jellyfin samba share for media storage, explicitly set `jellyfin_samba_share: yes` in the host's configuration variables.
+- **monitoring:** remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables from your configuration, if you changed the defaults. If you don't want monitoring utilities or rsyslog set up, enable individual `monitoring_netdata/rsyslog/utils` roles, instead of the global `monitoring` role.
+- (optional) `xsrv check` to simulate changes.
+- `xsrv deploy` to apply changes.
 
 **Added:**
 - add [dnsmasq](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq) lightweight DNS server role
