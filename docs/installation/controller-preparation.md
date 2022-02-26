@@ -1,6 +1,6 @@
 # Controller preparation
 
-A **controller** machine will be used for deployment and remote administration. The controller stores a [text description of your setup](usage.md), and deploys it to your [hosts](server-preparation.md) remotely over SSH.
+A **controller** machine will be used for deployment and remote administration. The controller stores a [text description of your setup](../usage.md), and deploys it to your [hosts](server-preparation.md) remotely over SSH.
 
 Any PC, dedicated server, VM or container where a SSH client, Python and Bash are available can be used as a controller. 
 
