@@ -1,8 +1,10 @@
 ##### LYNIS SECURITY AUDIT #####
 
-- name: install lynis
+- name: install lynis and related utilities
   apt:
-    package: lynis
+    package:
+      - lynis
+      - debsums
     state: present
 
 - name: copy custom lynis scan profile
@@ -24,3 +26,11 @@
       /usr/sbin/lynis audit system --profile /etc/lynis/custom.prf --warnings-only --cronjob --report-file /var/log/lynis-report.txt >/dev/null &&
       grep -i -E '{{ lynis_report_regex }}' /var/log/lynis-report.txt
     user: root
+
+- name: copy debsums cron job configuration
+  template:
+    src: etc_default_debsums.j2
+    dest: /etc/default/debsums
+    owner: root
+    group: root
+    mode: 0644
