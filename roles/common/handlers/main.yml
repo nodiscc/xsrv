@@ -12,3 +12,10 @@
     name: ssh
     state: restarted
     enabled: yes
+
+- name: restart crond
+  become: yes
+  service:
+    name: cron
+    state: restarted
+    enabled: yes

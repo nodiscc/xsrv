@@ -1,0 +1,43 @@
+- name: configure cron daemon
+  template:
+    src: etc_default_cron.j2
+    dest: /etc/default/cron
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart crond
+
+- name: only allow select users to use crontab
+  template:
+    src: etc_cron.allow.j2
+    dest: /etc/cron.allow
+    mode: 0644
+    owner: root
+    group: root
+
+# Granting write access to this directory for non-privileged users could provide
+# them the means for gaining unauthorized elevated privileges.
+# Granting read access to this directory could give an unprivileged user insight
+# in how to gain elevated privileges or circumvent auditing controls.
+# CIS 5.1.2 - CIS 5.1.7
+# From https://github.com/dev-sec/ansible-collection-hardening/blob/master/roles/os_hardening/tasks/cron.yml - Apache License, Version 2.0
+- name: find cron files and directories
+  find:
+    paths:
+      - /etc
+    patterns:
+      - cron.hourly
+      - cron.daily
+      - cron.weekly
+      - cron.monthly
+      - cron.d
+      - crontab
+    file_type: any
+  register: cron_directories
+- name: ensure only root can access cron files and directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    owner: root
+    group: root
+    mode: og-rwx
+  with_items: "{{ cron_directories.files }}"
