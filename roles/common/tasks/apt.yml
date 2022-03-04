@@ -1,3 +1,4 @@
+# https://wiki.debian.org/SourcesList
 - name: copy apt sources lists (debian + security + backports)
   template:
     src: "etc_apt_sources.list.j2"
@@ -6,7 +7,10 @@
   when: ansible_facts.distribution == 'Debian'
   notify: update apt cache
 
-- name: copy apt config (automatic upgrades, no recommended packages, don't overwrite conffiles)
+# https://wiki.debian.org/UnattendedUpgrades
+# https://www.debian.org/doc/manuals/maint-guide/dother.en.html#conffiles
+# https://www.debian.org/doc/debian-policy/ch-relationships.html#binary-dependencies-depends-recommends-suggests-enhances-pre-depends
+- name: copy apt configuration
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
