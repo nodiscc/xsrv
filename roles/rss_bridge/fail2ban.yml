@@ -1,0 +1,15 @@
+- name: copy rss-bridge fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_rss-bridge.conf.j2
+    dest: /etc/fail2ban/jail.d/rss-bridge.conf
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban
+
+- name: copy fail2ban rss-bridge-auth filter
+  template:
+    src: etc_fail2ban_filter.d_rss-bridge-auth.conf.j2
+    dest: /etc/fail2ban/filter.d/rss-bridge-auth.conf
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban

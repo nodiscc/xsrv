@@ -62,7 +62,7 @@ nextcloud_db_password: "CHANGEME"
 nextcloud_db_password: "CHANGEME@CHANGEME.org"
 ```
 
-See [defaults/main.yml](defaults/main.yml) for all configurable variables
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 
 ## Usage

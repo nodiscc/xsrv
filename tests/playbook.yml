@@ -11,6 +11,7 @@
     - nodiscc.xsrv.nextcloud
     - nodiscc.xsrv.tt_rss
     - nodiscc.xsrv.shaarli
+    - nodiscc.xsrv.rss_bridge
     - nodiscc.xsrv.gitea
     - nodiscc.xsrv.samba
     - nodiscc.xsrv.transmission

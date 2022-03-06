@@ -1,0 +1,15 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that:
+      - rss_bridge_fqdn is not search('CHANGEME')
+      - rss_bridge_auth_enabled == rss_bridge_auth_enabled|bool
+      - rss_bridge_https_mode in ['selfsigned', 'letsencrypt']
+
+- name: check that variables are correctly defined (rss-bridge authentication)
+  assert:
+    quiet: yes
+    that:
+      - rss_bridge_auth_username is not search('CHANGEME')
+      - rss_bridge_auth_password is not search('CHANGEME')
+  when: rss_bridge_auth_enabled|bool

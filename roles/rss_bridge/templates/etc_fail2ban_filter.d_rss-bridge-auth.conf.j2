@@ -1,0 +1,6 @@
+# fail2ban filter for rss-bridge authentication
+[INCLUDES]
+before = common.conf
+[Definition]
+failregex = AH01071: Got error 'PHP message: \[RSS-Bridge\] Failed authentication attempt from <HOST>'
+ignoreregex =

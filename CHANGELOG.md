@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - UNRELEASES
 
 **Added:**
+- add [rss_bridge](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge) role - the RSS feed for websites missing it
 - monitoring_utils: install [debsums](https://packages.debian.org/sid/debsums) utility for the verification of packages with known good database (by default, run weekly)
 - common: cron: allow disabling cron setup (`setup_cron: yes/no`)
 - monitoring_netdata: allow configuring netdata notification downtime periods (start/end)

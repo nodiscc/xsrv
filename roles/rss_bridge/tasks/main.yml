@@ -1,0 +1,49 @@
+- include: checks.yml
+  tags:
+    - rss_bridge
+    - checks
+
+- include: rss-bridge.yml
+  become: yes
+  tags: rss_bridge
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - apache
+    - ssl
+    - rss_bridge
+  when: rss_bridge_https_mode == 'selfsigned'
+
+- include: apache.yml
+  become: yes
+  tags:
+    - rss_bridge
+    - apache
+
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - rss_bridge
+    - fail2ban
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - rss_bridge
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
+
+- include: fact.yml
+  become: yes
+  tags: rss_bridge
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: rss_bridge

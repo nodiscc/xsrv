@@ -1,0 +1,27 @@
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/ssl/private/{{ rss_bridge_fqdn }}.key"
+  notify: restart apache
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/ssl/private/{{ rss_bridge_fqdn }}.csr"
+    privatekey_path: "/etc/ssl/private/{{ rss_bridge_fqdn }}.key"
+    common_name: "{{ rss_bridge_fqdn }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
+
+- name: generate self-signed openssl certificate
+  openssl_certificate:
+    path: "/etc/ssl/certs/{{ rss_bridge_fqdn }}.crt"
+    privatekey_path: "/etc/ssl/private/{{ rss_bridge_fqdn }}.key"
+    csr_path: "/etc/ssl/private/{{ rss_bridge_fqdn }}.csr"
+    provider: selfsigned
+  notify: restart apache

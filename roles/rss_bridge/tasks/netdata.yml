@@ -1,0 +1,8 @@
+- name: add netdata httpcheck for rss-bridge
+  template:
+    src: etc_netdata_go.d_httpcheck.conf.d_rss-bridge.conf.j2
+    dest: "/etc/netdata/go.d/httpcheck.conf.d/rss-bridge.conf"
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration
