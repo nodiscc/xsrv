@@ -25,5 +25,5 @@
     privatekey_path: "/etc/ssl/private/{{ ldap_account_manager_fqdn }}.key"
     csr_path: "/etc/ssl/private/{{ ldap_account_manager_fqdn }}.csr"
     provider: selfsigned
-  ignore_errors: "{{ ansible_check_mode }}"
   notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"

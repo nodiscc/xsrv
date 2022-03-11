@@ -18,6 +18,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: cron: include the FDQN in subject when sending mail
 - common: cron: log beginning and end of cron jobs
 
+**Fixed:**
+- fix `check` mode support for self-signed certificat generation tasks
+
 -------------------------------
 
 #### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - 2022-02-25
