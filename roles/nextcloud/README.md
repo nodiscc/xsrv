@@ -19,10 +19,6 @@ Default installed applications include:
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).
 
-It will also configure:
-- bruteforce prevention using fail2ban
-- (optional) aggregation of nextcloud logs to syslog
-
 [![](https://i.imgur.com/PPVIb6V.png)](https://i.imgur.com/1YaT357.png)
 [![](https://i.imgur.com/URs7XH5.png)](https://i.imgur.com/V6CR3we.png)
 [![](https://i.imgur.com/bVMzmr1.png)](https://github.com/nextcloud/photos#readme)
