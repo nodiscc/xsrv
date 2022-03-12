@@ -2,6 +2,10 @@
 
 ### xsrv/xsrv
 
+- #732 - allow disabling web applications - **`-`** `configuration,easy,enhancement`
+- #731 - doc: add a role template - **`-`** `documentation,enhancement`
+- #730 - proxmox: additional hardening - **`-`** `enhancement,security`
+- #728 - rss_bridge: allow configuration of whitelisted bridges - **`-`** `enhancement`
 - #723 - Automate DNS scans with dnsspy.io? - **`-`** `feature,question,security`
 - #722 - Allow hdparm/disk spindown time configuration? - **`-`** `feature,question`
 - #721 - Browser synchornization service? - **`-`** `feature,question`
@@ -47,7 +51,6 @@
 - #635 - firewalld: implement outbound traffic filtering - **`1.6.0`** `enhancement,security`
 - #628 - limit fact gathering inside roles to ansible_local facts (speed up setup: tasks) - **`-`** `enhancement,performance`
 - #627 - WIP implement molecule testing - **`1.6.0`** `enhancement,maintenance,tools`
-- #623 - upgrade ansible to 5.0.0 - **`1.6.0`** `maintenance`
 - #622 - tt_rss: log cron job errors to syslog instead of sending them by mail - **`-`** `configuration,easy,enhancement,monitoring`
 - #616 - common: ssh: make SSH port configurable - **`-`** `enhancement`
 - #615 - WIP nfs-server role + ability to mount filesystems from the common role - **`-`** `feature`
