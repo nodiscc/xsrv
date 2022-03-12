@@ -29,12 +29,17 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 **Backups:** See the the included [rsnapshot configuration](templates/etc_rsnapshot.d_letsencrypt.conf) for the [backup](../backup/README.md) role
 
+**Integration with other roles:** Each role relying on this one must install its own configuration in `/etc/apache2/{conf,sites}-{available,enabled}/` and notify the `reload/restart apache` handlers.
 
-**Integration with other roles:**
+**Allow a user to read apache/web applications files:** Add you user to the `www-data` group. For example using the [`common`](../common/) role:
 
-Each role relying on this one must install its own configuration in `/etc/apache2/*-enabled/` and notify the `reload/restart apache` handlers.
-
-
+```yaml
+linux_users:
+  - name: "{{ ansible_user }}"
+    groups: www-data
+    append: yes
+    comment: "ansible user/allowed to read/write web application files"
+```
 
 ## License
 
