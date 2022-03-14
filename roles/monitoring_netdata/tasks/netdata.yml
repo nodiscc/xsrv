@@ -145,6 +145,7 @@
     - /etc/netdata/go.d/portcheck.conf.d
     - /etc/netdata/health.d/processes.conf.d
     - /etc/netdata/health.d/filecheck.conf.d
+    - /etc/netdata/health.d/systemdunits.conf.d
     - /usr/libexec/netdata/python.d/
     - /etc/netdata/health.d/
   ignore_errors: "{{ ansible_check_mode }}"

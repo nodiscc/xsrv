@@ -1,0 +1,26 @@
+ alarm: systemd_service_mongod
+    on: systemdunits_service_units.service_unit_state
+  calc: $mongod
+ every: 10s
+  crit: ($this = 5)
+ units: state
+  info: mongodb service status
+    to: sysadmin
+
+ alarm: systemd_service_elasticsearch
+    on: systemdunits_service_units.service_unit_state
+  calc: $elasticsearch
+ every: 10s
+  crit: ($this = 5)
+ units: state
+  info: elasticsearch service status
+    to: sysadmin
+
+ alarm: systemd_service_graylog
+    on: systemdunits_service_units.service_unit_state
+  calc: $graylog-server
+ every: 10s
+  crit: ($this = 5)
+ units: state
+  info: graylog-server service status
+    to: sysadmin

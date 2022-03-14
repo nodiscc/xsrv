@@ -81,6 +81,7 @@
     - go.d/portcheck.conf
     - health.d/filecheck.conf
     - health.d/processes.conf
+    - health.d/systemdunits.conf
   notify: restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
 

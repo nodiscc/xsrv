@@ -17,9 +17,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - common: cron: include the FDQN in subject when sending mail
 - common: cron: log beginning and end of cron jobs
+- all roles: replace netdata process checks/alarms with more accurate systemd unit checks, raise alarms/notifications when a service is in the failed state
+- cleanup: standardize task names
 
 **Fixed:**
-- fix `check` mode support for self-signed certificat generation tasks
+- fix `check` mode support for self-signed certificate generation tasks/netdata configuration
 
 -------------------------------
 

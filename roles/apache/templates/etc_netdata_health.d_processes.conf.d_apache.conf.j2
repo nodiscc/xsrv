@@ -1,8 +1,0 @@
- alarm: httpd_processes
-    on: apps.processes
-  calc: $httpd
- every: 20s
-  crit: ($this < 1) OR ($this = nan)
- units: processes
-  info: web server running processes
-    to: sysadmin

@@ -1,4 +1,4 @@
-- name: add netdata alarms for docker engine
+- name: install netdata alarms for docker engine
   template:
     src: "etc_netdata_health.d_dockerd.conf.j2"
     dest: "/etc/netdata/health.d/dockerd.conf"
