@@ -64,7 +64,7 @@ This project provides:
 [![](https://i.imgur.com/5KDvL9Z.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog)
-[![](https://i.imgur.com/NytdOIJ.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge)
+[![](https://i.imgur.com/UWjyTqP.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge)
 
 ## Source code
 

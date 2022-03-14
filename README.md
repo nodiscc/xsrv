@@ -64,7 +64,7 @@ This project provides:
 [![](https://i.imgur.com/5KDvL9Z.png)](roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
-[![](https://i.imgur.com/NytdOIJ.png)](roles/rss_bridge)
+[![](https://i.imgur.com/UWjyTqP.png)](roles/rss_bridge)
 
 ## Source code
 
