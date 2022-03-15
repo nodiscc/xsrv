@@ -55,7 +55,7 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian,codename=${distro_codename}-updates" # Debian stable point release
   - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
   - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
-  - "origin=Debian,codename=${distro_codename},label=Debian Backports" # Debian backports
+  - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
   - "origin=packagecloud.io/netdata/netdata,label=netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
   - "o=Proxmox,site=download.proxmox.com" # nodiscc.xsrv.proxmox
