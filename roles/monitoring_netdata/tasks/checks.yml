@@ -32,4 +32,4 @@
     that:
       - item.start is string
       - item.end is string
-  with_items: netdata_notification_downtimes
+  with_items: "{{ netdata_notification_downtimes }}"
