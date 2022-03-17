@@ -66,10 +66,10 @@ test_command_line:
 ##### RELEASE PROCEDURE #####
 # - make bump_versions update_todo changelog new_tag=$new_tag
 # - update changelog.md, add and commit version bumps and changelog updates
-# - git tag $new_tag; git push && git push --tags
+# - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
 # - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag
-# - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tags
+# - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tag
 # - ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
 # - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
 
