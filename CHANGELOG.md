@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - UNRELEASES
 
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles in your playbook to the latest release
+
 **Added:**
 - add [rss_bridge](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge) role - the RSS feed for websites missing it
 - monitoring_utils: install [debsums](https://packages.debian.org/sid/debsums) utility for the verification of packages with known good database (by default, run weekly)
