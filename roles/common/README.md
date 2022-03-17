@@ -6,18 +6,14 @@ This role will configure a basic Debian-based server:
 - DNS resolution (`/etc/resolv.conf`)
 - hosts file (`/etc/hosts`)
 - sysctl/kernel settings: networking, swap/memory management, security
-- **APT package manager** configuration:
-  - Debian stable + Debian security + Debian backports [repositories](https://wiki.debian.org/SourcesList)
-  - automatic security updates ([`unattended-upgrades`](https://wiki.debian.org/UnattendedUpgrades))
-  - preserve manually changed [`conffiles`](https://www.debian.org/doc/manuals/maint-guide/dother.en.html#conffiles) during upgrades
-  - don't install [`recommended`](https://www.debian.org/doc/debian-policy/ch-relationships.html#binary-dependencies-depends-recommends-suggests-enhances-pre-depends) packages
-- NTP date/time synchronization
-- user accounts, resources, PAM restrictions
-- SSH server
- - `sftponly` group (SFTP-only accounts in SSH `chroot`)
-- firewall ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
-- intrusion/bruteforce detection and prevention system (`fail2ban`)
-- outgoing mail through an external SMTP relay (`msmtp`)
+- [APT package manager configuration](tasks/apt.yml)
+- [date/time and NTP synchronization](tasks/datetime.yml)
+- [Linux user accounts](tasks/users.yml) (user account creation/deletion, resources, PAM restrictions)
+- [cron task scheduler](tasks/cron.yml) (hardening, logging)
+- [SSH server](tasks/ssh.yml) (hardening, chrooted SFTP accounts)
+- [firewall](tasks/firewalld.yml) ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
+- [fail2ban](tasks/fail2ban.yml) intrusion/bruteforce prevention system
+- [outgoing mail](tasks/mail.yml) (forwarding throug external mail relay)
 - streamlining/removal of unwanted packages
 - `haveged` random number generator/entropy source for virtual machines
 - installation of basic command-line utilities/diagnostic tools

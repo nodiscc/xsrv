@@ -4,3 +4,4 @@
     that:
       - lynis_report_regex is string
       - lynis_skip_tests|type_debug == "list"
+      - debsums_cron_check in ['daily', 'weekly', 'monthly']

@@ -1,0 +1,14 @@
+##### RSS-BRIDGE #####
+# Fully Qualified Domain Name for the rss-bridge instance
+rss_bridge_fqdn: "rss-bridge.CHANGEME.org"
+# yes/no: enable username/password authentication for all requests going to rss-bridge
+rss_bridge_auth_enabled: yes
+# rss_bridge login and password, when authentication is enabled
+rss_bridge_auth_username: "CHANGEME"
+rss_bridge_auth_password: "CHANGEME"
+# mode for SSL/TLS certificates for the rss-bridge webserver virtualhost (letsencrypt/selfsigned)
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+rss_bridge_https_mode: selfsigned
+# rss-bridge version (https://github.com/RSS-Bridge/rss-bridge/releases)
+rss_bridge_version: "2022-01-20"

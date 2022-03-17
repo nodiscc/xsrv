@@ -1,5 +1,3 @@
-##### SSL/TLS CERTIFICATES - SELF-SIGNED #####
-
 - name: install requirements for SSL/TLS certificates generation
   apt:
     state: present
@@ -19,6 +17,7 @@
     common_name: "{{ homepage_fqdn }}"
     key_usage: "digitalSignature,keyEncipherment"
     basicConstraints: "CA:TRUE"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:
@@ -27,3 +26,4 @@
     csr_path: "/etc/ssl/private/{{ homepage_fqdn }}.csr"
     provider: selfsigned
   notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"

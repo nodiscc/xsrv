@@ -11,6 +11,7 @@
       - netdata_disable_error_log == netdata_disable_error_log|bool
       - netdata_http_checks|type_debug == "list"
       - netdata_x509_checks|type_debug == "list"
+      - netdata_notification_downtimes|type_debug == "list"
       - netdata_logcount_error_threshold_crit == netdata_logcount_error_threshold_crit|int
       - netdata_logcount_error_threshold_warn == netdata_logcount_error_threshold_warn|int
       - netdata_logcount_notification_to is string
@@ -24,3 +25,11 @@
       - netdata_update_every == netdata_update_every|int
       - netdata_firewalld_zones|type_debug == "list"
       - needrestart_autorestart_services == needrestart_autorestart_services|bool
+
+- name: check that variables are correctly defined (netdata_notification_downtimes)
+  assert:
+    quiet: yes
+    that:
+      - item.start is string
+      - item.end is string
+  with_items: "{{ netdata_notification_downtimes }}"

@@ -1,8 +1,0 @@
- alarm: auth_processes
-    on: apps.processes
-  calc: $auth
- every: 20s
-  crit: ($this < 1) OR ($this = nan)
- units: processes
-  info: authentication services (ldap) running processes
-    to: sysadmin

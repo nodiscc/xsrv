@@ -1,0 +1,24 @@
+# @tag rss_bridge - setup rss-bridge - The RSS feed for websites missing it
+
+galaxy_info:
+  role_name: rss_bridge
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "The RSS feed for websites missing it"
+  license: GPL-3.0
+  min_ansible_version: 2.8
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+  galaxy_tags:
+    - server
+    - rss
+    - twitter
+    - atom
+    - web
+dependencies:
+  - nodiscc.xsrv.handlers
+  - nodiscc.xsrv.apache
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.backup
+  # - nodiscc.xsrv.monitoring

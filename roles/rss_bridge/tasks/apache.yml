@@ -1,0 +1,35 @@
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+
+- name: enable apache2 modules
+  command: a2enmod {{ item }}
+  with_items:
+    - 'rewrite'
+    - 'headers'
+    - 'env'
+    - 'dir'
+    - 'mime'
+  args:
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+  notify: reload apache
+
+- name: copy php-fpm configuration
+  template:
+    src: etc_php_PHPVERSION_fpm_pool.d_rss-bridge.conf.j2
+    dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/rss-bridge.conf
+    mode: 0644
+  notify: restart php-fpm
+
+- name: copy apache2 virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_rss-bridge.conf.j2
+    dest: /etc/apache2/sites-available/rss-bridge.conf
+    mode: 0644
+  notify: reload apache
+
+- name: enable apache2 virtualhost
+  command: a2ensite rss-bridge
+  args:
+    creates: "/etc/apache2/sites-enabled/rss-bridge.conf"
+  notify: restart apache

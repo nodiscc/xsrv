@@ -5,6 +5,34 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
 
+#### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - UNRELEASES
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles in your playbook to the latest release
+
+**Added:**
+- add [rss_bridge](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge) role - the RSS feed for websites missing it
+- monitoring_utils: install [debsums](https://packages.debian.org/sid/debsums) utility for the verification of packages with known good database (by default, run weekly)
+- common: cron: allow disabling cron setup (`setup_cron: yes/no`)
+- monitoring_netdata: allow configuring netdata notification downtime periods (start/end)
+- tests: automate basic testing of the xsrv command-line tool (`xsrv init-project xsrv-test my.example.org`)
+
+**Changed:**
+- common: cron: include the FDQN in subject when sending mail
+- common: cron: log beginning and end of cron jobs
+- all roles: replace netdata process checks/alarms with more accurate systemd unit checks, raise alarms/notifications when a service is in the failed state
+- cleanup: standardize task names
+- xsrv: init-project: allow adding a first host directly using `xsrv init-project [project] [host]`
+
+**Fixed:**
+- fix `check` mode support for self-signed certificate generation tasks/netdata configuration
+- apt: fix automatic upgrades for packages installed from Debian Backports
+- xsrv: fix error on new project creation/`init-playbook` - missing playbook directory
+- xsrv: fix support for `XSRV_PROJECTS_DIR` environment variable
+
+-------------------------------
+
 #### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - 2022-02-25
 
 **Upgrade procedure:**

@@ -1,4 +1,4 @@
-- name: add netdata httpcheck for transmission
+- name: add netdata http check for transmission
   template:
     src: etc_netdata_go.d_httpcheck.conf.d_transmission.conf.j2
     dest: "/etc/netdata/go.d/httpcheck.conf.d/transmission.conf"
@@ -6,3 +6,4 @@
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
+  ignore_errors: "{{ ansible_check_mode }}"

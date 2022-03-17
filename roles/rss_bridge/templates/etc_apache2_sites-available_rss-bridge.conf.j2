@@ -1,0 +1,38 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/{{ rss_bridge_fqdn }}
+    ServerName {{ rss_bridge_fqdn }}
+    ServerAdmin webmaster@{{ rss_bridge_fqdn }}
+{% if rss_bridge_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if rss_bridge_https_mode == 'letsencrypt' %}
+MDomain {{ rss_bridge_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  DocumentRoot /var/www/{{ rss_bridge_fqdn }}
+  ServerName  {{ rss_bridge_fqdn }}
+  ServerAdmin webmaster@{{ rss_bridge_fqdn }}
+{% if rss_bridge_https_mode == 'selfsigned' %}
+  SSLEngine on
+  SSLCertificateFile /etc/ssl/certs/{{ rss_bridge_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ rss_bridge_fqdn }}.key
+{% endif %}
+
+  <FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php7.4-fpm-rss-bridge.sock|fcgi://localhost"
+  </FilesMatch>
+
+  <FilesMatch ".+\.(?!(jpg|php|png|css|js|jpeg|ico)$)[^\.]+?$">
+    Require all denied
+  </FilesMatch>
+
+  Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline'; frame-ancestors 'none'"
+  DirectoryIndex index.php
+
+</VirtualHost>

@@ -1,4 +1,4 @@
-- name: add netdata httpcheck for jellyfin
+- name: install netdata http check for jellyfin
   template:
     src: etc_netdata_go.d_httpcheck.conf.d_jellyfin.conf.j2
     dest: "/etc/netdata/go.d/httpcheck.conf.d/jellyfin.conf"
@@ -6,3 +6,4 @@
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
+  ignore_errors: "{{ ansible_check_mode }}"

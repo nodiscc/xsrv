@@ -14,3 +14,5 @@ lynis_skip_tests:
   - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers wil be selected automatically)
   - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
   - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
+# when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
+debsums_cron_check: "daily"

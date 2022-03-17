@@ -1,0 +1,8 @@
+ alarm: systemd_service_apache2
+    on: systemdunits_service_units.service_unit_state
+  calc: $apache2
+ every: 10s
+  crit: ($this = 5)
+ units: state
+  info: apache web server service status
+    to: sysadmin

@@ -1,13 +1,20 @@
-- name: install netdata process/http checks for graylog/elasticsearch/mongodb
+- name: install netdata http/systemd checks for graylog
   template:
-    src: etc_netdata_{{ item.plugin }}_{{ item.module }}.conf.d_graylog.conf.j2
-    dest: /etc/netdata/{{ item.plugin }}/{{ item.module }}.conf.d/graylog.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
+  ignore_errors: "{{ ansible_check_mode }}"
   with_items:
-    - plugin: go.d
-      module: httpcheck
-    - plugin: health.d
-      module: processes
+    - src: etc_netdata_go.d_httpcheck.conf.d_graylog.conf.j2
+      dest: /etc/netdata/go.d/httpcheck.conf.d/graylog.conf
+    - src: etc_netdata_health.d_systemdunits.conf.d_graylog.conf.j2
+      dest: /etc/netdata/health.d/systemdunits.conf.d/graylog.conf
+
+- name: remove files from old versions of the role
+  file:
+    state: absent
+    path: "/etc/netdata/health.d/processes.conf.d/graylog.conf"
+  notify: assemble netdata configuration
