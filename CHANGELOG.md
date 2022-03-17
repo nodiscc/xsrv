@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: cron: log beginning and end of cron jobs
 - all roles: replace netdata process checks/alarms with more accurate systemd unit checks, raise alarms/notifications when a service is in the failed state
 - cleanup: standardize task names
+- xsrv: init-project: allow adding a first host directly using `xsrv init-project [project] [host]`
 
 **Fixed:**
 - fix `check` mode support for self-signed certificate generation tasks/netdata configuration
