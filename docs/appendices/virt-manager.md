@@ -76,29 +76,31 @@ virt-install --name mynew.example.org --os-type linux --ram 1024M --vcpu 2 --dis
 
 It is common practice to setup a virtual machine with the bare minimum components required to enable SSH access ("golden" image), then use [configuration management](configuration-management.md) to manage all other software components. Once a [VM template](server-preparation.md) has been set up, clone it to a new VM and update its IP address, and administrator/root passwords. You may do this manually from `virt-manager` and the VM console, or using basic scripting:
 
+<!-- TODO use virt-systprep to regenerate sshd host keys -->
+
 ```bash
 # template configuration details
-TEMPLATE_NAME=debian10-base
-TEMPLATE_IP=10.0.0.200
-TEMPLATE_ADMIN_USER=USERNAME
+TEMPLATE_NAME=debian11-base
+TEMPLATE_IP=10.0.0.250
+TEMPLATE_ADMIN_USER=deploy
 TEMPLATE_ADMIN_PASSWORD=PASSWORD
 # new VM configuration details
-VM_NAME=newvm.CHANGEME.org
-VM_IP=10.0.0.205
-VM_ADMIN_PASSWORD=NEWPASSWORD
-VM_ROOT_PASSWORD=NEWROOTPASSWORD
+NEWVM_NAME=newvm.CHANGEME.org
+NEWVM_IP=10.0.0.223
+NEWVM_ADMIN_PASSWORD=NEWPASSWORD
+NEWVM_ROOT_PASSWORD=NEWROOTPASSWORD
 # clone the template to a new VM
-virt-clone --original "$TEMPLATE_NAME" --name "$VM_NAME" --file "/path/to/$VM_NAME.qcow2"
+virt-clone --original "$TEMPLATE_NAME" --name "$NEWVM_NAME" --file "/path/to/$NEWVM_NAME.qcow2"
 # start the new VM
-virsh start "$VM_NAME"
-# authorize your SSH key on the new VM
+virsh start "$NEWVM_NAME"
+# wait for the vm to boot up, authorize your SSH key on the new VM
 echo "$TEMPLATE_ADMIN_PASSWORD" | sshpass ssh-copy-id -i ~/.ssh/id_rsa "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP"
 # update the IP address on the new VM
-echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo sed -i "s/$TEMPLATE_IP/$VM_IP/g" /etc/network/interfaces
-echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo systemctl restart networking # this will interrupt the SSH connection
+echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo sed -i "s/$TEMPLATE_IP/$NEWVM_IP/g" /etc/network/interfaces
+echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo systemctl restart networking # this will interrupt/cause the SSH connection to hang, just close it with Ctrl+C
 # update the admin user and root passwords on the new VM
-echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$VM_IP" "echo -e '$VM_ADMIN_PASSWORD\n$VM_ADMIN_PASSWORD' | sudo passwd $TEMPLATE_ADMIN_USER"
-echo "$VM_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$VM_IP" "echo -e '$VM_ROOT_PASSWORD\n$VM_ROOT_PASSWORD' | sudo passwd root"
+echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$NEWVM_IP" "echo -e '$NEWVM_ADMIN_PASSWORD\n$NEWVM_ADMIN_PASSWORD' | sudo passwd $TEMPLATE_ADMIN_USER"
+echo "$NEWVM_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$NEWVM_IP" "echo -e '$NEWVM_ROOT_PASSWORD\n$NEWVM_ROOT_PASSWORD' | sudo passwd root"
 ```
 
 Your new VM is ready to use.
