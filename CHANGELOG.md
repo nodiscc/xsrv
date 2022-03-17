@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - fix `check` mode support for self-signed certificate generation tasks/netdata configuration
 - apt: fix automatic upgrades for packages installed from Debian Backports
 - xsrv: fix error on new project creation/`init-playbook` - missing playbook directory
+- xsrv: fix support for `XSRV_PROJECTS_DIR` environment variable
 
 -------------------------------
 

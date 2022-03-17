@@ -4,7 +4,7 @@ set -o nounset
 
 # Configuration / defaults
 xsrv_clone_dir="${XSRV_CLONE_DIR:=$HOME/.local/share/xsrv/git}"
-projects_dir="${XSRV_projects_dir:=$HOME/playbooks}"
+projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
