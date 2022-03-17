@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 -------------------------------
 
-#### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - UNRELEASES
+#### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - 2022-03-17
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
