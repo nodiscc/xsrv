@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environmnets to the latest release
 
+**Added:**
+- docker: monitoring: raise a netdata alarm when the docker engine service is in the failed state (when `xsrv.monitoring_netdata` is deployed)
+
 **Changed:**
 - update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 

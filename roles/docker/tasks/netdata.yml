@@ -1,9 +1,16 @@
-- name: install netdata alarms for docker engine
+- name: install netdata checks/alarms for docker engine
   template:
-    src: "etc_netdata_health.d_dockerd.conf.j2"
-    dest: "/etc/netdata/health.d/dockerd.conf"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: 0640
-  notify: restart netdata
+  notify:
+    - assemble netdata configuration
+    - restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - src: etc_netdata_health.d_dockerd.conf.j2
+      dest: /etc/netdata/health.d/dockerd.conf
+    - src: etc_netdata_health.d_systemdunits.conf.d_docker.conf.j2
+      dest: /etc/netdata/health.d/systemdunits.conf.d/docker.conf
