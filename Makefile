@@ -7,7 +7,7 @@ all: tests
 ##### TESTS #####
 
 .PHONY: tests # run all tests
-tests: test_shellcheck test_jinja2 test_ansible_syntax_check test_ansible_lint test_yamllint
+tests: test_shellcheck test_jinja2 test_ansible_syntax_check test_ansible_lint test_yamllint test_command_line
 
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
@@ -56,6 +56,11 @@ test_jinja2: venv
 	echo "[INFO] checking syntax for $$i"; \
 	python3 ./tests/check-jinja2.py "$$i"; \
 	done
+
+.PHONY: test_command_line # test correct execution of xsrv commands
+test_command_line:
+	rm -rf ~/playbooks/xsrv-test
+	XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-test my.example.org
 
 
 ##### RELEASE PROCEDURE #####
