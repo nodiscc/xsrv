@@ -1,3 +1,6 @@
+# @tag lynis - setup lynis security audit tool
+# @tag monitoring-cli-utils - setup command-line/additional monitoring utilities
+
 galaxy_info:
   role_name: monitoring_utils
   author: "nodiscc <nodiscc@gmail.com>"

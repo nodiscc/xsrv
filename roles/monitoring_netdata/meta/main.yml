@@ -1,3 +1,6 @@
+# @tag netdata - setup netdata monitoring system
+# @tag netdata-config - copy netdata configuration files
+
 galaxy_info:
   role_name: monitoring_netdata
   author: "nodiscc <nodiscc@gmail.com>"
