@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - cleanup: standardize file names
 - cleanup: fix/standardize indentation in netdata configuration files produced by `to_nice_yaml`
+- cleanup: make netdata assembled configuration more readable (add blank line delimiters)
 
 -------------------------------
 

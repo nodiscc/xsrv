@@ -74,6 +74,7 @@
     owner: root
     group: netdata
     mode: 0640
+    delimiter: ''
   with_items:
     - go.d/filecheck.conf
     - go.d/httpcheck.conf
