@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: make netdata assembled configuration more readable (add blank line delimiters)
 - gotty: attempt to restart the systemd service every 2 seconds, for a maximum of 4 times in 10 seconds in case of failure
 - gitea: limit systemd service automatic restart attempts to 4 in 10 seconds
+- monitoring_netdata: re-add default netdata alarms for the systemdunits module
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
