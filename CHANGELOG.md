@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: monitoring: raise a netdata alarm when the docker engine service is in the failed state (when `xsrv.monitoring_netdata` is deployed)
 - monitoring_netdata: make netdata filechecks configurable
 - add ansible tag `netdata-config`
-- transmission: monitoring/netdata: raise an alarm when the transmission systemd service is in the failed state
+- transmission/gotty: monitoring/netdata: raise an alarm when transmission/gotty systemd services are in the failed state
 
 **Changed:**
 - update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)

@@ -1,9 +1,14 @@
-- name: install netdata http check for gotty
+- name: install netdata http/systemd checks/alarms for gotty
   template:
-    src: etc_netdata_go.d_httpcheck.conf.d_gotty.conf.j2
-    dest: /etc/netdata/go.d/httpcheck.conf.d/gotty.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - src: etc_netdata_go.d_httpcheck.conf.d_gotty.conf.j2
+      dest: /etc/netdata/go.d/httpcheck.conf.d/gotty.conf
+    - src: etc_netdata_health.d_systemdunits.conf.d_gotty.conf.j2
+      dest: /etc/netdata/health.d/systemdunits.conf.d/gotty.conf
