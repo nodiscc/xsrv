@@ -6,13 +6,15 @@ After=syslog.target
 After=network.target
 
 [Service]
-RestartSec=5s
+RestartSec=2s
 Type=simple
 User={{ gotty_run_username }}
 Group={{ gotty_run_username }}
 WorkingDirectory=~
 ExecStart=/usr/local/bin/gotty --config /etc/gotty/gotty.conf  "{{ gotty_run_command }}"
-Restart=always
+Restart=on-failure
+StartLimitIntervalSec=10s
+StartLimitBurst=4
 
 [Install]
 WantedBy=multi-user.target
