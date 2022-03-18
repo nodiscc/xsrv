@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - docker: monitoring: raise a netdata alarm when the docker engine service is in the failed state (when `xsrv.monitoring_netdata` is deployed)
 - monitoring_netdata: make netdata filechecks configurable
+- add ansible tag `netdata-config`
 
 **Changed:**
 - update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)

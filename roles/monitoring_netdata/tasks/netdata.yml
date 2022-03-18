@@ -175,6 +175,7 @@
     - assemble netdata configuration
     - restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
+  tags: netdata-config
 
 - name: install netdata downtime cron jobs
   template:
