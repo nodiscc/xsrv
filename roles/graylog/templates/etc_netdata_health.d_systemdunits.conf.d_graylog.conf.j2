@@ -18,7 +18,7 @@
 
  alarm: systemd_service_graylog
     on: systemdunits_service_units.service_unit_state
-  calc: $graylog-server
+  calc: $graylog_server
  every: 10s
   crit: ($this = 5)
  units: state

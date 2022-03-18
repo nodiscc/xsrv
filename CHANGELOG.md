@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: standardize file names
 - cleanup: fix/standardize indentation in netdata configuration files produced by `to_nice_yaml`
 - cleanup: make netdata assembled configuration more readable (add blank line delimiters)
+- graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 
 -------------------------------
 
