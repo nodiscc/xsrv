@@ -1,5 +1,5 @@
 {% if openldap_setup_lam %}
--   name: ldap-account-manager
+  - name: ldap-account-manager
     timeout: 1
     tls_skip_verify: true
     update_every: 10
@@ -8,7 +8,7 @@
       Host: "{{ ldap_account_manager_fqdn }}"
 {% endif %}
 {% if openldap_setup_ssp %}
--   name: self-service-password
+  - name: self-service-password
     timeout: 1
     tls_skip_verify: true
     update_every: 10
