@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gotty: attempt to restart the systemd service every 2 seconds, for a maximum of 4 times in 10 seconds in case of failure
 - gitea: limit systemd service automatic restart attempts to 4 in 10 seconds
 - monitoring_netdata: re-add default netdata alarms for the systemdunits module
+- gitea: update gitea to v1.16.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.1) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.2) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.3) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.16.4)
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
