@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: limit systemd service automatic restart attempts to 4 in 10 seconds
 - monitoring_netdata: re-add default netdata alarms for the systemdunits module
 - gitea: update gitea to v1.16.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.1) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.2) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.3) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.16.4)
+- nextcloud: update nextcloud to [v23.0.2](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/)
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
