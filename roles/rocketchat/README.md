@@ -40,6 +40,10 @@ rocketchat_fqdn: chat.CHANGEME.org
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
+Hardware requirements [[1]](https://docs.rocket.chat/quick-start/installing-and-updating/hardware-requirements):
+- 50 concurrent users, low activity: 1vCPU, 1GB RAM, 30GB storage
+- 100 concurrent users, medium activity: 2vCPU, 2GB RAM, 40GB storage
+- 300 concurrent users, medium activity: 6vCPU, 5GB RAM, 500GB storage
 
 ## Usage
 
