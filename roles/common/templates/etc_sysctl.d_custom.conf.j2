@@ -201,3 +201,5 @@ kernel.kptr_restrict = 1
 # may not be appropriate for developers or servers with only admin accounts.
 kernel.yama.ptrace_scope = 1
 
+# disable potentially exploitable unprivileged user namespaces
+kernel.unprivileged_userns_clone = 0
