@@ -24,5 +24,5 @@ READ_ENV="yes"
 #   4   log jobs with exit status != 0
 #   8   log the process identifier of child process (in all logs)
 #
-EXTRA_OPTS="-n -L 7"
+EXTRA_OPTS="-n -L {{ cron_log_level }}"
 

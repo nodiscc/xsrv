@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_netdata: make netdata filechecks configurable
 - add ansible tag `netdata-config`
 - transmission/gotty/jellyfin: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state
+- common: make cron jobs log level configurable (`cron_log_level`)
 
 **Changed:**
 - update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)

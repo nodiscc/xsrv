@@ -205,6 +205,8 @@ ansible_user_allow_sudo_rsync_nopasswd: yes
 setup_cron: yes
 # list of users allowed to use crontab for task scheduling
 linux_users_crontab_allow: ['root']
+# cron jobs log level (cumulative, https://manpages.debian.org/bullseye/cron/cron.8.en.html#OPTIONS)
+cron_log_level: 7
 
 ### OUTGOING MAIL ###
 # (yes/no) install outgoing system mail (msmtp)
