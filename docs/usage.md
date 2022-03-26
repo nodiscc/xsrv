@@ -13,30 +13,31 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.5.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.6.0
 
 USAGE: xsrv COMMAND [project] [host]
 
-init-project [project]          initialize a new project
-edit-inventory [project]        edit/show inventory file (hosts/groups)
-edit-playbook [project]         edit/show playbook (roles for each host)
-show-defaults [project] [role]  show all variables and their default values
-edit-requirements [project]     edit ansible requirements/collections
-edit-cfg [project]              edit ansible configuration (ansible.cfg)
-init-host [project] [host]      add a new host to an existing project
-check [project] [host]          simulate deployment, report what would be changed
-deploy [project] [host]         deploy the main playbook in a project (apply configuration/roles)
-edit-host [project] [host]      edit host configuration (host_vars)
-edit-vault [project] [host]     edit encrypted (vault) host configuration (host_vars)
-edit-group [project] [group]    edit group configuration (default group: all) (group_vars)
-fetch-backups [project] [host]  fetch backups from a host to the local backups directory
-shell [project] [host]          open interactive shell on a host
-logs [project] [host]           view system logs on a host
-ls                              list files in the projects directory (accepts a path)
-help                            show this message
-help-tags [project]             show the list of ansible tags and their descriptions
-upgrade [project]               upgrade roles/collections to latest versions
-self-upgrade                    check for new releases/upgrade the xsrv script in-place
+init-project [project] [host]       initialize a new project (and optionally a first host)
+edit-inventory [project]            edit/show inventory file (hosts/groups)
+edit-playbook [project]             edit/show playbook (roles for each host)
+show-defaults [project] [role]      show all variables and their default values
+edit-requirements [project]         edit ansible requirements/collections
+edit-cfg [project]                  edit ansible configuration (ansible.cfg)
+init-host [project] [host]          add a new host to an existing project
+check [project] [host]              simulate deployment, report what would be changed
+deploy [project] [host]             deploy the main playbook (apply configuration/roles)
+edit-host [project] [host]          edit host configuration (host_vars)
+edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
+edit-group [project] [group]        edit group configuration (group_vars)
+edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
+fetch-backups [project] [host]      fetch backups from a host to the local backups directory
+shell [project] [host]              open interactive shell on a host
+logs [project] [host]               view system logs on a host
+ls                                  list files in the projects directory (accepts a path)
+help                                show this message
+help-tags [project]                 show the list of ansible tags and their descriptions
+upgrade [project]                   upgrade roles/collections to latest versions
+self-upgrade                        check for new releases/upgrade the xsrv script in-place
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
@@ -287,6 +288,17 @@ setup_msmtp: yes
 # xsrv edit-host default dev.example.org
 # except for this host
 setup_msmtp: no
+```
+
+### xsrv edit-group-vault
+
+Edit encrypted [group](#manage-hosts) configuration - similar to [`xsrv edit-vault`](#xsrv-edit-vault) but for groups.
+
+```bash
+# xsrv edit-group-vault all
+# common outgoing mail credentials for all hosts
+msmtp_username: "mail-notifications"
+msmtp_password: "e9fozo8ItlH6XNoysyt7vdylXcttVu"
 ```
 
 

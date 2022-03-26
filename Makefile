@@ -61,7 +61,7 @@ test_jinja2: venv
 test_command_line:
 	rm -rf ~/playbooks/xsrv-test
 	XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-test my.example.org
-
+	EDITOR=cat ./xsrv edit-group-vault xsrv-test all && grep ANSIBLE_VAULT ~/playbooks/xsrv-test/group_vars/all/all.vault.yml
 
 ##### RELEASE PROCEDURE #####
 # - make bump_versions update_todo changelog new_tag=$new_tag

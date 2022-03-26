@@ -44,6 +44,20 @@ function _check_host_name() {
     fi
 }
 
+function migrate_group_vars_file() {
+    # migrate files from group_vars/$group_name.yml to group_vars/$group_name/$group_name.yml
+    legacy_group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
+    if [[ -f "$legacy_group_vars_file" ]]; then
+        echo "[xsrv] INFO: legacy $legacy_group_vars_file detected, moving it to $group_vars_file";
+        if [[ -f "$group_vars_file" ]]; then
+            echo "[xsrv] ERROR: destination file $group_vars_file already exists, aborting. Please merge files manually."
+            exit 1
+        fi
+        mkdir -p "$projects_dir/$project_name/group_vars/$group_name"
+        mv "$legacy_group_vars_file" "$group_vars_file"
+    fi
+}
+
 function check_group_name() {
     # check if group_vars files exist for a group, set group_vars_file global variable
     check_project_exists
@@ -52,10 +66,9 @@ function check_group_name() {
         echo "[xsrv] INFO: no group name provided, editing variables for group 'all'"
         group_name="all"
     fi
-    group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
-    if [[ ! -f "$group_vars_file" ]]; then
-        echo "[xsrv] INFO: $group_vars_file does not exist, will be created";
-    fi
+    group_vars_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.yml"
+    group_vault_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.vault.yml"
+    migrate_group_vars_file
 }
 
 function create_venv() {
@@ -186,7 +199,21 @@ function edit_group() {
     # edit group variables
     check_group_name
     echo "[xsrv] INFO: opening group_vars file $group_vars_file"
+    mkdir -p "$(dirname "$group_vars_file")"
     $editor "$group_vars_file"
+}
+
+function edit_group_vault() {
+    # edit a group's vault file
+    check_group_name
+    echo "[xsrv] INFO: opening group vault file $group_vault_file"
+    mkdir -p "$(dirname "$group_vault_file")"
+    cd "$projects_dir/$project_name"
+    if [[ ! -f "$group_vault_file" ]]; then
+        touch "$group_vault_file"
+        ansible-vault encrypt "$group_vault_file"
+    fi
+    EDITOR="$editor" ansible-vault edit "$group_vault_file"
 }
 
 function edit_vault() {
@@ -388,6 +415,7 @@ function _main() {
         "edit-cfg") shift; edit_ansible_cfg;;
         "edit-host") shift; edit_host ;;
         "edit-group") shift; edit_group;;
+        "edit-group-vault") init_venv; shift; edit_group_vault;;
         "edit-vault") init_venv; shift; edit_vault ;;
         "shell") init_venv; shift; run_shell ;;
         "logs") init_venv; shift; ssh_args="bash -c 'if [[ -r /var/log/syslog ]]; then lnav /var/log/syslog; else sudo lnav /var/log/syslog; fi'"; run_shell ;;
@@ -410,26 +438,27 @@ function _main() {
 usage="
 USAGE: xsrv COMMAND [project] [host]
 
-init-project [project] [host]   initialize a new project (and optionally a first host)
-edit-inventory [project]        edit/show inventory file (hosts/groups)
-edit-playbook [project]         edit/show playbook (roles for each host)
-show-defaults [project] [role]  show all variables and their default values
-edit-requirements [project]     edit ansible requirements/collections
-edit-cfg [project]              edit ansible configuration (ansible.cfg)
-init-host [project] [host]      add a new host to an existing project
-check [project] [host]          simulate deployment, report what would be changed
-deploy [project] [host]         deploy the main playbook in a project (apply configuration/roles)
-edit-host [project] [host]      edit host configuration (host_vars)
-edit-vault [project] [host]     edit encrypted (vault) host configuration (host_vars)
-edit-group [project] [group]    edit group configuration (default group: all) (group_vars)
-fetch-backups [project] [host]  fetch backups from a host to the local backups directory
-shell [project] [host]          open interactive shell on a host
-logs [project] [host]           view system logs on a host
-ls                              list files in the projects directory (accepts a path)
-help                            show this message
-help-tags [project]             show the list of ansible tags and their descriptions
-upgrade [project]               upgrade roles/collections to latest versions
-self-upgrade                    check for new releases/upgrade the xsrv script in-place
+init-project [project] [host]       initialize a new project (and optionally a first host)
+edit-inventory [project]            edit/show inventory file (hosts/groups)
+edit-playbook [project]             edit/show playbook (roles for each host)
+show-defaults [project] [role]      show all variables and their default values
+edit-requirements [project]         edit ansible requirements/collections
+edit-cfg [project]                  edit ansible configuration (ansible.cfg)
+init-host [project] [host]          add a new host to an existing project
+check [project] [host]              simulate deployment, report what would be changed
+deploy [project] [host]             deploy the main playbook (apply configuration/roles)
+edit-host [project] [host]          edit host configuration (host_vars)
+edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
+edit-group [project] [group]        edit group configuration (group_vars)
+edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
+fetch-backups [project] [host]      fetch backups from a host to the local backups directory
+shell [project] [host]              open interactive shell on a host
+logs [project] [host]               view system logs on a host
+ls                                  list files in the projects directory (accepts a path)
+help                                show this message
+help-tags [project]                 show the list of ansible tags and their descriptions
+upgrade [project]                   upgrade roles/collections to latest versions
+self-upgrade                        check for new releases/upgrade the xsrv script in-place
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
