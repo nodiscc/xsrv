@@ -161,6 +161,7 @@
     mode: 0640
   with_items:
     - { src: 'etc_netdata_netdata.conf.j2', dest: '/etc/netdata/netdata.conf' } # general configuration
+    - { src: 'etc_netdata_stream.conf.j2', dest: '/etc/netdata/stream.conf' } # streaming and replication configuration
     - { src: 'etc_netdata_go.d.conf.j2', dest: '/etc/netdata/go.d.conf' } # go.d plugin
     - { src: 'etc_netdata_go.d_systemdunits.conf.j2', dest: '/etc/netdata/go.d/systemdunits.conf' } # systemd units monitoring
     - { src: 'etc_netdata_health_alarm_notify.conf.j2', dest: '/etc/netdata/health_alarm_notify.conf' } # health notifications configuration # noqa 204

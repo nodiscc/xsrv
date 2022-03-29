@@ -122,6 +122,16 @@ netdata_fping_ping_every: 5000
 # Delay between ping chart updates (seconds) (this shohuld be longer than netdata_fping_ping_every)
 netdata_fping_update_every: 10
 
+## NETDATA STREAMING ##
+# enable/disable streaming to another netdata instance (yes/no)
+netdata_streaming_send_enabled: no
+# netdata instance to stream metrics to (protocol:hostname:port:SSL)
+netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
+# enable/disable accepting streaming from another netdata instance (yes/no)
+netdata_streaming_receive_enabled: no
+# API key (UUID) used to authenticate on the destination instance/allow from source instances
+netdata_api_key: "CHANGEME"
+
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)
 setup_needrestart: yes

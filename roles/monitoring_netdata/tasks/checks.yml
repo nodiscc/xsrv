@@ -21,6 +21,8 @@
       - netdata_logcount_update_interval == netdata_logcount_update_interval|int
       - netdata_logcount_warning_threshold_warn == netdata_logcount_warning_threshold_warn|int
       - netdata_monitor_systemd_units == netdata_monitor_systemd_units|bool
+      - netdata_streaming_send_enabled == netdata_streaming_send_enabled|bool
+      - netdata_streaming_receive_enabled == netdata_streaming_receive_enabled|bool
       - netdata_port_checks|type_debug == "list"
       - netdata_process_checks|type_debug == "list"
       - netdata_disabled_plugins|type_debug == "list"
@@ -41,3 +43,19 @@
       - item.end is string
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   with_items: "{{ netdata_notification_downtimes }}"
+
+- name: check that variables are correctly defined (netdata streaming API key)
+  assert:
+    quiet: yes
+    that:
+      - netdata_streaming_api_key is not search("CHANGEME")
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
+  when: (netdata_streaming_send_enabled|bool) or (netdata_streaming_receive_enabled|bool)
+
+- name: check that variables are correctly defined (netdata streaming destination)
+  assert:
+    quiet: yes
+    that:
+      - netdata_streaming_destination is not search("CHANGEME")
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
+  when: netdata_streaming_send_enabled|bool
