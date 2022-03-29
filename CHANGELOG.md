@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: update LDAP Account Manager to [v7.9](https://github.com/LDAPAccountManager/lam/releases)
 - rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
 - xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple group_vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
+- netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
