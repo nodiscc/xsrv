@@ -20,6 +20,7 @@
       - openssl
       - liblz4-1
       - gnupg
+      - fping # fping netdata plugin
       - git # required to clone additional modules
       - python3-psycopg2 # postgresql support
       # - python3-mysqldb # mysql/mariadb monitoring
@@ -172,6 +173,7 @@
     - { src: 'etc_netdata_go.d_x509check.conf.d_000-x509check.conf.j2', dest: '/etc/netdata/go.d/x509check.conf.d/000-x509check.conf' } # SSL certificate checks
     - { src: 'etc_netdata_go.d_portcheck.conf.d_000-portcheck.conf.j2', dest: '/etc/netdata/go.d/portcheck.conf.d/000-portcheck.conf' } # TCP port checks
     - { src: 'etc_netdata_python.d_apache.conf.j2', dest: '/etc/netdata/python.d/apache.conf' } # apache status checks
+    - { src: 'etc_netdata_fping.conf.j2', dest: '/etc/netdata/fping.conf' }
   notify:
     - assemble netdata configuration
     - restart netdata

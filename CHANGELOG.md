@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - transmission/gotty/jellyfin: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state
 - common: make cron jobs log level configurable (`cron_log_level`)
 - xsrv: add `edit-group-vault` command (edit encrypted group variables file)
+- netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency)
 
 **Changed:**
 - update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)

@@ -109,6 +109,18 @@ netdata_port_checks: []
 #         - '/path/to/dir1'
 #         - '/path/to/dir2'
 netdata_file_checks: []
+# Netdata ping checks
+# List of hosts to ping using the fping plugin
+# Example:
+# netdata_fping_hosts:
+#   - netdata.cloud
+#   - debian.org
+#   - 1.1.1.1
+netdata_fping_hosts: []
+# Delay between ping checks (ms)
+netdata_fping_ping_every: 5000
+# Delay between ping chart updates (seconds) (this shohuld be longer than netdata_fping_ping_every)
+netdata_fping_update_every: 10
 
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)
