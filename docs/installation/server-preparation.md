@@ -4,7 +4,10 @@
 
 The server (_host_) machine can be:
 - a physical computer (dedicated server, repurposed desktop/laptop, small factor board...)
-- a [virtual machine](https://en.wikipedia.org/wiki/Virtualization) (virtualization software: [libvirt/virt-manager](../appendices/virt-manager.md), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox), ...) or a [VPS](https://en.wikipedia.org/wiki/Virtual_private_server) from a hosting service.
+- a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) (VM)
+- a [VPS](https://en.wikipedia.org/wiki/Virtual_private_server) from a hosting provider
+
+Virtualization software ([hypervisors](https://en.wikipedia.org/wiki/Hypervisor)) include [libvirt/virt-manager](../../appendices/virt-manager.md), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox), ...
 
 Resource usage will vary depending on installed components (read each role's documentation), the number of concurrent users, and how much user data you need to store. Example minimal configuration for a personal/small team server with 2-10 users:
 
@@ -20,15 +23,15 @@ Prefer low power consumption hardware. To increase availability, setup the BIOS 
 
 ## Network
 
-
-### Internet access
-
-The server must have Internet access during deployment and upgrades. Prefer fast and reliable network links. 
+- The server must have a valid IPv4 address and gateway set during operating system installation.
+- The server must have a valid DNS resolver set during installation.
+- The server must have Internet access during deployment and upgrades.
+- Prefer fast and reliable network links.
 
 
 ### NAT/port forwarding
 
-If the network interface is in a [private network](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) behind a router, setup [port forwarding (NAT)](https://en.wikipedia.org/wiki/Port_forwarding) on the router if you need to access your services from other networks/Internet. Forward the following ports to your server's private IP address (if corresponding services are installed):
+If the network interface is in a [private network](https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses) behind a router, setup [port forwarding (NAT)](https://en.wikipedia.org/wiki/Port_forwarding) on the router if you need to access your services from other networks/Internet. Depending on which services are installed on the server, forward the following ports to your server's private IP address (if corresponding services are installed):
 
 ```
 SSH server:                      TCP 22
@@ -42,9 +45,17 @@ Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456
 
 ### Domain names
 
-The controller must be able to resolve the server's _host name_ ([Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Separate domain/subdomain names are required for web applications. Point `A` or `CNAME` DNS records to the public IP address of your server using a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar), a [free subdomain service](https://freedns.afraid.org/domain/registry/) or your [private DNS resolver](../appendices/pfsense.md).
 
-By default the following subdomains are configured (if corresponding roles are enabled):
+Point `A` or `CNAME` DNS records to the public IP address of your server, using:
+- a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)
+- a [free subdomain service](https://freedns.afraid.org/domain/registry/)
+- or your [private DNS resolver](../appendices/pfsense.md)
+
+Alternatively, you can add [hosts](https://en.wikipedia.org/wiki/Hosts_%28file%29) entries on your client devices for each domain name.
+
+- The controller must be able to resolve the server's _host name_. Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)).
+- Accessing the host directory by IP address is discouraged. Use DNS records.
+- Separate domain/subdomain names are required for web applications. By default the following subdomains are configured, when corresponding roles are enabled:
 
 ```bash
 ***.CHANGEME.org # host name in the inventory/playbook
@@ -63,8 +74,6 @@ logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
 rss-bridge.CHANGEME.org # rss_bridge
 ```
-
-_Alternatively, you can add [hosts](https://en.wikipedia.org/wiki/Hosts_%28file%29) entries on your client devices for each domain name._
 
 _Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates._
 
