@@ -179,7 +179,9 @@ See [YAML inventory](https://docs.ansible.com/ansible/latest/collections/ansible
 
 ### xsrv edit-playbook
 
-Edit the list of [roles](index.md#roles) (playbook file) for your hosts. Add any role you wish to enable to the `roles:` list:
+Edit the list of [roles](index.md#roles) (playbook file) for your hosts. Add any role you wish to enable to the `roles:` list.
+
+This is the simplest playbook, with a single host carrying multple roles:
 
 ```yaml
 # xsrv edit-playbook
@@ -200,6 +202,39 @@ Edit the list of [roles](index.md#roles) (playbook file) for your hosts. Add any
 ```
 
 See [Intro to playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html).
+
+Other examples:
+
+```yaml
+# deploy the common role to all hosts in parallel
+- hosts: all
+  roles:
+    - nodiscc.xsrv.common
+
+# deploy the monitoring role to all hosts except demo35.example.org
+- hosts: all:!demo35.example.org
+  roles:
+    - nodiscc.xsrv.monitoring
+
+# deploy specific roles role to specific hosts
+- hosts: proxmox1.example.org
+  roles:
+    - nodiscc.xsrv.proxmox
+- hosts: ldap.example.org
+  roles:
+    - nodiscc.xsrv.apache
+    - nodiscc.xsrv.openldap
+- hosts: backup.example.org
+  roles:
+    - nodiscc.xsrv.backup
+- hosts: app01.example.org
+  roles:
+    - nodiscc.xsrv.apache
+    - nodiscc.xsrv.postgresql
+    - nodiscc.xsrv.nextcloud
+    - nodiscc.xsrv.shaarli
+    - nodiscc.xsrv.gitea
+```
 
 
 ### Remove roles
