@@ -24,6 +24,7 @@
       - fping # fping netdata plugin
       - git # required to clone additional modules
       - python3-psycopg2 # postgresql support
+      - acl # required to use "become" as a non-root user
       # - python3-mysqldb # mysql/mariadb monitoring
     state: present
 

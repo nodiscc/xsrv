@@ -49,6 +49,16 @@
     - netdata-debsecan
   when: setup_netdata_debsecan | bool
 
+- name: include netdata-module-apt configuration tasks
+  import_tasks: netdata-module-apt.yml
+  become: yes
+  tags:
+    - monitoring
+    - netdata
+    - netdata-modules
+    - netdata-apt
+  when: setup_netdata_apt | bool
+
 - name: include firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes

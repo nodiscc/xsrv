@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+**Added:**
+- monitoring/netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
+
 **Changed:**
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - update documentation

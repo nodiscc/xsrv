@@ -172,3 +172,5 @@ netdata_logcount_notification_to: "silent"
 setup_netdata_debsecan: yes
 # monitor systemd units states
 netdata_monitor_systemd_units: yes
+# setup monitoring of pending package upgrades
+setup_netdata_apt: yes
