@@ -20,6 +20,9 @@ See [meta/main.yml](meta/main.yml)
     # - nodiscc.xsrv.monitoring # (optional) full monitoring suite including monitoring_netdata
 ```
 
+See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+
 ## Usage
 
 - Netdata dashboard access: https://my.CHANGEME.org:19999 (or https://IP_ADDRESS:19999)
