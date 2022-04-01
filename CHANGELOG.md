@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: add `edit-group-vault` command (edit encrypted group variables file)
 - netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency)
 - netdata: check that `setup_*` variables are correctly defined
+- add ansible tags: `netdata-modules`, `netdata-needrestart`, `netdata-debsecan`, `netdata-logcount`
 
 **Changed:**
 - update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
