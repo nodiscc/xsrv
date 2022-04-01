@@ -53,7 +53,12 @@
     mode: 0640
   with_items:
     - { src: '/root/netdata-needrestart/needrestart.chart.py', dest: '/usr/libexec/netdata/python.d/needrestart.chart.py' }
-    - { src: '/root/netdata-needrestart/needrestart.conf', dest: '/usr/libexec/netdata/python.d/needrestart.conf' }
+    - { src: '/root/netdata-needrestart/needrestart.conf', dest: '/etc/netdata/python.d/needrestart.conf' }
     - { src: '/root/netdata-needrestart/health.d_needrestart.conf', dest: '/etc/netdata/health.d/needrestart.conf' }
   notify: restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: remove files from old versions of the role
+  file:
+    state: absent
+    path: /usr/libexec/netdata/python.d/needrestart.conf
