@@ -26,7 +26,7 @@
     - { src: "/root/netdata-debsecan/usr_local_bin_debsecan-by-type", dest: "/usr/local/bin/debsecan-by-type", mode: "0755" }
     - { src: "/root/netdata-debsecan/debsecan.conf", dest: "/etc/netdata/python.d/debsecan.conf", mode: "0644" }
   notify: restart netdata
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate initial debsecan reports
   command: /usr/local/bin/debsecan-by-type

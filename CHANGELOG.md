@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
 - doc: update documentation, improve default playbook template README.md
 - tests: remove broken jinja2 syntax test
+- improve `check` mode support
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
