@@ -7,7 +7,7 @@ all: tests
 ##### TESTS #####
 
 .PHONY: tests # run all tests
-tests: test_shellcheck test_jinja2 test_ansible_syntax_check test_ansible_lint test_yamllint test_command_line
+tests: test_shellcheck test_ansible_syntax_check test_ansible_lint test_yamllint test_command_line
 
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
@@ -47,15 +47,6 @@ test_yamllint: venv
 	source .venv/bin/activate && \
 	set -o pipefail && \
 	find roles/ -iname "*.yml" | xargs yamllint -c tests/.yamllint
-
-.PHONY: test_jinja2 # Jinja2 template syntax linter
-test_jinja2: venv
-	source .venv/bin/activate && \
-	j2_files=$$(find roles/ -name "*.j2") && \
-	for i in $$j2_files; do \
-	echo "[INFO] checking syntax for $$i"; \
-	python3 ./tests/check-jinja2.py "$$i"; \
-	done
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:

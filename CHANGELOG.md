@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple group_vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
 - netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
 - doc: update documentation, improve default playbook template README.md
+- tests: remove broken jinja2 syntax test
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
