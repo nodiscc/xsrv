@@ -1,4 +1,4 @@
-# @tag rocketchat - setup rocketchat communication platforl
+# @tag rocketchat - setup rocketchat communication platform
 
 galaxy_info:
   role_name: rocketchat
@@ -9,7 +9,7 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - buster
+        - 11
   galaxy_tags:
     - chat
     - communication
