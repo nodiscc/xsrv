@@ -20,9 +20,9 @@ Rocket.Chat features include:
 It provides an alternative to proprietary SaaS software like Slack, Discord, Google Meet...
 
 
-## Requirements/dependencies
+## Requirements/dependencies/example playbook
 
-See [meta/main.yml](defaults/main.yml)
+See [meta/main.yml](meta/main.yml)
 
 ```yaml
 # playbook.yml
@@ -30,8 +30,9 @@ See [meta/main.yml](defaults/main.yml)
   roles:
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # webserver and SSL/TLS certificates
     - nodiscc.xsrv.docker # docker container engine
+    - nodiscc.xsrv.apache # webserver and SSL/TLS certificates
+    - nodiscc.xsrv.rocketchat
 
 # required variables:
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
