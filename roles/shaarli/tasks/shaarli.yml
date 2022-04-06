@@ -8,14 +8,13 @@
     update_cache: yes
     cache_valid_time: 900
     package:
-      - php-gd
-      - php-curl
-      - php-json
-      - php-mbstring
-      - php-gd
-      - php-intl
-      - php-curl
-      - php-gettext
+      - php7.4-gd
+      - php7.4-curl
+      - php7.4-json
+      - php7.4-mbstring
+      - php7.4-intl
+      - php7.4-curl
+      - php7.4-gettext
 
 ### SHAARLI INSTALLATION ###
 
