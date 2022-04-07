@@ -44,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 - netdata: fix location for needrestart module configuration file
 - shaarli: explicitly use php 7.4 packages, fix possible installation problems on Debian 11
+- tests: fix and speed up ansible-lint tests
 
 -------------------------------
 
