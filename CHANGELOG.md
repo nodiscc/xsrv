@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - tests: remove broken jinja2 syntax test
 - improve `check` mode support
 - common: hardening/sysctl: disable potentially exploitable unprivileged BPF
+- tests: ansible-lint: ignore `fqcn-bultins` rule, must be fixed before ansible 2.16
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
