@@ -1,7 +1,7 @@
 # not idempotent, always upgrade to latest versions
 - name: update nextcloud applications (always returns changed)
   become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ app:update --all
   args:
     chdir: "{{ nextcloud_install_dir }}"
@@ -10,7 +10,7 @@
 
 - name: install nextcloud applications
   become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ app:install {{ item.app }}
   args:
     chdir: "{{ nextcloud_install_dir }}"
@@ -26,7 +26,7 @@
 
 - name: enable/disable nextcloud applications
   become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ app:{{ item.state }} {{ item.app }}
   args:
     chdir: "{{ nextcloud_install_dir }}"

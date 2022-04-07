@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environmnets to the latest release
+- this upgrade will cause Nextcloud instances to go down for a few minutes, depending on the number of files in their data directory
 
 **Added:**
 - xsrv: add [`init-vm`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (initialize a ready-to-deploy libvirt VM from a template)
@@ -28,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
 - netdata: re-add default netdata alarms for the `systemdunits` module
 - nextcloud: update to v23.0.3 [[1]](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/) [[2]](https://nextcloud.com/blog/nextcloud-23-0-3-and-22-2-6-are-out-bringing-a-series-of-bug-fixes-and-improvements/)
+- nextcloud: run nextcloud PHP processes under a dedicated `nextcloud` user, if an older instalaltion owned by `www-data` is found, it will be migrated to the new user automatically
 - openldap: update LDAP Account Manager to [v7.9](https://github.com/LDAPAccountManager/lam/releases)
 - rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
 - apache/fail2ban/nextcloud: remove obsolete workaround for nextcloud [desktop client issue](https://github.com/nextcloud/server/issues/15688)
