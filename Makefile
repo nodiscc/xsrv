@@ -7,7 +7,7 @@ all: tests
 ##### TESTS #####
 
 .PHONY: tests # run all tests
-tests: test_shellcheck test_ansible_syntax_check test_ansible_lint test_yamllint test_command_line
+tests: test_shellcheck test_ansible_lint test_yamllint test_command_line
 
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
@@ -31,12 +31,7 @@ install_collection: venv build_collection
 	source .venv/bin/activate && \
 	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
 
-.PHONY: test_ansible_syntax_check # ansible playbook syntax check
-test_ansible_syntax_check: venv
-	source .venv/bin/activate && \
-	ansible-playbook --syntax-check --inventory tests/inventory.yml tests/playbook.yml
-
-.PHONY: ansible_lint # ansible syntax linter
+.PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
 	ANSIBLE_ROLES_PATH=./roles ansible-lint -v -x fqcn-builtins,truthy,braces,line-length tests/playbook.yml

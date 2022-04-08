@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - improve `check` mode support
 - common: hardening/sysctl: disable potentially exploitable unprivileged BPF
 - tests: ansible-lint: ignore `fqcn-bultins,truthy,braces,line-length` rules
+- tests: remove obsolete `ansible-playbook --syntax-check` test, replaced by ansible-lint
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
