@@ -10,41 +10,41 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environmnets to the latest release
 
 **Added:**
-- docker: monitoring: raise a netdata alarm when the docker engine service is in the failed state (when `xsrv.monitoring_netdata` is deployed)
-- monitoring_netdata: make netdata filechecks configurable
-- add ansible tag `netdata-config`
-- transmission/gotty/jellyfin: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state
 - common: make cron jobs log level configurable (`cron_log_level`)
-- xsrv: add `edit-group-vault` command (edit encrypted group variables file)
+- docker: monitoring: raise a netdata alarm when the docker engine service is in the failed state (when `xsrv.monitoring_netdata` is deployed)
 - netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency)
 - netdata: check that `setup_*` variables are correctly defined
-- add ansible tags: `netdata-modules`, `netdata-needrestart`, `netdata-debsecan`, `netdata-logcount`
+- netdata: make netdata filechecks configurable
+- transmission/gotty/jellyfin: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state
+- xsrv: add `edit-group-vault` command (edit encrypted group variables file)
+- xsrv: add ansible tags: `netdata-modules`, `netdata-needrestart`, `netdata-debsecan`, `netdata-logcount`, `netdata-config`
 
 **Changed:**
-- xsrv: update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
-- cleanup: standardize file names
-- cleanup: fix/standardize indentation in netdata configuration files produced by `to_nice_yaml`
 - cleanup: make netdata assembled configuration more readable (add blank line delimiters)
-- gotty: attempt to restart the systemd service every 2 seconds, for a maximum of 4 times in 10 seconds in case of failure
+- cleanup: standardize file names
+- common: hardening/sysctl: disable potentially exploitable unprivileged BPF
+- common: sysctl/security: disable potentially exploitable unprivileged user namespaces
 - gitea: limit systemd service automatic restart attempts to 4 in 10 seconds
-- monitoring_netdata: re-add default netdata alarms for the systemdunits module
-- gitea: update gitea to v1.16.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.1) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.2) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.3) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.16.4) [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.16.5)
-- nextcloud: update nextcloud to v23.0.3 [[1]](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/) [[2]](https://nextcloud.com/blog/nextcloud-23-0-3-and-22-2-6-are-out-bringing-a-series-of-bug-fixes-and-improvements/)
+- gitea: update to v1.16.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.1) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.2) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.3) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.16.4) [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.16.5)
+- gotty: attempt to restart the systemd service every 2 seconds in case of failure, for a maximum of 4 times in 10 seconds
+- netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
+- netdata: re-add default netdata alarms for the systemdunits module
+- nextcloud: update to v23.0.3 [[1]](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/) [[2]](https://nextcloud.com/blog/nextcloud-23-0-3-and-22-2-6-are-out-bringing-a-series-of-bug-fixes-and-improvements/)
 - openldap: update LDAP Account Manager to [v7.9](https://github.com/LDAPAccountManager/lam/releases)
 - rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
-- common: sysctl/security: disable potentially exploitable unprivileged user namespaces
+- xsrv: improve `check` mode support
 - xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple group_vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
-- netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
+- xsrv: update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - doc: update documentation, improve default playbook template README.md
-- tests: remove broken jinja2 syntax test
-- improve `check` mode support
-- common: hardening/sysctl: disable potentially exploitable unprivileged BPF
 - tests: ansible-lint: ignore `fqcn-bultins,truthy,braces,line-length` rules
+- tests: remove broken jinja2 syntax test
 - tests: remove obsolete `ansible-playbook --syntax-check` and `yamllint` tests, replaced by ansible-lint
+
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 - netdata: fix location for needrestart module configuration file
+- netdata: fix/standardize indentation in configuration files produced by `to_nice_yaml`
 - shaarli: explicitly use php 7.4 packages, fix possible installation problems on Debian 11
 - tests: fix and speed up ansible-lint tests
 - tests: fix various ansible-lint warnings
