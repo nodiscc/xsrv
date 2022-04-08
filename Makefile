@@ -7,7 +7,7 @@ all: tests
 ##### TESTS #####
 
 .PHONY: tests # run all tests
-tests: test_shellcheck test_ansible_lint test_yamllint test_command_line
+tests: test_shellcheck test_ansible_lint test_command_line
 
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
@@ -35,12 +35,6 @@ install_collection: venv build_collection
 test_ansible_lint: venv
 	source .venv/bin/activate && \
 	ANSIBLE_ROLES_PATH=./roles ansible-lint -v -x fqcn-builtins,truthy,braces,line-length tests/playbook.yml
-
-.PHONY: test_yamllint # YAML syntax check and linter
-test_yamllint: venv
-	source .venv/bin/activate && \
-	set -o pipefail && \
-	find roles/ -iname "*.yml" | xargs yamllint -c tests/.yamllint
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:
