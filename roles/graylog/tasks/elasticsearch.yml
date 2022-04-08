@@ -22,6 +22,9 @@
   file:
     state: directory
     path: /etc/systemd/system/elasticsearch.service.d/
+    owner: root
+    group: root
+    mode: 0755
 
 - name: configure elasticsearch
   template:

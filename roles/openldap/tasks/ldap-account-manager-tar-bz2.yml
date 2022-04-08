@@ -43,6 +43,9 @@
   get_url:
     url: https://netix.dl.sourceforge.net/project/lam/LAM/{{ ldap_account_manager_version }}/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
     dest: /root/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
+    owner: root
+    group: root
+    mode: 0640
   retries: 3
   when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
   check_mode: no

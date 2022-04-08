@@ -2,6 +2,9 @@
   get_url:
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0640
   with_items:
     - { url: "https://github.com/sorenisanerd/gotty/releases/download/v{{ gotty_version }}/gotty_v{{ gotty_version }}_linux_amd64.tar.gz",
         dest: "/root/gotty_v{{ gotty_version }}_linux_amd64.tar.gz" }

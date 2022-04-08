@@ -33,6 +33,9 @@
     url: https://rsnapshot.org/downloads/rsnapshot_1.4.4-1_all.deb
     dest: /root/rsnapshot_1.4.4-1_all.deb
     checksum: sha256:92f9124e93520f955cf7b52dc23a5dbb30e9dd1b7bc8e02536e4e2df4101bf60
+    owner: root
+    group: root
+    mode: 0640
   check_mode: no # run even in check mode so that following tasks don't fail
 
 - name: install rsnapshot from upstream .deb

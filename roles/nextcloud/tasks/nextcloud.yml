@@ -55,9 +55,8 @@
     - ansible_local.nextcloud.installed.version < nextcloud_version
     - nextcloud_dir.stat.exists
 
-#- debug:
-#    msg: "action: {{ nextcloud_action }}, nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, nextcloud_version: {{ nextcloud_version }}"
-
+# - debug:
+#     msg: "action: {{ nextcloud_action }}, nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, nextcloud_version: {{ nextcloud_version }}"
 
 ### DOWNLOAD/INSTALLATION ###
 
@@ -65,6 +64,9 @@
   get_url:
     url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
     dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
+    owner: root
+    group: root
+    mode: 0640
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
 - name: create nextcloud zip extraction directory

@@ -4,6 +4,9 @@
   get_url:
     url: "https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb"
     dest: "/root/graylog-4.0-repository_latest.deb"
+    owner: root
+    group: root
+    mode: 0640
   ignore_errors: "{{ ansible_check_mode }}" # HEAD requests are forbidden/403
 
 - name: install graylog-4.0-repository package
@@ -21,17 +24,24 @@
 - name: install graylog-server package
   apt:
     pkg: "graylog-server"
-    state: latest
+    state: present
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate graylog password hash
-  shell: echo -n {{ graylog_root_password }} | sha256sum | cut -d" " -f1
+  shell: set -o pipefail && echo -n {{ graylog_root_password }} | sha256sum | cut -d" " -f1
   register: graylog_root_password_hash
   changed_when: false
   check_mode: no # run even in check mode, does not change anything
+  args:
+    executable: /bin/bash
 
 - name: copy graylog server configuration
-  template: "{{ item }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
   notify: restart graylog-server
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:

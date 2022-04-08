@@ -40,9 +40,8 @@
     - ansible_local.rss_bridge.installed.version < rss_bridge_version
     - rss_bridge_dir.stat.exists
 
-#- debug:
-#    msg: "action: {{ rss_bridge_action }}, rss_bridge_dir.stat.exists: {{ rss_bridge_dir.stat.exists }}, rss_bridge_version: {{ rss_bridge_version }}"
-
+# - debug:
+#     msg: "action: {{ rss_bridge_action }}, rss_bridge_dir.stat.exists: {{ rss_bridge_dir.stat.exists }}, rss_bridge_version: {{ rss_bridge_version }}"
 
 ### DOWNLOAD/INSTALLATION ###
 
@@ -50,6 +49,9 @@
   get_url:
     url: "https://github.com/RSS-Bridge/rss-bridge/archive/refs/tags/{{ rss_bridge_version }}.zip"
     dest: "/root/rss-bridge-{{ rss_bridge_version }}.zip"
+    owner: root
+    group: root
+    mode: 0640
   when: rss_bridge_action == 'initial' or rss_bridge_action == 'upgrade'
 
 - name: create rss-bridge zip extraction directory

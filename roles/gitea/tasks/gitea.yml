@@ -7,6 +7,9 @@
   get_url:
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0640
   with_items:
     - url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64"
       dest: "/root/gitea-{{ gitea_version }}-linux-amd64"

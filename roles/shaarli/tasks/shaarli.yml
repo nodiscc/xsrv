@@ -43,6 +43,9 @@
   get_url:
     url: "https://github.com/shaarli/Shaarli/releases/download/{{ shaarli_version }}/shaarli-{{ shaarli_version }}-full.zip"
     dest: "/root/shaarli-{{ shaarli_version }}-full.zip"
+    owner: root
+    group: root
+    mode: 0640
   when:
     - shaarli_action is defined
     - shaarli_action == 'initial' or shaarli_action == 'upgrade'
