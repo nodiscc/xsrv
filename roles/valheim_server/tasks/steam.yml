@@ -16,11 +16,11 @@
   command: dpkg --add-architecture i386
   when: result_i386_check.rc == 1
   register: enable_i386_architecture
+  notify: update apt cache
 
-- name: update apt cache if necessary
-  apt:
-    update_cache: yes
-  when: enable_i386_architecture.changed
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: valheim_server
 
 - name: install steamcmd
   apt:
