@@ -39,13 +39,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - tests: remove broken jinja2 syntax test
 - improve `check` mode support
 - common: hardening/sysctl: disable potentially exploitable unprivileged BPF
-- tests: ansible-lint: ignore `fqcn-bultins` rule, must be fixed before ansible 2.16
+- tests: ansible-lint: ignore `fqcn-bultins,truthy,braces,line-length` rules
 
 **Fixed:**
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 - netdata: fix location for needrestart module configuration file
 - shaarli: explicitly use php 7.4 packages, fix possible installation problems on Debian 11
 - tests: fix and speed up ansible-lint tests
+- tests: fix various ansible-lint warnings
 
 -------------------------------
 

@@ -6,7 +6,7 @@
 # TODO replace with template module
 
 - name: Check if i386 is enabled
-  shell: dpkg --print-foreign-architectures | grep i386
+  shell: dpkg --print-foreign-architectures | grep i386 # noqa risky-shell-pipe
   register: result_i386_check
   changed_when: result_i386_check.rc == 1
   failed_when: result_i386_check.rc > 1

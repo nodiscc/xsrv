@@ -39,7 +39,7 @@ test_ansible_syntax_check: venv
 .PHONY: ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ANSIBLE_ROLES_PATH=./roles ansible-lint -v -x fqcn-builtins,truthy,braces tests/playbook.yml
+	ANSIBLE_ROLES_PATH=./roles ansible-lint -v -x fqcn-builtins,truthy,braces,line-length tests/playbook.yml
 
 .PHONY: test_yamllint # YAML syntax check and linter
 test_yamllint: venv
