@@ -110,70 +110,70 @@
             <div class="col-1-1 mobile-col-1-1">
                 <h1>{{ homepage_title }}</h1>
             </div>
-{% if ansible_local.nextcloud.ansible_managed is defined and ansible_local.nextcloud.ansible_managed %}
+{% if ansible_local.nextcloud.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 nextcloud">
-                <a href="https://{{ nextcloud_fqdn }}">
+                <a href="https://{{ ansible_local.nextcloud.fqdn }}">
                     <div class="content">
                         <p><img src="res/nextcloud.png"/><br/> Nextcloud</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.rocketchat.ansible_managed is defined and ansible_local.rocketchat.ansible_managed %}
+{% if ansible_local.rocketchat.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 rocketchat">
-                <a href="https://{{ rocketchat_fqdn }}">
+                <a href="https://{{ ansible_local.rocketchat.fqdn }}">
                     <div class="content">
                         <p><img src="res/rocketchat.png"/><br/> Rocket.Chat</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.shaarli.ansible_managed is defined and ansible_local.shaarli.ansible_managed %}
+{% if ansible_local.shaarli.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 shaarli">
-                <a href="https://{{ shaarli_fqdn }}">
+                <a href="https://{{ ansible_local.shaarli.fqdn }}">
                     <div class="content">
                         <p><img src="res/shaarli.png"/><br/> Shaarli</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.tt_rss.ansible_managed is defined and ansible_local.tt_rss.ansible_managed %}
+{% if ansible_local.tt_rss.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 tt-rss">
-                <a href="https://{{ tt_rss_fqdn }}">
+                <a href="https://{{ ansible_local.tt_rss.fqdn }}">
                     <div class="content">
                         <p><img src="res/tt-rss.png"/><br/> Tiny Tiny RSS</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.transmission.ansible_managed is defined and ansible_local.transmission.ansible_managed %}
+{% if ansible_local.transmission.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 transmission">
-                <a href="https://{{ transmission_fqdn }}">
+                <a href="https://{{ ansible_local.transmission.fqdn }}">
                     <div class="content">
                         <p><img src="res/transmission.png"/><br/> Transmission</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.gitea.ansible_managed is defined and ansible_local.gitea.ansible_managed %}
+{% if ansible_local.gitea.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 gitea">
-                <a href="https://{{ gitea_fqdn }}">
+                <a href="https://{{ ansible_local.gitea.fqdn }}">
                     <div class="content">
                         <p><img src="res/gitea.png"/><br/> Gitea</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.jellyfin.ansible_managed is defined and ansible_local.nextcloud.ansible_managed %}
+{% if ansible_local.jellyfin.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 jellyfin">
-                <a href="https://{{ jellyfin_fqdn }}">
+                <a href="https://{{ ansible_local.jellyfin.fqdn }}">
                     <div class="content">
                         <p><img src="res/jellyfin.png"/><br/> Jellyfin</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.mumble.ansible_managed is defined and ansible_local.mumble.ansible_managed %}
+{% if ansible_local.mumble.ansible_managed is defined %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ mumble_port }}">
                     <div class="content">
@@ -182,25 +182,25 @@
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.ldap_account_manager.ansible_managed is defined and ansible_local.ldap_account_manager.ansible_managed %}
+{% if ansible_local.ldap_account_manager.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1">
-                <a class="ldap-account-manager" href="https://{{ ldap_account_manager_fqdn }}">
+                <a class="ldap-account-manager" href="https://{{ ansible_local.ldap_account_manager.fqdn }}">
                     <div class="content">
                         <p><img src="res/ldap-account-manager.png"/><br/> LDAP Account Manager</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.self_service_password.ansible_managed is defined and ansible_local.self_service_password.ansible_managed %}
+{% if ansible_local.self_service_password.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1">
-                <a class="self-service-password" href="https://{{ self_service_password_fqdn }}">
+                <a class="self-service-password" href="https://{{ ansible_local.self_service_password.fqdn is defined }}">
                     <div class="content">
                         <p><img src="res/self-service-password.png"/><br/> Self-Service Password</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.netdata.ansible_managed is defined and ansible_local.netdata.ansible_managed %}
+{% if ansible_local.netdata.ansible_managed is defined %}
             <div class="col-1-3 mobile-col-1-1">
                 <a class="netdata" href="https://{{ inventory_hostname }}:19999/">
                     <div class="content">
@@ -209,18 +209,18 @@
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.graylog.ansible_managed is defined and ansible_local.graylog.ansible_managed %}
+{% if ansible_local.graylog.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1">
-                <a class="graylog" href="https://{{ graylog_fqdn }}/">
+                <a class="graylog" href="https://{{ ansible_local.graylog.fqdn }}/">
                     <div class="content">
                         <p><img src="res/graylog.png"/><br/> Graylog</p>
                     </div>
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.gotty.ansible_managed is defined and ansible_local.gotty.ansible_managed %}
+{% if ansible_local.gotty.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1">
-                <a class="gotty" href="https://{{ gotty_fqdn }}/">
+                <a class="gotty" href="https://{{ ansible_local.gotty.fqdn }}/">
                     <div class="content">
                         <p><img src="res/gotty.png"/><br/> GoTTY</p>
                     </div>
@@ -237,7 +237,7 @@
                     <p><img src="res/sftp.png"/><br/>SFTP<br/><input type="text" readonly value="sftp://{{ ansible_user }}@{{ inventory_hostname }}:{{ ansible_ssh_port|default('22')}}"></input></p>
                 </div>
             </div>
-{% if ansible_local.samba.ansible_managed is defined and ansible_local.samba.ansible_managed %}
+{% if ansible_local.samba.ansible_managed is defined %}
             <div class="col-1-3 mobile-col-1-1 samba">
                 <div class="content">
                     <p><img src="res/samba.png"/><br/>Samba<br/><input type="text" readonly value="smb://{{ inventory_hostname }}"></input></p>

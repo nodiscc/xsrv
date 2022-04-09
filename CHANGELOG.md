@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 - netdata: fix location for needrestart module configuration file
 - netdata: fix/standardize indentation in configuration files produced by `to_nice_yaml`
+- homepage: fix homepage templating when the homepage role is not part of the same play as related roles
 - shaarli: explicitly use php 7.4 packages, fix possible installation problems on Debian 11
 - tests: fix and speed up ansible-lint tests
 - tests: fix various ansible-lint warnings

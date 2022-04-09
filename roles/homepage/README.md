@@ -27,6 +27,9 @@ homepage_fqdn: "www.CHANGEME.org"
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
+_Note:_ This role should be listed _after_ other roles it integrates with, else applications/services that are not yet deployed when the role runs, will not be listed.
+
+
 ## Usage
 
 Access the homepage in a [web browser](https://www.mozilla.org/firefox/) at the URL/domain name defined by `{{ homepage_fqdn }}`.
