@@ -43,7 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - common: ssh/users: fix SFTP-only user accounts creation (set permissions _after_ creating user accounts)
-- common: firewall: fix failure to reload firewall on first run (`setup_firewall` role variable not visible from the handler)
+- all roles: firewall: fix 'reload firewall/fail2ban/apache' handlers failures when called from other roles
 - openldap: fix ldap-ccount-manager installation on Debian 11 (php package name changes)
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 - netdata: fix location for needrestart module configuration file

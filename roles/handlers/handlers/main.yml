@@ -24,7 +24,6 @@
     name: fail2ban
     state: reloaded
     enabled: yes
-  when: setup_fail2ban|bool
   ignore_errors: "{{ ansible_check_mode }}"
 
 
@@ -36,7 +35,6 @@
     state: restarted
     enabled: yes
   become: yes
-  when: apache_enable_service|bool
 
 - name: reload apache
   service:
@@ -44,7 +42,6 @@
     state: reloaded
     enabled: yes
   become: yes
-  when: apache_enable_service|bool
 
 - name: restart php-fpm
   service:
