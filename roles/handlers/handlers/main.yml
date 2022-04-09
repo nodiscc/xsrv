@@ -6,7 +6,6 @@
     name: firewalld
     state: reloaded
     enabled: yes
-  when: setup_firewall|bool
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart firewalld
@@ -15,7 +14,6 @@
     name: firewalld
     state: restarted
     enabled: yes
-  when: setup_firewall|bool
   ignore_errors: "{{ ansible_check_mode }}"
 
 ### FAIL2BAN ###
