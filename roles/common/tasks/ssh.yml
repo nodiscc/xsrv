@@ -66,29 +66,6 @@
     owner: root
     group: root
 
-##### SFTP #####
-
-# chrooted users home directories must be owned by root:$USER
-- name: set sftponly home directories ownership
-  file:
-    path: "{{ item.home }}"
-    owner: "root"
-    group: "{{ item.name }}"
-    mode: "0750"
-  when: '"sftponly" in item.groups'
-  with_items: "{{ linux_users }}"
-
-- name: create writeable subdirectory in sftponly users homes
-  file:
-    state: directory
-    path: "{{ item.home }}/{{ item.name }}"
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
-    mode: 0770
-  when: '"sftponly" in item.groups'
-  with_items: "{{ linux_users }}"
-
-
 # apply ssh configuration
 - name: apply configuration (flush handlers)
   meta: flush_handlers

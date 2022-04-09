@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 
 **Fixed:**
+- common: ssh/users: fix SFTP-only user accounts creation (set permissions _after_ creating user accounts)
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 - netdata: fix location for needrestart module configuration file
 - netdata: fix/standardize indentation in configuration files produced by `to_nice_yaml`
