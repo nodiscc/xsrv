@@ -1,6 +1,6 @@
 - hosts: my.example.org
   # ignore_unreachable: yes # don't fail when host is unreachable
-  # strategy: free # use this if your servers are independent from each other/do not require ordered/synchronized deployment
+  # strategy: free # if your servers do not require ordered/synchronized execution of tasks
   roles:
     - common
     - backup
