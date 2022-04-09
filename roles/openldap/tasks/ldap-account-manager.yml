@@ -4,7 +4,7 @@
   apt:
     package:
       - php-ldap
-      - php-gettext
+      - php-php-gettext
       - php-gmp
       - php-gd
       - php-zip
