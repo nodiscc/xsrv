@@ -4,7 +4,7 @@ LAST_TAG := $(shell git describe --tags --abbrev=0)
 
 all: tests
 
-##### TESTS #####
+##### AUTOMATIC (CI) TESTS #####
 
 .PHONY: tests # run all tests
 tests: test_shellcheck test_ansible_lint test_command_line
@@ -41,6 +41,40 @@ test_command_line:
 	rm -rf ~/playbooks/xsrv-test
 	XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-test my.example.org
 	EDITOR=cat ./xsrv edit-group-vault xsrv-test all && grep ANSIBLE_VAULT ~/playbooks/xsrv-test/group_vars/all/all.vault.yml
+
+##### MANUAL TESTS #####
+# requirements: libvirt libguestfs-tools, prebuilt debian VM template, host configuration initialized with xsrv init-host
+# usage: make test_init_vm SUDO_PASSWORD=CHANGEME ROOT_PASSWORD=CHANGEME
+TEMPLATE_NAME = debian11-base
+VM_NAME = my.example.test
+VM_IP = 10.0.0.223
+VM_NETMASK = 24
+VM_GATEWAY = 10.0.0.1
+VM_MEM = 7G
+VM_VCPUS = 4
+SUDO_USER = deploy
+SSH_PUBKEY = 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJKlvXZ7snonbBj2xmRfzQi+/5iXLWiD8Eq9atICCvp4jF/ocdem13wGHkForElqsqMHbOWFJskQDS6lVTvORdMpgSiJmkR0wI9VD/AeInPCesWVxO1pyF2xqsnd8OhnaK9+igioz6iG0iE318lX2LmxN5JpauVx8cesoOVp0b2LKpSiXaoyxr4Sd8dQjT5GiUBz8mlDQPVdMOZRnXdr9y1tQt6kNvfRMesJ5594cOBY6nMtbQB6/rnbn77LLkq1am1y4XBwTPQ/3DJFuxyaixq/A3+SfiFOlFHcijq/mfw0O2pI4K4vFPVl3n5bHXgJJ57QIQdkYQW2Tir/Mv1zDj4c+lhScX4jNNxmde/nZ2TE+ynW2OapiodXlCjBTVysOMgizSA96HZcHNwNhSdodqOJxGW+U9FIF4K8RUXbUkrWmoWDGmlDHkjkNszdKBieGT4tjuzB3NN9J93CDdwqlEIPg0xRUImCkc4zeTwTWVgFW1TD9o/CBz3l+hlF2wV8wvCzBfx42cTjeEMrWMb/8CSz9VK+Q6R2l27MqhLJUmOnlWEqiQaponAoPUpocBd703oOnJGnX3anJjY+LNeqlye++T2iTr0SwIWXohX9NzVgJZIDmEIRd7ThjTvdWoebR7pKpox4x48LR6f4K6p/tnG7BM9O+7MkglSdFj0tn5NQ=='
+SUDO_PASSWORD = CHANGEME
+ROOT_PASSWORD = CHANGEME
+
+.PHONY: test_init_vm # test correct execution of xsrv init-vm
+test_init_vm:
+	ssh-keygen -R $(VM_NAME)
+	ssh-keygen -R $(VM_IP)
+	if [[ -f /etc/libvirt/qemu/$(VM_NAME).xml ]]; then virsh undefine --domain $(VM_NAME) --remove-all-storage; fi
+	./xsrv init-vm --template $(TEMPLATE_NAME) --name $(VM_NAME) \
+	    --ip $(VM_IP) --netmask $(VM_NETMASK) --gateway $(VM_GATEWAY) \
+	    --sudo-user $(SUDO_USER) --sudo-password $(SUDO_PASSWORD) --ssh-pubkey $(SSH_PUBKEY) --root-password $(ROOT_PASSWORD) \
+		--memory $(VM_MEM) --vcpus $(VM_VCPUS)
+
+.PHONY: test_idempotence # test full playbook run against the host created with test_init_vm
+test_idempotence:
+	# test initial check mode
+	./xsrv check default $(VM_NAME)
+	# test initial deployment
+	./xsrv deploy default $(VM_NAME)
+	# test idempotence
+	./xsrv deploy default $(VM_NAME)
 
 ##### RELEASE PROCEDURE #####
 # - make bump_versions update_todo changelog new_tag=$new_tag

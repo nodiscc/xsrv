@@ -23,10 +23,10 @@ Advantages of virtualization include:
 On Debian-based systems:
 
 ```bash
-sudo apt install virt-manager
+sudo apt install virt-manager libguestfs-tools
 ```
 
-(Optional) add your normal user account to the `libvirt` group to allow it to manage virtual machines without using `sudo` or entering your password during normal operation:
+(Optional) add your normal/unprivileged user account to the `libvirt` group to allow it to manage virtual machines without using `sudo`/entering your password for common operations:
 
 ```bash
 sudo usermod -G $USER libvirt
@@ -37,7 +37,7 @@ sudo usermod -G $USER libvirt
 
 ### Manual
 
-Run virt-manager from the main menu and click `New virtual machine`
+Run virt-manager from your applications menu and click `New virtual machine`
 
 ![](https://i.imgur.com/1e2jNP0.png)
 
@@ -71,47 +71,18 @@ Click `Finish` and start the VM from virt-manager's main window.
 You can also create a VM from the command-line using the [virsh](https://manpages.debian.org/buster/libvirt-clients/virsh.1.en.html) command-line tool:
 
 ```bash
-virt-install --name mynew.example.org --os-type linux --ram 1024M --vcpu 2 --disk path=/path/to/mynew.example.org.qcow2,size=20 --graphics virtio --noautoconsole --hvm --cdrom /path/to/debian-10.3.1_amd64.iso --boot cdrom,hd
+virt-install --name my.CHANGEME.org --os-type linux --ram 1024M --vcpu 2 --disk path=/path/to/my.CHANGEME.org.qcow2,size=20 --graphics virtio --noautoconsole --hvm --cdrom /path/to/debian-10.3.1_amd64.iso --boot cdrom,hd
 ```
+
+<!-- TODO preseed -->
 
 ## Cloning VMs
 
-It is common practice to setup a virtual machine with the bare minimum components required to enable SSH access ("golden" image), then use [configuration management](configuration-management.md) to manage all other software components. Once a [VM template](server-preparation.md) has been set up, clone it to a new VM and update its IP address, and administrator/root passwords. You may do this manually from `virt-manager` and the VM console, or using basic scripting:
-
-<!-- TODO use virt-systprep to regenerate sshd host keys -->
-
-```bash
-# requires sshpass libvirt pwgen
-# VM template configuration details
-TEMPLATE_NAME=debian11-base
-TEMPLATE_IP=10.0.0.CHANGEME
-TEMPLATE_ADMIN_USER=deploy
-TEMPLATE_ADMIN_PASSWORD=CHANGEME
-# new VM configuration details
-NEWVM_NAME=newvm.CHANGEME.org
-NEWVM_IP=10.0.0.223
-NEWVM_ADMIN_PASSWORD=$(pwgen -s 21 1)
-NEWVM_ROOT_PASSWORD=$(pwgen -s 21 1)
-
-# clone the template to a new VM
-virt-clone --original "$TEMPLATE_NAME" --name "$NEWVM_NAME" --file "/var/lib/libvirt/images/$VM_NAME.qcow2"
-# start the new VM
-virsh start "$NEWVM_NAME"
-# wait for the ssh server to start accepting connections
-until nc -w 1 $TEMPLATE_IP 22; do sleep 1; done
-# add the server's SSH key to known_hosts
-ssh-keyscan -H $TEMPLATE_IP >> ~/.ssh/known_hosts
-# authorize your SSH key on the new VM
-echo "$TEMPLATE_ADMIN_PASSWORD" | sshpass ssh-copy-id -i ~/.ssh/id_rsa "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP"
-# update the IP address on the new VM
-echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo sed -i "s/$TEMPLATE_IP/$NEWVM_IP/g" /etc/network/interfaces
-echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$TEMPLATE_IP" sudo systemctl restart networking
-# update the admin user and root passwords on the new VM
-echo "$TEMPLATE_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$NEWVM_IP" "echo -e '$NEWVM_ADMIN_PASSWORD\n$NEWVM_ADMIN_PASSWORD' | sudo passwd $TEMPLATE_ADMIN_USER"
-echo "$NEWVM_ADMIN_PASSWORD" | ssh -tt "$TEMPLATE_ADMIN_USER"@"$NEWVM_IP" "echo -e '$NEWVM_ROOT_PASSWORD\n$NEWVM_ROOT_PASSWORD' | sudo passwd root"
-```
-
-Your new VM is ready to use.
+See [Debian/Installation/From a VM template](debian.md), [`xsrv init-vm --help`](.../usage.md), and the following manpages:
+- [`virt-clone`](https://manpages.debian.org/bullseye/virtinst/virt-clone.1.en.html)
+- [`virt-sysprep`](https://manpages.debian.org/bullseye/libguestfs-tools/virt-sysprep.1.en.html)
+- [`virt-customize`](https://manpages.debian.org/bullseye/libguestfs-tools/virt-customize.1.en.html)
+- [`virt-builder`](https://manpages.debian.org/bullseye/libguestfs-tools/virt-builder.1.en.html)
 
 
 ## Migrating VMs between hypervisors

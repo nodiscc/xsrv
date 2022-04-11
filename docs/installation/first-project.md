@@ -2,14 +2,6 @@
 
 This example will create a new project based on a [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv/) - this is the simplest setup using a single server ([host](server-preparation.md)) with multiple roles. On the [controller](controller-preparation.md):
 
-```bash
-# generate a SSH key pair if you don't have one
-ssh-keygen -b 4096
-# authorize your SSH key on the remote user account (replace 'deploy' with the user created during server preparation)
-ssh-copy-id deploy@my.CHANGEME.org
-# create a new project
-xsrv init-project
-```
 
 ```bash
 $ xsrv init-project

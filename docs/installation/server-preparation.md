@@ -78,26 +78,10 @@ rss-bridge.CHANGEME.org # rss_bridge
 _Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates._
 
 
-## Operating System
+## Base Operating System
 
-Roles in this collection are designed to run against minimal [Debian](https://www.debian.org/) [_Stable_](https://wiki.debian.org/DebianStable) systems: [Install Debian](../appendices/debian.md) or use a preconfigured Debian installation image from your hosting provider.
+`xsrv` roles are designed to run against minimal [Debian](https://www.debian.org/) [_Stable_](https://wiki.debian.org/DebianStable) systems: [Install Debian](../appendices/debian.md) on the host.
 
-
-## Ansible requirements
-
-From the server console, login as `root` and run:
-
-```bash
-# install requirements for remote admin/ansible access
-apt update && apt --no-install-recommends install python3 aptitude sudo openssh-server
-# create a user account for remote administration (replace 'deploy' with the desired account name)
-useradd --create-home --groups ssh,sudo --shell /bin/bash deploy
-# set the sudo password for this user account
-passwd deploy
-# lock the console
-logout
-```
-
-At this point you may stop your newly created VM, and use it as a [template](../../appendices/virt-manager.md) for future deployments.
+-------------------
 
 You should now [prepare the controller](controller-preparation.md).

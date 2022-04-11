@@ -1,7 +1,7 @@
 # Usage
 
 
-The `xsrv` command-line tool automates creation and maintenance of [projects](#manage-projects) on a [controller](installation/controller-preparation.md) machine. Configuration is stored in [YAML](https://en.wikipedia.org/wiki/YAML) files on the controller.
+The `xsrv` command-line tool automates creation and maintenance of [projects](#manage-projects) on a [controller](installation/controller-preparation.md) machine. Configuration is stored in [YAML](https://en.wikipedia.org/wiki/YAML) files on the controller and deployed to target [hosts](installation/server-preparation.md) over SSH.
 
 Use the `xsrv` command-line to manage your projects, or [include xsrv roles in your own ansible playbooks](#use-as-ansible-collection).
 
@@ -38,6 +38,7 @@ help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
 upgrade [project]                   upgrade roles/collections to latest versions
 self-upgrade                        check for new releases/upgrade the xsrv script in-place
+init-vm [--help] [options]          initialize a new libvirt VM from a template
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
