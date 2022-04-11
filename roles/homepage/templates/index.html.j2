@@ -193,7 +193,7 @@
 {% endif %}
 {% if ansible_local.self_service_password.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1">
-                <a class="self-service-password" href="https://{{ ansible_local.self_service_password.fqdn is defined }}">
+                <a class="self-service-password" href="https://{{ ansible_local.self_service_password.fqdn }}">
                     <div class="content">
                         <p><img src="res/self-service-password.png"/><br/> Self-Service Password</p>
                     </div>
