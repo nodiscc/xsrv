@@ -5,3 +5,4 @@
     state: restarted
     enabled: yes
   when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"

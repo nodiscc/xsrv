@@ -4,6 +4,7 @@
   apt_key:
     url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
     state: present
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: add elasticsearch APT repository
   apt_repository:

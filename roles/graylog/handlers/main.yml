@@ -4,6 +4,7 @@
     name: elasticsearch
     state: restarted
   when: graylog_enable_service|bool
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart graylog-server
   become: yes
@@ -11,3 +12,4 @@
     name: graylog-server
     state: restarted
   when: graylog_enable_service|bool
+  ignore_errors: "{{ ansible_check_mode }}"

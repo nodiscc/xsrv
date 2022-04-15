@@ -5,3 +5,4 @@
     enabled: yes
   become: yes
   when: gitea_enable_service
+  ignore_errors: "{{ ansible_check_mode }}"

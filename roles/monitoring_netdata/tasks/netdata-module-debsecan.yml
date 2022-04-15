@@ -12,6 +12,7 @@
     version: "1.0.3"
     accept_hostkey: yes
     force: yes # discard modified files
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: install netdata-debsecan module/script/configuration
   copy:

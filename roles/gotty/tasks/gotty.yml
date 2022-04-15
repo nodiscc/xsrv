@@ -18,6 +18,7 @@
     path: /root/gotty-unpack
     state: directory
     mode: 0750
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: extract gotty tarball
   unarchive:
@@ -26,6 +27,7 @@
     remote_src: yes
     mode: u=rwX
   diff: no
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy gotty binary
   copy:
@@ -36,7 +38,7 @@
     owner: root
     group: root
   notify: restart gotty
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create gotty configuration directory
   file:

@@ -139,10 +139,10 @@
   register: nextcloud_first_setup
   args:
     chdir: "{{ nextcloud_install_dir }}"
-  failed_when: nextcloud_first_setup.rc !=0 and 'Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr  # noqa 204
+  failed_when: (nextcloud_first_setup.rc !=0) and ('Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr) # noqa 204
   changed_when: nextcloud_first_setup.rc == 0
-  when:
-    - nextcloud_action == 'initial'
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nextcloud_action == 'initial'
 
 - name: copy config.php from old installation
   copy:
@@ -181,6 +181,7 @@
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
     - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
   no_log: "{{ item.no_log | default(False) }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config
 
 # trashbin_retention_obligation:
@@ -198,8 +199,8 @@
     chdir: "{{ nextcloud_install_dir }}"
   register: nextcloud_upgrade
   changed_when: not 'Nextcloud is already at the latest version' in nextcloud_upgrade.stdout
-  when:
-    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  when: (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: schedule nextcloud background tasks
   cron:
@@ -217,6 +218,7 @@
     chdir: "{{ nextcloud_install_dir }}"
   register: nextcloud_add_missing_pkeys_indices
   changed_when: "'Adding' in nextcloud_add_missing_pkeys_indices.stdout"
+  ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - add-missing-primary-keys
     - add-missing-indices
@@ -229,6 +231,7 @@
     chdir: "{{ nextcloud_install_dir }}"
   register: nextcloud_convert_filecache_bigint
   changed_when: "'will be updated' in nextcloud_convert_filecache_bigint.stdout"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### ANSIBLE FACTS ###
 

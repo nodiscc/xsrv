@@ -25,6 +25,7 @@
     group: www-data
     mode: 0640
   notify: reload apache
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy apache virtualhost configuration
   template:

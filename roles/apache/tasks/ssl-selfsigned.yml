@@ -9,6 +9,7 @@
   openssl_privatekey:
     path: "/etc/ssl/private/localhost.key"
   notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate certificate signing request for default virtualhost
   openssl_csr:

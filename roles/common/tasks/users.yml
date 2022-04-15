@@ -66,6 +66,7 @@
     mode: "0750"
   when: '"sftponly" in item.groups'
   with_items: "{{ linux_users }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create writeable subdirectory in sftponly users homes
   file:

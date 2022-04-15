@@ -35,6 +35,7 @@
     state: restarted
     enabled: yes
   become: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: reload apache
   service:
@@ -42,6 +43,7 @@
     state: reloaded
     enabled: yes
   become: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart php-fpm
   service:
@@ -49,6 +51,7 @@
     state: restarted
     enabled: yes
   become: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### MONITORING_RSYSLOG ###
 

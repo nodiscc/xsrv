@@ -79,6 +79,7 @@
     size: 4096
   register: root_ssh_key
   tags: rsnapshot-ssh-key
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: store root public SSH key to local fact file
   block:

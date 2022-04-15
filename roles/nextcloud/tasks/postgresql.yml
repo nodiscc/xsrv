@@ -15,6 +15,7 @@
     name: "{{ nextcloud_db_user }}"
     state: present
     no_password_changes: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set nexctloud postgresql user password
   become: yes
@@ -24,6 +25,7 @@
     password: "{{ nextcloud_db_password }}"
   when: nextcloud_db_password is defined
   no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create nextcloud postgresql database
   become: yes
@@ -33,6 +35,7 @@
     state: present
     encoding: 'UNICODE'
     owner: '{{ nextcloud_db_user }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: grant privileges on nextcloud database to nextcloud postgresql user
   become: yes
@@ -42,3 +45,4 @@
     privs: ALL
     type: database
     role: "{{ nextcloud_db_user }}"
+  ignore_errors: "{{ ansible_check_mode }}"

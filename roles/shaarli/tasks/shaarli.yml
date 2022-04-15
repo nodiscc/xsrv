@@ -76,6 +76,7 @@
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set file permissions
   file:
@@ -90,6 +91,7 @@
     - { path: "/root/shaarli-unpack/Shaarli/tmp", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/cache", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/pagecache", mode: "0770" }
+  ignore_errors: "{{ ansible_check_mode }}"
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')

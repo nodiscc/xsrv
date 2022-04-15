@@ -13,6 +13,7 @@
   postgresql_user:
     name: "{{ gitea_db_user }}"
     state: present
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set gitea postgresql user password
   become: yes
@@ -20,6 +21,7 @@
   postgresql_user:
     name: "{{ gitea_db_user }}"
     password: "{{ gitea_db_password }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   when:
     - gitea_db_password|length > 0
   no_log: True
@@ -34,6 +36,7 @@
     lc_ctype: 'en_US.UTF-8'
     encoding: 'UTF8'
     owner: '{{ gitea_db_user }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: grant privileges on gitea database to gitea postgresql user
   become: yes
@@ -43,3 +46,4 @@
     privs: ALL
     type: database
     role: "{{ gitea_db_user }}"
+  ignore_errors: "{{ ansible_check_mode }}"

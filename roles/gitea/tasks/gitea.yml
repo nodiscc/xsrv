@@ -173,3 +173,4 @@
     state: "{{ 'started' if gitea_enable_service else 'stopped' }}"
     enabled: "{{ 'yes' if gitea_enable_service else 'no' }}"
   tags: services
+  ignore_errors: "{{ ansible_check_mode }}"

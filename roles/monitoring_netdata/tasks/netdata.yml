@@ -38,6 +38,7 @@
   apt_key:
     url: https://packagecloud.io/netdata/netdata/gpgkey
     state: present
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: remove APT configuration from old versions of the role
   file:
