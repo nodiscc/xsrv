@@ -474,10 +474,8 @@ image: debian:buster-backports
 # GITLAB_CI_SSH_KEY (contents of private SSH key authorized on remote hosts, terminated by newline, type file)
 
 stages:
-  - test
-  - check
-  - deploy-staging
-  - deploy-production
+  - staging
+  - production
 
 variables:
   ANSIBLE_CONFIG: ansible.cfg
@@ -504,33 +502,42 @@ before_script:
   - wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
   - chmod a+x /usr/local/bin/xsrv
 
+
+##### STAGING #####
+
 check-staging:
-  stage: check
+  stage: staging
   script:
-    - xsrv check staging
+    - TAGS=$TAGS xsrv check staging
   interruptible: true # stop this job when a new pipeline starts on the same branch
-  allow_failure: true # allow this job to be cancelled/skipped
+  needs: [] # don't wait for other jobs to complete before starting this job
+
+deploy-staging:
+  stage: staging
+  script:
+    - TAGS=$TAGS xsrv deploy staging
+  resource_group: staging # only allow one job to run concurrently on this resource group/environment
+  needs:
+    - check-staging
+
+##### PRODUCTION #####
 
 check-production:
   stage: check
   script:
-    - xsrv check production
+    - TAGS=$TAGS xsrv check production
   interruptible: true
-  allow_failure: true
-
-deploy-staging:
-  stage: deploy-staging
-  script:
-    - xsrv deploy staging
-  interruptible: true
-  when: manual # require manual action/click to start deployment
+  needs: []
 
 deploy-production:
-  stage: deploy-production
+  stage: production
   script:
-    - ./xsrv deploy production
-  interruptible: true
-  when: manual
+    - TAGS=$TAGS xsrv deploy production
+  when: manual # require manual action/click to start deployment
+  resource_group: production
+  needs:
+    - check-production
+    - deploy-staging
   only: # only allow deployment of the master branch or tags to production
     - master
     - tags
