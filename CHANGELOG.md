@@ -10,38 +10,39 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environmnets to the latest release
 
 **Added:**
-- common: make cron jobs log level configurable (`cron_log_level`)
-- docker: monitoring: raise a netdata alarm when the docker engine service is in the failed state (when `xsrv.monitoring_netdata` is deployed)
-- netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency)
-- netdata: check that `setup_*` variables are correctly defined
-- netdata: make netdata filechecks configurable
-- transmission/gotty/jellyfin: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state
-- xsrv: add `edit-group-vault` command (edit encrypted group variables file)
-- xsrv: add ansible tags: `netdata-modules`, `netdata-needrestart`, `netdata-debsecan`, `netdata-logcount`, `netdata-config`
+- xsrv: add [`init-vm`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (initialize a ready-to-deploy libvirt VM from a template)
+- xsrv: add [`edit-group-vault`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (edit encrypted group variables file)
+- common: make cron jobs log level configurable ([`cron_log_level`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency) ([`netdata_fping_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: make netdata filechecks configurable ([`netdata_file_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- transmission/gotty/jellyfin/docker: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state (and the `monitoring_netdata` role is deployed)
+- add ansible [tags](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): `netdata-modules`, `netdata-needrestart`, `netdata-debsecan`, `netdata-logcount`, `netdata-config`
 
 **Changed:**
-- cleanup: make netdata assembled configuration more readable (add blank line delimiters)
-- cleanup: standardize file names
 - common: hardening/sysctl: disable potentially exploitable unprivileged BPF
 - common: sysctl/security: disable potentially exploitable unprivileged user namespaces
 - gitea: limit systemd service automatic restart attempts to 4 in 10 seconds
 - gitea: update to v1.16.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.1) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.2) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.3) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.16.4) [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.16.5)
 - gotty: attempt to restart the systemd service every 2 seconds in case of failure, for a maximum of 4 times in 10 seconds
 - netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
-- netdata: re-add default netdata alarms for the systemdunits module
+- netdata: re-add default netdata alarms for the `systemdunits` module
 - nextcloud: update to v23.0.3 [[1]](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/) [[2]](https://nextcloud.com/blog/nextcloud-23-0-3-and-22-2-6-are-out-bringing-a-series-of-bug-fixes-and-improvements/)
 - openldap: update LDAP Account Manager to [v7.9](https://github.com/LDAPAccountManager/lam/releases)
 - rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
-- xsrv: improve `check` mode support
 - xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple group_vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
 - xsrv: update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
-- doc: update documentation, improve default playbook template README.md
+- cleanup: make netdata assembled configuration more readable (add blank line delimiters)
+- cleanup: standardize file names
+- all roles: check that variables are correctly defined before running roles
 - tests: ansible-lint: ignore `fqcn-bultins,truthy,braces,line-length` rules
 - tests: remove broken jinja2 syntax test
 - tests: remove obsolete `ansible-playbook --syntax-check` and `yamllint` tests, replaced by ansible-lint
+- tests: automate tests for `init-vm`, `xsrv check`, `xsrv deploy`
+- doc: update documentation, default playbook README, Gitlab CI example
 
 
 **Fixed:**
+- all roles: ensure `check` mode doesn't fail when running it before before first deployment
 - common: ssh/users: fix SFTP-only user accounts creation (set permissions _after_ creating user accounts)
 - all roles: firewall: fix 'reload firewall/fail2ban/apache' handlers failures when called from other roles
 - openldap: fix ldap-ccount-manager installation on Debian 11 (php package name changes)
