@@ -464,7 +464,7 @@ You may have to restore data from last known good [backups](maintenance.md)/a sn
 
 [Continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment) systems can be tied to a version control/git repository for automated checks and deployments controlled by git operations ("GitOps").
 
-This example [`.gitlab-ci.yml`](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `⏵`) to run actual staging/production deployments.
+This example [`.gitlab-ci.yml`](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments.
 
 ```yaml
 image: debian:buster-backports
