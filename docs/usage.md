@@ -180,7 +180,7 @@ See [YAML inventory](https://docs.ansible.com/ansible/latest/collections/ansible
 
 ### xsrv edit-playbook
 
-Edit the list of [roles](index.md#roles) (playbook file) for your hosts. Add any role you wish to enable to the `roles:` list.
+Edit the list of [roles](index.md) (playbook file) for your hosts. Add any role you wish to enable to the `roles:` list.
 
 This is the simplest playbook, with a single host carrying multple roles:
 
@@ -424,7 +424,7 @@ To upgrade the collection to the latest [release](https://gitlab.com/nodiscc/xsr
 $ ansible-galaxy collection install --force -r requirements.yml
 ```
 
-See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md#roles) documentation.
+See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
 
 ## Version control
