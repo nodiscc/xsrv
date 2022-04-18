@@ -65,6 +65,9 @@
             .tt-rss :hover{
                 border-color: #EA8E31;
             }
+            .rss-bridge :hover{
+                border-color: #FF6600;
+            }
             .transmission :hover{
                 border-color: #C64337;
             }
@@ -142,6 +145,15 @@
                 <a href="https://{{ ansible_local.tt_rss.fqdn }}">
                     <div class="content">
                         <p><img src="res/tt-rss.png"/><br/> Tiny Tiny RSS</p>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.rss_bridge.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 rss-bridge">
+                <a href="https://{{ ansible_local.rss_bridge.fqdn }}">
+                    <div class="content">
+                        <p><img src="res/rss-bridge.png"/><br/> RSS-Bridge</p>
                     </div>
                 </a>
             </div>
