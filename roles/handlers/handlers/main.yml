@@ -64,6 +64,9 @@
 
 ### MONITORING_NETDATA ###
 
+# assemble all files from /etc/netdata/*/*.d/*.conf to main /etc/netdata/*/*.conf files
+# this is an example of how to do it manually:
+# sudo find /etc/netdata/go.d/httpcheck.conf.d/ -type f |sort | xargs sudo cat | sudo tee /etc/netdata/go.d/httpcheck.conf
 - name: assemble netdata configuration
   become: yes
   assemble:
