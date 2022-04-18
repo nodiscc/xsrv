@@ -6,7 +6,7 @@
     dest: "/root/graylog-4.0-repository_latest.deb"
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}" # HEAD requests are forbidden/403
 
 - name: install graylog-4.0-repository package
@@ -49,12 +49,12 @@
       dest: /etc/graylog/server/server.conf
       owner: root
       group: graylog
-      mode: 0640
+      mode: "0640"
     - src: etc_default_graylog-server.j2
       dest: /etc/default/graylog-server
       owner: root
       group: root
-      mode: 0644
+      mode: "0644"
 
 ### GRAYLOG SSL/TLS SYSLOG CA CERTIFICATE ###
 
@@ -74,7 +74,7 @@
     path: "/etc/graylog/ssl/graylog-ca.key"
     owner: root
     group: graylog
-    mode: 0640
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl certificate signing request
@@ -84,7 +84,7 @@
     common_name: "{{ inventory_hostname }}"
     owner: root
     group: graylog
-    mode: 0640
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl CA/server certificate
@@ -95,7 +95,7 @@
     provider: selfsigned
     owner: root
     group: graylog
-    mode: 0640
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
 # the certificate will be uploaded to syslog clients (hosts with rsyslog_enable_forwarding: yes)

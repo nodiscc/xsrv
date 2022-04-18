@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh/users: fix SFTP-only user accounts creation (set permissions _after_ creating user accounts)
 - all roles: firewall: fix 'reload firewall/fail2ban/apache' handlers failures when called from other roles
 - openldap: fix ldap-ccount-manager installation on Debian 11 (php package name changes)
+- graylog: fix graylog service not starting/incorrect permissions on configuration files
 - graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
 - netdata: fix location for needrestart module configuration file
 - netdata: fix/standardize indentation in configuration files produced by `to_nice_yaml`
