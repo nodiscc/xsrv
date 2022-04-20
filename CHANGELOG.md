@@ -57,6 +57,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: explicitly use php 7.4 packages, fix possible installation problems on Debian 11
 - tests: fix and speed up `ansible-lint` tests, fix ansible-lint warnings
 
+[Full changes since v1.6.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.6.0...1.7.0)
+
 -------------------------------
 
 #### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - 2022-03-17
@@ -84,6 +86,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apt: fix automatic upgrades for packages installed from Debian Backports
 - xsrv: fix error on new project creation/`init-playbook` - missing playbook directory
 - xsrv: fix support for `XSRV_PROJECTS_DIR` environment variable
+
+[Full changes since v1.5.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.5.0...1.6.0)
 
 -------------------------------
 
@@ -174,6 +178,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - default playbook/xsrv: fix invalid `"%%ANSIBLE_HOST%%"` value set by `xsrv init-host`
 - common: hosts: fix warning: Found variable using reserved name: hosts
 
+[Full changes since v1.4.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.4.0...1.5.0)
+
+-------------------------
 
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17
 
@@ -262,6 +269,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
 - common: automatically apply security updates for packages installed from Debian Backports
 
+[Full changes since v1.3.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.3.1...1.4.0)
+
+------------------------
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
 
@@ -283,7 +293,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: upgrade to 20.0.10
 - update documentation (virt-manager/add basic VM provisioning procedure)
 
+[Full changes since v1.3.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.3.0...1.3.1)
 
+----------------------------
 
 #### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - 2021-06-08
 
@@ -366,6 +378,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Security:**
 - common: fail2ban: fix bantime for ssh jail (~49 days)
 
+[Full changes since v1.2.2](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.2...1.3.0)
+
 -------------------------------
 
 #### [v1.2.2](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.2) - 2021-04-01
@@ -375,6 +389,9 @@ Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the lates
 **Fixed:**
  - samba: fix nscd default log level, update samba default log level
 
+[Full changes since v1.2.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.1...1.2.2)
+
+---------------------------
 
 #### [v1.2.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.1) - 2021-04-01
 
@@ -385,6 +402,7 @@ Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the lates
 
 samba: fix nscd default log level, update samba default log level
 
+[Full changes since v1.2.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.0...1.2.1)
 
 -------------------------------
 
@@ -413,6 +431,7 @@ samba: fix nscd default log level, update samba default log level
 - rocketchat: fix port 3001 exposed on 0.0.0.0 instead of localhost-only/firewall bypass
 - gitea: update to v1.13.6
 
+[Full changes since v1.1.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.1.0...1.2.0)
 
 -------------------------------
 
@@ -465,6 +484,7 @@ samba: fix nscd default log level, update samba default log level
 - upgrade ansible to 2.10.7 - https://pypi.org/project/ansible/#history
 - move TODOs to issues
 
+[Full changes since v1.0.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.0.0...1.1.0)
 
 -------------------------------
 
