@@ -386,7 +386,7 @@ TODO-->
 
 ## Use as ansible collection
 
-The main [`xsrv` script](command-line-usage) maintains a simple and consistent structure for your projects, automates frequent operations, and manages ansible installation/environments. You can also manage your playbooks manually using your favorite text editor and [`ansible-*` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
+The main [`xsrv` script](#command-line-usage) maintains a simple and consistent structure for your projects, automates frequent operations, and manages ansible installation/environments. You can also manage your playbooks manually using your favorite text editor and [`ansible-*` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
 
 To import roles as a [collection](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in your own playbooks, [install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) and create `requirements.yml` in your playbook directory:
 
