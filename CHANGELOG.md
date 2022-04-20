@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: add [`init-vm`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (initialize a ready-to-deploy libvirt VM from a template)
 - xsrv: add [`edit-group-vault`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (edit encrypted group variables file)
 - common: make cron jobs log level configurable ([`cron_log_level`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: apt: clean downloaded package archives every 7 days by default ([`apt_clean_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency) ([`netdata_fping_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - netdata: make netdata filechecks configurable ([`netdata_file_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - transmission/gotty/jellyfin/docker: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state (and the `monitoring_netdata` role is deployed)

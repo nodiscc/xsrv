@@ -153,3 +153,6 @@ APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "7";
 // automatically run package upgrades
 APT::Periodic::Unattended-Upgrade "1";
+
+// Do "apt-get clean" every n-days (0=disable)
+APT::Periodic::CleanInterval "{{ apt_clean_days }}";

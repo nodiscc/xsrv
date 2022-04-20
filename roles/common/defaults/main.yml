@@ -48,6 +48,8 @@ os_security_kernel_enable_core_dump: no
 setup_apt: yes
 # yes/no: enable 'contrib' and 'non-free' software sections in debian APT repositories
 apt_enable_nonfree: no
+# clean downloaded package archives (apt clean) every n-days (0=disable)
+apt_clean_days: 7
 # automatic upgrades: allow unattended upgrades from the following sources (see 50unattended-upgrades.j2)
 # these settings have no effect if corresponding repositories are not enabled/configured
 apt_unattended_upgrades_origins_patterns:
