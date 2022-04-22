@@ -2,6 +2,7 @@
   become: yes
   command: testparm -s
   listen: reload samba
+  changed_when: no
 
 - name: reload samba
   become: yes
@@ -11,6 +12,7 @@
   with_items:
     - smbd
     - nmbd
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart nslcd
   become: yes
@@ -18,6 +20,7 @@
     name: nslcd
     state: restarted
     enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart nscd
   become: yes
@@ -25,3 +28,4 @@
     name: nscd
     state: restarted
     enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"

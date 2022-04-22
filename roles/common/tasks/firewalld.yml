@@ -34,7 +34,7 @@
 - name: force upgrade of iptables to buster-backports (Debian 10)
   apt:
     package: iptables
-    state: latest
+    state: latest # noqa package-latest
     default_release: buster-backports
   when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
 

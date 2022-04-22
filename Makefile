@@ -4,10 +4,10 @@ LAST_TAG := $(shell git describe --tags --abbrev=0)
 
 all: tests
 
-##### TESTS #####
+##### AUTOMATIC (CI) TESTS #####
 
 .PHONY: tests # run all tests
-tests: test_shellcheck test_jinja2 test_ansible_syntax_check test_ansible_lint test_yamllint test_command_line
+tests: test_shellcheck test_ansible_lint test_command_line
 
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint yamllint ansible==5.2.0
+	pip3 install isort ansible-lint==6.0.2 yamllint ansible==5.5.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -28,48 +28,61 @@ build_collection: venv
 
 .PHONY: install_collection # prepare the test environment/install the collection
 install_collection: venv build_collection
-	cp tests/playbook.yml test.yml
 	source .venv/bin/activate && \
 	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
 
-.PHONY: test_ansible_syntax_check # ansible playbook syntax check
-test_ansible_syntax_check: venv install_collection
+.PHONY: test_ansible_lint # ansible syntax linter
+test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ANSIBLE_COLLECTIONS_PATHS="./" ansible-playbook --syntax-check --inventory tests/inventory.yml test.yml
-
-.PHONY: ansible_lint # ansible syntax linter
-test_ansible_lint: venv install_collection
-	source .venv/bin/activate && \
-	ANSIBLE_COLLECTIONS_PATHS="./" ansible-lint -v test.yml
-
-.PHONY: test_yamllint # YAML syntax check and linter
-test_yamllint: venv
-	source .venv/bin/activate && \
-	set -o pipefail && \
-	find roles/ -iname "*.yml" | xargs yamllint -c tests/.yamllint
-
-.PHONY: test_jinja2 # Jinja2 template syntax linter
-test_jinja2: venv
-	source .venv/bin/activate && \
-	j2_files=$$(find roles/ -name "*.j2") && \
-	for i in $$j2_files; do \
-	echo "[INFO] checking syntax for $$i"; \
-	python3 ./tests/check-jinja2.py "$$i"; \
-	done
+	ANSIBLE_ROLES_PATH=./roles ansible-lint -v -x fqcn-builtins,truthy,braces,line-length tests/playbook.yml
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:
 	rm -rf ~/playbooks/xsrv-test
 	XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-test my.example.org
+	EDITOR=cat ./xsrv edit-group-vault xsrv-test all && grep ANSIBLE_VAULT ~/playbooks/xsrv-test/group_vars/all/all.vault.yml
 
+##### MANUAL TESTS #####
+# requirements: libvirt libguestfs-tools, prebuilt debian VM template, host configuration initialized with xsrv init-host
+# usage: make test_init_vm SUDO_PASSWORD=CHANGEME ROOT_PASSWORD=CHANGEME
+TEMPLATE_NAME = debian11-base
+VM_NAME = my.example.test
+VM_IP = 10.0.0.223
+VM_NETMASK = 24
+VM_GATEWAY = 10.0.0.1
+VM_MEM = 7G
+VM_VCPUS = 4
+SUDO_USER = deploy
+SSH_PUBKEY = 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJKlvXZ7snonbBj2xmRfzQi+/5iXLWiD8Eq9atICCvp4jF/ocdem13wGHkForElqsqMHbOWFJskQDS6lVTvORdMpgSiJmkR0wI9VD/AeInPCesWVxO1pyF2xqsnd8OhnaK9+igioz6iG0iE318lX2LmxN5JpauVx8cesoOVp0b2LKpSiXaoyxr4Sd8dQjT5GiUBz8mlDQPVdMOZRnXdr9y1tQt6kNvfRMesJ5594cOBY6nMtbQB6/rnbn77LLkq1am1y4XBwTPQ/3DJFuxyaixq/A3+SfiFOlFHcijq/mfw0O2pI4K4vFPVl3n5bHXgJJ57QIQdkYQW2Tir/Mv1zDj4c+lhScX4jNNxmde/nZ2TE+ynW2OapiodXlCjBTVysOMgizSA96HZcHNwNhSdodqOJxGW+U9FIF4K8RUXbUkrWmoWDGmlDHkjkNszdKBieGT4tjuzB3NN9J93CDdwqlEIPg0xRUImCkc4zeTwTWVgFW1TD9o/CBz3l+hlF2wV8wvCzBfx42cTjeEMrWMb/8CSz9VK+Q6R2l27MqhLJUmOnlWEqiQaponAoPUpocBd703oOnJGnX3anJjY+LNeqlye++T2iTr0SwIWXohX9NzVgJZIDmEIRd7ThjTvdWoebR7pKpox4x48LR6f4K6p/tnG7BM9O+7MkglSdFj0tn5NQ=='
+SUDO_PASSWORD = CHANGEME
+ROOT_PASSWORD = CHANGEME
+
+.PHONY: test_init_vm # test correct execution of xsrv init-vm
+test_init_vm:
+	ssh-keygen -R $(VM_NAME)
+	ssh-keygen -R $(VM_IP)
+	if [[ -f /etc/libvirt/qemu/$(VM_NAME).xml ]]; then virsh undefine --domain $(VM_NAME) --remove-all-storage; fi
+	./xsrv init-vm --template $(TEMPLATE_NAME) --name $(VM_NAME) \
+	    --ip $(VM_IP) --netmask $(VM_NETMASK) --gateway $(VM_GATEWAY) \
+	    --sudo-user $(SUDO_USER) --sudo-password $(SUDO_PASSWORD) --ssh-pubkey $(SSH_PUBKEY) --root-password $(ROOT_PASSWORD) \
+		--memory $(VM_MEM) --vcpus $(VM_VCPUS)
+
+.PHONY: test_idempotence # test full playbook run against the host created with test_init_vm
+test_idempotence:
+	# test initial check mode
+	./xsrv check default $(VM_NAME)
+	# test initial deployment
+	./xsrv deploy default $(VM_NAME)
+	# test idempotence
+	./xsrv deploy default $(VM_NAME)
 
 ##### RELEASE PROCEDURE #####
 # - make bump_versions update_todo changelog new_tag=$new_tag
 # - update changelog.md, add and commit version bumps and changelog updates
-# - git tag $new_tag; git push && git push --tags
+# - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
 # - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag
-# - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tags
+# - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tag
 # - ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
 # - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
 
@@ -83,25 +96,6 @@ endif
 	sed -i "s/^version =.*/version = '$(new_tag)'/" docs/conf.py && \
 	sed -i "s/^release =.*/release = '$(new_tag)'/" docs/conf.py && \
 	sed -i "s/latest%20release-.*-blue/latest%20release-$(new_tag)-blue/" README.md docs/index.md
-
-# requires gitea-cli configuration in ~/.config/gitearc:
-# export GITEA_API_TOKEN="AAAbbbCCCdddZZ"
-# gitea.issues() {
-# 	split_repo "$1"
-# 	auth curl --silent --insecure "https://gitea.example.org/api/v1/repos/$REPLY/issues?limit=1000"
-# }
-.PHONY: update_todo # manual - Update TODO.md by fetching issues from the main gitea instance API
-update_todo:
-	git clone https://github.com/bashup/gitea-cli gitea-cli
-	echo '<!-- This file is automatically generated by "make update_todo" -->' >| docs/TODO.md
-	echo -e "\n### xsrv/xsrv\n" >> docs/TODO.md; \
-	./gitea-cli/bin/gitea issues xsrv/xsrv | jq -r '.[] | "- #\(.number) - \(.title) - **`\(.milestone.title // "-")`** `\(.labels | map(.name) | join(","))`"'  | sed 's/ - `null`//' >> docs/TODO.md
-	rm -rf gitea-cli
-
-.PHONY: changelog # manual - establish a changelog since the last git tag
-changelog:
-	@echo "[INFO] changes since last tag $(LAST_TAG)" && \
-	git log --oneline $(LAST_TAG)...HEAD | cat
 
 .PHONY: gitlab_release # create a new gitlab release (new_tag=X.Y.Z required, GITLAB_PRIVATE_TOKEN must be defined in the environment)
 gitlab_release:
@@ -162,6 +156,25 @@ endif
 	commit=$$(git rev-parse HEAD) && \
 	curl --silent --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" "https://gitlab.com/api/v4/projects/nodiscc%2Fxsrv/repository/commits/$$commit/statuses?ref=$$branch" | jq  .[].status
 
+# requires gitea-cli configuration in ~/.config/gitearc:
+# export GITEA_API_TOKEN="AAAbbbCCCdddZZ"
+# gitea.issues() {
+# 	split_repo "$1"
+# 	auth curl --silent --insecure "https://gitea.example.org/api/v1/repos/$REPLY/issues?limit=1000"
+# }
+.PHONY: update_todo # manual - Update TODO.md by fetching issues from the main gitea instance API
+update_todo:
+	git clone https://github.com/bashup/gitea-cli gitea-cli
+	echo '<!-- This file is automatically generated by "make update_todo" -->' >| docs/TODO.md
+	echo -e "\n### xsrv/xsrv\n" >> docs/TODO.md; \
+	./gitea-cli/bin/gitea issues xsrv/xsrv | jq -r '.[] | "- #\(.number) - \(.title) - **`\(.milestone.title // "-")`** `\(.labels | map(.name) | join(","))`"'  | sed 's/ - `null`//' >> docs/TODO.md
+	rm -rf gitea-cli
+
+.PHONY: changelog # manual - establish a changelog since the last git tag
+changelog:
+	@echo "[INFO] changes since last tag $(LAST_TAG)" && \
+	git log --oneline $(LAST_TAG)...HEAD | cat
+
 .PHONY: doc_md # manual - generate docs/index.md from README.md
 doc_md:
 	@roles_list_md=$$(for i in roles/*/meta/main.yml; do \
@@ -195,4 +208,8 @@ doc_html: doc_md
 
 .PHONY: clean # manual - clean artifacts generated by make tests
 clean:
-	-rm -rf test.yml .venv/ nodiscc-xsrv-*.tar.gz gitea-cli/ .venv/ ansible_collections/ .cache/
+	-rm -rf .venv/ nodiscc-xsrv-*.tar.gz gitea-cli/ .venv/ ansible_collections/ .cache/
+
+.PHONY: help # generate list of targets with descriptions
+help:
+	@grep '^.PHONY: .* #' Makefile | sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' | expand -t20

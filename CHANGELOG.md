@@ -3,9 +3,66 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- this upgrade will cause Nextcloud instances to go down for a few minutes, depending on the number of files in their data directory
+
+**Added:**
+- xsrv: add [`init-vm`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (initialize a ready-to-deploy libvirt VM from a template)
+- xsrv: add [`edit-group-vault`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (edit encrypted group variables file)
+- common: make cron jobs log level configurable ([`cron_log_level`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: apt: clean downloaded package archives every 7 days by default ([`apt_clean_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency) ([`netdata_fping_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: make netdata filechecks configurable ([`netdata_file_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- transmission/gotty/jellyfin/docker: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state (and the `monitoring_netdata` role is deployed)
+- homepage: add rss-bridge to the homepage when the rss_bridge role is deployed on the host
+- add ansible [tags](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): `netdata-modules`, `netdata-needrestart`, `netdata-debsecan`, `netdata-logcount`, `netdata-config`
+
+**Changed:**
+- common: sysctl/security: disable potentially exploitable unprivileged BPF and user namespaces
+- gitea: limit systemd service automatic restart attempts to 4 in 10 seconds
+- gitea: update to v1.16.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.1) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.2) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.3) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.16.4) [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.16.5)
+- gotty: attempt to restart the systemd service every 2 seconds in case of failure, for a maximum of 4 times in 10 seconds
+- netdata: disable more internal monitoring charts (plugin execution time, webserver threads CPU)
+- netdata: re-add default netdata alarms for the `systemdunits` module
+- nextcloud: update to v23.0.3 [[1]](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/) [[2]](https://nextcloud.com/blog/nextcloud-23-0-3-and-22-2-6-are-out-bringing-a-series-of-bug-fixes-and-improvements/)
+- nextcloud: run nextcloud PHP processes under a dedicated `nextcloud` user, if an older installation owned by `www-data` is found, it will be migrated to the new user automatically
+- openldap: update LDAP Account Manager to [v7.9](https://github.com/LDAPAccountManager/lam/releases)
+- rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
+- apache/fail2ban/nextcloud: remove obsolete workaround for nextcloud [desktop client issue](https://github.com/nextcloud/server/issues/15688)
+- xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
+- xsrv: update ansible to [v5.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+- cleanup: make netdata assembled configuration more readable (add blank line delimiters)
+- cleanup: standardize file names
+- all roles: check that variables are correctly defined before running roles
+- tests: ansible-lint: ignore `fqcn-bultins,truthy,braces,line-length` rules
+- tests: remove broken jinja2 syntax test
+- tests: remove obsolete `ansible-playbook --syntax-check` and `yamllint` tests, replaced by ansible-lint
+- tests: automate tests for `init-vm`, `xsrv check`, `xsrv deploy`
+- doc: update documentation, default playbook README, Gitlab CI example
+
+
+**Fixed:**
+- all roles: ensure `check` mode doesn't fail when running it before before first deployment
+- common: ssh/users: fix SFTP-only user accounts creation (set permissions _after_ creating user accounts)
+- all roles: firewall: fix 'reload firewall/fail2ban/apache' handlers failures when called from other roles
+- openldap: fix ldap-ccount-manager installation on Debian 11 (php package name changes)
+- graylog: fix graylog service not starting/incorrect permissions on configuration files
+- graylog/mumble: monitoring/netdata: fix healthcheck/alarm not returning correct status when systemd services are in the failed state
+- netdata: fix location for needrestart module configuration file
+- netdata: fix/standardize indentation in configuration files produced by `to_nice_yaml`
+- homepage: fix homepage templating when the homepage role is not part of the same play as related roles
+- shaarli: explicitly use php 7.4 packages, fix possible installation problems on Debian 11
+- tests: fix and speed up `ansible-lint` tests, fix ansible-lint warnings
+
+[Full changes since v1.6.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.6.0...1.7.0)
+
 -------------------------------
 
-#### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - UNRELEASES
+#### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - 2022-03-17
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -30,6 +87,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apt: fix automatic upgrades for packages installed from Debian Backports
 - xsrv: fix error on new project creation/`init-playbook` - missing playbook directory
 - xsrv: fix support for `XSRV_PROJECTS_DIR` environment variable
+
+[Full changes since v1.5.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.5.0...1.6.0)
 
 -------------------------------
 
@@ -120,6 +179,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - default playbook/xsrv: fix invalid `"%%ANSIBLE_HOST%%"` value set by `xsrv init-host`
 - common: hosts: fix warning: Found variable using reserved name: hosts
 
+[Full changes since v1.4.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.4.0...1.5.0)
+
+-------------------------
 
 #### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17
 
@@ -208,6 +270,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
 - common: automatically apply security updates for packages installed from Debian Backports
 
+[Full changes since v1.3.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.3.1...1.4.0)
+
+------------------------
 
 #### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
 
@@ -229,7 +294,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: upgrade to 20.0.10
 - update documentation (virt-manager/add basic VM provisioning procedure)
 
+[Full changes since v1.3.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.3.0...1.3.1)
 
+----------------------------
 
 #### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - 2021-06-08
 
@@ -312,6 +379,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Security:**
 - common: fail2ban: fix bantime for ssh jail (~49 days)
 
+[Full changes since v1.2.2](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.2...1.3.0)
+
 -------------------------------
 
 #### [v1.2.2](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.2) - 2021-04-01
@@ -321,6 +390,9 @@ Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the lates
 **Fixed:**
  - samba: fix nscd default log level, update samba default log level
 
+[Full changes since v1.2.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.1...1.2.2)
+
+---------------------------
 
 #### [v1.2.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.1) - 2021-04-01
 
@@ -331,6 +403,7 @@ Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the lates
 
 samba: fix nscd default log level, update samba default log level
 
+[Full changes since v1.2.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.0...1.2.1)
 
 -------------------------------
 
@@ -359,6 +432,7 @@ samba: fix nscd default log level, update samba default log level
 - rocketchat: fix port 3001 exposed on 0.0.0.0 instead of localhost-only/firewall bypass
 - gitea: update to v1.13.6
 
+[Full changes since v1.1.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.1.0...1.2.0)
 
 -------------------------------
 
@@ -411,6 +485,7 @@ samba: fix nscd default log level, update samba default log level
 - upgrade ansible to 2.10.7 - https://pypi.org/project/ansible/#history
 - move TODOs to issues
 
+[Full changes since v1.0.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.0.0...1.1.0)
 
 -------------------------------
 

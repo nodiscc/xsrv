@@ -10,6 +10,7 @@
   apt_key:
     state: present
     url: https://repo.jellyfin.org/debian/jellyfin_team.gpg.key
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: add jellyfin APT repository
   apt_repository:
@@ -22,6 +23,7 @@
     state: present
     package: jellyfin
   notify: display jellyfin first run message
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### MEDIA DIRECTORIES #####
 
@@ -47,6 +49,7 @@
     state: link
     dest: "{{ ansible_env.HOME }}/MEDIA"
     src: "/var/lib/jellyfin/media/"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # required to allow jellyfin group to write in subdirectories
 - name: set permissions on jellyfin data directory
@@ -55,12 +58,14 @@
     owner: jellyfin
     group: jellyfin
     mode: 0770
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: allow ansible user to read/write jellyfin data files
   user:
     name: "{{ ansible_user }}"
     groups: jellyfin
     append: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: allow jellyfin to read/write transmission downloads directory
   user:
@@ -70,6 +75,7 @@
   when:
     - ansible_local.transmission.ansible_managed is defined
     - ansible_local.transmission.ansible_managed|bool
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SERVICE #####
 
@@ -79,3 +85,4 @@
     state: "{{ 'started' if jellyfin_enable_service else 'stopped' }}"
     enabled: "{{ 'yes' if jellyfin_enable_service else 'no' }}"
   tags: services
+  ignore_errors: "{{ ansible_check_mode }}"

@@ -2,6 +2,9 @@
   get_url:
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0640
   with_items:
     - { url: "https://github.com/sorenisanerd/gotty/releases/download/v{{ gotty_version }}/gotty_v{{ gotty_version }}_linux_amd64.tar.gz",
         dest: "/root/gotty_v{{ gotty_version }}_linux_amd64.tar.gz" }
@@ -15,6 +18,7 @@
     path: /root/gotty-unpack
     state: directory
     mode: 0750
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: extract gotty tarball
   unarchive:
@@ -23,6 +27,7 @@
     remote_src: yes
     mode: u=rwX
   diff: no
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy gotty binary
   copy:
@@ -33,7 +38,7 @@
     owner: root
     group: root
   notify: restart gotty
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create gotty configuration directory
   file:

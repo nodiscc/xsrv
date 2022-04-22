@@ -104,3 +104,4 @@
     - sambaLockoutThreshold: '5' # TODO description? make this configurable?
     - sambaForceLogoff: '-1'  # TODO description? make this configurable?
     - sambaRefuseMachinePwdChange: '0' # TODO description? make this configurable?
+  ignore_errors: "{{ ansible_check_mode }}"

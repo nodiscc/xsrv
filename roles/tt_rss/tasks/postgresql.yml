@@ -6,6 +6,7 @@
     package:
       - php-pgsql
       - python3-psycopg2
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create tt-rss postgresql user
   become: yes
@@ -13,6 +14,7 @@
   postgresql_user:
     name: "{{ tt_rss_db_user }}"
     state: present
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set tt-rss postgresql user password
   become: yes
@@ -21,6 +23,7 @@
     name: "{{ tt_rss_db_user }}"
     password: "{{ tt_rss_db_password }}"
   no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create tt-rss postgresql database
   become: yes
@@ -30,6 +33,7 @@
     state: present
     encoding: 'UNICODE'
     owner: '{{ tt_rss_db_user }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: grant privileges on tt-rss database to tt-rss postgresql user
   become: yes
@@ -39,3 +43,4 @@
     privs: ALL
     type: database
     role: "{{ tt_rss_db_user }}"
+  ignore_errors: "{{ ansible_check_mode }}"

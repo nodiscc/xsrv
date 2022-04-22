@@ -1,5 +1,14 @@
 #### NEXTCLOUD #####
 
+### USER ###
+
+- name: create nextcloud user
+  user:
+    name: nextcloud
+    state: present
+    home: /var/nextcloud
+    create_home: yes
+
 ### PACKAGES ###
 
 - name: install required packages
@@ -55,9 +64,8 @@
     - ansible_local.nextcloud.installed.version < nextcloud_version
     - nextcloud_dir.stat.exists
 
-#- debug:
-#    msg: "action: {{ nextcloud_action }}, nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, nextcloud_version: {{ nextcloud_version }}"
-
+# - debug:
+#     msg: "action: {{ nextcloud_action }}, nextcloud_dir.stat.exists: {{ nextcloud_dir.stat.exists }}, nextcloud_version: {{ nextcloud_version }}"
 
 ### DOWNLOAD/INSTALLATION ###
 
@@ -65,6 +73,9 @@
   get_url:
     url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
     dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
+    owner: root
+    group: root
+    mode: 0640
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
 - name: create nextcloud zip extraction directory
@@ -88,7 +99,8 @@
 - name: give write permissions to the webserver
   file:
     path: "{{ item.path }}"
-    group: www-data
+    owner: nextcloud
+    group: nextcloud
     mode: "{{ item.mode }}"
     recurse: no
   with_items:
@@ -109,20 +121,52 @@
   command: mv /root/nextcloud-unpack/nextcloud '{{ nextcloud_install_dir }}'
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
 
+### USER MIGRATION WWW-DATA -> NEXTCLOUD ###
 
-### CONFIGURATION ###
+- name: update ownership of data directory
+  file:
+    path: "/var/nextcloud"
+    state: directory
+    owner: nextcloud
+    group: nextcloud
+    recurse: yes
+  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: update ownership of application directories
+  file:
+    path: "{{ item }}"
+    owner: nextcloud
+    group: nextcloud
+    recurse: yes
+  with_items:
+    - "{{ nextcloud_install_dir }}/apps"
+    - "{{ nextcloud_install_dir }}/config"
+    - "{{ nextcloud_install_dir }}/themes"
+  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: update ownership of occ script
+  file:
+    path: "{{ nextcloud_install_dir }}/occ"
+    owner: nextcloud
+    group: nextcloud
+  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### CONFIGURATION #####
 
 - name: create nextcloud data directory
   file:
     path: "/var/nextcloud/data"
     state: directory
-    owner: root
-    group: www-data
+    owner: nextcloud
+    group: nextcloud
     mode: 0770
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: run first setup (this can take a while)
-  become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php occ \
            maintenance:install \
            --database="{{ nextcloud_db_type }}" \
@@ -137,28 +181,27 @@
   register: nextcloud_first_setup
   args:
     chdir: "{{ nextcloud_install_dir }}"
-  failed_when: nextcloud_first_setup.rc !=0 and 'Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr  # noqa 204
+  failed_when: (nextcloud_first_setup.rc !=0) and ('Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr) # noqa 204
   changed_when: nextcloud_first_setup.rc == 0
-  when:
-    - nextcloud_action == 'initial'
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: nextcloud_action == 'initial'
 
 - name: copy config.php from old installation
   copy:
     remote_src: yes
     src: '{{ nextcloud_install_dir }}.old/config/config.php'
     dest: '{{ nextcloud_install_dir }}/config/config.php'
-    owner: www-data
-    group: www-data
+    owner: nextcloud
+    group: nextcloud
     mode: 0660
-  when:
-    - nextcloud_action == 'upgrade'
+  when: nextcloud_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
 
 # occ doesn't report changed status, not idempotent, alwyas returns changd
 # Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
 - name: set nextcloud config.php values (always returns changed)
   become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301
   args:
     chdir: "{{ nextcloud_install_dir }}/"
@@ -179,6 +222,7 @@
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
     - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
   no_log: "{{ item.no_log | default(False) }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config
 
 # trashbin_retention_obligation:
@@ -189,44 +233,43 @@
 #   disabled: auto clean disabled
 
 - name: run nextcloud upgrade command
-  become: True
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ upgrade
   args:
     chdir: "{{ nextcloud_install_dir }}"
   register: nextcloud_upgrade
   changed_when: not 'Nextcloud is already at the latest version' in nextcloud_upgrade.stdout
-  when:
-    - (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  when: (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: schedule nextcloud background tasks
   cron:
-    user: www-data
+    user: nextcloud
     cron_file: nextcloud
     minute: "*/5"
     job: "/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php >/dev/null"
     name: "run nextcloud background tasks"
 
 - name: add missing primary keys and indices to nextcloud database
-  become: True
-  become_user: www-data
+  become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:{{ item }}"
   args:
     chdir: "{{ nextcloud_install_dir }}"
   register: nextcloud_add_missing_pkeys_indices
   changed_when: "'Adding' in nextcloud_add_missing_pkeys_indices.stdout"
+  ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - add-missing-primary-keys
     - add-missing-indices
 
 - name: convert columns to bigint in nextcloud database
-  become: True
-  become_user: www-data
+  become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:convert-filecache-bigint"
   args:
     chdir: "{{ nextcloud_install_dir }}"
   register: nextcloud_convert_filecache_bigint
   changed_when: "'will be updated' in nextcloud_convert_filecache_bigint.stdout"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### ANSIBLE FACTS ###
 
@@ -236,7 +279,7 @@
     state: directory
     mode: 0755
 
-- name: create nextcloud installed fact file
+- name: create nextcloud fact file
   template:
     src: etc_ansible_facts.d_nextcloud.fact.j2
     dest: /etc/ansible/facts.d/nextcloud.fact

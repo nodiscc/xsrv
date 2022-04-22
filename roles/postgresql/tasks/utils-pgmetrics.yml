@@ -2,6 +2,9 @@
   get_url:
     url: https://github.com/rapidloop/pgmetrics/releases/download/v1.12.0/pgmetrics_1.12.0_linux_amd64.tar.gz
     dest: /root/pgmetrics_1.12.0_linux_amd64.tar.gz
+    owner: root
+    group: root
+    mode: 0640
 
 - name: create pgmetrics tarball extraction directory
   file:

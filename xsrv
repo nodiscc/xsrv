@@ -8,8 +8,8 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.6.0"
-ansible_version="5.2.0"
+version="1.7.0"
+ansible_version="5.5.0"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
@@ -44,6 +44,20 @@ function _check_host_name() {
     fi
 }
 
+function migrate_group_vars_file() {
+    # migrate files from group_vars/$group_name.yml to group_vars/$group_name/$group_name.yml
+    legacy_group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
+    if [[ -f "$legacy_group_vars_file" ]]; then
+        echo "[xsrv] INFO: legacy $legacy_group_vars_file detected, moving it to $group_vars_file";
+        if [[ -f "$group_vars_file" ]]; then
+            echo "[xsrv] ERROR: destination file $group_vars_file already exists, aborting. Please merge files manually."
+            exit 1
+        fi
+        mkdir -p "$projects_dir/$project_name/group_vars/$group_name"
+        mv "$legacy_group_vars_file" "$group_vars_file"
+    fi
+}
+
 function check_group_name() {
     # check if group_vars files exist for a group, set group_vars_file global variable
     check_project_exists
@@ -52,10 +66,9 @@ function check_group_name() {
         echo "[xsrv] INFO: no group name provided, editing variables for group 'all'"
         group_name="all"
     fi
-    group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
-    if [[ ! -f "$group_vars_file" ]]; then
-        echo "[xsrv] INFO: $group_vars_file does not exist, will be created";
-    fi
+    group_vars_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.yml"
+    group_vault_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.vault.yml"
+    migrate_group_vars_file
 }
 
 function create_venv() {
@@ -186,7 +199,21 @@ function edit_group() {
     # edit group variables
     check_group_name
     echo "[xsrv] INFO: opening group_vars file $group_vars_file"
+    mkdir -p "$(dirname "$group_vars_file")"
     $editor "$group_vars_file"
+}
+
+function edit_group_vault() {
+    # edit a group's vault file
+    check_group_name
+    echo "[xsrv] INFO: opening group vault file $group_vault_file"
+    mkdir -p "$(dirname "$group_vault_file")"
+    cd "$projects_dir/$project_name"
+    if [[ ! -f "$group_vault_file" ]]; then
+        touch "$group_vault_file"
+        ansible-vault encrypt "$group_vault_file"
+    fi
+    EDITOR="$editor" ansible-vault edit "$group_vault_file"
 }
 
 function edit_vault() {
@@ -349,6 +376,120 @@ function self_upgrade() {
     fi
 }
 
+function init_vm() {
+    # initialize a libvirt VM from a template, configure resources/users/SSH access, start the VM
+    # requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
+    INIT_VM_USAGE="$0 init-vm --template TEMPLATE_NAME --name VM_NAME --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] --sudo-user VM_SUDO_USER [--sudo-password VM_sudo_password] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory MEM_SIZE] [--vcpus NUM_CPU]
+        EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4
+        If not specified, random sudo/root passwords will be generated automatically
+        If not specified, memory and vcpu values from the template will be kept
+        If not specified, the VM disk image will be created at /var/lib/libvirt/images/VM_NAME.qcow2
+        "
+
+    long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:"
+    GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
+    eval set -- "$GETOPT"
+
+    template=""
+    name=""
+    ip_address=""
+    netmask="24"
+    gateway=""
+    ssh_port="22"
+    sudo_user=""
+    sudo_password=$(pwgen -s 21 1)
+    ssh_pubkey=""
+    root_password=$(pwgen -s 21 1)
+    disk_path=""
+    memory=""
+    vcpus=""
+
+    while true; do
+        case "$1" in
+            -h|--help) echo "USAGE: $INIT_VM_USAGE"; exit;;
+            --template) template=$2; shift 2;;
+            --name) name=$2; shift 2;;
+            --ip) ip_address=$2; shift 2;;
+            --netmask) netmask=$2; shift 2;;
+            --gateway) gateway=$2; shift 2;;
+            --ssh-port) ssh_port=$2; shift 2;;
+            --sudo-user) sudo_user=$2; shift 2;;
+            --sudo-password) sudo_password=$2; shift 2;;
+            --ssh-pubkey) ssh_pubkey=$2; shift 2;;
+            --root-password) root_password=$2; shift 2;;
+            --disk-path) disk_path=$2; shift 2;;
+            --memory) memory=$2; shift 2;;
+            --vcpus) vcpus=$2; shift 2;;
+            --) shift; break;;
+            *) echo "[xsrv] ERROR: invalid option $1"; echo "USAGE: $INIT_VM_USAGE"; exit 1;;
+        esac
+    done
+
+    for i in "$template" "$name" "$ip_address" "$gateway" "$sudo_user"; do
+        if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option"; echo "[xsrv] USAGE: $INIT_VM_USAGE"; exit 1; fi
+    done
+
+cat > ./libvirt-clone-interfaces.txt << EOF
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug enp1s0
+iface enp1s0 inet static
+    address ${ip_address}/${netmask}
+    gateway ${gateway}
+EOF
+
+    echo "[xsrv] INFO: attempting to resolve $name..."
+    getent hosts "$name" || (echo "[xsrv] ERROR: resolving $name failed! Make sure a record exists in the DNS system or add this entry to /etc/hosts: $ip_address      $name"; exit 1)
+    if [[ -z "$disk_path" ]]; then disk_path="/var/lib/libvirt/images/$name.qcow2"; fi
+    echo "[xsrv] INFO: cloning template $template to $name..."
+    virt-clone --original "$template" \
+        --name "$name" \
+        --file "$disk_path"
+    # virt-clone always creates the disk image with owner/group root:root mode 0600
+    echo "[xsrv] INFO: fixing permissions on $disk_path..."
+    sudo chown libvirt-qemu:libvirt "$disk_path"
+    sudo chmod 0660 "$disk_path"
+    echo "[xsrv] INFO: cleaning up $name..."
+    virt-sysprep --domain "$name" \
+        --hostname "$name" \
+        --password "$sudo_user:password:$sudo_password" \
+        --root-password "password:$root_password" \
+        --firstboot-command "dpkg-reconfigure openssh-server" \
+        --upload ./libvirt-clone-interfaces.txt:/etc/network/interfaces \
+        --ssh-inject "$sudo_user:string:$ssh_pubkey"
+    if [[ -n "$memory" ]]; then
+        echo "[xsrv] INFO: updating memory settings for $name..."
+        virsh setmaxmem --domain "$name" --size "$memory" --config
+        virsh setmem --domain "$name" --size "$memory" --config
+    fi
+    if [[ -n "$vcpus" ]]; then
+        echo "[xsrv] INFO: updating CPU settings for $name..."
+        virsh setvcpus --domain "$name" --count "$vcpus" --config --maximum
+        virsh setvcpus --domain "$name" --count "$vcpus" --config
+    fi
+    echo "[xsrv] INFO: starting VM $name..."
+    virsh start "$name"
+    echo "[xsrv] INFO: waiting $name ssh server to start accepting connections..."
+    until nc -w 1 "$name" "$ssh_port"; do sleep 1; done
+    echo "[xsrv] INFO: adding $name ssh server's hostkey to known_hosts file..."
+    ssh-keyscan -H "$name" 2>/dev/null >> ~/.ssh/known_hosts
+    echo "[xsrv] INFO: $name setup complete, your VM is ready to use:"
+    echo "[xsrv] INFO: SSH access: ssh -p $ssh_port $sudo_user@$name"
+    echo "[xsrv] INFO: SSH hostkeys fingerprints:"
+    ssh-keyscan "$name" 2>/dev/null | ssh-keygen -lf -
+    echo "[xsrv] INFO password for $sudo_user: $sudo_password"
+    echo "[xsrv] INFO: password for root: $root_password"
+    rm ./libvirt-clone-interfaces.txt
+}
+
 function format_ansible_tags() {
     # format ansible-playbook --list tags output as a list, one item per line
     grep 'TASK TAGS:' | sed 's/      TASK TAGS: \[//' | sed 's/\]$//' | sed 's/, /\n/g' | sort --unique
@@ -388,6 +529,7 @@ function _main() {
         "edit-cfg") shift; edit_ansible_cfg;;
         "edit-host") shift; edit_host ;;
         "edit-group") shift; edit_group;;
+        "edit-group-vault") init_venv; shift; edit_group_vault;;
         "edit-vault") init_venv; shift; edit_vault ;;
         "shell") init_venv; shift; run_shell ;;
         "logs") init_venv; shift; ssh_args="bash -c 'if [[ -r /var/log/syslog ]]; then lnav /var/log/syslog; else sudo lnav /var/log/syslog; fi'"; run_shell ;;
@@ -398,6 +540,7 @@ function _main() {
         "upgrade") init_venv; shift; upgrade_roles ;;
         "show-defaults") shift; show_defaults "$@";;
         "self-upgrade") self_upgrade;;
+        "init-vm") init_vm "$@";;
         "init-playbook") init_venv; shift; legacy_init_playbook;;
         *) echo "[xsrv] ERROR: unrecognized command $command"; exit 1 ;;
     esac
@@ -410,26 +553,28 @@ function _main() {
 usage="
 USAGE: xsrv COMMAND [project] [host]
 
-init-project [project] [host]   initialize a new project (and optionally a first host)
-edit-inventory [project]        edit/show inventory file (hosts/groups)
-edit-playbook [project]         edit/show playbook (roles for each host)
-show-defaults [project] [role]  show all variables and their default values
-edit-requirements [project]     edit ansible requirements/collections
-edit-cfg [project]              edit ansible configuration (ansible.cfg)
-init-host [project] [host]      add a new host to an existing project
-check [project] [host]          simulate deployment, report what would be changed
-deploy [project] [host]         deploy the main playbook in a project (apply configuration/roles)
-edit-host [project] [host]      edit host configuration (host_vars)
-edit-vault [project] [host]     edit encrypted (vault) host configuration (host_vars)
-edit-group [project] [group]    edit group configuration (default group: all) (group_vars)
-fetch-backups [project] [host]  fetch backups from a host to the local backups directory
-shell [project] [host]          open interactive shell on a host
-logs [project] [host]           view system logs on a host
-ls                              list files in the projects directory (accepts a path)
-help                            show this message
-help-tags [project]             show the list of ansible tags and their descriptions
-upgrade [project]               upgrade roles/collections to latest versions
-self-upgrade                    check for new releases/upgrade the xsrv script in-place
+init-project [project] [host]       initialize a new project (and optionally a first host)
+edit-inventory [project]            edit/show inventory file (hosts/groups)
+edit-playbook [project]             edit/show playbook (roles for each host)
+show-defaults [project] [role]      show all variables and their default values
+edit-requirements [project]         edit ansible requirements/collections
+edit-cfg [project]                  edit ansible configuration (ansible.cfg)
+init-host [project] [host]          add a new host to an existing project
+check [project] [host]              simulate deployment, report what would be changed
+deploy [project] [host]             deploy the main playbook (apply configuration/roles)
+edit-host [project] [host]          edit host configuration (host_vars)
+edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
+edit-group [project] [group]        edit group configuration (group_vars)
+edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
+fetch-backups [project] [host]      fetch backups from a host to the local backups directory
+shell [project] [host]              open interactive shell on a host
+logs [project] [host]               view system logs on a host
+ls                                  list files in the projects directory (accepts a path)
+help                                show this message
+help-tags [project]                 show the list of ansible tags and their descriptions
+upgrade [project]                   upgrade roles/collections to latest versions
+self-upgrade                        check for new releases/upgrade the xsrv script in-place
+init-vm [--help] [options]          initialize a new libvirt VM from a template
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)

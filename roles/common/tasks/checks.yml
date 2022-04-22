@@ -7,9 +7,11 @@
       - linux_users|type_debug == "list"
       - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump|bool
       - setup_apt == setup_apt|bool
+      - apt_clean_days == apt_clean_days|int
       - apt_unattended_upgrades_origins_patterns|type_debug == "list"
       - setup_cli_utils == setup_cli_utils|bool
       - setup_cron == setup_cron|bool
+      - cron_log_level == cron_log_level|int
       - setup_dns == setup_dns|bool
       - setup_hostname == setup_hostname|bool
       - setup_hosts_file == setup_hosts_file|bool

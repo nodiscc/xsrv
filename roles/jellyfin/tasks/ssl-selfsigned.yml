@@ -9,6 +9,7 @@
   openssl_privatekey:
     path: "/etc/ssl/private/{{ jellyfin_fqdn }}.key"
   notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl certificate signing request
   openssl_csr:

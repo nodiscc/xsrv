@@ -1,6 +1,6 @@
 #
 # @synopsis: level-count
-# @description: Print out the number of log messages from the past 5 minutes and broken down by log level
+# @description: Print out the number of log messages from the past 1 minute and broken down by log level
 # @reference: https://github.com/tstack/lnav/issues/721
 #
 

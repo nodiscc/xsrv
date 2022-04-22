@@ -1,27 +1,27 @@
 - hosts: my.example.org
   # ignore_unreachable: yes # don't fail when host is unreachable
-  # strategy: free # use this if your servers are independent from each other/do not require ordered/synchronized deployment
+  # strategy: free # if your servers do not require ordered/synchronized execution of tasks
   roles:
-    - nodiscc.xsrv.common
-    - nodiscc.xsrv.backup
-    - nodiscc.xsrv.monitoring
-    - nodiscc.xsrv.apache
-    - nodiscc.xsrv.homepage
-    - nodiscc.xsrv.postgresql
-    - nodiscc.xsrv.nextcloud
-    - nodiscc.xsrv.tt_rss
-    - nodiscc.xsrv.shaarli
-    - nodiscc.xsrv.rss_bridge
-    - nodiscc.xsrv.gitea
-    - nodiscc.xsrv.samba
-    - nodiscc.xsrv.transmission
-    - nodiscc.xsrv.mumble
-    - nodiscc.xsrv.openldap
-    - nodiscc.xsrv.docker
-    - nodiscc.xsrv.rocketchat
-    - nodiscc.xsrv.graylog
-    - nodiscc.xsrv.proxmox
-    - nodiscc.xsrv.gotty
-    - nodiscc.xsrv.jellyfin
-    - nodiscc.xsrv.valheim_server
-    - nodiscc.xsrv.dnsmasq
+    - common
+    - backup
+    - monitoring
+    - apache
+    - homepage
+    - postgresql
+    - nextcloud
+    - tt_rss
+    - shaarli
+    - rss_bridge
+    - gitea
+    - samba
+    - transmission
+    - mumble
+    - openldap
+    - docker
+    - rocketchat
+    - graylog
+    - proxmox
+    - gotty
+    - jellyfin
+    - valheim_server
+    - dnsmasq

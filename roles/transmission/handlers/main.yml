@@ -5,3 +5,4 @@
     state: reloaded
     enabled: yes
   when: transmission_enable_service|bool
+  ignore_errors: "{{ ansible_check_mode }}"

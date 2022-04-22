@@ -2,12 +2,12 @@
 
 - name: enable required apache modules
   command: a2enmod {{ item }}
-  with_items:
-    - proxy
-    - proxy_http
   args:
     creates: /etc/apache2/mods-enabled/{{ item }}.load
   notify: restart apache
+  with_items:
+    - proxy
+    - proxy_http
 
 - name: install requirements for ansible htpasswd module
   apt:
@@ -25,6 +25,7 @@
     group: www-data
     mode: 0640
   notify: reload apache
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy apache virtualhost configuration
   template:

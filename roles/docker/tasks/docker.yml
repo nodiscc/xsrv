@@ -1,11 +1,11 @@
-- name: Ensure old versions of Docker are not installed.
+- name: ensure old versions of Docker are not installed
   apt:
     package:
       - docker
       - docker-engine
     state: absent
 
-- name: Ensure dependencies are installed.
+- name: ensure dependencies are installed
   apt:
     state: present
     package:
@@ -13,14 +13,15 @@
       - ca-certificates
       - gpg # required for APT key import
 
-- name: Add Docker apt key.
+- name: add Docker APT key
   apt_key:
     url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     state: present
   register: add_repository_key
+  ignore_errors: "{{ ansible_check_mode }}"
 
-- name: Add Docker repository.
+- name: add Docker APT repository
   apt_repository:
     repo: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}" # noqa 204
     state: present
@@ -44,13 +45,14 @@
     mode: 0644
   notify: restart docker
 
-- name: Install Docker.
+- name: install Docker
   package:
     name: "docker-ce"
     state: "present"
   notify: restart docker
+  ignore_errors: "{{ ansible_check_mode }}"
 
-- name: Install docker_stack module requirements and docker-compose
+- name: install docker_stack module requirements and docker-compose
   package:
     name:
       - python3-jsondiff
@@ -59,7 +61,7 @@
       - docker-compose
     state: present
 
-- name: Ensure docker users are added to the docker group.
+- name: ensure docker users are added to the docker group
   user:
     name: "{{ item }}"
     groups: docker
@@ -84,6 +86,7 @@
 
 - name: configure docker swarm
   docker_swarm: "{{ docker_swarm }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SERVICE #####
 
@@ -93,3 +96,4 @@
     state: "{{ 'started' if docker_enable_service else 'stopped' }}"
     enabled: "{{ 'yes' if docker_enable_service else 'no' }}"
   tags: services
+  ignore_errors: "{{ ansible_check_mode }}"

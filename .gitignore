@@ -1,5 +1,4 @@
 .venv/
 nodiscc-xsrv-*.tar.gz
-/test.yml
 /ansible_collections/
 docs/html/

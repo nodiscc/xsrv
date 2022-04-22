@@ -102,6 +102,10 @@ When using Jellyfin from a web browser, media will be converted/transcoded on-th
 To search and download video subtitles, register an account on https://opensubtitles.com, enable the `Opensubtitles` plugin from `Admin > Plugins` and set your opensubtitles.org username/password in the plugin preferences. Then obtain an API key by following the link the plugin settings. You will then be able to use right-click > `Edit subtitles` on any video from your library and search for matching subtitles.
 
 
+## Metadata
+
+The [Youtube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) can be used to automatically set metadata for videos downloaded using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

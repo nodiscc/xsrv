@@ -22,12 +22,14 @@
     name: "{{ ansible_user }}"
     groups: debian-transmission
     append: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create symlink to download directory in main users home
   file:
     state: link
     src: "{{ transmission_download_dir }}"
     dest: "/home/{{ ansible_user }}/TORRENTS"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SERVICE #####
 
@@ -37,3 +39,4 @@
     state: "{{ 'started' if transmission_enable_service else 'stopped' }}"
     enabled: "{{ 'yes' if transmission_enable_service else 'no' }}"
   tags: services
+  ignore_errors: "{{ ansible_check_mode }}"

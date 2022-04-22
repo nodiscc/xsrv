@@ -21,6 +21,8 @@
   tags:
     - monitoring
     - netdata
+    - netdata-modules
+    - netdata-needrestart
   when: setup_needrestart|bool
 
 - include: netdata-module-logcount.yml
@@ -28,6 +30,8 @@
   tags:
     - monitoring
     - netdata
+    - netdata-modules
+    - netdata-logcount
   when: setup_netdata_logcount|bool
 
 - include: netdata-module-debsecan.yml
@@ -35,6 +39,8 @@
   tags:
     - monitoring
     - netdata
+    - netdata-modules
+    - netdata-debsecan
   when: setup_netdata_debsecan|bool
 
 - include: firewalld.yml

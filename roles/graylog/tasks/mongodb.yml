@@ -4,11 +4,12 @@
   apt_key:
     url: "https://www.mongodb.org/static/pgp/server-4.2.asc"
     state: present
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set distribution for mongodb APT repository
   set_fact:
     mongodb_apt_repo_distribution: "{{ item.apt_repository }}"
-  when: ansible_facts.distribution_release == "{{ item.distribution_release }}"
+  when: ansible_facts.distribution_release == "{{ item.distribution_release }}" # noqa no-jinja-when
   with_items:
     - apt_repository: stretch
       distribution_release: stretch

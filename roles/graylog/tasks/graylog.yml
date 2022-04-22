@@ -4,6 +4,9 @@
   get_url:
     url: "https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb"
     dest: "/root/graylog-4.0-repository_latest.deb"
+    owner: root
+    group: root
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}" # HEAD requests are forbidden/403
 
 - name: install graylog-4.0-repository package
@@ -21,17 +24,24 @@
 - name: install graylog-server package
   apt:
     pkg: "graylog-server"
-    state: latest
+    state: present
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate graylog password hash
-  shell: echo -n {{ graylog_root_password }} | sha256sum | cut -d" " -f1
+  shell: set -o pipefail && echo -n {{ graylog_root_password }} | sha256sum | cut -d" " -f1
   register: graylog_root_password_hash
   changed_when: false
   check_mode: no # run even in check mode, does not change anything
+  args:
+    executable: /bin/bash
 
 - name: copy graylog server configuration
-  template: "{{ item }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
   notify: restart graylog-server
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:
@@ -39,12 +49,12 @@
       dest: /etc/graylog/server/server.conf
       owner: root
       group: graylog
-      mode: 0640
+      mode: "0640"
     - src: etc_default_graylog-server.j2
       dest: /etc/default/graylog-server
       owner: root
       group: root
-      mode: 0644
+      mode: "0644"
 
 ### GRAYLOG SSL/TLS SYSLOG CA CERTIFICATE ###
 
@@ -64,7 +74,8 @@
     path: "/etc/graylog/ssl/graylog-ca.key"
     owner: root
     group: graylog
-    mode: 0640
+    mode: "0640"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl certificate signing request
   openssl_csr:
@@ -73,7 +84,8 @@
     common_name: "{{ inventory_hostname }}"
     owner: root
     group: graylog
-    mode: 0640
+    mode: "0640"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl CA/server certificate
   openssl_certificate:
@@ -83,7 +95,8 @@
     provider: selfsigned
     owner: root
     group: graylog
-    mode: 0640
+    mode: "0640"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # the certificate will be uploaded to syslog clients (hosts with rsyslog_enable_forwarding: yes)
 - name: download CA/server certificate to the controller
@@ -91,6 +104,7 @@
     src: /etc/graylog/ssl/graylog-ca.crt
     dest: "{{ playbook_dir }}/public_keys/{{ inventory_hostname }}-graylog-ca.crt"
     flat: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 
 ### SERVICE ###

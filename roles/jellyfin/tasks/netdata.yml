@@ -1,9 +1,14 @@
-- name: install netdata http check for jellyfin
+- name: install netdata http/systemd checks/alarms for jellyfin
   template:
-    src: etc_netdata_go.d_httpcheck.conf.d_jellyfin.conf.j2
-    dest: "/etc/netdata/go.d/httpcheck.conf.d/jellyfin.conf"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - src: etc_netdata_go.d_httpcheck.conf.d_jellyfin.conf.j2
+      dest: /etc/netdata/go.d/httpcheck.conf.d/jellyfin.conf
+    - src: etc_netdata_health.d_systemdunits.conf.d_jellyfin.conf.j2
+      dest: /etc/netdata/health.d/systemdunits.conf.d/jellyfin.conf

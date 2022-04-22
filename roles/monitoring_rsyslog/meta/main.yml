@@ -1,3 +1,5 @@
+# @tag rsyslog - setup system log processing
+
 galaxy_info:
   role_name: monitoring_rsyslog
   author: "nodiscc <nodiscc@gmail.com>"

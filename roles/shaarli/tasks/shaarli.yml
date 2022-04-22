@@ -8,14 +8,13 @@
     update_cache: yes
     cache_valid_time: 900
     package:
-      - php-gd
-      - php-curl
-      - php-json
-      - php-mbstring
-      - php-gd
-      - php-intl
-      - php-curl
-      - php-gettext
+      - php7.4-gd
+      - php7.4-curl
+      - php7.4-json
+      - php7.4-mbstring
+      - php7.4-intl
+      - php7.4-curl
+      - php7.4-gettext
 
 ### SHAARLI INSTALLATION ###
 
@@ -44,6 +43,9 @@
   get_url:
     url: "https://github.com/shaarli/Shaarli/releases/download/{{ shaarli_version }}/shaarli-{{ shaarli_version }}-full.zip"
     dest: "/root/shaarli-{{ shaarli_version }}-full.zip"
+    owner: root
+    group: root
+    mode: 0640
   when:
     - shaarli_action is defined
     - shaarli_action == 'initial' or shaarli_action == 'upgrade'
@@ -74,6 +76,7 @@
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set file permissions
   file:
@@ -88,6 +91,7 @@
     - { path: "/root/shaarli-unpack/Shaarli/tmp", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/cache", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/pagecache", mode: "0770" }
+  ignore_errors: "{{ ansible_check_mode }}"
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')

@@ -1,30 +1,32 @@
 # not idempotent, always upgrade to latest versions
 - name: update nextcloud applications (always returns changed)
   become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ app:update --all
-  changed_when: yes
   args:
     chdir: "{{ nextcloud_install_dir }}"
+  changed_when: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: install nextcloud applications
   become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ app:install {{ item.app }}
   args:
     chdir: "{{ nextcloud_install_dir }}"
   with_items: "{{ nextcloud_apps }}"
   register: nextcloud_app_install
-  when:
-    - 'item.state == "enable"'
-  changed_when:
-    - not 'already installed' in nextcloud_app_install.stdout
+  when: 'item.state == "enable"'
+  changed_when: not 'already installed' in nextcloud_app_install.stdout
   failed_when:
-    - nextcloud_app_install.rc !=0 and not 'not compatible with this version of the server' not in nextcloud_app_install.stderr
+    - (nextcloud_app_install.rc !=0)
+    - (not 'not compatible with this version of the server' in nextcloud_app_install.stderr)
+    - (not 'already installed' in nextcloud_app_install.stdout)
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable/disable nextcloud applications
   become: yes
-  become_user: www-data
+  become_user: nextcloud
   command: /usr/bin/php ./occ app:{{ item.state }} {{ item.app }}
   args:
     chdir: "{{ nextcloud_install_dir }}"
@@ -33,3 +35,4 @@
   changed_when:
     - not 'No such app enabled' in nextcloud_app_enable_disable.stdout
     - not 'already enabled' in nextcloud_app_enable_disable.stdout
+  ignore_errors: "{{ ansible_check_mode }}"

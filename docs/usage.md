@@ -1,7 +1,7 @@
 # Usage
 
 
-The `xsrv` command-line tool automates creation and maintenance of [projects](#manage-projects) on a [controller](installation/controller-preparation.md) machine. Configuration is stored in [YAML](https://en.wikipedia.org/wiki/YAML) files on the controller.
+The `xsrv` command-line tool automates creation and maintenance of [projects](#manage-projects) on a [controller](installation/controller-preparation.md) machine. Configuration is stored in [YAML](https://en.wikipedia.org/wiki/YAML) files on the controller and deployed to target [hosts](installation/server-preparation.md) over SSH.
 
 Use the `xsrv` command-line to manage your projects, or [include xsrv roles in your own ansible playbooks](#use-as-ansible-collection).
 
@@ -13,30 +13,32 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.5.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.6.0
 
 USAGE: xsrv COMMAND [project] [host]
 
-init-project [project]          initialize a new project
-edit-inventory [project]        edit/show inventory file (hosts/groups)
-edit-playbook [project]         edit/show playbook (roles for each host)
-show-defaults [project] [role]  show all variables and their default values
-edit-requirements [project]     edit ansible requirements/collections
-edit-cfg [project]              edit ansible configuration (ansible.cfg)
-init-host [project] [host]      add a new host to an existing project
-check [project] [host]          simulate deployment, report what would be changed
-deploy [project] [host]         deploy the main playbook in a project (apply configuration/roles)
-edit-host [project] [host]      edit host configuration (host_vars)
-edit-vault [project] [host]     edit encrypted (vault) host configuration (host_vars)
-edit-group [project] [group]    edit group configuration (default group: all) (group_vars)
-fetch-backups [project] [host]  fetch backups from a host to the local backups directory
-shell [project] [host]          open interactive shell on a host
-logs [project] [host]           view system logs on a host
-ls                              list files in the projects directory (accepts a path)
-help                            show this message
-help-tags [project]             show the list of ansible tags and their descriptions
-upgrade [project]               upgrade roles/collections to latest versions
-self-upgrade                    check for new releases/upgrade the xsrv script in-place
+init-project [project] [host]       initialize a new project (and optionally a first host)
+edit-inventory [project]            edit/show inventory file (hosts/groups)
+edit-playbook [project]             edit/show playbook (roles for each host)
+show-defaults [project] [role]      show all variables and their default values
+edit-requirements [project]         edit ansible requirements/collections
+edit-cfg [project]                  edit ansible configuration (ansible.cfg)
+init-host [project] [host]          add a new host to an existing project
+check [project] [host]              simulate deployment, report what would be changed
+deploy [project] [host]             deploy the main playbook (apply configuration/roles)
+edit-host [project] [host]          edit host configuration (host_vars)
+edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
+edit-group [project] [group]        edit group configuration (group_vars)
+edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
+fetch-backups [project] [host]      fetch backups from a host to the local backups directory
+shell [project] [host]              open interactive shell on a host
+logs [project] [host]               view system logs on a host
+ls                                  list files in the projects directory (accepts a path)
+help                                show this message
+help-tags [project]                 show the list of ansible tags and their descriptions
+upgrade [project]                   upgrade roles/collections to latest versions
+self-upgrade                        check for new releases/upgrade the xsrv script in-place
+init-vm [--help] [options]          initialize a new libvirt VM from a template
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
@@ -178,7 +180,9 @@ See [YAML inventory](https://docs.ansible.com/ansible/latest/collections/ansible
 
 ### xsrv edit-playbook
 
-Edit the list of [roles](index.md#roles) (playbook file) for your hosts. Add any role you wish to enable to the `roles:` list:
+Edit the list of [roles](index.md) (playbook file) for your hosts. Add any role you wish to enable to the `roles:` list.
+
+This is the simplest playbook, with a single host carrying multple roles:
 
 ```yaml
 # xsrv edit-playbook
@@ -199,6 +203,39 @@ Edit the list of [roles](index.md#roles) (playbook file) for your hosts. Add any
 ```
 
 See [Intro to playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html).
+
+Other examples:
+
+```yaml
+# deploy the common role to all hosts in parallel
+- hosts: all
+  roles:
+    - nodiscc.xsrv.common
+
+# deploy the monitoring role to all hosts except demo35.example.org
+- hosts: all:!demo35.example.org
+  roles:
+    - nodiscc.xsrv.monitoring
+
+# deploy specific roles role to specific hosts
+- hosts: proxmox1.example.org
+  roles:
+    - nodiscc.xsrv.proxmox
+- hosts: ldap.example.org
+  roles:
+    - nodiscc.xsrv.apache
+    - nodiscc.xsrv.openldap
+- hosts: backup.example.org
+  roles:
+    - nodiscc.xsrv.backup
+- hosts: app01.example.org
+  roles:
+    - nodiscc.xsrv.apache
+    - nodiscc.xsrv.postgresql
+    - nodiscc.xsrv.nextcloud
+    - nodiscc.xsrv.shaarli
+    - nodiscc.xsrv.gitea
+```
 
 
 ### Remove roles
@@ -289,6 +326,17 @@ setup_msmtp: yes
 setup_msmtp: no
 ```
 
+### xsrv edit-group-vault
+
+Edit encrypted [group](#manage-hosts) configuration - similar to [`xsrv edit-vault`](#xsrv-edit-vault) but for groups.
+
+```bash
+# xsrv edit-group-vault all
+# common outgoing mail credentials for all hosts
+msmtp_username: "mail-notifications"
+msmtp_password: "e9fozo8ItlH6XNoysyt7vdylXcttVu"
+```
+
 
 ## Apply changes
 
@@ -338,7 +386,7 @@ TODO-->
 
 ## Use as ansible collection
 
-The main [`xsrv` script](command-line-usage) maintains a simple and consistent structure for your projects, automates frequent operations, and manages ansible installation/environments. You can also manage your playbooks manually using your favorite text editor and [`ansible-*` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
+The main [`xsrv` script](#command-line-usage) maintains a simple and consistent structure for your projects, automates frequent operations, and manages ansible installation/environments. You can also manage your playbooks manually using your favorite text editor and [`ansible-*` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
 
 To import roles as a [collection](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in your own playbooks, [install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) and create `requirements.yml` in your playbook directory:
 
@@ -376,7 +424,7 @@ To upgrade the collection to the latest [release](https://gitlab.com/nodiscc/xsr
 $ ansible-galaxy collection install --force -r requirements.yml
 ```
 
-See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md#roles) documentation.
+See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
 
 ## Version control
@@ -416,7 +464,7 @@ You may have to restore data from last known good [backups](maintenance.md)/a sn
 
 [Continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment) systems can be tied to a version control/git repository for automated checks and deployments controlled by git operations ("GitOps").
 
-This example [`.gitlab-ci.yml`](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `⏵`) to run actual staging/production deployments.
+This example [`.gitlab-ci.yml`](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments.
 
 ```yaml
 image: debian:buster-backports
@@ -426,10 +474,8 @@ image: debian:buster-backports
 # GITLAB_CI_SSH_KEY (contents of private SSH key authorized on remote hosts, terminated by newline, type file)
 
 stages:
-  - test
-  - check
-  - deploy-staging
-  - deploy-production
+  - staging
+  - production
 
 variables:
   ANSIBLE_CONFIG: ansible.cfg
@@ -456,33 +502,42 @@ before_script:
   - wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
   - chmod a+x /usr/local/bin/xsrv
 
+
+##### STAGING #####
+
 check-staging:
-  stage: check
+  stage: staging
   script:
-    - xsrv check staging
+    - TAGS=$TAGS xsrv check staging
   interruptible: true # stop this job when a new pipeline starts on the same branch
-  allow_failure: true # allow this job to be cancelled/skipped
+  needs: [] # don't wait for other jobs to complete before starting this job
+
+deploy-staging:
+  stage: staging
+  script:
+    - TAGS=$TAGS xsrv deploy staging
+  resource_group: staging # only allow one job to run concurrently on this resource group/environment
+  needs:
+    - check-staging
+
+##### PRODUCTION #####
 
 check-production:
   stage: check
   script:
-    - xsrv check production
+    - TAGS=$TAGS xsrv check production
   interruptible: true
-  allow_failure: true
-
-deploy-staging:
-  stage: deploy-staging
-  script:
-    - xsrv deploy staging
-  interruptible: true
-  when: manual # require manual action/click to start deployment
+  needs: []
 
 deploy-production:
-  stage: deploy-production
+  stage: production
   script:
-    - ./xsrv deploy production
-  interruptible: true
-  when: manual
+    - TAGS=$TAGS xsrv deploy production
+  when: manual # require manual action/click to start deployment
+  resource_group: production
+  needs:
+    - check-production
+    - deploy-staging
   only: # only allow deployment of the master branch or tags to production
     - master
     - tags

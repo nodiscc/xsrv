@@ -1,10 +1,10 @@
-- name: add rocket.chat FQDN to hosts file
+- name: add rocketchat FQDN to hosts file
   lineinfile:
     path: /etc/hosts
     state: present
     line: "127.0.0.1	{{ rocketchat_fqdn }}" # noqa 203
 
-- name: create directories for rocket.chat data
+- name: create directories for rocketchat data
   file:
     state: directory
     owner: "{{ item.owner }}"

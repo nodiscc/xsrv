@@ -1,3 +1,10 @@
+# @tag netdata - setup netdata monitoring system
+# @tag netdata-config - copy netdata configuration files
+# @tag netdata-modules - setup custom netdata modules
+# @tag netdata-needrestart - setup netdata needrestart module
+# @tag netdata-logcount - setup netdata logcount module
+# @tag netdata-debsecan - setup netdata debsecan module
+
 galaxy_info:
   role_name: monitoring_netdata
   author: "nodiscc <nodiscc@gmail.com>"
