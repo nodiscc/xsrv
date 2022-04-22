@@ -4,23 +4,17 @@
 
 - #782 - xsrv init-vm: don't require sudo to fix cloned disk image permissions - **`1.8.0`** `enhancement,question`
 - #781 - shaarli: 'server reached pm.max_children setting (5), consider raising it' when mass-fetching thumbnails - **`-`** `enhancement,performance,question`
-- #780 - doc: changelog add "changed since $previous_version entry to each changelog entry - **`1.7.0`** `documentation,easy,maintenance`
 - #778 - systemd-nspawn/systemd-machined role? - **`-`** `feature,question`
-- #777 - homepage: rss-bridge missing from the auto-generated page - **`1.7.0`** `bug,easy`
 - #776 - nextcloud: allow enabling feeds/RSS app? - **`-`** `easy,enhancement,question`
-- #775 - remove all remaining usage of `in role_names` - **`1.7.0`** `easy,maintenance`
 - #774 - proxmox: allow configuration of a proxmox cluster? - **`-`** `enhancement,question`
-- #773 - nextcloud: run nextcloud under a dedicated user account - **`1.7.0`** `enhancement,security`
 - #771 - netdata: add netdata-apt module (monitor number of upgradeable packages) - **`1.8.0`** `feature,monitoring`
 - #770 - graylog: document example extractors - **`-`** `documentation,enhancement,monitoring`
 - #768 - add ldap-client role (LDAP PAM/SSH authentication)? - **`-`** `feature,question`
-- #767 - run nextcloud under a dedicated user account (not www-data) - **`1.7.0`** `enhancement,security`
 - #766 - lynis: investigate 'suggestion' report items - **`1.8.0`** `enhancement,question,security`
-- #765 - lynis: investigate 'manual' report items - **`1.7.0`** `easy,enhancement,question,security`
 - #764 - rocketchat: lynis: warning[]=DBS-1820|MongoDB instance allows any user to access databases - **`1.8.0`** `enhancement,monitoring,question,security`
 - #763 - Improve Gitlab CI examples/documentation - **`1.8.0`** `documentation,enhancement`
 - #762 - rocketchat: enable mongodb username/password authentication - **`1.8.0`** `enhancement,security`
-- #755 - [debops] Join forces? - **`1.7.0`** `documentation,enhancement`
+- #755 - [debops] Join forces? - **`1.8.0`** `documentation,enhancement`
 - #753 - fail2Ban: ERROR   Too many errors at once (100), going idle - **`1.8.0`** `monitoring,question`
 - #752 - monitoring_utils: add duc disk usage analyzer? - **`-`** `feature,monitoring,question`
 - #751 - monitoring_utils: add scripts to measure disk usage by type/extension/path? - **`-`** `easy,enhancement,monitoring,question`
@@ -43,7 +37,6 @@
 - #715 - dnsmasq: DNS-over-HTTPS support? - **`-`** `configuration,enhancement,question,security`
 - #714 - dnsmasq: DNS-based ad blocking/fitering? - **`-`** `feature,question`
 - #709 - IMAP (MDA) server role (dovecot) - **`1.8.0`** `feature`
-- #701 - common: apt: clean APT downloaded .deb cache (apt clean) automatically - **`1.7.0`** `configuration,enhancement,maintenance`
 - #689 - WIP: shaarli add python API client - **`1.8.0`** `feature`
 - #686 - samba: announce shares over  MDNS - **`-`** `enhancement`
 - #685 - apache: automate running SSLLabs scans against all virtualhosts - **`-`** `feature`
@@ -55,8 +48,8 @@
 - #654 - WIP add apt-listbugs - **`1.8.0`** `enhancement`
 - #652 - libvirt: allow setting up hooks to forward ports to VMs - **`-`** `enhancement`
 - #648 - graylog: setup authentication fro mongodb - **`-`** `easy,enhancement,security`
-- #647 - WIP tests/Makefile: add test_ansible_check_localhost target (run check mode against localhost) - **`1.7.0`** `enhancement,tools`
-- #646 - WIP automate test VM setup - **`1.7.0`** `enhancement,tools`
+- #647 - WIP tests/Makefile: add test_ansible_check_localhost target (run check mode against localhost) - **`1.8.0`** `enhancement,tools`
+- #646 - WIP automate test VM setup - **`1.8.0`** `enhancement,tools`
 - #645 - WIP netdata: exclude /dev/ and /dev/shm from disk space metrics - **`1.8.0`** `configuration,easy,enhancement,monitoring`
 - #642 - mumble: LDAP user backend - **`-`** `enhancement`
 - #641 - common: implement manual reboot/shudown (utils-reboot/utils-shutdown ansible tags) - **`-`** `easy,enhancement,feature`
@@ -141,7 +134,7 @@
 - #426 - samba: add ability to delete a share by setting state: absent - **`-`** `enhancement`
 - #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification? - **`-`** `enhancement,security`
 - #424 - nextcloud: add templateeditor app? - **`-`** `feature`
-- #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - **`1.7.0`** `enhancement,maintenance`
+- #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - **`1.8.0`** `enhancement,maintenance`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900 - **`-`** `configuration,documentation,enhancement,upstream`
 - #393 - Samba: performance improvements (socket options)? - **`-`** `configuration,enhancement,performance,question,wontfix`
 - #390 - apache: auto reload/restart apache when mod_md certificate is installed - **`-`** `enhancement`
@@ -327,7 +320,7 @@
 - #47 - distributed filesystem (ceph, glusterfs) role? - **`-`** `feature,question,wontfix`
 - #46 - Printer sharing server? - **`-`** `feature,question`
 - #45 - Video hosting/streaming platform - **`-`** `feature`
-- #44 - UPNP mediaserver role? - **`1.7.0`** `documentation,easy,feature,question`
+- #44 - jellyfin: document DLNA/UPnP usage - **`-`** `configuration,documentation,feature,question`
 - #43 - OSM routing service role? - **`-`** `feature,question`
 - #42 - OpenStreetMap tileserver role? - **`-`** `feature,question`
 - #41 - network scanner (SANE) server role? - **`-`** `feature,question`
