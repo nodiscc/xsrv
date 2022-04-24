@@ -24,6 +24,8 @@
   apt:
     package:
       - libapache2-mod-php
+      - libapache2-mod-php7.0
+      - libapache2-mod-php7.2
       - libapache2-mod-php7.3
       - libapache2-mod-php7.4
     state: absent
@@ -39,7 +41,7 @@
   include_vars:
     file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
 
-- name: copy apache2/php configuration
+- name: copy apache/php configuration
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -63,6 +65,8 @@
     removes: /etc/apache2/mods-enabled/{{ item }}.load
   with_items:
     - 'cgi'
+    - 'php7.0' # conflicts with mpm_event
+    - 'php7.2' # conflicts with mpm_event
     - 'php7.3' # conflicts with mpm_event
     - 'php7.4' # conflicts with mpm_event
     - 'mpm_prefork' # conflicts with mpm_event
