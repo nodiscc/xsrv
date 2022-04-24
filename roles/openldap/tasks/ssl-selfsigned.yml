@@ -16,7 +16,7 @@
 - name: generate openssl private key
   openssl_privatekey:
     path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
-  notify: restart apache
+  notify: restart slapd
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl certificate signing request
