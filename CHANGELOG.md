@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
 - docker: install requirements for docker private registry login
-- all roles: checks: add an info message pointing to roles documentation when one or more variables are not corretly defined
+- all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 
 **Changed:**
 - xsrv: improve `check` mode support
@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: upgrade ansible to [v5.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - nextcloud: upgrade to [v23.0.4](https://nextcloud.com/changelog/#latest23)
 - openldap: upgrade ldap-account-manager to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
+- gitea: upgrade gitea to [v1.16.6](https://github.com/go-gitea/gitea/releases/tag/v1.16.6)
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts
