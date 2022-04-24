@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - UNRELEASED
 
+**Added:**
+- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
+
 **Changed:**
 - xsrv: improve `check` mode support
 - apache: ensure no leftover mod-php installations are present
