@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: standardize task names, remove ununsed template files
 - xsrv: upgrade ansible to [v5.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - nextcloud: upgrade to [v23.0.4](https://nextcloud.com/changelog/#latest23)
+- openldap: upgrade ldap-account-manager to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts
