@@ -14,7 +14,6 @@ host {{ msmtp_host }}
 
 {% if msmtp_from == 'auto' %}
 auto_from on
-{% endif %}
 {% else %}
 from {{ msmtp_from }}
 {% endif %}
