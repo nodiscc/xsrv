@@ -39,7 +39,7 @@
     cron_file: "debsecan"
     month: "*"
     day: "*"
-    hour: "*"
+    hour: "0,6,12,18"
     minute: "0"
     job: /usr/local/bin/debsecan-by-type
     name: "debsecan"

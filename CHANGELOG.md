@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: upgrade ldap-account-manager to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
 - gitea: upgrade gitea to [v1.16.6](https://github.com/go-gitea/gitea/releases/tag/v1.16.6)
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
+- netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts
