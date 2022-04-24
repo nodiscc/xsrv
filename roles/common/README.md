@@ -13,7 +13,7 @@ This role will configure a basic Debian-based server:
 - [SSH server](tasks/ssh.yml) (hardening, chrooted SFTP accounts)
 - [firewall](tasks/firewalld.yml) ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
 - [fail2ban](tasks/fail2ban.yml) intrusion/bruteforce prevention system
-- [outgoing mail](tasks/mail.yml) (forwarding throug external mail relay)
+- [outgoing mail](tasks/mail.yml) (forwarding through an external mail relay)
 - streamlining/removal of unwanted packages
 - `haveged` random number generator/entropy source for virtual machines
 - installation of basic command-line utilities/diagnostic tools
@@ -21,7 +21,7 @@ This role will configure a basic Debian-based server:
 
 All components can be disabled/enabled independently.
 
-In addition, this role provides a procedure to upgrade Debian 10 hosts to Debian 11. The tag `debian10to11` must be passed explicitly for this procedure to run.
+In addition, this role provides a procedure to upgrade Debian 10 hosts to Debian 11. The tag `utils-debian10to11` must be passed explicitly for this procedure to run.
 
 ## Requirements/dependencies/example playbook
 
