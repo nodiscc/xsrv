@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
 
 **Removed:**
-- common: firewalld: drop compatibilty with Debian 10
+- common: firewalld/mail/msmtp: drop compatibilty with Debian 10
 
 **Changed:**
 - xsrv: improve `check` mode support
