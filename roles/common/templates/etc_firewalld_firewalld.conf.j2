@@ -5,14 +5,6 @@
 # Default: public
 DefaultZone=public
 
-{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster' %}
-# Minimal mark
-# Marks up to this minimum are free for use for example in the direct 
-# interface. If more free marks are needed, increase the minimum
-# Default: 100
-MinimalMark=100
-{% endif %}
-
 # Clean up on exit
 # If set to no or false the firewall configuration will not get cleaned up
 # on exit or stop of firewalld

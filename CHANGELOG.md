@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
 
+**Removed:**
+- common: firewalld: drop compatibilty with Debian 10
+
 **Changed:**
 - xsrv: improve `check` mode support
 - apache: ensure no leftover mod-php installations are present

@@ -26,7 +26,6 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - 10
         - 11
     - name: Ubuntu
       versions:
