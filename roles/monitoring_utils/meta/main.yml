@@ -18,4 +18,5 @@ galaxy_info:
     - monitoring
     - audit
     - security
-dependencies: []
+dependencies:
+  - nodiscc.xsrv.handlers
