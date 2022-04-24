@@ -34,7 +34,7 @@
   args:
     creates: "/var/log/debsecan/debsecan.log"
 
-- name: add a cron job to refresh debsecan reports every hour
+- name: add a cron job to refresh debsecan reports every 6 hours
   cron:
     cron_file: "debsecan"
     month: "*"
