@@ -39,6 +39,8 @@ ldap_account_manager_version: "7.9.1"
 ldap_account_manager_install_method: "tar.bz2"
 # ldap-account-manager session timeout in minutes
 ldap_account_manager_session_timeout: 10
+# LDAP server URI for ldap-account-manager (e.g. ldap://localhost:389 or ldaps://localhost:636)
+ldap_account_manager_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the ldap-account-manager webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
@@ -68,6 +70,8 @@ self_service_password_debug: no
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # ldap account manager version
 self_service_password_version: "1.3"
+# LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldaps://localhost:636)
+self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)

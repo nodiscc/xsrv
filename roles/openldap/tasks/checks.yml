@@ -21,6 +21,7 @@
     that:
       - ldap_account_manager_allowed_hosts is not search(" ")
       - ldap_account_manager_fqdn is not search("CHANGEME")
+      - ldap_account_manager_ldap_url is string
       - ldap_account_manager_https_mode in ['selfsigned', 'letsencrypt']
       - ldap_account_manager_install_dir is not search("CHANGEME")
       - ldap_account_manager_install_method in ['tar.bz2']
@@ -41,6 +42,7 @@
       - self_service_password_fqdn is not search("CHANGEME")
       - self_service_password_install_dir is not search("CHANGEME")
       - self_service_password_version is defined
+      - self_service_password_ldap_url is string
       - self_service_password_https_mode in ['selfsigned', 'letsencrypt']
       - self_service_password_php_max_execution_time == self_service_password_php_max_execution_time|int
       - self_service_password_php_max_input_time == self_service_password_php_max_input_time|int

@@ -10,29 +10,59 @@
     path: /etc/ssl/openldap
     state: directory
     owner: root
-    group: root
+    group: openldap
     mode: 0750
 
 - name: generate openssl private key
   openssl_privatekey:
-    path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
+    path: "/etc/ssl/openldap/{{ openldap_fqdn }}.key"
+    owner: root
+    group: openldap
+    mode: 0640
   notify: restart slapd
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate openssl certificate signing request
   openssl_csr:
-    path: "/etc/ssl/openldap/{{ openldap_base_dn }}.csr"
-    privatekey_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
-    common_name: "{{ openldap_base_dn }}"
+    path: "/etc/ssl/openldap/{{ openldap_fqdn }}.csr"
+    privatekey_path: "/etc/ssl/openldap/{{ openldap_fqdn }}.key"
+    common_name: "{{ openldap_fqdn }}"
     key_usage: "digitalSignature,keyEncipherment"
     basicConstraints: "CA:TRUE"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
   openssl_certificate:
-    path: "/etc/ssl/openldap/{{ openldap_base_dn }}.crt"
-    privatekey_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.key"
-    csr_path: "/etc/ssl/openldap/{{ openldap_base_dn }}.csr"
+    path: "/etc/ssl/openldap/{{ openldap_fqdn }}.crt"
+    privatekey_path: "/etc/ssl/openldap/{{ openldap_fqdn }}.key"
+    csr_path: "/etc/ssl/openldap/{{ openldap_fqdn }}.csr"
     provider: selfsigned
+    owner: root
+    group: openldap
+    mode: 0640
   notify: restart slapd
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure slapd to use self-signed CA certificate
+  ldap_attrs:
+    dn: "cn=config"
+    attributes:
+      olcTLSCACertificateFile: '/etc/ssl/openldap/{{ openldap_fqdn }}.crt'
+      olcTLSCertificateKeyFile: '/etc/ssl/openldap/{{ openldap_fqdn }}.key'
+      olcTLSCertificateFile: '/etc/ssl/openldap/{{ openldap_fqdn }}.crt'
+    state: 'exact'
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create local certificates directory on the controller
+  become: no
+  delegate_to: localhost
+  file:
+    path: "{{ playbook_dir }}/certificates/"
+    state: directory
+    mode: 0755
+
+- name: download self-signed certificate to the controller
+  fetch:
+    src: "/etc/ssl/openldap/{{ openldap_fqdn }}.crt"
+    dest: "{{ playbook_dir }}/certificates/{{ openldap_fqdn }}.openldap.crt"
+    flat: yes

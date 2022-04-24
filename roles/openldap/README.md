@@ -11,6 +11,8 @@ This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/Op
 
 See [meta/main.yml](meta/main.yml)
 
+The server must be reachable by clients over TCP ports 389 and 636 (SSL/TLS).
+
 ```yaml
 # playbook.yml
 - hosts: my.example.org

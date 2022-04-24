@@ -56,3 +56,9 @@
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+- name: add a hosts file entry for the LDAP server fqdn
+  lineinfile:
+    path: /etc/hosts
+    line: '127.0.0.1	{{ openldap_fqdn }}'
+    state: present
