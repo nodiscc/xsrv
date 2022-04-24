@@ -26,8 +26,8 @@
     - apache
     - fail2ban
   when:
-    - "'nodiscc.xsrv.common' in role_name"
-    - setup_fail2ban|bool
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
 
 - include: rsyslog.yml
   become: yes
