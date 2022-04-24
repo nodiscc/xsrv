@@ -1,8 +1,0 @@
-deb http://deb.debian.org/debian/ {{ ansible_facts.distribution_release }} main contrib
-{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye' %}
-deb http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}-security main contrib
-{% elif ansible_facts.distribution == 'Debian' %}
-deb http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}/updates main contrib
-{% endif %}
-deb http://deb.debian.org/debian/ {{ ansible_facts.distribution_release }}-updates main contrib
-deb http://deb.debian.org/debian/ {{ ansible_facts.distribution_release }}-backports main contrib

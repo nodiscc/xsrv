@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - cleanup: standardize task names, remove ununsed template files
 - docker: install requirements for docker private registry login
+- proxmox: use a single file to configure proxmox APT repositories
 
 #### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
 
