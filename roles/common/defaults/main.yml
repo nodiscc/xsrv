@@ -170,6 +170,8 @@ fail2ban_default_findtime: "10min"
 fail2ban_default_maxretry: 5
 
 ### USERS ###
+# setup user accounts/PAM configuration (yes/no)
+setup_users: yes
 # Additional user accounts to create.
 # Supports these parameters from the user (https://docs.ansible.com/ansible/latest/modules/user_module.html) module:
 #   name, password, comment, create_home, home, groups, append, generate_ssh_key, update_password

@@ -4,6 +4,7 @@
     that:
       - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd|bool
       - dns_nameservers|type_debug == "list"
+      - setup_users == setup_users|bool
       - linux_users|type_debug == "list"
       - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump|bool
       - setup_apt == setup_apt|bool

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - UNRELEASED
 
 **Added:**
+- common: allow disabling PAM/user accounts configuration tasks ([`setup_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
 - docker: install requirements for docker private registry login
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
