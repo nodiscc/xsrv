@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: improve `check` mode support
 - apache: ensure no leftover mod-php installations are present
 - apache: only setup fail2ban when it is marked as managed by ansible through ansible local facts
+- cleanup: standardize task names, remove ununsed template files
 
 
 #### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
