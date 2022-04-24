@@ -2,12 +2,6 @@
   become: yes
   tags: proxmox
 
-- include: fail2ban.yml
-  become: yes
-  tags:
-    - proxmox
-    - fail2ban
-
 - include: fact.yml
   become: yes
   tags: proxmox
@@ -20,6 +14,15 @@
   when:
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed|bool
+
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - proxmox
+    - firewall
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

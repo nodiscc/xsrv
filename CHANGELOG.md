@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: standardize task names, remove ununsed template files
 - docker: install requirements for docker private registry login
 - proxmox: use a single file to configure proxmox APT repositories
+- proxmox: only run fail2ban configuration tasks when fail2ban is marked as managed by ansible in local facts
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts
