@@ -33,3 +33,4 @@
       - gitea_user_repo_limit == gitea_user_repo_limit|int
       - gitea_version is string
       - gitea_issue_paging_num == gitea_issue_paging_num|int
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea"

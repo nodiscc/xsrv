@@ -3,19 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - UNRELEASED
+#### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - UNRELEASED
 
 **Added:**
 - docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
+- docker: install requirements for docker private registry login
+- all roles: checks: add an info message pointing to roles documentation when one or more variables are not corretly defined
 
 **Changed:**
 - xsrv: improve `check` mode support
 - apache: ensure no leftover mod-php installations are present
-- apache: only setup fail2ban when it is marked as managed by ansible through ansible local facts
-- cleanup: standardize task names, remove ununsed template files
-- docker: install requirements for docker private registry login
+- apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - proxmox: use a single file to configure proxmox APT repositories
-- proxmox: only run fail2ban configuration tasks when fail2ban is marked as managed by ansible in local facts
+- cleanup: standardize task names, remove ununsed template files
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts

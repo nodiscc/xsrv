@@ -12,3 +12,4 @@
       - graylog_heap_size|regex_search('[mg]$')
       - (elasticsearch_timeout_start_sec == 'auto') or (elasticsearch_timeout_start_sec == elasticsearch_timeout_start_sec|int)
       - graylog_tcp_firewalld_zones|type_debug == "list"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog"

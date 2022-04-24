@@ -5,3 +5,4 @@
       - homepage_fqdn is not search("CHANGEME")
       - homepage_title is not search("CHANGEME")
       - homepage_https_mode in ['selfsigned', 'letsencrypt']
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"

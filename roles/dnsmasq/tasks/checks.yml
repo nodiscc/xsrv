@@ -9,11 +9,13 @@
       - dnsmasq_listen_interfaces|type_debug == "list"
       - dnsmasq_listen_addresses|type_debug == "list"
       - dnsmasq_dnssec == dnsmasq_dnssec|bool
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq"
 
 - name: check that mandatory variables are correctly defined (dnsmasq_upstream_servers)
   assert:
     quiet: yes
     that: item|ansible.netcommon.ipv4
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq"
   with_items: "{{ dnsmasq_upstream_servers }}"
 
 - name: check that mandatory variables are correctly defined (dnsmasq_records)
@@ -22,4 +24,5 @@
     that:
       - item.name is string
       - item.ip|ansible.netcommon.ipv4
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq"
   with_items: "{{ dnsmasq_records }}"

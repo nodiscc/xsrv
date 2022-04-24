@@ -33,6 +33,12 @@
       - sysctl_answer_ping == sysctl_answer_ping|bool
       - sysctl_vm_swappiness|int
       - sysctl_vm_vfs_cache_pressure|int
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+  tags:
+    - ssh
+    - sysctl
+    - firewall
+    - apt
 
 - name: check that mandatory variables are correctly defined (msmtp)
   assert:
@@ -46,6 +52,7 @@
       - msmtp_from is not search("CHANGEME")
       - msmtp_starttls == msmtp_starttls|bool
       - msmtp_tls_certcheck == msmtp_tls_certcheck|bool
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   when: setup_msmtp|bool
   tags:
     - mail
@@ -57,6 +64,7 @@
     that:
       - msmtp_username is not search("CHANGEME")
       - msmtp_password is not search("CHANGEME")
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   when:
     - setup_msmtp|bool
     - msmtp_auth_enabled|bool
@@ -70,6 +78,7 @@
     that:
       - item.ip_address|ansible.netcommon.ipaddr
       - (item.state is not defined) or (item.state in ['present', 'absent'])
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   with_items: "{{ hosts_file_entries }}"
   when: setup_hosts_file|bool
   tags: hosts
@@ -96,6 +105,7 @@
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
       - (item.permanent is not defined) or (item.permanent == item.permanent|bool)
       - (item.immediate is not defined) or (item.immediate == item.permanent|bool)
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   with_items: "{{ firewalld_zone_sources }}"
   when:
     - setup_firewall|bool
@@ -113,6 +123,7 @@
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
       - (item.permanent is not defined) or (item.permanent == item.permanent|bool)
       - (item.immediate is not defined) or (item.immediate == item.permanent|bool)
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   with_items: "{{ firewalld_zone_services }}"
   when: setup_firewall|bool
   tags:

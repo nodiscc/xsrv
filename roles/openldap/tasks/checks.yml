@@ -13,7 +13,7 @@
       - openldap_setup_lam == openldap_setup_lam|bool
       - openldap_setup_ssp == openldap_setup_ssp|bool
       - openldap_firewalld_zones|type_debug == "list"
-    fail_msg: "One or more openldap variables are not correctly defined. Check role documentation."
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
 
 - name: check that mandatory variables are correctly defined (ldap-account-manager)
   assert:
@@ -31,7 +31,7 @@
       - ldap_account_manager_php_upload_max_filesize|regex_search('[KMG]$')
       - ldap_account_manager_session_timeout == ldap_account_manager_session_timeout|int
       - ldap_account_manager_version is defined
-    fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined."
+    fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
   when: openldap_setup_lam|bool
 
 - name: check that mandatory variables are correctly defined (self-service-password)
@@ -47,5 +47,5 @@
       - self_service_password_php_memory_limit|regex_search('[KMG]$')
       - self_service_password_php_post_max_size|regex_search('[KMG]$')
       - self_service_password_php_upload_max_filesize|regex_search('[KMG]$')
-    fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined."
+    fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
   when: openldap_setup_ssp|bool

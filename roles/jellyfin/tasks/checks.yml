@@ -9,3 +9,4 @@
       - jellyfin_enable_media_backups == jellyfin_enable_media_backups|bool
       - ( jellyfin_samba_share_allow_write_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
       - ( jellyfin_samba_share_allow_read_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"

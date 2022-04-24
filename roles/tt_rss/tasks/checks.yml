@@ -22,3 +22,4 @@
       - tt_rss_php_max_input_time == tt_rss_php_max_input_time|int
       - tt_rss_php_post_max_size|regex_search('[KMG]$')
       - tt_rss_php_upload_max_filesize|regex_search('[KMG]$')
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"

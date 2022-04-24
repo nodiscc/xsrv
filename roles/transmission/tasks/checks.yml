@@ -10,3 +10,4 @@
       - transmission_username is not search("CHANGEME")
       - transmission_backup_downloads == transmission_backup_downloads|bool
       - transmission_firewalld_zones|type_debug == "list"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission"

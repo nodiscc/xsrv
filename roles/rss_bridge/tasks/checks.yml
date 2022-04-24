@@ -5,6 +5,7 @@
       - rss_bridge_fqdn is not search('CHANGEME')
       - rss_bridge_auth_enabled == rss_bridge_auth_enabled|bool
       - rss_bridge_https_mode in ['selfsigned', 'letsencrypt']
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge"
 
 - name: check that variables are correctly defined (rss-bridge authentication)
   assert:
@@ -12,4 +13,5 @@
     that:
       - rss_bridge_auth_username is not search('CHANGEME')
       - rss_bridge_auth_password is not search('CHANGEME')
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge"
   when: rss_bridge_auth_enabled|bool

@@ -14,3 +14,4 @@
       - samba_nscd_cache_time_to_live == samba_nscd_cache_time_to_live|int
       - samba_hosts_allow|type_debug == "list"
       - samba_firewalld_zones|type_debug == "list"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba"

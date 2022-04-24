@@ -16,3 +16,4 @@
       - gotty_input_timeout == gotty_input_timeout|int
       - gotty_listen_address is string
       - gotty_version is string
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty"
