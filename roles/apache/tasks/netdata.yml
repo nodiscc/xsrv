@@ -1,4 +1,4 @@
-- name: install netdata systemd check for apache
+- name: install netdata systemd/http checks for apache
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -12,6 +12,8 @@
       dest: /etc/netdata/health.d/systemdunits.conf.d/apache.conf
     - src: etc_netdata_health.d_systemdunits.conf.d_php-fpm.conf.j2
       dest: /etc/netdata/health.d/systemdunits.conf.d/php-fpm.conf
+    - src: etc_netdata_go.d_httpcheck.conf.d_apache-reverseproxies.conf.j2
+      dest: /etc/netdata/go.d/httpcheck.conf.d/apache-reverseproxies.conf
 
 - name: migration - remove files from old versions of the role
   file:

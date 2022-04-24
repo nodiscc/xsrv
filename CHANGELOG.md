@@ -13,7 +13,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - **rsyslog/graylog**: if you use the `rsyslog_forward_to_hostname` variable and it is pointing to a graylog instance deployed with the `graylog` role, udpate it to use the graylog instance FQDN (e.g. `logs.example.org`) instead of the graylog host inventory hostname (e.g. `host1.example.org`)
 
 **Added:**
-- libvirt add `utils-libvirt-setmem` [tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
+- apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
+- libvirt: add `utils-libvirt-setmem` [tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
 
 **Changed:**
 - xsrv: [init-vm](docs/appendices/virt-manager.md): rename `--dump` option to `--dumpxml`, require an output file as argument

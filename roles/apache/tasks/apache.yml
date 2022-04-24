@@ -82,6 +82,7 @@
     - 'ssl'
     - 'mpm_event'
     - 'proxy'
+    - 'proxy_http'
     - 'proxy_fcgi'
     - 'http2'
   notify: restart apache
@@ -110,12 +111,14 @@
     dest: /etc/apache2/sites-available/000-sites.conf
     mode: 0644
   notify: reload apache
+  tags: apache-reverseproxy
 
 - name: enable apache sites configuration
   command: a2ensite 000-sites
   args:
     creates: /etc/apache2/sites-enabled/000-sites.conf
   notify: reload apache
+  tags: apache-reverseproxy
 
 - name: migration - remove apache/php configuration from old versions of the role
   file:

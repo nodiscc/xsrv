@@ -50,3 +50,8 @@ jitsi_enable_service: no
 ##### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
 matrix_synapse_fqdn: "matrix.example.test"
 matrix_element_fqdn: "chat.example.test"
+##### APACHE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml
+apache_reverseproxies:
+  - servername: "reverseproxy.example.test"
+    upstream: "https://www.example.org"
+    extra_directives: ['ProxyPreserveHost Off']
