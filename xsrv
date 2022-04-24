@@ -531,7 +531,7 @@ function _main() {
         "edit-group") shift; edit_group;;
         "edit-group-vault") init_venv; shift; edit_group_vault;;
         "edit-vault") init_venv; shift; edit_vault ;;
-        "shell") init_venv; shift; run_shell ;;
+        "shell"|"ssh") init_venv; shift; run_shell ;;
         "logs") init_venv; shift; ssh_args="bash -c 'if [[ -r /var/log/syslog ]]; then lnav /var/log/syslog; else sudo lnav /var/log/syslog; fi'"; run_shell ;;
         "ls") shift; _ls "$@" ;;
         "help") echo "$usage" ;;
@@ -567,7 +567,7 @@ edit-vault [project] [host]         edit encrypted (vault) host configuration (h
 edit-group [project] [group]        edit group configuration (group_vars)
 edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
-shell [project] [host]              open interactive shell on a host
+shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
 help                                show this message

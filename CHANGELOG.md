@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: install requirements for docker private registry login
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
+- xsrv: add `ssh` subcommand (alias for `shell`)
 
 **Removed:**
 - common: firewalld/mail/msmtp: drop compatibilty with Debian 10

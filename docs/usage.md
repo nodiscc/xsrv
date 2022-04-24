@@ -13,7 +13,7 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.6.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.7.0
 
 USAGE: xsrv COMMAND [project] [host]
 
@@ -31,7 +31,7 @@ edit-vault [project] [host]         edit encrypted (vault) host configuration (h
 edit-group [project] [group]        edit group configuration (group_vars)
 edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
-shell [project] [host]              open interactive shell on a host
+shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
 help                                show this message
