@@ -12,6 +12,7 @@
       - apt-transport-https
       - ca-certificates
       - gpg # required for APT key import
+      - pass # required for docker registry login
 
 - name: add Docker APT key
   apt_key:
