@@ -254,6 +254,11 @@ Most roles provide variables to temporarily disable the services they manage.
 
 Show [all role configuration variables](configuration-variables.md), and their default values.
 
+Can be limited to show only a single role's default values, for example:
+
+```bash
+xsrv show-defaults myproject nextcloud
+```
 
 
 ### xsrv edit-host
