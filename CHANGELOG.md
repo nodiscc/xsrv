@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: install requirements for docker private registry login
 - openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)
 - openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+- openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
 - xsrv: add `ssh` subcommand (alias for `shell`)

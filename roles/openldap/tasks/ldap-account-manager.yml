@@ -45,6 +45,15 @@
       dest: "{{ ldap_account_manager_install_dir }}/config/profiles/lam/default.user"
       mode: "0660"
 
+- name: copy ldap-account-manager trusted LDAP server certificate
+  copy:
+    src: "{{ ldap_account_manager_ldaps_cert }}"
+    dest: "{{ ldap_account_manager_configcfg_dir }}/serverCerts.pem"
+    owner: root
+    group: www-data
+    mode: 0640
+  when: ldap_account_manager_ldaps_cert != ""
+
 ### SSL/TLS CERTIFICATES ###
 
 - include: ldap-account-manager-ssl-selfsigned.yml
