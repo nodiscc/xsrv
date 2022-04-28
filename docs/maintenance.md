@@ -47,6 +47,8 @@ The default setup enforces intermediate hardening measures inspired from various
 
 Network communications are protected using strong public-key cryptography (authenticity/integrity/confidentiality).
 
+`xsrv` roles install and manage only  [Free and Open-Source Software](https://en.wikipedia.org/wiki/Free_and_open-source_software).
+
 The system is designed to host data and services with the same classification level and tenant. If you need different security contexts (for example public or private facing services, different sets of end users/multitenancy, ...), split your infrastructure across different VMs/machines/networks and setup additional network/infrastructure access controls and isolation mechanisms.
 
 If needed, setup additional physical access controls such as [Full Disk Encryption](https://unix.stackexchange.com/questions/577379/how-can-i-install-debian-with-full-disk-encryption-and-a-custom-sized-swapfile), surveillance and perimeter security.

@@ -431,6 +431,10 @@ $ ansible-galaxy collection install --force -r requirements.yml
 
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
+You can find additional collections here:
+- https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION
+- https://galaxy.ansible.com/
+
 
 ## Version control
 

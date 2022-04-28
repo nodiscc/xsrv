@@ -27,4 +27,3 @@ Then run `xsrv deploy` to apply changes.
 - [shaarli](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)
 - [transmission](https://gitlab.com/nodiscc/xsrv/-/blob/master/transmission/common/defaults/main.yml)
 - [tt_rss](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml)
-- [valheim_server](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/valheim_server/defaults/main.yml)

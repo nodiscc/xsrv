@@ -1,8 +1,0 @@
-- name: restart valheim server
-  become: yes
-  service:
-    name: valheim-server
-    state: restarted
-    enabled: yes
-  when: valheim_enable_service|bool
-  ignore_errors: "{{ ansible_check_mode }}"

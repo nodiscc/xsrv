@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - UNRELEASED
 
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **valheim_server:** if you had the `nodiscc.xsrv.valheim_server` update `requirements.yml` and `playbook.yml` to use the [archived `nodiscc.toolbox.valheim_server` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION).
+
 **Added:**
 - common: allow disabling PAM/user accounts configuration tasks ([`setup_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
@@ -15,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - common: firewalld/mail/msmtp: drop compatibilty with Debian 10
+- valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
 - xsrv: improve `check` mode support
