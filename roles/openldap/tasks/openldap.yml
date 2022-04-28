@@ -60,5 +60,5 @@
 - name: add a hosts file entry for the LDAP server fqdn
   lineinfile:
     path: /etc/hosts
-    line: '127.0.0.1	{{ openldap_fqdn }}'
+    line: '127.0.0.1	{{ openldap_fqdn }}' # noqa no-tabs
     state: present
