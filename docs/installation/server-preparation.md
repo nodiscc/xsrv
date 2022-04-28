@@ -18,7 +18,7 @@ Computer with x86/64 compatible CPU
 1-∞ GB storage for user data
 ```
 
-Prefer low power consumption hardware. To increase availability, setup the BIOS to reboot after a power loss, setup an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
+If hosting on a physical server, prefer low power consumption hardware. Setup the BIOS to reboot after a power loss. If availability is important, setup hardware-level redundancy/failover mechanisms such as [RAID](https://en.wikipedia.org/wiki/RAID), multiple network links, an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
 
 
 ## Network
@@ -43,8 +43,8 @@ Graylog TCP input:               TCP 5140
 Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456-2457/4380/27000-27031/27036
 ```
 
-### Domain names
 
+### Domain names
 
 Point `A` or `CNAME` DNS records to the public IP address of your server, using:
 - a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)

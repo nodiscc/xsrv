@@ -5,9 +5,9 @@ Self-hosting places your services and data under your own responsibility (availa
 
 ## Backups
 
-Always keep 3 copies of valuable data (the working data, a local backup - preferably on a dedicated drive, and an off-line, off-site backup).
+Always keep at least 3 copies of valuable data (the working data, a local backup - preferably on a dedicated drive, and an off-line, off-site backup).
 
-The [backup](roles/backup) role performs automatic daily/weekly/monthly backups of your data, to a local directory `/var/backups/rsnapshot` on the server. These backups are suitable for restoration after a minor incident or limited data loss.
+The [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) role performs automatic daily/weekly/monthly backups of your data, with a [default retention](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) of 6 daily, 6 weekly and 6 monthly backups, to a local directory `/var/backups/rsnapshot` on the server. These backups are suitable for restoration after a minor incident or limited data loss.
 
 In case of catastrophic failure (destroyed/compromised server, disk failure), an off-site backup must be restored. To download a copy of latest daily backups from a host, to the `data/backups/` directory on the controller, run:
 
@@ -35,13 +35,21 @@ Security upgrades for software provided by the Linux distribution are applied [a
 
 ## Security
 
+Check and apply [upgrades](#upgrading) on a regular basis. Check [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) reports for abnormal messages or alarms.
+
 Isolation between services/applications relies on [file permissions, ownership and groups](https://wiki.debian.org/Permissions) and [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). Compromise of a single service or account must not allow compromise of other services and accounts.
 
 <!-- TODO PHP web applications currently share the same user. -->
 
-The administration account (`ansible_user`) has unlimited access through SSH/[`sudo`](https://wiki.debian.org/sudo) (requires both an authorized SSH key and a password). Be careful when performing manual operations from this account. Protect your private SSH key and the `.ansible-vault-password` file.
+The `ansible_user` administration account has unlimited access through SSH/[`sudo`](https://wiki.debian.org/sudo) (requires both an authorized SSH key and a password). Be careful when performing manual operations from this account. Protect your private SSH key and the `.ansible-vault-password` file.
 
-The system is designed to host data and services with the same classification level and tenant. If you need different security contexts (for example public or private facing services, different sets of end users/multitenancy, ...), split your infrastructure across different VMs/machines/networks and setup additional access controls and isolation mechanisms.
+The default setup enforces intermediate hardening measures inspired from various guidelines ([DISA STIGs](https://public.cyber.mil/stigs/), [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/)...).
+
+Network communications are protected using strong public-key cryptography (authenticity/integrity/confidentiality).
+
+The system is designed to host data and services with the same classification level and tenant. If you need different security contexts (for example public or private facing services, different sets of end users/multitenancy, ...), split your infrastructure across different VMs/machines/networks and setup additional network/infrastructure access controls and isolation mechanisms.
+
+If needed, setup additional physical access controls such as [Full Disk Encryption](https://unix.stackexchange.com/questions/577379/how-can-i-install-debian-with-full-disk-encryption-and-a-custom-sized-swapfile), surveillance and perimeter security.
 
 ```
 We trust you have received the usual lecture from the local System
