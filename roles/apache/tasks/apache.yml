@@ -37,10 +37,6 @@
 
 ##### APACHE MODULES/CONFIGURATON #####
 
-- name: load distribution-specific variables
-  include_vars:
-    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
-
 - name: copy apache/php configuration
   template:
     src: "{{ item.src }}"
