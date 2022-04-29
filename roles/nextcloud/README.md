@@ -114,7 +114,7 @@ sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 **LDAP authentication support:**
 - Create a group (eg. `posixGroup: access_nextcloud`) in your LDAP directory and add users that should be able to access Nextcloud to this group
 - Access your Nextcloud LDAP settings (https://cloud.CHANGEME.org/index.php/settings/admin/ldap):
-  - `Server > Host: ldap.CHANGEME.org`
+  - `Server > Host: ldap.CHANGEME.org` or `ldaps://ldap.CHANGEME.org`
   - click `Detect port`
   - `Server > User DN: cn=bind,ou=system,dc=CHANGEME,dc=org` the DN for your unprivilegied/bind LDAP user
   - `Server > Password:` the password for your bind LDAP user
@@ -124,6 +124,24 @@ sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
   - `Users > Groups:` (your LDAP server must support the memberOf overlay)
   - `Login attributes: [x] LDAP/AD user name`
   - `Groups: Only in groups: access_nextcloud`
+
+To trust a self-signed LDAP server certificate:
+
+```bash
+# copy the LDAP server PEM CA certificate file to /etc/ssl/certs/
+rsync -avzP certificates/ldap.CHANGEME.org.openldap.crt my.CHANGEME.org:
+ssh my.CHANGEME.org
+sudo mv ldap.CHANGEME.org.openldap.crt /etc/ssl/certs/
+# update the LDAP client configuration file
+sudo nano /etc/ldap/ldap.conf
+```
+```
+TLS_CACERT /etc/ssl/certs/ldap.xinit.se.openldap.crt
+```
+```bash
+# restart the php7.4-fpm service
+sudo systemctl restart php7.4-fpm
+```
 
 **Uninstallation**
 
