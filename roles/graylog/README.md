@@ -73,6 +73,24 @@ Start using Graylog to [search and filter](https://docs.graylog.org/en/4.0/pages
 
 Setup [authentication](https://docs.graylog.org/en/latest/pages/permission_management.htmln#authentication) and [roles](https://docs.graylog.org/en/latest/pages/permission_management.html#roles) settings allow granting read or write access to specific users/groups. LDAP is supported.
 
+**LDAP authentication:** This example is given for [openldap](../openldap) server:
+- Open the `System > Authentication` menu (https://logs.CHANGEME.org/system/authentication/services/create)
+- Select a service: `LDAP` -> `Get started`
+- Server address: `ldap.CHANGEME.org`, port `636` (SSL/TLS) or `389`
+- `TLS` or `None` - if the certificate is self-signed, uncheck `Verify Certificates`
+- System User DN: `cn=bind,ou=system,dc=CHANGEME,dc=org`
+- System password: the value of `openldap_bind_password` (unprivileged LDAP user)
+- `Next: User synchronisation`
+- Search Base DN: `ou=users,dc=CHANGEME,dc=org`
+- Search pattern: `(&(uid={0})(objectClass=inetOrgPerson))`
+- Name Attribute: `uid`
+- Full Name Attribute: `cn`
+- ID Attribute: `entryUUID`
+- Default Roles: `Reader` or any other graylog [role](#roles)
+- `Next: Group synchronization`
+- `Finish & Save Service`
+- In the Configured AUthentication Services list, `Activate` the LDAP service
+
 
 ## Backups
 
