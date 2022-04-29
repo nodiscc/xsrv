@@ -27,6 +27,14 @@
     group: root
     mode: 0755
 
+- name: fix permissions on elasticsearch configuration directory
+  file:
+    state: directory
+    path: /etc/elasticsearch
+    owner: root
+    group: elasticsearch
+    mode: 0770
+
 - name: configure elasticsearch
   template:
     src: "{{ item.src }}"
