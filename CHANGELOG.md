@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts
+- all roles: monitoring/netdata: fix systemd services health checks not loaded by netdata
 
 
 #### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
