@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- **valheim_server:** if you had the `nodiscc.xsrv.valheim_server` update `requirements.yml` and `playbook.yml` to use the [archived `nodiscc.toolbox.valheim_server` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION).
+- **valheim_server:** if you had the `nodiscc.xsrv.valheim_server`, enabled update `requirements.yml` and `playbook.yml` to use the [archived `nodiscc.toolbox.valheim_server` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) instead.
 
 **Added:**
 - common: allow disabling PAM/user accounts configuration tasks ([`setup_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
