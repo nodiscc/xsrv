@@ -69,12 +69,13 @@ To allow logins to Jellyfin using LDAP user accounts (for example from [openldap
 - Login to jellyfin using the initial/administrator account
 - Open `Admin > Dashboard > Plugins > Catalog`
 - Open `LDAP authentication` and click `Install`
-- Restart the jellyfin server (`xsrv shell` `sudo systemctl restart jellyfin`)
+- Restart the jellyfin server (from `Server > Dashboard > Restart` or `xsrv shell > sudo systemctl restart jellyfin`)
 - Open `Admin > Dashboard > Plugins > LDAP-Auth` and configure the plugin:
-  - LDAP server: your LDAP server address (`127.0.0.1`, `ldap.CHANGEME.org`...)
-  - Secure LDAP/StartTLS/Skip SSL verification: disable these if your LDAP server does not support SSL/TLS.
+  - LDAP server: `ldap.CHANGEME.org`
+  - Secure LDAP: enabled (or disabled if your LDAP server does not support SSL/TLS)
+  - Skip SSL verification: enable if your server is using a self-signed certificate
   - LDAP Base DN for searches: `dc=CHANGEME,dc=org`
-  - LDAP port: `389`
+  - LDAP port: `636` (SSL/TLS) or `389`
   - LDAP attributes: `uid, cn, mail`
   - LDAP Name Attribute: `uid`
   - LDAP User Filter: set to `(objectClass=inetOrgPerson)` if your LDAP server does not support the `memberOf` overlay (all LDAP users will be allowed to access Jellyfin). Otherwise set `memberOf=GROUPNAME` to the LDAP group name allowed to access Jellyfin (eg. `access_jellyfin`)
