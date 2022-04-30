@@ -490,7 +490,7 @@ variables:
   ANSIBLE_CONFIG: ansible.cfg
   ANSIBLE_HOST_KEY_CHECKING: "False"
   ANSIBLE_FORCE_COLOR: "True"
-  XSRV_PLAYBOOKS_DIR: "../"
+  XSRV_PLAYBOOKS_DIR: "$CI_PROJECT_DIR/../"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
   TAGS: "all"
 
@@ -506,26 +506,26 @@ before_script:
   - export ANSIBLE_PRIVATE_KEY_FILE="$GITLAB_CI_SSH_KEY"
   - chmod 0600 "$ANSIBLE_PRIVATE_KEY_FILE"
   - echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
+  - ln -s $CI_PROJECT_DIR $CI_PROJECT_DIR/../default
   - echo 'Apt::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-norecommends
-  - apt update && apt -y git bash python3-pip python3-venv
+  - apt update && apt -y install git bash python3-pip python3-venv
   - wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
   - chmod a+x /usr/local/bin/xsrv
 
-
 ##### STAGING #####
 
-check-staging:
+check-staging: # run check mode on staging environment
   stage: staging
   script:
     - TAGS=$TAGS xsrv check staging
   interruptible: true # stop this job when a new pipeline starts on the same branch
   needs: [] # don't wait for other jobs to complete before starting this job
 
-deploy-staging:
+deploy-staging: # run deployment on staging environment
   stage: staging
   script:
     - TAGS=$TAGS xsrv deploy staging
-  resource_group: staging # only allow one job to run concurrently on this resource group/environment
+  resource_group: staging # wait for other jobs on this environment to finish before starting this job
   needs:
     - check-staging
 
@@ -554,11 +554,51 @@ deploy-production:
 
 <!-- TODO PIPELINE SCREENSHOT -->
 
-The pipeline run time can be optimized by pre-building a CI image that already includes dependencies from the `before_script` directive:
+Pipeline execution time can be optimized by pre-building a CI image that includes dependencies (requires Gitlab [Container Registry](https://docs.gitlab.com/ee/user/packages/container_registry/) set up and enabled for the project):
+
 
 ```Dockerfile
-<!-- TODO .gitlab-ci.Dockerfile example -->
+# .gitlab-ci.Dockerfile -->
+FROM python:3
+RUN echo 'Apt::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-norecommends && apt update && apt -y install git bash python3-venv python3-pip python3-cryptography openssh-client pwgen wget
+RUN wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
+RUN chmod a+x /usr/local/bin/xsrv
 ```
+
+Then remove the corresponding steps from `before_script`, and modify `.gitlab-ci.yml`:
+
+```yaml
+# add a 'build-ci-image' stage
+stages:
+  - build-ci-image
+  - staging
+  - production
+
+# remove dependencies installation steps from before_script
+before_script:
+  - export ANSIBLE_PRIVATE_KEY_FILE="$GITLAB_CI_SSH_KEY"
+  - chmod 0600 "$ANSIBLE_PRIVATE_KEY_FILE"
+  - echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
+  - ln -s $CI_PROJECT_DIR $CI_PROJECT_DIR/../default
+
+# build the base image for deployments
+build-ci-image:
+  stage: build-ci-image
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:$CI_COMMIT_REF_NAME -f .gitlab-ci.Dockerfile .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:$CI_COMMIT_REF_NAME
+  when: manual # require manual trigger to build/rebuild the image
+
+# in ansible-check-* and deploy-* jobs, use the image we just built
+deploy-staging:
+  image: $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:master
+  ...
+```
+
 
 ## Use the development version
 
