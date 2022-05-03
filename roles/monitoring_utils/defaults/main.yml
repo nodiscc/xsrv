@@ -17,5 +17,6 @@ lynis_skip_tests:
   - "BANN-7126" # legal banner for local logins is not needed
   - "BANN-7130" # legal banner for ssh logins is not needed
   - "LOGG-2190" # open file descriptors on deleted files is normal behavior
+  - "SSH-7408:Port" # changing ssh listen port from 22 does not mitigate the risk, not a security measure, can also be set to a non-standard port in NAT
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
