@@ -105,7 +105,8 @@ GSSAPICleanupCredentials yes
 # Disable TCP keep alive since it is spoofable. Use ClientAlive messages instead, they use the encrypted channel
 TCPKeepAlive no
 
-# Manage `ClientAlive..` signals via interval and maximum count. This will periodically check up to a `..CountMax` number of times within `..Interval` timeframe, and abort the connection once these fail.
+# Send "client alive" messages to all clients every ClientAliveInterval seconds
+# Disconnect any clients not responding to "client alive" messages after ClientAliveCountMax number of messages
 ClientAliveInterval 600
 ClientAliveCountMax 3
 
