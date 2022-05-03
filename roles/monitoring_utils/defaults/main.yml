@@ -19,5 +19,6 @@ lynis_skip_tests:
   - "LOGG-2190" # open file descriptors on deleted files is normal behavior
   - "SSH-7408:Port" # changing ssh listen port from 22 does not mitigate the risk, not a security measure, can also be set to a non-standard port in NAT
   - "SSH-7408:ClientAliveCountMax" # 3 is an acceptable value, nodiscc.xsrv.common sets the value to 3
+  - "SSH-7408:Compression" # any of yes/delayed/no can be considered secure since 2018 (pre-authentication compression never enabled)
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
