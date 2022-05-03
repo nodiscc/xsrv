@@ -16,5 +16,6 @@ lynis_skip_tests:
   - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
   - "BANN-7126" # legal banner for local logins is not needed
   - "BANN-7130" # legal banner for ssh logins is not needed
+  - "LOGG-2190" # open file descriptors on deleted files is normal behavior
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
