@@ -32,7 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
-- nextcloud: upgrade to [v23.0.5](https://nextcloud.com/changelog/#latest23)
+- nextcloud: upgrade to v24.0.1 [[1]](https://nextcloud.com/blog/nextcloud-hub-24-is-here/) [[2]](https://nextcloud.com/blog/maintenance-releases-24-0-1-23-0-5-and-22-2-8-are-out-update/) [[3]](https://nextcloud.com/changelog/#latest23)
 - gitea: upgrade to v1.16.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7)
 - openldap: ldap-account-manager: upgrade to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
 - rss_bridge: upgrade to [v2022-06-14](https://github.com/RSS-Bridge/rss-bridge/releases/tag/2022-06-14)
