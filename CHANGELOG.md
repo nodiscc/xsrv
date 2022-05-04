@@ -34,7 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: upgrade ansible to [v5.7.1](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - nextcloud: upgrade to [v23.0.4](https://nextcloud.com/changelog/#latest23)
 - openldap: upgrade ldap-account-manager to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
-- gitea: upgrade gitea to [v1.16.6](https://github.com/go-gitea/gitea/releases/tag/v1.16.6)
+- gitea: upgrade gitea to v1.16.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7)
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
 - monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
