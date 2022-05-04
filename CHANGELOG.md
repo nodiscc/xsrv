@@ -31,7 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - proxmox: use a single file to configure proxmox APT repositories
 - cleanup: standardize task names, remove ununsed template files
-- xsrv: upgrade ansible to [v5.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+- xsrv: upgrade ansible to [v5.7.1](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - nextcloud: upgrade to [v23.0.4](https://nextcloud.com/changelog/#latest23)
 - openldap: upgrade ldap-account-manager to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
 - gitea: upgrade gitea to [v1.16.6](https://github.com/go-gitea/gitea/releases/tag/v1.16.6)
