@@ -916,7 +916,7 @@ make deploy
 - configure an apache virtualhost for transmission
 - add transmission_https_mode variable to configure SSL certificate generation (selfsigned/letsencrypt)
 - add checks for required variables
-- delegate HTTP basic auth to apache, pass credentials to the backend tranmission service (proxy-chain-auth)
+- delegate HTTP basic auth to apache, pass credentials to the backend transmission service (proxy-chain-auth)
 - add rsnapshot configuration (backup transmission downloads and torrents cache)
 
 
