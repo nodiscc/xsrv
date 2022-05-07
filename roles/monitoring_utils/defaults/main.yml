@@ -21,6 +21,7 @@ lynis_skip_tests:
   - "SSH-7408:ClientAliveCountMax" # 3 is an acceptable value, nodiscc.xsrv.common sets the value to 3
   - "SSH-7408:Compression" # any of yes/delayed/no can be considered secure since 2018 (pre-authentication compression never enabled)
   - "SSH-7408:MaxAuthTries" # 5 is an acceptable value (nodiscc.xsrv.common), lowering it may cause login failures from systems where more than 3 ssh private keys are available
+  - "SSH-7408:MaxSessions" # 10 is an acceptable values, SSH connection multiplexing cannot be abused/cause performance issues unless the user is authenticated
   - "PHP-2376" # allow_url_fopen is used legitimately by several applications in file_get_contents() to fetch remote files
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
