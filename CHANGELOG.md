@@ -28,7 +28,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
-
 - nextcloud: upgrade to [v23.0.4](https://nextcloud.com/changelog/#latest23)
 - openldap: upgrade ldap-account-manager to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
 - gitea: upgrade gitea to v1.16.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7)
@@ -46,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts
+- common: ssh: fix confusion between `AcceptEnv` and `PermitUserEnvironment` settings
 - all roles: monitoring/netdata: fix systemd services health checks not loaded by netdata
 - apache: monitoring/rsyslog: fix rsyslog config installation when running with only `--tags=monitoring`
 - graylog: fix elasticsearch/graylog unable to start caused by too strict permissions on configuration files

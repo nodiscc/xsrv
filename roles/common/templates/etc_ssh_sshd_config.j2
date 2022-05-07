@@ -52,7 +52,7 @@ KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
 # --------------
 
 # Don't process environment variables passed by the client except locale variables
-PermitUserEnvironment LANG,LC_*
+AcceptEnv LANG LC_*
 
 # The server disconnects after this time if the user has not successfully logged in
 LoginGraceTime 30s
