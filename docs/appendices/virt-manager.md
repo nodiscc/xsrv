@@ -7,12 +7,12 @@ The [libvirt](https://en.wikipedia.org/wiki/Libvirt) project allows easy and com
 Advantages of virtualization include:
 
 - Run many independent operating systems/environmnents on a single machine.
-- Quickly create, clone and delete virtual machines for temporary/testing environments
-- VM operating systems are isolated from each other and from the hypervisor.
-- Easy rollback: snapshot the state of a VM at any time - restore it to roll back to the exact previous state.
+- Quickly create, clone and delete virtual machines for temporary/testing environments or horizontal scaling
+- VM operating systems are strongly isolated from each other and from the hypervisor
 - Easy, dynamic management of resources, virtual storage, RAM, CPU...
+- Easy rollback: snapshot the state of a VM, make changes, then restore the snapshot to return to the previous state
 - Create simple or complex virtual networks with routing, switching, firewalling...
-- Easy migration of VMs between hypervisors for emergencies or load balancing.
+- Easy migration of VMs between hypervisors for emergencies or load balancing
 - QEMU/KVM virtual machine performance is very close to the performance on a real, physical host ([Type 1 Hypervisor](https://en.wikipedia.org/wiki/Hypervisor#Classification)) - in contrast with Type 2 hypervisors (VirtualBox, VMWare Player...)
 
 `libvirt`/`virt-manager` can be installed on a dedicated machine, or on any GNU/Linux desktop computer.
