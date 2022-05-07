@@ -17,6 +17,17 @@
     - { src: 'etc_apt_apt.conf.d_50unattended-upgrades.j2', dest: '/etc/apt/apt.conf.d/50unattended-upgrades' }
     - { src: 'etc_apt_apt.conf.d_99-autoremove.j2', dest: '/etc/apt/apt.conf.d/99-autoremove' }
 
+- name: enable/disable nightly purge of removed packages configuration files
+  cron:
+    user: root
+    cron_file: apt-purge
+    name: "purge configuration files of removed packages"
+    minute: "00"
+    hour: "23"
+    day: "*"
+    job: aptitude -q -y purge ~c 2>&1 | logger -t apt-purge
+    disabled: "{{ False if apt_purge_nightly else True }}"
+
 - name: remove files from old versions of the role
   file:
     path: "{{ item }}"

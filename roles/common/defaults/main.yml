@@ -58,6 +58,8 @@ setup_apt: yes
 apt_enable_nonfree: no
 # clean downloaded package archives (apt clean) every n-days (0=disable)
 apt_clean_days: 7
+# yes/no: automatically remove (purge) configuration files of removed packages, nightly
+apt_purge_nightly: yes
 # automatic upgrades: allow unattended upgrades from the following sources (see 50unattended-upgrades.j2)
 # these settings have no effect if corresponding repositories are not enabled/configured
 apt_unattended_upgrades_origins_patterns:

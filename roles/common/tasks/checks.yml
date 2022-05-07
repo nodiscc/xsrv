@@ -10,6 +10,7 @@
       - setup_apt == setup_apt|bool
       - apt_clean_days == apt_clean_days|int
       - apt_unattended_upgrades_origins_patterns|type_debug == "list"
+      - apt_purge_nightly == apt_purge_nightly|bool
       - setup_cli_utils == setup_cli_utils|bool
       - setup_cron == setup_cron|bool
       - cron_log_level == cron_log_level|int

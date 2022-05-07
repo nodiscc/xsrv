@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - common: allow disabling PAM/user accounts configuration tasks ([`setup_users: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)), disable unused network/firewire modules by default
+- common: automatically remove (purge) configuration files of removed packages, nightly, enabled by default ([`apt_purge_nightly: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
 - docker: install requirements for docker private registry login
 - openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)
