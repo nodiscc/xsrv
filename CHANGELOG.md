@@ -8,12 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- **valheim_server:** if you had the `nodiscc.xsrv.valheim_server`, enabled update `requirements.yml` and `playbook.yml` to use the [archived `nodiscc.toolbox.valheim_server` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) instead.
+- **valheim_server:** if you are using the `nodiscc.xsrv.valheim_server` role, update `requirements.yml` and `playbook.yml` to use the [archived `nodiscc.toolbox.valheim_server` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) instead.
 
 **Added:**
-- common: allow disabling PAM/user accounts configuration tasks ([`setup_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: allow disabling PAM/user accounts configuration tasks ([`setup_users: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)), disable unused network/firewire modules by default
-- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
+- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
 - docker: install requirements for docker private registry login
 - openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)
 - openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
@@ -27,19 +27,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
-- xsrv: improve `check` mode support
-- apache: ensure no leftover mod-php installations are present
-- apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
-- proxmox: use a single file to configure proxmox APT repositories
-- cleanup: standardize task names, remove ununsed template files
-- xsrv: upgrade ansible to [v5.7.1](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+
 - nextcloud: upgrade to [v23.0.4](https://nextcloud.com/changelog/#latest23)
 - openldap: upgrade ldap-account-manager to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
 - gitea: upgrade gitea to v1.16.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7)
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
 - monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- xsrv: upgrade ansible to [v5.7.1](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+- apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - common: ssh: increase the frequency of "client alive" messages to 1 every 5 minutes
+- apache: cleanup: ensure no leftover mod-php installations are present
+- proxmox: cleanup: use a single file to configure proxmox APT repositories
+- cleanup: standardize task names, remove unused template files
+- all roles: improve `check` mode support
 
 **Fixed:**
 - proxmox: fail2ban: fix detection of failed login attempts
@@ -938,7 +939,6 @@ make deploy
  - make tdbsam users configurable through samba_users variable
  - add rsnapshot backup configuration for samba
  - make shares available/browseable state configurable (default to yes)
-
  - update documentation
 
 **docker role:**
