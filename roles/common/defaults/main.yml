@@ -48,6 +48,8 @@ kernel_modules_blacklist:
   - sctp # CIS 3.4.2 Ensure SCTP is disabled
   - rds # CIS 3.4.3 Ensure RDS is disabled
   - tipc # 3.4.4 Ensure TIPC is disabled
+  - firewire-ohci # disable IEEE 1394 (FireWire) Support
+  - firewire-core # disable IEEE 1394 (FireWire) Support
 
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
