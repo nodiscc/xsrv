@@ -53,5 +53,10 @@ galaxy_info:
     - utilities
     - users
     - sudo
+    - cis
+    - debian
+    - disa
+    - stig
+    - systemd
 dependencies:
   - nodiscc.xsrv.handlers

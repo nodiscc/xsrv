@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - common: allow disabling PAM/user accounts configuration tasks ([`setup_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)), disable some unused network modules by default
 - docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
 - docker: install requirements for docker private registry login
 - openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)

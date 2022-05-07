@@ -5,7 +5,7 @@ This role will configure a basic Debian-based server:
 - hostname
 - DNS resolution (`/etc/resolv.conf`)
 - hosts file (`/etc/hosts`)
-- sysctl/kernel settings: networking, swap/memory management, security
+- [sysctl/kernel](tasks/sysctl.yml) settings: networking, swap/memory management, security, kernel modules...
 - [APT package manager configuration](tasks/apt.yml)
 - [date/time and NTP synchronization](tasks/datetime.yml)
 - [Linux user accounts](tasks/users.yml) (user account creation/deletion, resources, PAM restrictions)
