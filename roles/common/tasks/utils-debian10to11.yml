@@ -1,10 +1,10 @@
 - name: check if host is already running the target distribution
   debug:
     msg: "Host is already running Debian 11. Nothing to do."
-  when: ansible_distribution_release == "bullseye"
+  when: ansible_facts.distribution_release == "bullseye"
 
 - name: run pre-upgrade steps on Proxmox hosts
-  when: ansible_distribution_release == "buster"
+  when: ansible_facts.distribution_release == "buster"
   block:
     - name: check for presence of proxmox update check script
       stat: path=/usr/bin/pve6to7
@@ -21,7 +21,7 @@
       when: pve6to7.stat.exists
 
 - name: upgrade Debian 10 to 11
-  when: ansible_distribution_release == "buster"
+  when: ansible_facts.distribution_release == "buster"
   block:
     - name: upgrade all packages to latest versions
       apt:
