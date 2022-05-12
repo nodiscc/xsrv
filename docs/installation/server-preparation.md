@@ -1,6 +1,6 @@
 # Server preparation
 
-## Hardware
+## Hardware & resources
 
 The server (_host_) machine can be:
 - a physical computer (dedicated server, repurposed desktop/laptop, small factor board...)
@@ -46,16 +46,18 @@ Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456
 
 ### Domain names
 
-Point `A` or `CNAME` DNS records to the public IP address of your server, using:
-- a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)
-- a [free subdomain service](https://freedns.afraid.org/domain/registry/)
-- or your [private DNS resolver](../appendices/pfsense.md)
+The controller must be able to resolve the server's name frome the [inventory](usage.md), using either:
 
-Alternatively, you can add [hosts](https://en.wikipedia.org/wiki/Hosts_%28file%29) entries on your client devices for each domain name.
+- (preferred) `A` or `CNAME` DNS records to the public IP address of your server, from:
+  - a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)
+  - your [private DNS resolver](../appendices/pfsense.md)
+  - or a [free subdomain service](https://freedns.afraid.org/domain/registry/)
+- a [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29)
+- the `ansible_host` variable in the host's [configuration](usage.md) file (e.g. `ansible_host: 192.168.1.220`)
 
-- The controller must be able to resolve the server's _host name_. Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)).
-- Accessing the host directory by IP address is discouraged. Use DNS records.
-- Separate domain/subdomain names are required for web applications. By default the following subdomains are configured, when corresponding roles are enabled:
+Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Accessing the host directly by IP address is discouraged, use DNS records. Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates.
+
+Separate domain/subdomain names are required for web applications. For example:
 
 ```bash
 ***.CHANGEME.org # host name in the inventory/playbook
@@ -74,8 +76,6 @@ logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
 rss-bridge.CHANGEME.org # rss_bridge
 ```
-
-_Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates._
 
 
 ## Base Operating System

@@ -1,6 +1,8 @@
 # Installation
 
-This tool runs on an administration machine (_controller_), and uses [SSH](https://en.wikipedia.org/wiki/Secure_Shell) to configure remote servers (_hosts_) over the network.
+`xsrv` uses [Ansible](https://en.wikipedia.org/wiki/Ansible_(software)), an open-source software provisioning, configuration management, and application-deployment tool.
+
+`xsrv`/Ansible runs from a [controller](installation/controller-preparation.md) (administration machine) and configures remote servers ([hosts](server-preparation.md)) over the network, using [SSH](https://en.wikipedia.org/wiki/Secure_Shell).
  
 ![](ansible-diagram.png)
 
