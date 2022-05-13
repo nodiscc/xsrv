@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - common: ssh: increase the frequency of "client alive" messages to 1 every 5 minutes
 - common: ssh/users: don't allow login for users without an existing home directory
+- common: users: move PAM configuration to the main `limits.conf` configuration file
 - apache: cleanup: ensure no leftover mod-php installations are present
 - proxmox: cleanup: use a single file to configure proxmox APT repositories
 - cleanup: standardize task names, remove unused template files
