@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 
+**Added:**
+- common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+
 **Changed:**
 - nextcloud: no longer disable accessibility app by default
 - update documentation

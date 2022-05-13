@@ -21,6 +21,14 @@
     group: root
     mode: 0644
 
+- name: mount /proc
+  mount:
+    name: /proc
+    src: none
+    fstype: proc
+    opts: "rw,nosuid,nodev,noexec,relatime,hidepid={{ '2' if kernel_proc_hidepid else '0' }}"
+    state: present
+
 # apply sysctl configuration
 - name: apply configuration (flush handlers)
   meta: flush_handlers
