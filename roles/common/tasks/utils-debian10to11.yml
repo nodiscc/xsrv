@@ -1,3 +1,5 @@
+# the tag 'utils-debian10to11' must be passed explicitly for these tasks to run
+
 - name: check if host is already running the target distribution
   debug:
     msg: "Host is already running Debian 11. Nothing to do."

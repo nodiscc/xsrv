@@ -2,10 +2,10 @@
 
 This role will configure a basic Debian-based server:
 
-- hostname
-- DNS resolution (`/etc/resolv.conf`)
-- hosts file (`/etc/hosts`)
-- [sysctl/kernel](tasks/sysctl.yml) settings: networking, swap/memory management, security, kernel modules...
+- [hostname](tasks/hostname.yml) configuration
+- [DNS](tasks/dns.yml) resolution (`/etc/resolv.conf`)
+- [hosts](tasks/hosts.yml) file (`/etc/hosts`)
+- [sysctl/kernel](tasks/sysctl.yml) settings: networking, swap/memory management, security, modules...
 - [APT package manager configuration](tasks/apt.yml)
 - [date/time and NTP synchronization](tasks/datetime.yml)
 - [Linux user accounts](tasks/users.yml) (user account creation/deletion, resources, PAM restrictions)
@@ -14,14 +14,11 @@ This role will configure a basic Debian-based server:
 - [firewall](tasks/firewalld.yml) ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
 - [fail2ban](tasks/fail2ban.yml) intrusion/bruteforce prevention system
 - [outgoing mail](tasks/mail.yml) (forwarding through an external mail relay)
-- streamlining/removal of unwanted packages
-- `haveged` random number generator/entropy source for virtual machines
-- installation of basic command-line utilities/diagnostic tools
-
+- streamlining/removal of unwanted [packages](tasks/packages.yml), installation of basic system utilities/diagnostic tools
+- automated procedure to upgrade hosts from [Debian 10 to 11](tasks/utils-debian10to11.yml)
 
 All components can be disabled/enabled independently.
 
-In addition, this role provides a procedure to upgrade Debian 10 hosts to Debian 11. The tag `utils-debian10to11` must be passed explicitly for this procedure to run.
 
 ## Requirements/dependencies/example playbook
 
@@ -38,18 +35,21 @@ See [meta/main.yml](meta/main.yml)
 # ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
 ansible_user: "CHANGEME"
 ansible_become_pass: "CHANGEME"
-
-# if setup_msmtp: yes
-setup_msmtp: yes
-msmtp_host: "smtp.CHANGEME.org"
-msmtp_username: "CHANGEME"
-msmtp_password: "CHANGEME"
-msmtp_admin_email: "CHANGEME@CHANGEME.org"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-**Sending e-mail** requires an external SMTP server (see `*msmtp*` configuration variables) and is disabled by default. If you don't have a SMTP server, you can use a free transactional e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT records for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other e-mail account.
+**Sending e-mail** requires an external SMTP server (see `msmtp_*` configuration variables) and is disabled by default. You can use your own SMTP server or a commercial e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT records for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other e-mail account.
+
+```yaml
+# host_vars/my.example.org/my.example.org.yml
+setup_msmtp: yes
+msmtp_host: "smtp.CHANGEME.org"
+msmtp_admin_email: "CHANGEME@CHANGEME.org"
+# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
+msmtp_username: "CHANGEME"
+msmtp_password: "CHANGEME"
+```
 
 **Firewall:** All roles from the `nodiscc.xsrv` collection will setup appropriate rules when this role is deployed. See each role's `*_firewall_zones` configuration variables.
 
