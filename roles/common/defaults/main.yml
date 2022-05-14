@@ -231,7 +231,7 @@ msmtp_host: "smtp.CHANGEME.org"
 msmtp_port: 587
 msmtp_username: "CHANGEME"
 msmtp_password: "CHANGEME"
-# mail address to redirect all local mail to
+# mail address to send adminbistrator email to (multiple recipients can be added, separated by ', ')
 msmtp_admin_email: "CHANGEME"
 # (auto/admin@CHANGEME.org) sender address for outgoing mail
 msmtp_from: 'auto'
