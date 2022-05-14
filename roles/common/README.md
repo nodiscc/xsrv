@@ -52,6 +52,11 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
 - Get current firewall configuration: `ansible-playbook --tags utils-firewalld-info playbook.yml`
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+<!--END TAGS LIST-->
+
 
 ## License
 

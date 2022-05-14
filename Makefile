@@ -193,6 +193,19 @@ doc_md:
 		p' docs/configuration-variables.md >> docs/configuration-variables.tmp.md && \
 		mv docs/configuration-variables.tmp.md docs/configuration-variables.md && \
 		rm roles-list-defaults.tmp.md
+	# generate tags list in roles READMEs
+	@for i in roles/*; do \
+		echo $$i; \
+		tags_list=$$(grep '^# @' $$i/meta/main.yml); \
+		echo -e "\`\`\`\n$$tags_list\n\`\`\`" | sed 's/# @tag //g'> tags.tmp.md && \
+		awk ' \
+			BEGIN { p=1} \
+			/^<!--BEGIN TAGS LIST-->/ {print;system("cat tags.tmp.md");p=0} \
+			/^<!--END TAGS LIST-->/ {p=1} \
+			p' $$i/README.md >> README.tmp.md && \
+		rm tags.tmp.md && \
+		mv README.tmp.md $$i/README.md; \
+	done
 
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
