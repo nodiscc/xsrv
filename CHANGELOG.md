@@ -44,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - proxmox: cleanup: use a single file to configure proxmox APT repositories
 - cleanup: standardize task names, remove unused template files
 - cleanup: make usage of ansible_facts consistent in all roles
+- cleanup: clarify xsrv script, reorder functions by purpose/component
 - all roles: improve `check` mode support
 
 **Fixed:**

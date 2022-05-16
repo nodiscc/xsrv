@@ -2,7 +2,44 @@
 set -o errexit
 set -o nounset
 
-# Configuration / defaults
+usage="
+USAGE: xsrv COMMAND [project] [host]
+
+COMMANDS:
+init-project [project] [host]       initialize a new project (and optionally a first host)
+edit-inventory [project]            edit/show inventory file (hosts/groups)
+edit-playbook [project]             edit/show playbook (roles for each host)
+edit-requirements [project]         edit ansible requirements/collections
+edit-cfg [project]                  edit ansible configuration (ansible.cfg)
+upgrade [project]                   upgrade a project's roles/collections to latest versions
+init-host [project] [host]          add a new host to an existing project
+edit-host [project] [host]          edit host configuration (host_vars)
+edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
+edit-group [project] [group]        edit group configuration (group_vars)
+edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
+check [project] [host|group]        simulate deployment, report what would be changed
+deploy [project] [host|group]       deploy the main playbook (apply configuration/roles)
+fetch-backups [project] [host]      fetch backups from a host to the local backups directory
+shell|ssh [project] [host]          open interactive SSH shell on a host
+logs [project] [host]               view system logs on a host
+ls                                  list files in the projects directory (accepts a path)
+show-defaults [project] [role]      show all variables and their default values
+help                                show this message
+help-tags [project]                 show the list of ansible tags and their descriptions
+self-upgrade                        check for new releases/upgrade the xsrv script in-place
+init-vm [--help] [options]          initialize a new libvirt VM from a template
+
+# ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
+TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
+EDITOR             text editor to use (default: nano)
+PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
+
+# DOCUMENTATION/EXAMPLES: https://xsrv.readthedocs.io/en/master/usage.html
+"
+
+
+########## CONFIGURATION/DEFAULTS ##########
+
 xsrv_clone_dir="${XSRV_CLONE_DIR:=$HOME/.local/share/xsrv/git}"
 projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
@@ -17,147 +54,35 @@ ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
   ╹ ╹┗━┛╹┗╸┗┛ v${version}"
 
-### Helpers ###
+command="${1:-}"
+project_name="${2:-default}"
+project_dir="$projects_dir/$project_name"
+venv_dir="$project_dir/.venv"
+host_name="${3:-}"
+ssh_args=""
 
-function check_project_exists() {
-    # check that the directory for the specified playbook exists, exit with error if not
-    if [[ ! -e "$project_dir" ]]; then
-        echo "[xsrv] ERROR: project $project_dir does not exist"; exit 1;
+########## PROJECT-LEVEL MANAGEMENT ##########
+
+function init_project() {
+    # initialize a new project
+    if [[ -e "$project_dir" ]]; then
+        echo "[xsrv] ERROR: $project_dir already exists"; exit 1
     fi
+    mkdir -p "$project_dir"
+    init_venv
+    upgrade_roles
+    echo "[xsrv] INFO: creating files and directories for $project_name"
+    templates_dir="$project_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
+    cp -rn "$templates_dir"/{ansible.cfg,README.md,requirements.yml,data/,group_vars/,public_keys/,playbooks/} "$project_dir/"
+    gen_vault_password_file
+    init_host "$host_name"
+    echo "[xsrv] INFO: project $project_name initialized in $project_dir"
+    echo "[xsrv] INFO: run xsrv deploy to apply configuration now, or xsrv help for more options"
 }
 
-function _check_host_name() {
-    # check if host_vars files exist for a host, set host_vars_file and host_vault_file global variables
-    check_project_exists
-    if [[ -z "$host_name" ]]; then
-        host_vars_dirs=$(find "$projects_dir/$project_name/host_vars/" -maxdepth 1 -type d)
-        host_name="${host_vars_dirs##*/}"
-        echo "[xsrv] INFO: no host name provided, using $host_name as host name"
-        if [[ ! $(echo "$host_name" | wc -l) -eq 1 ]]; then
-            echo "[xsrv] ERROR: no host name specified and multiple hosts found in project"; exit 1
-        fi
-    fi
-    host_vars_file="$projects_dir/$project_name/host_vars/$host_name/$host_name.yml"
-    host_vault_file="$projects_dir/$project_name/host_vars/$host_name/$host_name.vault.yml"
-    if [[ ! -f "$host_vars_file" ]]; then
-        echo "[xsrv] ERROR: $host_vars_file does not exist"; exit 1
-    fi
-}
-
-function migrate_group_vars_file() {
-    # migrate files from group_vars/$group_name.yml to group_vars/$group_name/$group_name.yml
-    legacy_group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
-    if [[ -f "$legacy_group_vars_file" ]]; then
-        echo "[xsrv] INFO: legacy $legacy_group_vars_file detected, moving it to $group_vars_file";
-        if [[ -f "$group_vars_file" ]]; then
-            echo "[xsrv] ERROR: destination file $group_vars_file already exists, aborting. Please merge files manually."
-            exit 1
-        fi
-        mkdir -p "$projects_dir/$project_name/group_vars/$group_name"
-        mv "$legacy_group_vars_file" "$group_vars_file"
-    fi
-}
-
-function check_group_name() {
-    # check if group_vars files exist for a group, set group_vars_file global variable
-    check_project_exists
-    group_name="$host_name"
-    if [[ -z "$group_name" ]]; then
-        echo "[xsrv] INFO: no group name provided, editing variables for group 'all'"
-        group_name="all"
-    fi
-    group_vars_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.yml"
-    group_vault_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.vault.yml"
-    migrate_group_vars_file
-}
-
-function create_venv() {
-    echo "[xsrv] INFO: creating virtualenv in $venv_dir"
-    mkdir -p "$venv_dir"
-    python3 -m venv "$venv_dir"
-    source "$venv_dir/bin/activate"
-    echo "[xsrv] INFO: installing ansible in $venv_dir"
-    pip3 install wheel
-    pip3 install ansible=="$ansible_version" netaddr
-}
-
-function init_venv() {
-    # check if a working ansible virtualenv exists,
-    # check if the installed ansible version matches the expected version,
-    # otherwise create/activate the virtualenv and install ansible
-    check_project_exists
-    {
-        source "$venv_dir/bin/activate" 2>/dev/null
-        ansible_installed_version=$(pip3 show ansible|grep '^Version' | awk -F' ' '{print $2}')
-        [ "$ansible_installed_version" == "$ansible_version" ]
-    } || create_venv
-}
-
-function _get_host_var() {
-    # get a host var using ansible -m debug | grep
-    # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
-    (cd "$project_dir" && ansible --one-line \
-      --inventory "$project_dir"/inventory.yml \
-      --module-name debug --args \
-      "msg={{ $1 }}" "$host_name" | \
-      grep -oP '(?<="msg": ").*(?="})')
-}
-
-function gen_vault_password_file() {
-    # generate a random password for ansible-vault and store it in a file
-    echo "[xsrv] INFO: Generating random password for ansible-vault"
-    openssl rand -base64 32 > "$projects_dir/$project_name/.ansible-vault-password"
-    echo "[xsrv] INFO: vault password stored in $projects_dir/$project_name/.ansible-vault-password"
-    echo "[xsrv] INFO: Keep this file private! Keep backups of this file!"
-}
-
-function gen_random_passwords() {
-    # replace CHANGEMEXX values in file $1, where XX is an integer, with random password with length = XX
-    host_vault_file="$1"
-    if ! command -v pwgen >/dev/null; then
-        echo "[xsrv] WARNING: pwgen not installed, unable to generate random passwords for $host_name. Please manually replace any values labeled CHANGEME!"
-        return
-    fi
-    echo "[xsrv] INFO: generating random passwords for $host_name"
-    randomized_vault=$(while read -r line; do
-        if echo "$line" | grep -E 'CHANGEME[0-9]+' 2>&1 >/dev/null; then
-            num_char=$(echo "$line" | grep -oP '(?<=CHANGEME)[0-9]+(?=")')
-            echo "$line" | sed -E "s/CHANGEME[0-9]+/$(pwgen -s "$num_char" 1)/"
-        else
-            echo "$line"
-        fi
-    done < "$host_vault_file")
-    echo "$randomized_vault" > "$host_vault_file"
-}
-
-
-### Commands ###
-
-function help() {
-    # show help
-    echo "$usage"
-    exit 1
-}
-
-# shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
-function check() {
-    # run ansible playbook in check mode
-    check_project_exists
-    if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
-    if [[ -n "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
-    cd "$projects_dir/$project_name"
-    echo "[xsrv] INFO: deploying (dry-run) main playbook for project $project_name"
-    ansible-playbook playbook.yml --check --diff $ansible_tags_arg $ansible_host_arg
-}
-
-# shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
-function deploy() {
-    # run ansible playbook
-    if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg="--limit=all"; fi
-    if [[ -n "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg="--tags=all"; fi
-    cd "$projects_dir/$project_name"
-    echo "[xsrv] INFO: deploying main playbook for project $project_name"
-    ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
+function legacy_init_playbook() {
+    echo "[xsrv] WARNING: init-playbook is deprecated and will be removed in a future release. Use init-project"
+    init_project
 }
 
 function edit_playbook() {
@@ -188,63 +113,8 @@ function edit_ansible_cfg() {
     $editor "$cfg_file"
 }
 
-function edit_host() {
-    # edit a host's vars file
-    _check_host_name
-    echo "[xsrv] INFO: opening host vars file $host_vars_file"
-    $editor "$host_vars_file"
-}
 
-function edit_group() {
-    # edit group variables
-    check_group_name
-    echo "[xsrv] INFO: opening group_vars file $group_vars_file"
-    mkdir -p "$(dirname "$group_vars_file")"
-    $editor "$group_vars_file"
-}
-
-function edit_group_vault() {
-    # edit a group's vault file
-    check_group_name
-    echo "[xsrv] INFO: opening group vault file $group_vault_file"
-    mkdir -p "$(dirname "$group_vault_file")"
-    cd "$projects_dir/$project_name"
-    if [[ ! -f "$group_vault_file" ]]; then
-        touch "$group_vault_file"
-        ansible-vault encrypt "$group_vault_file"
-    fi
-    EDITOR="$editor" ansible-vault edit "$group_vault_file"
-}
-
-function edit_vault() {
-    # edit a host's vault file
-    _check_host_name
-    echo "[xsrv] INFO: opening vault file $host_vault_file"
-    cd "$projects_dir/$project_name"
-    EDITOR="$editor" ansible-vault edit "$host_vault_file"
-}
-
-function legacy_init_playbook() {
-    echo "[xsrv] WARNING: init-playbook is deprecated and will be removed in a future release. Use init-project"
-    init_project
-}
-
-function init_project() {
-    # initialize a new project
-    if [[ -e "$project_dir" ]]; then
-        echo "[xsrv] ERROR: $project_dir already exists"; exit 1
-    fi
-    mkdir -p "$project_dir"
-    init_venv
-    upgrade_roles
-    echo "[xsrv] INFO: creating files and directories for $project_name"
-    templates_dir="$project_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
-    cp -rn "$templates_dir"/{ansible.cfg,README.md,requirements.yml,data/,group_vars/,public_keys/,playbooks/} "$project_dir/"
-    gen_vault_password_file
-    init_host "$host_name"
-    echo "[xsrv] INFO: project $project_name initialized in $project_dir"
-    echo "[xsrv] INFO: run xsrv deploy to apply configuration now, or xsrv help for more options"
-}
+########## HOST/GROUP-LEVEL MANAGEMENT ##########
 
 function init_host() {
     # add a new host to a project (from template files)
@@ -283,6 +153,69 @@ function init_host() {
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $project_name $host_name"
 }
 
+function edit_host() {
+    # edit a host's vars file
+    _check_host_name
+    echo "[xsrv] INFO: opening host vars file $host_vars_file"
+    $editor "$host_vars_file"
+}
+
+function edit_group() {
+    # edit group variables
+    check_group_name
+    echo "[xsrv] INFO: opening group_vars file $group_vars_file"
+    mkdir -p "$(dirname "$group_vars_file")"
+    $editor "$group_vars_file"
+}
+
+function edit_group_vault() {
+    # edit a group's vault file
+    check_group_name
+    echo "[xsrv] INFO: opening group vault file $group_vault_file"
+    mkdir -p "$(dirname "$group_vault_file")"
+    cd "$projects_dir/$project_name"
+    if [[ ! -f "$group_vault_file" ]]; then
+        touch "$group_vault_file"
+        ansible-vault encrypt "$group_vault_file"
+    fi
+    EDITOR="$editor" ansible-vault edit "$group_vault_file"
+}
+
+function edit_vault() {
+    # edit a host's vault file
+    _check_host_name
+    echo "[xsrv] INFO: opening vault file $host_vault_file"
+    cd "$projects_dir/$project_name"
+    EDITOR="$editor" ansible-vault edit "$host_vault_file"
+}
+
+
+########## DEPLOYMENT RELATED COMMANDS ##########
+
+# shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
+function check() {
+    # run ansible playbook in check mode
+    check_project_exists
+    if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
+    if [[ -n "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg=""; fi
+    cd "$projects_dir/$project_name"
+    echo "[xsrv] INFO: deploying (dry-run) main playbook for project $project_name"
+    ansible-playbook playbook.yml --check --diff $ansible_tags_arg $ansible_host_arg
+}
+
+# shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
+function deploy() {
+    # run ansible playbook
+    if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg="--limit=all"; fi
+    if [[ -n "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg="--tags=all"; fi
+    cd "$projects_dir/$project_name"
+    echo "[xsrv] INFO: deploying main playbook for project $project_name"
+    ansible-playbook playbook.yml $ansible_tags_arg $ansible_host_arg
+}
+
+
+########## UTILITIES/HELPERS ##########
+
 function run_shell() {
     # open a SSH shell on a host
     _check_host_name
@@ -291,12 +224,6 @@ function run_shell() {
     echo "[xsrv] INFO: connecting to $ssh_user@$host_name port $ssh_port"
     ssh_command="ssh -t -p $ssh_port $ssh_user@$host_name $ssh_args"
     $ssh_command
-}
-
-function _ls() {
-    # list files in the projects directory
-    path=${1:-}
-    ls "$projects_dir/$path"
 }
 
 function fetch_backups() {
@@ -312,16 +239,10 @@ function fetch_backups() {
       "$projects_dir/$project_name/$local_backups_dir/daily.0.$backup_date"
 }
 
-function upgrade_roles() {
-    check_project_exists
-    if [[ ! -f "$project_dir"/requirements.yml ]]; then
-        echo "[xsrv] INFO: installing default collection git+$xsrv_git_url,$xsrv_upgrade_channel"
-        (cd "$project_dir" && ansible-galaxy collection install --force --collections-path "$project_dir/" git+$xsrv_git_url,$xsrv_upgrade_channel)
-    else
-        echo "[xsrv] INFO: upgrading collections from requirements.yml"
-        (cd "$project_dir" && ansible-galaxy collection install --force -r requirements.yml)
-    fi
-    create_venv
+function _ls() {
+    # list files in the projects directory
+    path=${1:-}
+    ls "$projects_dir/$path"
 }
 
 function show_defaults() {
@@ -343,6 +264,49 @@ function show_defaults() {
         done)
         echo -e "$defaults_header""$defaults_list" | $pager 2>/dev/null
     fi
+}
+
+function help() {
+    # show help
+    echo "$usage"
+    exit 1
+}
+
+
+########## ANSIBLE INSTALLATION AND UPGRADES ##########
+
+function create_venv() {
+    echo "[xsrv] INFO: creating virtualenv in $venv_dir"
+    mkdir -p "$venv_dir"
+    python3 -m venv "$venv_dir"
+    source "$venv_dir/bin/activate"
+    echo "[xsrv] INFO: installing ansible in $venv_dir"
+    pip3 install wheel
+    pip3 install ansible=="$ansible_version" netaddr
+}
+
+function init_venv() {
+    # check if a working ansible virtualenv exists,
+    # check if the installed ansible version matches the expected version,
+    # otherwise create/activate the virtualenv and install ansible
+    check_project_exists
+    {
+        source "$venv_dir/bin/activate" 2>/dev/null
+        ansible_installed_version=$(pip3 show ansible|grep '^Version' | awk -F' ' '{print $2}')
+        [ "$ansible_installed_version" == "$ansible_version" ]
+    } || create_venv
+}
+
+function upgrade_roles() {
+    check_project_exists
+    if [[ ! -f "$project_dir"/requirements.yml ]]; then
+        echo "[xsrv] INFO: installing default collection git+$xsrv_git_url,$xsrv_upgrade_channel"
+        (cd "$project_dir" && ansible-galaxy collection install --force --collections-path "$project_dir/" git+$xsrv_git_url,$xsrv_upgrade_channel)
+    else
+        echo "[xsrv] INFO: upgrading collections from requirements.yml"
+        (cd "$project_dir" && ansible-galaxy collection install --force -r requirements.yml)
+    fi
+    create_venv
 }
 
 function self_upgrade() {
@@ -376,11 +340,13 @@ function self_upgrade() {
     fi
 }
 
+########## LIBVIRT RELATED COMMANDS ##########
+
 function init_vm() {
-    # initialize a libvirt VM from a template, configure resources/users/SSH access, start the VM
-    # requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
     INIT_VM_USAGE="$0 init-vm --template TEMPLATE_NAME --name VM_NAME --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] --sudo-user VM_SUDO_USER [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory MEM_SIZE] [--vcpus NUM_CPU]
         EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4
+        Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
+        Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
         If not specified, random sudo/root passwords will be generated automatically
         If not specified, memory and vcpu values from the template will be kept
         If not specified, the VM disk image will be created at /var/lib/libvirt/images/VM_NAME.qcow2
@@ -490,6 +456,84 @@ EOF
     rm ./libvirt-clone-interfaces.txt
 }
 
+
+########## INTERNAL HELPERS ##########
+
+function _get_host_var() {
+    # get a host var using ansible -m debug | grep
+    # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
+    (cd "$project_dir" && ansible --one-line \
+      --inventory "$project_dir"/inventory.yml \
+      --module-name debug --args \
+      "msg={{ $1 }}" "$host_name" | \
+      grep -oP '(?<="msg": ").*(?="})')
+}
+
+function gen_vault_password_file() {
+    # generate a random password for ansible-vault and store it in a file
+    echo "[xsrv] INFO: Generating random password for ansible-vault"
+    openssl rand -base64 32 > "$projects_dir/$project_name/.ansible-vault-password"
+    echo "[xsrv] INFO: vault password stored in $projects_dir/$project_name/.ansible-vault-password"
+    echo "[xsrv] INFO: Keep this file private! Keep backups of this file!"
+}
+
+function gen_random_passwords() {
+    # replace CHANGEMEXX values in file $1, where XX is an integer, with random password with length = XX
+    host_vault_file="$1"
+    if ! command -v pwgen >/dev/null; then
+        echo "[xsrv] WARNING: pwgen not installed, unable to generate random passwords for $host_name. Please manually replace any values labeled CHANGEME!"
+        return
+    fi
+    echo "[xsrv] INFO: generating random passwords for $host_name"
+    randomized_vault=$(while read -r line; do
+        if echo "$line" | grep -E 'CHANGEME[0-9]+' 2>&1 >/dev/null; then
+            num_char=$(echo "$line" | grep -oP '(?<=CHANGEME)[0-9]+(?=")')
+            echo "$line" | sed -E "s/CHANGEME[0-9]+/$(pwgen -s "$num_char" 1)/"
+        else
+            echo "$line"
+        fi
+    done < "$host_vault_file")
+    echo "$randomized_vault" > "$host_vault_file"
+}
+
+function check_project_exists() {
+    # check that the directory for the specified playbook exists, exit with error if not
+    if [[ ! -e "$project_dir" ]]; then
+        echo "[xsrv] ERROR: project $project_dir does not exist"; exit 1;
+    fi
+}
+
+function _check_host_name() {
+    # check if host_vars files exist for a host, set host_vars_file and host_vault_file global variables
+    check_project_exists
+    if [[ -z "$host_name" ]]; then
+        host_vars_dirs=$(find "$projects_dir/$project_name/host_vars/" -maxdepth 1 -type d)
+        host_name="${host_vars_dirs##*/}"
+        echo "[xsrv] INFO: no host name provided, using $host_name as host name"
+        if [[ ! $(echo "$host_name" | wc -l) -eq 1 ]]; then
+            echo "[xsrv] ERROR: no host name specified and multiple hosts found in project"; exit 1
+        fi
+    fi
+    host_vars_file="$projects_dir/$project_name/host_vars/$host_name/$host_name.yml"
+    host_vault_file="$projects_dir/$project_name/host_vars/$host_name/$host_name.vault.yml"
+    if [[ ! -f "$host_vars_file" ]]; then
+        echo "[xsrv] ERROR: $host_vars_file does not exist"; exit 1
+    fi
+}
+
+function check_group_name() {
+    # check if group_vars files exist for a group, set group_vars_file global variable
+    check_project_exists
+    group_name="$host_name"
+    if [[ -z "$group_name" ]]; then
+        echo "[xsrv] INFO: no group name provided, editing variables for group 'all'"
+        group_name="all"
+    fi
+    group_vars_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.yml"
+    group_vault_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.vault.yml"
+    migrate_group_vars_file
+}
+
 function format_ansible_tags() {
     # format ansible-playbook --list tags output as a list, one item per line
     grep 'TASK TAGS:' | sed 's/      TASK TAGS: \[//' | sed 's/\]$//' | sed 's/, /\n/g' | sort --unique
@@ -512,8 +556,21 @@ function help_tags() {
     diff --changed-group-format='%<%>' --unchanged-group-format='' <(echo "$tags_doc_short") <(echo "$tags_discovered_all")
 }
 
+function migrate_group_vars_file() {
+    # migrate files from group_vars/$group_name.yml to group_vars/$group_name/$group_name.yml
+    legacy_group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
+    if [[ -f "$legacy_group_vars_file" ]]; then
+        echo "[xsrv] INFO: legacy $legacy_group_vars_file detected, moving it to $group_vars_file";
+        if [[ -f "$group_vars_file" ]]; then
+            echo "[xsrv] ERROR: destination file $group_vars_file already exists, aborting. Please merge files manually."
+            exit 1
+        fi
+        mkdir -p "$projects_dir/$project_name/group_vars/$group_name"
+        mv "$legacy_group_vars_file" "$group_vars_file"
+    fi
+}
 
-############################
+########## MAIN ##########
 
 function _main() {
     echo "$ascii_banner"
@@ -549,47 +606,6 @@ function _main() {
 
 ############################
 
-# Usage
-usage="
-USAGE: xsrv COMMAND [project] [host]
 
-init-project [project] [host]       initialize a new project (and optionally a first host)
-edit-inventory [project]            edit/show inventory file (hosts/groups)
-edit-playbook [project]             edit/show playbook (roles for each host)
-show-defaults [project] [role]      show all variables and their default values
-edit-requirements [project]         edit ansible requirements/collections
-edit-cfg [project]                  edit ansible configuration (ansible.cfg)
-init-host [project] [host]          add a new host to an existing project
-check [project] [host]              simulate deployment, report what would be changed
-deploy [project] [host]             deploy the main playbook (apply configuration/roles)
-edit-host [project] [host]          edit host configuration (host_vars)
-edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
-edit-group [project] [group]        edit group configuration (group_vars)
-edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
-fetch-backups [project] [host]      fetch backups from a host to the local backups directory
-shell|ssh [project] [host]          open interactive SSH shell on a host
-logs [project] [host]               view system logs on a host
-ls                                  list files in the projects directory (accepts a path)
-help                                show this message
-help-tags [project]                 show the list of ansible tags and their descriptions
-upgrade [project]                   upgrade roles/collections to latest versions
-self-upgrade                        check for new releases/upgrade the xsrv script in-place
-init-vm [--help] [options]          initialize a new libvirt VM from a template
-
-# ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
-TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
-EDITOR             text editor to use (default: nano)
-PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
-
-# DOCUMENTATION
-https://xsrv.readthedocs.io/en/master/usage.html
-"
-
-command="${1:-}"
-project_name="${2:-default}"
-project_dir="$projects_dir/$project_name"
-venv_dir="$project_dir/.venv"
-host_name="${3:-}"
-ssh_args=""
 
 _main "$@"
