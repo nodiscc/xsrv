@@ -1,7 +1,10 @@
 #!/bin/bash
 set -o errexit
 set -o nounset
-
+# Description: a wrapper around the ansible suite of tools. Manages independent projects consisting of
+#              a virtualenv-based ansible installation, a standard file/directory structure, an isolated
+#              collections installation directory. Provides easily accessible commands for common configuration,
+#              secrets management, deployment and maintenance tasks.
 usage="
 USAGE: xsrv COMMAND [project] [host]
 
