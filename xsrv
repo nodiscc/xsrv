@@ -229,6 +229,7 @@ function run_shell() {
 function fetch_backups() {
     # fetch latest daily backups from the host
     check_project_exists
+    _check_host_name
     ssh_port=$(_get_host_var "ansible_ssh_port|default(22)")
     ssh_user=$(_get_host_var "ansible_user")
     backup_date=$(date "+%Y%m%d_%H%M%S")
@@ -507,7 +508,7 @@ function _check_host_name() {
     # check if host_vars files exist for a host, set host_vars_file and host_vault_file global variables
     check_project_exists
     if [[ -z "$host_name" ]]; then
-        host_vars_dirs=$(find "$projects_dir/$project_name/host_vars/" -maxdepth 1 -type d)
+        host_vars_dirs=$(find "$projects_dir/$project_name/host_vars/" -mindepth 1 -maxdepth 1 -type d | sort --reverse)
         host_name="${host_vars_dirs##*/}"
         echo "[xsrv] INFO: no host name provided, using $host_name as host name"
         if [[ ! $(echo "$host_name" | wc -l) -eq 1 ]]; then
