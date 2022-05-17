@@ -32,6 +32,10 @@ help-tags [project]                 show the list of ansible tags and their desc
 self-upgrade                        check for new releases/upgrade the xsrv script in-place
 init-vm [--help] [options]          initialize a new libvirt VM from a template
 
+If no project is specified, the 'default' project is assumed.
+For edition/utility commands, if no host/group is specified, the first host/group in alphabetical order is assumed.
+For deploy/check commands, if no host/group is specified, the 'all' group (all hosts) is assumed.
+
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
 EDITOR             text editor to use (default: nano)
