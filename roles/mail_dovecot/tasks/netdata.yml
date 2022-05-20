@@ -1,0 +1,9 @@
+- name: install netdata systemd check for dovecot
+  template:
+    src: etc_netdata_health.d_systemdunits.conf.d_dovecot.conf.j2
+    dest: /etc/netdata/health.d/systemdunits.conf.d/dovecot.conf
+    owner: root
+    group: netdata
+    mode: 0640
+  notify: assemble netdata configuration
+  ignore_errors: "{{ ansible_check_mode }}"

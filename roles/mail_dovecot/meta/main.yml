@@ -1,0 +1,23 @@
+# @tag dovecot - setup dovecot MDA/IMAP server
+
+galaxy_info:
+  role_name: mail_dovecot
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "IMAP mailbox server"
+  license: GPL-3.0
+  min_ansible_version: 2.12
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+  galaxy_tags:
+    - dovecot
+    - mail
+    - email
+    - email
+    - server
+    - mda
+    - imap
+    - ldap
+dependencies:
+  - nodiscc.xsrv.handlers

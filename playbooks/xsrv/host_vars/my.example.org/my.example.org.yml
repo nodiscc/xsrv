@@ -37,3 +37,8 @@ rss_bridge_fqdn: "rss-bridge.CHANGEME.org"
 ##### COMMON - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml
 ##### NETDATA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml
 ##### SAMBA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml
+##### DOVECOT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml
+dovecot_fqdn: "imap.CHANGEME.org"
+dovecot_ldap_uri: "ldap://ldap.CHANGEME.org"
+dovecot_ldap_base: "ou=users,dc=CHANGEME,dc=org"
+dovecot_ldap_bind_dn: "cn=bind,ou=system,dc=CHANGEME,dc=org"

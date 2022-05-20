@@ -46,7 +46,7 @@
             }
             .message {
                 text-align: center;
-                color; #AAA;
+                color: #AAA;
                 display: block;
                 border-radius: 2px;
                 margin-top: 12px;
@@ -107,6 +107,12 @@
             }
             .mumble-cb {
                 background-color: #838383;
+            }
+            .mail :hover{
+                border-color: #FEC006;
+            }
+            .mail-cb {
+                background-color: #f5cd56;
             }
             .ldap-account-manager :hover{
                 border-color: #2B899F;
@@ -263,6 +269,16 @@
                     <div class="content">
                         <div class="colorblock mumble-cb"><img class="app-icon" src="res/mumble.png"></div>
                         <p class="app-name">Mumble</p>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.dovecot.ansible_managed is defined %}
+            <div class="col-1-3 mobile-col-1-1">
+                <a class="mail" href="imap://{{ dovecot_fqdn }}:993">
+                    <div class="content">
+                        <div class="colorblock mail-cb"><img class="app-icon" src="res/mail.png"></div>
+                        <p class="app-name">Mail</p>
                     </div>
                 </a>
             </div>

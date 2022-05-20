@@ -24,3 +24,4 @@
     - gotty
     - jellyfin
     - dnsmasq
+    - mail_dovecot

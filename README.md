@@ -32,6 +32,7 @@ This project provides:
 - [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
+- [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
 - [monitoring_rsyslog](roles/monitoring_rsyslog) - Log aggregation, processing and forwarding system

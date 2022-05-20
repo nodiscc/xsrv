@@ -18,5 +18,6 @@
     # - nodiscc.xsrv.rocketchat # instant messaging & communication platform
     # - nodiscc.xsrv.jellyfin # media server
     # - nodiscc.xsrv.samba # file sharing server
-    # - nodiscc.xsrv.homepage # simple webserver homepage
     # - nodiscc.xsrv.dnsmasq # lightweight DNS server
+    # - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
+    # - nodiscc.xsrv.homepage # simple webserver homepage

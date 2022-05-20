@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - **valheim_server:** if you are using the [`valheim_server`](https://gitlab.com/nodiscc/xsrv/-/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 
 **Added:**
+- add [`mail_dovecot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) role - IMAP mailbox server
 - monitoring: netdata: allow streaming charts data/alarms to/from other netdata nodes ([`netdata_streaming_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - xsrv: add [`xsrv ssh`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (alias for `shell`)
 - openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)

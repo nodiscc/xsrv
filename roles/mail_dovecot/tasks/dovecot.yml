@@ -1,0 +1,41 @@
+- name: install dovecot
+  apt:
+    state: present
+    package:
+      - dovecot-core
+      - dovecot-imapd
+      - dovecot-ldap
+
+- name: create dovecot directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: dovecot
+    mode: "0770"
+  with_items:
+    - "/var/mail/vhosts"
+
+
+- name: copy dovecot configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode|default('0644') }}"
+  with_items:
+    - { src: etc_dovecot_conf.d_10-mail.conf.j2, dest: /etc/dovecot/conf.d/10-mail.conf }
+    - { src: etc_dovecot_conf.d_10-master.conf.j2, dest: /etc/dovecot/conf.d/10-master.conf }
+    - { src: etc_dovecot_conf.d_10-auth.conf.j2, dest: /etc/dovecot/conf.d/10-auth.conf }
+    - { src: etc_dovecot_conf.d_10-logging.conf.j2, dest: /etc/dovecot/conf.d/10-logging.conf }
+    - { src: etc_dovecot_conf.d_10-ssl.conf.j2, dest: /etc/dovecot/conf.d/10-ssl.conf }
+    - { src: etc_dovecot_dovecot-ldap.conf.ext.j2, dest: /etc/dovecot/dovecot-ldap.conf.ext, mode: "0600" }
+  notify: restart dovecot
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# test IMAP/IMAPS ports locally:
+# $ nc -Cv 127.0.0.1 143 or
+# $ nc -Cv 127.0.0.1 993
+# * OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE LITERAL+ STARTTLS AUTH=PLAIN] Dovecot (Debian) ready.
+# A1 login user@CHANGEME.org CHANGEME_PASSWORD

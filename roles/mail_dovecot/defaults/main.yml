@@ -1,0 +1,29 @@
+# teh domain name used to access the IMAP server
+dovecot_fqdn: "imap.CHANGEME.org"
+# URI of the LDAP server to use for authentication (use ldap:// or ldaps://)
+dovecot_ldap_uri: "ldap://ldap.CHANGEME.org"
+# LDAP base DN used to search for user accounts
+dovecot_ldap_base: "ou=users,dc=CHANGEME,dc=org"
+# DN of the unprivileged/"bind" LDAP user used to lookup user accounts in the directory
+dovecot_ldap_bind_dn: "cn=bind,ou=system,dc=CHANGEME,dc=org"
+# password for the "bind" LDAP user
+dovecot_ldap_bind_password: "CHANGEME"
+# LDAP user filter, the default value allows logins to the IMAP server by username OR e-mail address
+dovecot_ldap_user_filter: "(&(objectClass=inetOrgPerson)(|(uid=%u)(mail=%u)))"
+# mappign between LDAP attributes and IMAP user/password
+dovecot_ldap_pass_attrs: "mail=user,userPassword=password"
+# yes/no: log authentication debugging messages
+dovecot_auth_debug: no
+# allow unencrypted IMAP on port 143/tcp (yes/no)
+dovecot_listen_imap: no
+# require SSL (yes/no)
+dovecot_ssl_required: yes
+# disable plaintext authentication when SSL is not used (yes/no)
+dovecot_disable_plaintext_auth: yes
+# firewall zones for the IMAPS service, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+dovecot_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: enabled
