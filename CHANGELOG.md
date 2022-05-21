@@ -56,6 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: monitoring/rsyslog: fix rsyslog config installation when running with only `--tags=monitoring`
 - graylog: fix elasticsearch/graylog unable to start caused by too strict permissions on configuration files
 - openldap: ldap-account-manager: fix access to tree view
+- homepage: fix homepage generation when mumble was deployed from a different play
 - xsrv: [`fetch-backups`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): use the first host in alphabetical order, when no host is specified
 
 
