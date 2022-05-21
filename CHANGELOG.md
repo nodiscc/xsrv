@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: users: move PAM configuration to the main `limits.conf` configuration file
 - apache: cleanup: ensure no leftover mod-php installations are present
 - proxmox: cleanup: use a single file to configure proxmox APT repositories
+- homepage: improve homepage styling/layout
 - homepage: link directly to `ssh://` and `sftp://` URIs
 - cleanup: standardize task names, remove unused template files
 - cleanup: make usage of ansible_facts consistent in all roles
