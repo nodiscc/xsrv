@@ -154,23 +154,28 @@ Edit the inventory file. This file lists all hosts in your environment and assig
 # the simplest inventory, single host in a single group 'all'
 all:
   my.example.org:
-
+```
+```yaml
 # an inventory with mutiple hosts/groups
 all:
   children:
     tools:
-      hypervisor.example.org:
-      dns.example.org:
-      siem.example.org:
+      hosts:
+        hypervisor.example.org:
+        dns.example.org:
+        siem.example.org:
     dev:
-      dev.example.org:
-      dev-db.example.org:
+      hosts:
+        dev.example.org:
+        dev-db.example.org:
     staging:
-      staging.example.org:
-      staging-db.example.org:
+      hosts:
+        staging.example.org:
+        staging-db.example.org:
     prod:
-      prod.example.org:
-      prod-db.example.org:
+      hosts:
+        prod.example.org:
+        prod-db.example.org:
 ```
 
 See [YAML inventory](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yaml_inventory.html).
@@ -180,12 +185,10 @@ See [YAML inventory](https://docs.ansible.com/ansible/latest/collections/ansible
 
 ### xsrv edit-playbook
 
-Edit the list of [roles](index.md) (playbook file) for your hosts. Add any role you wish to enable to the `roles:` list.
-
-This is the simplest playbook, with a single host carrying multple roles:
+Edit the list of [roles](index.md) (playbook file) that will be deployed to your hosts. Add any role you wish to enable to the `roles:` list.
 
 ```yaml
-# xsrv edit-playbook
+# the simplest playbook, with a single host carrying multple roles:
 # uncomment or add roles to this list to enable additional components
 - hosts: my.example.org
   roles:
@@ -201,12 +204,11 @@ This is the simplest playbook, with a single host carrying multple roles:
     # - nodiscc.xsrv.samba
     # - other.collection.role
 ```
-
-See [Intro to playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html).
-
-Other examples:
-
 ```yaml
+# a playbook that optimizes deployment time by deploying some components in
+# parallel across hosts, taking into account deployment order/dependencies
+# between services:
+
 # deploy the common role to all hosts in parallel
 - hosts: all
   roles:
@@ -221,22 +223,24 @@ Other examples:
 - hosts: proxmox1.example.org
   roles:
     - nodiscc.xsrv.proxmox
-- hosts: ldap.example.org
+- hosts: ldap.example,app01.example.org
   roles:
     - nodiscc.xsrv.apache
+- hosts: ldap.example.org
+  roles:
     - nodiscc.xsrv.openldap
 - hosts: backup.example.org
   roles:
     - nodiscc.xsrv.backup
 - hosts: app01.example.org
   roles:
-    - nodiscc.xsrv.apache
     - nodiscc.xsrv.postgresql
     - nodiscc.xsrv.nextcloud
     - nodiscc.xsrv.shaarli
     - nodiscc.xsrv.gitea
 ```
 
+See [Intro to playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html).
 
 ### Remove roles
 
