@@ -21,8 +21,10 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional)
-    - nodiscc.xsrv.monitoring # (optional)
+    - nodiscc.xsrv.common # (optional) hardening, firewall, login bruteforce protection
+    - nodiscc.xsrv.monitoring # (optional) samba server monitoring
+    - nodiscc.xsrv.backup # (optional) automatic local backups
+    - nodiscc.xsrv.samba # (optional) manage jellyfin files/library over samba file sharing
     - nodiscc.xsrv.apache # webserver/reverseproxy and SSL/TLS certificates
     - nodiscc.xsrv.jellyfin
 
@@ -47,7 +49,7 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 ### Uploading media
 
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
-- If the [samba](../samba) role is enabled and [a list of valid users](defaults/main.yml) is specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
+- If the [samba](../samba) role is enabled and [`jellyfin_samba_share_enabled: yes` and a list of valid users](defaults/main.yml) are specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
 - Download files from bittorrent using [transmission](../transmission)
 
 
@@ -60,7 +62,7 @@ You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org
 
 ### Backups
 
-Automatic backups of the default media directory are disabled by default, see the `jellyfin_enable_media_backups` [variable](defaults/main.yml). See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
+Automatic backups of the default media directory are disabled by default, unless [`jellyfin_enable_media_backups: yes`](defaults/main.yml). See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
 
 
 ### LDAP authentication
