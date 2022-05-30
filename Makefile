@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.1.0 yamllint ansible==6.3.0
+	pip3 install isort ansible-lint==6.5.1 yamllint ansible==6.3.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -32,7 +32,7 @@ install_collection: venv build_collection
 	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
 
 .PHONY: test_ansible_lint # ansible syntax linter
-test_ansible_lint: venv install_collection
+test_ansible_lint: venv
 	source .venv/bin/activate && \
 	ansible-lint -v -x fqcn-builtins,truthy,braces,line-length roles/*
 
