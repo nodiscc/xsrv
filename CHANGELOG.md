@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: standardize task names, remove unused template files
 - cleanup: make usage of ansible_facts consistent in all roles
 - cleanup: clarify xsrv script, reorder functions by purpose/component
+- all roles: checks: don't fail immediately when a variable is not correctly defined, only fail after all checks
 - all roles: improve `check` mode support
 
 **Fixed:**
@@ -60,6 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - samba: fix [`samba_passdb_backend: ldapsam`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml#L39) mode when openldap role is not part of the same play
 - xsrv: [`fetch-backups`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): use the first host in alphabetical order, when no host is specified
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
+- shaarli/transmission: fix `*_https_mode` variable checks
 
 **Security:**
 - proxmox: fail2ban: fix detection of failed login attempts

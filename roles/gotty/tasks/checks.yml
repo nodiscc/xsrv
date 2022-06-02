@@ -1,19 +1,20 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - gotty_fqdn is not search("CHANGEME")
-      - gotty_auth_username is not search("CHANGEME")
-      - gotty_auth_password is not search("CHANGEME")
-      - gotty_run_username is not search("CHANGEME")
-      - gotty_run_command is string
-      - gotty_permit_write == gotty_permit_write|bool
-      - gotty_https_mode in ['selfsigned', 'letsencrypt']
-      - gotty_enable_service == gotty_enable_service|bool
-      - gotty_close_timeout == gotty_close_timeout|int
-      - gotty_reconnect == gotty_reconnect|bool
-      - gotty_reconnect_time == gotty_reconnect_time|int
-      - gotty_input_timeout == gotty_input_timeout|int
-      - gotty_listen_address is string
-      - gotty_version is string
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty"
+  with_items:
+    - gotty_fqdn is not search("CHANGEME")
+    - gotty_auth_username is not search("CHANGEME")
+    - gotty_auth_password is not search("CHANGEME")
+    - gotty_run_username is not search("CHANGEME")
+    - gotty_run_command is string
+    - gotty_permit_write == gotty_permit_write|bool
+    - gotty_https_mode in ['selfsigned', 'letsencrypt']
+    - gotty_enable_service == gotty_enable_service|bool
+    - gotty_close_timeout == gotty_close_timeout|int
+    - gotty_reconnect == gotty_reconnect|bool
+    - gotty_reconnect_time == gotty_reconnect_time|int
+    - gotty_input_timeout == gotty_input_timeout|int
+    - gotty_listen_address is string
+    - gotty_version is string

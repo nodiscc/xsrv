@@ -1,13 +1,14 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - apache_enable_mod_evasive == apache_enable_mod_evasive|bool
-      - apache_enable_service == apache_enable_service|bool
-      - apache_letsencrypt_email is not search("CHANGEME")
-      - apache_listen_http == apache_listen_http|bool
-      - apache_allow_robots == apache_allow_robots|bool
-      - php_fpm_enable_default_pool == php_fpm_enable_default_pool|bool
-      - apache_access_log_to_syslog == apache_access_log_to_syslog|bool
-      - apache_firewalld_zones|type_debug == "list"
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache"
+  with_items:
+    - apache_enable_mod_evasive == apache_enable_mod_evasive|bool
+    - apache_enable_service == apache_enable_service|bool
+    - apache_letsencrypt_email is not search("CHANGEME")
+    - apache_listen_http == apache_listen_http|bool
+    - apache_allow_robots == apache_allow_robots|bool
+    - php_fpm_enable_default_pool == php_fpm_enable_default_pool|bool
+    - apache_access_log_to_syslog == apache_access_log_to_syslog|bool
+    - apache_firewalld_zones|type_debug == "list"

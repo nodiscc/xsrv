@@ -1,16 +1,18 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - syslog_retention_days == syslog_retention_days|int
-      - rsyslog_enable_forwarding == rsyslog_enable_forwarding|bool
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog"
+  with_items:
+    - syslog_retention_days == syslog_retention_days|int
+    - rsyslog_enable_forwarding == rsyslog_enable_forwarding|bool
 
 - name: check that mandatory variables are correctly defined (syslog forwarding)
   assert:
     quiet: yes
-    that:
-      - rsyslog_forward_to_hostname is not search('CHANGEME')
-      - rsyslog_forward_to_port == rsyslog_forward_to_port|int
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog"
   when: rsyslog_enable_forwarding
+  with_items:
+    - rsyslog_forward_to_hostname is not search('CHANGEME')
+    - rsyslog_forward_to_port == rsyslog_forward_to_port|int

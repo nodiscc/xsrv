@@ -1,25 +1,26 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - tt_rss_account_limit == tt_rss_account_limit|int
-      - tt_rss_db_name is string
-      - tt_rss_db_password is not search("CHANGEME")
-      - tt_rss_db_user is string
-      - tt_rss_fqdn is not search("CHANGEME")
-      - tt_rss_full_url is not search("CHANGEME")
-      - tt_rss_https_mode in ['selfsigned', 'letsencrypt']
-      - tt_rss_install_dir is not search("CHANGEME")
-      - tt_rss_install_plugins == tt_rss_install_plugins|bool
-      - tt_rss_install_themes == tt_rss_install_themes|bool
-      - tt_rss_log_destination is string
-      - tt_rss_password is not search("CHANGEME")
-      - tt_rss_password_salt|length == 250
-      - tt_rss_user is not search("CHANGEME")
-      - tt_rss_version is string
-      - tt_rss_php_memory_limit|regex_search('[KMG]$')
-      - tt_rss_php_max_execution_time == tt_rss_php_max_execution_time|int
-      - tt_rss_php_max_input_time == tt_rss_php_max_input_time|int
-      - tt_rss_php_post_max_size|regex_search('[KMG]$')
-      - tt_rss_php_upload_max_filesize|regex_search('[KMG]$')
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
+  with_items:
+    - tt_rss_account_limit == tt_rss_account_limit|int
+    - tt_rss_db_name is string
+    - tt_rss_db_password is not search("CHANGEME")
+    - tt_rss_db_user is string
+    - tt_rss_fqdn is not search("CHANGEME")
+    - tt_rss_full_url is not search("CHANGEME")
+    - tt_rss_https_mode in ['selfsigned', 'letsencrypt']
+    - tt_rss_install_dir is not search("CHANGEME")
+    - tt_rss_install_plugins == tt_rss_install_plugins|bool
+    - tt_rss_install_themes == tt_rss_install_themes|bool
+    - tt_rss_log_destination is string
+    - tt_rss_password is not search("CHANGEME")
+    - tt_rss_password_salt|length == 250
+    - tt_rss_user is not search("CHANGEME")
+    - tt_rss_version is string
+    - tt_rss_php_memory_limit|regex_search('[KMG]$')
+    - tt_rss_php_max_execution_time == tt_rss_php_max_execution_time|int
+    - tt_rss_php_max_input_time == tt_rss_php_max_input_time|int
+    - tt_rss_php_post_max_size|regex_search('[KMG]$')
+    - tt_rss_php_upload_max_filesize|regex_search('[KMG]$')

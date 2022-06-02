@@ -1,10 +1,11 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - mumble_superuser_password is not search("CHANGEME")
-      - mumble_superuser_password is not search(" ")
-      - mumble_password is not search("CHANGEME")
-      - mumble_welcome_text is string
-      - mumble_firewalld_zones|type_debug == "list"
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble"
+  with_items:
+    - mumble_superuser_password is not search("CHANGEME")
+    - mumble_superuser_password is not search(" ")
+    - mumble_password is not search("CHANGEME")
+    - mumble_welcome_text is string
+    - mumble_firewalld_zones|type_debug == "list"

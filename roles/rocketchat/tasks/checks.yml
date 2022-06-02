@@ -1,9 +1,10 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - rocketchat_docker_version is string
-      - rocketchat_fqdn is not search("CHANGEME")
-      - rocketchat_https_mode in ['selfsigned', 'letsencrypt']
-      - rocketchat_enable_service == rocketchat_enable_service|bool
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat"
+  with_items:
+    - rocketchat_docker_version is string
+    - rocketchat_fqdn is not search("CHANGEME")
+    - rocketchat_https_mode in ['selfsigned', 'letsencrypt']
+    - rocketchat_enable_service == rocketchat_enable_service|bool
