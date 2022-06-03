@@ -49,7 +49,7 @@ Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456
 The controller must be able to resolve the server's name frome the [inventory](usage.md), using either:
 
 - (preferred) `A` or `CNAME` DNS records to the public IP address of your server, from:
-  - a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)
+  - a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar) ([namecheap.com](https://namecheap.com), [gandi.net](https://gandi.net), ...)
   - your [private DNS resolver](../appendices/pfsense.md)
   - or a [free subdomain service](https://freedns.afraid.org/domain/registry/)
 - a [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29)
