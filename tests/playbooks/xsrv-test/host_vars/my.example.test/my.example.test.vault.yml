@@ -1,0 +1,60 @@
+# encrypted configuration variables for my.example.test (ansible-vault)
+# please set required configuration variables (CHANGEME), and remove variables for roles you don't use
+# random values are generated where possible
+
+##### CONNECTION
+# administrator account (sudo) username/password
+ansible_user: "deploy"
+ansible_become_pass: "cj5Bfvv5Bm5JYNJiEEOG"
+##### GENERAL
+# default global username/password/email for applications/services admin accounts
+xsrv_admin_username: "xhEx7suWUTkbs8v7d0vK"
+xsrv_admin_password: "0v2CIXtzxOfj2nrUNdTB"
+xsrv_admin_email: "adminer@example.test"
+##### APACHE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml
+apache_letsencrypt_email: "{{ xsrv_admin_email }}"
+##### NEXTCLOUD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml
+nextcloud_user: "{{ xsrv_admin_username }}"
+nextcloud_password: "{{ xsrv_admin_password }}"
+nextcloud_admin_email: "{{ xsrv_admin_email }}"
+nextcloud_db_password: "JwO50Ue4LlZxYmEBPZzh"
+##### SHAARLI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml
+shaarli_username: "{{ xsrv_admin_username }}"
+shaarli_password: "{{ xsrv_admin_password }}"
+shaarli_password_salt: "fkvBduiT4y8EV0BOKeTr7PA5bTnwzzMRohJj6RKd" # 40 characters
+shaarli_api_secret: "ibUJplG9DZkc" # 12 or more characters
+##### TT_RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt-rss/defaults/main.yml
+tt_rss_user: "{{ xsrv_admin_username }}"
+tt_rss_password: "{{ xsrv_admin_password }}"
+tt_rss_db_password: "4JdWLnGYkHQbM5fe1XqG"
+tt_rss_password_salt: "vpKLZuRoTe2bB2ptzD25lTm9ZYYaOIV8WthEQPmZXfaM3KvilXF1KoOpLkiuLEwEOGZXhOG4YundwEhE6bIOg7MxhYd0L5TCQdLQCvczjrD3v2DW0qh7EnzJommqkJwiEbBJsnE4yUfBfMrotGM0TLJ7dyXJavjpsPZL7GbaeL8PmYWL4Y69ijZ4qZ5iapDTuLQjPGBAU1U0bkQabDKzULQ8xuB58ygcaQExOo3ePTefWlMwfUz9UbPBux" # 250 characters
+##### TRANSMISSION - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml
+transmission_username: "{{ xsrv_admin_username }}"
+transmission_password: "{{ xsrv_admin_password }}"
+##### GITEA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml
+gitea_admin_username: "{{ xsrv_admin_username }}"
+gitea_admin_password: "{{ xsrv_admin_password }}"
+gitea_admin_email: "{{ xsrv_admin_email }}"
+gitea_db_password: "" # leave empty when using postgresql
+gitea_internal_token: "3aUMDXbFGB8dXI1ndJTlPQmMnXC8BqNElL2piZA0LoDnCxpUo2K7pfEHEbSdVe41MQSEufdmoEc9H4SLD27phWQENAI4rur0Aung9TKCMK" # 106 characters
+gitea_secret_key: "CQ35nKQr5jTtdW7wANJRJh7l7sJgGkDBsGn9eZmwpncoVOAsdifHzbruaZ2g9IEb" # 64 characters
+gitea_oauth2_jwt_secret: "FuFb1c7ml9mNeA57VltGUwrBlb9iXcKHcrinhTFcPa4" # 43 characters
+gitea_lfs_jwt_secret: "p4ES9WEzenovXCmvFXL6oYmxnIgUeBAgMZbpxdlEJJF" # 43 characters
+##### MUMBLE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mumble/defaults/main.yml
+mumble_password: "FkVVh41phgFXniC8hhR6"
+mumble_superuser_password: "{{ xsrv_admin_password }}"
+##### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
+openldap_admin_password: "LcOmrE30ZLTfubYcz6J6dWaxqLXB0t"
+openldap_bind_password: "R2FPSgjrG8YEL77lUtwlZaJvBZ5WD5"
+#### GRAYLOG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml
+graylog_root_username: "{{ xsrv_admin_username }}"
+graylog_root_password: "{{ xsrv_admin_password }}"
+graylog_secret_key: "vuVCF8pxoX2NYX9V37MVsMAaLS32UrlQluDwm3FfPl8NBEXNysbf2MviDIX7xm1tna9Y4mdAFy8mX2q5lpEc7jv4e8WI4roI"
+#### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
+gotty_auth_username: "ROLyT4HAUjyLejZSkmnV"
+gotty_auth_password: "OvbvaXDvQ2KUzNb7qSS6"
+##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
+rss_bridge_auth_username: "{{ xsrv_admin_username }}"
+rss_bridge_auth_password: "{{ xsrv_admin_password }}"
+##### DOVECOT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml
+dovecot_ldap_bind_password: "{{ openldap_bind_password }}"

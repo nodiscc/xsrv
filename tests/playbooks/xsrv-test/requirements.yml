@@ -1,0 +1,14 @@
+# ansible collections (with version/branch) used in this playbook
+# run xsrv upgrade or ansible-galaxy collection install --force -r requirements.yml to upgrade
+collections:
+  - name: https://gitlab.com/nodiscc/xsrv.git
+    type: git
+    version: master
+  # - name: nodiscc.toolbox
+  #   source: git+https://gitlab.com/nodiscc/toolbox.git#/ARCHIVE/ANSIBLE-COLLECTION/ # role from a directory in a git repository
+  #   type: git
+  #   version: master
+  # - name: chocolatey.chocolatey # role from https://galaxy.ansible.com/
+  # - name: git+file:///home/user/GIT/xsrv-devel.git # role from a local git repository
+  #   type: git
+  #   version: firewalld

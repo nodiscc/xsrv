@@ -47,7 +47,7 @@ test_command_line:
 # usage: make test_init_vm SUDO_PASSWORD=CHANGEME ROOT_PASSWORD=CHANGEME
 TEMPLATE_NAME = debian11-base
 VM_NAME = my.example.test
-VM_IP = 10.0.0.223
+VM_IP = 10.0.0.212
 VM_NETMASK = 24
 VM_GATEWAY = 10.0.0.1
 VM_MEM = 7G
@@ -67,16 +67,30 @@ test_init_vm:
 	    --sudo-user $(SUDO_USER) --sudo-password $(SUDO_PASSWORD) --ssh-pubkey $(SSH_PUBKEY) --root-password $(ROOT_PASSWORD) \
 		--memory $(VM_MEM) --vcpus $(VM_VCPUS)
 
-.PHONY: test_idempotence # test full playbook run against the host created with test_init_vm
+.PHONY: test_check_mode # test full playbook run (--check mode) against the host created with test_init_vm
+	# install roles in the test project
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
+	# test that check mode before first deployment does not fail
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv check xsrv-test $(VM_NAME)
+
+.PHONY: test_idempotence # test 2 consecutive full playbook runs against the host created with test_init_vm
 test_idempotence:
-	# test initial check mode
-	./xsrv check default $(VM_NAME)
+	# install roles in the test project
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
 	# test initial deployment
-	./xsrv deploy default $(VM_NAME)
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test $(VM_NAME)
 	# test idempotence
-	./xsrv deploy default $(VM_NAME)
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test $(VM_NAME)
+	# check netdata alarms count
+	curl --insecure https://my.example.test:19999/api/v1/alarms
+
+# this requires an entry in /etc/hosts, e.g. 10.0.0.212 my.example.test git.example.test www.example.test media.example.test cloud.example.test links.example.test torrent.example.test rss.example.test chat.example.test ldap.example.test logs.example.test tty.example.test rss-bridge.example.test imap.example.test
+.PHONY: test_return_codes # check web applications return codes
+test_return_codes:
+	for host in $$(grep fqdn tests//playbooks/xsrv-test/host_vars/my.example.test/my.example.test.yml |awk -F'"' '{print $$2}'); do curl --insecure --silent --fail -w '%{url_effective} %{http_code}\n' -o /dev/null "https://$$host"; done
 
 ##### RELEASE PROCEDURE #####
+# - make test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG
 # - make bump_versions update_todo changelog new_tag=$new_tag
 # - update changelog.md, add and commit version bumps and changelog updates
 # - git tag $new_tag && git push && git push --tags
