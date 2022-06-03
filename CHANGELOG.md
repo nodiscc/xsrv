@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: install requirements for logging in to private docker registries
 - openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
 - openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+- samba: make events logged by full_audit configurable ([`samba_log_full_audit_success_events`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
 - shaarli: add an option to configure thumbnail generation mode ([`shaarli_thumbnails_mode`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and default number of links per page (`shaarli_links_per_page`, default 30)
 - postgresql: download pgmetrics report to the controller when running `TAGS=utils-pgmetrics`
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined

@@ -68,6 +68,9 @@ samba_firewalld_zones:
 samba_enable_backups: yes
 # Samba log level (1-10, allows additional component:level)
 samba_log_level: '1 passdb:2 auth:2 auth_audit:3'
+# Log the following audit events (on success)
+# Example: 'chdir chmod chown close closedir connect disconnect fchmod fchown ftruncate link lock mkdir mknod open opendir pread pwrite read readlink realpath rename rmdir sendfile symlink unlink write !closedir !connectpath !get_alloc_size !lstat !opendir !pread !readdir !strict_unlock !telldir'
+samba_log_full_audit_success_events: 'mkdir rmdir rename open unlink connect disconnect'
 # Max size of log files (in KiB)
 samba_max_log_size_kb: 10000
 # base path for samba share directories
