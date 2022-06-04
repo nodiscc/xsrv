@@ -114,4 +114,4 @@
     name: ttrss_update
     hour: '*'
     minute: '0'
-    job: '/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet'
+    job: '/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet 2>&1 | logger -t tt-rss-update'

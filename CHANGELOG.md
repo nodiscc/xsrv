@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
 - monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- tt_rss: don't send feed update errors by mail, log them to syslog
 - xsrv: always use the first host/group in alphabetical order when no host/group is specified
 - xsrv: upgrade ansible to [v5.8.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
