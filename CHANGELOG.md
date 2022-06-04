@@ -63,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - samba: fix [`samba_passdb_backend: ldapsam`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml#L39) mode when openldap role is not part of the same play
 - xsrv: [`fetch-backups`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): use the first host in alphabetical order, when no host is specified
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
+- monitoring: netdata/needrestart: fix `needrestart_autorestart_services` value not taken into account when true
 - shaarli/transmission: fix `*_https_mode` variable checks
 
 **Security:**
