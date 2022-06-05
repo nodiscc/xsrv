@@ -9,7 +9,7 @@ input(type="imfile"
 {% if apache_access_log_to_syslog %}
 input(type="imfile"
       File="/var/log/apache2/access.log"
-      Tag="apache:"
+      Tag="apache-access:"
       Facility="daemon"
       PersistStateInterval="0")
 {% endif %}
