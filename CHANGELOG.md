@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
 - monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - xsrv: always use the first host/group in alphabetical order when no host/group is specified
-- xsrv: upgrade ansible to [v5.7.1](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+- xsrv: upgrade ansible to [v5.8.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - common: ssh: increase the frequency of "client alive" messages to 1 every 5 minutes
 - common: ssh/users: don't allow login for users without an existing home directory
