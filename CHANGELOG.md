@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: standardize task names, remove unused template files
 - cleanup: make usage of ansible_facts consistent in all roles
 - cleanup: clarify xsrv script, reorder functions by purpose/component
+- postgresql: update pgmetrics to [v1.13.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.0)
 - all roles: checks: don't fail immediately when a variable is not correctly defined, only fail after all checks
 - all roles: improve `check` mode support
 
