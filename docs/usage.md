@@ -49,21 +49,31 @@ PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
 https://xsrv.readthedocs.io/en/master/usage.html
 ```
 
-If no `[project]` is specified, the `default` project is assumed. If no `[limit]` is specified, `all` hosts are assumed.
+If no `project` is specified, the `default` project is assumed. If no `host` or `group` is specified, `all` hosts are assumed.
 
 Examples:
 
 ```bash
-xsrv deploy # deploy all hosts in the default project
-xsrv deploy default # deploy all hosts in the default project
-xsrv init-project infra # initialize a new project named infra
-xsrv deploy infra # deploy all hosts in project infra
-xsrv init-host infra ex2.CHANGEME.org # add a new host ex2.CHANGEME.org to project infra
-xsrv edit-host infra ex2.CHANGEME.org # edit host variables for the host'ex2.CHANGEME.org in project infra
-xsrv edit-vault infra ex2.CHANGEME.org # edit secret/vaulted variables for ex2.CHANGEME.org in project infra
-xsrv deploy infra ex1.CHANGEME.org,ex2.CHANGEME.org # deploy only the hosts ex1.CHANGEME.org and ex2.CHANGEME.org in project infra
-TAGS=nextcloud,gitea xsrv deploy infra ex3.CHANGEME.org # run tasks tagged nextcloud or gitea on ex3.CHANGEME.org in project infra
-xsrv deploy default '!ex1.CHANGEME.org,!ex7.CHANGEME.org' # deploy all hosts except ex1 and ex7.CHANGEME.org
+# deploy all hosts in the default project
+xsrv deploy # or xsrv deploy default
+# initialize a new project named infra
+xsrv init-project infra
+# deploy all hosts in project infra
+xsrv deploy infra
+ # add a new host ex2.CHANGEME.org to project infra
+xsrv init-host infra ex2.CHANGEME.org
+# edit configuration for the host ex2.CHANGEME.org in project infra
+xsrv edit-host infra ex2.CHANGEME.org
+# edit secret/vaulted configuration for my.CHANGEME.org in project default
+xsrv edit-vault default my.CHANGEME.org
+# deploy only ex1.CHANGEME.org and ex2.CHANGEME.org
+xsrv deploy infra ex1.CHANGEME.org,ex2.CHANGEME.org
+# deploy only tasks tagged nextcloud or gitea on ex3.CHANGEME.org
+TAGS=nextcloud,gitea xsrv deploy infra ex3.CHANGEME.org
+# deploy all hosts except ex1 and ex7.CHANGEME.org
+xsrv deploy default '!ex1.CHANGEME.org,!ex7.CHANGEME.org'
+# deploy all hosts in group 'prod' in default project (dry-run/simulation mode)
+xsrv check default prod
 ```
 
 
@@ -72,75 +82,46 @@ xsrv deploy default '!ex1.CHANGEME.org,!ex7.CHANGEME.org' # deploy all hosts exc
 ## Manage projects
 
 Each project contains:
+- an [inventory](#manage-hosts) of managed servers
+- a list of [roles](#manage-roles) assigned to each host/group (_playbook_)
+- [configuration](#manage-hosts-configuration) values for host/group (*host_vars/group_vars*)
+- deployment logic/tasks used in your project ([collections](#use-as-ansible-collection)/roles)
 - an independent/isolated ansible installation (_virtualenv_) and its configuration
-- an [inventory](#manage-hosts) of managed servers and their [roles](#manage-roles) (_playbook_)
-- [configuration](#manage-hosts-configuration) values specific to each host/group (*host_vars/group_vars*)
-- [collections](#use-as-ansible-collection)/roles used by your project
 
 Projects are stored in the `~/playbooks` directory by default (use the `XSRV_PROJECTS_DIR` environment variable to override this).
-
-A single project is suitable for most setups (you can still organize hosts as different [environments/groups](#manage-hosts) inside a project). Use multiple projects to separate setups with completely [different contexts/owners](maintenance.md).
 
 ```bash
 $ ls ~/playbooks/
 default/  homelab/  mycompany/
 ```
 
-Directory structure for a project:
+A single project is suitable for most setups (you can still organize hosts as different [environments/groups](#manage-hosts) inside a project). Use multiple projects to separate setups with completely [different contexts/owners](maintenance.md).
 
-```bash
-# tree -a ~/playbooks/default/
-├── inventory.yml # inventory of managed hosts
-├── playbook.yml # playbook (assign roles to managed hosts)
-├── group_vars/ # group variables (file names = group names from inventory.yml)
-│   └── all.yml
-├── host_vars/ # host variables (file names = host names from inventory.yml)
-│   ├── my.example.org/
-│   │   ├── my.example.org.vault.yml # plaintext host variables file
-│   │   └── my.example.org.yml # encrypted/vaulted host variables file
-│   └── my.other.org/
-│       ├── my.other.org.vault.yml
-│       └── my.other.org.yml
-├── data/ # local cache and data
-│   ├── backups/
-│   └── cache/
-├── README.md # documentation about your project
-├── ansible.cfg # ansible configuration
-├── requirements.yml # required ansible collections
-└── ansible_collections # downloaded collections
-    └── nodiscc
-        └── xsrv
-```
-
-<!--TODO
- (output format, verbosity, logging, paths...)
-├── public_keys/ # public SSH keys
-│   └── user@laptop.pub
- and their versions
-├── playbooks # custom playbooks for one-shot tasks
-│   ├── main.yml
-│   └── operationXYZ.yml
-```
--->
 
 ### xsrv init-project
 
 Initialize a new project from the [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv) - creates all necessary files and prepares a playbook/environment with a single host.
 
+<!-- TODO screencast -->
+
+-----------------------
 
 ## Manage hosts
 
-All servers [(hosts)](installation/server-preparation.md) must be listed in the inventory file. Their [roles](#manage-roles) must be listed in the playbook file. Hosts [configuration](#manage-hosts-configuration) must be set in [host_vars/group_vars](#manage-hosts-configuration) files.
+- All servers [(hosts)](installation/server-preparation.md) must be listed in the inventory file.
+- Their [roles](#manage-roles) must be listed in the playbook file.
+- Hosts [configuration](#manage-hosts-configuration) must be set in [host or group](#manage-hosts-configuration) configuration files.
 
 
 ### xsrv init-host
 
 Add a new host to the inventory/playbook and create/update all required files. You will be asked for a [host name](#manage-hosts):
 
-```yaml
-# xsrv init-host
-# [xsrv] Host name to add to the default playbook (ex: my.CHANGEME.org): my.example.org
+```bash
+xsrv init-host
+[xsrv] Host name to add to the default playbook (ex: my.CHANGEME.org): my.example.org
 ```
+<!-- TODO full output -->
 
 - An editor will let you set the list of [roles](#manage-roles) for the host
 - An editor wil let you set required [configuration variables](#manage-hosts-configuration).
@@ -181,14 +162,17 @@ all:
 See [YAML inventory](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yaml_inventory.html).
 
 
+---------------------
+
 ## Manage roles
 
 ### xsrv edit-playbook
 
 Edit the list of [roles](index.md) (playbook file) that will be deployed to your hosts. Add any role you wish to enable to the `roles:` list.
 
+The simplest playbook, a single host carrying multiple roles:
+
 ```yaml
-# the simplest playbook, with a single host carrying multple roles:
 # uncomment or add roles to this list to enable additional components
 - hosts: my.example.org
   roles:
@@ -198,17 +182,16 @@ Edit the list of [roles](index.md) (playbook file) that will be deployed to your
     - nodiscc.xsrv.openldap
     - nodiscc.xsrv.nextcloud
     - nodiscc.xsrv.mumble
+    # - nodiscc.xsrv.samba
     # - nodiscc.xsrv.jellyfin
     # - nodiscc.xsrv.transmission
     # - nodiscc.xsrv.gitea
-    # - nodiscc.xsrv.samba
     # - other.collection.role
 ```
-```yaml
-# a playbook that optimizes deployment time by deploying some components in
-# parallel across hosts, taking into account deployment order/dependencies
-# between services:
 
+A playbook that deploys some roles in parallel across hosts:
+
+```yaml
 # deploy the common role to all hosts in parallel
 - hosts: all
   roles:
@@ -220,9 +203,6 @@ Edit the list of [roles](index.md) (playbook file) that will be deployed to your
     - nodiscc.xsrv.monitoring
 
 # deploy specific roles role to specific hosts
-- hosts: proxmox1.example.org
-  roles:
-    - nodiscc.xsrv.proxmox
 - hosts: ldap.example,app01.example.org
   roles:
     - nodiscc.xsrv.apache
@@ -242,51 +222,59 @@ Edit the list of [roles](index.md) (playbook file) that will be deployed to your
 
 See [Intro to playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html).
 
-### Remove roles
 
-Removing a role from the list does not remove its components from your hosts. To uninstall components managed by a role:
-- Set the appropriate `*_uninstall` variable to `yes` ([`xsrv show-defaults`](#xsrv-show-defaults)) and apply changes ([`xsrv deploy`](#xsrv-deploy)). You may then remove the role from the list
-- Or remove components manually using SSH/[`xsrv shell`](#xsrv-shell). You may then remove the role from the list
-- Or remove the role from the list, [prepare](installation/server-preparation.md) a new host, apply the updated configuration/roles list, and restore data from backups
+**Removing roles:** Removing a role from the playbook does not remove its components or data from your hosts. To uninstall components managed by a role, run `xsrv deploy` with the appropriate `utils-remove-*` [tag](tags.md):
+
+```bash
+# remove all gitea role components and data from demo1.example.org
+TAGS=utils-remove-gitea xsrv deploy default demo1.example.org
+```
+
+Then remove the role from your playbook.
+
+You may also remove components manually using SSH/[`xsrv shell`](#xsrv-shell), or remove the role from the list, [prepare](installation/server-preparation.md) a new host, deploy the playbook again, and restore data from backups or shared storage.
 
 Most roles provide variables to temporarily disable the services they manage.
 
+-------------------------------
 
-## Manage hosts configuration
+## Manage configuration
 
 ### xsrv show-defaults
 
 Show [all role configuration variables](configuration-variables.md), and their default values.
 
-Can be limited to show only a single role's default values, for example:
-
 ```bash
+# show variables for all roles
+xsrv show-defaults myproject
+# show variables only for a specific role
 xsrv show-defaults myproject nextcloud
 ```
 
 
 ### xsrv edit-host
 
-Edit configuration variables (`host_vars`) for the host/roles deployed to it.
+Edit configuration variables (`host_vars`) for a host.
 
-To change one of the default values listed in [`xsrv show-defaults`](#xsrv-show-defaults), add the variable to this file with the desired value. The value in host_vars will take [precedence](https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html) over [default](#xsrv-show-defaults) role values and [group](#xsrv-edit-group) values. Example:
+The value in host_vars will take [precedence](https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html) over default and [group](#xsrv-edit-group) values. Example:
 
 ```yaml
-# xsrv show-defaults
+# $ xsrv show-defaults
 # yes/no: enable rocketchat services
 rocketchat_enable_service: yes
 
-# xsrv edit-host
+# $ xsrv edit-host
+# disable rocketchat services on this host
 rocketchat_enable_service: no
 ```
 
-You may also use [special variables](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html) in your hosts/groups configuration.
+Use [`xsrv show-defaults`](#xsrv-show-defaults) to list all available variables and their default values.
+
+You may also use [special variables](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html) or [connection variables](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ssh_connection.html):
 
 ```yaml
-# this variable is required for all hosts
-ansible_user: "CHANGEME" # user account used for deployment
-
-# these variables may be required in some cases
+# user account used for deployment
+ansible_user: "deploy"
 # SSH port used to contact the host if different from 22
 ansible_ssh_port: 123
 # IP/hostname used to contact the host if its inventory name is different/not resolvable
@@ -298,12 +286,12 @@ ansible_host: 1.2.3.4
 
 Edit encrypted configuration variables/secrets.
 
-Sensitive variables such as usernames/password/credentials should not be stored as plain text in `host_vars`. Instead, store them in a file encrypted with [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html):
+Sensitive variables such as usernames/password/credentials should not be stored as plain text in [`host_vars`](#xsrv-edit-host). Instead, store them in an encrypted file:
 
 ```yaml
 # xsrv edit-vault
-# this variable is required for all hosts
-ansible_become_pass: "CHANGEME" # sudo password for this account
+# sudo password for the ansible_user account
+ansible_become_pass: "ZplHu0b6q88_QkHNzuKwoa-9cb-Dxrrt"
 # roles may require additional secrets/variables
 nextcloud_user: "myadminusername"
 nextcloud_password: "cyf58eAZFbbEUZ4v3y6B"
@@ -311,41 +299,45 @@ nextcloud_admin_email: "admin@example.org"
 nextcloud_db_password: "ucB77fNLX4qOoj2GhLBy"
 ```
 
-Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. **Keep backups of this file** and protect it appropriately.
+Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. **Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, encrypt underlying disk).
 
 ```bash
 # cat ~/playbooks/default/.ansible-vault-password
-Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY 
+Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY
 ```
 
-You may also write a custom script in `.ansible-vault-password` that will fetch the master password from a secret storage/keyring of your choice (in that case `.ansible-vault-password` must be made executable).
+You may also write a custom script in `.ansible-vault-password` that will fetch the master password from a secret storage/keyring of your choice. See [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html).
 
 
 ### xsrv edit-group
 
 Edit [group](#manage-hosts) configuration (*group_vars* - configuration shared by all hosts in a group).
 
-```bash
-# xsrv edit-group default all
+```yaml
+# $ xsrv edit-group default all
 # enable msmtp mail client installation for all hosts
 setup_msmtp: yes
 
-# xsrv edit-host default dev.example.org
+# $ xsrv edit-host default dev.example.org
 # except for this host
 setup_msmtp: no
 ```
+
+Group variables have higher precedence than [default](#xsrv-show-defaults) values, but lower than [host](#xsrv-edit-host) variables.
+
 
 ### xsrv edit-group-vault
 
 Edit encrypted [group](#manage-hosts) configuration - similar to [`xsrv edit-vault`](#xsrv-edit-vault) but for groups.
 
-```bash
-# xsrv edit-group-vault all
+```yaml
+# $ xsrv edit-group-vault all
 # common outgoing mail credentials for all hosts
 msmtp_username: "mail-notifications"
 msmtp_password: "e9fozo8ItlH6XNoysyt7vdylXcttVu"
 ```
 
+----------------------------
 
 ## Apply changes
 
@@ -360,44 +352,71 @@ xsrv deploy
 You may also deploy changes for a limited set/group of hosts or roles/tasks:
 
 ```bash
-# deploy configuration only to my.example2.org and the production group
-xsrv deploy default my.example2.org,production
+# deploy only to my.example2.org and the 'prod' group in the default project
+xsrv deploy default my.example2.org,prod
 # deploy only nextcloud and transmission roles
-TAGS=nextcloud,transmission xsrv deploy
+TAGS=nextcloud,transmission xsrv deploy default
 ```
+
+Run `xsrv help-tags` or see the list of [all tags](tags.md).
+
 
 ### xsrv check
 
-[Check mode](https://docs.ansible.com/ansible/latest/user_guide/playbooks_checkmode.html) will simulate changes and return the expected return status of each task (`ok/changed/skipped/failed`), but no actual changes will be made to the host.
+[Check mode](https://docs.ansible.com/ansible/latest/user_guide/playbooks_checkmode.html) will simulate changes and return the expected return status of each task (`ok/changed/skipped/failed`), but no actual changes will be made to the host (_dry-run_ mode).
+
+```bash
+# check what would be changed by running xsrv deploy default my.example2.org
+xsrv check default my.example2.org
+# TAGS can also be sued in check mode
+TAGS=nextcloud,transmission xsrv check
+```
+
 
 _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2.org,production --tags=transmission,nextcloud --check`_
 
-## Usage without remote controller
+-----------------------------------------
 
+## Upgrading
+
+**Upgrade roles to the latest release:** (this is the default) run `xsrv upgrade` to upgrade to the latest stable [release](https://gitlab.com/nodiscc/xsrv/-/releases) at any point in time (please read release notes/upgrade procedures and check if manual steps are required).
+
+**Upgrade roles to the latest development revision**: replace `release` with `master` (or any other branch/tag) in the [requirements.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) file of your project (`xsrv edit-requirements`) , then run `xsrv upgrade`.
+
+**Upgrade the xsrv script**: run `xsrv self-upgrade` to upgrade the `xsrv` command-line utility to the latest stable release.
+
+------------------------------
+
+## Advanced
+
+### Use without remote controller
+
+Using the server/host as its own controller is not recommended, but can help with single-server setups where no separate administration machine is available. By not using a separate controller, you lose the ability to easily redeploy a new system from scratch in case of emergency/distaster, and centralized management of multiple hosts will become more difficult. Your host will also have access to configuration of other hosts in your project.
 
 - [Install](installation/controller-preparation.md) the `xsrv` main script directly on the host
 - During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `connection: local` in the playbook for this host:
 
 ```yaml
-# xsrv edit-playbook
+# $ xsrv edit-playbook
 - hosts: my.example.org
   connection: local
   roles:
     - nodiscc.xsrv.common
+    - nodiscc.xsrv.apache
+    - nodiscc.xsrv.jellyfin
+    - ...
 ```
-
-Using the server/host as its own controller is not recommended, but can help with single-server setups where no separate administration machine is available. By not using a separate controller, you lose the ability to easily redeploy a new system from scratch in case of emergency/distaster, and centralized management of multiple hosts will become more difficult. Your host will also have access to configuration of other hosts in your project.
 
 <!--
 ### Interactive mode
 TODO-->
 
 
-## Use as ansible collection
+### Use as ansible collection
 
-The main [`xsrv` script](#command-line-usage) maintains a simple and consistent structure for your projects, automates frequent operations, and manages ansible installation/environments. You can also manage your playbooks manually using your favorite text editor and [`ansible-*` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
+The main [`xsrv` script](#command-line-usage) maintains a simple and consistent structure for your projects, automates frequent operations, and manages Ansible installation/environments. You can also manage your playbooks manually using your favorite text editor and [`ansible-*` command-line tools](https://docs.ansible.com/ansible/latest/user_guide/command_line_tools.html).
 
-To import roles as a [collection](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in your own playbooks, [install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) and create `requirements.yml` in your playbook directory:
+To import roles as a [collection](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in your own playbooks, [install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) and create `requirements.yml` in the project directory:
 
 ```yaml
 # cat requirements.yml
@@ -407,10 +426,10 @@ collections:
     version: release
 ```
 
-Install the collection:
+Install the collection (or upgrade it to the latest [release](https://gitlab.com/nodiscc/xsrv/-/releases)):
 
 ```bash
-ansible-galaxy collection install -r requirements.yml
+ansible-galaxy collection install --force -r requirements.yml
 ```
 
 Include the collection and roles in your playbooks:
@@ -427,31 +446,54 @@ Include the collection and roles in your playbooks:
    - ...
 ```
 
-To upgrade the collection to the latest [release](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md):
-
-```bash
-$ ansible-galaxy collection install --force -r requirements.yml
-```
-
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
-xsrv provides shorthand [commands](#command-line-usage) for these operations:
-
-```bash
-$ xsrv edit-requirements [project]
-$ xsrv upgrade [project]
-```
-
-You can find additional collections here:
+Other collections:
 - [`nodiscc.toolbox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
+- [`devsec.hardening`](https://github.com/dev-sec/ansible-collection-hardening)
+- [`debops.debops`](https://galaxy.ansible.com/debops/debops)
 - [Ansible Galaxy](https://galaxy.ansible.com/)
 
+Directory structure for a project:
 
-## Version control
+```bash
+# tree -a ~/playbooks/default/
+├── inventory.yml # inventory of managed hosts
+├── playbook.yml # playbook (assign roles to managed hosts)
+├── group_vars/ # group variables (file names = group names from inventory.yml)
+│   └── all.yml
+├── host_vars/ # host variables (file names = host names from inventory.yml)
+│   ├── my.example.org/
+│   │   ├── my.example.org.vault.yml # plaintext host variables file
+│   │   └── my.example.org.yml # encrypted/vaulted host variables file
+│   └── my.other.org/
+│       ├── my.other.org.vault.yml
+│       └── my.other.org.yml
+├── data/ # local cache and data
+│   ├── backups/
+│   └── cache/
+├── README.md # documentation about your project
+├── ansible.cfg # ansible configuration
+├── requirements.yml # required ansible collections
+└── ansible_collections # downloaded collections
+    └── nodiscc
+        └── xsrv
+```
 
-Configuration/testing/deployment/change management process can be automated further using [version-controlled](https://en.wikipedia.org/wiki/Version_control) configuration.
+<!--TODO
+ (output format, verbosity, logging, paths...)
+├── public_keys/ # public SSH keys
+│   └── user@laptop.pub
+ and their versions
+├── playbooks # custom playbooks for one-shot tasks
+│   ├── main.yml
+│   └── operationXYZ.yml
+```
+-->
 
-Put your playbook directory (eg. `~/playbooks/default`) under `git` version control and start tracking changes to your configuration:
+### Version control
+
+Configuration/testing/deployment/change management process can be automated further using [version-controlled](https://en.wikipedia.org/wiki/Version_control) configuration. Put your playbook directory (e.g. `~/playbooks/default`) under `git` version control and start tracking changes to your configuration:
 
 ```bash
 # create a project
@@ -475,145 +517,22 @@ git push
 **Reverting changes:**
 
 - `git checkout` your playbook directory as it was before the change or `git reset` to the desired, "good" commit.
-- run the playbook `xsrv deploy`
+- apply the playbook `xsrv deploy`
 
 You may have to restore data from last known good [backups](maintenance.md)/a snapshot from before the change. See each role's documentation for restoration instructions.
 
 
-## Continuous deployment
+### Continuous deployment
 
-[Continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment) systems can be tied to a version control/git repository for automated checks and deployments controlled by git operations ("GitOps").
+Projects stored in git repositories can be tied to a [Continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment) system that will perform automated checks and deployments, controlled by git operations (similar to [GitOps](https://about.gitlab.com/topics/gitops/)).
 
-This example [`.gitlab-ci.yml`](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments.
-
-```yaml
-image: debian:buster-backports
-
-# These variables must be set in the environment (Settings > CI/CD > variables)
-# ANSIBLE_VAULT_PASSWORD (contents of .ansible-vault-password, type variable, masked)
-# GITLAB_CI_SSH_KEY (contents of private SSH key authorized on remote hosts, terminated by newline, type file)
-
-stages:
-  - staging
-  - production
-
-variables:
-  ANSIBLE_CONFIG: ansible.cfg
-  ANSIBLE_HOST_KEY_CHECKING: "False"
-  ANSIBLE_FORCE_COLOR: "True"
-  XSRV_PLAYBOOKS_DIR: "$CI_PROJECT_DIR/../"
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
-  TAGS: "all"
-
-cache:
-  paths:
-    - "$CI_PROJECT_DIR/pip-cache"
-    - "$CI_PROJECT_DIR/.venv"
-
-include: # only run pipelines for branches/tags, not merge requests
-  - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
-
-before_script:
-  - export ANSIBLE_PRIVATE_KEY_FILE="$GITLAB_CI_SSH_KEY"
-  - chmod 0600 "$ANSIBLE_PRIVATE_KEY_FILE"
-  - echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
-  - ln -s $CI_PROJECT_DIR $CI_PROJECT_DIR/../default
-  - echo 'Apt::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-norecommends
-  - apt update && apt -y install git bash python3-pip python3-venv
-  - wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
-  - chmod a+x /usr/local/bin/xsrv
-
-##### STAGING #####
-
-check-staging: # run check mode on staging environment
-  stage: staging
-  script:
-    - TAGS=$TAGS xsrv check staging
-  interruptible: true # stop this job when a new pipeline starts on the same branch
-  needs: [] # don't wait for other jobs to complete before starting this job
-
-deploy-staging: # run deployment on staging environment
-  stage: staging
-  script:
-    - TAGS=$TAGS xsrv deploy staging
-  resource_group: staging # wait for other jobs on this environment to finish before starting this job
-  needs:
-    - check-staging
-
-##### PRODUCTION #####
-
-check-production:
-  stage: check
-  script:
-    - TAGS=$TAGS xsrv check production
-  interruptible: true
-  needs: []
-
-deploy-production:
-  stage: production
-  script:
-    - TAGS=$TAGS xsrv deploy production
-  when: manual # require manual action/click to start deployment
-  resource_group: production
-  needs:
-    - check-production
-    - deploy-staging
-  only: # only allow deployment of the master branch or tags to production
-    - master
-    - tags
-```
+This example [`.gitlab-ci.yml`](.gitlab-ci.yml) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments.
 
 <!-- TODO PIPELINE SCREENSHOT -->
 
-Pipeline execution time can be optimized by pre-building a CI image that includes dependencies (requires Gitlab [Container Registry](https://docs.gitlab.com/ee/user/packages/container_registry/) set up and enabled for the project):
-
-
-```Dockerfile
-# .gitlab-ci.Dockerfile -->
-FROM python:3
-RUN echo 'Apt::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-norecommends && apt update && apt -y install git bash python3-venv python3-pip python3-cryptography openssh-client pwgen wget
-RUN wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
-RUN chmod a+x /usr/local/bin/xsrv
-```
-
-Then remove the corresponding steps from `before_script`, and modify `.gitlab-ci.yml`:
-
-```yaml
-# add a 'build-ci-image' stage
-stages:
-  - build-ci-image
-  - staging
-  - production
-
-# remove dependencies installation steps from before_script
-before_script:
-  - export ANSIBLE_PRIVATE_KEY_FILE="$GITLAB_CI_SSH_KEY"
-  - chmod 0600 "$ANSIBLE_PRIVATE_KEY_FILE"
-  - echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
-  - ln -s $CI_PROJECT_DIR $CI_PROJECT_DIR/../default
-
-# build the base image for deployments
-build-ci-image:
-  stage: build-ci-image
-  image: docker:stable
-  services:
-    - docker:dind
-  script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:$CI_COMMIT_REF_NAME -f .gitlab-ci.Dockerfile .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:$CI_COMMIT_REF_NAME
-  when: manual # require manual trigger to build/rebuild the image
-
-# in ansible-check-* and deploy-* jobs, use the image we just built
-deploy-staging:
-  image: $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:master
-  ...
-```
-
-
-## Use the development version
-
-To use the development version of the roles, replace `release` with `master` (or any other branch/tag) in the [requirements.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) file of your project (`xsrv edit-requirements [project]`), then run `xsrv upgrade [project]`. Other collections can also be added to this file.
+Pipeline execution time can be optimized by building a CI image that includes preinstalled dependencies:
+- [`.gitlab-ci.Dockerfile`](.gitlab-ci.Dockerfile)
+- [`.gitlab-ci.yml`](.gitlab-ci.docker.yml)
 
 
 ## External links

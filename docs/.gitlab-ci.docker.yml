@@ -1,0 +1,90 @@
+# gitlab CI configuration - xsrv
+# https://docs.gitlab.com/ee/ci/
+# These variables must be set in the environment (Settings > CI/CD > variables)
+# ANSIBLE_VAULT_PASSWORD (contents of .ansible-vault-password, type variable, masked)
+# GITLAB_CI_SSH_KEY (contents of private SSH key authorized on remote hosts, terminated by newline, type file)
+
+image: $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:master
+
+stages:
+  - build-ci-image
+  - staging
+  - production
+
+variables:
+  ANSIBLE_CONFIG: ansible.cfg
+  ANSIBLE_HOST_KEY_CHECKING: "False"
+  ANSIBLE_FORCE_COLOR: "True"
+  XSRV_PLAYBOOKS_DIR: "$CI_PROJECT_DIR/../"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
+  TAGS: "all"
+
+cache:
+  paths:
+    - "$CI_PROJECT_DIR/pip-cache"
+    - "$CI_PROJECT_DIR/.venv"
+
+include: # only run pipelines for branches/tags, not merge requests
+  - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
+
+before_script:
+  - export ANSIBLE_PRIVATE_KEY_FILE="$GITLAB_CI_SSH_KEY"
+  - chmod 0600 "$ANSIBLE_PRIVATE_KEY_FILE"
+  - echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
+  - ln -s $CI_PROJECT_DIR $CI_PROJECT_DIR/../default
+
+##### CI IMAGE BUILD #####
+
+# requires Gitlab Container Registry set up and enabled for the project
+# https://docs.gitlab.com/ee/user/packages/container_registry/
+# this job must be run manually at least once as the image is reused in following steps
+build-ci-image:
+  stage: build-ci-image
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:$CI_COMMIT_REF_NAME -f .gitlab-ci.Dockerfile .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/xsrv:$CI_COMMIT_REF_NAME
+  when: manual # require manual trigger to build/rebuild the image
+
+
+##### STAGING #####
+
+check-staging: # run check mode on staging environment
+  stage: staging
+  script:
+    - TAGS=$TAGS xsrv check staging
+  interruptible: true # stop this job when a new pipeline starts on the same branch
+  needs: [] # don't wait for other jobs to complete before starting this job
+
+deploy-staging: # run deployment on staging environment
+  stage: staging
+  script:
+    - TAGS=$TAGS xsrv deploy staging
+  resource_group: staging # wait for other jobs on this environment to finish before starting this job
+  needs:
+    - check-staging
+
+##### PRODUCTION #####
+
+check-production:
+  stage: check
+  script:
+    - TAGS=$TAGS xsrv check production
+  interruptible: true
+  needs: []
+
+deploy-production:
+  stage: production
+  script:
+    - TAGS=$TAGS xsrv deploy production
+  when: manual # require manual action/click to start deployment
+  resource_group: production
+  needs:
+    - check-production
+    - deploy-staging
+  only: # only allow deployment of the master branch or tags to production
+    - master
+    - tags
