@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: install requirements for logging in to private docker registries
 - openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
 - openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+- postgresql: download pgmetrics report to the controller when running `TAGS=utils-pgmetrics`
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 - xsrv: [`xsrv help-tags`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) will now parse tag descriptions from custom roles in `roles/` in addition to collections
 

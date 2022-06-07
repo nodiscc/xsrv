@@ -11,7 +11,6 @@
     path: /root/pgmetrics-unpack
     state: directory
     mode: 0750
-  check_mode: no # create even in check mode so that following tasks don't fail
 
 - name: extract pgmetrics tar.gz
   unarchive:
@@ -21,6 +20,7 @@
     owner: root
     group: root
     mode: u=rwX,g=rX,o=rX
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy pgmetrics binary in place
   copy:
@@ -30,9 +30,26 @@
     owner: root
     group: root
     mode: 0755
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: run pgmetrics
   become: yes
   become_user: postgres
-  command: /usr/local/bin/pgmetrics --no-password
-  changed_when: no
+  command: /usr/local/bin/pgmetrics --no-password --output=/var/log/postgresql/pgmetrics.log
+  changed_when: yes
+  register: pgmetrics
+
+- name: harden read permissions on pgmetrics report
+  file:
+    path: /var/log/postgresql/pgmetrics.log
+    owner: postgres
+    group: adm
+    mode: 0640
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: download pgmetrics report to data/pgmetrics-{{ inventory_hostname }}.log
+  fetch:
+    src: /var/log/postgresql/pgmetrics.log
+    dest: "{{ playbook_dir }}/data/pgmetrics-{{ inventory_hostname }}.log"
+    flat: yes
+  ignore_errors: "{{ ansible_check_mode }}"
