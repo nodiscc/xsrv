@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: users: move PAM configuration to the main `limits.conf` configuration file
 - apache: cleanup: ensure no leftover mod-php installations are present
 - apache: rsyslog: prefix apache access logs with `apache-access:` in syslog when [`apache_access_log_to_syslog: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
+- homepage: reword default [`homepage_message`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
 - proxmox: cleanup: use a single file to configure proxmox APT repositories
 - cleanup: standardize task names, remove unused template files
 - cleanup: make usage of ansible_facts consistent in all roles
