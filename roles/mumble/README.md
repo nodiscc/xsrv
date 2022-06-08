@@ -3,8 +3,8 @@
 This role will install [Mumble](https://en.wikipedia.org/wiki/Mumble_(software)) server, a voice chat ([VoIP](https://en.wikipedia.org/wiki/Voice_over_IP)) server. It is primarily designed for use by gamers and can replace commercial programs such as TeamSpeak or Ventrilo.
 
 It also configures:
-- login bruteforce prevention using `fail2ban`
-- (optional) aggregation of mumble server logs to syslog
+- (optional) login bruteforce prevention using [fail2ban](tasks/fail2ban.yml)
+- (optional) aggregation of mumble server logs to [syslog](tasks/rsyslog.yml)
 
 [![](https://i.imgur.com/S5Z6IEw.png)](https://i.imgur.com/S5Z6IEw.png)
 

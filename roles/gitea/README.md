@@ -12,6 +12,7 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 - Organizations and teams
 - Markdown rendering and code highlighting
 - Wikis
+- LDAP authentication
 
 It will also configure:
 - login bruteforce prevention with fail2ban

@@ -7,6 +7,7 @@ Stream to any device from your own server, with no strings attached. Your media,
  - Music: Enjoy your music collection. Make playlists, and listen on the go.
  - Live TV & DVR: Watch Live TV and set automatic recordings to expand your library.
  - Your data: no tracking, phone-home, or central servers collecting your data.
+ - LDAP authentication support
 
 [![](https://jellyfin.org/images/screenshots/home_thumb.png)](https://jellyfin.org/images/screenshots/home_full.png)
 [![](https://jellyfin.org/images/screenshots/movie_thumb.png)](https://jellyfin.org/images/screenshots/movie_full.png)

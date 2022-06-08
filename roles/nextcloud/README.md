@@ -2,9 +2,12 @@
 
 This role will install [Nextcloud](https://en.wikipedia.org/wiki/Nextcloud), a private file hosting/sharing/synchronization service and groupware/collaboration platform.
 
-Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/).
-
-Basic functionality includes uploading, viewing, editing, downloading and sharing files from a web interface. Nextcloud [clients](#clients) can be installed on any computer (Linux/OSX/Windows) or mobile device (Android/iOS) and allow automatically synchronizing your files with the server. It can be extended to a full personal cloud/collaborative suite/groupware solution by more than 200 [applications](https://apps.nextcloud.com/).
+Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/). Features:
+- Uploading, viewing, editing, downloading and sharing files from a web interface
+- [Clients](#clients) for PC or mobile devices
+- Realtime file synchronization
+- Can be extended to a full personal cloud/collaborative suite/groupware solution by more than 200 [applications](https://apps.nextcloud.com/)
+- LDAP authentication
 
 Default installed applications include:
 

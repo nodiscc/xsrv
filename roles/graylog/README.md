@@ -2,6 +2,17 @@
 
 This role will install and configure [Graylog](https://github.com/Graylog2/graylog2-server), an open source log management, capture and analysis platform.
 
+Features:
+- Collect log data from multiple sources/formats
+- Organize and process data using extractors, streams, pipeline rules, lookup tables...
+- Search data using a powerful search engine
+- Create custom search/visualization dashboards
+- Build alerts based on events or relationships between events
+- REST API
+- Long-term archiving
+- LDAP authentication support
+- And [more](https://www.graylog.org/features)
+
 _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-sspl) used by Graylog and MongoDB is [not recognized as an Open-Source license](https://opensource.org/node/1099) by the Open-Source Initiative. Make sure you understand the license before offering a publicly available Graylog-as-a-service instance._
 
 [![](https://i.imgur.com/tC4G9mQm.png)](https://i.imgur.com/tC4G9mQ.png)

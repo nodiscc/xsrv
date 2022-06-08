@@ -2,8 +2,8 @@
 
 This role installs and configures [goTTY](https://github.com/sorenisanerd/gotty), a tool to access a server terminal as a web application.
 
-
 [![](https://raw.githubusercontent.com/sorenisanerd/gotty/master/screenshot.gif)](https://raw.githubusercontent.com/sorenisanerd/gotty/master/screenshot.gif)
+
 
 ## Requirements/dependencies/example playbook
 
