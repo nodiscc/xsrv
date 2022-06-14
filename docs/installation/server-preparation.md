@@ -24,7 +24,10 @@ If hosting on a physical server, prefer low power consumption hardware. Setup th
 ## Network
 
 - The server must have a valid IPv4 address and gateway set during operating system installation.
-- The server must have a valid DNS resolver set during installation.
+- The server must have a valid DNS resolver set during installation. You can either use:
+  - Your hosting/Internet service provider's DNS resolvers
+  - Public DNS resolvers such as [Google Public DNS](https://en.wikipedia.org/wiki/Google_Public_DNS) (`8.8.8.8 8.8.4.4`), [Cloudflare public DNS](https://en.wikipedia.org/wiki/1.1.1.1) (`1.1.1.1 1.0.0.1`)
+  - Your private DNS resolver
 - The server must have Internet access during deployment and upgrades.
 - Prefer fast and reliable network links.
 
@@ -46,18 +49,20 @@ Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456
 
 ### Domain names
 
-The controller must be able to resolve the server's name frome the [inventory](usage.md), using either:
+The controller must be able to resolve the server's name from the [inventory](usage.md), using either:
 
 - (preferred) `A` or `CNAME` DNS records to the public IP address of your server, from:
   - a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar) ([namecheap.com](https://namecheap.com), [gandi.net](https://gandi.net), ...)
-  - your [private DNS resolver](../appendices/pfsense.md)
-  - or a [free subdomain service](https://freedns.afraid.org/domain/registry/)
-- a [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29)
+  - your private DNS resolver
+  - a [free subdomain service](https://freedns.afraid.org/domain/registry/)
+- [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29) entries
 - the `ansible_host` variable in the host's [configuration](usage.md) file (e.g. `ansible_host: 192.168.1.220`)
 
-Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)). Accessing the host directly by IP address is discouraged, use DNS records. Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates.
+Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). Accessing the host directly by IP address is discouraged, use DNS records.
 
-Separate domain/subdomain names are required for web applications. For example:
+Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates - private DNS records will not work (you may still use self-signed certificates).
+
+Separate domain/subdomain names are required to allow clients to access web applications. For example:
 
 ```bash
 ***.CHANGEME.org # host name in the inventory/playbook
