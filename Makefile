@@ -175,25 +175,37 @@ changelog:
 	@echo "[INFO] changes since last tag $(LAST_TAG)" && \
 	git log --oneline $(LAST_TAG)...HEAD | cat
 
-.PHONY: doc_md # manual - generate docs/index.md from README.md
+.PHONY: doc_md # manual - generate markdown documentation
 doc_md:
+	# update README.md from available roles
 	@roles_list_md=$$(for i in roles/*/meta/main.yml; do \
 		name=$$(grep "role_name: " "$$i" | awk -F': ' '{print $$2}'); \
 		description=$$(grep "description: " "$$i" | awk -F': ' '{print $$2}' | sed 's/"//g'); \
 		echo "- [$$name](roles/$$name) - $$description"; \
 		done) && \
-		echo "$$roles_list_md" >| roles-list.tmp.md
-	@awk ' \
+		echo "$$roles_list_md" >| roles-list.tmp.md && \
+		awk ' \
 		BEGIN {p=1} \
 		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list.tmp.md | sort --version-sort");p=0} \
 		/^<!--END ROLES LIST-->/ {p=1} \
-		p' README.md >> README.tmp.md
-	@rm roles-list.tmp.md
-	@mv README.tmp.md README.md
-	@cp README.md docs/index.md
-	@sed -i 's|(roles/|(https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/|g' docs/index.md
-	@sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md
-	@sed -i 's|docs/||g' docs/index.md
+		p' README.md >> README.tmp.md && \
+		mv README.tmp.md README.md && \
+		rm roles-list.tmp.md
+	# generate docs/index.md from README.md
+	@cp README.md docs/index.md && \
+		sed -i 's|(roles/|(https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/|g' docs/index.md && \
+		sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md && \
+		sed -i 's|docs/||g' docs/index.md
+	# update docs/configuration-variables.md from available roles
+	@roles_list_defaults_md=$$(for role in roles/*/; do echo "- [$$role](https://gitlab.com/nodiscc/xsrv/-/blob/master/$${role}defaults/main.yml)"; done); \
+		echo "$$roles_list_defaults_md" >| roles-list-defaults.tmp.md && \
+		awk ' \
+		BEGIN {p=1} \
+		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list-defaults.tmp.md | sort --version-sort");p=0} \
+		/^<!--END ROLES LIST-->/ {p=1} \
+		p' docs/configuration-variables.md >> docs/configuration-variables.tmp.md && \
+		mv docs/configuration-variables.tmp.md docs/configuration-variables.md && \
+		rm roles-list-defaults.tmp.md
 
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build

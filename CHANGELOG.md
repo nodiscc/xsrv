@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - homepage: improve homepage styling/layout, link directly to `ssh://` and `sftp://` URIs
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
+- all roles: checks: don't exit immediately when a variable is not correctly defined, only fail after checking all variables
 - monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - tt_rss: don't send feed update errors by mail, log them to syslog
 - xsrv: always use the first host/group in alphabetical order when no host/group is specified
@@ -49,12 +50,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: rsyslog: prefix apache access logs with `apache-access:` in syslog when [`apache_access_log_to_syslog: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
 - homepage: reword default [`homepage_message`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
 - proxmox: cleanup: use a single file to configure proxmox APT repositories
+- all roles: improve `check` mode support
 - cleanup: standardize task names, remove unused template files
 - cleanup: make usage of ansible_facts consistent in all roles
-- cleanup: clarify xsrv script, reorder functions by purpose/component
+- cleanup: clarify xsrv script, reorder functions by purpose/component, automate doc generation
 - postgresql: update pgmetrics to [v1.13.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.0)
-- all roles: checks: don't fail immediately when a variable is not correctly defined, only fail after all checks
-- all roles: improve `check` mode support
 
 **Fixed:**
 - common: ssh: fix confusion between `AcceptEnv` and `PermitUserEnvironment` settings
@@ -69,6 +69,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
 - monitoring: netdata/needrestart: fix `needrestart_autorestart_services` value not taken into account when true
 - shaarli/transmission: fix `*_https_mode` variable checks
+- doc: fix broken links
+
 
 **Security:**
 - proxmox: fail2ban: fix detection of failed login attempts
