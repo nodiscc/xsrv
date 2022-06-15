@@ -11,4 +11,4 @@ rss_bridge_auth_password: "CHANGEME"
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 rss_bridge_https_mode: selfsigned
 # rss-bridge version (https://github.com/RSS-Bridge/rss-bridge/releases)
-rss_bridge_version: "2022-01-20"
+rss_bridge_version: "2022-06-14"

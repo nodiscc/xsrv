@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: upgrade to [v23.0.5](https://nextcloud.com/changelog/#latest23)
 - gitea: upgrade to v1.16.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7)
 - openldap: ldap-account-manager: upgrade to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
+- rss_bridge: upgrade to [v2022-06-14](https://github.com/RSS-Bridge/rss-bridge/releases/tag/2022-06-14)
 - homepage: improve homepage styling/layout, link directly to `ssh://` and `sftp://` URIs
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
