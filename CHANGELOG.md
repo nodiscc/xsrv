@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: cleanup: ensure no leftover mod-php installations are present
 - apache: rsyslog: prefix apache access logs with `apache-access:` in syslog when [`apache_access_log_to_syslog: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
 - homepage: reword default [`homepage_message`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
+- shaarli: default to generating thumbnails only for common media hosts
 - proxmox: cleanup: use a single file to configure proxmox APT repositories
 - all roles: improve `check` mode support
 - cleanup: standardize task names, remove unused template files
