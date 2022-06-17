@@ -13,6 +13,7 @@
     - shaarli_password_salt is not search("CHANGEME")
     - shaarli_timezone is string
     - shaarli_debug == shaarli_debug|bool
+    - shaarli_thumbnails_mode in ['all', 'common', 'none']
     - shaarli_header_link is string
     - shaarli_hide_timestamps == shaarli_hide_timestamps|bool
     - shaarli_formatter in ['default', 'markdown', 'markdownExtra']
