@@ -20,6 +20,8 @@ shaarli_debug: no
 shaarli_formatter: "markdown"
 # enable thumbnails for all hosts, or only common media hosts, or none (all/common/none)
 shaarli_thumbnails_mode: 'common'
+# default number of links per page
+shaarli_links_per_page: 30
 # overwrite shaarli configuration if it already exists (yes/no - yes will overwrite any changes made from Shaarli tools menu)
 shaarli_overwrite_config: no
 # Mode for SSL/TLS certificates for the shaarli webserver virtualhost
