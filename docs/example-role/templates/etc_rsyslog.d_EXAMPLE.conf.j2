@@ -1,0 +1,7 @@
+# rsyslog configuration for EXAMPLE logs
+
+input(type="imfile"
+      File="/var/log/EXAMPLE/error.log"
+      Tag="EXAMPLE:"
+      Facility="daemon"
+      PersistStateInterval="0")

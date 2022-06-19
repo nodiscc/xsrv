@@ -1,0 +1,72 @@
+# tasks for EXAMPLE role
+
+- include: checks.yml
+  tags:
+    - EXAMPLE
+    - checks
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - ssl
+
+- include: EXAMPLE.yml
+  become: yes
+  tags:
+    - EXAMPLE
+
+- include: component2.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - mail
+
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - fail2ban
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
+
+- include: rsyslog.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - monitoring
+    - rsyslog
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
+
+- include: fact.yml
+  become: yes
+  tags: EXAMPLE
+
+- include: firewalld.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - EXAMPLE
+    - monitoring
+    - fail2ban
