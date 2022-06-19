@@ -6,13 +6,13 @@ galaxy_info:
   author: "nodiscc <nodiscc@gmail.com>"
   description: "Various monitoring and audit utilities"
   license: GPL-3.0
-  min_ansible_version: 2.12
+  min_ansible_version: "2.12"
   platforms:
     - name: Debian
       versions:
-        - 9
-        - 10
-        - 11
+        - "9"
+        - "10"
+        - "11"
   galaxy_tags:
     - system
     - monitoring
