@@ -1,6 +1,6 @@
 # xsrv.proxmox
 
-This role will perform basic setup steps for a [Proxmox](hhttps://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) hypervisor:
+This role will perform basic setup steps for [Proxmox](hhttps://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) hypervisors:
 - setup `pve-no-subscription` APT repositories
 - protect from bruteforce on the login form using `fail2ban` (if `nodiscc.xsrv.common` role is deployed)
 
