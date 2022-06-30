@@ -16,7 +16,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - add [`mail_dovecot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) role - IMAP mailbox server
 - monitoring: netdata: allow streaming charts data/alarms to/from other netdata nodes ([`netdata_streaming_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - monitoring: netdata: enable monitoring of hard drives SMART status
-- monitoring: utils: add `iputils-ping` package (ping utility)
 - xsrv: add [`xsrv ssh`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (alias for `shell`)
 - openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)
 - common: allow disabling PAM/user accounts configuration tasks ([`setup_users: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
@@ -32,43 +31,46 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - postgresql: download pgmetrics report to the controller when running `TAGS=utils-pgmetrics`
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 - xsrv: [`xsrv help-tags`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) will now parse tag descriptions from custom roles in `roles/` in addition to collections
+- monitoring: utils: add `iputils-ping` package (ping utility)
+
 
 **Removed:**
 - common: firewalld/mail/msmtp: drop compatibilty with Debian 10
 - valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
-- nextcloud: upgrade to v24.0.1 [[1]](https://nextcloud.com/blog/nextcloud-hub-24-is-here/) [[2]](https://nextcloud.com/blog/maintenance-releases-24-0-1-23-0-5-and-22-2-8-are-out-update/) [[3]](https://nextcloud.com/changelog/#latest23)
-- gitea: upgrade to v1.16.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7)
-- openldap: ldap-account-manager: upgrade to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
-- rss_bridge: upgrade to [v2022-06-14](https://github.com/RSS-Bridge/rss-bridge/releases/tag/2022-06-14)
-- homepage: improve homepage styling/layout, link directly to `ssh://` and `sftp://` URIs
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
 - netdata: disable metrics gathering for `/dev` and `/dev/shm` virtual filesystems
-- gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss: remove hard dependency on apache role
-- all roles: checks: don't exit immediately when a variable is not correctly defined, only fail after checking all variables
-- monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- all roles: checks all variables values *before* failing, when one or more variables are not correctly defined
 - tt_rss: don't send feed update errors by mail, log them to syslog
 - xsrv: always use the first host/group in alphabetical order when no host/group is specified
 - xsrv: upgrade ansible to [v5.8.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - common: ssh: increase the frequency of "client alive" messages to 1 every 5 minutes
 - common: ssh/users: don't allow login for users without an existing home directory
-- common: users: move PAM configuration to the main `limits.conf` configuration file
-- apache: cleanup: ensure no leftover mod-php installations are present
 - apache: rsyslog: prefix apache access logs with `apache-access:` in syslog when [`apache_access_log_to_syslog: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
+- homepage: improve homepage styling/layout, link directly to `ssh://` and `sftp://` URIs
 - homepage: reword default [`homepage_message`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
 - shaarli: default to generating thumbnails only for common media hosts
-- proxmox: cleanup: use a single file to configure proxmox APT repositories
 - transmission: firewall: always allow bittorrent peer traffic from the public zone
-- all roles: improve `check` mode support
-- cleanup: standardize task names, remove unused template files
-- cleanup: make usage of ansible_facts consistent in all roles
-- cleanup: clarify xsrv script, reorder functions by purpose/component, automate doc generation
+- monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- nextcloud: upgrade to v24.0.1 [[1]](https://nextcloud.com/blog/nextcloud-hub-24-is-here/) [[2]](https://nextcloud.com/blog/maintenance-releases-24-0-1-23-0-5-and-22-2-8-are-out-update/) [[3]](https://nextcloud.com/changelog/#latest23)
+- gitea: upgrade to v1.16.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7)
+- openldap: ldap-account-manager: upgrade to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
+- rss_bridge: upgrade to [v2022-06-14](https://github.com/RSS-Bridge/rss-bridge/releases/tag/2022-06-14)
 - postgresql: update pgmetrics to [v1.13.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.0)
+- gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss: remove hard dependency on apache role
+- cleanup: proxmox: use a single file to configure proxmox APT repositories
+- cleanup: apache: ensure no leftover mod-php installations are present
+- cleanup: common: users: move PAM configuration to the main `limits.conf` configuration file
+- cleanup/tools: improve `check` mode support, standardize task names, remove unused template files, make usage of ansible_facts consistent in all roles, clarify xsrv script, reorder functions by purpose/component, automate documentation generation, improve tests/release procedure, automate initial check mode/deployment/idempotence tests
+- update documentation
+
 
 **Fixed:**
+- xsrv: `init-project`: fix inventory not correctly initialized
+- xsrv: fix `xsrv shell/fetch-backups` when a non-default `XSRV_PROJECTS_DIR` is specified by the user
 - common: ssh: fix confusion between `AcceptEnv` and `PermitUserEnvironment` settings
 - all roles: monitoring/netdata: fix systemd services health checks not loaded by netdata
 - apache: monitoring/rsyslog: fix rsyslog config installation when running with only `--tags=monitoring`
@@ -328,7 +330,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - all roles/monitoring: apply role-specific netdata/rsyslog configuration immediately after installing it
 - default playbook: .gitignore data/ and cache/ directories
 - doc: update/refactor documentation and roles metadata
-- tools: improve automatic doc generation
+- tools: improve automatic documentation generation
 - refactor: refactor integration between roles (use ansible_local facts, fix intergation when roles are not part of the same play)
 
 **Removed:**
