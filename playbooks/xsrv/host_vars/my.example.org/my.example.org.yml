@@ -34,6 +34,9 @@ gotty_run_username: "CHANGEME"
 ##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
 rss_bridge_fqdn: "rss-bridge.CHANGEME.org"
 ##### DNSMASQ - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml
+dnsmasq_upstream_servers:
+  - 1.1.1.1
+  - 1.0.0.1
 ##### COMMON - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml
 ##### NETDATA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml
 ##### SAMBA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml
