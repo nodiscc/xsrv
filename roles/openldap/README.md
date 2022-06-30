@@ -23,7 +23,7 @@ The server must be reachable by clients over TCP ports 389 and 636 (SSL/TLS).
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce protection
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (required if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.openldap
 
 # required variables:

@@ -30,8 +30,8 @@ See [meta/main.yml](meta/main.yml)
   roles:
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.docker # docker container engine
-    - nodiscc.xsrv.apache # webserver and SSL/TLS certificates
+    - nodiscc.xsrv.docker # (required) docker container engine
+    - nodiscc.xsrv.apache # (required) webserver and SSL/TLS certificates
     - nodiscc.xsrv.rocketchat
 
 # required variables:

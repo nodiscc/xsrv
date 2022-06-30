@@ -26,7 +26,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.monitoring # (optional) samba server monitoring
     - nodiscc.xsrv.backup # (optional) automatic local backups
     - nodiscc.xsrv.samba # (optional) manage jellyfin files/library over samba file sharing
-    - nodiscc.xsrv.apache # webserver/reverseproxy and SSL/TLS certificates
+    - nodiscc.xsrv.apache # (required) webserver/reverseproxy and SSL/TLS certificates
     - nodiscc.xsrv.jellyfin
 
 # required variables

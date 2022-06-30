@@ -14,7 +14,7 @@ See [meta/main.yml](meta/main.yml)
   roles:
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring, log aggregation
-    - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.apache # (required) webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.gotty
 
 # required variables:

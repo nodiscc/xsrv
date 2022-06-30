@@ -16,7 +16,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.openldap # (if samba_passdb_backend: ldapsam) LDAP user backend
+    - nodiscc.xsrv.openldap # (required if samba_passdb_backend: ldapsam) LDAP user backend
     - nodiscc.xsrv.samba
 ```
 
