@@ -471,7 +471,7 @@ function _get_host_var() {
     # get a host var using ansible -m debug | grep
     # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
     (cd "$project_dir" && ansible --one-line \
-      --inventory "$project_dir"/inventory.yml \
+      --inventory inventory.yml \
       --module-name debug --args \
       "msg={{ $1 }}" "$host_name" | \
       grep -oP '(?<="msg": ").*(?="})')
