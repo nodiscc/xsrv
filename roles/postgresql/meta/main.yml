@@ -17,5 +17,5 @@ galaxy_info:
     - database
 dependencies:
   - nodiscc.xsrv.handlers
-  # - nodiscc.xsrv.common
-  # - nodiscc.xsrv.monitoring
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional

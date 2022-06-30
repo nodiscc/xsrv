@@ -20,8 +20,8 @@ galaxy_info:
     - web
 dependencies:
   - nodiscc.xsrv.handlers
-  # - nodiscc.xsrv.common
-  # - nodiscc.xsrv.monitoring
-  # - nodiscc.xsrv.backup
-  - nodiscc.xsrv.apache
-  # -  nodiscc.xsrv.postgresql
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.backup # optional
+  # - nodiscc.xsrv.apache # required
+  # -  nodiscc.xsrv.postgresql # required

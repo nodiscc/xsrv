@@ -19,7 +19,7 @@ galaxy_info:
     - authentication
 dependencies:
   - nodiscc.xsrv.handlers
-  # - nodiscc.xsrv.common
-  # - nodiscc.xsrv.monitoring
-  # - nodiscc.xsrv.backup
-  - { role: nodiscc.xsrv.apache, when: (openldap_setup_lam|bool) or (openldap_setup_ssp|bool) }
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.backup # optional
+  # - nodiscc.xsrv.apache # required when openldap_setup_lam or openldap_setup_ssp: yes

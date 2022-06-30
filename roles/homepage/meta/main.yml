@@ -17,4 +17,4 @@ galaxy_info:
     - dashboard
 dependencies:
   - nodiscc.xsrv.handlers
-  - nodiscc.xsrv.apache
+  # - nodiscc.xsrv.apache # required

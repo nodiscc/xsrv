@@ -18,4 +18,4 @@ galaxy_info:
     - lxc
 dependencies:
   - nodiscc.xsrv.handlers
-  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.common # optional

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss:** ensure the `apache` role or equivalent is explicitly deployed to the host *before* deploying any of these roles.
 - **jellyfin/samba:** if both jellyfin and samba roles are deployed on the same host, ensure `samba` is deployed before `jellyfin` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook))
 - **valheim_server:** if you are using the [`valheim_server`](https://gitlab.com/nodiscc/xsrv/-/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 
@@ -44,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
 - netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
 - netdata: disable metrics gathering for `/dev` and `/dev/shm` virtual filesystems
+- gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss: remove hard dependency on apache role
 - all roles: checks: don't exit immediately when a variable is not correctly defined, only fail after checking all variables
 - monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - tt_rss: don't send feed update errors by mail, log them to syslog
