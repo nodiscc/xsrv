@@ -10,6 +10,11 @@
       - lnav # enhanced log file viewer
       - logwatch
       - libdate-manip-perl
+      - iputils-ping # tools to test the reachability of network hosts
+      # - spectre-meltdown-checker # Spectre & Meltdown vulnerability/mitigation checker # TODO integrate with lynis
+      # - iotop # simple top-like I/O monitor
+      # - iftop # displays bandwidth usage information on a network interface
+      # - inxi # full featured system information script
 
 - name: remove default logwatch cron job
   file:
