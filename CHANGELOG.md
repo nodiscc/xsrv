@@ -61,6 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - homepage: reword default [`homepage_message`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
 - shaarli: default to generating thumbnails only for common media hosts
 - proxmox: cleanup: use a single file to configure proxmox APT repositories
+- transmission: firewall: always allow bittorrent peer traffic from the public zone
 - all roles: improve `check` mode support
 - cleanup: standardize task names, remove unused template files
 - cleanup: make usage of ansible_facts consistent in all roles

@@ -14,9 +14,8 @@
 
 - name: setup transmission firewalld rules
   firewalld:
-    zone: "{{ item.zone }}"
+    zone: "public"
     service: transmission-daemon
-    state: "{{ item.state }}"
+    state: "enabled"
     permanent: yes
     immediate: yes
-  with_items: "{{ apache_firewalld_zones }}"
