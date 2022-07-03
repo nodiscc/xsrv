@@ -82,7 +82,7 @@ test_idempotence:
 	# test idempotence
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test $(VM_NAME)
 	# check netdata alarms count
-	curl --insecure https://my.example.test:19999/api/v1/alarms
+	curl --insecure https://$(VM_NAME):19999/api/v1/alarms
 
 ##### RELEASE PROCEDURE #####
 # - make test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG
