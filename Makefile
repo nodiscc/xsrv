@@ -84,11 +84,6 @@ test_idempotence:
 	# check netdata alarms count
 	curl --insecure https://my.example.test:19999/api/v1/alarms
 
-# this requires an entry in /etc/hosts, e.g. 10.0.0.212 my.example.test git.example.test www.example.test media.example.test cloud.example.test links.example.test torrent.example.test rss.example.test chat.example.test ldap.example.test logs.example.test tty.example.test rss-bridge.example.test imap.example.test
-.PHONY: test_return_codes # check web applications return codes
-test_return_codes:
-	for host in $$(grep fqdn tests//playbooks/xsrv-test/host_vars/my.example.test/my.example.test.yml |awk -F'"' '{print $$2}'); do curl --insecure --silent --fail -w '%{url_effective} %{http_code}\n' -o /dev/null "https://$$host"; done
-
 ##### RELEASE PROCEDURE #####
 # - make test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG
 # - make bump_versions update_todo changelog new_tag=$new_tag
