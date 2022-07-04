@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+
+**Changed:**
+- xsrv: upgrade ansible to [v6.0.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
+- all roles: require `ansible-core>=2.12/ansible>=6.0.0`
+
+
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - UNRELEASED
 
 **Upgrade procedure:**

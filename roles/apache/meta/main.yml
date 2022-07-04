@@ -6,7 +6,7 @@ galaxy_info:
   author: "nodiscc <nodiscc@gmail.com>"
   description: "Apache web server + PHP-FPM interpreter"
   license: "GPL-3.0"
-  min_ansible_version: 2.8
+  min_ansible_version: 2.12
   platforms:
     - name: Debian
       versions:

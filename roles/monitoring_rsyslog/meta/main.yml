@@ -5,7 +5,7 @@ galaxy_info:
   author: "nodiscc <nodiscc@gmail.com>"
   description: "Log aggregation, processing and forwarding system"
   license: GPL-3.0
-  min_ansible_version: 2.8
+  min_ansible_version: 2.12
   platforms:
     - name: Debian
       versions:

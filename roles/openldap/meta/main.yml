@@ -7,7 +7,7 @@ galaxy_info:
   author: "nodiscc <nodiscc@gmail.com>"
   description: "LDAP directory server and web management tools"
   license: "GPL-3.0"
-  min_ansible_version: 2.7
+  min_ansible_version: 2.12
   platforms:
     - name: Debian
       versions:
