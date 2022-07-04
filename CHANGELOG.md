@@ -45,7 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - all roles: checks all variables values *before* failing, when one or more variables are not correctly defined
 - tt_rss: don't send feed update errors by mail, log them to syslog
 - xsrv: always use the first host/group in alphabetical order when no host/group is specified
-- xsrv: upgrade ansible to [v5.8.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+- xsrv: upgrade ansible to [v5.10.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - common: ssh: increase the frequency of "client alive" messages to 1 every 5 minutes
 - common: ssh/users: don't allow login for users without an existing home directory
