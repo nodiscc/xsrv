@@ -117,7 +117,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: re-add default netdata alarms for the `systemdunits` module
 - nextcloud: update to v23.0.3 [[1]](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/) [[2]](https://nextcloud.com/blog/nextcloud-23-0-3-and-22-2-6-are-out-bringing-a-series-of-bug-fixes-and-improvements/)
 - nextcloud: run nextcloud PHP processes under a dedicated `nextcloud` user, if an older installation owned by `www-data` is found, it will be migrated to the new user automatically
-- openldap: update LDAP Account Manager to [v7.9](https://github.com/LDAPAccountManager/lam/releases)
+- openldap: update LDAP Account Manager to [v8.0.1](https://github.com/LDAPAccountManager/lam/releases)
 - rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
 - apache/fail2ban/nextcloud: remove obsolete workaround for nextcloud [desktop client issue](https://github.com/nextcloud/server/issues/15688)
 - xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
