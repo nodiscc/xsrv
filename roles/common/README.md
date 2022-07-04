@@ -39,18 +39,6 @@ ansible_become_pass: "CHANGEME"
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-**Sending e-mail** requires an external SMTP server (see `msmtp_*` configuration variables) and is disabled by default. You can use your own SMTP server or a commercial e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT records for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other e-mail account.
-
-```yaml
-# host_vars/my.example.org/my.example.org.yml
-setup_msmtp: yes
-msmtp_host: "smtp.CHANGEME.org"
-msmtp_admin_email: "CHANGEME@CHANGEME.org"
-# ansible-vault edit host_vars/my.example.org/my.example.org.vault.yml
-msmtp_username: "CHANGEME"
-msmtp_password: "CHANGEME"
-```
-
 **Firewall:** All roles from the `nodiscc.xsrv` collection will setup appropriate rules when this role is deployed. See each role's `*_firewall_zones` configuration variables.
 
 
