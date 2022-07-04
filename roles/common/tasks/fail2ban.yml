@@ -43,9 +43,6 @@
     dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
   notify: reload systemd unit files
 
-- name: apply configuration (flush handlers)
-  meta: flush_handlers
-
 ##### FACTS #####
 
 - name: create ansible facts.d directory
@@ -62,3 +59,6 @@
     mode: 0644
   notify: update ansible facts
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers

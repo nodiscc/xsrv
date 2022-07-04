@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss:** ensure the `apache` role or equivalent is explicitly deployed to the host *before* deploying any of these roles.
+- **jellyfin/samba:** if both jellyfin and samba roles are deployed on the same host, ensure `samba` is deployed before `jellyfin` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook))
+- **valheim_server:** if you are using the [`valheim_server`](https://gitlab.com/nodiscc/xsrv/-/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
+
+**Added:**
+- add [`mail_dovecot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) role - IMAP mailbox server
+- monitoring: netdata: allow streaming charts data/alarms to/from other netdata nodes ([`netdata_streaming_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- monitoring: netdata: enable monitoring of hard drives SMART status
+- xsrv: add [`xsrv ssh`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (alias for `shell`)
+- openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)
+- common: allow disabling PAM/user accounts configuration tasks ([`setup_users: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)), disable unused network/firewire modules by default
+- common: automatically remove (purge) configuration files of removed packages, nightly, enabled by default ([`apt_purge_nightly: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: attempt to automatically repair (fsck) failed filesystems on boot
+- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
+- docker: install requirements for logging in to private docker registries
+- openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+- openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+- samba: make events logged by full_audit configurable ([`samba_log_full_audit_success_events`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
+- shaarli: add an option to configure thumbnail generation mode ([`shaarli_thumbnails_mode`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and default number of links per page (`shaarli_links_per_page`, default 30)
+- postgresql: download pgmetrics report to the controller when running `TAGS=utils-pgmetrics`
+- all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
+- xsrv: [`xsrv help-tags`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) will now parse tag descriptions from custom roles in `roles/` in addition to collections
+- monitoring: utils: add `iputils-ping` package (ping utility)
+
+
+**Removed:**
+- common: firewalld/mail/msmtp: drop compatibilty with Debian 10
+- valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
+
+**Changed:**
+- netdata: needrestart: don't send e-mail notifications for needrestart alarms
+- netdata: debsecan: refresh debsecan reports every 6 hours instead of every hour
+- netdata: disable metrics gathering for `/dev` and `/dev/shm` virtual filesystems
+- all roles: checks all variables values *before* failing, when one or more variables are not correctly defined
+- tt_rss: don't send feed update errors by mail, log them to syslog
+- xsrv: always use the first host/group in alphabetical order when no host/group is specified
+- xsrv: upgrade ansible to [v5.10.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
+- apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
+- common: ssh: increase the frequency of "client alive" messages to 1 every 5 minutes
+- common: ssh/users: don't allow login for users without an existing home directory
+- apache: rsyslog: prefix apache access logs with `apache-access:` in syslog when [`apache_access_log_to_syslog: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
+- homepage: improve homepage styling/layout, link directly to `ssh://` and `sftp://` URIs
+- homepage: reword default [`homepage_message`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
+- shaarli: default to generating thumbnails only for common media hosts
+- transmission: firewall: always allow bittorrent peer traffic from the public zone
+- monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- nextcloud: upgrade to v24.0.1 [[1]](https://nextcloud.com/blog/nextcloud-hub-24-is-here/) [[2]](https://nextcloud.com/blog/maintenance-releases-24-0-1-23-0-5-and-22-2-8-are-out-update/) [[3]](https://nextcloud.com/changelog/#latest23)
+- gitea: upgrade to v1.16.8 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.8)
+- openldap: ldap-account-manager: upgrade to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
+- rss_bridge: upgrade to [v2022-06-14](https://github.com/RSS-Bridge/rss-bridge/releases/tag/2022-06-14)
+- postgresql: update pgmetrics to [v1.13.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.0)
+- gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss: remove hard dependency on apache role
+- cleanup: proxmox: use a single file to configure proxmox APT repositories
+- cleanup: apache: ensure no leftover mod-php installations are present
+- cleanup: common: users: move PAM configuration to the main `limits.conf` configuration file
+- cleanup/tools: improve `check` mode support, standardize task names, remove unused template files, make usage of ansible_facts consistent in all roles, clarify xsrv script, reorder functions by purpose/component, automate documentation generation, improve tests/release procedure, automate initial check mode/deployment/idempotence tests
+- update documentation
+
+
+**Fixed:**
+- xsrv: `init-project`: fix inventory not correctly initialized
+- xsrv: fix `xsrv shell/fetch-backups` when a non-default `XSRV_PROJECTS_DIR` is specified by the user
+- common: ssh: fix confusion between `AcceptEnv` and `PermitUserEnvironment` settings
+- all roles: monitoring/netdata: fix systemd services health checks not loaded by netdata
+- apache: monitoring/rsyslog: fix rsyslog config installation when running with only `--tags=monitoring`
+- graylog: fix elasticsearch/graylog unable to start caused by too strict permissions on configuration files
+- openldap: ldap-account-manager: fix access to tree view
+- homepage: fix homepage generation when the mumble role was deployed from a different play
+- jellyfin/samba: fix jellyfin [samba share](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml) creation when samba role is not part of the same play
+- samba: fix [`samba_passdb_backend: ldapsam`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml#L39) mode when openldap role is not part of the same play
+- xsrv: [`fetch-backups`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): use the first host in alphabetical order, when no host is specified
+- monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
+- monitoring: netdata/needrestart: fix `needrestart_autorestart_services` value not taken into account when true
+- shaarli/transmission: fix `*_https_mode` variable checks
+- doc: fix broken links
+
+
+**Security:**
+- proxmox: fail2ban: fix detection of failed login attempts
+
+
 #### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
 
 **Upgrade procedure:**
@@ -30,7 +117,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: re-add default netdata alarms for the `systemdunits` module
 - nextcloud: update to v23.0.3 [[1]](https://nextcloud.com/blog/update-now-23-0-2-22-2-5-and-21-0-9/) [[2]](https://nextcloud.com/blog/nextcloud-23-0-3-and-22-2-6-are-out-bringing-a-series-of-bug-fixes-and-improvements/)
 - nextcloud: run nextcloud PHP processes under a dedicated `nextcloud` user, if an older installation owned by `www-data` is found, it will be migrated to the new user automatically
-- openldap: update LDAP Account Manager to [v7.9](https://github.com/LDAPAccountManager/lam/releases)
+- openldap: update LDAP Account Manager to [v8.0.1](https://github.com/LDAPAccountManager/lam/releases)
 - rocketchat: update to [v3.18.4](https://github.com/RocketChat/Rocket.Chat/releases)
 - apache/fail2ban/nextcloud: remove obsolete workaround for nextcloud [desktop client issue](https://github.com/nextcloud/server/issues/15688)
 - xsrv: store group_vars files under `group_vars/$group_name/` (allows multiple vars files per group). If a `group_vars/$group_name.yml` file is found, it will be moved to the subdirectory automatically.
@@ -121,7 +208,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: netdata: automate testing netdata mail notifications (`TAGS=utils-netdata-test-notifications xsrv deploy`)
 - monitoring: netdata: monitor systemd units state (timers/services/sockets)
 - docker: add a nightly cleanup of unused docker images/containers/networks/build cache, allow disabling it through `docker_prune_nighlty: no`
-- xsrv: add `xsrv help-tags` subcommand (show the list of ansible tags in the play and their descriptions)
+- xsrv: add [`xsrv help-tags`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (show the list of ansible tags in the play and their descriptions)
 - install ansible local fact files for each deployed role/component
 
 **Removed:**
@@ -147,7 +234,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: apt: automatically remove unused dependency packages on every install/upgrade/remove operation
 - common: fail2ban: increase maximum IP/attempts count retention to 1 year
 - common: ssh: decrease SFTP logs verbosity to INFO by default
-- common/graylog: apt: enable automatic upgrades for graylog/mongodb/elasticsearch packages by default
+- common/graylog: apt: enable automatic upgrades for graylog/mongodb/elasticsearch packages by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48))
 - gitea: upgrade to v1.16.0 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.15.8), [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.15.9), [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.15.10), [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.15.11), [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.16.0)
 - xsrv: upgrade ansible to [5.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - gitea: cleanup/maintenance: update config file comments/ordering to reduce diff with upstream example file
@@ -243,7 +330,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - all roles/monitoring: apply role-specific netdata/rsyslog configuration immediately after installing it
 - default playbook: .gitignore data/ and cache/ directories
 - doc: update/refactor documentation and roles metadata
-- tools: improve automatic doc generation
+- tools: improve automatic documentation generation
 - refactor: refactor integration between roles (use ansible_local facts, fix intergation when roles are not part of the same play)
 
 **Removed:**
@@ -319,15 +406,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - add [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) log analyzer role
 - add [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) role
-- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add `rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port` variables)
-- jellyfin/common/apt: add automatic upgrades for jellyfin, enable by default
-- monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in `netdata_http_checks`
-- monitoring/netdata: add `netdata_x509_checks` (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
+- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add [`rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port`]([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitorign_rsyslog/defaults/main.yml)) variables)
+- jellyfin/common/apt: enable automatic upgrades for jellyfin by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48))
+- monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in [`netdata_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
+- monitoring/netdata: add [`netdata_x509_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
 - rocketchat: allow disabling rocketchat/mongodb services (`rocketchat_enable_service: yes/no`)
-- xsrv: add `xsrv edit-group` subcommand (edit group variables - default group: `all`)
-- xsrv: add `xsrv ls` subcommand (list files in the playbooks directory - accepts a path)
-- xsrv: add `edit-requirements` subcommand (edit ansible collections/requirements)
-- xsrv: add `edit-cfg` subcommand (edit ansible configuration/`ansible.cfg`)
+- xsrv: add [`xsrv edit-group`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (edit group variables - default group: `all`)
+- xsrv: add [`xsrv ls`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (list files in the playbooks directory - accepts a path)
+- xsrv: add [`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (edit ansible collections/requirements)
+- xsrv: add [`xsrv edit-cfg`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (edit ansible configuration/`ansible.cfg`)
 - xsrv: add syntax highlighting to default text editor/pager (nano - requires manual installation of yaml syntax highlighting file), improve display
 - homepage: add favicon
 - common: msmtp: make outgoing mail port configurable (`msmtp_port`, default `587`)
@@ -867,7 +954,7 @@ make deploy
 - configure an apache virtualhost for transmission
 - add transmission_https_mode variable to configure SSL certificate generation (selfsigned/letsencrypt)
 - add checks for required variables
-- delegate HTTP basic auth to apache, pass credentials to the backend tranmission service (proxy-chain-auth)
+- delegate HTTP basic auth to apache, pass credentials to the backend transmission service (proxy-chain-auth)
 - add rsnapshot configuration (backup transmission downloads and torrents cache)
 
 
@@ -892,7 +979,6 @@ make deploy
  - make tdbsam users configurable through samba_users variable
  - add rsnapshot backup configuration for samba
  - make shares available/browseable state configurable (default to yes)
-
  - update documentation
 
 **docker role:**

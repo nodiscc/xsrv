@@ -11,9 +11,11 @@ jellyfin_enable_service: yes
 # disabled by default - this can consume a lot of space on the backup storage, please configure backups manually,
 # or set this to yes if you really want to backup all your media
 # backups of the jellyfin samba share are controlled by a different variable (samba_enable_backups)
-# database/metadata/configuration is always backed up automaticllay when the backup role is enabled
+# database/metadata/configuration is always backed up automatically when the backup role is enabled
 jellyfin_enable_media_backups: no
-# enable a jellyfin samba share (upload media files there), requires nodiscc.xsrv.samba role
+
+# enable a jellyfin samba share (upload media files there)
+# requires the nodiscc.xsrv.samba role to be deployed before jellyfin
 jellyfin_samba_share_enabled: no
 # lists of users allowed to read/write to the jellyfin samba share (use @groupname for groups)
 jellyfin_samba_share_allow_write_users: []

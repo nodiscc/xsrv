@@ -1,12 +1,3 @@
-- name: enable contrib section in debian APT sources
-  template:
-    src: etc_apt_sources.list.d_proxmox-debian.list.j2
-    dest: /etc/apt/sources.list.d/proxmox-debian.list
-    owner: root
-    group: root
-    mode: 0644
-  notify: update apt cache
-
 - name: enable proxmox no-subscription apt repository
   template:
     src: etc_apt_sources.list.d_proxmox-no-subscription.list.j2
@@ -16,11 +7,14 @@
     mode: 0644
   notify: update apt cache
 
-- name: romve files from old versions of the role
+- name: remove files from old versions of the role
   file:
     state: absent
     path: "{{ item }}"
   with_items:
+    - /etc/apt/sources.list.d/proxmox.list
+    - /etc/apt/sources.list.d/proxmox-debian.list
     - /etc/apt/sources.list.d/debian-contrib.list
     - /etc/apt/sources.list.d/debian-updates-contrib.list
+    - /etc/apt/sources.list.d/debian-security-contrib.list
   notify: update apt cache

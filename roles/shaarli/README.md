@@ -18,10 +18,10 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # fail2ban bruteforce protection
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.monitoring # (optional) apache monitoring
-    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (required) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.shaarli
 
 # required variables:

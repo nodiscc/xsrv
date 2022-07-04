@@ -2,8 +2,8 @@
 
 This role installs and configures [goTTY](https://github.com/sorenisanerd/gotty), a tool to access a server terminal as a web application.
 
-
 [![](https://raw.githubusercontent.com/sorenisanerd/gotty/master/screenshot.gif)](https://raw.githubusercontent.com/sorenisanerd/gotty/master/screenshot.gif)
+
 
 ## Requirements/dependencies/example playbook
 
@@ -14,7 +14,7 @@ See [meta/main.yml](meta/main.yml)
   roles:
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring, log aggregation
-    - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.apache # (required) webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.gotty
 
 # required variables:

@@ -18,5 +18,5 @@ galaxy_info:
     - messaging
 dependencies:
   - nodiscc.xsrv.handlers
-  - nodiscc.xsrv.apache
-  - nodiscc.xsrv.docker
+  # - nodiscc.xsrv.apache # required
+  # - nodiscc.xsrv.docker # required

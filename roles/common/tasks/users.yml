@@ -81,29 +81,18 @@
 
 ##### PAM #####
 
-- block:
-    - name: configure PAM to prevent core dumps
-      pam_limits:
-        dest: '/etc/security/limits.d/10.hardcore.conf'
-        domain: '*'
-        limit_type: hard
-        limit_item: core
-        value: '0'
-        comment: Prevent core dumps for all users. These are usually not needed and may contain sensitive information
-    - name: set 10.hardcore.conf perms to 0400 and root ownership
-      file:
-        path: /etc/security/limits.d/10.hardcore.conf
-        owner: 'root'
-        group: 'root'
-        mode: '0440'
-      when: not ansible_check_mode
-  when: not os_security_kernel_enable_core_dump | bool
+- name: configure the pam_limits module
+  template:
+    src: etc_security_limits.conf.j2
+    dest: /etc/security/limits.con
+    owner: root
+    group: root
+    mode: 0600
 
-- name: remove 10.hardcore.conf config file
+- name: remove files from old versions of the role
   file:
     path: /etc/security/limits.d/10.hardcore.conf
     state: absent
-  when: os_security_kernel_enable_core_dump | bool
 
 # remove libpam-ccreds to disable password caching (prevents connections using cached LDAP credentials, when no connnection to the LDAP server is not available)
 # add libpam-tmpdir to use per-user temporary directories

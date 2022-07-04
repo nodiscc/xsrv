@@ -7,7 +7,7 @@ galaxy_info:
   author: "nodiscc <nodiscc@gmail.com>"
   description: "file hosting/sharing/synchronization and collaboration platform"
   license: GPL-3.0
-  min_ansible_version: 2.8
+  min_ansible_version: 2.12
   platforms:
     - name: Debian
       versions:
@@ -31,8 +31,8 @@ galaxy_info:
     - web
 dependencies:
   - nodiscc.xsrv.handlers
-  - nodiscc.xsrv.apache
-  # - nodiscc.xsrv.common
-  # - nodiscc.xsrv.backup
-  # - nodiscc.xsrv.monitoring
-  # - nodiscc.xsrv.postgresql
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.backup # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.postgresql # optional
+  # - nodiscc.xsrv.apache # required

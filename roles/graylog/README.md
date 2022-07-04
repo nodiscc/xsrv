@@ -2,6 +2,17 @@
 
 This role will install and configure [Graylog](https://github.com/Graylog2/graylog2-server), an open source log management, capture and analysis platform.
 
+Features:
+- Collect log data from multiple sources/formats
+- Organize and process data using extractors, streams, pipeline rules, lookup tables...
+- Search data using a powerful search engine
+- Create custom search/visualization dashboards
+- Build alerts based on events or relationships between events
+- REST API
+- Long-term archiving
+- LDAP authentication support
+- And [more](https://www.graylog.org/features)
+
 _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-sspl) used by Graylog and MongoDB is [not recognized as an Open-Source license](https://opensource.org/node/1099) by the Open-Source Initiative. Make sure you understand the license before offering a publicly available Graylog-as-a-service instance._
 
 [![](https://i.imgur.com/tC4G9mQm.png)](https://i.imgur.com/tC4G9mQ.png)
@@ -17,9 +28,9 @@ _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-ss
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-     - nodiscc.xsrv.common # optional
-     - nodiscc.xsrv.monitoring # optional
-     - nodiscc.xsrv.apache # reverse proxy and SSL/TLS certificates
+     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
+     - nodiscc.xsrv.monitoring # (optional) server health and performance monitoring
+     - nodiscc.xsrv.apache # (required) reverse proxy and SSL/TLS certificates
      - nodiscc.xsrv.graylog
 
 # required variables:
@@ -72,6 +83,24 @@ Start using Graylog to [search and filter](https://docs.graylog.org/en/4.0/pages
 ![](https://i.imgur.com/0OCFJlx.png)
 
 Setup [authentication](https://docs.graylog.org/en/latest/pages/permission_management.htmln#authentication) and [roles](https://docs.graylog.org/en/latest/pages/permission_management.html#roles) settings allow granting read or write access to specific users/groups. LDAP is supported.
+
+**LDAP authentication:** This example is given for [openldap](../openldap) server:
+- Open the `System > Authentication` menu (https://logs.CHANGEME.org/system/authentication/services/create)
+- Select a service: `LDAP` -> `Get started`
+- Server address: `ldap.CHANGEME.org`, port `636` (SSL/TLS) or `389`
+- `TLS` or `None` - if the certificate is self-signed, uncheck `Verify Certificates`
+- System User DN: `cn=bind,ou=system,dc=CHANGEME,dc=org`
+- System password: the value of `openldap_bind_password` (unprivileged LDAP user)
+- `Next: User synchronisation`
+- Search Base DN: `ou=users,dc=CHANGEME,dc=org`
+- Search pattern: `(&(uid={0})(objectClass=inetOrgPerson))`
+- Name Attribute: `uid`
+- Full Name Attribute: `cn`
+- ID Attribute: `entryUUID`
+- Default Roles: `Reader` or any other graylog [role](#roles)
+- `Next: Group synchronization`
+- `Finish & Save Service`
+- In the Configured AUthentication Services list, `Activate` the LDAP service
 
 
 ## Backups

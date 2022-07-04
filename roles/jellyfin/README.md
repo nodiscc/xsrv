@@ -7,6 +7,7 @@ Stream to any device from your own server, with no strings attached. Your media,
  - Music: Enjoy your music collection. Make playlists, and listen on the go.
  - Live TV & DVR: Watch Live TV and set automatic recordings to expand your library.
  - Your data: no tracking, phone-home, or central servers collecting your data.
+ - LDAP authentication support
 
 [![](https://jellyfin.org/images/screenshots/home_thumb.png)](https://jellyfin.org/images/screenshots/home_full.png)
 [![](https://jellyfin.org/images/screenshots/movie_thumb.png)](https://jellyfin.org/images/screenshots/movie_full.png)
@@ -21,9 +22,11 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.common # (optional)
-    - nodiscc.xsrv.monitoring # (optional)
-    - nodiscc.xsrv.apache # webserver/reverseproxy and SSL/TLS certificates
+    - nodiscc.xsrv.common # (optional) hardening, firewall, login bruteforce protection
+    - nodiscc.xsrv.monitoring # (optional) samba server monitoring
+    - nodiscc.xsrv.backup # (optional) automatic local backups
+    - nodiscc.xsrv.samba # (optional) manage jellyfin files/library over samba file sharing
+    - nodiscc.xsrv.apache # (required) webserver/reverseproxy and SSL/TLS certificates
     - nodiscc.xsrv.jellyfin
 
 # required variables
@@ -47,7 +50,7 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 ### Uploading media
 
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
-- If the [samba](../samba) role is enabled and [a list of valid users](defaults/main.yml) is specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
+- If the [samba](../samba) role is enabled and [`jellyfin_samba_share_enabled: yes` and a list of valid users](defaults/main.yml) are specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
 - Download files from bittorrent using [transmission](../transmission)
 
 
@@ -60,7 +63,7 @@ You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org
 
 ### Backups
 
-Automatic backups of the default media directory are disabled by default, see the `jellyfin_enable_media_backups` [variable](defaults/main.yml). See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
+Automatic backups of the default media directory are disabled by default, unless [`jellyfin_enable_media_backups: yes`](defaults/main.yml). See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
 
 
 ### LDAP authentication
@@ -69,12 +72,13 @@ To allow logins to Jellyfin using LDAP user accounts (for example from [openldap
 - Login to jellyfin using the initial/administrator account
 - Open `Admin > Dashboard > Plugins > Catalog`
 - Open `LDAP authentication` and click `Install`
-- Restart the jellyfin server (`xsrv shell` `sudo systemctl restart jellyfin`)
+- Restart the jellyfin server (from `Server > Dashboard > Restart` or `xsrv shell > sudo systemctl restart jellyfin`)
 - Open `Admin > Dashboard > Plugins > LDAP-Auth` and configure the plugin:
-  - LDAP server: your LDAP server address (`127.0.0.1`, `ldap.CHANGEME.org`...)
-  - Secure LDAP/StartTLS/Skip SSL verification: disable these if your LDAP server does not support SSL/TLS.
+  - LDAP server: `ldap.CHANGEME.org`
+  - Secure LDAP: enabled (or disabled if your LDAP server does not support SSL/TLS)
+  - Skip SSL verification: enable if your server is using a self-signed certificate
   - LDAP Base DN for searches: `dc=CHANGEME,dc=org`
-  - LDAP port: `389`
+  - LDAP port: `636` (SSL/TLS) or `389`
   - LDAP attributes: `uid, cn, mail`
   - LDAP Name Attribute: `uid`
   - LDAP User Filter: set to `(objectClass=inetOrgPerson)` if your LDAP server does not support the `memberOf` overlay (all LDAP users will be allowed to access Jellyfin). Otherwise set `memberOf=GROUPNAME` to the LDAP group name allowed to access Jellyfin (eg. `access_jellyfin`)

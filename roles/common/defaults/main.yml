@@ -28,7 +28,7 @@ setup_hosts_file: yes
 #     state: absent
 hosts_file_entries: []
 
-##### SYSCTL (NETWORKING/MEMORY) #####
+##### SYSCTL/KERNEL CONFIGURATION #####
 # update sysctl settings (yes/no)
 setup_sysctl: yes
 # Enable/disable packet forwarding between network interfaces (routing) (yes/no)
@@ -42,6 +42,14 @@ sysctl_vm_vfs_cache_pressure: '150'
 # yes/no: enable/disable creation of core dumps on kernel crashes
 # These are usually not needed and may contain sensitive information
 os_security_kernel_enable_core_dump: no
+# list of kernel modules to prevent from being loaded
+kernel_modules_blacklist:
+  - dccp # CIS 3.4.1 Ensure DCCP is disabled
+  - sctp # CIS 3.4.2 Ensure SCTP is disabled
+  - rds # CIS 3.4.3 Ensure RDS is disabled
+  - tipc # 3.4.4 Ensure TIPC is disabled
+  - firewire-ohci # disable IEEE 1394 (FireWire) Support
+  - firewire-core # disable IEEE 1394 (FireWire) Support
 
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
@@ -50,6 +58,8 @@ setup_apt: yes
 apt_enable_nonfree: no
 # clean downloaded package archives (apt clean) every n-days (0=disable)
 apt_clean_days: 7
+# yes/no: automatically remove (purge) configuration files of removed packages, nightly
+apt_purge_nightly: yes
 # automatic upgrades: allow unattended upgrades from the following sources (see 50unattended-upgrades.j2)
 # these settings have no effect if corresponding repositories are not enabled/configured
 apt_unattended_upgrades_origins_patterns:
@@ -170,6 +180,8 @@ fail2ban_default_findtime: "10min"
 fail2ban_default_maxretry: 5
 
 ### USERS ###
+# setup user accounts/PAM configuration (yes/no)
+setup_users: yes
 # Additional user accounts to create.
 # Supports these parameters from the user (https://docs.ansible.com/ansible/latest/modules/user_module.html) module:
 #   name, password, comment, create_home, home, groups, append, generate_ssh_key, update_password
@@ -219,7 +231,7 @@ msmtp_host: "smtp.CHANGEME.org"
 msmtp_port: 587
 msmtp_username: "CHANGEME"
 msmtp_password: "CHANGEME"
-# mail address to redirect all local mail to
+# mail address to send adminbistrator email to (multiple recipients can be added, separated by ', ')
 msmtp_admin_email: "CHANGEME"
 # (auto/admin@CHANGEME.org) sender address for outgoing mail
 msmtp_from: 'auto'

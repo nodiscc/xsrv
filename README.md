@@ -8,7 +8,7 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.7.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.8.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -32,6 +32,7 @@ This project provides:
 - [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
+- [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
 - [monitoring_rsyslog](roles/monitoring_rsyslog) - Log aggregation, processing and forwarding system
@@ -47,7 +48,6 @@ This project provides:
 - [shaarli](roles/shaarli) - Bookmarking & link sharing web application
 - [transmission](roles/transmission) - Transmission Bittorrent client/web interface
 - [tt_rss](roles/tt_rss) - Tiny Tiny RSS web-based news feed reader
-- [valheim_server](roles/valheim_server) - Valheim multiplayer server
 <!--END ROLES LIST-->
 
 ## Screenshots
@@ -61,7 +61,7 @@ This project provides:
 [![](https://i.imgur.com/6Im61B0.png)](roles/mumble)
 [![](https://i.imgur.com/REzcZVh.png)](roles/openldap)
 [![](https://i.imgur.com/Mib9YkX.png)](roles/rocketchat)
-[![](https://i.imgur.com/5KDvL9Z.png)](roles/homepage)
+[![](https://i.imgur.com/qR3vIN4.png)](roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
 [![](https://i.imgur.com/UWjyTqP.png)](roles/rss_bridge)

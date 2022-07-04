@@ -33,12 +33,16 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "7.9"
+ldap_account_manager_version: "8.0.1"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
 # ldap-account-manager session timeout in minutes
 ldap_account_manager_session_timeout: 10
+# LDAP server URI for ldap-account-manager (e.g. ldap://localhost:389 or ldaps://localhost:636)
+ldap_account_manager_ldap_url: "ldap://{{ openldap_fqdn }}:389"
+# path to trusted server certificate if using ldaps:// connection (e.g. "certificates/{{ openldap_fqdn }}.openldap.crt" - leave empty to disable)
+ldap_account_manager_ldaps_cert: ""
 # HTTPS/SSL/TLS certificate mode for the ldap-account-manager webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
@@ -68,6 +72,8 @@ self_service_password_debug: no
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # ldap account manager version
 self_service_password_version: "1.3"
+# LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
+self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)

@@ -1,0 +1,9 @@
+- name: copy dovecot fail2ban jail config
+  template:
+    src: etc_fail2ban_jail.d_dovecot.conf.j2
+    dest: /etc/fail2ban/jail.d/dovecot.conf
+    owner: root
+    group: root
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban

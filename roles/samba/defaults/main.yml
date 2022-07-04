@@ -48,12 +48,6 @@ samba_passdb_backend: "tdbsam"
 #   - username: bob
 #     password: "{{ samba_user_password_bob }}"
 samba_users: []
-# Max size of log files (in KiB)
-samba_max_log_size_kb: 10000
-# Samba log level
-samba_log_level: '1 passdb:2 auth:2 auth_audit:3'
-# base path for samba share directories
-samba_shares_path: /var/lib/samba/shares/
 # list of hosts allowed to connect to samba services (CIDR)
 # do not expose samba on the Internet/public networks!
 samba_hosts_allow:
@@ -72,6 +66,15 @@ samba_firewalld_zones:
 # disable this and/or set backup paths manually if samba backups consume too
 # much disk space on the backup storage, or if you don't care about losing the data.
 samba_enable_backups: yes
+# Samba log level (1-10, allows additional component:level)
+samba_log_level: '1 passdb:2 auth:2 auth_audit:3'
+# Log the following audit events (on success)
+# Example: 'chdir chmod chown close closedir connect disconnect fchmod fchown ftruncate link lock mkdir mknod open opendir pread pwrite read readlink realpath rename rmdir sendfile symlink unlink write !closedir !connectpath !get_alloc_size !lstat !opendir !pread !readdir !strict_unlock !telldir'
+samba_log_full_audit_success_events: 'mkdir rmdir rename open unlink connect disconnect'
+# Max size of log files (in KiB)
+samba_max_log_size_kb: 10000
+# base path for samba share directories
+samba_shares_path: /var/lib/samba/shares/
 # list of hosts allowed to access the $IPC share anonymously
 # windows clients require access to $IPC to be able to access any other share,
 # so it is recommended to keep the same value as samba_hosts_allow

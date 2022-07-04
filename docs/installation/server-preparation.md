@@ -1,6 +1,6 @@
 # Server preparation
 
-## Hardware
+## Hardware & resources
 
 The server (_host_) machine can be:
 - a physical computer (dedicated server, repurposed desktop/laptop, small factor board...)
@@ -18,13 +18,16 @@ Computer with x86/64 compatible CPU
 1-∞ GB storage for user data
 ```
 
-Prefer low power consumption hardware. To increase availability, setup the BIOS to reboot after a power loss, setup an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
+If hosting on a physical server, prefer low power consumption hardware. Setup the BIOS to reboot after a power loss. If availability is important, setup hardware-level redundancy/failover mechanisms such as [RAID](https://en.wikipedia.org/wiki/RAID), multiple network links, an [UPS](https://en.wikipedia.org/wiki/Uninterruptible_power_supply), and/or multiple power supplies.
 
 
 ## Network
 
 - The server must have a valid IPv4 address and gateway set during operating system installation.
-- The server must have a valid DNS resolver set during installation.
+- The server must have a valid DNS resolver set during installation. You can either use:
+  - Your hosting/Internet service provider's DNS resolvers
+  - Public DNS resolvers such as [Google Public DNS](https://en.wikipedia.org/wiki/Google_Public_DNS) (`8.8.8.8 8.8.4.4`), [Cloudflare public DNS](https://en.wikipedia.org/wiki/1.1.1.1) (`1.1.1.1 1.0.0.1`)
+  - Your private DNS resolver
 - The server must have Internet access during deployment and upgrades.
 - Prefer fast and reliable network links.
 
@@ -40,22 +43,26 @@ Web server:                      TCP 80/443
 BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738
 Graylog TCP input:               TCP 5140
-Valheim server:                  TCP 2456-2457/27015/27030/27036-27037, UDP 2456-2457/4380/27000-27031/27036
+Dovecot IMAP server:             TCP 993
 ```
+
 
 ### Domain names
 
+The controller must be able to resolve the server's name from the [inventory](usage.md), using either:
 
-Point `A` or `CNAME` DNS records to the public IP address of your server, using:
-- a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)
-- a [free subdomain service](https://freedns.afraid.org/domain/registry/)
-- or your [private DNS resolver](../appendices/pfsense.md)
+- (preferred) `A` or `CNAME` DNS records to the public IP address of your server, from:
+  - a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar) ([namecheap.com](https://namecheap.com), [gandi.net](https://gandi.net), ...)
+  - your private DNS resolver
+  - a [free subdomain service](https://freedns.afraid.org/domain/registry/)
+- [hosts file](https://en.wikipedia.org/wiki/Hosts_%28file%29) entries
+- the `ansible_host` variable in the host's [configuration](usage.md) file (e.g. `ansible_host: 192.168.1.220`)
 
-Alternatively, you can add [hosts](https://en.wikipedia.org/wiki/Hosts_%28file%29) entries on your client devices for each domain name.
+Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). Accessing the host directly by IP address is discouraged, use DNS records.
 
-- The controller must be able to resolve the server's _host name_. Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)).
-- Accessing the host directory by IP address is discouraged. Use DNS records.
-- Separate domain/subdomain names are required for web applications. By default the following subdomains are configured, when corresponding roles are enabled:
+Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates - private DNS records will not work (you may still use self-signed certificates).
+
+Separate domain/subdomain names are required to allow clients to access web applications. For example:
 
 ```bash
 ***.CHANGEME.org # host name in the inventory/playbook
@@ -73,9 +80,14 @@ media.CHANGEME.org # jellyfin
 logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
 rss-bridge.CHANGEME.org # rss_bridge
+imap.CHANGEME.org # mail_dovecot
 ```
 
-_Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates._
+### External SMTP server
+
+For your applications/services/monitoring tools to be able to send e-mail (notifications, confirmations, reports...), a valid account on an external e-mail (SMTP) server must be configured (see [`msmtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) and `*mailer*` configuration variables). By default all outgoing e-mail functionality is disabled and you will not receive any e-mail from your servers.
+
+You can use your own SMTP server or a commercial e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT [DNS records](#domain-names) for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other [[1]](https://www.ovhcloud.com/en-ie/emails/) [[2]](https://posteo.de/en) e-mail account.
 
 
 ## Base Operating System

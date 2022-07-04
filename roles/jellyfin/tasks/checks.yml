@@ -1,11 +1,13 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - jellyfin_fqdn is not search("CHANGEME")
-      - jellyfin_https_mode in ['selfsigned', 'letsencrypt']
-      - jellyfin_enable_service == jellyfin_enable_service|bool
-      - jellyfin_samba_share_enabled == jellyfin_samba_share_enabled|bool
-      - jellyfin_enable_media_backups == jellyfin_enable_media_backups|bool
-      - ( jellyfin_samba_share_allow_write_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
-      - ( jellyfin_samba_share_allow_read_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
+  with_items:
+    - jellyfin_fqdn is not search("CHANGEME")
+    - jellyfin_https_mode in ['selfsigned', 'letsencrypt']
+    - jellyfin_enable_service == jellyfin_enable_service|bool
+    - jellyfin_samba_share_enabled == jellyfin_samba_share_enabled|bool
+    - jellyfin_enable_media_backups == jellyfin_enable_media_backups|bool
+    - ( jellyfin_samba_share_allow_write_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
+    - ( jellyfin_samba_share_allow_read_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )

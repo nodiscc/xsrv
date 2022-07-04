@@ -1,23 +1,27 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - shaarli_api_secret|length >= 12
-      - shaarli_fqdn is not search("CHANGEME")
-      - shaarli_https_mode is in ["selfsigned", "letsencrypt"]
-      - shaarli_install_dir is string
-      - shaarli_overwrite_config == shaarli_overwrite_config|bool
-      - shaarli_password is not search("CHANGEME")
-      - shaarli_password_salt is not search("CHANGEME")
-      - shaarli_timezone is string
-      - shaarli_debug == shaarli_debug|bool
-      - shaarli_header_link is string
-      - shaarli_hide_timestamps == shaarli_hide_timestamps|bool
-      - shaarli_formatter in ['default', 'markdown', 'markdownExtra']
-      - shaarli_username is not search("CHANGEME")
-      - shaarli_version is string
-      - shaarli_php_memory_limit|regex_search('[KMG]$')
-      - shaarli_php_max_execution_time == shaarli_php_max_execution_time|int
-      - shaarli_php_max_input_time == shaarli_php_max_input_time|int
-      - shaarli_php_post_max_size|regex_search('[KMG]$')
-      - shaarli_php_upload_max_filesize|regex_search('[KMG]$')
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli"
+  with_items:
+    - shaarli_api_secret|length >= 12
+    - shaarli_fqdn is not search("CHANGEME")
+    - shaarli_https_mode in ["selfsigned", "letsencrypt"]
+    - shaarli_install_dir is string
+    - shaarli_overwrite_config == shaarli_overwrite_config|bool
+    - shaarli_password is not search("CHANGEME")
+    - shaarli_password_salt is not search("CHANGEME")
+    - shaarli_timezone is string
+    - shaarli_links_per_page == shaarli_links_per_page|int
+    - shaarli_debug == shaarli_debug|bool
+    - shaarli_thumbnails_mode in ['all', 'common', 'none']
+    - shaarli_header_link is string
+    - shaarli_hide_timestamps == shaarli_hide_timestamps|bool
+    - shaarli_formatter in ['default', 'markdown', 'markdownExtra']
+    - shaarli_username is not search("CHANGEME")
+    - shaarli_version is string
+    - shaarli_php_memory_limit|regex_search('[KMG]$')
+    - shaarli_php_max_execution_time == shaarli_php_max_execution_time|int
+    - shaarli_php_max_input_time == shaarli_php_max_input_time|int
+    - shaarli_php_post_max_size|regex_search('[KMG]$')
+    - shaarli_php_upload_max_filesize|regex_search('[KMG]$')

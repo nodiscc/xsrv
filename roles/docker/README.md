@@ -20,6 +20,23 @@ See [`meta/main.yml`](meta/main.yml)
 
 See [`defaults/main.yml`](defaults/main.yml) for all configuration variables.
 
+## Uninstallation
+
+```bash
+xsrv edit-playbook
+# remove the role from your playbook
+xsrv edit-host
+xsrv edit-vault
+# remove all docker_* configuration variables
+```
+
+```bash
+sudo apt purge docker-ce docker-compose
+sudo rm -rf /etc/apt/sources.list.d/docker.list /etc/docker /etc/cron.d/docker-system-prune-all /etc/ansible/facts.d/docker.fact /etc/netdata/health.d/dockerd.conf /etc/netdata/health.d/systemdunits.conf.d/docker.conf /var/lib/docker
+sudo groupdel docker
+sudo systemctl restart netdata
+```
+
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)

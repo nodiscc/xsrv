@@ -6,7 +6,7 @@ netdata_update_every: 2
 netdata_dbengine_page_cache_size: 32
 # (MiB) amount of disk space dedicated to storing Netdata metric values/metadata
 netdata_dbengine_disk_space: 800
-# space-separated list of IP addresses authorized to access netdata
+# space-separated list of IP addresses authorized to access netdata dashboard/API (wildcards accepted)
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
@@ -121,6 +121,16 @@ netdata_fping_hosts: []
 netdata_fping_ping_every: 5000
 # Delay between ping chart updates (seconds) (this shohuld be longer than netdata_fping_ping_every)
 netdata_fping_update_every: 10
+
+## NETDATA STREAMING ##
+# enable/disable streaming to another netdata instance (yes/no)
+netdata_streaming_send_enabled: no
+# netdata instance to stream metrics to (protocol:hostname:port:SSL)
+netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
+# enable/disable accepting streaming from another netdata instance (yes/no)
+netdata_streaming_receive_enabled: no
+# API key (UUID) used to authenticate on the destination instance/allow from source instances
+netdata_api_key: "CHANGEME"
 
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)

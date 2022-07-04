@@ -1,5 +1,7 @@
 # Debian
 
+> [Debian GNU/Linux](https://en.wikipedia.org/wiki/Debian) is a GNU/Linux distribution composed of [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software), developed by the community-supported Debian Project. Debian is one of the oldest operating systems based on the Linux kernel, and also the basis for many other distributions, most notably Ubuntu. The project is coordinated over the Internet by a team of volunteers guided by three foundational documents: the [Debian Social Contract](https://en.wikipedia.org/wiki/Debian_Social_Contract), the [Debian Constitution](https://www.debian.org/devel/constitution), and the [Debian Free Software Guidelines](https://en.wikipedia.org/wiki/Debian_Free_Software_Guidelines).
+
 ## Installation
 
 ### From ISO image
@@ -54,3 +56,9 @@ USAGE: ./xsrv init-vm --template TEMPLATE_NAME --name VM_NAME --ip VM_IP --netma
 ### From a hosting provider
 
 Most VPS providers allow you to install a preconfigured Debian system with basic SSH `root` access. Follow your hosting provider's documentation - make sure requirements  above are met (user account in the `sudo` group).
+
+
+## See also
+
+- [debian-live-config](https://debian-live-config.readthedocs.io/) - Debian GNU/Linux desktop operating system for personal computers & workstations.
+- https://stdout.root.sx/?searchtags=debian

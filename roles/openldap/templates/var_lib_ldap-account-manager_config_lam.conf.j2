@@ -5,7 +5,7 @@
 ###################################################################################################
 
 # server address (e.g. ldap://localhost:389 or ldaps://localhost:636)
-ServerURL: ldap://localhost:389
+ServerURL: {{ ldap_account_manager_ldap_url }}
 
 # list of users who are allowed to use LDAP Account Manager
 # names have to be seperated by semicolons
@@ -20,7 +20,7 @@ Admins: cn=admin,{{ openldap_base_dn }}
 
 # suffix of tree view
 # e.g. dc=yourdomain,dc=org
-treesuffix: {{ openldap_base_dn }}
+tools: treeViewSuffix: {{ openldap_base_dn }}
 
 # default language (a line from config/language)
 defaultLanguage: en_GB.utf8

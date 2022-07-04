@@ -6,6 +6,7 @@
     dest: /etc/apache2/conf-available/mod-evasive.conf
     mode: 0644
   when: apache_enable_mod_evasive|bool
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable apache mod_evasive
   command: a2enmod evasive
@@ -20,6 +21,7 @@
     creates: /etc/apache2/conf-enabled/mod-evasive.conf
   when: apache_enable_mod_evasive|bool
   notify: reload apache
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: disable apache mod_evasive
   command: a2dismod evasive

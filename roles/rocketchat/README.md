@@ -30,8 +30,8 @@ See [meta/main.yml](meta/main.yml)
   roles:
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.docker # docker container engine
-    - nodiscc.xsrv.apache # webserver and SSL/TLS certificates
+    - nodiscc.xsrv.docker # (required) docker container engine
+    - nodiscc.xsrv.apache # (required) webserver and SSL/TLS certificates
     - nodiscc.xsrv.rocketchat
 
 # required variables:
@@ -106,6 +106,23 @@ After first deployment, access your rocket.chat instance at https://chat.CHANGEM
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc_rsnasphot.d_rocketchat.conf.j2) for the [backup](../backup) role and [rocketchat dump script](templates/_user_local_bin_rocketchat-dump.sh.j2)
+
+### Uninstall
+
+```bash
+xsrv edit-playbook
+# remove the role from your playbook
+xsrv edit-host
+xsrv edit-vault
+# remove all rocketchat_* variables from the configuration
+```
+
+```bash
+docker stack rm rocketchat
+sudo rm -rf /etc/apache2/sites-available/rocketchat.conf /etc/apache2/sites-enabled/rocketchat.conf /usr/local/bin/rocketchat-dump-mongodb.sh /etc/rsnapshot.d/rocketchat.conf /etc/ansible/facts.d/rocketchat.fact /etc/netdata/go.d/httpcheck.conf.d/rocketchat.conf /var/lib/rocket.chat
+sudo systemctl reload apache2
+sudo systemctl restart netdata
+```
 
 
 ## License

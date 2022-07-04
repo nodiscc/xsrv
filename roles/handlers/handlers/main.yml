@@ -95,6 +95,13 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
+### BACKUP/RSNAPSHOT ###
+
+- name: check rsnapshot configuration
+  become: yes
+  command: rsnapshot configtest
+  changed_when: no
+
 ### GENERAL PURPOSE ###
 
 - name: reload systemd unit files

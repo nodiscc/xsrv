@@ -5,6 +5,19 @@
     mode: 0600
   notify: apply sysctl configuration
 
+- name: setup kernel modules blacklist
+  template:
+    src: etc_modprobe.d_blacklist.conf.j2
+    dest: /etc/modprobe.d/blacklist.conf
+    mode: 0644
+    owner: root
+    group: root
+
+- name: configure system to attempt to repair failed filesystems on boot
+  template:
+    src: etc_default_rcS.j2
+    dest: /etc/default/rcS
+
 # apply sysctl configuration
 - name: apply configuration (flush handlers)
   meta: flush_handlers

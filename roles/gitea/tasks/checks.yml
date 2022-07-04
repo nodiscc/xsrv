@@ -1,35 +1,37 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - gitea_admin_email is not search("CHANGEME")
-      - gitea_admin_password is not search("CHANGEME")
-      - gitea_admin_username is not search("CHANGEME")
-      - gitea_https_mode in ['selfsigned', 'letsencrypt']
-      - gitea_base_url is string
-      - gitea_db_host is string
-      - gitea_db_password is not search("CHANGEME")
-      - gitea_db_port == gitea_db_port|int
-      - gitea_db_type in ['postgres', 'mysql']
-      - gitea_db_user is string
-      - gitea_default_private in ['last', 'private', 'public']
-      - gitea_disable_gravatar in ['true', 'false']
-      - gitea_disable_registration in ['true', 'false']
-      - gitea_enable_api in ['true', 'false']
-      - gitea_api_max_results == gitea_api_max_results|int
-      - gitea_enable_service == gitea_enable_service|bool
-      - gitea_force_private in ['true', 'false']
-      - gitea_fqdn is not search("CHANGEME")
-      - gitea_mailer_enabled == gitea_mailer_enabled|bool
-      - gitea_min_password_length == gitea_min_password_length|int
-      - gitea_offline_mode in ['true', 'false']
-      - gitea_require_signin in ['true', 'false']
-      - gitea_secret_key is not search("CHANGEME")
-      - gitea_oauth2_jwt_secret is not search("CHANGEME")
-      - gitea_lfs_jwt_secret is not search("CHANGEME")
-      - gitea_internal_token is not search("CHANGEME")
-      - gitea_show_user_email in ['true', 'false']
-      - gitea_user_home is string
-      - gitea_user_repo_limit == gitea_user_repo_limit|int
-      - gitea_version is string
-      - gitea_issue_paging_num == gitea_issue_paging_num|int
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea"
+  with_items:
+    - gitea_admin_email is not search("CHANGEME")
+    - gitea_admin_password is not search("CHANGEME")
+    - gitea_admin_username is not search("CHANGEME")
+    - gitea_https_mode in ['selfsigned', 'letsencrypt']
+    - gitea_base_url is string
+    - gitea_db_host is string
+    - gitea_db_password is not search("CHANGEME")
+    - gitea_db_port == gitea_db_port|int
+    - gitea_db_type in ['postgres', 'mysql']
+    - gitea_db_user is string
+    - gitea_default_private in ['last', 'private', 'public']
+    - gitea_disable_gravatar in ['true', 'false']
+    - gitea_disable_registration in ['true', 'false']
+    - gitea_enable_api in ['true', 'false']
+    - gitea_api_max_results == gitea_api_max_results|int
+    - gitea_enable_service == gitea_enable_service|bool
+    - gitea_force_private in ['true', 'false']
+    - gitea_fqdn is not search("CHANGEME")
+    - gitea_mailer_enabled == gitea_mailer_enabled|bool
+    - gitea_min_password_length == gitea_min_password_length|int
+    - gitea_offline_mode in ['true', 'false']
+    - gitea_require_signin in ['true', 'false']
+    - gitea_secret_key is not search("CHANGEME")
+    - gitea_oauth2_jwt_secret is not search("CHANGEME")
+    - gitea_lfs_jwt_secret is not search("CHANGEME")
+    - gitea_internal_token is not search("CHANGEME")
+    - gitea_show_user_email in ['true', 'false']
+    - gitea_user_home is string
+    - gitea_user_repo_limit == gitea_user_repo_limit|int
+    - gitea_version is string
+    - gitea_issue_paging_num == gitea_issue_paging_num|int

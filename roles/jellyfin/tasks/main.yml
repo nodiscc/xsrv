@@ -13,7 +13,10 @@
   tags:
     - jellyfin
     - samba
-  when: jellyfin_samba_share_enabled|bool
+  when:
+    - jellyfin_samba_share_enabled|bool
+    - ansible_local.samba.ansible_managed is defined
+    - ansible_local.samba.ansible_managed|bool
 
 - include: ssl-selfsigned.yml
   become: yes

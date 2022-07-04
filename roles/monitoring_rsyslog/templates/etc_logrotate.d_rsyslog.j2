@@ -7,7 +7,7 @@
 	delaycompress
 	compress
 	postrotate
-{% if ansible_distribution == "Debian" and ansible_distribution_release == "stretch" %}		invoke-rc.d rsyslog rotate > /dev/null
+{% if ansible_facts.distribution == "Debian" and ansible_facts.distribution_release == "stretch" %}		invoke-rc.d rsyslog rotate > /dev/null
 {% else %}		/usr/lib/rsyslog/rsyslog-rotate
 {% endif %}
 	endscript
@@ -34,7 +34,7 @@
 	delaycompress
 	sharedscripts
 	postrotate
-{% if ansible_distribution == "Debian" and ansible_distribution_release == "stretch" %}		invoke-rc.d rsyslog rotate > /dev/null
+{% if ansible_facts.distribution == "Debian" and ansible_facts.distribution_release == "stretch" %}		invoke-rc.d rsyslog rotate > /dev/null
 {% else %}		/usr/lib/rsyslog/rsyslog-rotate
 {% endif %}
 	endscript

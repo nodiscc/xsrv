@@ -1,8 +1,8 @@
- alarm: systemd_service_jellyfin
-    on: systemdunits_service_units.service_unit_state
-  calc: $jellyfin
- every: 10s
-  crit: ($this = 5)
- units: state
-  info: jellyfin service status
-    to: sysadmin
+    alarm: systemd_service_jellyfin
+       on: systemdunits_service_units.service_unit_state
+     calc: $jellyfin
+    every: 10s
+     crit: ($this = 5)
+    units: state
+     info: jellyfin service status
+       to: sysadmin

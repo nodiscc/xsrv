@@ -1,4 +1,0 @@
-- name: check rsnapshot configuration
-  become: yes
-  command: rsnapshot configtest
-  changed_when: no

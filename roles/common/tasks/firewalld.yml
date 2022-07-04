@@ -24,20 +24,6 @@
 
 ##### FIREWALLD #####
 
-- name: configure APT to install iptables from backports (Debian 10)
-  template:
-    src: etc_apt_preferences.d_99-iptables-buster-backports.j2
-    dest: /etc/apt/preferences.d/99-iptables-buster-backports
-    mode: 0644
-  when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
-
-- name: force upgrade of iptables to buster-backports (Debian 10)
-  apt:
-    package: iptables
-    state: latest # noqa package-latest
-    default_release: buster-backports
-  when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
-
 - name: install firewalld
   apt:
     package:

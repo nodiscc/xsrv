@@ -1,27 +1,28 @@
+# when updating this file remember to also update playbooks/xsrv/playbooks.yml to reflect changes
 - hosts: my.example.org
   # ignore_unreachable: yes # don't fail when host is unreachable
   # strategy: free # if your servers do not require ordered/synchronized execution of tasks
   roles:
-    - common
-    - backup
-    - monitoring
-    - apache
-    - homepage
-    - postgresql
-    - nextcloud
-    - tt_rss
-    - shaarli
-    - rss_bridge
-    - gitea
-    - samba
-    - transmission
-    - mumble
-    - openldap
-    - docker
-    - rocketchat
-    - graylog
-    - proxmox
-    - gotty
-    - jellyfin
-    - valheim_server
-    - dnsmasq
+    - common # base setup
+    - monitoring # monitoring, alerting and logging
+    - backup # backup service
+    - apache # web server + PHP interpreter
+    - openldap # LDAP directory server
+    - postgresql # database engine
+    - nextcloud # file hosting/sharing/synchronization and collaboration
+    - tt_rss # news feed reader
+    - rss_bridge # the RSS feed for websites missing it
+    - shaarli # bookmarking & link sharing
+    - gitea # git service/software forge
+    - transmission # bittorrent client
+    - mumble # VoIP/voice chat server
+    - docker # application containerization
+    - rocketchat # instant messaging & communication platform
+    - jellyfin # media server
+    - samba # file sharing server
+    - dnsmasq # lightweight DNS server
+    - mail_dovecot # IMAP mailbox server
+    - gotty # access server terminal as a web application
+    - proxmox # basic setup steps for proxmox hypervisors
+    - graylog # log management, capture and analysis platform
+    - homepage # simple webserver homepage

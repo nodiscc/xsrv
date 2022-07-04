@@ -1,24 +1,26 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - nextcloud_admin_email is not search("CHANGEME")
-      - nextcloud_apps|type_debug == "list"
-      - nextcloud_data_dir is string
-      - nextcloud_db_host is string
-      - nextcloud_db_name is string
-      - nextcloud_db_password is not search("CHANGEME")
-      - nextcloud_db_type in ['pgsql', 'mysql']
-      - nextcloud_db_user is string
-      - nextcloud_fqdn is not search("CHANGEME")
-      - nextcloud_full_url is not search("CHANGEME")
-      - nextcloud_https_mode in ['selfsigned', 'letsencrypt']
-      - nextcloud_install_dir is string
-      - nextcloud_password is not search("CHANGEME")
-      - nextcloud_user is not search("CHANGEME")
-      - nextcloud_version is string
-      - nextcloud_php_memory_limit|regex_search('[KMG]$')
-      - nextcloud_php_max_execution_time == nextcloud_php_max_execution_time|int
-      - nextcloud_php_max_input_time == nextcloud_php_max_input_time|int
-      - nextcloud_php_post_max_size|regex_search('[KMG]$')
-      - nextcloud_php_upload_max_filesize|regex_search('[KMG]$')
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud"
+  with_items:
+    - nextcloud_admin_email is not search("CHANGEME")
+    - nextcloud_apps|type_debug == "list"
+    - nextcloud_data_dir is string
+    - nextcloud_db_host is string
+    - nextcloud_db_name is string
+    - nextcloud_db_password is not search("CHANGEME")
+    - nextcloud_db_type in ['pgsql', 'mysql']
+    - nextcloud_db_user is string
+    - nextcloud_fqdn is not search("CHANGEME")
+    - nextcloud_full_url is not search("CHANGEME")
+    - nextcloud_https_mode in ['selfsigned', 'letsencrypt']
+    - nextcloud_install_dir is string
+    - nextcloud_password is not search("CHANGEME")
+    - nextcloud_user is not search("CHANGEME")
+    - nextcloud_version is string
+    - nextcloud_php_memory_limit|regex_search('[KMG]$')
+    - nextcloud_php_max_execution_time == nextcloud_php_max_execution_time|int
+    - nextcloud_php_max_input_time == nextcloud_php_max_input_time|int
+    - nextcloud_php_post_max_size|regex_search('[KMG]$')
+    - nextcloud_php_upload_max_filesize|regex_search('[KMG]$')

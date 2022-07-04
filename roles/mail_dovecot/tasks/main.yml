@@ -1,0 +1,66 @@
+- include: checks.yml
+  tags:
+    - dovecot
+    - mail
+    - checks
+
+- include: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - dovecot
+    - mail
+    - ssl
+
+- include: dovecot.yml
+  become: yes
+  tags:
+    - dovecot
+    - mail
+
+- include: fail2ban.yml
+  become: yes
+  tags:
+    - dovecot
+    - mail
+    - fail2ban
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
+
+- include: firewalld.yml
+  become: yes
+  tags:
+    - dovecot
+    - mail
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed|bool
+
+- include: backups.yml
+  become: yes
+  tags:
+    - gitea
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed|bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - dovecot
+    - mail
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed|bool
+
+- include: fact.yml
+  become: yes
+  tags: dovecot
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: dovecot

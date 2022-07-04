@@ -1,0 +1,26 @@
+# enable additional roles by uncommenting them
+- hosts: my.example.test
+  roles:
+    - nodiscc.xsrv.common # base setup
+    - nodiscc.xsrv.monitoring # monitoring, alerting and logging
+    - nodiscc.xsrv.backup # backup service
+    - nodiscc.xsrv.apache # web server + PHP interpreter
+    - nodiscc.xsrv.openldap # LDAP directory server
+    - nodiscc.xsrv.postgresql # database engine
+    - nodiscc.xsrv.nextcloud # file hosting/sharing/synchronization and collaboration
+    - nodiscc.xsrv.tt_rss # news feed reader
+    - nodiscc.xsrv.rss_bridge # the RSS feed for websites missing it
+    - nodiscc.xsrv.shaarli # bookmarking & link sharing
+    - nodiscc.xsrv.gitea # git service/software forge
+    - nodiscc.xsrv.transmission # bittorrent client
+    - nodiscc.xsrv.mumble # VoIP/voice chat server
+    - nodiscc.xsrv.docker # application containerization
+    - nodiscc.xsrv.rocketchat # instant messaging & communication platform
+    - nodiscc.xsrv.jellyfin # media server
+    - nodiscc.xsrv.samba # file sharing server
+    - nodiscc.xsrv.dnsmasq # lightweight DNS server
+    - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
+    - nodiscc.xsrv.gotty # access server terminal as a web application
+    # - nodiscc.xsrv.proxmox # basic setup steps for proxmox hypervisors
+    - nodiscc.xsrv.graylog # log management, capture and analysis platform
+    - nodiscc.xsrv.homepage # simple webserver homepage

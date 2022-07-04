@@ -1,16 +1,19 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that:
-      - samba_log_level is string
-      - samba_max_log_size_kb == samba_max_log_size_kb|int
-      - samba_netbios_name is string
-      - samba_server_string is string
-      - samba_shares|type_debug == "list"
-      - samba_shares_path is string
-      - samba_users|type_debug == "list"
-      - samba_passdb_backend in ['tdbsam', 'ldapsam']
-      - samba_nscd_debug_level == samba_nscd_debug_level|int
-      - samba_nscd_cache_time_to_live == samba_nscd_cache_time_to_live|int
-      - samba_hosts_allow|type_debug == "list"
-      - samba_firewalld_zones|type_debug == "list"
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba"
+  with_items:
+    - samba_log_level is string
+    - samba_max_log_size_kb == samba_max_log_size_kb|int
+    - samba_netbios_name is string
+    - samba_server_string is string
+    - samba_shares|type_debug == "list"
+    - samba_shares_path is string
+    - samba_users|type_debug == "list"
+    - samba_passdb_backend in ['tdbsam', 'ldapsam']
+    - samba_nscd_debug_level == samba_nscd_debug_level|int
+    - samba_nscd_cache_time_to_live == samba_nscd_cache_time_to_live|int
+    - samba_hosts_allow|type_debug == "list"
+    - samba_firewalld_zones|type_debug == "list"
+    - samba_log_full_audit_success_events is string

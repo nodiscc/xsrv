@@ -20,6 +20,7 @@
       - openssl
       - liblz4-1
       - gnupg
+      - smartmontools # smart log monitoring
       - fping # fping netdata plugin
       - git # required to clone additional modules
       - python3-psycopg2 # postgresql support
@@ -118,11 +119,14 @@
 ### NETDATA CONFIGURATION ###
 
 # required for systemd services charts/cgroups accounting
-- name: create systemd dynamic configuration directory
+- name: create required directories
   file:
-    path: '/etc/systemd/system.conf.d'
+    path: "{{ item }}"
     state: directory
     mode: 0755
+  with_items:
+    - '/etc/systemd/system.conf.d' # systemd dynamic configuration directory
+    - '/var/log/smartd' # smartd log directory
 
 - name: enable systemd cgroups ressource accounting (systemd services chart)
   template:
@@ -130,6 +134,14 @@
     dest: '/etc/systemd/system.conf.d/accounting.conf'
     mode: 0644
   notify: re-execute the systemd manager
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure smartd
+  template:
+    src: etc_default_smartmontools.j2
+    dest: /etc/default/smartmontools
+    mode: 0644
+  notify: restart smartd
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create directories for netdata configuration
@@ -161,6 +173,7 @@
     mode: 0640
   with_items:
     - { src: 'etc_netdata_netdata.conf.j2', dest: '/etc/netdata/netdata.conf' } # general configuration
+    - { src: 'etc_netdata_stream.conf.j2', dest: '/etc/netdata/stream.conf' } # streaming and replication configuration
     - { src: 'etc_netdata_go.d.conf.j2', dest: '/etc/netdata/go.d.conf' } # go.d plugin
     - { src: 'etc_netdata_go.d_systemdunits.conf.j2', dest: '/etc/netdata/go.d/systemdunits.conf' } # systemd units monitoring
     - { src: 'etc_netdata_health_alarm_notify.conf.j2', dest: '/etc/netdata/health_alarm_notify.conf' } # health notifications configuration # noqa 204

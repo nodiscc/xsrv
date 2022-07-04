@@ -9,19 +9,19 @@
     mode: 0755
   with_items:
     - /var/lib/jellyfin/sambashare
-    - "{{ samba_shares_path }}/jellyfin"
+    - "{{ ansible_local.samba.shares_path }}/jellyfin"
 
 - name: mount jellyfin samba share to jellyfin directory
   mount:
     path: /var/lib/jellyfin/sambashare
-    src: "{{ samba_shares_path }}/jellyfin"
+    src: "{{ ansible_local.samba.shares_path }}/jellyfin"
     opts: bind
     state: mounted
     fstype: none
 
 - name: create jellyfin samba share subdirectories
   file:
-    path: "{{ samba_shares_path }}/jellyfin/{{ item }}"
+    path: "{{ ansible_local.samba.shares_path }}/jellyfin/{{ item }}"
     state: directory
     owner: jellyfin
     group: sambausers

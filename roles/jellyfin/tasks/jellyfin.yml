@@ -15,7 +15,7 @@
 - name: add jellyfin APT repository
   apt_repository:
     state: present
-    repo: deb [arch=amd64] https://repo.jellyfin.org/debian {{ ansible_distribution_release | lower }} main
+    repo: deb [arch=amd64] https://repo.jellyfin.org/debian {{ ansible_facts.distribution_release | lower }} main
     filename: jellyfin
 
 - name: install jellyfin

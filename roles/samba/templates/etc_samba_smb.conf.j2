@@ -117,7 +117,7 @@
 # connect/disconnect, create/delete directory, rename and read/write (open), delete (unlink)
 # See also: read/pread, write/pwrite, sendfile, chmod/chown, lock,
 # link/symlink/readlink/mknod, fallocate/fftruncate
-    full_audit:success = mkdir rmdir rename open unlink connect disconnect
+    full_audit:success = {{ samba_log_full_audit_success_events }}
 
 # full_audit VFS backend: log the following functions when failed
 # failed connection attempts (connect)

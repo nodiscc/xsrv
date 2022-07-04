@@ -26,7 +26,6 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - 10
         - 11
     - name: Ubuntu
       versions:
@@ -54,5 +53,10 @@ galaxy_info:
     - utilities
     - users
     - sudo
+    - cis
+    - debian
+    - disa
+    - stig
+    - systemd
 dependencies:
   - nodiscc.xsrv.handlers

@@ -26,7 +26,7 @@ base {{ openldap_base_dn }}
 
 # The distinguished name to bind to the server with.
 # Optional: default is to bind anonymously.
-binddn cn={{ openldap_bind_username }},ou=system,{{ openldap_base_dn }}
+binddn cn={{ openldap_bind_username|default('bind') }},ou=system,{{ openldap_base_dn }}
 
 # The credentials to bind with.
 # Optional: default is no credentials.

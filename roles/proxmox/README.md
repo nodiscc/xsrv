@@ -1,6 +1,6 @@
 # xsrv.proxmox
 
-This role will perform basic setup steps for a [Proxmox](hhttps://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) hypervisor:
+This role will perform basic setup steps for [Proxmox](hhttps://en.wikipedia.org/wiki/Proxmox_Virtual_Environment) hypervisors:
 - setup `pve-no-subscription` APT repositories
 - protect from bruteforce on the login form using `fail2ban` (if `nodiscc.xsrv.common` role is deployed)
 
@@ -9,7 +9,7 @@ This role will perform basic setup steps for a [Proxmox](hhttps://en.wikipedia.o
 [![](https://i.imgur.com/7DYZfcC.png)](https://i.imgur.com/7DYZfcC.png)
 
 
-## Requirements/eependencies/example playbook
+## Requirements/dependencies/example playbook
 
 See [meta/main.yml](meta/main.yml)
 
@@ -20,7 +20,6 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) hardening/bruteforce protection/automatic security upgrades
     - nodiscc.xsrv.monitoring # (optional) server monitoring and log aggregation
     - nodiscc.xsrv.proxmox
-    - nodiscc.xsrv.mumble
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables

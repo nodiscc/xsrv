@@ -3,8 +3,8 @@
 This role will install [Mumble](https://en.wikipedia.org/wiki/Mumble_(software)) server, a voice chat ([VoIP](https://en.wikipedia.org/wiki/Voice_over_IP)) server. It is primarily designed for use by gamers and can replace commercial programs such as TeamSpeak or Ventrilo.
 
 It also configures:
-- login bruteforce prevention using `fail2ban`
-- (optional) aggregation of mumble server logs to syslog
+- (optional) login bruteforce prevention using [fail2ban](tasks/fail2ban.yml)
+- (optional) aggregation of mumble server logs to [syslog](tasks/rsyslog.yml)
 
 [![](https://i.imgur.com/S5Z6IEw.png)](https://i.imgur.com/S5Z6IEw.png)
 
@@ -19,7 +19,7 @@ See [meta/main.yml](meta/main.yml)
   roles:
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring and log aggregation
-    - nodiscc.xsrv.backup # (optional) backup of mumble server database
+    - nodiscc.xsrv.backup # (optional) automatic backups of mumble server database
     - nodiscc.xsrv.mumble
 
 # required variables:

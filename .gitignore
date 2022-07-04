@@ -2,3 +2,4 @@
 nodiscc-xsrv-*.tar.gz
 /ansible_collections/
 docs/html/
+/tests/playbooks/xsrv-test/ansible_collections/

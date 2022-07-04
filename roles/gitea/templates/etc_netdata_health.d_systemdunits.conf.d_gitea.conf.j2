@@ -1,8 +1,9 @@
- alarm: systemd_service_gitea
-    on: systemdunits_service_units.service_unit_state
-  calc: $gitea
- every: 10s
-  crit: ($this = 5)
- units: state
-  info: gitea service status
-    to: sysadmin
+    alarm: systemd_service_gitea
+       on: systemdunits_service_units.service_unit_state
+     calc: $gitea
+    every: 10s
+     crit: ($this = 5)
+    units: state
+     info: gitea service status
+       to: sysadmin
+

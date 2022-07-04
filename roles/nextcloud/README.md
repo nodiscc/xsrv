@@ -2,9 +2,12 @@
 
 This role will install [Nextcloud](https://en.wikipedia.org/wiki/Nextcloud), a private file hosting/sharing/synchronization service and groupware/collaboration platform.
 
-Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/).
-
-Basic functionality includes uploading, viewing, editing, downloading and sharing files from a web interface. Nextcloud [clients](#clients) can be installed on any computer (Linux/OSX/Windows) or mobile device (Android/iOS) and allow automatically synchronizing your files with the server. It can be extended to a full personal cloud/collaborative suite/groupware solution by more than 200 [applications](https://apps.nextcloud.com/).
+Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/). Features:
+- Uploading, viewing, editing, downloading and sharing files from a web interface
+- [Clients](#clients) for PC or mobile devices
+- Realtime file synchronization
+- Can be extended to a full personal cloud/collaborative suite/groupware solution by more than 200 [applications](https://apps.nextcloud.com/)
+- LDAP authentication
 
 Default installed applications include:
 
@@ -44,8 +47,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring and log aggregation
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # webserver, PHP interpreter and SSL certificates
-    - nodiscc.xsrv.postgresql # database engine
+    - nodiscc.xsrv.apache # (required) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.postgresql # (required if nextcloud_db_host: localhost) database engine
     - nodiscc.xsrv.nextcloud
 
 # required variables:
@@ -114,7 +117,7 @@ sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 **LDAP authentication support:**
 - Create a group (eg. `posixGroup: access_nextcloud`) in your LDAP directory and add users that should be able to access Nextcloud to this group
 - Access your Nextcloud LDAP settings (https://cloud.CHANGEME.org/index.php/settings/admin/ldap):
-  - `Server > Host: ldap.CHANGEME.org`
+  - `Server > Host: ldap.CHANGEME.org` or `ldaps://ldap.CHANGEME.org`
   - click `Detect port`
   - `Server > User DN: cn=bind,ou=system,dc=CHANGEME,dc=org` the DN for your unprivilegied/bind LDAP user
   - `Server > Password:` the password for your bind LDAP user
@@ -124,6 +127,24 @@ sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
   - `Users > Groups:` (your LDAP server must support the memberOf overlay)
   - `Login attributes: [x] LDAP/AD user name`
   - `Groups: Only in groups: access_nextcloud`
+
+To trust a self-signed LDAP server certificate:
+
+```bash
+# copy the LDAP server PEM CA certificate file to /etc/ssl/certs/
+rsync -avzP certificates/ldap.CHANGEME.org.openldap.crt my.CHANGEME.org:
+ssh my.CHANGEME.org
+sudo mv ldap.CHANGEME.org.openldap.crt /etc/ssl/certs/
+# update the LDAP client configuration file
+sudo nano /etc/ldap/ldap.conf
+```
+```
+TLS_CACERT /etc/ssl/certs/ldap.xinit.se.openldap.crt
+```
+```bash
+# restart the php7.4-fpm service
+sudo systemctl restart php7.4-fpm
+```
 
 **Uninstallation**
 

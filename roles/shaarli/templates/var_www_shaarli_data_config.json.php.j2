@@ -31,7 +31,7 @@
     },
     "general": {
         "header_link": "{{ shaarli_header_link }}",
-        "links_per_page": 20,
+        "links_per_page": {{ shaarli_links_per_page }},
         "enabled_plugins": [
             "qrcode"
         ],
@@ -63,7 +63,7 @@
     "thumbnails": {
         "width": 125,
         "height": 90,
-        "mode": "all"
+        "mode": "{{ shaarli_thumbnails_mode }}"
     },
     "translation": {
         "language": "auto",

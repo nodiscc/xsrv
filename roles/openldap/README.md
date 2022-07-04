@@ -1,6 +1,9 @@
 # xsrv.openldap
 
-This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/OpenLDAP), a [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) directory server, and optionally the [LDAP Account Manager](https://ldap-account-manager.org/) web management interface, and the [Self Service Password](https://ltb-project.org/documentation/self-service-password) password change tool.
+This role will install and configure a [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) directory server:
+- [OpenLDAP](https://en.wikipedia.org/wiki/OpenLDAP) server
+- (optional) [LDAP Account Manager](https://ldap-account-manager.org/) web interface for easy management of the LDAP directory
+- (optional) [Self Service Password](https://ltb-project.org/documentation/self-service-password) LDAP password change tool
 
 [![](https://screenshots.debian.net/shrine/screenshot/6946/simage/small-58bc88c5ca84c0544180e2c0f7de1445.png)](https://screenshots.debian.net/package/ldap-account-manager)
 [![](https://screenshots.debian.net/shrine/screenshot/16087/simage/small-d9cc1bf64acddc45d98715f41fada68c.png)](https://screenshots.debian.net/package/ldap-account-manager)
@@ -11,6 +14,8 @@ This role will install and configure [OpenLDAP](https://en.wikipedia.org/wiki/Op
 
 See [meta/main.yml](meta/main.yml)
 
+The server must be reachable by clients over TCP ports 389 and 636 (SSL/TLS).
+
 ```yaml
 # playbook.yml
 - hosts: my.example.org
@@ -18,7 +23,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce protection
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (required if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.openldap
 
 # required variables:

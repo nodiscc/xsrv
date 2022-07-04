@@ -3,6 +3,14 @@
     - apache
     - checks
 
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  tags:
+    - apache
+    - monitoring
+    - rsyslog
+
 - include: ssl-selfsigned.yml
   become: yes
   tags:
@@ -26,8 +34,8 @@
     - apache
     - fail2ban
   when:
-    - "'nodiscc.xsrv.common' in role_name"
-    - setup_fail2ban|bool
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed|bool
 
 - include: rsyslog.yml
   become: yes
