@@ -21,6 +21,12 @@
     group: root
     mode: 0600
 
+- name: ensure /var/log/wtmp is not world-readable
+  file:
+    path: /var/log/wtmp
+    follow: yes
+    mode: o-rw
+
 - name: ensure ansible user home directory is not world-readable
   file:
     state: directory
