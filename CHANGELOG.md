@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 
 
-#### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - UNRELEASED
+#### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-04
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
