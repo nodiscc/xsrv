@@ -2,21 +2,18 @@
 
 ### xsrv/xsrv
 
-- #897 - xsrv: upgrade ansible to v6.0.0 - **`1.9.0`** `easy,maintenance`
-- #893 - common: harden permissions on /var/log/wtmp - **`1.9.0`** `configuration,easy,enhancement,security`
+- #899 - tests: simplify ansible-lint test mechanism - **`1.9.0`** `enhancement,maintenance,tools`
 - #892 - replace proxmox role with libvirt - **`1.9.0`** `enhancement,feature,maintenance`
 - #890 - apache: implement modpagespeed? - **`-`** `performance,question`
 - #889 - rocketchat: use rocketchatctl for backups? - **`-`** `backups,question`
 - #887 - WIP migrate shaarli to separate shaarli user acount - **`1.9.0`** `enhancement,security`
 - #886 - proxmox: misc improvements/documentation? - **`-`** `question`
 - #885 - proxmox: document/setup default firewall configuration? - **`-`** `question`
-- #884 - gitea: document LDAP/LDAPS authentication configuration - **`1.9.0`** `documentation,enhancement`
 - #883 - Proxmox: LDAP authentication? - **`-`** `enhancement,question,security`
-- #881 - Keycloak role - **`1.9.0`** `easy,feature,security`
-- #874 - dovecot: unable to connect to IMAP server with self-signed certificate from thunderbird - **`1.9.0`** `bug,documentation`
+- #881 - Keycloak role? - **`-`** `feature,question`
 - #871 - tools/tests: update ansible-lint to 6.3.0 - **`-`** `maintenance,tools`
 - #870 - xsrv: allow using `xsrv show-defaults | grep some_search_term` to search/filter available configuration variables - **`1.9.0`** `enhancement`
-- #868 - dovecot: document how to open a local copy of a maildir with a mail client - **`1.9.0`** `backups,documentation,easy`
+- #868 - dovecot: document how to open a local copy of a maildir with a mail client - **`-`** `backups,documentation`
 - #867 - dovecot: document/test LDAPS setup - **`-`** `documentation,enhancement,security`
 - #866 - WIP add xsrv init-vm-template command - **`1.9.0`** `feature`
 - #863 - dovecot: setup netdata dovecot plugin? - **`-`** `monitoring,question`
@@ -49,7 +46,6 @@
 - #809 - monitoring_utils: lynis: suggestion[]=AUTH-9282|When possible set expire dates for all password protected accounts - **`-`** `configuration,enhancement,question,security`
 - #808 - monitoring_utils: lynis: suggestion[]=AUTH-9229|Check PAM configuration, add rounds if applicable and expire passwords to encrypt with new values - **`-`** `configuration,enhancement,security`
 - #807 - monitoring_utils: lynis: suggestion[]=AUTH-9230|Configure password hashing rounds in /etc/login.defs - **`-`** `configuration,enhancement,security`
-- #806 - monitoring_utils: lynis: suggestion[]=DEB-0810|Install apt-listbugs to display a list of critical bugs prior to each APT installation.|-|-| - **`1.9.0`** `enhancement,feature,monitoring,security`
 - #804 - homepage: improve layout - **`1.9.0`** `enhancement`
 - #802 - apache: allow using LDAP for basic auth - **`-`** `enhancement`
 - #799 - mumble: document LDAP over SSL/TLS + self-signed certificate setup - **`1.9.0`** `documentation,enhancement,security`
@@ -97,7 +93,6 @@
 - #675 - pgmetrics: write results to file on the controller - **`-`** `enhancement`
 - #672 - [DEPRECATION WARNING]: "include" is deprecated, use include_tasks/import_tasks instead - **`-`** `maintenance`
 - #668 - apache: allow defining custom ErrorDocuments - **`-`** `enhancement`
-- #654 - WIP add apt-listbugs - **`-`** `enhancement`
 - #652 - libvirt: allow setting up hooks to forward ports to VMs - **`-`** `enhancement`
 - #648 - graylog: setup authentication fro mongodb - **`-`** `easy,enhancement,security`
 - #642 - mumble: LDAP user backend - **`-`** `enhancement`
@@ -171,7 +166,7 @@
 - #448 - Netdata: send notifications using signal-cli or telegram - **`-`** `feature,monitoring`
 - #447 - display local mailboxes through netdata static web server, raise alarm if there is unread mail - **`-`** `feature,monitoring`
 - #445 - bookstack role? - **`-`** ``
-- #441 - openldap: setup MemberOf overlay - **`-`** `enhancement,security`
+- #441 - openldap: allow restricting application access to groups/setup MemberOf overlay - **`-`** `enhancement,security`
 - #433 - docker: additional hardening/CIS guidelines - **`2.0.0`** `configuration,enhancement,security`
 - #429 - gitea: role is not idempotent - **`-`** `maintenance,tools`
 - #428 - gitea: document backup restoration procedure - **`-`** `backups,documentation`
