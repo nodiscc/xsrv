@@ -12,11 +12,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 
-
 **Changed:**
 - xsrv: upgrade ansible to [v6.0.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - common: ensure `/var/log/wtmp` is not world-readable
+
+
+#### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-10
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Fixed:**
+- backup/rsnapshot: fix rsnapshot installation, always install from Debian repositories
+
 
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-04
 
@@ -26,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - **gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss:** ensure the `apache` role or equivalent is explicitly deployed to the host *before* deploying any of these roles.
 - **jellyfin/samba:** if both jellyfin and samba roles are deployed on the same host, ensure `samba` is deployed before `jellyfin` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook))
 - **valheim_server:** if you are using the [`valheim_server`](https://gitlab.com/nodiscc/xsrv/-/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
+- `xsrv deploy` to apply changes
 
 **Added:**
 - add [`mail_dovecot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) role - IMAP mailbox server
@@ -47,7 +58,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 - xsrv: [`xsrv help-tags`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) will now parse tag descriptions from custom roles in `roles/` in addition to collections
 - monitoring: utils: add `iputils-ping` package (ping utility)
-
 
 **Removed:**
 - common: firewalld/mail/msmtp: drop compatibilty with Debian 10
@@ -82,7 +92,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup/tools: improve `check` mode support, standardize task names, remove unused template files, make usage of ansible_facts consistent in all roles, clarify xsrv script, reorder functions by purpose/component, automate documentation generation, improve tests/release procedure, automate initial check mode/deployment/idempotence tests
 - update documentation
 
-
 **Fixed:**
 - xsrv: `init-project`: fix inventory not correctly initialized
 - xsrv: fix `xsrv shell/fetch-backups` when a non-default `XSRV_PROJECTS_DIR` is specified by the user
@@ -99,7 +108,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring: netdata/needrestart: fix `needrestart_autorestart_services` value not taken into account when true
 - shaarli/transmission: fix `*_https_mode` variable checks
 - doc: fix broken links
-
 
 **Security:**
 - proxmox: fail2ban: fix detection of failed login attempts
