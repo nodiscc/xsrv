@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: upgrade ansible to [v6.0.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - common: ensure `/var/log/wtmp` is not world-readable
+- tools/tests: simplify test tooling
 
 
 #### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-10

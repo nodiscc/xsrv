@@ -32,9 +32,9 @@ install_collection: venv build_collection
 	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
 
 .PHONY: test_ansible_lint # ansible syntax linter
-test_ansible_lint: venv
+test_ansible_lint: venv install_collection
 	source .venv/bin/activate && \
-	ANSIBLE_ROLES_PATH=./roles ansible-lint -v -x fqcn-builtins,truthy,braces,line-length tests/playbook.yml
+	ansible-lint -v -x fqcn-builtins,truthy,braces,line-length roles/*
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:

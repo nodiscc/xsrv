@@ -1,5 +1,7 @@
 # enable additional roles by uncommenting them
 - hosts: my.example.test
+  # ignore_unreachable: yes # don't fail when host is unreachable
+  # strategy: free # if your servers do not require ordered/synchronized execution of tasks
   roles:
     - nodiscc.xsrv.common # base setup
     - nodiscc.xsrv.monitoring # monitoring, alerting and logging
