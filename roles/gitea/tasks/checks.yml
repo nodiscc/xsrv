@@ -35,3 +35,5 @@
     - gitea_user_repo_limit == gitea_user_repo_limit|int
     - gitea_version is string
     - gitea_issue_paging_num == gitea_issue_paging_num|int
+    - gitea_disable_git_hooks == gitea_disable_git_hooks|bool
+    - gitea_disable_webhooks == gitea_disable_webhooks|bool

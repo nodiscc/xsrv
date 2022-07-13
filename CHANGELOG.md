@@ -11,8 +11,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- gitea: allow enabling/disabling git hooks and webhooks features globally ([`gitea_enable_git_hooks/webhooks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 
 **Changed:**
+- gitea: disable git hooks by default
 - xsrv: upgrade ansible to [v6.0.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - common: ensure `/var/log/wtmp` is not world-readable
