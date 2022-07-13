@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **gitea:** if you rely on custom git hooks for your projects, set `gitea_enable_git_hooks: yes` in the host configuration/vars file (`xsrv edit-host`)
+- `xsrv deploy` to apply changes
 
 **Added:**
 - common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
