@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - gitea: disable git hooks by default
+- postgresql: update pgmetrics to [v1.13.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.1)
 - xsrv: upgrade ansible to [v6.0.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - common: ensure `/var/log/wtmp` is not world-readable
