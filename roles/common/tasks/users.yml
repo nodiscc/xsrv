@@ -70,7 +70,9 @@
     owner: "root"
     group: "{{ item.name }}"
     mode: "0750"
-  when: '"sftponly" in item.groups'
+  when:
+   - item.groups is defined
+   - '"sftponly" in item.groups'
   with_items: "{{ linux_users }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -81,7 +83,9 @@
     owner: "{{ item.name }}"
     group: "{{ item.name }}"
     mode: 0770
-  when: '"sftponly" in item.groups'
+  when:
+   - item.groups is defined
+   - '"sftponly" in item.groups'
   with_items: "{{ linux_users }}"
 
 

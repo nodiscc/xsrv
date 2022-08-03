@@ -23,6 +23,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ensure `/var/log/wtmp` is not world-readable
 - tools/tests: simplify test tooling
 
+**Fixed:**
+- common: users: fix errors during creation fo `sftponly` user accounts when no groups are defined in the user definition
+
 
 #### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-10
 
