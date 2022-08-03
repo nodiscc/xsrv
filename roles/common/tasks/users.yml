@@ -71,8 +71,8 @@
     group: "{{ item.name }}"
     mode: "0750"
   when:
-   - item.groups is defined
-   - '"sftponly" in item.groups'
+    - item.groups is defined
+    - '"sftponly" in item.groups'
   with_items: "{{ linux_users }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
