@@ -37,3 +37,4 @@
     - gitea_issue_paging_num == gitea_issue_paging_num|int
     - gitea_enable_git_hooks == gitea_enable_git_hooks|bool
     - gitea_enable_webhooks == gitea_enable_webhooks|bool
+    - gitea_ssh_url_port == gitea_ssh_url_port|int

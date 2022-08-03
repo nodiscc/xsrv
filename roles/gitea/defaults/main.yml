@@ -67,6 +67,8 @@ gitea_default_allow_create_organization: "false"
 gitea_enable_git_hooks: no
 # yes/no: enable/disable the webhooks feature
 gitea_enable_webhooks: yes
+# port to expose in the clone URL
+gitea_ssh_url_port: 22
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
 # Mail settings below are required if gitea mailer is enabled
