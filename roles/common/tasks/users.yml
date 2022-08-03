@@ -84,8 +84,8 @@
     group: "{{ item.name }}"
     mode: 0770
   when:
-   - item.groups is defined
-   - '"sftponly" in item.groups'
+    - item.groups is defined
+    - '"sftponly" in item.groups'
   with_items: "{{ linux_users }}"
 
 
