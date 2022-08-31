@@ -24,6 +24,7 @@
   apt:
     package: rsnapshot
     state: present
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy rsnapshot configuration
   template:
