@@ -1,4 +1,4 @@
 collections:
-  - name: https://gitlab.com/nodiscc/xsrv.git
+  - name: nodiscc.xsrv
+    source: git+file:///home/live/GIT/xsrv.git
     type: git
-    version: master
