@@ -34,7 +34,7 @@ install_collection: venv build_collection
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ansible-lint -v -x fqcn-builtins,truthy,braces,line-length,name[casing],yaml[truthy],schema[meta] roles/*
+	ansible-lint -v -x fqcn-builtins,truthy,braces,line-length,name[casing],yaml[truthy],schema[meta],yaml[line-length] roles/*
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:

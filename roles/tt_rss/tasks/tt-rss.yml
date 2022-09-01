@@ -87,7 +87,7 @@
   become_user: postgres
   postgresql_query:
     db: "{{ tt_rss_db_name }}"
-    query: UPDATE ttrss_users SET login = '{{ tt_rss_user }}', pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}', salt     = '{{ tt_rss_password_salt }}' WHERE id = 1; # noqa yaml[line-length]
+    query: UPDATE ttrss_users SET login = '{{ tt_rss_user }}', pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}', salt     = '{{ tt_rss_password_salt }}' WHERE id = 1;
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: load/upgrade tt-rss database schema
