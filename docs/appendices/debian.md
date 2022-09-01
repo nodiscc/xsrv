@@ -45,13 +45,28 @@ The template will be created by downloading an [official Debian installer image]
 
 ```bash
 $ xsrv init-vm-template --help
-USAGE: xsrv init-vm-template --name TEMPLATE_NAME [--root-password TEMPLATE_ROOT_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
-        Initialize a libvirt VM template from a Debian netinstall image + a preseed file. This template can be reused from xsrv init-vm
+USAGE: ./xsrv init-vm-template --name TEMPLATE_NAME --ip IP_ADDRESS --gateway GATEWAY_IP [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file /home/live/.local/share/xsrv/git/docs/preseed.cfg]
+        Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
-        If not specified, a random root password will be generated automatically and displayed once after VM creation
+        --name          REQUIRED name of the VM/template to create
+        --ip            REQUIRED IP address of the VM/template
+        --gateway       REQUIRED default network gateway of the VM
+        --netmask       network mask of the VM
+        --nameservers   space-separated list of DNS nameservers
+        --root-password set the root account password
+        --sudo-user     name of the administrative (sudoer) user account to create
+        --sudo-password password for the administrative (sudoer) user account
+        --storage-path  path to the directory where qcow2 disk images will be stored
+        --memory        VM memory, in MB
+        --vcpus         VM vCPUs
+        --disk-size     size of the disk image to create, in GB
+        --network       name of the libvirt network to attach to
+        --preseed-file  path to the preseed/preconfiguration file
+
+        If no root/sudo password is specified, random passsowrds will be generated automatically and displayed once after VM creation
 ```
 
-Most options are self-explanatory. The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overriden using `--preseed /path/to/custom/preseed.cfg`.
+The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overriden using `--preseed /path/to/custom/preseed.cfg`.
 
 
 ### Automated, from a VM template
