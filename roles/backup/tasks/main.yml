@@ -15,7 +15,7 @@
     - rsyslog
   when:
     - ansible_local.rsyslog.ansible_managed is defined
-    - ansible_local.rsyslog.ansible_managed|bool
+    - ansible_local.rsyslog.ansible_managed | bool
 
 - include: netdata.yml
   become: yes
@@ -25,7 +25,7 @@
     - netdata
   when:
     - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed|bool
+    - ansible_local.netdata.ansible_managed | bool
 
 - include: fact.yml
   become: yes

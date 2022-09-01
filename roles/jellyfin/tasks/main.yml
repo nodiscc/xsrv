@@ -14,9 +14,9 @@
     - jellyfin
     - samba
   when:
-    - jellyfin_samba_share_enabled|bool
+    - jellyfin_samba_share_enabled | bool
     - ansible_local.samba.ansible_managed is defined
-    - ansible_local.samba.ansible_managed|bool
+    - ansible_local.samba.ansible_managed | bool
 
 - include: ssl-selfsigned.yml
   become: yes
@@ -39,7 +39,7 @@
     - fail2ban
   when:
     - ansible_local.fail2ban.ansible_managed is defined
-    - ansible_local.fail2ban.ansible_managed|bool
+    - ansible_local.fail2ban.ansible_managed | bool
 
 - include: backups.yml
   become: yes
@@ -48,7 +48,7 @@
     - backup
   when:
     - ansible_local.backup.ansible_managed is defined
-    - ansible_local.backup.ansible_managed|bool
+    - ansible_local.backup.ansible_managed | bool
 
 - include: netdata.yml
   become: yes
@@ -58,7 +58,7 @@
     - netdata
   when:
     - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed|bool
+    - ansible_local.netdata.ansible_managed | bool
 
 - include: fact.yml
   become: yes

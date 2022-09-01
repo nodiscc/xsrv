@@ -54,7 +54,7 @@
   apt:
     state: present
     package: apt-listbugs
-  when: apt_listbugs|bool
+  when: apt_listbugs | bool
   tags: apt-listbugs
 
 - name: configure apt-listbugs
@@ -69,12 +69,12 @@
       dest: /etc/apt/listbugs/ignore_bugs
     - src: etc_apt_apt.conf.d_10apt-listbugs.j2
       dest: /etc/apt/apt.conf.d/10apt-listbugs
-  when: apt_listbugs|bool
+  when: apt_listbugs | bool
   tags: apt-listbugs
 
 - name: remove automatic APT pinnings added by apt-listbugs
   file:
     path: /etc/apt/preferences.d/apt-listbugs
     state: absent
-  when: apt_listbugs|bool
+  when: apt_listbugs | bool
   tags: apt-listbugs

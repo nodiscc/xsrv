@@ -8,15 +8,15 @@
     - shaarli_fqdn is not search("CHANGEME")
     - shaarli_https_mode in ["selfsigned", "letsencrypt"]
     - shaarli_install_dir is string
-    - shaarli_overwrite_config == shaarli_overwrite_config|bool
+    - shaarli_overwrite_config == shaarli_overwrite_config | bool
     - shaarli_password is not search("CHANGEME")
     - shaarli_password_salt is not search("CHANGEME")
     - shaarli_timezone is string
     - shaarli_links_per_page == shaarli_links_per_page|int
-    - shaarli_debug == shaarli_debug|bool
+    - shaarli_debug == shaarli_debug | bool
     - shaarli_thumbnails_mode in ['all', 'common', 'none']
     - shaarli_header_link is string
-    - shaarli_hide_timestamps == shaarli_hide_timestamps|bool
+    - shaarli_hide_timestamps == shaarli_hide_timestamps | bool
     - shaarli_formatter in ['default', 'markdown', 'markdownExtra']
     - shaarli_username is not search("CHANGEME")
     - shaarli_version is string

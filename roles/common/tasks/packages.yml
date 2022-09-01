@@ -32,7 +32,7 @@
       # - autojump # jump to frequently used directories
       # - secure-delete # securely erase data
       # - pwgen # generate memorable random passwords
-  when: setup_cli_utils|bool
+  when: setup_cli_utils | bool
 
 - name: install haveged entropy source
   apt:

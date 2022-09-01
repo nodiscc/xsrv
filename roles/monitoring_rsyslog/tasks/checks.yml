@@ -5,7 +5,7 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog"
   with_items:
     - syslog_retention_days == syslog_retention_days|int
-    - rsyslog_enable_forwarding == rsyslog_enable_forwarding|bool
+    - rsyslog_enable_forwarding == rsyslog_enable_forwarding | bool
 
 - name: check that mandatory variables are correctly defined (syslog forwarding)
   assert:

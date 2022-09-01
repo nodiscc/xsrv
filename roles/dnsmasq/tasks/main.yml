@@ -14,7 +14,7 @@
     - firewall
   when:
     - ansible_local.firewalld.ansible_managed is defined
-    - ansible_local.firewalld.ansible_managed|bool
+    - ansible_local.firewalld.ansible_managed | bool
 
 - include: fact.yml
   become: yes

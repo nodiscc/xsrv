@@ -24,7 +24,7 @@
     - backup
   when:
     - ansible_local.backup.ansible_managed is defined
-    - ansible_local.backup.ansible_managed|bool
+    - ansible_local.backup.ansible_managed | bool
 
 - include: rsyslog.yml
   become: yes
@@ -34,7 +34,7 @@
     - monitoring
   when:
     - ansible_local.rsyslog.ansible_managed is defined
-    - ansible_local.rsyslog.ansible_managed|bool
+    - ansible_local.rsyslog.ansible_managed | bool
 
 - include: firewalld.yml
   become: yes
@@ -43,7 +43,7 @@
     - firewall
   when:
     - ansible_local.firewalld.ansible_managed is defined
-    - ansible_local.firewalld.ansible_managed|bool
+    - ansible_local.firewalld.ansible_managed | bool
 
 - include: fact.yml
   become: yes

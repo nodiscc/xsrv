@@ -3,9 +3,9 @@
 ### NETWORKING
 
 # Enable/disable packet forwarding between interfaces (routing) globally
-net.ipv4.conf.all.forwarding = {{ '1' if (sysctl_allow_forwarding|bool) else '0' }}
+net.ipv4.conf.all.forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
 # Enable/disable forwarding of multicast packets
-net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding|bool) else '0' }}
+net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
 
 # Accepting redirects can lead to malicious networking behavior, so disable
 # it if not needed. Attackers could use bogus ICMP redirect messages to maliciously alter the system
@@ -60,7 +60,7 @@ net.ipv4.conf.all.rp_filter = 1
 net.ipv4.conf.default.rp_filter = 1
 
 # Accept/Ignore any ICMP ECHO requests (ping)
-net.ipv4.icmp_echo_ignore_all = {{ '0' if (sysctl_answer_ping|bool) else '1' }}
+net.ipv4.icmp_echo_ignore_all = {{ '0' if (sysctl_answer_ping | bool) else '1' }}
 
 # Ignore all ICMP ECHO and TIMESTAMP requests received vai broadcast/multicast
 net.ipv4.icmp_echo_ignore_broadcasts = 1

@@ -3,5 +3,5 @@
   service:
     name: dovecot
     state: restarted
-    # when: dovecot_enable_service|bool
+    # when: dovecot_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"

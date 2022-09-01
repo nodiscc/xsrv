@@ -10,7 +10,7 @@
     owner: root
     group: root
     mode: 0644
-  when: not setup_msmtp|bool
+  when: not setup_msmtp | bool
 
 ##### OUTGOING MAIL/SMARTHOST #####
 
@@ -20,7 +20,7 @@
       - msmtp
       - msmtp-mta
     state: present
-  when: setup_msmtp|bool
+  when: setup_msmtp | bool
 
 - name: copy msmtp configuration
   template:
@@ -29,7 +29,7 @@
     mode: "0640"
     owner: root
     group: "msmtp"
-  when: setup_msmtp|bool
+  when: setup_msmtp | bool
 
 - name: forward all root mail to msmtp_admin_email
   lineinfile:
@@ -46,4 +46,4 @@
       line: "root: default"
     - regex: "^default"
       line: "default: {{ msmtp_admin_email }}"
-  when: setup_msmtp|bool
+  when: setup_msmtp | bool

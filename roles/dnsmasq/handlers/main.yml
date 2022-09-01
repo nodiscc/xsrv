@@ -4,5 +4,5 @@
     name: dnsmasq
     state: restarted
     enabled: yes
-  when: dnsmasq_enable_service|bool
+  when: dnsmasq_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"

@@ -7,10 +7,10 @@
     - (dnsmasq_upstream_servers|type_debug == "list") and (dnsmasq_upstream_servers|length > 0)
     - dnsmasq_records|type_debug == "list"
     - dnsmasq_firewalld_zones|type_debug == "list"
-    - dnsmasq_enable_service == dnsmasq_enable_service|bool
+    - dnsmasq_enable_service == dnsmasq_enable_service | bool
     - dnsmasq_listen_interfaces|type_debug == "list"
     - dnsmasq_listen_addresses|type_debug == "list"
-    - dnsmasq_dnssec == dnsmasq_dnssec|bool
+    - dnsmasq_dnssec == dnsmasq_dnssec | bool
 
 - name: check that mandatory variables are correctly defined (dnsmasq_upstream_servers)
   assert:

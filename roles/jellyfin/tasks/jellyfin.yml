@@ -74,7 +74,7 @@
     append: yes
   when:
     - ansible_local.transmission.ansible_managed is defined
-    - ansible_local.transmission.ansible_managed|bool
+    - ansible_local.transmission.ansible_managed | bool
   ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SERVICE #####

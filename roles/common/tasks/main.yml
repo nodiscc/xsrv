@@ -8,49 +8,49 @@
   tags:
     - common
     - hostname
-  when: setup_hostname|bool
+  when: setup_hostname | bool
 
 - include: hosts.yml
   become: yes
   tags:
     - common
     - hosts
-  when: setup_hosts_file|bool
+  when: setup_hosts_file | bool
 
 - include: dns.yml
   become: yes
   tags:
     - common
     - dns
-  when: setup_dns|bool
+  when: setup_dns | bool
 
 - include: sysctl.yml
   become: yes
   tags:
     - common
     - sysctl
-  when: setup_sysctl|bool
+  when: setup_sysctl | bool
 
 - include: apt.yml
   become: yes
   tags:
     - common
     - apt
-  when: setup_apt|bool
+  when: setup_apt | bool
 
 - include: datetime.yml
   become: yes
   tags:
     - common
     - datetime
-  when: setup_datetime|bool
+  when: setup_datetime | bool
 
 - include: ssh.yml
   become: yes
   tags:
     - common
     - ssh
-  when: setup_ssh|bool
+  when: setup_ssh | bool
 
 - include: firewalld.yml
   become: yes
@@ -58,28 +58,28 @@
     - common
     - firewall
     - firewalld
-  when: setup_firewall|bool
+  when: setup_firewall | bool
 
 - include: fail2ban.yml
   become: yes
   tags:
     - common
     - fail2ban
-  when: setup_fail2ban|bool
+  when: setup_fail2ban | bool
 
 - include: users.yml
   become: yes
   tags:
     - common
     - users
-  when: setup_users|bool
+  when: setup_users | bool
 
 - include: cron.yml
   become: yes
   tags:
     - common
     - cron
-  when: setup_cron|bool
+  when: setup_cron | bool
 
 - include: mail.yml
   become: yes
