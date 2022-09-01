@@ -470,10 +470,10 @@ function init_vm_template() {
     INIT_VM_TEMPLATE_USAGE="$0 init-vm-template --name TEMPLATE_NAME --ip IP_ADDRESS --gateway GATEWAY_IP [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
-        --name      name of the VM/template to create
-        --ip        IP address of the VM/template
-        --gateway   default network gateway of the VM
-        --netmask   network mask of the VM
+        --name          REQUIRED name of the VM/template to create
+        --ip            REQUIRED IP address of the VM/template
+        --gateway       REQUIRED default network gateway of the VM
+        --netmask       network mask of the VM
         --nameservers   space-separated list of DNS nameservers
         --root-password set the root account password
         --sudo-user     name of the administrative (sudoer) user account to create
