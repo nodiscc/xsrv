@@ -120,6 +120,7 @@ apt_listbugs_ignore_list:
   - 995115 # https://bugs.debian.org/995115 - unconfirmed, workaround is to comment out DPkg::Pre-Install-Pkgs in /etc/apt/apt.conf.d/10apt-listbugs
   - 991936 # https://bugs.debian.org/991936 - fixed in point release, no workaround available
   - 1016102 # https://bugs.debian.org/1016102 - edge case
+  - 1001276 # https://bugs.debian.org/1001276 - kFreeBSD only
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
