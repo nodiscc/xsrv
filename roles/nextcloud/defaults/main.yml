@@ -58,6 +58,7 @@ nextcloud_apps:
   - { state: "enable", app: "files_trashbin" }
   - { state: "enable", app: "files_videoplayer" }
   - { state: "enable", app: "firstrunwizard" }
+  - { state: "enable", app: "groupfolders" }
   - { state: "enable", app: "photos" }
   - { state: "enable", app: "music" }
   - { state: "enable", app: "maps" }
