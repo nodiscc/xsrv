@@ -122,6 +122,8 @@ apt_listbugs_ignore_list:
   - 1016102 # https://bugs.debian.org/1016102 - edge case
   - 1001276 # https://bugs.debian.org/1001276 - kFreeBSD only
   - 975931 # https://bugs.debian.org/975931 - armhf only
+  - 1008005 # https://bugs.debian.org/1008005 - no impact when installation of recommended packages is disabled
+
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
