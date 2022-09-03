@@ -121,6 +121,7 @@ apt_listbugs_ignore_list:
   - 991936 # https://bugs.debian.org/991936 - fixed in point release, no workaround available
   - 1016102 # https://bugs.debian.org/1016102 - edge case
   - 1001276 # https://bugs.debian.org/1001276 - kFreeBSD only
+  - 975931 # https://bugs.debian.org/975931 - armhf only
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
