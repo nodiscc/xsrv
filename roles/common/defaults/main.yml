@@ -124,6 +124,8 @@ apt_listbugs_ignore_list:
   - 975931 # https://bugs.debian.org/975931 - armhf only
   - 1008005 # https://bugs.debian.org/1008005 - no impact when installation of recommended packages is disabled
   - 1002047 # https://bugs.debian.org/1002047 - no impact when base option is present in configuration file
+  - 895823 # https://bugs.debian.org/895823 - only happens after purging dovecot
+  - 1009872 # https://bugs.debian.org/1009872 - only happens when /etc/ssl/certs/ssl-cert-snakeoil* were deleted manually
 
 
 ### DATE/TIME ###
