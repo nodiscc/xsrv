@@ -23,7 +23,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: "{{ item.mode|default('0644') }}"
+    mode: "{{ item.mode | default('0644') }}"
   with_items:
     - { src: etc_dovecot_conf.d_10-mail.conf.j2, dest: /etc/dovecot/conf.d/10-mail.conf }
     - { src: etc_dovecot_conf.d_10-master.conf.j2, dest: /etc/dovecot/conf.d/10-master.conf }
