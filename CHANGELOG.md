@@ -24,10 +24,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: upgrade to v24.0.3 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-3-23-0-7-and-22-2-10-are-out-update/) [[2]](https://nextcloud.com/changelog/#latest24)
 - postgresql: update pgmetrics to [v1.13.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.1)
 - xsrv: upgrade ansible to [v6.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
-- all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - common: ensure `/var/log/wtmp` is not world-readable
 - common: ssh: replace the server's default 2048 bits RSA keypair with 4096 bits keypair
-- tools/tests: simplify test tooling
+- all roles: require `ansible-core>=2.12/ansible>=6.0.0`
+- tools/tests: improve/simplify test tools
 
 **Fixed:**
 - common: users: fix errors during creation fo `sftponly` user accounts when no groups are defined in the user definition
