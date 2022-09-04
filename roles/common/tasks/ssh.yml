@@ -5,7 +5,7 @@
     mode: 0600
   notify: restart ssh
 
-- name: Add authorized keys
+- name: add authorized keys
   authorized_key:
     user: "{{ ansible_user }}"
     state: present
@@ -56,6 +56,18 @@
          [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
   notify: restart ssh
   when: sshd_register_moduli.stdout
+
+- name: replace default 2048 bits RSA keypair with 4096 bits keypair
+  openssh_keypair:
+    state: present
+    type: rsa
+    size: 4096
+    path: "/etc/ssh/ssh_host_rsa_key"
+    force: no
+    regenerate: partial_idempotence
+    owner: root
+    group: root
+    mode: "0600"
 
 # lynis: FILE-7524|Incorrect permissions for file /root/.ssh
 - name: ensure /root/.ssh is mode 0700

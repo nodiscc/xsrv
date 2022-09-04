@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: upgrade ansible to [v6.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - common: ensure `/var/log/wtmp` is not world-readable
+- common: ssh: replace the server's default 2048 bits RSA keypair with 4096 bits keypair
 - tools/tests: simplify test tooling
 
 **Fixed:**
