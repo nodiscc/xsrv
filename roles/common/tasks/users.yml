@@ -61,6 +61,13 @@
     dest: /etc/sudoers.d/nopasswd
     mode: 0440
 
+- name: configure sudo to run processes in a pseudo-terminal
+  template:
+    src: etc_sudoers.d_use-pty.j2
+    dest: /etc/sudoers.d/use-pty
+    mode: 0440
+
+
 ##### SFTP #####
 
 # chrooted users home directories must be owned by root:$USER
