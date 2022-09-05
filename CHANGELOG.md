@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: login/ssh: kill user processes when an interactive user logs out (except for root). Lock idle login sessions after 15 minutes of inactivity.
 - common: ssh: replace the server's default 2048 bits RSA keypair with 4096 bits keypair
 - common: configure sudo to run processes in a pseudo-terminal
+- common: users/pam: increase the number of rounds for hashing group passwords
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - tools/tests: improve/simplify test tools
 
