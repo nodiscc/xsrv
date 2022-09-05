@@ -134,3 +134,10 @@
 # update pam configuration, restart systemd-logind
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+##### OTHER ####
+
+- name: mask debug-shell systemd service
+  systemd:
+    name: debug-shell.service
+    masked: yes
