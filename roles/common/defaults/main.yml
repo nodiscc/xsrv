@@ -309,7 +309,20 @@ mail_root_alias: "{{ ansible_user }}"
 
 
 ### PACKAGES ###
-# install a basic set of interactive command-line diagnostic/file manipulation/shell utilities (yes/no) - see tasks/50utilities.yml for the full list
-setup_cli_utils: yes
-# install haveged entropy generator (yes/no) - good to have on virtual machines where system is frequently running out of entropy
-setup_haveged: yes
+# additional packages to install (list)
+packages_install:
+  - atool # single tool to manipulate all archives/compressed file formats
+  - less # a pager like 'more'
+  - tree # show filesystems as a tree
+  - rsync # fast/powerful file transfer utility
+  - locate # maintain and query an index of a directory tree
+  - man # view manual pages
+  - at # task scheduler - required for ansible at module/one-shot job scheduling
+  - haveged # Linux entropy source using the HAVEGE algorithm - good to have on virtual machines where system is frequently running out of entropy
+
+# packages to remove (list)
+packages_remove:
+  - snapd
+  # - rpcbind # not an NFS server
+  # - nfs-common # not an NFS server
+  # - exim4-base # use a smarthost/msmtp

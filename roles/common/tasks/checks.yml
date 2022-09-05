@@ -14,7 +14,8 @@
     - apt_clean_days == apt_clean_days|int
     - apt_unattended_upgrades_origins_patterns|type_debug == "list"
     - apt_purge_nightly == apt_purge_nightly | bool
-    - setup_cli_utils == setup_cli_utils | bool
+    - packages_install | type_debug == "list"
+    - packages_remove | type_debug == "list"
     - setup_cron == setup_cron | bool
     - cron_log_level == cron_log_level|int
     - setup_dns == setup_dns | bool
@@ -23,7 +24,6 @@
     - setup_firewall == setup_firewall | bool
     - firewalld|type_debug == "list"
     - setup_fail2ban == setup_fail2ban | bool
-    - setup_haveged == setup_haveged | bool
     - setup_msmtp == setup_msmtp | bool
     - setup_ssh == setup_ssh | bool
     - ssh_permit_root_login in ['yes', 'no', 'without-password', 'prohibit-password', 'forced-commands-only']
