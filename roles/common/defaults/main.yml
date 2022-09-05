@@ -231,7 +231,7 @@ fail2ban_default_findtime: "10min"
 # fail2ban default number of failures that have to occur in the last findtime to ban the IP
 fail2ban_default_maxretry: 5
 
-### USERS ###
+### LINUX USERS ###
 # setup user accounts/PAM configuration (yes/no)
 setup_users: yes
 # Additional user accounts to create.

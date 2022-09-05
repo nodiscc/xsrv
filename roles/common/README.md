@@ -8,7 +8,7 @@ This role will configure a basic Debian-based server:
 - [sysctl/kernel](tasks/sysctl.yml) settings: networking, swap/memory management, security, modules...
 - [APT package manager configuration](tasks/apt.yml)
 - [date/time and NTP synchronization](tasks/datetime.yml)
-- [Linux user accounts](tasks/users.yml) (user account creation/deletion, resources, PAM restrictions)
+- [Linux user accounts](tasks/users.yml) (user account creation/deletion, resources, PAM/login restrictions)
 - [cron task scheduler](tasks/cron.yml) (hardening, logging)
 - [SSH server](tasks/ssh.yml) (hardening, chrooted SFTP accounts)
 - [firewall](tasks/firewalld.yml) ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
