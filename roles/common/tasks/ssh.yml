@@ -5,7 +5,7 @@
     mode: 0600
   notify: restart ssh
 
-- name: add authorized keys
+- name: Add authorized keys
   authorized_key:
     user: "{{ ansible_user }}"
     state: present

@@ -6,6 +6,13 @@
   become: yes
   command: 'pam-auth-update --package'
 
+- name: restart systemd-logind
+  become: yes
+  service:
+    name: systemd-logind
+    state: restarted
+    enabled: yes
+
 - name: restart ssh
   become: yes
   service:

@@ -89,7 +89,7 @@
   with_items: "{{ linux_users }}"
 
 
-##### PAM #####
+##### PAM/LOGIND #####
 
 - name: configure the pam_limits module
   template:
@@ -115,6 +115,15 @@
     - { name: 'libpam-tmpdir', state: 'present' }
   notify: update pam configuration
 
-# update pam configuration
+- name: configure systemd-logind
+  template:
+    src: etc_systemd_logind.conf.j2
+    dest: /etc/systemd/logind.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart systemd-logind
+
+# update pam configuration, restart systemd-logind
 - name: apply configuration (flush handlers)
   meta: flush_handlers
