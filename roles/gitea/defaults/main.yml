@@ -67,6 +67,10 @@ gitea_default_allow_create_organization: "false"
 gitea_enable_git_hooks: no
 # yes/no: enable/disable the webhooks feature
 gitea_enable_webhooks: yes
+# list of hosts that can be called from webhooks
+# accepts: my.example.org (hostname), *.example.org (wildcards), 192.168.1.0/24 (IP network), loopback (localhost), private (LAN/intranet), external (public hosts on internet), * (all hosts)
+gitea_webhook_allowed_hosts:
+  - "external"
 # port to expose in the clone URL
 gitea_ssh_url_port: 22
 # enable outgoing mail (yes/no)

@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: allow specifying a list of packages to install/remove ([`packages_install/remove`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - gitea: allow enabling/disabling git hooks and webhooks features globally ([`gitea_enable_git_hooks/webhooks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- gitea: allow configuring the list of hosts that can be called from webhooks ([`gitea_webhook_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 - gitea: allow configuring the SSH port exposed in the clone URL ([`gitea_ssh_url_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 
 **Removed:**
