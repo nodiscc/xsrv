@@ -35,7 +35,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh: replace the server's default 2048 bits RSA keypair with 4096 bits keypair
 - common: configure sudo to run processes in a pseudo-terminal
 - common: users/pam: increase the number of rounds for hashing group passwords
-- common: sysctl: Restricts loading TTY line disciplines to the CAP_SYS_MODULE capability
+- common: sysctl: restrict loading TTY line disciplines to the CAP_SYS_MODULE capability
+- common: sysctl: protect against unintentional writes to an attacker-controlled FIFO
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - tools/tests: improve/simplify test tools
 

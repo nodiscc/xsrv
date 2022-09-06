@@ -217,3 +217,7 @@ kernel.unprivileged_bpf_disabled = 1
 # prevent unprivileged attackers from loading vulnerable line disciplines with
 # the TIOCSETD ioctl, which has been abused in a number of exploits before.
 dev.tty.ldisc_autoload = 0
+
+# avoid unintentional writes to an attacker-controlled FIFO, where a program
+# expected to create a regular file.
+fs.protected_fifos = 2
