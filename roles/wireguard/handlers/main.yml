@@ -1,0 +1,5 @@
+- name: reload wireguard configuration
+  become: yes
+  service:
+    name: wg-quick@wg0
+    state: reloaded

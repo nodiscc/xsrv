@@ -1,0 +1,17 @@
+# @tag wireguard - setup wireguard
+
+galaxy_info:
+  role_name: wireguard
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "fast and modern VPN server"
+  license: "GPL-3.0"
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "11"
+  galaxy_tags:
+    - wireguard
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.dnsmasq # DNS resolution for VPN clients

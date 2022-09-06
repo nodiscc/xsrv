@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - xsrv: add `xsrv init-vm-template` command (create a libvirt Debian VM template, unattended using a preconfiguration file)
+- add [wireguard](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard) role - fast and modern VPN server
 - nextcloud: enable [Group folders](https://apps.nextcloud.com/apps/groupfolders) app by default
 - common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: allow specifying a list of packages to install/remove ([`packages_install/remove`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))

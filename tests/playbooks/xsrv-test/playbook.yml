@@ -21,6 +21,7 @@
     - nodiscc.xsrv.jellyfin # media server
     - nodiscc.xsrv.samba # file sharing server
     - nodiscc.xsrv.dnsmasq # lightweight DNS server
+    - nodiscc.xsrv.wireguard # fast and modern VPN server
     - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
     - nodiscc.xsrv.gotty # access server terminal as a web application
     # - nodiscc.xsrv.proxmox # basic setup steps for proxmox hypervisors

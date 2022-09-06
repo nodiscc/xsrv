@@ -1,0 +1,10 @@
+[Interface]
+Address = {{ wireguard_server_ip }}
+PrivateKey = {{ wireguard_server_private_key.content | b64decode }}
+ListenPort = 51820
+
+{% for peer in wireguard_peers %}
+[Peer]
+PublicKey = {{ peer.public_key }}
+AllowedIPs = {{ peer.ip_address }}
+{% endfor %}

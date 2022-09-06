@@ -44,6 +44,7 @@ BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738
 Graylog TCP input:               TCP 5140
 Dovecot IMAP server:             TCP 993
+Wireguard VPN server:            UDP 51820
 ```
 
 

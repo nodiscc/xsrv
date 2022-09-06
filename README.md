@@ -48,6 +48,7 @@ This project provides:
 - [shaarli](roles/shaarli) - Bookmarking & link sharing web application
 - [transmission](roles/transmission) - Transmission Bittorrent client/web interface
 - [tt_rss](roles/tt_rss) - Tiny Tiny RSS web-based news feed reader
+- [wireguard](roles/wireguard) - fast and modern VPN server
 <!--END ROLES LIST-->
 
 ## Screenshots

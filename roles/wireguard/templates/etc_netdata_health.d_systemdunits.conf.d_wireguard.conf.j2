@@ -1,0 +1,9 @@
+    alarm: systemd_service_wireguard
+       on: systemdunits_service_units.service_unit_state
+     calc: $wg-quick@wg0
+    every: 10s
+     crit: ($this = 5)
+    units: state
+     info: wireguard service status
+       to: sysadmin
+

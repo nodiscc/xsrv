@@ -1,0 +1,45 @@
+- name: create wireguard zone in firewalld
+  firewalld:
+    zone: wireguard
+    state: present
+    permanent: yes
+  notify: reload firewalld
+
+- name: add wireguard interface to wireguard firewalld zone
+  firewalld:
+    zone: wireguard
+    interface: wg0
+    state: enabled
+    permanent: yes
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: enable masquerade on firewalld public zone
+  firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: yes
+    zone: public
+
+- name: copy wireguard firewalld service definition
+  template:
+    src: etc_firewalld_services_wireguard.xml.j2
+    dest: /etc/firewalld/services/wireguard.xml
+    owner: root
+    group: adm
+    mode: 0640
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# reload firewalld service definitions
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: setup firewalld rules for wireguard
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: wireguard
+    state: "{{ item.state }}"
+    permanent: yes
+    immediate: yes
+  with_items: "{{ wireguard_firewalld_zones }}"

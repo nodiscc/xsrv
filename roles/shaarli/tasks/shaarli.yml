@@ -158,7 +158,7 @@
     state: directory
     owner: root
     group: shaarli
-    recurse: "{{ item.recurse|default(True) }}"
+    recurse: "{{ item.recurse | default(True) }}"
     mode: "{{ item.mode | default('0770') }}"
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:

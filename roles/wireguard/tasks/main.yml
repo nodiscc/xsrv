@@ -1,0 +1,48 @@
+- include: checks.yml
+  tags:
+    - wireguard
+    - checks
+
+- include: wireguard.yml
+  become: yes
+  tags:
+    - wireguard
+
+- include: backups.yml
+  become: yes
+  tags:
+    - wireguard
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed | bool
+
+- include: netdata.yml
+  become: yes
+  tags:
+    - wireguard
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed | bool
+
+- include: fact.yml
+  become: yes
+  tags: wireguard
+
+- include: firewalld.yml
+  become: yes
+  tags:
+    - wireguard
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed | bool
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - wireguard
+    - monitoring
+    - fail2ban
