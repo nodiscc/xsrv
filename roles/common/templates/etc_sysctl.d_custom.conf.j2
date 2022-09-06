@@ -212,3 +212,8 @@ kernel.unprivileged_userns_clone = 0
 
 # disable potentially exploitable unprivileged BPF
 kernel.unprivileged_bpf_disabled = 1
+
+# Restricts loading TTY line disciplines to the CAP_SYS_MODULE capability to
+# prevent unprivileged attackers from loading vulnerable line disciplines with
+# the TIOCSETD ioctl, which has been abused in a number of exploits before.
+dev.tty.ldisc_autoload = 0
