@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: sysctl: restrict loading TTY line disciplines to the CAP_SYS_MODULE capability
 - common: sysctl: protect against unintentional writes to an attacker-controlled FIFO
 - common: sysctl: prevent even the root user from reading kernel memory maps
+- common: sysctl enable BPF JIT hardening
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - tools/tests: improve/simplify test tools
 

@@ -221,3 +221,10 @@ dev.tty.ldisc_autoload = 0
 # avoid unintentional writes to an attacker-controlled FIFO, where a program
 # expected to create a regular file.
 fs.protected_fifos = 2
+
+# This enables hardening for the BPF JIT compiler. Supported are eBPF JIT backends.
+# Enabling hardening trades off performance, but can mitigate JIT spraying. Values :
+# 0 - disable JIT hardening (default value)
+# 1 - enable JIT hardening for unprivileged users only
+# 2 - enable JIT hardening for all users
+net.core.bpf_jit_harden = 2
