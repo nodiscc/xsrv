@@ -11,11 +11,13 @@ net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding | bool) els
 # it if not needed. Attackers could use bogus ICMP redirect messages to maliciously alter the system
 # routing tables and get them to send packets to incorrect networks and allow your system packets to be captured.
 # Setting net.ipv4.conf.all.secure_redirects to 0 protects the system from routing table updates
-# by possibly compromised known gateways.net.ipv4.conf.all.accept_redirects = 0
+# by possibly compromised known gateways
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.default.accept_redirects = 0
 net.ipv4.conf.all.secure_redirects = 0
 net.ipv4.conf.default.secure_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
 
 # For non-routers: don't send redirects.
 # An attacker could use a compromised host to send invalid ICMP redirects to other

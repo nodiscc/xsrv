@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: sysctl: protect against unintentional writes to an attacker-controlled FIFO
 - common: sysctl: prevent even the root user from reading kernel memory maps
 - common: sysctl enable BPF JIT hardening
+- common: sysctl: disable ICMP redirect support for IPv6
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
 - tools/tests: improve/simplify test tools
 
