@@ -21,3 +21,9 @@
   args:
     creates: "/etc/apache2/sites-enabled/gitea.conf"
   notify: reload apache
+
+- name: add a hosts file entry for the gitea server fqdn
+  lineinfile:
+    path: /etc/hosts
+    line: '127.0.0.1	{{ gitea_fqdn }}' # noqa no-tabs
+    state: present
