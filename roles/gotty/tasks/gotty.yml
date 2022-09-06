@@ -18,7 +18,6 @@
     path: /root/gotty-unpack
     state: directory
     mode: 0750
-  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: extract gotty tarball
   unarchive:
