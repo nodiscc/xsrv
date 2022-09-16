@@ -31,6 +31,15 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
+- include: backups.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed | bool
+
 - include: rsyslog.yml
   become: yes
   tags:

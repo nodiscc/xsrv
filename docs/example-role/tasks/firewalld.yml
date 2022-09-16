@@ -1,10 +1,22 @@
-- name: setup EXAMPLE firewalld rules
-  firewalld:
-    zone: "{{ item[0].zone }}"
-    service: "{{ item[1] }}"
-    state: "{{ item[0].state }}"
+- name: copy EXAMPLE firewalld service definition
+  template:
+    src: etc_firewalld_services_EXAMPLE.xml.j2
+    dest: /etc/firewalld/services/EXAMPLE.xml
+    owner: root
+    group: adm
+    mode: 0640
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# reload firewalld service definitions
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: setup firewalld rules for EXAMPLE
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: EXAMPLE
+    state: "{{ item.state }}"
     permanent: yes
     immediate: yes
-  with_nested:
-    - "{{ EXAMPLE_firewalld_zones }}"
-    - ['service1', 'service2']
+  with_items: "{{ EXAMPLE_firewalld_zones }}"

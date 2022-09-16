@@ -54,6 +54,6 @@ Notes about backing up data generated/used by the service. See the included [rsn
 
 ## New role checklist
 
-- [ ] Add the role to the [test playbook](https://gitlab.com/nodiscc/xsrv/-/blob/master/tests/playbook.yml)
-- [ ] `make doc`
+- [ ] Add the role to the [test playbook](https://gitlab.com/nodiscc/xsrv/-/blob/master/tests/playbooks/xsrv-test/playbook.yml)
+- [ ] `make doc_md`
 - [ ] Update `CHANGELOG.md`
