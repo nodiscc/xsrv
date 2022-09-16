@@ -27,7 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - gitea: disable git hooks by default
 - gitea: upgrade to v1.17.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.9) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.17.0) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.17.1) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.17.2)
-- openldap: update self-service-password to [v1.5.0](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.0)
+- openldap: update self-service-password to v1.5.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.1)
 - nextcloud: upgrade to v24.0.5 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-3-23-0-7-and-22-2-10-are-out-update/) [[2]](https://nextcloud.com/changelog/#latest24)
 - postgresql: update pgmetrics to [v1.13.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.1)
 - shaarli: run shaarli under a dedicated `shaarli` user account (don't use the default shared `www-data` user)
