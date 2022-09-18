@@ -50,6 +50,28 @@ kernel_modules_blacklist:
   - tipc # 3.4.4 Ensure TIPC is disabled
   - firewire-ohci # disable IEEE 1394 (FireWire) Support
   - firewire-core # disable IEEE 1394 (FireWire) Support
+  - bluetooth # bluetooth support, STIG V-38682
+  - bnep # bluetooth support, STIG V-38682
+  - btusb # bluetooth support, STIG V-38682
+  - net-pf-31 # bluetooth support, STIG V-38682
+  - cpia2 # CPiA2 cameras
+  - floppy # floppy drives
+  - n_hdlc # HDLC line discipline
+  - pcspkr # PC speaker/beep
+  - soundcore # audio input/output
+  - thunderbolt # thunderbolt devices
+  - usb-midi # USB MIDI
+  - usb-storage # USB storage
+  - uvcvideo # UVC video devices
+  - v4l2_common # V4L2 video devices
+  - cramfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
+  - freevxfs # CIS 1.1.1.1 mounting of freevxfs filesystems is disabled
+  - hfs # CIS 1.1.1.3 mounting of hfs filesystems is disabled
+  - hfsplus # CIS 1.1.1.4 mounting of hfsplus filesystems is disabled
+  - jffs2 # CIS 1.1.1.2 mounting of jffs2 filesystems is disabled
+  - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
+  - udf # CIS 1.1.1.6 mounting of udf filesystems is disabled
+  - vfat # 1.1.1.7 mounting of FAT filesystems is limited
 
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades

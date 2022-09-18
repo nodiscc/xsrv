@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ssh: hardening: replace the server's default 2048 bits RSA keypair with 4096 bits keypair
 - common: sudo: hardening: configure sudo to run processes in a pseudo-terminal
 - common: users/pam: hardening: increase the number of rounds for hashing group passwords
+- common: sysctl: hardening: disable more kernel modules by default (bluetooth, audio I/O, USB storage, USB MIDI, UVC/V4L2/CPIA2 video devices, thunderbolt, floppy, PC speaker beep
 - common: sysctl: hardening: restrict loading TTY line disciplines to the CAP_SYS_MODULE capability
 - common: sysctl: hardening: protect against unintentional writes to an attacker-controlled FIFO
 - common: sysctl: hardening: prevent even the root user from reading kernel memory maps
