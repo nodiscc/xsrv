@@ -33,7 +33,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: hardening: run shaarli under a dedicated `shaarli` user account (don't use the default shared `www-data` user)
 - xsrv: upgrade ansible to [v6.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - nextcloud/netdata: mitigate frequent httpckeck alarms on the nextcloud web service response time (`httpcheck_web_service_unreachable`), increase the timeout of the check to 3s
-- common: ensure `/var/log/wtmp` is not world-readable
+- common: sysctl: automatically reboot the host after 60 seconds in case of kernel panic
+- common: hardening: ensure `/var/log/wtmp` is not world-readable
 - common: login/ssh: hardening: kill user processes when an interactive user logs out (except for root). Lock idle login sessions after 15 minutes of inactivity.
 - common: ssh: hardening: replace the server's default 2048 bits RSA keypair with 4096 bits keypair
 - common: sudo: hardening: configure sudo to run processes in a pseudo-terminal

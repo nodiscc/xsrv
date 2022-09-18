@@ -227,3 +227,8 @@ fs.protected_fifos = 2
 # 1 - enable JIT hardening for unprivileged users only
 # 2 - enable JIT hardening for all users
 net.core.bpf_jit_harden = 2
+
+# Number of seconds the kernel waits before rebooting on a panic.
+# When you use the software watchdog, the recommended setting is 60.
+# Setting this to 0 disables automatic reboot on panic.
+kernel.panic = 60
