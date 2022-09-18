@@ -50,7 +50,7 @@ Wireguard VPN server:            UDP 51820
 
 ### Domain names
 
-The controller must be able to resolve the server's name from the [inventory](usage.md), using either:
+The controller must be able to resolve the server's name from the [inventory](../usage.md), using either:
 
 - (preferred) `A` or `CNAME` DNS records to the public IP address of your server, from:
   - a public [domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar) ([namecheap.com](https://namecheap.com), [gandi.net](https://gandi.net), ...)

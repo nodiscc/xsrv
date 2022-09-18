@@ -88,7 +88,6 @@ This project provides:
 - [Usage](docs/usage.md)
 - [List of all configuration variables](docs/configuration-variables.md)
 - [Maintenance](docs/maintenance.md)
-- [Advanced usage](docs/advanced.md)
 - [Contributing](docs/contributing.md)
 - [Appendices](docs/appendices.md)
 - [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)
