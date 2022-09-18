@@ -27,7 +27,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "{{ gitea_db_password }}" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: '1.16.8'
+gitea_version: '1.17.2'
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -62,6 +62,17 @@ gitea_min_password_length: 10
 gitea_password_complexity: "lower,upper,digit,spec"
 # Allow new users to create organizations by default (true/false - QUOTED)
 gitea_default_allow_create_organization: "false"
+# yes/no: allow users with git hook privileges to create custom git hooks
+# Custom git hooks can be used to perform arbitrary code execution on the host operating system, access and modify files owned by gitea, the database and gain administrator privileges, and access/perform arbitrary actions other resources available to the gitea user on the operating system. Use with caution.
+gitea_enable_git_hooks: no
+# yes/no: enable/disable the webhooks feature
+gitea_enable_webhooks: yes
+# list of hosts that can be called from webhooks
+# accepts: my.example.org (hostname), *.example.org (wildcards), 192.168.1.0/24 (IP network), loopback (localhost), private (LAN/intranet), external (public hosts on internet), * (all hosts)
+gitea_webhook_allowed_hosts:
+  - "external"
+# port to expose in the clone URL
+gitea_ssh_url_port: 22
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
 # Mail settings below are required if gitea mailer is enabled

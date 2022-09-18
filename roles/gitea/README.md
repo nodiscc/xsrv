@@ -65,6 +65,47 @@ Gitea can be used from:
 - any other [git GUI client](https://git-scm.com/downloads/guis)
 - [GitNex](https://f-droid.org/en/packages/org.mian.gitnex/) Android application
 
+### LDAP authentication
+
+The xample below is given for a LDAP server configured with the [openldap](../openldap) role.
+
+- Access `Site administration > Authentication sources` (https://git.CHANGEME.org/admin/auths)
+- Click `Add authentication source`
+- Authentication type: `LDAP (via BindDN)`
+- Authentication Name: `LDAP`
+- Security protocol: `LDAPS` (or `Unencrypted` if your LDAP server does not support SSL/TLS)
+- Host: `ldap.CHANGEME.org` (hostname of your LDAP server)
+- Port: `636` (or `389` if your LDAP server does not support SSL/TLS)
+- BindDN: `cn=bind,ou=system,dc=CHANGEME,dc=org`
+- Bind password: the value of `{{ openldap_bind_password }}` on the LDAP server
+- User search base: `ou=users,dc=CHANGEME,dc=org`
+- User filter: `(&(objectClass=posixAccount)(uid=%s))`
+- Admin filter: ``
+- Restructed filter: ``
+- Username attribute: `uid`
+- First name attribue: `givenName`
+- Surname attribute: `sn`
+- Email attribute: `mail`
+- Public SSH key attribute: `SshPublicKey`
+- Avatar attribute: `jpegPhoto`
+- [ ] Verify group membership in LDAP
+- [ ] Use paged search
+- [ ] Skip local 2FA
+- [ ] Allow an empty search result to deactivate all users
+- [ ] Fetch attributes in Bind DN context
+- [x] Enable user synchronization
+- [x] This authentication source is activated
+- Click `Add authentication source`
+
+If your LDAP server uses a self-signed SSL/TLS certificate, you must copy it to `/usr/local/share/ca-certificates/` and update the OS certificate store. Example:
+
+```bash
+rsync -avzP certificates/ldap.CHANGEME.org.openldap.crt my.example.org:
+ssh my.EXAMPLE.org
+sudo cp ldap.CHANGEME.org.openldap.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
+```
+
 ### Repository mirroring
 
 #### Mirror from gitea to other hosts

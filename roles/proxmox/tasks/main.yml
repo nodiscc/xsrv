@@ -13,7 +13,7 @@
     - firewall
   when:
     - ansible_local.firewalld.ansible_managed is defined
-    - ansible_local.firewalld.ansible_managed|bool
+    - ansible_local.firewalld.ansible_managed | bool
 
 - include: fail2ban.yml
   become: yes
@@ -22,7 +22,7 @@
     - firewall
   when:
     - ansible_local.fail2ban.ansible_managed is defined
-    - ansible_local.fail2ban.ansible_managed|bool
+    - ansible_local.fail2ban.ansible_managed | bool
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

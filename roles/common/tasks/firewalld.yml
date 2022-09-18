@@ -42,6 +42,7 @@
       path: /usr/sbin/iptables-nft
     - name: ebtables
       path: /usr/sbin/ebtables-nft
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure firewalld
   template:
@@ -73,20 +74,20 @@
 - name: configure firewalld zone sources
   firewalld:
     zone: "{{ item.0.zone }}"
-    state: "{{ item.0.state|default('enabled') }}"
-    permanent: "{{ item.0.permanent|default('yes') }}"
-    immediate: "{{ item.0.immediate|default('yes') }}"
+    state: "{{ item.0.state | default('enabled') }}"
+    permanent: "{{ item.0.permanent | default('yes') }}"
+    immediate: "{{ item.0.immediate | default('yes') }}"
     source: "{{ item.1 }}"
   when: (item.0.delete is not defined) or (not item.0.delete)
-  loop: "{{   q('subelements', firewalld_zone_sources, 'sources', {'skip_missing': True}) }}"
+  loop: "{{ q('subelements', firewalld_zone_sources, 'sources', {'skip_missing': True}) }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure firewalld zone services
   firewalld:
     zone: "{{ item.0.zone }}"
-    state: "{{ item.0.state|default('enabled') }}"
-    permanent: "{{ item.0.permanent|default('yes') }}"
-    immediate: "{{ item.0.immediate|default('yes') }}"
+    state: "{{ item.0.state | default('enabled') }}"
+    permanent: "{{ item.0.permanent | default('yes') }}"
+    immediate: "{{ item.0.immediate | default('yes') }}"
     service: "{{ item.1 }}"
   with_subelements:
     - "{{ firewalld_zone_services }}"

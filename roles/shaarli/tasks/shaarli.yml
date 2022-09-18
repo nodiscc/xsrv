@@ -1,4 +1,11 @@
-##### SHAARLI #####
+### USER ###
+
+- name: create shaarli user
+  user:
+    name: shaarli
+    state: present
+    home: "{{ shaarli_install_dir }}"
+    create_home: no
 
 ### PACKAGES ###
 
@@ -62,7 +69,9 @@
   file:
     path: /root/shaarli-unpack
     state: directory
-    mode: 0750
+    mode: 0755
+    owner: root
+    group: root
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
@@ -82,11 +91,11 @@
   file:
     path: "{{ item.path }}"
     owner: root
-    group: www-data
+    group: shaarli
     mode: "{{ item.mode }}"
     recurse: no
   with_items:
-    - { path: "/root/shaarli-unpack/Shaarli", mode: "0750" }
+    - { path: "/root/shaarli-unpack/Shaarli", mode: "0755" }
     - { path: "/root/shaarli-unpack/Shaarli/data", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/tmp", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/cache", mode: "0770" }
@@ -117,7 +126,7 @@
     dest: '{{ shaarli_install_dir }}/'
     mode: preserve
     owner: root
-    group: www-data
+    group: shaarli
   when:
     - shaarli_action is defined
     - shaarli_action == 'upgrade'
@@ -127,7 +136,7 @@
     src: "var_www_shaarli_data_config.json.php.j2"
     dest: "{{ shaarli_install_dir }}/data/config.json.php"
     owner: root
-    group: www-data
+    group: shaarli
     mode: 0660
     force: "{{ shaarli_overwrite_config }}"
   tags: shaarli-config
@@ -139,9 +148,27 @@
     path: "{{ shaarli_install_dir }}/data/log.txt"
     access_time: preserve
     modification_time: preserve
-    owner: www-data
-    group: www-data
+    owner: shaarli
+    group: shaarli
     mode: 0660
+
+- name: update ownership/mode of directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: root
+    group: shaarli
+    recurse: "{{ item.recurse | default(True) }}"
+    mode: "{{ item.mode | default('0770') }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - path: "{{ shaarli_install_dir }}"
+      recurse: no
+      mode: "0755"
+    - path: "{{ shaarli_install_dir }}/data"
+    - path: "{{ shaarli_install_dir }}/tmp"
+    - path: "{{ shaarli_install_dir }}/cache"
+    - path: "{{ shaarli_install_dir }}/pagecache"
 
 - name: create ansible facts.d directory
   file:

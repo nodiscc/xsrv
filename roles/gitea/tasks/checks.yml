@@ -19,10 +19,10 @@
     - gitea_disable_registration in ['true', 'false']
     - gitea_enable_api in ['true', 'false']
     - gitea_api_max_results == gitea_api_max_results|int
-    - gitea_enable_service == gitea_enable_service|bool
+    - gitea_enable_service == gitea_enable_service | bool
     - gitea_force_private in ['true', 'false']
     - gitea_fqdn is not search("CHANGEME")
-    - gitea_mailer_enabled == gitea_mailer_enabled|bool
+    - gitea_mailer_enabled == gitea_mailer_enabled | bool
     - gitea_min_password_length == gitea_min_password_length|int
     - gitea_offline_mode in ['true', 'false']
     - gitea_require_signin in ['true', 'false']
@@ -35,3 +35,7 @@
     - gitea_user_repo_limit == gitea_user_repo_limit|int
     - gitea_version is string
     - gitea_issue_paging_num == gitea_issue_paging_num|int
+    - gitea_enable_git_hooks == gitea_enable_git_hooks | bool
+    - gitea_enable_webhooks == gitea_enable_webhooks | bool
+    - gitea_ssh_url_port == gitea_ssh_url_port|int
+    - gitea_webhook_allowed_hosts | type_debug == "list"

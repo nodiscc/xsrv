@@ -15,7 +15,7 @@
     - fail2ban
   when:
     - ansible_local.fail2ban.ansible_managed is defined
-    - ansible_local.fail2ban.ansible_managed|bool
+    - ansible_local.fail2ban.ansible_managed | bool
 
 - include: backups.yml
   become: yes
@@ -24,7 +24,7 @@
     - backup
   when:
     - ansible_local.backup.ansible_managed is defined
-    - ansible_local.backup.ansible_managed|bool
+    - ansible_local.backup.ansible_managed | bool
 
 - include: rsyslog.yml
   become: yes
@@ -34,7 +34,7 @@
     - rsyslog
   when:
     - ansible_local.rsyslog.ansible_managed is defined
-    - ansible_local.rsyslog.ansible_managed|bool
+    - ansible_local.rsyslog.ansible_managed | bool
 
 - include: netdata.yml
   become: yes
@@ -44,7 +44,7 @@
     - netdata
   when:
     - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed|bool
+    - ansible_local.netdata.ansible_managed | bool
 
 - include: firewalld.yml
   become: yes
@@ -53,7 +53,7 @@
     - firewall
   when:
     - ansible_local.firewalld.ansible_managed is defined
-    - ansible_local.firewalld.ansible_managed|bool
+    - ansible_local.firewalld.ansible_managed | bool
 
 - include: fact.yml
   become: yes

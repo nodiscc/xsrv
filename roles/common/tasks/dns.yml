@@ -4,7 +4,7 @@
   fail:
     msg: "setup_dns is enabled but no resolvers have been configured"
   when:
-    - setup_dns|bool
+    - setup_dns | bool
     - dns_nameservers is defined and (dns_nameservers | length == 0)
 
 - name: set DNS resolver settings in /etc/resolv.conf

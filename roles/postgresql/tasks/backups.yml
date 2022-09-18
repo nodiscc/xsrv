@@ -22,4 +22,4 @@
   notify: check rsnapshot configuration
   when:
     - ansible_local.backup.ansible_managed is defined
-    - ansible_local.backup.ansible_managed|bool
+    - ansible_local.backup.ansible_managed | bool

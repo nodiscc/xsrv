@@ -3,7 +3,58 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.1) - 2022-07-10
+#### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **gitea:** if you rely on custom git hooks for your projects, set `gitea_enable_git_hooks: yes` in the host configuration/vars file (`xsrv edit-host`)
+- `xsrv deploy` to apply changes
+
+**Added:**
+- xsrv: add [`xsrv init-vm-template`](https://xsrv.readthedocs.io/en/latest/usage.html#provision-hosts) command (create a libvirt Debian VM template, unattended using a preconfiguration file)
+- add [wireguard](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard) role - fast and modern VPN server
+- nextcloud: enable [group folders](https://apps.nextcloud.com/apps/groupfolders) app by default
+- common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: allow specifying a list of packages to install/remove ([`packages_install/remove`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- gitea: allow enabling/disabling git hooks and webhooks features globally ([`gitea_enable_git_hooks/webhooks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- gitea: allow configuring the list of hosts that can be called from webhooks ([`gitea_webhook_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- gitea: allow configuring the SSH port exposed in the clone URL ([`gitea_ssh_url_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+
+**Removed:**
+- common: remove `setup_cli_utils` and `setup_haveged` variables. Use [`packages_install/remove`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) instead.
+
+**Changed:**
+- gitea: disable git hooks by default
+- gitea: upgrade to v1.17.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.9) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.17.0) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.17.1) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.17.2)
+- openldap: update self-service-password to v1.5.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.1)
+- nextcloud: upgrade to v24.0.5 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-3-23-0-7-and-22-2-10-are-out-update/) [[2]](https://nextcloud.com/changelog/#latest24)
+- postgresql: update pgmetrics to [v1.13.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.13.1)
+- shaarli: hardening: run shaarli under a dedicated `shaarli` user account (don't use the default shared `www-data` user)
+- xsrv: upgrade ansible to [v6.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
+- nextcloud/netdata: mitigate frequent httpckeck alarms on the nextcloud web service response time (`httpcheck_web_service_unreachable`), increase the timeout of the check to 3s
+- common: sysctl: automatically reboot the host after 60 seconds in case of kernel panic
+- common: hardening: ensure `/var/log/wtmp` is not world-readable
+- common: login/ssh: hardening: kill user processes when an interactive user logs out (except for root). Lock idle login sessions after 15 minutes of inactivity.
+- common: ssh: hardening: replace the server's default 2048 bits RSA keypair with 4096 bits keypair
+- common: sudo: hardening: configure sudo to run processes in a pseudo-terminal
+- common: users/pam: hardening: increase the number of rounds for hashing group passwords
+- common: sysctl: hardening: only allow root/users with CAP_SYS_PTRACE to use ptrace
+- common: sysctl: hardening: disable more kernel modules by default (bluetooth, audio I/O, USB storage, USB MIDI, UVC/V4L2/CPIA2 video devices, thunderbolt, floppy, PC speaker beep
+- common: sysctl: hardening: restrict loading TTY line disciplines to the CAP_SYS_MODULE capability
+- common: sysctl: hardening: protect against unintentional writes to an attacker-controlled FIFO
+- common: sysctl: hardening: prevent even the root user from reading kernel memory maps
+- common: sysctl: hardening: enable BPF JIT hardening
+- common: sysctl: hardening: disable ICMP redirect support for IPv6
+- all roles: require `ansible-core>=2.12/ansible>=6.0.0`
+- common: improve check mode support before first deployment
+- tools/tests: improve/simplify test tools
+
+**Fixed:**
+- common: users: fix errors during creation fo `sftponly` user accounts when no groups are defined in the user definition
+
+
+#### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-10
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release

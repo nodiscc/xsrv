@@ -57,6 +57,18 @@
   notify: restart ssh
   when: sshd_register_moduli.stdout
 
+- name: replace default 2048 bits RSA keypair with 4096 bits keypair
+  openssh_keypair:
+    state: present
+    type: rsa
+    size: 4096
+    path: "/etc/ssh/ssh_host_rsa_key"
+    force: no
+    regenerate: partial_idempotence
+    owner: root
+    group: root
+    mode: "0600"
+
 # lynis: FILE-7524|Incorrect permissions for file /root/.ssh
 - name: ensure /root/.ssh is mode 0700
   file:

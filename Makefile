@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.1.0 yamllint ansible==5.10.0
+	pip3 install isort ansible-lint==6.5.2 yamllint ansible==6.4.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -34,7 +34,7 @@ install_collection: venv build_collection
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ANSIBLE_ROLES_PATH=./roles ansible-lint -v -x fqcn-builtins,truthy,braces,line-length tests/playbook.yml
+	ansible-lint -v -x fqcn-builtins,truthy,braces,line-length,name[casing],yaml[truthy],schema[meta],yaml[line-length] roles/*
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:
@@ -43,49 +43,47 @@ test_command_line:
 	EDITOR=cat ./xsrv edit-group-vault xsrv-test all && grep ANSIBLE_VAULT ~/playbooks/xsrv-test/group_vars/all/all.vault.yml
 
 ##### MANUAL TESTS #####
-# requirements: libvirt libguestfs-tools, prebuilt debian VM template, host configuration initialized with xsrv init-host
-# usage: make test_init_vm SUDO_PASSWORD=CHANGEME ROOT_PASSWORD=CHANGEME
-TEMPLATE_NAME = debian11-base
-VM_NAME = my.example.test
-VM_IP = 10.0.0.212
-VM_NETMASK = 24
-VM_GATEWAY = 10.0.0.1
-VM_MEM = 7G
-VM_VCPUS = 4
-SUDO_USER = deploy
-SSH_PUBKEY = 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJKlvXZ7snonbBj2xmRfzQi+/5iXLWiD8Eq9atICCvp4jF/ocdem13wGHkForElqsqMHbOWFJskQDS6lVTvORdMpgSiJmkR0wI9VD/AeInPCesWVxO1pyF2xqsnd8OhnaK9+igioz6iG0iE318lX2LmxN5JpauVx8cesoOVp0b2LKpSiXaoyxr4Sd8dQjT5GiUBz8mlDQPVdMOZRnXdr9y1tQt6kNvfRMesJ5594cOBY6nMtbQB6/rnbn77LLkq1am1y4XBwTPQ/3DJFuxyaixq/A3+SfiFOlFHcijq/mfw0O2pI4K4vFPVl3n5bHXgJJ57QIQdkYQW2Tir/Mv1zDj4c+lhScX4jNNxmde/nZ2TE+ynW2OapiodXlCjBTVysOMgizSA96HZcHNwNhSdodqOJxGW+U9FIF4K8RUXbUkrWmoWDGmlDHkjkNszdKBieGT4tjuzB3NN9J93CDdwqlEIPg0xRUImCkc4zeTwTWVgFW1TD9o/CBz3l+hlF2wV8wvCzBfx42cTjeEMrWMb/8CSz9VK+Q6R2l27MqhLJUmOnlWEqiQaponAoPUpocBd703oOnJGnX3anJjY+LNeqlye++T2iTr0SwIWXohX9NzVgJZIDmEIRd7ThjTvdWoebR7pKpox4x48LR6f4K6p/tnG7BM9O+7MkglSdFj0tn5NQ=='
-SUDO_PASSWORD = CHANGEME
-ROOT_PASSWORD = CHANGEME
 
+# usage: make test_init_vm_template NETWORK=default
+.PHONY: test_init_vm_template # test correct execution of xsrv init-vm-template
+test_init_vm_template:
+	if [[ -f /etc/libvirt/qemu/my.template.test.xml ]]; then virsh undefine --domain my.template.test --remove-all-storage; fi
+	./xsrv init-vm-template --name my.template.test --ip 10.0.10.240 --gateway 10.0.10.1 --network=$(NETWORK)	
+
+# TODO the resulting VM has no video output, access over serial console only, --graphics spice,listen=none during init-vm-template will prevent it from working, spice console must be added during init_vm
+# requirements: libvirt libguestfs-tools, prebuilt debian VM template, host configuration initialized with xsrv init-host
+# usage: make test_init_vm SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG
 .PHONY: test_init_vm # test correct execution of xsrv init-vm
 test_init_vm:
-	ssh-keygen -R $(VM_NAME)
-	ssh-keygen -R $(VM_IP)
-	if [[ -f /etc/libvirt/qemu/$(VM_NAME).xml ]]; then virsh undefine --domain $(VM_NAME) --remove-all-storage; fi
-	./xsrv init-vm --template $(TEMPLATE_NAME) --name $(VM_NAME) \
-	    --ip $(VM_IP) --netmask $(VM_NETMASK) --gateway $(VM_GATEWAY) \
-	    --sudo-user $(SUDO_USER) --sudo-password $(SUDO_PASSWORD) --ssh-pubkey $(SSH_PUBKEY) --root-password $(ROOT_PASSWORD) \
-		--memory $(VM_MEM) --vcpus $(VM_VCPUS)
+	ssh-keygen -R my.example.test
+	ssh-keygen -R 10.0.10.241
+	if [[ -f /etc/libvirt/qemu/my.example.test.xml ]]; then virsh undefine --domain my.example.test --remove-all-storage; fi
+	./xsrv init-vm --template my.template.test --name my.example.test \
+		--ip 10.0.10.241 --netmask 24 --gateway 10.0.10.1 \
+		--sudo-user deploy --sudo-password $(SUDO_PASSWORD) --root-password $(ROOT_PASSWORD) \
+		--ssh-pubkey 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJKlvXZ7snonbBj2xmRfzQi+/5iXLWiD8Eq9atICCvp4jF/ocdem13wGHkForElqsqMHbOWFJskQDS6lVTvORdMpgSiJmkR0wI9VD/AeInPCesWVxO1pyF2xqsnd8OhnaK9+igioz6iG0iE318lX2LmxN5JpauVx8cesoOVp0b2LKpSiXaoyxr4Sd8dQjT5GiUBz8mlDQPVdMOZRnXdr9y1tQt6kNvfRMesJ5594cOBY6nMtbQB6/rnbn77LLkq1am1y4XBwTPQ/3DJFuxyaixq/A3+SfiFOlFHcijq/mfw0O2pI4K4vFPVl3n5bHXgJJ57QIQdkYQW2Tir/Mv1zDj4c+lhScX4jNNxmde/nZ2TE+ynW2OapiodXlCjBTVysOMgizSA96HZcHNwNhSdodqOJxGW+U9FIF4K8RUXbUkrWmoWDGmlDHkjkNszdKBieGT4tjuzB3NN9J93CDdwqlEIPg0xRUImCkc4zeTwTWVgFW1TD9o/CBz3l+hlF2wV8wvCzBfx42cTjeEMrWMb/8CSz9VK+Q6R2l27MqhLJUmOnlWEqiQaponAoPUpocBd703oOnJGnX3anJjY+LNeqlye++T2iTr0SwIWXohX9NzVgJZIDmEIRd7ThjTvdWoebR7pKpox4x48LR6f4K6p/tnG7BM9O+7MkglSdFj0tn5NQ==' \
+		--memory 7G --vcpus 4
 
 .PHONY: test_check_mode # test full playbook run (--check mode) against the host created with test_init_vm
+test_check_mode:
 	# install roles in the test project
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
 	# test that check mode before first deployment does not fail
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv check xsrv-test $(VM_NAME)
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv check xsrv-test my.example.test
 
 .PHONY: test_idempotence # test 2 consecutive full playbook runs against the host created with test_init_vm
 test_idempotence:
 	# install roles in the test project
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
 	# test initial deployment
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test $(VM_NAME)
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test my.example.test
 	# test idempotence
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test $(VM_NAME)
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test my.example.test
 	# check netdata alarms count
-	curl --insecure https://$(VM_NAME):19999/api/v1/alarms
+	curl --insecure https://my.example.test:19999/api/v1/alarms
 
 ##### RELEASE PROCEDURE #####
-# - make test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG
+# - make test_init_vm_template test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
 # - make bump_versions update_todo changelog new_tag=$new_tag
 # - update changelog.md, add and commit version bumps and changelog updates
 # - git tag $new_tag && git push && git push --tags
@@ -229,9 +227,9 @@ endif
 	commit=$$(git rev-parse HEAD) && \
 	curl --silent --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" "https://gitlab.com/api/v4/projects/nodiscc%2Fxsrv/repository/commits/$$commit/statuses?ref=$$branch" | jq  .[].status
 
-.PHONY: clean # manual - clean artifacts generated by make tests
+.PHONY: clean # manual - clean artifacts generated by tests
 clean:
-	-rm -rf .venv/ nodiscc-xsrv-*.tar.gz gitea-cli/ .venv/ ansible_collections/ .cache/ tests/playbooks/xsrv-test/ansible_collections/
+	-rm -rf .venv/ nodiscc-xsrv-*.tar.gz gitea-cli/ .venv/ ansible_collections/ .cache/ tests/playbooks/xsrv-test/ansible_collections/ tests/playbooks/xsrv-test/.venv/
 
 .PHONY: help # generate list of targets with descriptions
 help:

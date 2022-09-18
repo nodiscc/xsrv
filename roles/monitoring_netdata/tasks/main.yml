@@ -23,7 +23,7 @@
     - netdata
     - netdata-modules
     - netdata-needrestart
-  when: setup_needrestart|bool
+  when: setup_needrestart | bool
 
 - include: netdata-module-logcount.yml
   become: yes
@@ -32,7 +32,7 @@
     - netdata
     - netdata-modules
     - netdata-logcount
-  when: setup_netdata_logcount|bool
+  when: setup_netdata_logcount | bool
 
 - include: netdata-module-debsecan.yml
   become: yes
@@ -41,7 +41,7 @@
     - netdata
     - netdata-modules
     - netdata-debsecan
-  when: setup_netdata_debsecan|bool
+  when: setup_netdata_debsecan | bool
 
 - include: firewalld.yml
   become: yes
@@ -51,7 +51,7 @@
     - firewall
   when:
     - ansible_local.firewalld.ansible_managed is defined
-    - ansible_local.firewalld.ansible_managed|bool
+    - ansible_local.firewalld.ansible_managed | bool
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

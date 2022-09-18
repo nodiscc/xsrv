@@ -17,6 +17,9 @@
   template:
     src: etc_default_rcS.j2
     dest: /etc/default/rcS
+    owner: root
+    group: root
+    mode: 0644
 
 # apply sysctl configuration
 - name: apply configuration (flush handlers)

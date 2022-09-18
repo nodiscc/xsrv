@@ -29,7 +29,7 @@
     - netdata
   when:
     - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed|bool
+    - ansible_local.netdata.ansible_managed | bool
 
 - include: fact.yml
   become: yes

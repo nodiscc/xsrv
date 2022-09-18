@@ -4,5 +4,5 @@
     name: mumble-server
     state: restarted
     enabled: yes
-  when: mumble_enable_service|bool
+  when: mumble_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"

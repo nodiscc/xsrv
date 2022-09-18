@@ -9,5 +9,5 @@
   become_user: netdata
   command: /usr/libexec/netdata/plugins.d/alarm-notify.sh test
   environment:
-    NETDATA_ALARM_NOTIFY_DEBUG: 1
+    NETDATA_ALARM_NOTIFY_DEBUG: "1"
   changed_when: True

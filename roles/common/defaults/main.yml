@@ -50,6 +50,28 @@ kernel_modules_blacklist:
   - tipc # 3.4.4 Ensure TIPC is disabled
   - firewire-ohci # disable IEEE 1394 (FireWire) Support
   - firewire-core # disable IEEE 1394 (FireWire) Support
+  - bluetooth # bluetooth support, STIG V-38682
+  - bnep # bluetooth support, STIG V-38682
+  - btusb # bluetooth support, STIG V-38682
+  - net-pf-31 # bluetooth support, STIG V-38682
+  - cpia2 # CPiA2 cameras
+  - floppy # floppy drives
+  - n_hdlc # HDLC line discipline
+  - pcspkr # PC speaker/beep
+  - soundcore # audio input/output
+  - thunderbolt # thunderbolt devices
+  - usb-midi # USB MIDI
+  - usb-storage # USB storage
+  - uvcvideo # UVC video devices
+  - v4l2_common # V4L2 video devices
+  - cramfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
+  - freevxfs # CIS 1.1.1.1 mounting of freevxfs filesystems is disabled
+  - hfs # CIS 1.1.1.3 mounting of hfs filesystems is disabled
+  - hfsplus # CIS 1.1.1.4 mounting of hfsplus filesystems is disabled
+  - jffs2 # CIS 1.1.1.2 mounting of jffs2 filesystems is disabled
+  - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
+  - udf # CIS 1.1.1.6 mounting of udf filesystems is disabled
+  - vfat # 1.1.1.7 mounting of FAT filesystems is limited
 
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
@@ -75,6 +97,58 @@ apt_unattended_upgrades_origins_patterns:
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=buster,site=repo.mongodb.org" # nodiscc.xsrv.graylog
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
+
+# yes/no: setup apt-listbugs
+apt_listbugs: no
+# what to do when apt-listbugs finds a bug in a package about to be installed (force-no (default), force-yes/force-default)
+# force-no: abort the installation/upgrade as soon as bugs are found, unless bugs are listed in apt_listbugs_ignore_list
+# force-yes/force-default: accept to continue with the installation/upgrade even when bugs are found
+apt_listbugs_action: "force-no"
+# Debian bug numbers/packages to ignore for apt-listbugs (don't let these bugs block package installation)
+apt_listbugs_ignore_list:
+  - 909750 # https://bugs.debian.org/909750 - reason: FHS violation, not critical
+  - 933001 # https://bugs.debian.org/933001 - reason: plymouth is not installed
+  - 933749 # https://bugs.debian.org/933749 - reason: disk space not a problem on most hosts
+  - 935042 # https://bugs.debian.org/935042 - reason: skip-upgrade-test=yes set in monitoring role
+  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 935182 # https://bugs.debian.org/935182 - reason: only affects files on samba shares in specific setups
+  - 928963 # https://bugs.debian.org/928963 - reason: only affects sparc64, powerpc64, and s390x architectures
+  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 918012 # https://bugs.debian.org/918012 - reason: only affects debian 9
+  - 969072 # https://bugs.debian.org/969072 - reason: only happens during groff build, not when running the command
+  - 987570 # https://bugs.debian.org/987570 - reason: packaging bug, no impact
+  - 922981 # https://bugs.debian.org/922981 - reason: impact limited to new certificates, patch pending upload
+  - 929685 # https://bugs.debian.org/929685 - packaging bug, no impact
+  - 991449 # https://bugs.debian.org/991449 - not using bsd-mailx
+  - 994510 # https://bugs.debian.org/994510 - only affects i386 architecture
+  - 1000826 # https://bugs.debian.org/1000826 - only affects python 3.10
+  - 1003150 # https://bugs.debian.org/1003150 - distutils already installed
+  - 1000796 # https://bugs.debian.org/1000796 - no impact on common use cases
+  - 993716 # https://bugs.debian.org/993716 - IPv6 is disabled
+  - 945001 # https://bugs.debian.org/945001 - only affects hosts with multiple OS in grub
+  - 948318 # https://bugs.debian.org/948318 - old lbc6 versions are automatically removed
+  - 998516 # https://bugs.debian.org/998516 - only affects bridged interfaces, workaround in bug report
+  - 990026 # https://bugs.debian.org/990026 - MAILTO not used in cron jobs
+  - 1004111 # https://bugs.debian.org/1004111 - unconfirmed, unattended-upgrades failure will trigger an error report by mail
+  - 1003012 # https://bugs.debian.org/1003012 - fixed in point release
+  - 995387 # https://bugs.debian.org/994971 - only affects #994971/nvidia-driver not in use
+  - 992045 # https://bugs.debian.org/992045 - fixed in debian-security, local only, high RAM usage noticeable by monitoring
+  - 968368 # https://bugs.debian.org/968368 - option bond-master not in use
+  - 990428 # https://bugs.debian.org/990428 - option bond-slaves not in use
+  - 984574 # https://bugs.debian.org/984574 - fixed in point release, workaround in bug report
+  - 998008 # https://bugs.debian.org/998008 - NIS not in use
+  - 993578 # https://bugs.debian.org/993578 - fixed in point release, gpgconf --check-programs not used
+  - 990318 # https://bugs.debian.org/990318 - no impact, incomplete removal of python2
+  - 995115 # https://bugs.debian.org/995115 - unconfirmed, workaround is to comment out DPkg::Pre-Install-Pkgs in /etc/apt/apt.conf.d/10apt-listbugs
+  - 991936 # https://bugs.debian.org/991936 - fixed in point release, no workaround available
+  - 1016102 # https://bugs.debian.org/1016102 - edge case
+  - 1001276 # https://bugs.debian.org/1001276 - kFreeBSD only
+  - 975931 # https://bugs.debian.org/975931 - armhf only
+  - 1008005 # https://bugs.debian.org/1008005 - no impact when installation of recommended packages is disabled
+  - 1002047 # https://bugs.debian.org/1002047 - no impact when base option is present in configuration file
+  - 895823 # https://bugs.debian.org/895823 - only happens after purging dovecot
+  - 1009872 # https://bugs.debian.org/1009872 - only happens when /etc/ssl/certs/ssl-cert-snakeoil* were deleted manually
+
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -179,7 +253,7 @@ fail2ban_default_findtime: "10min"
 # fail2ban default number of failures that have to occur in the last findtime to ban the IP
 fail2ban_default_maxretry: 5
 
-### USERS ###
+### LINUX USERS ###
 # setup user accounts/PAM configuration (yes/no)
 setup_users: yes
 # Additional user accounts to create.
@@ -213,6 +287,13 @@ linux_users: []
 # allow ansible connecting user to run 'sudo rsync' without password (yes/no)
 # Required to use the ansible synchronize module, and download files generated by the backup role
 ansible_user_allow_sudo_rsync_nopasswd: yes
+# kill user processes when an interactive user logs out (yes/no)
+systemd_logind_kill_user_processes: yes
+# do not kill processes on logout for these users
+systemd_logind_kill_exclude_users: ['root']
+# time after which idle interactive login sessions are automatically closed
+systemd_logind_lock_after_idle_min: 15
+
 
 ### CRON TASK SCHEDULER ###
 # (yes/no): setup cron permission restrictions/logging options
@@ -250,7 +331,20 @@ mail_root_alias: "{{ ansible_user }}"
 
 
 ### PACKAGES ###
-# install a basic set of interactive command-line diagnostic/file manipulation/shell utilities (yes/no) - see tasks/50utilities.yml for the full list
-setup_cli_utils: yes
-# install haveged entropy generator (yes/no) - good to have on virtual machines where system is frequently running out of entropy
-setup_haveged: yes
+# additional packages to install (list)
+packages_install:
+  - atool # single tool to manipulate all archives/compressed file formats
+  - less # a pager like 'more'
+  - tree # show filesystems as a tree
+  - rsync # fast/powerful file transfer utility
+  - locate # maintain and query an index of a directory tree
+  - man # view manual pages
+  - at # task scheduler - required for ansible at module/one-shot job scheduling
+  - haveged # Linux entropy source using the HAVEGE algorithm - good to have on virtual machines where system is frequently running out of entropy
+
+# packages to remove (list)
+packages_remove:
+  - snapd
+  # - rpcbind # not an NFS server
+  # - nfs-common # not an NFS server
+  # - exim4-base # use a smarthost/msmtp

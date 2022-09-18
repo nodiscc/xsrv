@@ -12,8 +12,8 @@
     - openldap_bind_password is not search("CHANGEME")
     - openldap_admin_password is not search("CHANGEME")
     - openldap_log_level == openldap_log_level|int
-    - openldap_setup_lam == openldap_setup_lam|bool
-    - openldap_setup_ssp == openldap_setup_ssp|bool
+    - openldap_setup_lam == openldap_setup_lam | bool
+    - openldap_setup_ssp == openldap_setup_ssp | bool
     - openldap_firewalld_zones|type_debug == "list"
 
 - name: check that mandatory variables are correctly defined (ldap-account-manager)
@@ -21,7 +21,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
-  when: openldap_setup_lam|bool
+  when: openldap_setup_lam | bool
   with_items:
     - ldap_account_manager_allowed_hosts is not search(" ")
     - ldap_account_manager_fqdn is not search("CHANGEME")
@@ -43,7 +43,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
-  when: openldap_setup_ssp|bool
+  when: openldap_setup_ssp | bool
   with_items:
     - self_service_password_fqdn is not search("CHANGEME")
     - self_service_password_install_dir is not search("CHANGEME")

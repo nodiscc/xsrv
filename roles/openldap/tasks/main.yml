@@ -29,14 +29,14 @@
   tags:
     - openldap
     - ldap-account-manager
-  when: openldap_setup_lam|bool
+  when: openldap_setup_lam | bool
 
 - include: self-service-password.yml
   become: yes
   tags:
     - openldap
     - self-service-password
-  when: openldap_setup_ssp|bool
+  when: openldap_setup_ssp | bool
 
 - include: netdata.yml
   become: yes
@@ -48,7 +48,7 @@
     - self-service-password
   when:
     - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed|bool
+    - ansible_local.netdata.ansible_managed | bool
 
 - include: firewalld.yml
   become: yes
@@ -57,7 +57,7 @@
     - firewall
   when:
     - ansible_local.firewalld.ansible_managed is defined
-    - ansible_local.firewalld.ansible_managed|bool
+    - ansible_local.firewalld.ansible_managed | bool
 
 - include: fact.yml
   become: yes

@@ -21,6 +21,12 @@
     group: root
     mode: 0600
 
+- name: ensure /var/log/wtmp is not world-readable
+  file:
+    path: /var/log/wtmp
+    follow: yes
+    mode: o-rw
+
 - name: ensure ansible user home directory is not world-readable
   file:
     state: directory
@@ -55,6 +61,13 @@
     dest: /etc/sudoers.d/nopasswd
     mode: 0440
 
+- name: configure sudo to run processes in a pseudo-terminal
+  template:
+    src: etc_sudoers.d_use-pty.j2
+    dest: /etc/sudoers.d/use-pty
+    mode: 0440
+
+
 ##### SFTP #####
 
 # chrooted users home directories must be owned by root:$USER
@@ -64,7 +77,9 @@
     owner: "root"
     group: "{{ item.name }}"
     mode: "0750"
-  when: '"sftponly" in item.groups'
+  when:
+    - item.groups is defined
+    - '"sftponly" in item.groups'
   with_items: "{{ linux_users }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -75,11 +90,13 @@
     owner: "{{ item.name }}"
     group: "{{ item.name }}"
     mode: 0770
-  when: '"sftponly" in item.groups'
+  when:
+    - item.groups is defined
+    - '"sftponly" in item.groups'
   with_items: "{{ linux_users }}"
 
 
-##### PAM #####
+##### PAM/LOGIND #####
 
 - name: configure the pam_limits module
   template:
@@ -105,6 +122,22 @@
     - { name: 'libpam-tmpdir', state: 'present' }
   notify: update pam configuration
 
-# update pam configuration
+- name: configure systemd-logind
+  template:
+    src: etc_systemd_logind.conf.j2
+    dest: /etc/systemd/logind.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart systemd-logind
+
+# update pam configuration, restart systemd-logind
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+##### OTHER ####
+
+- name: mask debug-shell systemd service
+  systemd:
+    name: debug-shell.service
+    masked: yes

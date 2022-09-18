@@ -30,6 +30,7 @@ show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
 self-upgrade                        check for new releases/upgrade the xsrv script in-place
+init-vm-template [--help] [options] initialize a new libvirt VM template
 init-vm [--help] [options]          initialize a new libvirt VM from a template
 
 If no project is specified, the 'default' project is assumed.
@@ -52,8 +53,8 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.8.1"
-ansible_version="5.10.0"
+version="1.9.0"
+ansible_version="6.4.0"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
@@ -359,14 +360,14 @@ function init_vm() {
         If not specified, memory and vcpu values from the template will be kept
         If not specified, the VM disk image will be created at /var/lib/libvirt/images/VM_NAME.qcow2
         "
-
+    # parse command-line options
     long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:"
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
-
+    # default values
     template=""
     name=""
-    ip_address=""
+    ip=""
     netmask="24"
     gateway=""
     ssh_port="22"
@@ -377,13 +378,13 @@ function init_vm() {
     disk_path=""
     memory=""
     vcpus=""
-
+    # override defaults with user-provided values
     while true; do
         case "$1" in
             -h|--help) echo "USAGE: $INIT_VM_USAGE"; exit;;
             --template) template=$2; shift 2;;
             --name) name=$2; shift 2;;
-            --ip) ip_address=$2; shift 2;;
+            --ip) ip=$2; shift 2;;
             --netmask) netmask=$2; shift 2;;
             --gateway) gateway=$2; shift 2;;
             --ssh-port) ssh_port=$2; shift 2;;
@@ -398,12 +399,12 @@ function init_vm() {
             *) echo "[xsrv] ERROR: invalid option $1"; echo "USAGE: $INIT_VM_USAGE"; exit 1;;
         esac
     done
-
-    for i in "$template" "$name" "$ip_address" "$gateway" "$sudo_user"; do
-        if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option"; echo "[xsrv] USAGE: $INIT_VM_USAGE"; exit 1; fi
+    # check mandatory options
+    for i in "$template" "$name" "$ip" "$gateway" "$sudo_user"; do
+        if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option --$i"; echo "[xsrv] USAGE: $INIT_VM_USAGE"; exit 1; fi
     done
-
-cat > ./libvirt-clone-interfaces.txt << EOF
+    # build /etc/network/interfaces for the target system 
+    cat > ./libvirt-clone-interfaces.txt << EOF
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -416,12 +417,12 @@ iface lo inet loopback
 # The primary network interface
 allow-hotplug enp1s0
 iface enp1s0 inet static
-    address ${ip_address}/${netmask}
+    address ${ip}/${netmask}
     gateway ${gateway}
 EOF
 
     echo "[xsrv] INFO: attempting to resolve $name..."
-    getent hosts "$name" || (echo "[xsrv] ERROR: resolving $name failed! Make sure a record exists in the DNS system or add this entry to /etc/hosts: $ip_address      $name"; exit 1)
+    getent hosts "$name" || (echo "[xsrv] ERROR: resolving $name failed! Make sure a record exists in the DNS system or add this entry to /etc/hosts: $ip      $name"; exit 1)
     if [[ -z "$disk_path" ]]; then disk_path="/var/lib/libvirt/images/$name.qcow2"; fi
     echo "[xsrv] INFO: cloning template $template to $name..."
     virt-clone --original "$template" \
@@ -464,6 +465,108 @@ EOF
     rm ./libvirt-clone-interfaces.txt
 }
 
+# to delete the VM: virsh destroy $TEMPLATE_VMNAME; virsh undefine $TEMPLATE_VMNAME; virsh vol-delete --pool /var/lib/libvirt/images/$TEMPLATE_VMNAME.qcow2
+function init_vm_template() {
+    INIT_VM_TEMPLATE_USAGE="$0 init-vm-template --name TEMPLATE_NAME --ip IP_ADDRESS --gateway GATEWAY_IP [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
+        Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
+        Requirements: libvirt, current user in the libvirt group
+        --name          REQUIRED name of the VM/template to create
+        --ip            REQUIRED IP address of the VM/template
+        --gateway       REQUIRED default network gateway of the VM
+        --netmask       network mask of the VM
+        --nameservers   space-separated list of DNS nameservers
+        --root-password set the root account password
+        --sudo-user     name of the administrative (sudoer) user account to create
+        --sudo-password password for the administrative (sudoer) user account
+        --storage-path  path to the directory where qcow2 disk images will be stored
+        --memory        VM memory, in MB
+        --vcpus         VM vCPUs
+        --disk-size     size of the disk image to create, in GB
+        --network       name of the libvirt network to attach to
+        --preseed-file  path to the preseed/preconfiguration file
+
+        If no root/sudo password is specified, random passsowrds will be generated automatically and displayed once after VM creation
+        "
+    # parse command-line options
+    long_opts="help,name:,storage-path:,memory:,vcpus:,disk-size:,network:,ip:,gateway:,netmask:,preseed:"
+    GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
+    eval set -- "$GETOPT"
+    # default values
+    name=""
+    storage_path="/var/lib/libvirt/images"
+    memory="1024"
+    vcpus="2"
+    disk_size="20"
+    network="default"
+    ip=""
+    gateway=""
+    netmask="255.255.255.0"
+    nameservers="1.1.1.1 1.0.0.1"
+    preseed_file="$xsrv_clone_dir/docs/preseed.cfg"
+    root_password=$(pwgen -s 21 1)
+    sudo_user="deploy"
+    sudo_password=$(pwgen -s 21 1)
+    # override defaults with user-provided values
+    while true; do
+        case "$1" in
+            -h|--help) echo "USAGE: $INIT_VM_TEMPLATE_USAGE"; exit;;
+            --name) name=$2; shift 2;;
+            --storage-path) storage_path=$2; shift 2;;
+            --memory) memory=$2; shift 2;;
+            --vcpus) vcpus=$2; shift 2;;
+            --network) network=$2; shift 2;;
+            --ip) ip=$2; shift 2;;
+            --gateway) gateway=$2; shift 2;;
+            --netmask) netmask=$2; shift 2;;
+            --nameservers) nameservers=$2; shift 2;;
+            --disk-size) disk_size=$2; shift 2;;
+            --preseed-file) preseed_file=$2; shift 2;;
+            --root-password) root_password=$2; shift 2;;
+            --sudo-user) sudo_user=$2; shift 2;;
+            --sudo-password) sudo_password=$2; shift 2;;
+            --) shift; break;;
+            *) echo "[xsrv] ERROR: invalid option $1"; echo "USAGE: $INIT_VM_TEMPLATE_USAGE"; exit 1;;
+        esac
+    done
+    for i in "$name" "$ip" "$gateway"; do
+        if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option"; echo "[xsrv] USAGE: $INIT_VM_TEMPLATE_USAGE"; exit 1; fi
+    done
+    echo "[xsrv] making the preseed file available to libvirt-qemu"
+    sudo cp "$preseed_file" /var/lib/libvirt/preseed.cfg
+    sudo chmod 0660 /var/lib/libvirt/preseed.cfg # don't make it world-readable
+    sudo chown libvirt-qemu:libvirt-qemu /var/lib/libvirt/preseed.cfg
+    echo "[xsrv] setting values the preseed file"
+    sudo sed -i "s/%%HOSTNAME%%/${name}/g" /var/lib/libvirt/preseed.cfg
+    sudo sed -i "s/%%SUDO_USER%%/${sudo_user}/g" /var/lib/libvirt/preseed.cfg
+    sudo sed -i "s/%%SUDO_PASSWORD%%/${sudo_password}/g" /var/lib/libvirt/preseed.cfg
+    sudo sed -i "s/%%ROOT_PASSWORD%%/${root_password}/g" /var/lib/libvirt/preseed.cfg
+    sudo sed -i "s/%%IP_ADDRESS%%/${ip}/g" /var/lib/libvirt/preseed.cfg
+    sudo sed -i "s/%%GATEWAY%%/${gateway}/g" /var/lib/libvirt/preseed.cfg
+    sudo sed -i "s/%%NETMASK%%/${netmask}/g" /var/lib/libvirt/preseed.cfg
+    sudo sed -i "s/%%NAMESERVERS%%/${nameservers}/g" /var/lib/libvirt/preseed.cfg
+    echo "[xsrv] INFO: installing operating system using preseed to VM $name..."
+    sudo virt-install \
+        --name "$name" \
+        --memory "$memory" \
+        --disk "$storage_path/$name.qcow2,size=$disk_size,device=disk,bus=virtio,cache=none" \
+        --vcpus "$vcpus" \
+        --os-type linux \
+        --os-variant debian10 \
+        --graphics none \
+        --console pty,target_type=serial \
+        --location http://deb.debian.org/debian/dists/bullseye/main/installer-amd64 \
+        --extra-args "console=ttyS0,115200n8 serial" \
+        --initrd-inject="/var/lib/libvirt/preseed.cfg" \
+        --network network="$network" \
+        --noreboot
+    reset
+    echo "[xsrv] INFO: cleaning up $name..."
+    sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
+    sudo chmod 0660 "$storage_path/$name.qcow2"
+    virt-sysprep --domain "$name"
+    echo "[xsrv] INFO password for $sudo_user: $sudo_password"
+    echo "[xsrv] INFO: password for root: $root_password"
+}
 
 ########## INTERNAL HELPERS ##########
 
@@ -606,6 +709,7 @@ function _main() {
         "show-defaults") shift; show_defaults "$@";;
         "self-upgrade") self_upgrade;;
         "init-vm") init_vm "$@";;
+        "init-vm-template") init_vm_template "$@";;
         "init-playbook") init_venv; shift; legacy_init_playbook;;
         *) echo "[xsrv] ERROR: unrecognized command $command"; exit 1 ;;
     esac

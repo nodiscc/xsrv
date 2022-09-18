@@ -17,36 +17,39 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 
 USAGE: xsrv COMMAND [project] [host]
 
+COMMANDS:
 init-project [project] [host]       initialize a new project (and optionally a first host)
 edit-inventory [project]            edit/show inventory file (hosts/groups)
 edit-playbook [project]             edit/show playbook (roles for each host)
-show-defaults [project] [role]      show all variables and their default values
 edit-requirements [project]         edit ansible requirements/collections
 edit-cfg [project]                  edit ansible configuration (ansible.cfg)
+upgrade [project]                   upgrade a projects roles/collections to latest versions
 init-host [project] [host]          add a new host to an existing project
-check [project] [host]              simulate deployment, report what would be changed
-deploy [project] [host]             deploy the main playbook (apply configuration/roles)
 edit-host [project] [host]          edit host configuration (host_vars)
 edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
 edit-group [project] [group]        edit group configuration (group_vars)
 edit-group-vault [project] [group]  edit encrypted (vault) group configuration (group_vars)
+check [project] [host|group]        simulate deployment, report what would be changed
+deploy [project] [host|group]       deploy the main playbook (apply configuration/roles)
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
+show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
-upgrade [project]                   upgrade roles/collections to latest versions
 self-upgrade                        check for new releases/upgrade the xsrv script in-place
+init-vm-template [--help] [options] initialize a new libvirt VM template
 init-vm [--help] [options]          initialize a new libvirt VM from a template
+
+If no project is specified, the 'default' project is assumed.
+For edition/utility commands, if no host/group is specified, the first host/group in alphabetical order is assumed.
+For deploy/check commands, if no host/group is specified, the 'all' group (all hosts) is assumed.
 
 # ENVIRONMENT VARIABLES (usage: VARIABLE=VALUE xsrv COMMAND)
 TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... xsrv deploy)
 EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
-
-# DOCUMENTATION
-https://xsrv.readthedocs.io/en/master/usage.html
 ```
 
 If no `project` is specified, the `default` project is assumed. If no `host` or `group` is specified, `all` hosts are assumed.
@@ -374,6 +377,18 @@ TAGS=nextcloud,transmission xsrv check
 
 
 _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2.org,production --tags=transmission,nextcloud --check`_
+
+-----------------------------------------
+
+## Provision hosts
+
+`xsrv` allows automated creation/provisioning of minimal Debian VMs using these commands:
+
+- [`xsrv init-vm-template`](appendices/debian.md)
+- [`xsrv init-vm`](appendices/debian.md)
+
+VMs created using this method can then be added to your project using [`xsrv init-host`](#xsrv-init-host) or equivalent, at which point you can start deploying your configuration/services to them.
+
 
 -----------------------------------------
 

@@ -3,19 +3,21 @@
 ### NETWORKING
 
 # Enable/disable packet forwarding between interfaces (routing) globally
-net.ipv4.conf.all.forwarding = {{ '1' if (sysctl_allow_forwarding|bool) else '0' }}
+net.ipv4.conf.all.forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
 # Enable/disable forwarding of multicast packets
-net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding|bool) else '0' }}
+net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
 
 # Accepting redirects can lead to malicious networking behavior, so disable
 # it if not needed. Attackers could use bogus ICMP redirect messages to maliciously alter the system
 # routing tables and get them to send packets to incorrect networks and allow your system packets to be captured.
 # Setting net.ipv4.conf.all.secure_redirects to 0 protects the system from routing table updates
-# by possibly compromised known gateways.net.ipv4.conf.all.accept_redirects = 0
+# by possibly compromised known gateways
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.default.accept_redirects = 0
 net.ipv4.conf.all.secure_redirects = 0
 net.ipv4.conf.default.secure_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
 
 # For non-routers: don't send redirects.
 # An attacker could use a compromised host to send invalid ICMP redirects to other
@@ -60,7 +62,7 @@ net.ipv4.conf.all.rp_filter = 1
 net.ipv4.conf.default.rp_filter = 1
 
 # Accept/Ignore any ICMP ECHO requests (ping)
-net.ipv4.icmp_echo_ignore_all = {{ '0' if (sysctl_answer_ping|bool) else '1' }}
+net.ipv4.icmp_echo_ignore_all = {{ '0' if (sysctl_answer_ping | bool) else '1' }}
 
 # Ignore all ICMP ECHO and TIMESTAMP requests received vai broadcast/multicast
 net.ipv4.icmp_echo_ignore_broadcasts = 1
@@ -105,12 +107,24 @@ net.ipv4.tcp_timestamps = 0
 net.ipv4.conf.all.bootp_relay = 0
 
 # Enable TCP SYN Cookies (SYN flood Protection)
+# Attackers use SYN flood attacks to perform a denial of service attack on a system
+# by sending many SYN packets without completing the three way handshake.
+# This will quickly use up slots in the kernel's half-open connection queue and
+# prevent legitimate connections from succeeding.
+# SYN cookies allow the system to keep accepting valid connections, even if
+# under a denial of service attack. CIS Distro Independent 3.2.8.
 net.ipv4.tcp_syncookies = 1
 net.ipv4.tcp_synack_retries = 2
 net.ipv4.tcp_syn_retries = 5
 
 # Increase the tcp-time-wait buckets pool size to prevent simple DOS attacks
 net.ipv4.tcp_max_tw_buckets = 1440000
+
+# Maximal number of remembered connection requests, which have not received an
+# acknowledgment from connecting client. The minimal value is 128 for low memory
+# machines, and it will increase in proportion to the memory of machine. If server 
+# suffers from overload, try increasing this number.
+#net.ipv4.tcp_max_syn_backlog = 20480
 
 # Define restrictions for announcing the local source IP address from IP packets in ARP requests sent on interface
 # 0 - (default) Use any local address, configured on any interface
@@ -179,30 +193,42 @@ fs.suid_dumpable = 0
 # /proc/modules, etc), and this setting can censor the addresses. A value
 # of "0" allows all users to see the kernel addresses. A value of "1"
 # limits visibility to the root user, and "2" blocks even the root user.
-kernel.kptr_restrict = 1
+kernel.kptr_restrict = 2
 
 # The PTRACE system is used for debugging. With it, a single user process
 # can attach to any other dumpable process owned by the same user. In the
 # case of malicious software, it is possible to use PTRACE to access
 # credentials that exist in memory (re-using existing SSH connections,
 # extracting GPG agent information, etc).
-# A PTRACE scope of "0" is the more permissive mode. A scope of "1" limits
-# PTRACE only to direct child processes (e.g. "gdb name-of-program" and
-# "strace -f name-of-program" work, but gdb's "attach" and "strace -fp $PID"
-# do not). The PTRACE scope is ignored when a user has CAP_SYS_PTRACE, so
-# "sudo strace -fp $PID" will work as before. For more details see:
-# https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#ptrace
-# For applications launching crash handlers that need PTRACE, exceptions can
-# be registered by the debugee by declaring in the segfault handler
-# specifically which process will be using PTRACE on the debugee:
-# prctl(PR_SET_PTRACER, debugger_pid, 0, 0, 0);
-# In general, PTRACE is not needed for the average running Ubuntu system.
-# To that end, the default is to set the PTRACE scope to "1". This value
-# may not be appropriate for developers or servers with only admin accounts.
-kernel.yama.ptrace_scope = 1
+# 0: all processes can be debugged, as long as they have same uid.
+# 1: only a parent process can be debugged.
+# 2: only administrators with the CAP_SYS_PTRACE capability can use ptrace
+# 3: no processes may be traced with ptrace. Once set, a reboot is needed to enable ptracing again.
+kernel.yama.ptrace_scope = 2
 
 # disable potentially exploitable unprivileged user namespaces
 kernel.unprivileged_userns_clone = 0
 
 # disable potentially exploitable unprivileged BPF
 kernel.unprivileged_bpf_disabled = 1
+
+# Restricts loading TTY line disciplines to the CAP_SYS_MODULE capability to
+# prevent unprivileged attackers from loading vulnerable line disciplines with
+# the TIOCSETD ioctl, which has been abused in a number of exploits before.
+dev.tty.ldisc_autoload = 0
+
+# avoid unintentional writes to an attacker-controlled FIFO, where a program
+# expected to create a regular file.
+fs.protected_fifos = 2
+
+# This enables hardening for the BPF JIT compiler. Supported are eBPF JIT backends.
+# Enabling hardening trades off performance, but can mitigate JIT spraying. Values :
+# 0 - disable JIT hardening (default value)
+# 1 - enable JIT hardening for unprivileged users only
+# 2 - enable JIT hardening for all users
+net.core.bpf_jit_harden = 2
+
+# Number of seconds the kernel waits before rebooting on a panic.
+# When you use the software watchdog, the recommended setting is 60.
+# Setting this to 0 disables automatic reboot on panic.
+kernel.panic = 60

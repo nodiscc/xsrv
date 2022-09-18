@@ -1,0 +1,16 @@
+# Wireguard VPN client configuration file
+# To setup your wireguard client:
+#   - Edit this file and set PrivateKey to the contents of wireguard.key
+#   - Using network-manager: save the file as wg0.conf; run `nmcli connection import type wireguard file wg0.conf`
+#   - OR manually: run `sudo mkdir -p /etc/wireguard && sudo cp wg0-{{ item.name }}.conf /etc/wireguard/wg0.conf && sudo wg-quick up wg0`
+#   - Verify that the traffic is correctly routed through the VPN by visiting https://ifconfig.me/ or running ip route get DESTINATION_IP
+[Interface]
+Address = {{ item.ip_address }}
+PrivateKey = CHANGEME
+DNS = {{ wireguard_server_ip | ansible.utils.ipaddr('address') }}
+
+[Peer]
+PublicKey = {{ wireguard_server_public_key.content | b64decode }}
+Endpoint = {{ wireguard_server_public_ip }}:51820
+AllowedIPs = {{ item.routes | default('0.0.0.0/0') }}
+PersistentKeepalive = 45

@@ -32,4 +32,5 @@ Then run `xsrv deploy` to apply changes.
 - [roles/shaarli/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)
 - [roles/transmission/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml)
 - [roles/tt_rss/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml)
+- [roles/wireguard/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml)
 <!--END ROLES LIST-->

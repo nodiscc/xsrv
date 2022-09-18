@@ -181,7 +181,7 @@
   register: nextcloud_first_setup
   args:
     chdir: "{{ nextcloud_install_dir }}"
-  failed_when: (nextcloud_first_setup.rc !=0) and ('Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr) # noqa 204
+  failed_when: (nextcloud_first_setup.rc != 0) and ('Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr) # noqa 204
   changed_when: nextcloud_first_setup.rc == 0
   ignore_errors: "{{ ansible_check_mode }}"
   when: nextcloud_action == 'initial'

@@ -52,6 +52,8 @@ Dovecot does not send or receive e-mail by itself, it only allows you to access/
 - Manual: Connect to both accounts from a desktop e-mail client  and manually move folders/messages from the old to the new account.
 - See other [migration methods](https://doc.dovecot.org/admin_manual/migrating_mailboxes/)
 
+**Self-signed certificates** may not work with all versions of Mozilla Thunderbird [[1]](https://bugzilla.mozilla.org/show_bug.cgi?id=1681960) (no dialog to add an exception/trust the certificate is shown during account creation/`SSL alert number 42`/`sslv3 alert bad certificate`).
+
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc/rsnapshot.d_dovecot.conf.j2) for information about directories to backup/restore.

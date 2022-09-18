@@ -6,16 +6,12 @@ galaxy_info:
   author: "nodiscc <nodiscc@gmail.com>"
   description: "Remote/local backup service (rsnapshot)"
   license: GPL-3.0
-  min_ansible_version: 2.8
+  min_ansible_version: "2.12"
   platforms:
     - name: Debian
       versions:
-        - 9
-        - 10
-    - name: Ubuntu
-      versions:
-        - 18
-        - 19
+        - "9"
+        - "10"
   galaxy_tags:
     - backup
     - incremental

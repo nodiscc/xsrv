@@ -5,21 +5,21 @@
     src: etc_apache2_conf-available_mod-evasive.conf.j2
     dest: /etc/apache2/conf-available/mod-evasive.conf
     mode: 0644
-  when: apache_enable_mod_evasive|bool
+  when: apache_enable_mod_evasive | bool
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable apache mod_evasive
   command: a2enmod evasive
   args:
     creates: /etc/apache2/mods-enabled/evasive.load
-  when: apache_enable_mod_evasive|bool
+  when: apache_enable_mod_evasive | bool
   notify: restart apache
 
 - name: enable apache mod_evasive configuration
   command: a2enconf mod-evasive
   args:
     creates: /etc/apache2/conf-enabled/mod-evasive.conf
-  when: apache_enable_mod_evasive|bool
+  when: apache_enable_mod_evasive | bool
   notify: reload apache
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -27,12 +27,12 @@
   command: a2dismod evasive
   args:
     removes: /etc/apache2/mods-enabled/evasive.load
-  when: not apache_enable_mod_evasive|bool
+  when: not apache_enable_mod_evasive | bool
   notify: restart apache
 
 - name: disable apache mod_evasive configuration
-  command: a2disconf mod-evasive|bool
+  command: a2disconf mod-evasive | bool
   args:
     removes: /etc/apache2/conf-enabled/mod-evasive.conf
-  when: not apache_enable_mod_evasive|bool
+  when: not apache_enable_mod_evasive | bool
   notify: reload apache

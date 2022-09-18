@@ -32,3 +32,7 @@ test:
   script:
     - make tests
   interruptible: true
+  # do not run tests on these branches
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH == "do-not-test"
+  #     when: never

@@ -7,4 +7,4 @@
     - rocketchat_docker_version is string
     - rocketchat_fqdn is not search("CHANGEME")
     - rocketchat_https_mode in ['selfsigned', 'letsencrypt']
-    - rocketchat_enable_service == rocketchat_enable_service|bool
+    - rocketchat_enable_service == rocketchat_enable_service | bool

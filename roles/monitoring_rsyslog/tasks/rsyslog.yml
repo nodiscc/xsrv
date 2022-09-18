@@ -7,7 +7,7 @@
 
 - name: setup keys/certificates for TCP/TLS message forwarding
   include_tasks: rsyslog-ssl.yml
-  when: rsyslog_enable_forwarding|bool
+  when: rsyslog_enable_forwarding | bool
 
 - name: set retention/rotation policy for rsyslog logs
   template:
