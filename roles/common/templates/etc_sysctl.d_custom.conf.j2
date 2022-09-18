@@ -120,6 +120,12 @@ net.ipv4.tcp_syn_retries = 5
 # Increase the tcp-time-wait buckets pool size to prevent simple DOS attacks
 net.ipv4.tcp_max_tw_buckets = 1440000
 
+# Maximal number of remembered connection requests, which have not received an
+# acknowledgment from connecting client. The minimal value is 128 for low memory
+# machines, and it will increase in proportion to the memory of machine. If server 
+# suffers from overload, try increasing this number.
+#net.ipv4.tcp_max_syn_backlog = 20480
+
 # Define restrictions for announcing the local source IP address from IP packets in ARP requests sent on interface
 # 0 - (default) Use any local address, configured on any interface
 # 1 - Try to avoid local addresses that are not in the target's subnet for this interface.
