@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: sysctl: hardening: enable BPF JIT hardening
 - common: sysctl: hardening: disable ICMP redirect support for IPv6
 - all roles: require `ansible-core>=2.12/ansible>=6.0.0`
+- common: improve check mode support before first deployment
 - tools/tests: improve/simplify test tools
 
 **Fixed:**

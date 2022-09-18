@@ -42,6 +42,7 @@
       path: /usr/sbin/iptables-nft
     - name: ebtables
       path: /usr/sbin/ebtables-nft
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure firewalld
   template:
