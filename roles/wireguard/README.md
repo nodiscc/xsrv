@@ -35,18 +35,17 @@ The server's UDP port `51820` must be reachable by clients. Configure NAT/port f
 
 ## Usage
 
-### Connecting VPN clients
-
-- Have all VPN clients generate their private/public keys:
+**Connecting VPN clients** VPN clients (peers) must generate their private/public keys beforehand:
 
 > Please generate VPN keys by running:  
 > `sudo apt install wireguard-tools`  
 > `wg genkey | (umask 0077 && tee $HOSTNAME-wireguard.key) | wg pubkey > $HOSTNAME-wireguard.pub`  
 > and send the contents of the `$HOSTNAME-wireguard.pub` file to the VPN server administrator. Keep a copy of the content of `$HOSTNAME-wireguard.key` somewhere safe as you will need it later. You may then delete `$HOSTNAME-wireguard.pub/key` files.
 
-- Setup clients in `wireguard_peers` using the `public_key` value they provided and deploy the role.
-- A configuration file for each client is generated in `data/wireguard/` in the playbook directory. Send their respective configuratino file to all clients - it contains further instructions to connect to the VPN on client machines.
+Setup clients in `wireguard_peers` using the `public_key` value they provided and deploy the role. A configuration file for each client will be generated in `data/wireguard/` in the playbook directory. Send their respective configuration file to all clients - it contains further instructions to connect to the VPN on client machines.
 
+
+**List connected clients:** Access the server over SSH (`xsrv ssh`) and run `sudo wg`.
 
 ### Debugging
 
