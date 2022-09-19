@@ -142,7 +142,8 @@ endif
 
 ##### DOCUMENTATION #####
 
-# requires gitea-cli configuration in ~/.config/gitearc:
+# requirements: sudo apt install git jq
+#               gitea-cli config defined in ~/.config/gitearc:
 # export GITEA_API_TOKEN="AAAbbbCCCdddZZ"
 # gitea.issues() {
 # 	split_repo "$1"
