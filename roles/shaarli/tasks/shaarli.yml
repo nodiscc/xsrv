@@ -159,7 +159,7 @@
     owner: root
     group: shaarli
     recurse: "{{ item.recurse | default(True) }}"
-    mode: "{{ item.mode | default('0770') }}"
+    mode: "{{ item.mode | default('u=rwX,g=rwX,o=') }}"
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - path: "{{ shaarli_install_dir }}"
