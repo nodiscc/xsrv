@@ -302,14 +302,19 @@ nextcloud_admin_email: "admin@example.org"
 nextcloud_db_password: "ucB77fNLX4qOoj2GhLBy"
 ```
 
-Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. **Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, encrypt underlying disk).
+Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. 
 
 ```bash
 # cat ~/playbooks/default/.ansible-vault-password
 Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY
 ```
+**Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, full-disk encryption on underlying storage).
 
-You may also write a custom script in `.ansible-vault-password` that will fetch the master password from a secret storage/keyring of your choice. See [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html).
+You may also place a custom script in `.ansible-vault-password`, that will fetch the master password from a secret storage/keyring of your choice (in this case the file must be made executable - `chmod +x .ansible-vault-password`).
+
+To disable reading the master password from a file/script: in the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting.
+
+See [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html).
 
 
 ### xsrv edit-group
