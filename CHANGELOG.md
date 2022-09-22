@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - nextcloud: no longer disable accessibility app by default
 - update documentation
-
+- update test tooling
 
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 
