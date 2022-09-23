@@ -20,6 +20,16 @@ See [meta/main.yml](meta/main.yml)
     # - nodiscc.xsrv.monitoring_lynis
 ```
 
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+monitoring - setup monitoring/alerting/logging system/utilities
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

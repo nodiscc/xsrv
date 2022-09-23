@@ -55,6 +55,13 @@ You can turn on debug logging at any time by running `echo module wireguard +p |
 
 The server's private/public keys should be backed up. See the included [rsnapshot configuration](templates/etc/rsnapshot.d_wireguard.conf.j2) for information about directories to backup/restore.
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+wireguard - setup wireguard
+```
+<!--END TAGS LIST-->
 
 ## License
 

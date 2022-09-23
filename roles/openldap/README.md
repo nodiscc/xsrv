@@ -75,15 +75,25 @@ EOF
 
 To look for LDAP authentication failures, set the log level to `256` and search for `err=49` in slapd log messages.
 
-
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc_rsnasphot.d_openldap.conf.j2) and [openldap dump script](templates/_user_local_bin_openldap-dump.sh.j2)
 
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+openldap - setup LDAP server
+ldap-account-manager - setup LDAP account manager
+self-service-password - setup LDAP self-service password
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)
-
 
 
 ## References

@@ -25,7 +25,7 @@ See [meta/main.yml](meta/main.yml)
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 
-### Usage
+## Usage
 
 - Show htop process manager: `ssh -t user@my.CHANGEME.org sudo htop`
 - Analyze disk usage by directory: `ssh -t user@my.CHANGEME.org sudo ncdu /`
@@ -57,6 +57,17 @@ linux_users:
      append: yes
      comment: "ansible user/allowed to read system logs"
 ```
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+lynis - setup lynis security audit tool
+monitoring-cli-utils - setup command-line/additional monitoring utilities
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

@@ -76,6 +76,13 @@ Re-apply the role on a regular basis to ensure the application stays up to date.
 
 _Note: due to TT-RSS "rolling" release model (always install the latest `master` branch), the role may upgrade the application without warning. Pin `tt_rss_version` to a specific commit hash from https://git.tt-rss.org/fox/tt-rss/commits/branch/master if you need to prevent this (but remember to update it manually/periodically).
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+tt_rss - setup tt-rss feed reader
+```
+<!--END TAGS LIST-->
 
 ## License
 

@@ -11,10 +11,10 @@
 # @tag packages - additional package istallation/removal
 # @tag sysctl - setup sysctl kernel configuration
 # @tag users - setup users and groups
-# @tags ssh - setup SSH server
-# @tags ssh-authorized-keys - setup ssh authorized keys
-# @tags mail - setup outgoing system mail
-# @tags msmtp - setup outgoing system mail
+# @tag ssh - setup SSH server
+# @tag ssh-authorized-keys - setup ssh authorized keys
+# @tag mail - setup outgoing system mail
+# @tag msmtp - setup outgoing system mail
 # @tag services - start/stop/enable/disable services
 
 galaxy_info:

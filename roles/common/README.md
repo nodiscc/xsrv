@@ -55,6 +55,26 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 ## Tags
 
 <!--BEGIN TAGS LIST-->
+```
+common - setup base system
+apt - setup APT package management
+checks - check that variables are correctly defined
+datetime - setup date/time configuration
+dns - setup DNS resolution
+fail2ban - setup fail2ban intrusion prevention system
+firewall - setup firewall
+firewalld - setup firewall
+hostname - setup hostname
+hosts - setup /etc/hosts entries
+packages - additional package istallation/removal
+sysctl - setup sysctl kernel configuration
+users - setup users and groups
+ssh - setup SSH server
+ssh-authorized-keys - setup ssh authorized keys
+mail - setup outgoing system mail
+msmtp - setup outgoing system mail
+services - start/stop/enable/disable services
+```
 <!--END TAGS LIST-->
 
 

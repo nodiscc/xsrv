@@ -42,6 +42,15 @@ linux_users:
     comment: "ansible user/allowed to read/write web application files"
 ```
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+apache - setup the apache web server
+ssl - setup SSL certificates and configuration
+```
+<!--END TAGS LIST-->
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

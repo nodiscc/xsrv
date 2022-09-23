@@ -46,13 +46,11 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
   - Jellyfin samba share (if the [samba](../samba) role is enabled): `/var/lib/jellyfin/sambashare/{movies,books,mixedcontent,shows,music,musicvideos,shows,photos}`
   - Transmission downloads directory (if the [transmission](../transmission) role is enabled): `/var/lib/transmission-daemon/downloads/{movies,books,mixedcontent,shows,music,musicvideos,shows,photos}`
 
-
 ### Uploading media
 
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
 - If the [samba](../samba) role is enabled and [`jellyfin_samba_share_enabled: yes` and a list of valid users](defaults/main.yml) are specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
 - Download files from bittorrent using [transmission](../transmission)
-
 
 ### Playing media
 
@@ -60,11 +58,9 @@ Jellyfin lets you watch your media from a web browser on your computer, apps on 
 
 You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance#Specification)-compatible media player on your local network, or use Jellyfin to play media thorugh any DLNA Media Renderer on your network. To use DLNA you must enable incoming/outgoing `UDP multicast on port 1900` traffic in the [firewall](../common). If you don't use DLNA it is recommended to turn it off completely under `Admin Dashboard > DLNA`.
 
-
 ### Backups
 
 Automatic backups of the default media directory are disabled by default, unless [`jellyfin_enable_media_backups: yes`](defaults/main.yml). See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
-
 
 ### LDAP authentication
 
@@ -92,23 +88,30 @@ To allow logins to Jellyfin using LDAP user accounts (for example from [openldap
   - Click `Save`
 - Restart the jellyfin server from the `Server > Dashboard` settings page
 
-
-## Performance
+### Performance
 
 When using Jellyfin from a web browser, media will be converted/transcoded on-the-fly to a format supported by the browser. You can also force transcoding to a lower quality directly from the `Settings > Quality` menu directly from the player. Transcoding will consume a noticeable amount of system (CPU/RAM) resources. On resource-constrained systems this may lead to playback issues or freezes and the server becoming unresponsive. To fix this several options exist:
 - Disable `Allow playback of media that requires transcoding` for each user under `Admin > Dashboard > Users`. Currently there is [no global setting](https://github.com/jellyfin/jellyfin/issues/645) to disable transcoding globally for all users.
 - Use a [native client](https://jellyfin.org/clients/) which does not require server-side transcoding
 - Manually setup [hardware acceleration](https://jellyfin.org/docs/general/administration/hardware-acceleration.html)
 
-
-## Subtitles
+### Subtitles
 
 To search and download video subtitles, register an account on https://opensubtitles.com, enable the `Opensubtitles` plugin from `Admin > Plugins` and set your opensubtitles.org username/password in the plugin preferences. Then obtain an API key by following the link the plugin settings. You will then be able to use right-click > `Edit subtitles` on any video from your library and search for matching subtitles.
 
-
-## Metadata
+### Metadata
 
 The [Youtube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) can be used to automatically set metadata for videos downloaded using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+jellyfin - setup jellyfin media server
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

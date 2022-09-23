@@ -20,7 +20,10 @@ See [`meta/main.yml`](meta/main.yml)
 
 See [`defaults/main.yml`](defaults/main.yml) for all configuration variables.
 
-## Uninstallation
+
+## Usage
+
+### Uninstallation
 
 ```bash
 xsrv edit-playbook
@@ -36,6 +39,16 @@ sudo rm -rf /etc/apt/sources.list.d/docker.list /etc/docker /etc/cron.d/docker-s
 sudo groupdel docker
 sudo systemctl restart netdata
 ```
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+docker - setup docker engine
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

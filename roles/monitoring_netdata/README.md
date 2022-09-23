@@ -30,10 +30,24 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 [netdata documentation](https://docs.netdata.cloud/)
 
-
 ### Integration with other roles/manual configuration
 
 To install custom `httpcheck`/`x509check`/`portcheck`/`processes` module/alarm, create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` [handler](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/handlers/main.yml) (`$module_name.conf` will be assembled from configuration fragments).
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+netdata - setup netdata monitoring system
+netdata-config - copy netdata configuration files
+netdata-modules - setup custom netdata modules
+netdata-needrestart - setup netdata needrestart module
+netdata-logcount - setup netdata logcount module
+netdata-debsecan - setup netdata debsecan module
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

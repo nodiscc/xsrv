@@ -102,7 +102,6 @@ Setup [authentication](https://docs.graylog.org/en/latest/pages/permission_manag
 - `Finish & Save Service`
 - In the Configured AUthentication Services list, `Activate` the LDAP service
 
-
 ## Backups
 
 TODO
@@ -111,6 +110,16 @@ TODO
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_graylog.conf.j2)
 There are no backups of log data. Use `bsondump` from the `mongo-tools` package to manipulate mongodb backups.
 -->
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+graylog - setup graylog log analyzer
+```
+<!--END TAGS LIST-->
+
 
 ## References
 

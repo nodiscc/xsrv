@@ -56,13 +56,20 @@ To restore backups, deploy the role and restore the `data/` directory:
 sudo rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/www/links.CHANGEME.org/data /var/www/links.CHANGEME.org/
 ```
 
-
 ### Upgrades
 
 Re-apply the role on a regular basis to ensure the application stays up to date.
 
 This role is not always idempotent - tt-rss is always upgraded to the latest available version (git `master` branch).
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+shaarli - setup shaarli bookmark service
+shaarli-config - setup main shaarli configuration
+```
+<!--END TAGS LIST-->
 
 ## License
 

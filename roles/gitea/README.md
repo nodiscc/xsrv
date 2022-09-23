@@ -134,7 +134,6 @@ Gitea also allows setting up an automatic, local/self-hosted git mirror of your 
 
 Repeat for every repository, you can then see your list list of mirrors at https://my.example.org/gitea/my-org
 
-
 ### API usage
 
 Example [gitea-cli](https://github.com/bashup/gitea-cli) usage (command-line project creation):
@@ -171,6 +170,15 @@ gitea --description "My new project" --private new myusername/myproject
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role and [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+gitea - setup gitea git service/software forge
+```
+<!--END TAGS LIST-->
 
 
 ## License

@@ -72,6 +72,15 @@ sudo systemctl reload firewalld
 ```
 
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+dovecot - setup dovecot MDA/IMAP server
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

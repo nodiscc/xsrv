@@ -33,6 +33,15 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 Access the homepage in a [web browser](https://www.mozilla.org/firefox/) at the URL/domain name defined by `{{ homepage_fqdn }}`.
 
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+homepage - setup simple webserver homepage
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

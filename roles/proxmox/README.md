@@ -25,9 +25,21 @@ See [meta/main.yml](meta/main.yml)
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 
+## Usage
+
 ### Backups
 
 TODO
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+proxmox - setup proxmox hypervisor
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

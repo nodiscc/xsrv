@@ -40,6 +40,15 @@ ansible-playbook playbook.yml --tags=utils-pgmetrics
 ```
 
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+postgresql - setup postgresql database server
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

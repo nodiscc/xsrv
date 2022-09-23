@@ -159,6 +159,18 @@ $ sudo -u postgres psql -c 'DROP USER nextcloud;'
 $ sudo userdel --remove nextcloud
 ```
 
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+nextcloud - setup nextcloud file sharing/collaboration platform
+nextcloud-applications - setup nextcloud applications
+nextcloud-config - setup main nextcloud configuration settings
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)
