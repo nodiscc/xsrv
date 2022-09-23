@@ -3,15 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
+#### [v1.10.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.10.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **common:** if the variable `os_security_kernel_enable_core_dump` was changed from its default value in your hosts/groups configuration, rename it to `kernel_enable_core_dump`
 
 **Added:**
 - common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 
 **Changed:**
 - nextcloud: no longer disable accessibility app by default
+- common: kernel: rename variable `os_security_kernel_enable_core_dump` -> `kernel_enable_core_dump`
 - update documentation
-- update test tooling
+- update/improve test tooling
+
 
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 

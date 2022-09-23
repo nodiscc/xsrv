@@ -8,7 +8,7 @@
     - dns_nameservers|type_debug == "list"
     - setup_users == setup_users | bool
     - linux_users|type_debug == "list"
-    - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump | bool
+    - kernel_enable_core_dump == kernel_enable_core_dump | bool
     - setup_apt == setup_apt | bool
     - apt_listbugs == apt_listbugs | bool
     - apt_clean_days == apt_clean_days|int

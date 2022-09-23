@@ -41,7 +41,7 @@ sysctl_vm_swappiness: '10'
 sysctl_vm_vfs_cache_pressure: '150'
 # yes/no: enable/disable creation of core dumps on kernel crashes
 # These are usually not needed and may contain sensitive information
-os_security_kernel_enable_core_dump: no
+kernel_enable_core_dump: no
 # no/yes: configure /proc mountpoint to hide processes from other users
 # setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, netdata...)
 kernel_proc_hidepid: no
