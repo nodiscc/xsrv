@@ -73,6 +73,7 @@ self_service_password_allowed_hosts:
 - nextcloud: update to v24.0.7 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/) [[2]](https://nextcloud.com/changelog/)
 - gitea: update to [v1.17.3](https://github.com/go-gitea/gitea/releases/tag/v1.17.3)
 - openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)
+- openldap: ldap-account-manager: upgrade to [v8.1](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_1)
 - graylog: update mongodb to v4.4
 - rocketchat: upgrade to [v3.18.7](https://raw.githubusercontent.com/RocketChat/Rocket.Chat/develop/HISTORY.md)
 - cleanup: replace deprecated `apt_key/apt_repository` modules, install all APT keys in `/usr/share/keyrings/`
