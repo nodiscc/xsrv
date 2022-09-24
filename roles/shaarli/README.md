@@ -2,12 +2,11 @@
 
 This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a minimalist bookmark manager and link sharing service.
 
-
-* [Demo](https://demo.shaarli.org/)
-* [Documentation](https://shaarli.readthedocs.io/en/master/)
-* [Github project](https://github.com/shaarli/shaarli)
-
-[![](https://i.imgur.com/8wEBRSG.png)](https://i.imgur.com/WWPfSj0.png) [![](https://i.imgur.com/93PpLLs.png)](https://i.imgur.com/V09kAQt.png) [![](https://i.imgur.com/rrsjWYy.png)](https://i.imgur.com/TZzGHMs.png) [![](https://i.imgur.com/8iRzHfe.png)](https://i.imgur.com/sfJJ6NT.png) [![](https://i.imgur.com/GjZGvIh.png)](https://i.imgur.com/QsedIuJ.png) [![](https://i.imgur.com/TFZ9PEq.png)](https://i.imgur.com/KdtF8Ll.png) [![](https://i.imgur.com/uICDOle.png)](https://i.imgur.com/27wYsbC.png) [![](https://i.imgur.com/tVvD3gH.png)](https://i.imgur.com/zGF4d6L.jpg)
+[![](https://i.imgur.com/8wEBRSG.png)](https://i.imgur.com/WWPfSj0.png) [![](https://i.imgur.com/93PpLLs.png)](https://i.imgur.com/V09kAQt.png) [![](https://i.imgur.com/rrsjWYy.png)](https://i.imgur.com/TZzGHMs.png) [![](https://i.imgur.com/8iRzHfe.png)](https://i.imgur.com/sfJJ6NT.png) [![](https://i.imgur.com/GjZGvIh.png)](https://i.imgur.com/QsedIuJ.png) [![](https://i.imgur.com/TFZ9PEq.png)](https://i.imgur.com/KdtF8Ll.png) [![](https://i.imgur.com/uICDOle.png)](https://i.imgur.com/27wYsbC.png) [![](https://i.imgur.com/tVvD3gH.png)](https://i.imgur.com/zGF4d6L.jpg), and optionally:
+- [apache](tasks/apache.yml) webserver configuration and SSL/TLS certificates
+- automatic local [backups](tasks/backup.yml)
+- [fail2ban](tasks/fail2ban.yml) login bruteforce prevention
+- monitoring and log aggregation through [netdata](tasks/netdata.yml) and [rsyslog](tasks/rsyslog.yml)
 
 
 ## Requirements/dependencies/example playbook
@@ -38,6 +37,10 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 
 ## Usage
+
+* [Demo](https://demo.shaarli.org/)
+* [Documentation](https://shaarli.readthedocs.io/en/master/)
+* [Github project](https://github.com/shaarli/shaarli)
 
 ### Clients
 
