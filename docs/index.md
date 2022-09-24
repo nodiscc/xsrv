@@ -15,7 +15,7 @@
 
 This project provides:
 
-- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install/configure various network services, applications and management tools (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, infrastructure...)
+- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) for automated installation/configuration of various network services, applications and management tools (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, infrastructure...)
 - an optional [command-line tool](usage.md) for common operations, configuration, deployment and maintenance of your servers
 - a template to [get started with a single server](installation.md) in a few minutes
 
