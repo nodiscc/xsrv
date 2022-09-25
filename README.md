@@ -32,6 +32,7 @@ This project provides:
 - [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
+- [jitsi](roles/jitsi) - Video conferencing solution
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
@@ -66,6 +67,7 @@ This project provides:
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
 [![](https://i.imgur.com/UWjyTqP.png)](roles/rss_bridge)
+[![](https://i.imgur.com/g0jUMXE.jpg)](roles/jitsi)
 
 ## Source code
 

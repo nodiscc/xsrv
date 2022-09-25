@@ -19,6 +19,7 @@
     - nodiscc.xsrv.docker # application containerization
     - nodiscc.xsrv.rocketchat # instant messaging & communication platform
     - nodiscc.xsrv.jellyfin # media server
+    - nodiscc.xsrv.jitsi # video conferencing solution
     - nodiscc.xsrv.samba # file sharing server
     - nodiscc.xsrv.dnsmasq # lightweight DNS server
     - nodiscc.xsrv.wireguard # fast and modern VPN server

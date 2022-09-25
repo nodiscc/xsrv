@@ -1,0 +1,9 @@
+# prefer installing these packages from download.jitsi.org
+Package: jicofo jigasi jitsi-*
+Pin: origin "download.jitsi.org"
+Pin-Priority: 1000
+
+# don't install other packages from this repository unless explicitely asked to
+Package: *
+Pin: origin "download.jitsi.org"
+Pin-Priority: 200

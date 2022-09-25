@@ -1,0 +1,26 @@
+# rsyslog configuration for EXAMPLE logs
+
+input(type="imfile"
+      File="/var/log/prosody/prosody.log"
+      Tag="prosody:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/prosody/prosody.err"
+      Tag="prosody-err:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/jitsi/jicofo.log"
+      Tag="jitsi-jicofo:"
+      Facility="daemon"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/jitsi/jvb.log"
+      Tag="jitsi-jvb:"
+      Facility="daemon"
+      PersistStateInterval="0")
+

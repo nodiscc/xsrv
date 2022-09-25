@@ -1,0 +1,25 @@
+# @tag jitsi - setup jitsi videoconferencing server
+# @tag jitsi-users - setup jitsi registered users
+
+galaxy_info:
+  role_name: jitsi
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Video conferencing solution"
+  license: "GPL-3.0"
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "11"
+  galaxy_tags:
+    - jitsi
+    - video
+    - conference
+    - screensharing
+    - communication
+    - messaging
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce protection
+  # - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
+  # - nodiscc.xsrv.apache # web server/reverse proxy and SSL/TLS certificates

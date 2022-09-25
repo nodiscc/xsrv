@@ -32,6 +32,7 @@ This project provides:
 - [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - Media solution that puts you in control of your media
+- [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) - Video conferencing solution
 - [mail_dovecot](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) - IMAP mailbox server
 - [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
@@ -66,6 +67,7 @@ This project provides:
 [![](https://i.imgur.com/H3PIWrt.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog)
 [![](https://i.imgur.com/UWjyTqP.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge)
+[![](https://i.imgur.com/g0jUMXE.jpg)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi)
 
 ## Source code
 

@@ -65,3 +65,6 @@ dovecot_ldap_bind_dn: "cn=bind,ou=system,dc=CHANGEME,dc=org"
 
 ##### WIREGUARD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml
 wireguard_server_public_ip: "CHANGEME"
+
+##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
+jitsi_fqdn: "conference.CHANGEME.org"

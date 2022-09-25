@@ -1,0 +1,26 @@
+    alarm: systemd_service_prosody
+       on: systemdunits_service_units.service_unit_state
+     calc: $prosody
+    every: 10s
+     crit: ($this = 5)
+    units: state
+     info: prosody XMPP service status
+       to: sysadmin
+
+    alarm: systemd_service_jicofo
+       on: systemdunits_service_units.service_unit_state
+     calc: $jicofo
+    every: 10s
+     crit: ($this = 5)
+    units: state
+     info: jicofo (jitsi conference focus) service status
+       to: sysadmin
+
+    alarm: systemd_service_jitsi_videobridge2
+       on: systemdunits_service_units.service_unit_state
+     calc: $jitsi_videobridge2
+    every: 10s
+     crit: ($this = 5)
+    units: state
+     info: jitsi videobridge service status
+       to: sysadmin

@@ -1,0 +1,24 @@
+- name: update CA certificates store
+  become: yes
+  command: update-ca-certificates
+
+- name: restart jitsi
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  become: yes
+  when: jitsi_enable_service
+  ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - jicofo
+    - jitsi-videobridge2
+
+- name: restart prosody
+  service:
+    name: prosody
+    state: restarted
+    enabled: yes
+  become: yes
+  when: jitsi_enable_service
+  ignore_errors: "{{ ansible_check_mode }}"

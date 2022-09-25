@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>jitsi</short>
+  <description>jitsi videoconferencing server</description>
+  <!-- General Network Audio/Video Meetings -->
+  <port port="10000" protocol="udp"/>
+  <!-- Queries to STUN server (coturn, optional, needs config.js change to enable it) -->
+  <!-- <port port="3478" protocol="udp"/> -->
+  <!-- Fallback video/audio communications over TCP (when UDP is blocked for example), served by coturn -->
+  <!-- <port port="5349" protocol="tcp"/> -->
+</service>

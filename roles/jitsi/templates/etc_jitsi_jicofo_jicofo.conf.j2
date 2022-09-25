@@ -1,0 +1,20 @@
+# Jicofo HOCON configuration. See reference.conf in /usr/share/jicofo/jicofo.jar for
+#available options, syntax, and default values.
+jicofo {
+{% if jitsi_secure_domain %}
+  authentication: {
+    enabled: true
+    type: XMPP
+    login-url: {{ jitsi_fqdn }}
+  }
+{% endif %}
+  xmpp: {
+    client: {
+      client-proxy: focus.{{ jitsi_fqdn }}
+    }
+    trusted-domains: [ "recorder.{{ jitsi_fqdn }}" ]
+  }
+  bridge: {
+    brewery-jid: "JvbBrewery@internal.auth.{{ jitsi_fqdn }}"
+  }
+}

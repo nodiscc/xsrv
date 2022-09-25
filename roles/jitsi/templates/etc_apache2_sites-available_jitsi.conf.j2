@@ -1,0 +1,58 @@
+<VirtualHost *:80>
+    ServerName {{ jitsi_fqdn }}
+    ServerAdmin webmaster@{{ jitsi_fqdn }}
+{% if jitsi_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if jitsi_https_mode == 'letsencrypt' %}
+MDomain {{ jitsi_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+    ServerName  {{ jitsi_fqdn }}
+    ServerAdmin webmaster@{{ jitsi_fqdn }}
+    SSLEngine on
+{% if jitsi_https_mode == 'selfsigned' %}
+    SSLCertificateFile /etc/ssl/certs/{{ jitsi_fqdn }}.crt
+    SSLCertificateKeyFile /etc/ssl/private/{{ jitsi_fqdn }}.key
+{% endif %}
+    DocumentRoot "/usr/share/jitsi-meet"
+
+    <Directory "/usr/share/jitsi-meet">
+        Options Indexes MultiViews Includes FollowSymLinks
+        AddOutputFilter Includes html
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    ErrorDocument 404 /static/404.html
+
+    Alias "/config.js" "/etc/jitsi/meet/{{ jitsi_fqdn }}-config.js"
+    <Location /config.js>
+        Require all granted
+    </Location>
+
+    Alias "/external_api.js" "/usr/share/jitsi-meet/libs/external_api.min.js"
+    <Location /external_api.js>
+        Require all granted
+    </Location>
+
+    ProxyRequests Off
+    SSLProxyEngine on
+    ProxyPreserveHost on
+    ProxyPass /http-bind http://localhost:5280/http-bind
+    ProxyPassReverse /http-bind http://localhost:5280/http-bind
+    ProxyPass /xmpp-websocket ws://localhost:5280/xmpp-websocket
+    ProxyPassReverse /xmpp-websocket ws://localhost:5280/xmpp-websocket
+    ProxyPass /colibri-ws/default-id ws://localhost:9090/colibri-ws/default-id
+    ProxyPassReverse /colibri-ws/default-id ws://localhost:9090/colibri-ws/default-id
+
+    RewriteEngine on
+    RewriteRule ^/([a-zA-Z0-9]+)$ /index.html
+</VirtualHost>

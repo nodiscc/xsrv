@@ -1,0 +1,34 @@
+##### JITSI MEET #####
+# fully qualified domain name of the jitsi meet instance
+jitsi_fqdn: "conference.CHANGEME.org"
+# random secret shared between the TURN and XMPP server
+jitsi_turn_secret: "CHANGEME"
+# only allow registered users to create rooms (yes/no)
+# if yes, whenever a new room is about to be created, Jitsi Meet will prompt for a user name and password. After the room is created, guests will be able to join without authentication.
+jitsi_secure_domain: yes
+# registered users (allowed to create rooms when jitsi_secure_domain: yes)
+#   name: the account name
+#   password: the account password
+#   state: absent/present (default present), set to absent to delete the account
+# Example:
+# jitsi_users:
+#   - name: CHANGEME
+#     password: CHANGEME
+#   - name: remove-this-account
+#     state: absent
+jitsi_users: []
+# enable/disable the recent rooms list on the welcome page (yes/no)
+jitsi_enable_recent_list: no
+# HTTPS and SSL/TLS certificate mode for the jitsi webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+jitsi_https_mode: selfsigned
+# start/stop the jitsi service, enable/disable it on boot (yes/no)
+jitsi_enable_service: yes
+# firewall zones for the jitsi server, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+jitsi_firewalld_zones:
+  - zone: public
+    state: enabled
+  - zone: internal
+    state: enabled
