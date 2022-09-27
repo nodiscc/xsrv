@@ -66,7 +66,7 @@ sudo -u postgres pg_restore --clean --create /tmp/ttrss.sql > /tmp/ttrss.txt.sql
 # restore the plaintext sql dump
 sudo -u postgres psql --echo-errors --file /tmp/ttrss.txt.sql
 # remove temporary files
-sudo rm /tmp/ttrss.sql /tmp/ttrss.sql.txt
+sudo rm /tmp/ttrss.sql /tmp/ttrss.txt.sql
 ```
 
 
