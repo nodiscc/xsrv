@@ -68,27 +68,6 @@
 - name: apply gotty configuration (flush handlers)
   meta: flush_handlers
 
-###### FAIL2BAN ############
-
-# TODO
-# - name: copy gotty fail2ban jail config
-#   template:
-#     src: etc_fail2ban_jail.d_gotty.conf.j2
-#     dest: /etc/fail2ban/jail.d/gotty.conf
-#     mode: 0600
-#   tags: fail2ban
-#   notify: reload fail2ban
-
-# - name: copy fail2ban gotty-auth filter
-#   template:
-#     src: etc_fail2ban_filter.d_gotty-auth.conf.j2
-#     dest: /etc/fail2ban/filter.d/gotty-auth.conf
-#     mode: 0600
-#   tags: fail2ban
-#   notify: reload fail2ban
-
-##### SERVICE #####
-
 - name: enable/disable start/stop gotty service
   systemd:
     name: gotty

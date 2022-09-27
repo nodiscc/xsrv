@@ -106,7 +106,6 @@
     mode: 0640 # read only for gitea
   notify: restart gitea
 
-# TODO not idempotent
 - name: create gitea database tables
   become: yes
   become_user: gitea
