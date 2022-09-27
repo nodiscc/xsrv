@@ -29,8 +29,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ### Backups
 
-TODO
-
+Backup the `/etc/pve/` directory to backup proxmox configuration including VM definitions. Backup `/var/lib/vz/dump` to backup VM snapshots.
 
 ## Tags
 
