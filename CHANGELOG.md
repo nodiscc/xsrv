@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - nextcloud: no longer disable accessibility app by default
 - common: kernel: rename variable `os_security_kernel_enable_core_dump` -> `kernel_enable_core_dump`
+- common: kernel: sysctl: ensure ipv4/ipv6 configuration is applied to all new/future interfaces as well
 - update documentation
 - update/improve test tooling
 

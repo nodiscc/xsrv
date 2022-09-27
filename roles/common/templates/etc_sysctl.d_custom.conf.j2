@@ -4,8 +4,10 @@
 
 # Enable/disable packet forwarding between interfaces (routing) globally
 net.ipv4.conf.all.forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
+net.ipv4.conf.default.forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
 # Enable/disable forwarding of multicast packets
 net.ipv4.conf.all.mc_forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
+net.ipv4.conf.default.mc_forwarding = {{ '1' if (sysctl_allow_forwarding | bool) else '0' }}
 
 # Accepting redirects can lead to malicious networking behavior, so disable
 # it if not needed. Attackers could use bogus ICMP redirect messages to maliciously alter the system
@@ -28,25 +30,35 @@ net.ipv4.conf.default.send_redirects = 0
 
 # Disable IPv6
 net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.all.disable_ipv6 = 1
 # Disable IPv6 traffic forwarding.
 net.ipv6.conf.all.forwarding = 0
+net.ipv6.conf.default.forwarding = 0
 # Limit configuration information disclosed by IPv6
 # Ignore Router Advertisements on IPv6
 net.ipv6.conf.all.accept_ra = 0
+net.ipv6.conf.default.accept_ra = 0
 # Ignore Router Solicitations on IPv6
 net.ipv6.conf.all.router_solicitations = 0
+net.ipv6.conf.defaultall.router_solicitations = 0
 # Ignore Router Preference in Router Advertisements
 net.ipv6.conf.all.accept_ra_rtr_pref = 0
+net.ipv6.conf.default.accept_ra_rtr_pref = 0
 # Ignore Prefix Information in Router Advertisement
 net.ipv6.conf.all.accept_ra_pinfo = 0
+net.ipv6.conf.default.accept_ra_pinfo = 0
 # Ignore Default Router Preference in Router Advertisements
 net.ipv6.conf.all.accept_ra_defrtr = 0
+net.ipv6.conf.default.accept_ra_defrtr = 0
 # Do not autoconfigure addresses using Prefix Information in Router Advertisements
 net.ipv6.conf.all.autoconf = 0
+net.ipv6.conf.default.autoconf = 0
 # The amount of Duplicate Address Detection probes to send
 net.ipv6.conf.all.dad_transmits = 0
+net.ipv6.conf.default.dad_transmits = 0
 # Maximum number of autoconfigured addresses per interface
 net.ipv6.conf.all.max_addresses = 1
+net.ipv6.conf.default.max_addresses = 1
 
 # Disable IP Source Routing
 # Drop packets with Strict Source Route (SSR) or Loose Source Routing (LSR) option set
@@ -105,6 +117,7 @@ net.ipv4.tcp_timestamps = 0
 
 # Don't relay BOOTP
 net.ipv4.conf.all.bootp_relay = 0
+net.ipv4.conf.default.bootp_relay = 0
 
 # Enable TCP SYN Cookies (SYN flood Protection)
 # Attackers use SYN flood attacks to perform a denial of service attack on a system
@@ -131,6 +144,7 @@ net.ipv4.tcp_max_tw_buckets = 1440000
 # 1 - Try to avoid local addresses that are not in the target's subnet for this interface.
 # 2 - Always use the best local address for this target.
 net.ipv4.conf.all.arp_announce = 2
+net.ipv4.conf.default.arp_announce = 2
 
 # Define mode for sending replies in response to received ARP requests
 # 0 - (default): reply for any local target IP address, configured on any interface
@@ -140,6 +154,7 @@ net.ipv4.conf.all.arp_announce = 2
 # 4-7 - reserved
 # 8 - never reply
 net.ipv4.conf.all.arp_ignore = 1
+net.ipv4.conf.default.arp_ignore = 1
 
 # Define mode for notification of address and device changes.
 # 0 - (default): do nothing
@@ -150,10 +165,11 @@ net.ipv4.conf.all.arp_ignore = 1
 # 0 - don't create new entries in the ARP table
 # 1 - create new entries in the ARP table
 # net.ipv4.conf.all.arp_accept = 0
+# net.ipv4.conf.default.arp_accept = 0
 
 # Don't proxy ARP for anyone
 net.ipv4.conf.all.proxy_arp = 0
-
+net.ipv4.conf.default.proxy_arp = 0
 
 
 ### MEMORY/SWAP
