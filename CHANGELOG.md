@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - shaarli: add ability to install the python API client ([`shaarli_setup_python_client: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and export all shaarli data to a JSON file every hour
 
+**Removed:**
+- tt_rss: remove installation of custom plugins/themes
+
 **Changed:**
 - nextcloud: no longer disable accessibility app by default
 - common: kernel: rename variable `os_security_kernel_enable_core_dump` -> `kernel_enable_core_dump`
