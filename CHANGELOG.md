@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 - update/improve test tooling
 
+**Fixed:**
+- shaarli: fix shaarli unable to save thumbnails to disk
 
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 
