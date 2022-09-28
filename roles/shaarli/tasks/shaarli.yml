@@ -12,8 +12,6 @@
 - name: install required packages for shaarli
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - php7.4-gd
       - php7.4-curl
