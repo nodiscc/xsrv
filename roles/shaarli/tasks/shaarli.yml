@@ -154,7 +154,7 @@
   file:
     path: "{{ item.path }}"
     state: directory
-    owner: root
+    owner: "{{ item.owner | default('root' ) }}"
     group: shaarli
     recurse: "{{ item.recurse | default(True) }}"
     mode: "{{ item.mode | default('u=rwX,g=rwX,o=') }}"
@@ -166,6 +166,7 @@
     - path: "{{ shaarli_install_dir }}/data"
     - path: "{{ shaarli_install_dir }}/tmp"
     - path: "{{ shaarli_install_dir }}/cache"
+      owner: www-data
     - path: "{{ shaarli_install_dir }}/pagecache"
 
 - name: create ansible facts.d directory
