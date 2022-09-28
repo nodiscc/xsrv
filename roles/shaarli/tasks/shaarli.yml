@@ -20,6 +20,7 @@
       - php7.4-intl
       - php7.4-curl
       - php7.4-gettext
+      - php7.4-ldap
 
 ### SHAARLI INSTALLATION ###
 
