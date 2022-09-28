@@ -66,6 +66,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: store root public SSH key to local fact file
+  tags: rsnapshot-ssh-key
   block:
     - name: create ansible facts.d directory
       file:
@@ -79,7 +80,6 @@
         mode: 0644
       notify: update ansible facts
       ignore_errors: "{{ ansible_check_mode }}" # root_ssh_key.public_key is never set in check mode, always returns empty/changed
-  tags: rsnapshot-ssh-key
 
 # reload ansible local facts
 - name: apply configuration (flush handlers)
