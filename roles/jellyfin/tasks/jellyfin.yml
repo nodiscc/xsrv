@@ -13,10 +13,17 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: add jellyfin APT repository
-  apt_repository:
-    state: present
-    repo: deb [arch=amd64] https://repo.jellyfin.org/debian {{ ansible_facts.distribution_release | lower }} main
-    filename: jellyfin
+  template:
+    src: etc_apt_sources.list.d_jellyfin.list.j2
+    dest: /etc/apt/sources.list.d/jellyfin.list
+    owner: root
+    group: root
+    mode: 0644
+  notify: update apt cache
+
+# update APT cache for the jellyfin package to become available
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
 
 - name: install jellyfin
   apt:

@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - shaarli: fix shaarli unable to save thumbnails to disk
+- jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
 
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 
