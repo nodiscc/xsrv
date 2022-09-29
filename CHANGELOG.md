@@ -20,11 +20,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: no longer disable accessibility app by default
 - common: kernel: rename variable `os_security_kernel_enable_core_dump` -> `kernel_enable_core_dump`
 - common: kernel/sysctl: ensure ipv4/ipv6 configuration is applied to all new/future interfaces as well
-- common: kernel/sysctl: don't disable USB storage module by default
+- common: kernel/sysctl: don't disable USB storage, audio input/output, USB MIDI, bluetooth and camera modules by default
 - common: kernel/sysctl: don't disable audio input/output module by default
 - common: kernel/sysctl: don't disable bluetooth modules by default
 - common: kernel/sysctl: don't disable camera modules by default
-- common: kernel/sysctl: don't disable `squashfs` filesystem module by default
+- common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
 - common: dns: check that valid IP addresses are specified in dns_nameservers
 - update documentation
 - update/improve test tooling
