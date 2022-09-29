@@ -151,7 +151,7 @@ apt_listbugs_ignore_list:
   - 1002047 # https://bugs.debian.org/1002047 - no impact when base option is present in configuration file
   - 895823 # https://bugs.debian.org/895823 - only happens after purging dovecot
   - 1009872 # https://bugs.debian.org/1009872 - only happens when /etc/ssl/certs/ssl-cert-snakeoil* were deleted manually
-
+  - 1019564 # https://bugs.debian.org/1019564 - unreproducible
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
