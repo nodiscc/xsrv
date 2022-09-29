@@ -155,7 +155,7 @@
   file:
     path: "{{ item.path }}"
     state: directory
-    owner: "{{ item.owner | default('root' ) }}"
+    owner: "{{ item.owner | default('root') }}"
     group: shaarli
     recurse: "{{ item.recurse | default(True) }}"
     mode: "{{ item.mode | default('u=rwX,g=rwX,o=') }}"
