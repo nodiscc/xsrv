@@ -61,7 +61,6 @@ kernel_modules_blacklist:
   - floppy # floppy drives
   - n_hdlc # HDLC line discipline
   - pcspkr # PC speaker/beep
-  - soundcore # audio input/output
   - thunderbolt # thunderbolt devices
   - usb-midi # USB MIDI
   - uvcvideo # UVC video devices
@@ -72,6 +71,7 @@ kernel_modules_blacklist:
   - hfsplus # CIS 1.1.1.4 mounting of hfsplus filesystems is disabled
   - jffs2 # CIS 1.1.1.2 mounting of jffs2 filesystems is disabled
   - udf # CIS 1.1.1.6 mounting of udf filesystems is disabled
+  # - soundcore # audio input/output
   # - vfat # 1.1.1.7 mounting of FAT filesystems is limited - prevents EFI boot
   # - usb-storage # CIS 1.1.10 disable USB storage - prevents usage of USB mass storage
   # - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
