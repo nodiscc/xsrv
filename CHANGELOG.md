@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - shaarli: fix shaarli unable to save thumbnails to disk
 - jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
+- common: kernel/sysctl: don't disable `vfat` module required by EFI boot
 
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 
@@ -65,7 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: sudo: hardening: configure sudo to run processes in a pseudo-terminal
 - common: users/pam: hardening: increase the number of rounds for hashing group passwords
 - common: sysctl: hardening: only allow root/users with CAP_SYS_PTRACE to use ptrace
-- common: sysctl: hardening: disable more kernel modules by default (bluetooth, audio I/O, USB storage, USB MIDI, UVC/V4L2/CPIA2 video devices, thunderbolt, floppy, PC speaker beep
+- common: sysctl: hardening: disable more kernel modules by default (bluetooth, audio I/O, USB storage, USB MIDI, UVC/V4L2/CPIA2 video devices, thunderbolt, floppy, PC speaker beep)
 - common: sysctl: hardening: restrict loading TTY line disciplines to the CAP_SYS_MODULE capability
 - common: sysctl: hardening: protect against unintentional writes to an attacker-controlled FIFO
 - common: sysctl: hardening: prevent even the root user from reading kernel memory maps

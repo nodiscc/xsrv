@@ -74,7 +74,7 @@ kernel_modules_blacklist:
   - jffs2 # CIS 1.1.1.2 mounting of jffs2 filesystems is disabled
   - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
   - udf # CIS 1.1.1.6 mounting of udf filesystems is disabled
-  - vfat # 1.1.1.7 mounting of FAT filesystems is limited
+  # - vfat # 1.1.1.7 mounting of FAT filesystems is limited - prevents EFI boot
 
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
