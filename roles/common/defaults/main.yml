@@ -64,7 +64,6 @@ kernel_modules_blacklist:
   - soundcore # audio input/output
   - thunderbolt # thunderbolt devices
   - usb-midi # USB MIDI
-  - usb-storage # USB storage
   - uvcvideo # UVC video devices
   - v4l2_common # V4L2 video devices
   - cramfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
@@ -75,6 +74,7 @@ kernel_modules_blacklist:
   - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
   - udf # CIS 1.1.1.6 mounting of udf filesystems is disabled
   # - vfat # 1.1.1.7 mounting of FAT filesystems is limited - prevents EFI boot
+  # - usb-storage # CIS 1.1.10 disable USB storage - prevents usage of USB mass storage
 
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
