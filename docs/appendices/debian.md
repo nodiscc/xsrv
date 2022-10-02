@@ -87,7 +87,7 @@ USAGE: ./xsrv init-vm --template TEMPLATE_NAME --name VM_NAME --ip VM_IP --netma
 
 ### From a hosting provider
 
-Most VPS providers allow you to install a preconfigured Debian system with basic SSH `root` access. Follow your hosting provider's documentation - make sure requirements above are met (`python apotitude sudo` installed, user account in the `sudo` group).
+Most VPS providers allow you to install a preconfigured Debian system with basic SSH `root` access. Follow your hosting provider's documentation - make sure requirements above are met (`python aptitude sudo` installed, user account in the `sudo` group).
 
 
 ## See also
