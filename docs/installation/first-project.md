@@ -63,18 +63,25 @@ nodiscc.xsrv:1.3.1 was installed successfully
 
 ##### GITEA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml
 gitea_fqdn: "git.CHANGEME.org"
+
 ##### HOMEPAGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml
 homepage_fqdn: "www.CHANGEME.org"
+
 ##### JELLYFIN - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml
 jellyfin_fqdn: "media.CHANGEME.org"
+
 ##### NEXTCLOUD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml
 nextcloud_fqdn: "cloud.CHANGEME.org"
+
 ##### SHAARLI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml
 shaarli_fqdn: "links.CHANGEME.org"
+
 ##### TRANSMISSION - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml
 transmission_fqdn: "torrent.CHANGEME.org"
+
 ##### TT-RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.CHANGEME.org"
+
 ##### ROCKETCHAT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
 rocketchat_fqdn: "chat.CHANGEME.org"
 ...
