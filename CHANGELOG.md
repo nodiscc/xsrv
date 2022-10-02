@@ -35,6 +35,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
 - common: kernel/sysctl: don't disable `vfat` module required by EFI boot
 
+
+[Full changes since v1.9.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.9.0...1.10.0)
+
+-------------------------------
+
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 
 **Upgrade procedure:**
@@ -85,6 +90,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - common: users: fix errors during creation fo `sftponly` user accounts when no groups are defined in the user definition
 
+[Full changes since v1.8.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.1...1.9.0)
+
+-------------------------------
 
 #### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-10
 
@@ -95,6 +103,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - backup/rsnapshot: fix rsnapshot installation, always install from Debian repositories
 
+[Full changes since v1.8.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.0...1.8.1)
+
+-------------------------------
 
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-04
 
@@ -180,6 +191,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Security:**
 - proxmox: fail2ban: fix detection of failed login attempts
 
+[Full changes since v1.7.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.7.0...1.8.0)
+
+-------------------------------
 
 #### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
 
