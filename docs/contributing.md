@@ -7,6 +7,6 @@
   - If reporting a security issue, please check the `This issue is confidential` checkbox
 - Please send patches by [Merge request](https://gitlab.com/nodiscc/xsrv/-/merge_requests) or attached to your bug reports
   - Patches must pass CI checks, include relevant documentation, and be split in a meaningful way
-  - You can find an example role which can be used as a template to develop new roles [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/docs/example-role)
+  - You can find an example role which can be used as a template to develop new roles [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/docs/example-role). See [this commit](https://gitlab.com/nodiscc/xsrv/-/commit/09ba2a429231dd75d86d15343a192c93280f1529) for an example.
 - Please contribute to upstream projects and report issues on relevant bug trackers
 
