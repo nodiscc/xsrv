@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: kernel/sysctl: don't disable camera modules by default
 - common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
 - common: dns: check that valid IP addresses are specified in dns_nameservers
+- jitsi: set restrictive `Content-Security-Policy` headers
 - update documentation
 - update/improve test tooling
 

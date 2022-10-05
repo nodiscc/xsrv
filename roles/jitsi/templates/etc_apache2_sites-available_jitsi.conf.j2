@@ -43,6 +43,9 @@ MDomain {{ jitsi_fqdn }}
         Require all granted
     </Location>
 
+    Header always unset Content-Security-Policy
+    Header always set Content-Security-Policy "default-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; object-src 'none';"
+
     ProxyRequests Off
     SSLProxyEngine on
     ProxyPreserveHost on
