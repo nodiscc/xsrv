@@ -42,6 +42,9 @@ linux_users:
     comment: "ansible user/allowed to read/write web application files"
 ```
 
+**Let's Encrypt certificates**: newly generated certificates may take up to 1 minute to become available.
+
+
 ## Tags
 
 <!--BEGIN TAGS LIST-->

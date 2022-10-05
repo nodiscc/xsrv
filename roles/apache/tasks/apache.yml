@@ -129,6 +129,32 @@
   notify: reload apache
   tags: ssl
 
+- name: create work directory for mod_md automatic reload script
+  file:
+    state: directory
+    path: /var/lib/apache2/md
+    owner: www-data
+    group: www-data
+    mode: 0755
+
+- name: copy automatic reload script for mod_md MDMessageCmd
+  copy:
+    src: usr_local_bin_apache-mod-md-reload
+    dest: /usr/local/bin/apache-mod-md-reload
+    owner: root
+    group: root
+    mode: 0755
+
+- name: schedule automatic reload of the service on mod_md certificate changes
+  cron:
+    user: root
+    cron_file: '/etc/cron.d/apache-mod-md-reload'
+    name: apache-mod-md-reload
+    hour: '*'
+    minute: '*'
+    day: '*'
+    job: '/usr/local/bin/apache-mod-md-reload | logger -t apache-mod-md-reload'
+
 ##### SERVICE #####
 
 - name: enable/disable start/stop apache2 service

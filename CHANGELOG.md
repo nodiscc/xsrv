@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - add [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) role - video conferencing solution
+- apache: automatically load new Let's Encrypt certificates every minute, manually reloading the server is no longer needed
 - common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - shaarli: add ability to install the python API client ([`shaarli_setup_python_client: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and export all shaarli data to a JSON file every hour
 - shaarli: add required packages for LDAP authentication
