@@ -153,7 +153,7 @@
     hour: '*'
     minute: '*'
     day: '*'
-    job: '/usr/local/bin/apache-mod-md-reload | logger -t apache-mod-md-reload'
+    job: '/usr/local/bin/apache-mod-md-reload check-reload | logger -t apache-mod-md-reload'
 
 ##### SERVICE #####
 
