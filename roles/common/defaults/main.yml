@@ -154,6 +154,7 @@ apt_listbugs_ignore_list:
   - 895823 # https://bugs.debian.org/895823 - only happens after purging dovecot
   - 1009872 # https://bugs.debian.org/1009872 - only happens when /etc/ssl/certs/ssl-cert-snakeoil* were deleted manually
   - 1019564 # https://bugs.debian.org/1019564 - unreproducible
+  - 1019855 # https://bugs.debian.org/1019855 - only affects 4th gen Intel Core CPUs
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
