@@ -26,17 +26,19 @@ See [`defaults/main.yml`](defaults/main.yml) for all configuration variables.
 ### Uninstallation
 
 ```bash
-xsrv edit-playbook
 # remove the role from your playbook
+xsrv edit-playbook
+# remove all docker_* configuration variables from your hosts configuration
 xsrv edit-host
-xsrv edit-vault
-# remove all docker_* configuration variables
 ```
 
 ```bash
 sudo apt purge docker-ce docker-compose
-sudo rm -rf /etc/apt/sources.list.d/docker.list /etc/docker /etc/cron.d/docker-system-prune-all /etc/ansible/facts.d/docker.fact /etc/netdata/health.d/dockerd.conf /etc/netdata/health.d/systemdunits.conf.d/docker.conf /var/lib/docker
+sudo rm -rf /etc/apt/sources.list.d/docker.list /etc/docker /etc/cron.d/docker-system-prune-all /etc/ansible/facts.d/docker.fact /etc/netdata/health.d/dockerd.conf /etc/netdata/health.d/systemdunits.conf.d/docker.conf /var/lib/docker /root/.docker /run/docker
 sudo groupdel docker
+sudo ip link delete docker0
+sudo ip link delete docker_gwbridge
+sudo find /etc/netdata/health.d/systemdunits.conf.d/ -type f | sort | xargs sudo cat | sudo tee /etc/netdata/health.d/systemdunits.conf
 sudo systemctl restart netdata
 ```
 
