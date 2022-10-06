@@ -10,7 +10,7 @@
     - prosody
     - jitsi
 
-- name: add APT signing keys
+- name: add jitsi/prosody APT signing keys
   copy:
     src: etc_apt_trusted.gpg.d_{{ item }}.gpg
     dest: /etc/apt/trusted.gpg.d/{{ item }}.gpg
