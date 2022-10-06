@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
 - common: dns: check that valid IP addresses are specified in dns_nameservers
 - jitsi: set restrictive `Content-Security-Policy` headers
+- cleanup: replace deprecated `apt_key/apt_repository` modules, install all APT keys in `/usr/share/keyrings/`
 - update documentation
 - update/improve test tooling
 
