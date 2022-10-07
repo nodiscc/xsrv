@@ -65,14 +65,6 @@
 
 ### INITIAL DB POPULATION ###
 
-# workaround for postgresql_query module bug https://github.com/ansible-collections/community.postgresql/issues/50
-- name: remove comments from SQL schema file
-  lineinfile:
-    path: "{{ tt_rss_install_dir }}/sql/pgsql/schema.sql"
-    state: absent
-    regexp: '^--.*'
-  when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
-
 - name: import tt-rss database schema to postgresql
   postgresql_query:
     login_host: "localhost"
@@ -80,6 +72,7 @@
     login_password: "{{ tt_rss_db_password }}"
     db: "{{ tt_rss_db_name }}"
     path_to_script: "{{ tt_rss_install_dir }}/sql/pgsql/schema.sql"
+    as_single_query: yes
   when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
   ignore_errors: "{{ ansible_check_mode }}"
 
