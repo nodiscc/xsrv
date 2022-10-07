@@ -47,3 +47,5 @@ dovecot_ldap_base: "ou=users,dc=example,dc=test"
 dovecot_ldap_bind_dn: "cn=bind,ou=system,dc=example,dc=test"
 ##### WIREGUARD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml
 wireguard_server_public_ip: "1.2.3.4"
+##### WIREGUARD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jisti/defaults/main.yml
+jitsi_fqdn: "conference.example.test"
