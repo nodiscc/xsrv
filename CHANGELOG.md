@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: fix shaarli unable to save thumbnails to disk
 - jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
 - common: kernel/sysctl: don't disable `vfat` module required by EFI boot
+- graylog: fix installation of elasticsearch packages
 
 
 [Full changes since v1.9.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.9.0...1.10.0)

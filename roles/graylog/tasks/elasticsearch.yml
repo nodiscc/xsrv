@@ -30,7 +30,7 @@
 
 - name: install elasticsearch
   apt:
-    package: elasticsearch-oss
+    package: elasticsearch
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 
