@@ -13,7 +13,7 @@
     - src: etc_netdata_health.d_systemdunits.conf.d_gitea.conf.j2
       dest: /etc/netdata/health.d/systemdunits.conf.d/gitea.conf
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: "/etc/netdata/health.d/processes.conf.d/gitea.conf"

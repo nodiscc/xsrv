@@ -104,7 +104,7 @@
     - apt
     - apt-listbugs
 
-- name: check that obsolete variables have been removed
+- name: migration - check that obsolete variables have been removed
   assert:
     quiet: yes
     that: "{{ item }}"

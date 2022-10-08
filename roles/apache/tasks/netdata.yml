@@ -8,7 +8,7 @@
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: "/etc/netdata/health.d/processes.conf.d/apache.conf"

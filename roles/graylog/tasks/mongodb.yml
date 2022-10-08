@@ -12,7 +12,7 @@
     - apt_repository: buster
       distribution_release: bullseye
 
-- name: remove old mongodb key from APT keyring
+- name: migration/1.10.0 - remove old mongodb key from APT keyring
   apt_key:
     id: "E162F504A20CDF15827F718D4B7C549A058F8B6B"
     state: absent

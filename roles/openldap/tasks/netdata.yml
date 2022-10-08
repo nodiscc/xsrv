@@ -13,7 +13,7 @@
     - src: etc_netdata_health.d_systemdunits.conf.d_openldap.conf.j2
       dest: /etc/netdata/health.d/systemdunits.conf.d/openldap.conf
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: "/etc/netdata/health.d/processes.conf.d/openldap.conf"

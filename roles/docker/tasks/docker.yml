@@ -14,7 +14,7 @@
       - gpg # required for APT key import
       - pass # required for docker registry login
 
-- name: remove old Docker key from APT keyring
+- name: migration/1.10.0 - remove old Docker key from APT keyring
   apt_key:
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     state: absent

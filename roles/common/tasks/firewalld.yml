@@ -13,7 +13,7 @@
     autoremove: yes
     purge: yes
 
-- name: remove other firewall management tools configuration
+- name: migration - remove other firewall management tools configuration
   file:
     state: absent
     path:

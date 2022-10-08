@@ -6,7 +6,7 @@
     package:
       - apt-transport-https
 
-- name: remove old jellyfin key from APT keyring
+- name: migration/1.10.0 - remove old jellyfin key from APT keyring
   apt_key:
     id: 4918AABC486CA052358D778D49023CD01DE21A7B
     state: absent

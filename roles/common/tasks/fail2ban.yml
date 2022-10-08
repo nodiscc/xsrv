@@ -37,7 +37,7 @@
 
 ##### CLEANUP #####
 
-- name: remove systemd unit/override files from old versions of the role
+- name: migration - remove systemd unit/override files from old versions of the role
   file:
     state: absent
     dest: '/etc/systemd/system/fail2ban.service.d/override.conf'

@@ -41,7 +41,7 @@
     state: absent
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: remove APT configuration from old versions of the role
+- name: migration - remove APT configuration from old versions of the role
   file:
     path: /etc/apt/sources.list.d/packagecloud_io_netdata_netdata_debian.list
     state: absent
@@ -213,7 +213,7 @@
     mode: 0644
   tags: netdata-downtime
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: "{{ item }}"

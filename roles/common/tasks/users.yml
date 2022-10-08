@@ -106,7 +106,7 @@
     group: root
     mode: 0600
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     path: /etc/security/limits.d/10.hardcore.conf
     state: absent

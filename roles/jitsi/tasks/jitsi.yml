@@ -10,7 +10,7 @@
     - prosody
     - jitsi
 
-- name: remove old jitsi/prosody APT signing keys
+- name: migration/1.10.0 - remove old jitsi/prosody APT signing keys
   file:
     path: /etc/apt/trusted.gpg.d/{{ item }}.gpg
     state: absent

@@ -59,7 +59,7 @@
   notify: restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: /usr/libexec/netdata/python.d/needrestart.conf

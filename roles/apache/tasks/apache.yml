@@ -115,19 +115,25 @@
     creates: /etc/apache2/sites-enabled/000-sites.conf
   notify: reload apache
 
-- name: remove apache/php configuration from previous versions of the role + default sites
+- name: migration - remove apache/php configuration from old versions of the role
   file:
     path: "{{ item }}"
     state: absent
   with_items:
     - /etc/apache2/sites-enabled/sites.conf
-    - /etc/apache2/sites-enabled/000-default.conf
-    - /etc/apache2/sites-enabled/default-ssl.conf
     - /etc/apache2/sites-available/sites.conf
-    - /var/www/html/index.html
     - /etc/php/7.4/apache2/conf.d/30-hide-header.ini
   notify: reload apache
-  tags: ssl
+
+- name: remove apache default sites
+  file:
+    path: "/etc/apache2/sites-enabled/000-default.conf"
+    state: absent
+  with_items:
+    - /etc/apache2/sites-enabled/000-default.conf
+    - /etc/apache2/sites-enabled/default-ssl.conf
+    - /var/www/html/index.html
+  notify: reload apache
 
 - name: create work directory for mod_md automatic reload script
   file:

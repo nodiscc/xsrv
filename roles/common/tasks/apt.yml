@@ -28,7 +28,7 @@
     job: aptitude -q -y purge ~c 2>&1 | logger -t apt-purge
     disabled: "{{ False if apt_purge_nightly else True }}"
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     path: "{{ item }}"
     state: absent
