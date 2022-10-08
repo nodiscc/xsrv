@@ -26,6 +26,7 @@ fetch-backups [project] [host]      fetch backups from a host to the local backu
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
+o|open [project]                    open the project directory in the default file manager
 show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
@@ -252,6 +253,11 @@ function _ls() {
     # list files in the projects directory
     path=${1:-}
     ls "$projects_dir/$path"
+}
+
+function _xdg_open() {
+    # open the project directory in the default file manager
+    xdg-open "$projects_dir/$project_name"
 }
 
 function show_defaults() {
@@ -702,6 +708,7 @@ function _main() {
         "shell"|"ssh") init_venv; shift; run_shell ;;
         "logs") init_venv; shift; ssh_args="bash -c 'if [[ -r /var/log/syslog ]]; then lnav /var/log/syslog; else sudo lnav /var/log/syslog; fi'"; run_shell ;;
         "ls") shift; _ls "$@" ;;
+        "o"|"open") shift; _xdg_open "$@" ;;
         "help") echo "$usage" ;;
         "help-tags") init_venv; shift; help_tags ;;
         "fetch-backups") init_venv; shift; fetch_backups ;;
