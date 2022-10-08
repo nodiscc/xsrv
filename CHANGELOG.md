@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)
 - rocketchat, graylog: update mongodb to v4.4
 - cleanup: replace deprecated `apt_key/apt_repository` modules, install all APT keys in `/usr/share/keyrings/`
+- general cleanup and maintenance
 - update documentation
 - update/improve test tooling
 
