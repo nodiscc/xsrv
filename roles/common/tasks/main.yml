@@ -66,7 +66,6 @@
   tags:
     - common
     - firewall
-    - firewalld
   when: setup_firewall | bool
 
 - name: include fail2ban configuration tasks

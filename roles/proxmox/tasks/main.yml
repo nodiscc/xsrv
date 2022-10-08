@@ -14,7 +14,6 @@
   tags:
     - proxmox
     - firewall
-    - firewalld
   when:
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
