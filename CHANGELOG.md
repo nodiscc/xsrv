@@ -29,7 +29,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: kernel/sysctl: don't disable camera modules by default
 - common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
 - common: dns: check that valid IP addresses are specified in dns_nameservers
-- jitsi: set restrictive `Content-Security-Policy` headers
 - nextcloud: update to [v24.0.6](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/)
 - openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)
 - rocketchat, graylog: update mongodb to v4.4
