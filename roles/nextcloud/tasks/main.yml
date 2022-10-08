@@ -1,23 +1,28 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - nextcloud
     - checks
 
-- include: mysql.yml
+- name: include mysql configuration tasks
+  include: mysql.yml
   become: yes
   tags: nextcloud
   when: nextcloud_db_type == 'mysql'
 
-- include: postgresql.yml
+- name: include postgresql configuration tasks
+  include: postgresql.yml
   become: yes
   tags: nextcloud
   when: nextcloud_db_type == 'pgsql'
 
-- include: nextcloud.yml
+- name: include nextcloud configuration tasks
+  include: nextcloud.yml
   become: yes
   tags: nextcloud
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  include: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -25,13 +30,15 @@
     - nextcloud
   when: nextcloud_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  include: apache.yml
   become: yes
   tags:
     - nextcloud
     - apache
 
-- include: backups.yml
+- name: include rsnapshot/backups configuration tasks
+  include: backups.yml
   become: yes
   tags:
     - nextcloud
@@ -40,7 +47,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  include: fail2ban.yml
   become: yes
   tags:
     - nextcloud
@@ -49,7 +57,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  include: rsyslog.yml
   become: yes
   tags:
     - nextcloud
@@ -59,7 +68,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - nextcloud
@@ -69,7 +79,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: nextcloud
 

@@ -1,22 +1,26 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - monitoring
     - netdata
     - checks
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - monitoring
     - netdata
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags:
     - monitoring
     - netdata
 
-- include: netdata-module-needrestart.yml
+- name: include netdata-netdata-module-needrestart configuration tasks
+  include: netdata-module-needrestart.yml
   become: yes
   tags:
     - monitoring
@@ -25,7 +29,8 @@
     - netdata-needrestart
   when: setup_needrestart | bool
 
-- include: netdata-module-logcount.yml
+- name: include netdata-module-logcount configuration tasks
+  include: netdata-module-logcount.yml
   become: yes
   tags:
     - monitoring
@@ -34,7 +39,8 @@
     - netdata-logcount
   when: setup_netdata_logcount | bool
 
-- include: netdata-module-debsecan.yml
+- name: include netdata-module-debsecan configuration tasks
+  include: netdata-module-debsecan.yml
   become: yes
   tags:
     - monitoring
@@ -43,7 +49,8 @@
     - netdata-debsecan
   when: setup_netdata_debsecan | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  include: firewalld.yml
   become: yes
   tags:
     - monitoring
@@ -62,7 +69,8 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- include: utils-netdata-test-notifications.yml
+- name: include netdata notification testing tasks
+  include: utils-netdata-test-notifications.yml
   tags:
     - never
     - utils-netdata-test-notifications

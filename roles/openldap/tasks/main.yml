@@ -1,44 +1,52 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - openldap
     - checks
 
-- include: openldap.yml
+- name: include openldap configuration tasks
+  include: openldap.yml
   become: yes
   tags: openldap
 
-- include: populate.yml
+- name: include LDAP database population tasks
+  include: populate.yml
   become: yes
   tags: openldap
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  include: backups.yml
   become: yes
   tags:
     - openldap
     - backup
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  include: ssl-selfsigned.yml
   become: yes
   tags:
     - ssl
     - openldap
     - openldap-ssl
 
-- include: ldap-account-manager.yml
+- name: include ldap-account-manager configuration tasks
+  include: ldap-account-manager.yml
   become: yes
   tags:
     - openldap
     - ldap-account-manager
   when: openldap_setup_lam | bool
 
-- include: self-service-password.yml
+- name: include self-service password configuration tasks
+  include: self-service-password.yml
   become: yes
   tags:
     - openldap
     - self-service-password
   when: openldap_setup_ssp | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - openldap
@@ -50,7 +58,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  include: firewalld.yml
   become: yes
   tags:
     - openldap
@@ -59,7 +68,8 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: openldap
 

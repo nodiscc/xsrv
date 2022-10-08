@@ -1,13 +1,16 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - shaarli
     - checks
 
-- include: shaarli.yml
+- name: include shaarli configuration tasks
+  include: shaarli.yml
   become: yes
   tags: shaarli
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  include: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -15,13 +18,15 @@
     - shaarli
   when: shaarli_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  include: apache.yml
   become: yes
   tags:
     - shaarli
     - apache
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  include: backups.yml
   become: yes
   tags:
     - shaarli
@@ -30,7 +35,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  include: fail2ban.yml
   become: yes
   tags:
     - shaarli
@@ -39,7 +45,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  include: rsyslog.yml
   become: yes
   tags:
     - shaarli
@@ -49,7 +56,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - shaarli
@@ -59,11 +67,13 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: shaarli
 
-- include: shaarli-client.yml
+- name: include python-shaarli-client configuration tasks
+  include: shaarli-client.yml
   become: yes
   tags:
     - shaarli

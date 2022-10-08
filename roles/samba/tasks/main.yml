@@ -1,23 +1,28 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - samba
     - checks
 
-- include: samba.yml
+- name: include salba configuration tasks
+  include: samba.yml
   become: yes
   tags: samba
 
-- include: samba-ldapsam.yml
+- name: include samba ldapsam backend configuration tasks
+  include: samba-ldapsam.yml
   become: yes
   when: samba_passdb_backend == 'ldapsam'
   tags: samba
 
-- include: samba-tdbsam.yml
+- name: include samba tdbsam backend configuration tasks
+  include: samba-tdbsam.yml
   become: yes
   when: samba_passdb_backend == 'tdbsam'
   tags: samba
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  include: backups.yml
   become: yes
   tags:
     - samba
@@ -26,7 +31,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  include: rsyslog.yml
   become: yes
   tags:
     - samba
@@ -36,7 +42,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  include: firewalld.yml
   become: yes
   tags:
     - samba
@@ -45,7 +52,8 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: samba
 

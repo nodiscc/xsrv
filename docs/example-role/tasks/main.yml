@@ -1,28 +1,31 @@
-# tasks for EXAMPLE role
-
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - EXAMPLE
     - checks
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  include: ssl-selfsigned.yml
   become: yes
   tags:
     - EXAMPLE
     - ssl
 
-- include: EXAMPLE.yml
+- name: include EXAMPLE configuration tasks
+  include: EXAMPLE.yml
   become: yes
   tags:
     - EXAMPLE
 
-- include: component2.yml
+- name: include component2 configuration tasks
+  include: component2.yml
   become: yes
   tags:
     - EXAMPLE
     - mail
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  include: fail2ban.yml
   become: yes
   tags:
     - EXAMPLE
@@ -31,7 +34,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  include: backups.yml
   become: yes
   tags:
     - EXAMPLE
@@ -40,7 +44,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  include: rsyslog.yml
   become: yes
   tags:
     - EXAMPLE
@@ -50,7 +55,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - EXAMPLE
@@ -60,11 +66,13 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: EXAMPLE
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  include: firewalld.yml
   become: yes
   tags:
     - EXAMPLE

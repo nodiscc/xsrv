@@ -1,13 +1,16 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - gotty
     - checks
 
-- include: gotty.yml
+- name: include gotty configuration tasks
+  include: gotty.yml
   become: yes
   tags: gotty
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  include: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -15,13 +18,15 @@
     - gotty
   when: gotty_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  include: apache.yml
   become: yes
   tags:
     - gotty
     - apache
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - gotty
@@ -31,7 +36,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: gotty
 

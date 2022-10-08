@@ -1,8 +1,10 @@
-- include: docker.yml
+- name: include docker configuration tasks
+  include: docker.yml
   become: yes
   tags: docker
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - docker
@@ -12,7 +14,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  include: firewalld.yml
   become: yes
   tags:
     - docker
@@ -21,7 +24,8 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansibeln facts configuration tasks
+  include: fact.yml
   become: yes
   tags: docker
 

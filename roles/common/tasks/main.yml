@@ -1,58 +1,67 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - common
     - checks
 
-- include: hostname.yml
+- name: include hostname configuration tasks
+  include: hostname.yml
   become: yes
   tags:
     - common
     - hostname
   when: setup_hostname | bool
 
-- include: hosts.yml
+- name: include hosts file configuration tasks
+  include: hosts.yml
   become: yes
   tags:
     - common
     - hosts
   when: setup_hosts_file | bool
 
-- include: dns.yml
+- name: include dns resolution configuration tasks
+  include: dns.yml
   become: yes
   tags:
     - common
     - dns
   when: setup_dns | bool
 
-- include: sysctl.yml
+- name: include kernel/sysctl configuration tasks
+  include: sysctl.yml
   become: yes
   tags:
     - common
     - sysctl
   when: setup_sysctl | bool
 
-- include: apt.yml
+- name: include APT package management configuration tasks
+  include: apt.yml
   become: yes
   tags:
     - common
     - apt
   when: setup_apt | bool
 
-- include: datetime.yml
+- name: include date/time configuration tasks
+  include: datetime.yml
   become: yes
   tags:
     - common
     - datetime
   when: setup_datetime | bool
 
-- include: ssh.yml
+- name: include SSH server configuration tasks
+  include: ssh.yml
   become: yes
   tags:
     - common
     - ssh
   when: setup_ssh | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  include: firewalld.yml
   become: yes
   tags:
     - common
@@ -60,41 +69,47 @@
     - firewalld
   when: setup_firewall | bool
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  include: fail2ban.yml
   become: yes
   tags:
     - common
     - fail2ban
   when: setup_fail2ban | bool
 
-- include: users.yml
+- name: include Linux users configuration tasks
+  include: users.yml
   become: yes
   tags:
     - common
     - users
   when: setup_users | bool
 
-- include: cron.yml
+- name: include cron configuration tasks
+  include: cron.yml
   become: yes
   tags:
     - common
     - cron
   when: setup_cron | bool
 
-- include: mail.yml
+- name: include system mail configuration tasks
+  include: mail.yml
   become: yes
   tags:
     - common
     - mail
     - msmtp
 
-- include: packages.yml
+- name: include base package instalaltion/removal tasks
+  include: packages.yml
   become: yes
   tags:
     - common
     - packages
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: common
 
@@ -104,7 +119,8 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- include: utils-debian10to11.yml
+- name: include debian 10->11 migration tasks
+  include: utils-debian10to11.yml
   become: yes
   tags:
     - never

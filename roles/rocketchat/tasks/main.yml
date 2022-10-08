@@ -1,19 +1,23 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - rocketchat
     - checks
 
-- include: rocketchat.yml
+- name: include rocketchat configuration tasks
+  include: rocketchat.yml
   become: yes
   tags: rocketchat
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  include: backups.yml
   become: yes
   tags:
     - rocketchat
     - backup
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  include: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -21,13 +25,15 @@
     - rocketchat
   when: rocketchat_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  include: apache.yml
   become: yes
   tags:
     - rocketchat
     - apache
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - rocketchat
@@ -37,7 +43,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: rocketchat
 

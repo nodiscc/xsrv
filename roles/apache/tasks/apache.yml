@@ -100,7 +100,8 @@
   notify: reload apache
   tags: ssl
 
-- include: apache-mod-evasive.yml
+- name: include mod-evasive configuration tasks
+  include: apache-mod-evasive.yml
 
 - name: copy apache sites config
   template:

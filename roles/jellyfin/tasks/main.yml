@@ -1,14 +1,17 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   become: yes
   tags:
     - jellyfin
     - checks
 
-- include: jellyfin.yml
+- name: include jaellyfin configuration tasks
+  include: jellyfin.yml
   become: yes
   tags: jellyfin
 
-- include: samba.yml
+- name: include jellyfin samba share configuration tasks
+  include: samba.yml
   become: yes
   tags:
     - jellyfin
@@ -18,7 +21,8 @@
     - ansible_local.samba.ansible_managed is defined
     - ansible_local.samba.ansible_managed | bool
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  include: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -26,13 +30,15 @@
     - jellyfin
   when: jellyfin_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  include: apache.yml
   become: yes
   tags:
     - jellyfin
     - apache
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  include: fail2ban.yml
   become: yes
   tags:
     - jellyfin
@@ -41,7 +47,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  include: backups.yml
   become: yes
   tags:
     - jellyfin
@@ -50,7 +57,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  include: netdata.yml
   become: yes
   tags:
     - jellyfin
@@ -60,7 +68,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  include: fact.yml
   become: yes
   tags: jellyfin
 
