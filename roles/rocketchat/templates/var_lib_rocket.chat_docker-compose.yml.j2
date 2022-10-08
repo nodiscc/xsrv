@@ -28,13 +28,13 @@ services:
 
 
   mongo:
-    image: mongo:4.4
+    image: mongo:4.0
     restart: unless-stopped
     volumes:
      - /var/lib/rocket.chat/db:/data/db
      - /var/lib/rocket.chat/dump:/dump
      - /var/lib/rocket.chat/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+    command: mongod --oplogSize 128 --replSet rs0 --smallfiles --storageEngine=mmapv1
     networks:
       - rocketchat
     deploy:
