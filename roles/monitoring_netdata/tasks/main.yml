@@ -74,3 +74,10 @@
   tags:
     - never
     - utils-netdata-test-notifications
+
+- name: include automatic reboot/restart tasks
+  become: yes
+  include: utils-autorestart.yml
+  tags:
+    - never
+    - utils-autorestart

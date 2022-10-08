@@ -1,0 +1,16 @@
+- name: check if host must be rebooted
+  shell: needrestart -b -k
+  register: needrestart_kernel
+  changed_when: no
+  check_mode: no # run even in check mode as it doesn't change anything
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: reboot host if an updated kernel must be loaded
+  reboot:
+  when: "'NEEDRESTART-KSTA: 3' in needrestart_kernel.stdout_lines"
+
+- name: restart services if required after an upgrade
+  shell: needrestart -r a
+  become: yes
+  register: needrestart_services
+  changed_when: "'No services need to be restarted.' not in needrestart_services.stdout_lines"

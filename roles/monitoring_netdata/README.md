@@ -30,6 +30,15 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 [netdata documentation](https://docs.netdata.cloud/)
 
+- To reboot hosts that have Linux kernel upgrade pending:
+
+```bash
+# using xsrv
+$ TAGS=utils-autorestart xsrv deploy
+# using ansible command-line tools
+$ ansible-playbook playbook.yml --tags=utils-autorestart
+```
+
 ### Integration with other roles/manual configuration
 
 To install custom `httpcheck`/`x509check`/`portcheck`/`processes` module/alarm, create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` [handler](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/handlers/main.yml) (`$module_name.conf` will be assembled from configuration fragments).
@@ -45,6 +54,7 @@ netdata-modules - setup custom netdata modules
 netdata-needrestart - setup netdata needrestart module
 netdata-logcount - setup netdata logcount module
 netdata-debsecan - setup netdata debsecan module
+utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 ```
 <!--END TAGS LIST-->
 
