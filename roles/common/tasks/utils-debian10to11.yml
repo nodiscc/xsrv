@@ -9,7 +9,8 @@
   when: ansible_facts.distribution_release == "buster"
   block:
     - name: check for presence of proxmox update check script
-      stat: path=/usr/bin/pve6to7
+      stat:
+        path: /usr/bin/pve6to7
       register: pve6to7
     - name: run proxmox update check script
       command: /usr/bin/pve6to7

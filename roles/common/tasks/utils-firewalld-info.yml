@@ -3,4 +3,5 @@
   register: firewalld_info
 
 - name: list firewall zones
-  debug: var=firewalld_info
+  debug:
+    var: firewalld_info

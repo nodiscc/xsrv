@@ -52,8 +52,10 @@
   check_mode: no
 
 - name: remove all small primes
-  shell: awk '$5 >= 2048' /etc/ssh/moduli > /etc/ssh/moduli.new ;
-         [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
+  shell:
+    cmd: |
+      awk '$5 >= 2048' /etc/ssh/moduli > /etc/ssh/moduli.new;
+      [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
   notify: restart ssh
   when: sshd_register_moduli.stdout
 

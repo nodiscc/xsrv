@@ -167,17 +167,19 @@
 
 - name: run first setup (this can take a while)
   become_user: nextcloud
-  command: /usr/bin/php occ \
-           maintenance:install \
-           --database="{{ nextcloud_db_type }}" \
-           --database-host="{{ nextcloud_db_host }}" \
-           --database-name="{{ nextcloud_db_name }}" \
-           --database-user="{{ nextcloud_db_user }}" \
-           --database-pass="{{ nextcloud_db_password }}" \
-           --admin-user="{{ nextcloud_user }}" \
-           --admin-pass="{{ nextcloud_password }}"
-           --data-dir="{{ nextcloud_data_dir }}"
-           --admin-email="{{ nextcloud_admin_email }}"
+  command:
+    cmd: |
+      /usr/bin/php occ
+      maintenance:install
+      --database="{{ nextcloud_db_type }}"
+      --database-host="{{ nextcloud_db_host }}"
+      --database-name="{{ nextcloud_db_name }}"
+      --database-user="{{ nextcloud_db_user }}"
+      --database-pass="{{ nextcloud_db_password }}"
+      --admin-user="{{ nextcloud_user }}"
+      --admin-pass="{{ nextcloud_password }}"
+      --data-dir="{{ nextcloud_data_dir }}"
+      --admin-email="{{ nextcloud_admin_email }}"
   register: nextcloud_first_setup
   args:
     chdir: "{{ nextcloud_install_dir }}"
@@ -202,7 +204,8 @@
 - name: set nextcloud config.php values (always returns changed)
   become: yes
   become_user: nextcloud
-  command: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301
+  command:
+    cmd: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301
   args:
     chdir: "{{ nextcloud_install_dir }}/"
   with_items:

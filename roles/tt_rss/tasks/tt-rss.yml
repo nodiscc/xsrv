@@ -86,7 +86,8 @@
 - name: load/upgrade tt-rss database schema
   become: yes
   become_user: www-data
-  command: /usr/bin/php {{ tt_rss_install_dir }}/update.php --update-schema=force-yes
+  command:
+    cmd: /usr/bin/php {{ tt_rss_install_dir }}/update.php --update-schema=force-yes
   register: tt_rss_db_upgrade
   changed_when: "'Database schema is already at latest version.' not in tt_rss_db_upgrade.stdout"
   ignore_errors: "{{ ansible_check_mode }}"

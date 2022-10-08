@@ -35,7 +35,8 @@
 - name: run pgmetrics
   become: yes
   become_user: postgres
-  command: /usr/local/bin/pgmetrics --no-password --output=/var/log/postgresql/pgmetrics.log
+  command:
+    cmd: /usr/local/bin/pgmetrics --no-password --output=/var/log/postgresql/pgmetrics.log
   changed_when: yes
   register: pgmetrics
 
