@@ -10,8 +10,6 @@
       - firehol
       - firehol-tools
     state: absent
-    autoremove: yes
-    purge: yes
 
 - name: migration - remove other firewall management tools configuration
   file:
