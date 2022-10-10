@@ -265,13 +265,6 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config
 
-# trashbin_retention_obligation:
-#   auto: keep for 30 days, then delete IF space needed
-#   D, auto: keep at least D+ days, then delete IF space needed
-#   auto, D: max D days, but delete if space needed
-#   D1, D2: keep lat east D1 days and max D2 days
-#   disabled: auto clean disabled
-
 - name: run nextcloud upgrade command
   become_user: nextcloud
   command: /usr/bin/php ./occ upgrade
