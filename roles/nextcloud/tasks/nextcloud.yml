@@ -221,7 +221,7 @@
     - { key: "logtimezone", value: "UTC" }
     - { key: "log_type", value: "file" }
     - { key: "log_authfailip", value: "true", type: "boolean" }
-    - { key: "loglevel", value: "1", type: "integer" }
+    - { key: "loglevel", value: "{{ nextcloud_loglevel }}", type: "integer" }
     - { key: "trashbin_retention_obligation", value: "auto" }
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
     - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
