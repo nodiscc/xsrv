@@ -104,6 +104,11 @@ To search and download video subtitles, register an account on https://opensubti
 The [Youtube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) can be used to automatically set metadata for videos downloaded using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 
+### Security
+
+Due to [potential security issues](https://github.com/jellyfin/jellyfin/issues/5415) in Jellyfin, it is not recommended to expose the service to untrusted networks. By default connections are allowed only from local network (RFC1918) addresses ([`jellyfin_allowed_hosts`](default/main.yml)).
+
+
 ## Tags
 
 <!--BEGIN TAGS LIST-->

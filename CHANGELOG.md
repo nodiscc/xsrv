@@ -50,6 +50,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - graylog: fix installation of elasticsearch packages
 
 
+**Security:**
+- jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+
+
 [Full changes since v1.9.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.9.0...1.10.0)
 
 -------------------------------

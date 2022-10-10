@@ -5,6 +5,7 @@
     state: present
     package:
       - apt-transport-https
+      - python3-lxml
 
 - name: migration/1.10.0 - remove old jellyfin key from APT keyring
   apt_key:
@@ -40,6 +41,18 @@
     package: jellyfin
   notify: display jellyfin first run message
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: build dictionary for jellyfin remote IP filter
+  set_fact:
+    jellyfin_allowed_hosts_dict: "{{ jellyfin_allowed_hosts | map('community.general.dict_kv', 'string') }}"
+
+- name: configure jellyfin remote IP filter
+  xml:
+    path: /etc/jellyfin/network.xml
+    xpath: /NetworkConfiguration/RemoteIPFilter
+    set_children: "{{ jellyfin_allowed_hosts_dict }}"
+    pretty_print: yes
+  notify: restart jellyfin
 
 ##### MEDIA DIRECTORIES #####
 

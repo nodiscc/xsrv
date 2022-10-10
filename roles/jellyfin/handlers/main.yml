@@ -1,3 +1,12 @@
+- name: restart jellyfin
+  become: yes
+  service:
+    name: jellyfin
+    state: restarted
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: jellyfin_enable_service | bool
+
 - name: display jellyfin first run message
   debug:
     msg: "Jellyfin has been installed. Please secure your installation at https://{{ jellyfin_fqdn }} !"
