@@ -228,6 +228,39 @@
     - { key: "defaultapp", value: "{{ nextcloud_defaultapp }}" }
     - { key: "upgrade.disable-web", value: "true", type: "boolean" }
     - { key: "simpleSignUpLink.shown", value: "false", type: "boolean" }
+    # - { key: "appstoreenabled", value: "true", type: "boolean" }
+    # - { key: "enable_previews", value: "true", type: "boolean" }
+    # - { key: "preview_max_x", value: "4096", type: "integer" }
+    # - { key: "preview_max_y", value: "4096", type: "integer" }
+    # - { key: "preview_max_filesize_image", value: "50", type: "integer" }
+    # - { key: "preview_max_memory", value: "128", type: "integer" }
+    # - { key: "preview_libreoffice_path", value: '/usr/bin/libreoffice' }
+    # - { key: "skeletondirectory", value: '/path/to/nextcloud/core/skeleton' }
+    # - { key: "lost_password_link", value: 'https://example.org/link/to/password/reset' }
+    # - { key: "updater.server.url", value: 'https://updates.nextcloud.com/updater_server/' }
+    # - { key: "updater.release.channel", value: 'stable' }
+    # - { key: "updatechecker", value: "true", type: "boolean" }
+    # - { key: "has_internet_connection", value: "true", type: "boolean" }
+    # - { key: "config_is_read_only", value: "false", type: "boolean" }
+    # - { key: "maintenance", value: "false", type: "boolean" }
+    # - { key: "auth.bruteforce.protection.enabled", value: "true", type: "boolean" }
+    # - { key: "token_auth_enforced", value: "false", type: "boolean" }
+    # - { key: "session_lifetime", value: "86400", type: "integer" }
+    # - { key: "auto_logout", value: "false", type: "boolean" }
+    # - { key: "session_keepalive", value: "true", type: "boolean" }
+    # - { key: "hide_login_form", value: "false", type: "boolean" }
+    # - { key: "logo_url", value: "https://www.example.org" }
+    # - { key: "mail_domain", value: "example.com" }
+    # - { key: "mail_from_address", value: "noreply" }
+    # - { key: "mail_smtphost", value: "smtp.example.com" }
+    # - { key: "mail_smtpport", value: "587", type: "integer" }
+    # - { key: "mail_smtpsecure", value: "tls" }
+    # - { key: "mail_smtpauth", value: "true", type: "boolean" }
+    # - { key: "mail_smtpname", value: "noreply" }
+    # - { key: "mail_smtppassword", value: "CHANGEME" }
+    # - { key: "filesystem_check_changes", value: "0", type: "integer" }
+    # - { key: "filelocking.enabled", value: "true", type: "boolean" }
+    # - { key: "filelocking.ttl", value: "3600", type: "integer" }
   no_log: "{{ item.no_log | default(False) }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config
