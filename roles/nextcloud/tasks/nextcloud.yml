@@ -199,8 +199,9 @@
   when: nextcloud_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
 
-# occ doesn't report changed status, not idempotent, alwyas returns changd
+# occ doesn't report changed status, not idempotent, alwyas returns changed
 # Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
+# Some possible additional settings are documented here. See https://github.com/nextcloud/server/blob/master/config/config.sample.php for all available configuration settings
 - name: set nextcloud config.php values (always returns changed)
   become: yes
   become_user: nextcloud
