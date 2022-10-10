@@ -31,6 +31,8 @@ nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 nextcloud_version: "24.0.6"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
+# default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
+nextcloud_defaultapp: 'dashboard,files'
 # Loglevel to start logging at (integer 1-4, 0=Debug, 1=Info, 2=Warning, 3=Error, 4=Fatal)
 nextcloud_loglevel: 1
 # workaround for old nextcloud-desktop clients which don't support TLSv1.3
