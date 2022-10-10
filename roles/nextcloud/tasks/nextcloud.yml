@@ -226,6 +226,7 @@
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
     - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
     - { key: "defaultapp", value: "{{ nextcloud_defaultapp }}" }
+    - { key: "upgrade.disable-web", value: "true", type: "boolean" }
   no_log: "{{ item.no_log | default(False) }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config
