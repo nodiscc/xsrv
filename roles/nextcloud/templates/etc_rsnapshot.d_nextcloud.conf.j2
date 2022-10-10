@@ -1,6 +1,8 @@
 # rsnapshot configuration for nextcloud backups
 # backup nextcloud data directory
 backup	{{ nextcloud_data_dir }}	localhost/
+# backup configuration file where the encryption app secret is stored
+backup	{{ nextcloud_install_dir }}/config/config.php	localhost/
 # exclude caches/trash directories
 exclude	{{ nextcloud_data_dir }}/updater-*/
 exclude	{{ nextcloud_data_dir }}/appdata_*/
