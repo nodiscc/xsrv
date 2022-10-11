@@ -38,7 +38,7 @@ self_service_password_allowed_hosts:
 - nextcloud: disable link to https://nextcloud.com/signup/ on public pages
 - nextcloud: backup: add `config.php` to the list of files to backup (may contain the encryption secret if encryption was enabled by the admin)
 - openldap: self-service-password: use a YAML list to define [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml), instead of a string with addresses separated by spaces
-- common: kernel: rename variable `os_security_kernel_enable_core_dump` -> `kernel_enable_core_dump`
+- common: kernel: rename variable `os_security_kernel_enable_core_dump` -> [`kernel_enable_core_dump`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
 - common: kernel/sysctl: ensure ipv4/ipv6 configuration is applied to all new/future interfaces as well
 - common: kernel/sysctl: don't disable USB storage, audio input/output, USB MIDI, bluetooth and camera modules by default
 - common: kernel/sysctl: don't disable audio input/output module by default
