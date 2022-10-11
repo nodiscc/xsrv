@@ -55,3 +55,4 @@
     - self_service_password_php_memory_limit|regex_search('[KMG]$')
     - self_service_password_php_post_max_size|regex_search('[KMG]$')
     - self_service_password_php_upload_max_filesize|regex_search('[KMG]$')
+    - self_service_password_allowed_hosts | type_debug == "list"

@@ -8,6 +8,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **common:** if the variable `os_security_kernel_enable_core_dump` was changed from its default value in your hosts/groups configuration, rename it to `kernel_enable_core_dump`
+- **openldap: self-sevice-password:** If you changed the value of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) in your host/groups configuration (`xsrv edit-host/edit-groups`), update it to the YAML list format, instead of a list of addresses separated by spaces:
+
+```yaml
+# old format
+self_service_password_allowed_hosts: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
+# new format
+self_service_password_allowed_hosts:
+  - 10.0.0.0/8
+  - 192.168.0.0/16
+  - 172.16.0.0/12
+```
 
 **Added:**
 - add [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) role - video conferencing solution
@@ -26,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: disable the web updater
 - nextcloud: disable link to https://nextcloud.com/signup/ on public pages
 - nextcloud: backup: add `config.php` to the list of files to backup (may contain the encryption secret if encryption was enabled by the admin)
+- openldap: self-service-password: use a YAML list to define [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml), instead of a string with addresses separated by spaces
 - common: kernel: rename variable `os_security_kernel_enable_core_dump` -> `kernel_enable_core_dump`
 - common: kernel/sysctl: ensure ipv4/ipv6 configuration is applied to all new/future interfaces as well
 - common: kernel/sysctl: don't disable USB storage, audio input/output, USB MIDI, bluetooth and camera modules by default
