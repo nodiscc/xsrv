@@ -48,7 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
 - common: kernel/sysctl: don't disable `vfat` module required by EFI boot
 - graylog: fix installation of elasticsearch packages
-
+- common: firewalld: add all addresses from `192.168.0.0/16` to the `internal` zone by default, not just `192.168.0.0/24`
 
 **Security:**
 - jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
