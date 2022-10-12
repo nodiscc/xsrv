@@ -105,13 +105,13 @@
 
 ### SERVICE ###
 
-- name: enable wireguard service
-  service:
+- name: enable/disable start/stop wireguard service
+  systemd:
     name: wg-quick@wg0
-    enabled: yes
-    state: started
-  register: wireguard_systemd_service
+    enabled: "{{ wireguard_enable_service }}"
+    state: "{{ 'started' if wireguard_enable_service else 'stopped' }}"
   ignore_errors: "{{ ansible_check_mode }}"
+  register: wireguard_systemd_service
 
 - name: restart netdata
   service:

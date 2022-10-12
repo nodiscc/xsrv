@@ -3,6 +3,8 @@
 wireguard_server_public_ip: "CHANGEME"
 # IP address of the VPN server on the VPN network (CIDR notation)
 wireguard_server_ip: "10.200.200.1/24"
+# yes/no: enable/disable the wireguard server service
+wireguard_enable_service: yes
 
 # List of wireguard peers (clients) allowed to connect to the server
 # clients can generate a private/public key pair by running: wg genkey | (umask 0077 && tee wireguard.key) | wg pubkey > wireguard.pub
