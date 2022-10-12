@@ -103,6 +103,9 @@ To search and download video subtitles, register an account on https://opensubti
 
 The [Youtube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) can be used to automatically set metadata for videos downloaded using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
+### Chapter thumbnails on seek bar
+
+Go `Administration > Dashboard > Libraries > Your Library` and `Enable chapter image extraction` to display thumbnails for each chapter while hovering the seek bar.
 
 ### Security
 
