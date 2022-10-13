@@ -20,4 +20,3 @@
     that:
       - item | ansible.utils.ipv4
   with_items: "{{ jellyfin_allowed_hosts }}"
-
