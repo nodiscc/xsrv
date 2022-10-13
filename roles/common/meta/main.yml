@@ -15,6 +15,7 @@
 # @tag mail - setup outgoing system mail
 # @tag msmtp - setup outgoing system mail
 # @tag services - start/stop/enable/disable services
+# @tag utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 
 galaxy_info:
   role_name: common
