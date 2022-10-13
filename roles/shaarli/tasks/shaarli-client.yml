@@ -34,6 +34,6 @@
     day: "*"
     hour: "*" # every hour
     minute: "0"
-    job: '/bin/bash -c "source /var/shaarli/.venv/bin/activate && shaarli {{ "--insecure " if shaarli_https_mode == "selfsigned" }}--config /var/shaarli/python-shaarli-client.ini --outfile /var/shaarli/shaarli.json get-links" | logger -t python-shaarli-client'
+    job: '/bin/bash -c "source /var/shaarli/.venv/bin/activate && shaarli {{ "--insecure " if shaarli_https_mode == "selfsigned" }}--config /var/shaarli/python-shaarli-client.ini --outfile /var/shaarli/shaarli.json get-links" 2>&1 | logger -t python-shaarli-client'
     name: periodic export of shaarli data to file
     user: shaarli
