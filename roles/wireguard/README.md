@@ -25,7 +25,6 @@ wireguard_peers:
   - name: client1
     public_key: Faz...4vEQ=
     ip_address: "10.200.200.10/24"
-
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
@@ -49,8 +48,42 @@ sysctl_allow_forwarding: yes
 
 Setup clients in `wireguard_peers` using the `public_key` value they provided and deploy the role. A configuration file for each client will be generated in `data/wireguard/` in the playbook directory. Send their respective configuration file to all clients - it contains further instructions to connect to the VPN on client machines.
 
-
 **List connected clients:** Access the server over SSH (`xsrv ssh`) and run `sudo wg`.
+
+**Only allow VPN clients to connect to a service on the host:** When firewalld is managed by the [common](../common/) role, by default VPN clients are part of the `internal` zone. To make VPN clients part of the `wireguard` zone instead:
+
+```yaml
+# remove 10.0.0.0/8 from the internal zone
+firewalld_zone_sources:
+  - zone: internal
+    sources:
+      - 192.168.0.0/24
+      - 10.0.1.0/24
+      - 10.0.2.0/24
+      - ...
+  - zone: internal
+    sources:
+      - 10.0.0.0/8
+    state: absent
+
+# disallow connections from LAN to the service, but explicitely allow from wireguard
+apache_firewalld_zones:
+  - zone: public
+    state: disabled
+  - zone: internal
+    state: disabled
+  - zone: wireguard
+    state: enabled
+
+# to disallow connections from VPN clients instead, but still allow connections from LAN:
+apache_firewalld_zones:
+  - zone: public
+    state: enabled
+  - zone: internal
+    state: enabled
+  - zone: wireguard
+    state: disabled
+```
 
 ### Debugging
 
