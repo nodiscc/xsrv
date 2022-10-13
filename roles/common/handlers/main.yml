@@ -1,6 +1,6 @@
 - name: apply sysctl configuration
   become: yes
-  command: sysctl --load /etc/sysctl.d/custom.conf
+  command: sysctl --system
 
 - name: update pam configuration
   become: yes
