@@ -48,7 +48,8 @@ This role does not remove any user accounts. To remove a samba user account, rem
 <!--BEGIN TAGS LIST-->
 ```
 samba - setup samba file server
-samba-config - setup main samba configuration
+samba-shares - configfure samba file shares
+utils-samba-listusers - (manual) list samba users
 ```
 <!--END TAGS LIST-->
 
