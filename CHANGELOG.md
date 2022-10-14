@@ -62,6 +62,7 @@ self_service_password_allowed_hosts:
 
 **Fixed:**
 - shaarli: fix shaarli unable to save thumbnails to disk
+- shaarli: fix broken link (HTTP 403) to documentation
 - jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
 - common: kernel/sysctl: don't disable `vfat` module required by EFI boot
 - graylog: fix installation of elasticsearch packages

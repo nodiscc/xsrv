@@ -46,6 +46,13 @@ MDomain {{ shaarli_fqdn }}
     Require all granted
   </Files>
 
+  <Directory {{ shaarli_install_dir }}/doc/html/>
+    DirectoryIndex index.html
+    <FilesMatch ".*\.html">
+      Require all granted
+    </FilesMatch>
+  </Directory>
+
   <FilesMatch "\.(?:ico|css|js|gif|jpe?g|png|ttf|oet|woff2)$">
       # allow client-side caching of static files
       Header set Cache-Control "max-age=2628000, public, must-revalidate, proxy-revalidate"
