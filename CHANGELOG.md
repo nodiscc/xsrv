@@ -52,6 +52,7 @@ self_service_password_allowed_hosts:
 - common: kernel/sysctl: load all sysctl variables, not just those in `custom.conf`
 - wireguard: firewalld: setup firewall to allow blocking/allowing traffic from VPN clients to services on the host, independently
 - nextcloud: update to [v24.0.6](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/)
+- gitea: update to [v1.17.3](https://github.com/go-gitea/gitea/releases/tag/v1.17.3)
 - openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)
 - graylog: update mongodb to v4.4
 - rocketchat: upgrade to [v3.18.7](https://raw.githubusercontent.com/RocketChat/Rocket.Chat/develop/HISTORY.md)
