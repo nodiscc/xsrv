@@ -79,6 +79,7 @@
   when: (item.0.delete is not defined) or (not item.0.delete)
   loop: "{{ q('subelements', firewalld_zone_sources, 'sources', {'skip_missing': True}) }}"
   ignore_errors: "{{ ansible_check_mode }}"
+  notify: reload firewalld
 
 - name: configure firewalld zone services
   firewalld:
