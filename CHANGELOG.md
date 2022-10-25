@@ -29,6 +29,7 @@ self_service_password_allowed_hosts:
 - common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - shaarli: add ability to install the python API client ([`shaarli_setup_python_client: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and export all shaarli data to a JSON file every hour
 - wireguard: add ability to enable/disable the wireguard server service ([`wireguard_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml))
+- monitoring/netdata: allow disabling notifications for ping check alarms ([`netdata_fping_alarms_silent: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - shaarli: add required packages for LDAP authentication
 - samba: add `utils-samba-listusers` tag (list samba users)
 

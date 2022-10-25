@@ -121,6 +121,8 @@ netdata_fping_hosts: []
 netdata_fping_ping_every: 5000
 # Delay between ping chart updates (seconds) (this shohuld be longer than netdata_fping_ping_every)
 netdata_fping_update_every: 10
+# Do not send notifications on ping check failures (yes/no)
+netdata_fping_alarms_silent: no
 
 ## NETDATA STREAMING ##
 # enable/disable streaming to another netdata instance (yes/no)

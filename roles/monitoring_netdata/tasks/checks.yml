@@ -12,6 +12,7 @@
     - netdata_disable_debug_log == netdata_disable_debug_log | bool
     - netdata_disable_error_log == netdata_disable_error_log | bool
     - netdata_fping_ping_every == netdata_fping_ping_every|int
+    - netdata_fping_alarms_silent == netdata_fping_alarms_silent | bool
     - netdata_fping_update_every == netdata_fping_update_every|int
     - netdata_fping_hosts|type_debug == "list"
     - netdata_http_checks|type_debug == "list"
