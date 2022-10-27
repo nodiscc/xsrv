@@ -1,28 +1,28 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - nextcloud
     - checks
 
 - name: include mysql configuration tasks
-  include: mysql.yml
+  import_tasks: mysql.yml
   become: yes
   tags: nextcloud
   when: nextcloud_db_type == 'mysql'
 
 - name: include postgresql configuration tasks
-  include: postgresql.yml
+  import_tasks: postgresql.yml
   become: yes
   tags: nextcloud
   when: nextcloud_db_type == 'pgsql'
 
 - name: include nextcloud configuration tasks
-  include: nextcloud.yml
+  import_tasks: nextcloud.yml
   become: yes
   tags: nextcloud
 
 - name: include self-signed certificates configuration tasks
-  include: ssl-selfsigned.yml
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -31,14 +31,14 @@
   when: nextcloud_https_mode == 'selfsigned'
 
 - name: include apache configuration tasks
-  include: apache.yml
+  import_tasks: apache.yml
   become: yes
   tags:
     - nextcloud
     - apache
 
 - name: include rsnapshot/backups configuration tasks
-  include: backups.yml
+  import_tasks: backups.yml
   become: yes
   tags:
     - nextcloud
@@ -48,7 +48,7 @@
     - ansible_local.backup.ansible_managed | bool
 
 - name: include fail2ban configuration tasks
-  include: fail2ban.yml
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - nextcloud
@@ -58,7 +58,7 @@
     - ansible_local.fail2ban.ansible_managed | bool
 
 - name: include rsyslog configuration tasks
-  include: rsyslog.yml
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - nextcloud
@@ -69,7 +69,7 @@
     - ansible_local.rsyslog.ansible_managed | bool
 
 - name: include netdata configuration tasks
-  include: netdata.yml
+  import_tasks: netdata.yml
   become: yes
   tags:
     - nextcloud
@@ -80,7 +80,7 @@
     - ansible_local.netdata.ansible_managed | bool
 
 - name: include ansible facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: nextcloud
 

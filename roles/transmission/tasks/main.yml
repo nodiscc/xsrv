@@ -1,16 +1,16 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - transmission
-    - checks
+        - checks
 
 - name: include transmission configuration tasks
-  include: transmission.yml
+  import_tasks: transmission.yml
   become: yes
   tags: transmission
 
 - name: include self-signed certificates configuration tasks
-  include: ssl-selfsigned.yml
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -19,14 +19,14 @@
   when: transmission_https_mode == 'selfsigned'
 
 - name: include apache configuration tasks
-  include: apache.yml
+  import_tasks: apache.yml
   become: yes
   tags:
     - transmission
     - apache
 
 - name: include netdata configuration tasks
-  include: netdata.yml
+  import_tasks: netdata.yml
   become: yes
   tags:
     - transmission
@@ -37,12 +37,12 @@
     - ansible_local.netdata.ansible_managed | bool
 
 - name: include ansible facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: transmission
 
 - name: include firewalld configuration tasks
-  include: firewalld.yml
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - transmission

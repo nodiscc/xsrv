@@ -51,6 +51,7 @@ linux_users:
 ```
 apache - setup the apache web server
 ssl - setup SSL certificates and configuration
+apache-mod-evasive - setup apache anti-DoS module
 ```
 <!--END TAGS LIST-->
 

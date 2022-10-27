@@ -321,7 +321,7 @@
 ### NEXTCLOUD APPLICATIONS ####
 
 - name: include nextcloud applications configuration tasks
-  include: nextcloud-applications.yml
+  import_tasks: nextcloud-applications.yml
   tags: nextcloud-applications
 
 ### CLEANUP ###

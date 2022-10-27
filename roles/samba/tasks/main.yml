@@ -1,28 +1,32 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - samba
     - checks
 
-- name: include salba configuration tasks
-  include: samba.yml
+- name: include samba configuration tasks
+  import_tasks: samba.yml
   become: yes
   tags: samba
 
 - name: include samba ldapsam backend configuration tasks
-  include: samba-ldapsam.yml
+  import_tasks: samba-ldapsam.yml
   become: yes
+  tags:
+    - samba
+    - samba-users
   when: samba_passdb_backend == 'ldapsam'
-  tags: samba
 
 - name: include samba tdbsam backend configuration tasks
-  include: samba-tdbsam.yml
+  import_tasks: samba-tdbsam.yml
   become: yes
+  tags:
+    - samba
+    - samba-users
   when: samba_passdb_backend == 'tdbsam'
-  tags: samba
 
 - name: include rsnapshot/backup configuration tasks
-  include: backups.yml
+  import_tasks: backups.yml
   become: yes
   tags:
     - samba
@@ -32,7 +36,7 @@
     - ansible_local.backup.ansible_managed | bool
 
 - name: include rsyslog configuration tasks
-  include: rsyslog.yml
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - samba
@@ -43,7 +47,7 @@
     - ansible_local.rsyslog.ansible_managed | bool
 
 - name: include firewalld configuration tasks
-  include: firewalld.yml
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - samba
@@ -53,7 +57,7 @@
     - ansible_local.firewalld.ansible_managed | bool
 
 - name: include ansible facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: samba
 
@@ -64,7 +68,7 @@
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
 - name: include samba users listing tasks
-  include: utils-samba-listusers.yml
+  import_tasks: utils-samba-listusers.yml
   become: yes
   tags:
     - never

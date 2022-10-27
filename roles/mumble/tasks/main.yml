@@ -1,17 +1,17 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   become: yes
   tags:
     - mumble
     - checks
 
 - name: include mumble configuration tasks
-  include: mumble.yml
+  import_tasks: mumble.yml
   become: yes
   tags: mumble
 
 - name: include fail2ban configuration tasks
-  include: fail2ban.yml
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - mumble
@@ -21,7 +21,7 @@
     - ansible_local.fail2ban.ansible_managed | bool
 
 - name: include rsnapshot/backup configuration tasks
-  include: backups.yml
+  import_tasks: backups.yml
   become: yes
   tags:
     - mumble
@@ -31,7 +31,7 @@
     - ansible_local.backup.ansible_managed | bool
 
 - name: include rsyslog configuration tasks
-  include: rsyslog.yml
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - mumble
@@ -42,7 +42,7 @@
     - ansible_local.rsyslog.ansible_managed | bool
 
 - name: include netdata configuration tasks
-  include: netdata.yml
+  import_tasks: netdata.yml
   become: yes
   tags:
     - mumble
@@ -53,7 +53,7 @@
     - ansible_local.netdata.ansible_managed | bool
 
 - name: include firewalld configuration tasks
-  include: firewalld.yml
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - mumble
@@ -63,7 +63,7 @@
     - ansible_local.firewalld.ansible_managed | bool
 
 - name: include ansible facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: mumble
 

@@ -12,7 +12,7 @@
 ### LDAP ACCOUNT MANAGER INSTALLATION ###
 
 - name: include ldap-account-manager configuration tasks (from .tar.bz2 file)
-  include: ldap-account-manager-tar-bz2.yml
+  import_tasks: ldap-account-manager-tar-bz2.yml
   when: ldap_account_manager_install_method == "tar.bz2"
 
 ### CONFIGURATION ###
@@ -58,7 +58,8 @@
 ### SSL/TLS CERTIFICATES ###
 
 - name: include ldap-account-manager self-signed certificates configuration tasks
-  include: ldap-account-manager-ssl-selfsigned.yml
+  import_tasks: ldap-account-manager-ssl-selfsigned.yml
+  tags: ssl-selfsigned
   when: ldap_account_manager_https_mode == 'selfsigned'
 
 ### APACHE CONFIGURATION ###

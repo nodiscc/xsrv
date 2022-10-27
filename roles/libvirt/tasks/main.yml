@@ -1,10 +1,10 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - libvirt
     - checks
 
 - name: include libvirt configuration tasks
-  include: libvirt.yml
+  import_tasks: libvirt.yml
   become: yes
   tags: libvirt

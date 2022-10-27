@@ -1,28 +1,28 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - gitea
     - checks
 
 - name: include mysql configuration tasks
-  include: mysql.yml
+  import_tasks: mysql.yml
   become: yes
   tags: gitea
   when: gitea_db_type == 'mysql'
 
 - name: include postgresql configuration tasks
-  include: postgresql.yml
+  import_tasks: postgresql.yml
   become: yes
   tags: gitea
   when: gitea_db_type == 'postgres'
 
 - name: include gitea configuration tasks
-  include: gitea.yml
+  import_tasks: gitea.yml
   become: yes
   tags: gitea
 
 - name: include self-signed certificates configuration tasks
-  include: ssl-selfsigned.yml
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -31,14 +31,14 @@
   when: gitea_https_mode == 'selfsigned'
 
 - name: include apache configuration tasks
-  include: apache.yml
+  import_tasks: apache.yml
   become: yes
   tags:
     - gitea
     - apache
 
 - name: include rsnapshot/backup configuration tasks
-  include: backups.yml
+  import_tasks: backups.yml
   become: yes
   tags:
     - gitea
@@ -48,7 +48,7 @@
     - ansible_local.backup.ansible_managed | bool
 
 - name: include rsyslog configuration tasks
-  include: rsyslog.yml
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - gotty
@@ -59,7 +59,7 @@
     - ansible_local.rsyslog.ansible_managed | bool
 
 - name: include netdata configuration tasks
-  include: netdata.yml
+  import_tasks: netdata.yml
   become: yes
   tags:
     - gotty
@@ -70,7 +70,7 @@
     - ansible_local.netdata.ansible_managed | bool
 
 - name: include ansible facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: gitea
 

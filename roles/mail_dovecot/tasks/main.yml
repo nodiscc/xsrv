@@ -1,12 +1,12 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - dovecot
     - mail
     - checks
 
 - name: include self-signed certificates configuration tasks
-  include: ssl-selfsigned.yml
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - dovecot
@@ -14,14 +14,14 @@
     - ssl
 
 - name: include dovecot configuration tasks
-  include: dovecot.yml
+  import_tasks: dovecot.yml
   become: yes
   tags:
     - dovecot
     - mail
 
 - name: include fail2ban configuration tasks
-  include: fail2ban.yml
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - dovecot
@@ -32,7 +32,7 @@
     - ansible_local.fail2ban.ansible_managed | bool
 
 - name: include firewalld configuration tasks
-  include: firewalld.yml
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - dovecot
@@ -43,7 +43,7 @@
     - ansible_local.firewalld.ansible_managed | bool
 
 - name: include rsnapshot/backup configuration tasks
-  include: backups.yml
+  import_tasks: backups.yml
   become: yes
   tags:
     - gitea
@@ -53,7 +53,7 @@
     - ansible_local.backup.ansible_managed | bool
 
 - name: include netdata configuration tasks
-  include: netdata.yml
+  import_tasks: netdata.yml
   become: yes
   tags:
     - dovecot
@@ -65,7 +65,7 @@
     - ansible_local.netdata.ansible_managed | bool
 
 - name: include ansibel facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: dovecot
 

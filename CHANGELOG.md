@@ -77,7 +77,8 @@ self_service_password_allowed_hosts:
 - cleanup: replace deprecated `apt_key/apt_repository` modules, install all APT keys in `/usr/share/keyrings/`
 - xsrv: update ansible to [v6.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - postgresql: update pgmetrics to [v1.14.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.14.0)
-- general cleanup and maintenance
+- general cleanup and maintenance, remove deprecated ansible modules
+- update ansible tags
 - update documentation
 - update/improve test tooling
 

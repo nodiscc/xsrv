@@ -1,19 +1,19 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - monitoring
     - rsyslog
     - checks
 
 - name: include rsyslog configuration tasks
-  include: rsyslog.yml
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - monitoring
     - rsyslog
 
 - name: include ansibel facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags:
     - monitoring

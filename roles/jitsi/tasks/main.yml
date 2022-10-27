@@ -1,23 +1,23 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - jitsi
     - checks
 
 - name: include jitsi configuration tasks
-  include: jitsi.yml
+  import_tasks: jitsi.yml
   become: yes
   tags: jitsi
 
 - name: include jitsi users configuration tasks
-  include: jitsi-users.yml
+  import_tasks: jitsi-users.yml
   become: yes
   tags:
     - jitsi
     - jitsi-users
 
 - name: include fail2ban configuration tasks
-  include: fail2ban.yml
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - jitsi
@@ -27,7 +27,7 @@
     - ansible_local.fail2ban.ansible_managed | bool
 
 - name: include rsyslog configuration tasks
-  include: rsyslog.yml
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - jitsi
@@ -38,12 +38,12 @@
     - ansible_local.rsyslog.ansible_managed | bool
 
 - name: include ansible facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: jitsi
 
 - name: include firewalld configuration tasks
-  include: firewalld.yml
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - jitsi
@@ -53,24 +53,24 @@
     - ansible_local.firewalld.ansible_managed | bool
 
 - name: include self-signed certificates configuration tasks
-  include: ssl-selfsigned.yml
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - jitsi
     - ssl
 
 - name: include apache configuration tasks
-  include: apache.yml
+  import_tasks: apache.yml
   become: yes
   tags:
     - jitsi
-    - firewall
+    - apache
   when:
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
 - name: include netdata configuration tasks
-  include: netdata.yml
+  import_tasks: netdata.yml
   become: yes
   tags:
     - jitsi

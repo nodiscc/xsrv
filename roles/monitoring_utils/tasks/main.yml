@@ -1,12 +1,12 @@
 - name: include monitoring-utils configuration tasks
-  include: monitoring-utils.yml
+  import_tasks: monitoring-utils.yml
   become: yes
   tags:
     - monitoring
     - monitoring_utils
 
 - name: include lynis configuration tasks
-  include: lynis.yml
+  import_tasks: lynis.yml
   become: yes
   tags:
     - monitoring

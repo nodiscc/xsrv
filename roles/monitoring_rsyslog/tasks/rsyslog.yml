@@ -6,7 +6,8 @@
       - rsyslog-gnutls # TLS forwarding support
 
 - name: setup keys/certificates for TCP/TLS message forwarding
-  include_tasks: rsyslog-ssl.yml
+  import_tasks: rsyslog-ssl.yml
+  tags: ssl
   when: rsyslog_enable_forwarding | bool
 
 - name: set retention/rotation policy for rsyslog logs

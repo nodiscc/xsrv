@@ -1,31 +1,31 @@
 - name: include variable checks tasks
-  include: checks.yml
+  import_tasks: checks.yml
   tags:
     - graylog
     - checks
 
 - name: include graylog requirements configuration tasks
-  include: requirements.yml
+  import_tasks: requirements.yml
   become: yes
   tags: graylog
 
 - name: include mongodb configuration tasks
-  include: mongodb.yml
+  import_tasks: mongodb.yml
   become: yes
   tags: graylog
 
 - name: include elasticsearch configuration tasks
-  include: elasticsearch.yml
+  import_tasks: elasticsearch.yml
   become: yes
   tags: graylog
 
 - name: include graylog configuration tasks
-  include: graylog.yml
+  import_tasks: graylog.yml
   become: yes
   tags: graylog
 
 - name: include self-signed certificates configuration tasks
-  include: ssl-selfsigned.yml
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -34,14 +34,14 @@
   when: graylog_https_mode == 'selfsigned'
 
 - name: include apache configuration tasks
-  include: apache.yml
+  import_tasks: apache.yml
   become: yes
   tags:
     - graylog
     - apache
 
 - name: include rsyslog configuration tasks
-  include: rsyslog.yml
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - graylog
@@ -52,7 +52,7 @@
     - ansible_local.rsyslog.ansible_managed | bool
 
 - name: include netdata configuration tasks
-  include: netdata.yml
+  import_tasks: netdata.yml
   become: yes
   tags:
     - graylog
@@ -63,12 +63,12 @@
     - ansible_local.netdata.ansible_managed | bool
 
 - name: include ansible facts configuration tasks
-  include: fact.yml
+  import_tasks: fact.yml
   become: yes
   tags: graylog
 
 - name: include firewalld configuration tasks
-  include: firewalld.yml
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - graylog

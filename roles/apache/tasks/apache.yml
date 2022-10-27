@@ -101,7 +101,8 @@
   tags: ssl
 
 - name: include mod-evasive configuration tasks
-  include: apache-mod-evasive.yml
+  import_tasks: apache-mod-evasive.yml
+  tags: apache-mod-evasive
 
 - name: copy apache sites config
   template:

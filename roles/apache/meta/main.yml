@@ -1,5 +1,6 @@
 # @tag apache - setup the apache web server
 # @tag ssl - setup SSL certificates and configuration
+# @tag apache-mod-evasive - setup apache anti-DoS module
 
 galaxy_info:
   role_name: apache
