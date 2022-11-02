@@ -1,5 +1,5 @@
 - name: check if host must be rebooted
-  shell: needrestart -b -k
+  command: needrestart -b -k
   register: needrestart_kernel
   changed_when: no
   check_mode: no # run even in check mode as it doesn't change anything
@@ -10,7 +10,7 @@
   when: "'NEEDRESTART-KSTA: 3' in needrestart_kernel.stdout_lines"
 
 - name: restart services if required after an upgrade
-  shell: needrestart -r a
+  command: needrestart -r a
   become: yes
   register: needrestart_services
   changed_when: "'No services need to be restarted.' not in needrestart_services.stdout_lines"
