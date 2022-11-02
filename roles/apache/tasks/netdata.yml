@@ -1,12 +1,17 @@
 - name: install netdata systemd check for apache
   template:
-    src: etc_netdata_health.d_systemdunits.conf.d_apache.conf.j2
-    dest: /etc/netdata/health.d/systemdunits.conf.d/apache.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: 0640
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - src: etc_netdata_health.d_systemdunits.conf.d_apache.conf.j2
+      dest: /etc/netdata/health.d/systemdunits.conf.d/apache.conf
+    - src: etc_netdata_health.d_systemdunits.conf.d_php-fpm.conf.j2
+      dest: /etc/netdata/health.d/systemdunits.conf.d/php-fpm.conf
 
 - name: migration - remove files from old versions of the role
   file:
