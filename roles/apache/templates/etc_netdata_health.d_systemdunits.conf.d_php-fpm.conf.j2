@@ -1,5 +1,5 @@
     alarm: systemd_service_php7.4_fpm
-       on: systemdunits_service_units.service_unit_state
+       on: systemdunits_service-units.service_unit_state
      calc: $php7.4_fpm
     every: 10s
      crit: ($this = 5)

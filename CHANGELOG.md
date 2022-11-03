@@ -70,6 +70,7 @@ self_service_password_allowed_hosts:
 - jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
 - common: kernel/sysctl: don't disable `vfat` module required by EFI boot
 - graylog: fix installation of elasticsearch packages
+- monitoring/netdata: fix individual alarms for failed systemd services
 - common: firewalld: add all addresses from `192.168.0.0/16` to the `internal` zone by default, not just `192.168.0.0/24`
 
 **Security:**

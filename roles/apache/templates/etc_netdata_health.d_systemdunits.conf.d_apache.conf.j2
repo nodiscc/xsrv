@@ -1,5 +1,5 @@
     alarm: systemd_service_apache2
-       on: systemdunits_service_units.service_unit_state
+       on: systemdunits_service-units.service_unit_state
      calc: $apache2
     every: 10s
      crit: ($this = 5)

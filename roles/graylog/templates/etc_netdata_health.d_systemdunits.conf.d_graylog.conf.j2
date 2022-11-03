@@ -1,5 +1,5 @@
     alarm: systemd_service_mongod
-       on: systemdunits_service_units.service_unit_state
+       on: systemdunits_service-units.service_unit_state
      calc: $mongod
     every: 10s
      crit: ($this = 5)
@@ -8,7 +8,7 @@
        to: sysadmin
 
     alarm: systemd_service_elasticsearch
-       on: systemdunits_service_units.service_unit_state
+       on: systemdunits_service-units.service_unit_state
      calc: $elasticsearch
     every: 10s
      crit: ($this = 5)
@@ -17,7 +17,7 @@
        to: sysadmin
 
     alarm: systemd_service_graylog
-       on: systemdunits_service_units.service_unit_state
+       on: systemdunits_service-units.service_unit_state
      calc: $graylog_server
     every: 10s
      crit: ($this = 5)
