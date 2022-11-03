@@ -31,6 +31,7 @@ self_service_password_allowed_hosts:
 - wireguard: add ability to enable/disable the wireguard server service ([`wireguard_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml))
 - monitoring/netdata: allow disabling notifications for ping check alarms ([`netdata_fping_alarms_silent: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - apache/monitoring: netdata: monitor state of the php-fpm service and alert in case of failure
+- apache: start/stop the php7.4-fpm service alongside the apache service depending on `apache_enable_service: yes/no`
 - shaarli: add required packages for LDAP authentication
 - monitoring_netdata: add `utils-autorestart` tag (reboot hosts if required after a kernel update, will only run if the `utils-autorestart` tag is explicitly called)
 - samba: add `utils-samba-listusers` tag (list samba users)

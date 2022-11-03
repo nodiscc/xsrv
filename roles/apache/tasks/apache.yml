@@ -162,11 +162,19 @@
     day: '*'
     job: '/usr/local/bin/apache-mod-md-reload check-reload | logger -t apache-mod-md-reload'
 
-##### SERVICE #####
+##### SERVICES #####
 
 - name: enable/disable start/stop apache2 service
   systemd:
     name: apache2
+    enabled: "{{ apache_enable_service }}"
+    state: "{{ 'started' if apache_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: enable/disable start/stop php-fpm service
+  systemd:
+    name: php7.4-fpm
     enabled: "{{ apache_enable_service }}"
     state: "{{ 'started' if apache_enable_service else 'stopped' }}"
     daemon_reload: yes
