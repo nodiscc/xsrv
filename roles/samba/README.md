@@ -23,7 +23,7 @@ See [meta/main.yml](meta/main.yml)
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-Currently, the LDAP server must be running on the same host as the samba server.
+Currently, the LDAP server must be running on the same host as the samba server if `samba_passdb_backend: ldpsam` is used.
 
 ## Usage
 
