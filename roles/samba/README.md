@@ -1,6 +1,6 @@
 # xsrv.samba
 
-This role will install [Samba](https://en.wikipedia.org/wiki/Samba_(software)), a file sharing service for various operating systems. Samba is a free software re-implementation of Microsoft SMB networking protocol.
+This role will install [Samba](https://en.wikipedia.org/wiki/Samba_(software)), a file sharing service compatible with many operating systems. Samba is a free software re-implementation of Microsoft SMB networking protocol.
 
 The server is set up as a "standalone"/workgroup server (ie. not part of a domain) and can use one of these backends for user accounts:
 - standard local Linux users
