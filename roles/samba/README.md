@@ -2,8 +2,9 @@
 
 This role will install [Samba](https://en.wikipedia.org/wiki/Samba_(software)), a file sharing service for various operating systems. Samba is a free software re-implementation of Microsoft SMB networking protocol.
 
-The server is set up as a "standalone"/workgroup server (ie. not part of a domain) and uses standard Linux users as a backend for user accounts.
-
+The server is set up as a "standalone"/workgroup server (ie. not part of a domain) and can use one of these backends for user accounts:
+- standard local Linux users
+- LDAP users
 
 ## Requirements/dependencies/example playbook
 
@@ -22,6 +23,7 @@ See [meta/main.yml](meta/main.yml)
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
+Currently, the LDAP server must be running on the same host as the samba server.
 
 ## Usage
 
@@ -34,10 +36,6 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_samba.conf.j2) for the [backup](../backup/) role.
-
-### Listing samba users
-
-`ssh my.example.org sudo pdbedit -Lv`
 
 ### Removing samba users
 
