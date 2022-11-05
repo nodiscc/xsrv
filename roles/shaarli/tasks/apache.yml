@@ -35,4 +35,4 @@
   lineinfile:
     path: /etc/hosts
     state: present
-    line: "127.0.0.1	{{ shaarli_fqdn }}" # noqa 203
+    line: "127.0.0.1	{{ shaarli_fqdn }}" # noqa no-tabs
