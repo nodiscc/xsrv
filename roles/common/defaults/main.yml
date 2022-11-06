@@ -166,7 +166,7 @@ setup_datetime: yes
 # setup/harden SSH server (yes/no)
 setup_ssh: yes
 # List of public SSH key files to authorize on the server for the ansible user
-# Example: ['public_keys/john.pub', 'public_keys/jane.pub']
+# Example: ['data/public_keys/john.pub', 'data/public_keys/jane.pub']
 # Removing a key here does not remove it on the server!
 ssh_authorized_keys: []
 # a list of public keys that are never accepted by the ssh server
@@ -273,13 +273,13 @@ setup_users: yes
 #   - name: "remotebackup"
 #     groups: [ "ssh", "sudo" ]
 #     comment: "limited user account for remote backups"
-#     ssh_authorized_keys: ['public_keys/root@backup.EXAMPLE.org.pub']
+#     ssh_authorized_keys: ['data/public_keys/root@backup.EXAMPLE.org.pub']
 #     home: "/home/remotebackup"
 #     sudo_nopasswd_commands: ['/usr/bin/rsync']
 #   - name: "my-sftp-account"
 #     home: "/var/lib/sftp/my-sftp-account"
 #     comment: "SFTP-only account"
-#     ssh_authorized_keys: [ "public_keys/gitlab-runner@my.EXAMPLE.org.pub", "public_keys/client1@EXAMPLE.org.pub" ]
+#     ssh_authorized_keys: [ "data/public_keys/gitlab-runner@my.EXAMPLE.org.pub", "data/public_keys/client1@EXAMPLE.org.pub" ]
 #     groups: [ 'ssh', 'sftponly' ]
 #   - name: "{{ ansible_user }}"
 #     groups: adm

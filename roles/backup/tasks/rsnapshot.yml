@@ -86,10 +86,18 @@
   meta: flush_handlers
   tags: rsnapshot-ssh-key
 
+- name: create local public_keys directory on the controller
+  become: no
+  delegate_to: localhost
+  file:
+    path: "{{ playbook_dir }}/data/public_keys/"
+    state: directory
+    mode: 0755
+
 - name: copy root public SSH key to the controller
   fetch:
     src: /root/.ssh/id_rsa.pub
-    dest: "public_keys/root@{{ inventory_hostname }}.pub"
+    dest: "{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"
     flat: yes
   tags: rsnapshot-ssh-key
 

@@ -2,7 +2,7 @@
 
 Usage: `xsrv COMMAND default [HOST]`
 
-[inventory](inventory.yml) · [playbook](playbook.yml) · [host variables](host_vars/) · [group variables](group_vars/) · [keepass keyring](default.kdbx) · [public keys](public_keys/) · [extra tasks](playbooks/) · [ansible.cfg](playbooks/) · [requirements/upgrades](requirements.yml) · [local backups/data/cache](data/)
+[inventory](inventory.yml) · [main playbook](playbook.yml) · [hosts configuration](host_vars/) · [groups configuration](group_vars/) · [keepass keyring](default.kdbx) · [other playbooks](playbooks/) · [ansible configuration](playbooks/) · [collections configuration](requirements.yml) · [other data](data/)
 
 <!--
 ## Monitoring
@@ -45,3 +45,8 @@ insert netdata badges here
   addressing: static
 ```
 -->
+
+## Hosts
+
+<!-- BEGIN AUTOMATICALLY GENERATED CONTENT - readme_gen ROLE -->
+<!-- END AUTOMATICALLY GENERATED CONTENT - readme_gen ROLE -->

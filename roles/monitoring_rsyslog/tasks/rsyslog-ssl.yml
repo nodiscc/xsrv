@@ -45,7 +45,7 @@
 
 - name: upload syslog server/CA certificate
   copy:
-    src: "{{ playbook_dir }}/public_keys/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt"
+    src: "{{ playbook_dir }}/data/certificates/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt"
     dest: /etc/ssl/rsyslog/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt
     owner: root
     group: root

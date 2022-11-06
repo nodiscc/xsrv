@@ -98,14 +98,21 @@
     mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: create local certificates directory on the controller
+  become: no
+  delegate_to: localhost
+  file:
+    path: "{{ playbook_dir }}/data/certificates/"
+    state: directory
+    mode: 0755
+
 # the certificate will be uploaded to syslog clients (hosts with rsyslog_enable_forwarding: yes)
 - name: download CA/server certificate to the controller
   fetch:
     src: /etc/graylog/ssl/graylog-ca.crt
-    dest: "{{ playbook_dir }}/public_keys/{{ inventory_hostname }}-graylog-ca.crt"
+    dest: "{{ playbook_dir }}/data/certificates/{{ inventory_hostname }}-graylog-ca.crt"
     flat: yes
   ignore_errors: "{{ ansible_check_mode }}"
-
 
 ### SERVICE ###
 

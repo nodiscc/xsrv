@@ -489,9 +489,14 @@ Directory structure for a project:
 │   └── my.other.org/
 │       ├── my.other.org.vault.yml
 │       └── my.other.org.yml
-├── data/ # local cache and data
+├── data/ # other data
 │   ├── backups/
-│   └── cache/
+│   ├── cache/
+│   ├── certificates/
+│   └── public_keys/
+├── playbooks # custom playbooks for one-shot tasks
+│   ├── main.yml
+│   └── operationXYZ.yml
 ├── README.md # documentation about your project
 ├── ansible.cfg # ansible configuration
 ├── requirements.yml # required ansible collections
@@ -499,17 +504,6 @@ Directory structure for a project:
     └── nodiscc
         └── xsrv
 ```
-
-<!--TODO
- (output format, verbosity, logging, paths...)
-├── public_keys/ # public SSH keys
-│   └── user@laptop.pub
- and their versions
-├── playbooks # custom playbooks for one-shot tasks
-│   ├── main.yml
-│   └── operationXYZ.yml
-```
--->
 
 ### Version control
 

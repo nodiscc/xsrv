@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **common:** if the variable `os_security_kernel_enable_core_dump` was changed from its default value in your hosts/groups configuration, rename it to `kernel_enable_core_dump`
 - **openldap: self-sevice-password:** If you changed the value of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) in your host/groups configuration (`xsrv edit-host/edit-groups`), update it to the YAML list format, instead of a list of addresses separated by spaces:
+- move the `public_keys/` directory from the root of the project directory, under the `data/` directory.
+- if it exists, move the `certificates/` directory from the root of the project directory, under the `data/` directory.
+- **graylog/monitoring_rsyslog:** move the `*-graylog-ca.crt` file from the `public_keys/` directory to the `data/certificates/` directory (create it if it does not exist)
 
 ```yaml
 # old format
