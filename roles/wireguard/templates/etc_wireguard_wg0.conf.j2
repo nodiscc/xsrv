@@ -6,5 +6,5 @@ ListenPort = 51820
 {% for peer in wireguard_peers %}
 [Peer]
 PublicKey = {{ peer.public_key }}
-AllowedIPs = {{ peer.ip_address }}
+AllowedIPs = {{ peer.ip_address | ansible.utils.ipaddr('address') }}/{{ wireguard_server_ip | ansible.utils.ipaddr('network') }}
 {% endfor %}
