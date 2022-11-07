@@ -35,13 +35,17 @@ Security upgrades for software provided by the Linux distribution are applied [a
 
 ## Security
 
-Check and apply [upgrades](#upgrading) on a regular basis. Check [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) reports for abnormal messages or alarms.
+- Check and apply [upgrades](#upgrading) on a regular basis.
+- Check [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) reports for abnormal messages or alarms.
+- Ensure appropriate [physical access control](https://www.stigviewer.com/controls/800-53/PE-3) measures are in place for physical servers.
 
 Isolation between services/applications relies on [file permissions, ownership and groups](https://wiki.debian.org/Permissions) and [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). Compromise of a single service or account must not allow compromise of other services and accounts.
 
 <!-- TODO PHP web applications currently share the same user. -->
 
-The `ansible_user` administration account has unlimited access through SSH/[`sudo`](https://wiki.debian.org/sudo) (requires both an authorized SSH key and a password). Be careful when performing manual operations from this account. Protect your private SSH key and the `.ansible-vault-password` file.
+The `ansible_user` administration account has unlimited access through SSH/[`sudo`](https://wiki.debian.org/sudo) (requires both an authorized SSH key and a password). Ensure appropriate security measures are in place on devices used to access to this account. Be careful when performing manual operations from this account. Protect your private SSH key and the `.ansible-vault-password` file.
+
+The system is designed to host data and services with the same classification level and tenant. If you need different security contexts (for example public or private facing services, different sets of end users/multitenancy, ...), split your infrastructure across different VMs/machines/networks and setup additional network/infrastructure access controls and isolation mechanisms.
 
 The default setup enforces intermediate hardening measures inspired from various guidelines ([DISA STIGs](https://public.cyber.mil/stigs/), [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/)...).
 
@@ -49,9 +53,6 @@ Network communications are protected using strong public-key cryptography (authe
 
 `xsrv` roles install and manage only  [Free and Open-Source Software](https://en.wikipedia.org/wiki/Free_and_open-source_software).
 
-The system is designed to host data and services with the same classification level and tenant. If you need different security contexts (for example public or private facing services, different sets of end users/multitenancy, ...), split your infrastructure across different VMs/machines/networks and setup additional network/infrastructure access controls and isolation mechanisms.
-
-If needed, setup additional physical access controls such as [Full Disk Encryption](https://unix.stackexchange.com/questions/577379/how-can-i-install-debian-with-full-disk-encryption-and-a-custom-sized-swapfile), surveillance and perimeter security.
 
 ```
 We trust you have received the usual lecture from the local System
