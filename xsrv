@@ -82,7 +82,7 @@ function init_project() {
     upgrade_roles
     echo "[xsrv] INFO: creating files and directories for $project_name"
     templates_dir="$project_dir/ansible_collections/nodiscc/xsrv/playbooks/xsrv"
-    cp -rn "$templates_dir"/{ansible.cfg,inventory.yml,README.md,requirements.yml,data/,group_vars/,public_keys/,playbooks/} "$project_dir/"
+    cp -rn "$templates_dir"/{ansible.cfg,inventory.yml,README.md,requirements.yml,data/,group_vars/,playbooks/} "$project_dir/"
     gen_vault_password_file
     init_host "$host_name"
     echo "[xsrv] INFO: project $project_name initialized in $project_dir"
