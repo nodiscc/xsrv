@@ -1,0 +1,25 @@
+# @tag libvirt - setup libvirt virtualization toolkit
+# @tag libvirt-storage - setup libvirt storage pools
+# @tag libvirt-networks - setup libvirt virtual networks
+# @tag libvirt-port-forwards - setup libvirt port forwards
+# @tag libvirt-vms - setup libvirt virtual machines
+
+galaxy_info:
+  role_name: libvirt
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "libvirt virtualization toolkit"
+  license: "GPL-3.0"
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "10"
+        - "11"
+  galaxy_tags:
+    - virtualization
+    - libvirt
+    - kvm
+    - vm
+    - hypervisor
+dependencies:
+  - nodiscc.xsrv.handlers

@@ -17,6 +17,7 @@ Then run `xsrv deploy` to apply changes.
 - [roles/homepage/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
 - [roles/jellyfin/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml)
 - [roles/jitsi/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml)
+- [roles/libvirt/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml)
 - [roles/mail_dovecot/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml)
 - [roles/monitoring/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml)
 - [roles/monitoring_netdata/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)

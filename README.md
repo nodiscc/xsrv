@@ -33,6 +33,7 @@ This project provides:
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
 - [jitsi](roles/jitsi) - Video conferencing solution
+- [libvirt](roles/libvirt) - libvirt virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
