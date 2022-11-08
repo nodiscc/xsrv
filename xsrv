@@ -484,7 +484,7 @@ EOF
 
     if [[ "$dump" == "yes" ]]; then
         echo "[xsrv] INFO: You may now start managing this VM using th nodiscc.xsrv.libvirt_role."
-        echo -e "libvirt_vms:\n  - name: $name\n    xml_file: '{{ playbook_dir }}/data/libvirt/$name.xml'"
+        echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '{{ playbook_dir }}/data/libvirt/$name.xml'"
         echo "[xsrv] INFO: $projects_dir/default/data/libvirt/$name.xml:"
         virsh dumpxml "$name"
     fi
