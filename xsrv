@@ -362,9 +362,21 @@ function init_vm() {
         EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
-        If not specified, random sudo/root passwords will be generated automatically
+
         If not specified, memory and vcpu values from the template will be kept
         If not specified, the VM disk image will be created at /var/lib/libvirt/images/VM_NAME.qcow2
+        --template      REQUIRED name of the template to create the new VM from
+        --name          REQUIRED name of the VM to create
+        --ip            REQUIRED IP address of the VM
+        --gateway       REQUIRED default network gateway of the VM
+        --netmask       network mask of the VM (CIDR notation, default 24)
+        --root-password root account password (default: generate and display a random password)
+        --sudo-user     REQUIRED name of the administrative (sudoer) user account to create
+        --sudo-password password for the administrative (sudoer) user account (default: generate and display a random password)
+        --ssh-pubkey    REQUIRED public key to authorize on the administrative (sudoer) account
+        --disk-path     path to the qcow2 disk image to create
+        --memory        VM memory, in MB
+        --vcpus         VM vCPUs
         "
     # parse command-line options
     long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:"
@@ -406,7 +418,7 @@ function init_vm() {
         esac
     done
     # check mandatory options
-    for i in "$template" "$name" "$ip" "$gateway" "$sudo_user"; do
+    for i in "$template" "$name" "$ip" "$gateway" "$sudo_user" "$ssh_pubkey"; do
         if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option --$i"; echo "[xsrv] USAGE: $INIT_VM_USAGE"; exit 1; fi
     done
     # build /etc/network/interfaces for the target system 
