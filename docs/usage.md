@@ -13,7 +13,7 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.7.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.9.0
 
 USAGE: xsrv COMMAND [project] [host]
 
@@ -23,7 +23,7 @@ edit-inventory [project]            edit/show inventory file (hosts/groups)
 edit-playbook [project]             edit/show playbook (roles for each host)
 edit-requirements [project]         edit ansible requirements/collections
 edit-cfg [project]                  edit ansible configuration (ansible.cfg)
-upgrade [project]                   upgrade a projects roles/collections to latest versions
+upgrade [project]                   upgrade a project's roles/collections to latest versions
 init-host [project] [host]          add a new host to an existing project
 edit-host [project] [host]          edit host configuration (host_vars)
 edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
@@ -35,6 +35,7 @@ fetch-backups [project] [host]      fetch backups from a host to the local backu
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
+o|open [project]                    open the project directory in the default file manager
 show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
