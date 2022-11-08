@@ -26,7 +26,9 @@ self_service_password_allowed_hosts:
 
 **Added:**
 - add [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) role - video conferencing solution
-- add [`xsrv open`](https://xsrv.readthedocs.io/en/latest/usage.html#provision-hosts) command (open the project directory in the default file manager)
+- add [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role - libvirt virtualizatino toolkit
+- xsrv: add [`xsrv open`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (open the project directory in the default file manager)
+- xsrv: `init-vm`: add [`--dump`](https://xsrv.readthedocs.io/en/latest/usage.html#provision-hosts) option (display the VM XML definition after creation)
 - apache: automatically load new Let's Encrypt certificates every minute, manually reloading the server is no longer needed
 - nextcloud: allow configuration of nextcloud log level, default app on login ([`nextcloud_loglevel`/`nextcloud_defaultapp`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 - common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
