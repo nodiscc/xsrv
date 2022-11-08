@@ -64,7 +64,7 @@
   community.libvirt.virt_net:
     name: "{{ item.name }}"
     command: define
-    xml: "{{ lookup('template', 'network.xml.j2' ) }}"
+    xml: "{{ lookup('template', 'network.xml.j2') }}"
     autostart: "{{ item.autostart | default(True) }}"
     state: "{{ item.state | default('active') }}"
   with_items: "{{ libvirt_networks }}"
@@ -107,7 +107,7 @@
   community.libvirt.virt_pool:
     name: "{{ item.name }}"
     command: define
-    xml: "{{ lookup('template', 'pool.xml.j2' ) }}"
+    xml: "{{ lookup('template', 'pool.xml.j2') }}"
   with_items: "{{ libvirt_storage_pools }}"
   when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
@@ -137,7 +137,7 @@
 - name: create/define virtual machines
   community.libvirt.virt:
     command: define
-    xml: "{{ lookup('file', item.xml_file ) }}"
+    xml: "{{ lookup('file', item.xml_file) }}"
     autostart: "{{ item.autostart | default(True) }}"
   when: (item.state is not defined) or (item.state in ['present', 'running', 'destroyed', 'shutdown'])
   with_items: "{{ libvirt_vms }}"

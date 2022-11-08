@@ -1,8 +1,10 @@
-- include: checks.yml
+- name: include variable checks tasks
+  include: checks.yml
   tags:
     - libvirt
     - checks
 
-- include: libvirt.yml
+- name: include libvirt configuration tasks
+  include: libvirt.yml
   become: yes
   tags: libvirt
