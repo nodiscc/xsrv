@@ -359,12 +359,9 @@ function self_upgrade() {
 
 function init_vm() {
     INIT_VM_USAGE="$0 init-vm --template TEMPLATE_NAME --name VM_NAME --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] --sudo-user VM_SUDO_USER [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory MEM_SIZE] [--vcpus NUM_CPU]
-        EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4
+        EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dump]
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
-
-        If not specified, memory and vcpu values from the template will be kept
-        If not specified, the VM disk image will be created at /var/lib/libvirt/images/VM_NAME.qcow2
         --template      REQUIRED name of the template to create the new VM from
         --name          REQUIRED name of the VM to create
         --ip            REQUIRED IP address of the VM
@@ -374,12 +371,13 @@ function init_vm() {
         --sudo-user     REQUIRED name of the administrative (sudoer) user account to create
         --sudo-password password for the administrative (sudoer) user account (default: generate and display a random password)
         --ssh-pubkey    REQUIRED public key to authorize on the administrative (sudoer) account
-        --disk-path     path to the qcow2 disk image to create
-        --memory        VM memory, in MB
-        --vcpus         VM vCPUs
+        --disk-path     path to the qcow2 disk image to create (default: /var/lib/libvirt/images/VM_NAME.qcow2)
+        --memory        VM memory, in MB (default: same value as the template)
+        --vcpus         number of vCPUs (default: same value as the template)
+        --dump          display the VM XML definition after creation, for use with the nodiscc.xsrv.libvirt role
         "
     # parse command-line options
-    long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:"
+    long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:,dump"
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
     # default values
@@ -396,6 +394,7 @@ function init_vm() {
     disk_path=""
     memory=""
     vcpus=""
+    dump="no"
     # override defaults with user-provided values
     while true; do
         case "$1" in
@@ -413,6 +412,7 @@ function init_vm() {
             --disk-path) disk_path=$2; shift 2;;
             --memory) memory=$2; shift 2;;
             --vcpus) vcpus=$2; shift 2;;
+            --dump) dump=yes; shift;;
             --) shift; break;;
             *) echo "[xsrv] ERROR: invalid option $1"; echo "USAGE: $INIT_VM_USAGE"; exit 1;;
         esac
@@ -481,6 +481,13 @@ EOF
     echo "[xsrv] INFO password for $sudo_user: $sudo_password"
     echo "[xsrv] INFO: password for root: $root_password"
     rm ./libvirt-clone-interfaces.txt
+
+    if [[ "$dump" == "yes" ]]; then
+        echo "[xsrv] INFO: You may now start managing this VM using th nodiscc.xsrv.libvirt_role."
+        echo -e "libvirt_vms:\n  - name: $name\n    xml_file: '{{ playbook_dir }}/data/libvirt/$name.xml'"
+        echo "[xsrv] INFO: $projects_dir/default/data/libvirt/$name.xml:"
+        virsh dumpxml "$name"
+    fi
 }
 
 # to delete the VM: virsh destroy $TEMPLATE_VMNAME; virsh undefine $TEMPLATE_VMNAME; virsh vol-delete --pool /var/lib/libvirt/images/$TEMPLATE_VMNAME.qcow2

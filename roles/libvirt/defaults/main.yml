@@ -36,12 +36,13 @@ libvirt_storage_pools: []
 # List of libvirt VMs to create/start/stop/shutdown/delete
 # 'state: absent' deletes the VM BUT NOT THEIR DISKS/STORAGE VOLUMES (a.k.a. virsh undefine --delete-all-storage)
 # 'state: destroyed' stops the VM without proper shutdown
+# xml_file must point to a file containing a libvirt VM XML definition (https://libvirt.org/formatdomain.html). You can use xsrv init-vm --dump option to display XML during VM creation.
 # Example:
 # libvirt_vms:
 #  - name: vm01.CHANGEME.org # name of the VM/guest
 #    state: present # present/running/destroyed/shutdown/absent, default present
 #    autostart: yes # optional, default yes
-#    xml_file: "{{ playbook_dir }}/data/libvirt/vm01.CHANGEME.org.xml" # path to XML file containing the VM definition (https://libvirt.org/formatdomain.html), required when state: present/running/destroyed/shutdown
+#    xml_file: "{{ playbook_dir }}/data/libvirt/vm01.CHANGEME.org.xml" # path to XML file containing the VM definition, required when state: present/running/destroyed/shutdown
 #  - name: remove.this.vm
 #    state: absent
 libvirt_vms: []
