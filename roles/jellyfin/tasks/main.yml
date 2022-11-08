@@ -5,7 +5,7 @@
     - jellyfin
     - checks
 
-- name: include jaellyfin configuration tasks
+- name: include jellyfin configuration tasks
   include: jellyfin.yml
   become: yes
   tags: jellyfin
