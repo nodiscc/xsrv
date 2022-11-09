@@ -77,9 +77,10 @@ nextcloud_apps:
   - { state: "disable", app: "documentserver_community" } # https://apps.nextcloud.com/apps/documentserver_community
   - { state: "disable", app: "onlyoffice" } # https://apps.nextcloud.com/apps/onlyoffice
   - { state: "disable", app: "bookmarks" } # https://apps.nextcloud.com/apps/bookmarks
-  - { state: "disable", app: "cookbook" } # https://github.com/nextcloud/cookbook/
-  - { state: "disable", app: "keeweb" } # https://github.com/jhass/nextcloud-keeweb
-  - { state: "disable", app: "passman" } # https://github.com/nextcloud/passman
+  - { state: "disable", app: "cookbook" } # https://apps.nextcloud.com/apps/cookbook
+  - { state: "disable", app: "keeweb" } # https://apps.nextcloud.com/apps/keeweb
+  - { state: "disable", app: "passman" } # https://apps.nextcloud.com/apps/passman
+  - { state: "disable", app: "passwords" } # https://apps.nextcloud.com/apps/passwords
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'
