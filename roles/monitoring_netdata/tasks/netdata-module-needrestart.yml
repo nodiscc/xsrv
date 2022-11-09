@@ -59,6 +59,24 @@
   notify: restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: copy needrestart automatic reboot script
+  copy:
+    src: usr_local_bin_needrestart-autorestart
+    dest: /usr/local/bin/needrestart-autorestart
+    owner: root
+    group: root
+    mode: 0755
+
+- name: setup needrestart cron job
+  template:
+    src: etc_cron.d_needrestart-autorestart.j2
+    dest: /etc/cron.d/needrestart-autorestart
+    owner: root
+    group: root
+    mode: 0644
+
+##### MIGRATION #####
+
 - name: migration - remove files from old versions of the role
   file:
     state: absent

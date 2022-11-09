@@ -1,0 +1,5 @@
+{% if needrestart_autorestart_cron %}
+{{ needrestart_autorestart_cron }} root /usr/local/bin/needrestart-autorestart 2>&1 | logger -t needrestart-autorestart
+{% else %}
+# automatic reboot is disabled on this host
+{% endif %}
