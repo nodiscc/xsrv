@@ -1,3 +1,8 @@
+- name: install packages for HTTPS APT sources support
+  apt:
+    state: present
+    package: apt-transport-https
+
 - name: copy apt sources lists (debian + security + backports)
   template:
     src: "etc_apt_sources.list.j2"

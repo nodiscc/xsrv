@@ -57,6 +57,7 @@ self_service_password_allowed_hosts:
 - common: kernel/sysctl: don't disable bluetooth modules by default
 - common: kernel/sysctl: don't disable camera modules by default
 - common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
+- common/graylog: apt: use HTTPS to access APT packages repositories
 - common: dns: check that valid IP addresses are specified in [`dns_nameservers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
 - common: kernel/sysctl: load all sysctl variables, not just those in `custom.conf`
 - common: users: configure bash to terminate idle sessions after 15 minutes
