@@ -2,7 +2,7 @@
 # Nextcloud admin username/password
 nextcloud_user: "CHANGEME"
 nextcloud_password: "CHANGEME"
-# nextcloud adminstrator e-mail address
+# nextcloud administrator e-mail address
 nextcloud_admin_email: "CHANGEME@CHANGEME.org"
 # Fully Qualified Domain Name for the nextcloud instance
 nextcloud_fqdn: "cloud.CHANGEME.org"
@@ -78,6 +78,8 @@ nextcloud_apps:
   - { state: "disable", app: "onlyoffice" } # https://apps.nextcloud.com/apps/onlyoffice
   - { state: "disable", app: "bookmarks" } # https://apps.nextcloud.com/apps/bookmarks
   - { state: "disable", app: "cookbook" } # https://github.com/nextcloud/cookbook/
+  - { state: "disable", app: "keeweb" } # https://github.com/jhass/nextcloud-keeweb
+  - { state: "disable", app: "passman" } # https://github.com/nextcloud/passman
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'
