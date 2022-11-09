@@ -135,6 +135,14 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
+- name: configure bash to terminate sessions after 15 minutes of idle
+  template:
+    src: etc_profile.d_tmout.sh.j2
+    dest: /etc/profile.d/tmout.sh
+    mode: 0755
+    owner: root
+    group: root
+
 ##### OTHER ####
 
 - name: mask debug-shell systemd service

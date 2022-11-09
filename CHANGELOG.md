@@ -59,6 +59,7 @@ self_service_password_allowed_hosts:
 - common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
 - common: dns: check that valid IP addresses are specified in [`dns_nameservers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
 - common: kernel/sysctl: load all sysctl variables, not just those in `custom.conf`
+- common: users: configure bash to terminate idle sessions after 15 minutes
 - wireguard: firewalld: setup firewall to allow blocking/allowing traffic from VPN clients to services on the host, independently
 - monitoring_utils: whitelist suggestion to disable USB storage
 - nextcloud: update to v24.0.7 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/) [[2]](https://nextcloud.com/changelog/)
