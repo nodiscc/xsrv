@@ -68,6 +68,7 @@ self_service_password_allowed_hosts:
 - graylog: update mongodb to v4.4
 - rocketchat: upgrade to [v3.18.7](https://raw.githubusercontent.com/RocketChat/Rocket.Chat/develop/HISTORY.md)
 - cleanup: replace deprecated `apt_key/apt_repository` modules, install all APT keys in `/usr/share/keyrings/`
+- xsrv: update ansible to [v6.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
 - general cleanup and maintenance
 - update documentation
 - update/improve test tooling
