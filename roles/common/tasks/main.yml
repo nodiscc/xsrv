@@ -100,17 +100,18 @@
     - mail
     - msmtp
 
+# detect CPU TRNG support before installing related packages
+- name: include ansible facts configuration tasks
+  include: fact.yml
+  become: yes
+  tags: common
+
 - name: include base package instalaltion/removal tasks
   include: packages.yml
   become: yes
   tags:
     - common
     - packages
-
-- name: include ansible facts configuration tasks
-  include: fact.yml
-  become: yes
-  tags: common
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

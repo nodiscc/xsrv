@@ -346,7 +346,6 @@ packages_install:
   - locate # maintain and query an index of a directory tree
   - man # view manual pages
   - at # task scheduler - required for ansible at module/one-shot job scheduling
-  - haveged # Linux entropy source using the HAVEGE algorithm - good to have on virtual machines where system is frequently running out of entropy
 
 # packages to remove (list)
 packages_remove:

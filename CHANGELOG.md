@@ -40,6 +40,7 @@ self_service_password_allowed_hosts:
 - shaarli: add required packages for LDAP authentication
 - monitoring_netdata: add `utils-autorestart` tag (reboot hosts if required after a kernel update, will only run if the `utils-autorestart` tag is explicitly called)
 - samba: add `utils-samba-listusers` tag (list samba users)
+- common: install hardware true random number generator (TRNG) support packages on hosts where the CPU suports [RDRAND](https://en.wikipedia.org/wiki/RDRAND)
 
 **Removed:**
 - tt_rss: remove installation of custom plugins/themes
@@ -61,6 +62,8 @@ self_service_password_allowed_hosts:
 - common: dns: check that valid IP addresses are specified in [`dns_nameservers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
 - common: kernel/sysctl: load all sysctl variables, not just those in `custom.conf`
 - common: users: configure bash to terminate idle sessions after 15 minutes
+- common: packages: always install haveged entropy source on KVM/VMware VMs
+- common: packages: remove haveged from the default list of packages to install everywhere
 - wireguard: firewalld: setup firewall to allow blocking/allowing traffic from VPN clients to services on the host, independently
 - monitoring_utils: whitelist suggestion to disable USB storage
 - nextcloud: update to v24.0.7 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/) [[2]](https://nextcloud.com/changelog/)
