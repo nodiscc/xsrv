@@ -46,6 +46,30 @@
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 
+# the SHA sums of the mongodb-database-tools include files which are not actually present in the package
+# debsums detects these as missing files and sends a warning to the user. Add these files to debsums ignore list
+- name: prevent incorrect debsums reports about missing files in mongodb-database-tools
+  lineinfile:
+    path: /etc/debsums-ignore
+    line: "{{ item }}"
+    state: present
+    owner: root
+    group: root
+    mode: 0600
+    create: yes
+  with_items:
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/bsondump$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongodump$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongoexport$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongofiles$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongoimport$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongorestore$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongostat$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongotop$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/share/doc/mongodb-database-tools/LICENSE.md$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/share/doc/mongodb-database-tools/README.md$'
+    - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/share/doc/mongodb-database-tools/THIRD-PARTY-NOTICES$'
+
 ### SERVICE ###
 
 - name: enable/disable start/stop mongodb service
