@@ -61,12 +61,6 @@ sudo rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/www/links.CHANGEME.
 ```
 
 
-### Upgrades
-
-Re-apply the role on a regular basis to ensure the application stays up to date.
-
-This role is not always idempotent - tt-rss is always upgraded to the latest available version (git `master` branch).
-
 ## Tags
 
 <!--BEGIN TAGS LIST-->

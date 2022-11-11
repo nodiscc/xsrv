@@ -81,6 +81,8 @@ _Note: due to TT-RSS "rolling" release model (always install the latest `master`
 <!--BEGIN TAGS LIST-->
 ```
 tt_rss - setup tt-rss feed reader
+tt_rss-postgresql - setup tt-rss postgresql database
+tt_rss-app - setup tt-rss appllication
 ```
 <!--END TAGS LIST-->
 

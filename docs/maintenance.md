@@ -18,7 +18,7 @@ xsrv fetch-backups
 xsrv fetch-backups myplaybook backupserver.CHANGEME.org
 ```
 
-See each [role](index.md#roles)'s documentation for information on how to restore backups.
+See each [role](https://xsrv.readthedocs.io/en/latest/#roles)'s documentation for information on how to restore backups.
 
 Also keep off-line, off-site backups of your `~/playbooks/` directory.
 
@@ -40,8 +40,6 @@ Security upgrades for software provided by the Linux distribution are applied [a
 - Ensure appropriate [physical access control](https://www.stigviewer.com/controls/800-53/PE-3) measures are in place for physical servers.
 
 Isolation between services/applications relies on [file permissions, ownership and groups](https://wiki.debian.org/Permissions) and [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). Compromise of a single service or account must not allow compromise of other services and accounts.
-
-<!-- TODO PHP web applications currently share the same user. -->
 
 The `ansible_user` administration account has unlimited access through SSH/[`sudo`](https://wiki.debian.org/sudo) (requires both an authorized SSH key and a password). Ensure appropriate security measures are in place on devices used to access to this account. Be careful when performing manual operations from this account. Protect your private SSH key and the `.ansible-vault-password` file.
 

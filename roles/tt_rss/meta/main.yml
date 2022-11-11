@@ -1,4 +1,6 @@
 # @tag tt_rss - setup tt-rss feed reader
+# @tag tt_rss-postgresql - setup tt-rss postgresql database
+# @tag tt_rss-app - setup tt-rss appllication
 
 galaxy_info:
   role_name: tt_rss

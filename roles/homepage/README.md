@@ -1,7 +1,7 @@
 # xsrv.homepage
 
 This role will setup a simple webserver homepage/dashboard:
-- list and shortcuts to services installed on the host ([ssh/sftp (common)](../common), [nextcloud](../nextcloud), [rocketchat](../rocketchat), [shaarli](../shaarli), [tt-rss](../tt_rss), [transmission](../transmission), [gitea](../gitea), [mumble](../mumble), [netdata (monitoring)](../monitoring), [samba](../samba), [ldap-account-manager (openldap)](../openldap)...), [jellyfin](../jellyfin)
+- list and shortcuts to services installed on the host (if managed by xsrv [roles](https://xsrv.readthedocs.io/en/latest/#roles))
 
 [![](https://i.imgur.com/xAWRADt.png)](https://i.imgur.com/xAWRADt.png)
 
