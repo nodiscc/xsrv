@@ -9,10 +9,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **common:** if the variable `os_security_kernel_enable_core_dump` was changed from its default value in your hosts/groups configuration, rename it to `kernel_enable_core_dump`
-- **openldap: self-sevice-password:** If you changed the value of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) in your host/groups configuration (`xsrv edit-host/edit-groups`), update it to the YAML list format, instead of a list of addresses separated by spaces:
 - move the `public_keys/` directory from the root of the project directory, under the `data/` directory.
 - if it exists, move the `certificates/` directory from the root of the project directory, under the `data/` directory.
 - **graylog/monitoring_rsyslog:** move the `*-graylog-ca.crt` file from the `public_keys/` directory to the `data/certificates/` directory (create it if it does not exist)
+- **openldap: self-sevice-password:** If you changed the value of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) in your host/groups configuration (`xsrv edit-host/edit-groups`), update it to the YAML list format, instead of a list of addresses separated by spaces
 
 ```yaml
 # old format
@@ -50,7 +50,7 @@ self_service_password_allowed_hosts:
 - nextcloud: disable the web updater
 - nextcloud: disable link to https://nextcloud.com/signup/ on public pages
 - nextcloud: backup: add `config.php` to the list of files to backup (may contain the encryption secret if encryption was enabled by the admin)
-- openldap: self-service-password: use a YAML list to define [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml), instead of a string with addresses separated by spaces
+- openldap: self-service-password: update format of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) (use a YAML list instead of space-separated list)
 - common: kernel: rename variable `os_security_kernel_enable_core_dump` -> [`kernel_enable_core_dump`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
 - common: kernel/sysctl: ensure ipv4/ipv6 configuration is applied to all new/future interfaces as well
 - common: kernel/sysctl: don't disable USB storage, audio input/output, USB MIDI, bluetooth and camera modules by default
