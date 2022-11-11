@@ -113,6 +113,9 @@
   listen:
     - restart firewalld
     - reload firewalld
+  when:
+    - ansible_local.libvirt.ansible_managed is defined
+    - ansible_local.libvirt.ansible_managed | bool
 
 ### GENERAL PURPOSE ###
 
