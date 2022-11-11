@@ -513,7 +513,7 @@ function init_vm_template() {
         If no root/sudo password is specified, random passsowrds will be generated automatically and displayed once after VM creation
         "
     # parse command-line options
-    long_opts="help,name:,storage-path:,memory:,vcpus:,disk-size:,network:,ip:,gateway:,netmask:,preseed:"
+    long_opts="help,name:,storage-path:,memory:,vcpus:,disk-size:,network:,ip:,gateway:,netmask:,preseed:,root-password:,sudo-password:,sudo-user:,nameservers:"
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
     # default values

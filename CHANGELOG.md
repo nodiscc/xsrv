@@ -87,6 +87,7 @@ self_service_password_allowed_hosts:
 - graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
 - monitoring/netdata: fix individual alarms for failed systemd services
 - common: firewalld: add all addresses from `192.168.0.0/16` to the `internal` zone by default, not just `192.168.0.0/24`
+- xsrv: init-vm-template: fix non-working options `--sudo-password, --root-password, --sudo-user, --nameservers`
 
 **Security:**
 - jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
