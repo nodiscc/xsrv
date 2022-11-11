@@ -45,7 +45,7 @@ The template will be created by downloading an [official Debian installer image]
 
 ```bash
 $ xsrv init-vm-template --help
-USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS --gateway GATEWAY_IP [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file /home/live/.local/share/xsrv/git/docs/preseed.cfg]
+USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS --gateway GATEWAY_IP [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1G] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file /home/live/.local/share/xsrv/git/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
         --name          name of the VM/template to create (default debian11-base)
@@ -57,7 +57,7 @@ USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS --gateway 
         --sudo-user     administrative (sudoer) user account (default deploy)
         --sudo-password password for the administrative (sudoer) user account (default generate and display a random password)
         --storage-path  path to the directory where qcow2 disk images will be stored (default /var/lib/libvirt/images)
-        --memory        VM memory, in MB (default 1024)
+        --memory        VM memory with M or G suffix (default 1G)
         --vcpus         VM vCPUs (default 2)
         --disk-size     size of the disk image to create, in GB (default 20)
         --network       name of the libvirt network to attach the VM to (default default)
@@ -73,21 +73,21 @@ If you already have a [libvirt](virt-manager.md) Debian VM set up as described a
 
 ```bash
 $ ./xsrv init-vm --help
-USAGE: ./xsrv init-vm --template TEMPLATE_NAME --name VM_NAME --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] --sudo-user VM_SUDO_USER [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory MEM_SIZE] [--vcpus NUM_CPU]
+USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
         EXAMPLE: ./xsrv init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dump]
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
-        --template      REQUIRED name of the template to create the new VM from
+        --template      name of the template to create the new VM from (default debian11-base)
         --name          REQUIRED name of the VM to create
         --ip            REQUIRED IP address of the VM
         --gateway       REQUIRED default network gateway of the VM
         --netmask       network mask of the VM (CIDR notation, default 24)
-        --root-password root account password (default: generate and display a random password)
-        --sudo-user     REQUIRED name of the administrative (sudoer) user account to create
-        --sudo-password password for the administrative (sudoer) user account (default: generate and display a random password)
+        --root-password root account password (default generate and display a random password)
+        --sudo-user     administrative (sudoer) user account (default deploy)
+        --sudo-password password for the administrative (sudoer) user account (default generate and display a random password)
         --ssh-pubkey    REQUIRED public key to authorize on the administrative (sudoer) account
         --disk-path     path to the qcow2 disk image to create (default: /var/lib/libvirt/images/VM_NAME.qcow2)
-        --memory        VM memory, in MB (default: same value as the template)
+        --memory        VM memory with M or G suffix (default 1G)
         --vcpus         number of vCPUs (default: same value as the template)
         --dump          display the VM XML definition after creation, for use with the nodiscc.xsrv.libvirt role
 ```

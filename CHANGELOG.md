@@ -67,6 +67,8 @@ self_service_password_allowed_hosts:
 - wireguard: firewalld: setup firewall to allow blocking/allowing traffic from VPN clients to services on the host, independently
 - monitoring_utils: whitelist suggestion to disable USB storage
 - xsrv: `init-vm-template`: make the `--template` option optional, default to `debian11-base`
+- xsrv: `init-vm-template`: make the `--sudo-user` option optional, default to `deploy`
+- xsrv: `init-vm/init-vm-template`: use `M` or `G` suffix/notation for `--memory` option
 - nextcloud: update to v24.0.7 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/) [[2]](https://nextcloud.com/changelog/)
 - gitea: update to [v1.17.3](https://github.com/go-gitea/gitea/releases/tag/v1.17.3)
 - openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)
@@ -88,7 +90,8 @@ self_service_password_allowed_hosts:
 - graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
 - monitoring/netdata: fix individual alarms for failed systemd services
 - common: firewalld: add all addresses from `192.168.0.0/16` to the `internal` zone by default, not just `192.168.0.0/24`
-- xsrv: init-vm-template: fix non-working options `--sudo-password, --root-password, --sudo-user, --nameservers`
+- xsrv: `init-vm-template`: fix non-working options `--sudo-password, --root-password, --sudo-user, --nameservers`
+- xsrv: `init-vm`: fix an issue where the created VM would be defined with 1MB of memory when `--memory 1024` was used
 
 **Security:**
 - jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
