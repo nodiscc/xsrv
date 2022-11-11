@@ -155,6 +155,7 @@ apt_listbugs_ignore_list:
   - 1009872 # https://bugs.debian.org/1009872 - only happens when /etc/ssl/certs/ssl-cert-snakeoil* were deleted manually
   - 1019564 # https://bugs.debian.org/1019564 - unreproducible
   - 1019855 # https://bugs.debian.org/1019855 - only affects 4th gen Intel Core CPUs
+  - 1023812 # https://bugs.debian.org/1019855 - packaging bug without impact
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
