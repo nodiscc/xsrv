@@ -66,6 +66,7 @@ self_service_password_allowed_hosts:
 - common: packages: remove haveged from the default list of packages to install everywhere
 - wireguard: firewalld: setup firewall to allow blocking/allowing traffic from VPN clients to services on the host, independently
 - monitoring_utils: whitelist suggestion to disable USB storage
+- xsrv: `init-vm-template`: make the `--template` option optional, default to `debian11-base`
 - nextcloud: update to v24.0.7 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/) [[2]](https://nextcloud.com/changelog/)
 - gitea: update to [v1.17.3](https://github.com/go-gitea/gitea/releases/tag/v1.17.3)
 - openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)

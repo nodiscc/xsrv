@@ -516,7 +516,7 @@ function init_vm_template() {
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
     # default values
-    name=""
+    name="debian11-base"
     storage_path="/var/lib/libvirt/images"
     memory="1024"
     vcpus="2"
