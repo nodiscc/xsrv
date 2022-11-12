@@ -8,11 +8,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- **common:** if the variable `os_security_kernel_enable_core_dump` was changed from its default value in your hosts/groups configuration, rename it to `kernel_enable_core_dump`
-- move the `public_keys/` directory from the root of the project directory, under the `data/` directory.
-- if it exists, move the `certificates/` directory from the root of the project directory, under the `data/` directory.
+- move the `public_keys/` directory from the root of your project directory, under the `data/` directory.
+- if it exists, move the `certificates/` directory from the root of your project directory, under the `data/` directory.
+- **common:** if you had changed the variable `os_security_kernel_enable_core_dump` from its default value in your hosts/groups configuration, rename it to [`kernel_enable_core_dump`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - **graylog/monitoring_rsyslog:** move the `*-graylog-ca.crt` file from the `public_keys/` directory to the `data/certificates/` directory (create it if it does not exist)
-- **openldap: self-sevice-password:** If you changed the value of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) in your host/groups configuration (`xsrv edit-host/edit-groups`), update it to the YAML list format, instead of a list of addresses separated by spaces
+- **openldap: self-sevice-password:** if you had changed the variable [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) from its default value in your host/groups configuration, update it to the new format (YAML list instead of a list of addresses separated by spaces):
 
 ```yaml
 # old format
@@ -26,7 +26,7 @@ self_service_password_allowed_hosts:
 
 **Added:**
 - add [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) role - video conferencing solution
-- add [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role - libvirt virtualizatino toolkit
+- add [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role - libvirt virtualization toolkit
 - xsrv: add [`xsrv open`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (open the project directory in the default file manager)
 - xsrv: `init-vm`: add [`--dump`](https://xsrv.readthedocs.io/en/latest/usage.html#provision-hosts) option (display the VM XML definition after creation)
 - apache: automatically load new Let's Encrypt certificates every minute, manually reloading the server is no longer needed
@@ -92,7 +92,7 @@ self_service_password_allowed_hosts:
 - monitoring/netdata: fix individual alarms for failed systemd services
 - common: firewalld: add all addresses from `192.168.0.0/16` to the `internal` zone by default, not just `192.168.0.0/24`
 - xsrv: `init-vm-template`: fix non-working options `--sudo-password, --root-password, --sudo-user, --nameservers`
-- xsrv: `init-vm`: fix an issue where the created VM would be defined with 1MB of memory when `--memory 1024` was used
+- xsrv: `init-vm`: fix an issue where VMs would be created with 1MB of memory when `--memory 1024` was used
 
 **Security:**
 - jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
