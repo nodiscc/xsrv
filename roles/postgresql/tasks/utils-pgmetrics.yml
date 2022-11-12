@@ -48,7 +48,7 @@
     mode: 0640
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: download pgmetrics report to data/pgmetrics-{{ inventory_hostname }}.log
+- name: download pgmetrics report to data/pgmetrics-*.log
   fetch:
     src: /var/log/postgresql/pgmetrics.log
     dest: "{{ playbook_dir }}/data/pgmetrics-{{ inventory_hostname }}.log"
