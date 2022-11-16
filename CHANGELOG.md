@@ -65,7 +65,8 @@ self_service_password_allowed_hosts:
 - common: packages: always install haveged entropy source on KVM/VMware VMs
 - common: packages: remove haveged from the default list of packages to install everywhere
 - wireguard: firewalld: setup firewall to allow blocking/allowing traffic from VPN clients to services on the host, independently
-- monitoring_utils: whitelist suggestion to disable USB storage
+- monitoring_utils: lynis: whitelist suggestion to disable USB storage
+- monitoring_utils: lynis: whitelist suggestion to install sysstat, when netdata is installed
 - tt_rss: run the web application (php-fpm pool) un der a dedicated user account
 - xsrv: `init-vm-template`: make the `--template` option optional, default to `debian11-base`
 - xsrv: `init-vm-template`: make the `--sudo-user` option optional, default to `deploy`

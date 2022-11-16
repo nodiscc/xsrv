@@ -6,10 +6,8 @@ profile-name=Custom Audit Template
 {% for test in lynis_skip_tests %}
 skip-test={{ test }}
 {% endfor %}
-{% else %}
-#skip-test=SSH-7408
 {% endif %}
-
+{{ "skip-test=ACCT-9626" if (ansible_local.netdata.ansible_managed is defined) and (ansible_local.netdata.ansible_managed) }}
 # Skip a particular option within a test (when applicable)
 #skip-test=SSH-7408:loglevel
 #skip-test=SSH-7408:permitrootlogin
