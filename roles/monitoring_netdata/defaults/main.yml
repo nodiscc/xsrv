@@ -19,6 +19,18 @@ netdata_disable_access_log: yes
 # netdata plugins to disable
 netdata_disabled_plugins:
   - ebpf
+  - coredns
+  - unbound
+  - rabbitmq
+  - mysql
+  - prometheus
+  - bind
+  - pihole
+  - k8s_kubelet
+  - pulsar
+  - solr
+  - supervisord
+  - lighttpd
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
