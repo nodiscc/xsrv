@@ -101,7 +101,7 @@
 - name: configure the pam_limits module
   template:
     src: etc_security_limits.conf.j2
-    dest: /etc/security/limits.con
+    dest: /etc/security/limits.conf
     owner: root
     group: root
     mode: 0600

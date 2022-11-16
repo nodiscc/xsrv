@@ -98,7 +98,7 @@ self_service_password_allowed_hosts:
 
 **Security:**
 - jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
-
+- common: fix [`kernel_enable_core_dump`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) not having any effect
 
 [Full changes since v1.9.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.9.0...1.10.0)
 
