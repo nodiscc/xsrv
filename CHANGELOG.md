@@ -96,6 +96,7 @@ self_service_password_allowed_hosts:
 - common: firewalld: add all addresses from `192.168.0.0/16` to the `internal` zone by default, not just `192.168.0.0/24`
 - xsrv: `init-vm-template`: fix non-working options `--sudo-password, --root-password, --sudo-user, --nameservers`
 - xsrv: `init-vm`: fix an issue where VMs would be created with 1MB of memory when `--memory 1024` was used
+- xsrv: fix `init-vm-template` command not working unless `xsrv self-upgrade` had already been run
 
 **Security:**
 - jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))

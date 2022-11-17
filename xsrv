@@ -329,10 +329,10 @@ function self_upgrade() {
     script_path="$0"
     echo "[xsrv] INFO fetching latest release..."
     if [[ -d "$xsrv_clone_dir/.git" ]]; then
-       git -C "$xsrv_clone_dir" pull
-       git -C "$xsrv_clone_dir" checkout "$xsrv_upgrade_channel"
+        git -C "$xsrv_clone_dir" pull
+        git -C "$xsrv_clone_dir" checkout "$xsrv_upgrade_channel"
     else
-      git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
+        git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
     fi
     new_version="$(grep '^version=.*' "$xsrv_clone_dir/xsrv" | cut -d= -f2)"
     new_commit="$(git -C "$xsrv_clone_dir" rev-parse HEAD)"
@@ -555,6 +555,9 @@ function init_vm_template() {
     for i in "$name" "$ip" "$gateway"; do
         if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option"; echo "[xsrv] USAGE: $INIT_VM_TEMPLATE_USAGE"; exit 1; fi
     done
+    if [[ ! -d "$xsrv_clone_dir/.git" ]]; then
+        git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
+    fi
     echo "[xsrv] making the preseed file available to libvirt-qemu"
     sudo cp "$preseed_file" /var/lib/libvirt/preseed.cfg
     sudo chmod 0660 /var/lib/libvirt/preseed.cfg # don't make it world-readable
