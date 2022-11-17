@@ -70,7 +70,7 @@ self_service_password_allowed_hosts:
 - tt_rss: run the web application (php-fpm pool) un der a dedicated user account
 - xsrv: `init-vm-template`: make the `--template` option optional, default to `debian11-base`
 - xsrv: `init-vm-template`: make the `--sudo-user` option optional, default to `deploy`
-- xsrv: `init-vm/init-vm-template`: use `M` or `G` suffix/notation for `--memory` option
+- xsrv: `init-vm/init-vm-template`: clarify use of units `M` or `G` for `--memory` option
 - nextcloud: update to v24.0.7 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/) [[2]](https://nextcloud.com/changelog/)
 - gitea: update to [v1.17.3](https://github.com/go-gitea/gitea/releases/tag/v1.17.3)
 - openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)

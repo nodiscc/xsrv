@@ -492,7 +492,7 @@ EOF
 
 # to delete the VM: virsh destroy $TEMPLATE_VMNAME; virsh undefine $TEMPLATE_VMNAME; virsh vol-delete --pool /var/lib/libvirt/images/$TEMPLATE_VMNAME.qcow2
 function init_vm_template() {
-    INIT_VM_TEMPLATE_USAGE="$0 init-vm-template [--name debian11-base] --ip IP_ADDRESS --gateway GATEWAY_IP [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1G] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
+    INIT_VM_TEMPLATE_USAGE="$0 init-vm-template [--name debian11-base] --ip IP_ADDRESS --gateway GATEWAY_IP [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
         --name          name of the VM/template to create (default debian11-base)
@@ -504,7 +504,7 @@ function init_vm_template() {
         --sudo-user     administrative (sudoer) user account (default deploy)
         --sudo-password password for the administrative (sudoer) user account (default generate and display a random password)
         --storage-path  path to the directory where qcow2 disk images will be stored (default /var/lib/libvirt/images)
-        --memory        VM memory with M or G suffix (default 1G)
+        --memory        VM memory, in MB (default 1024)
         --vcpus         VM vCPUs (default 2)
         --disk-size     size of the disk image to create, in GB (default 20)
         --network       name of the libvirt network to attach the VM to (default default)
@@ -518,7 +518,7 @@ function init_vm_template() {
     # default values
     name="debian11-base"
     storage_path="/var/lib/libvirt/images"
-    memory="1G"
+    memory="1024"
     vcpus="2"
     disk_size="20"
     network="default"
