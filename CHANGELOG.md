@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
+- xsrv: add (optional) bash completion script ([installation](https://xsrv.readthedocs.io/en/latest/installation/controller-preparation.html))
 - jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - graylog: setup automatic local backups of graylog configuration when the `nodiscc.xsrv.backup` role is deployed
 - nextcloud add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps ([`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))

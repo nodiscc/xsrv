@@ -15,6 +15,8 @@ sudo apt update && sudo apt install git bash python3-venv python3-pip python3-cr
 wget https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
 # (optional) copy the script to your $PATH
 sudo cp xsrv /usr/local/bin/
+# (optional) install the tab completion script
+sudo cp xsrv-completion.sh /etc/bash_completion.d/
 # generate a SSH key pair if not already done
 ssh-keygen -b 4096
 # authorize your SSH key on the remote user account
