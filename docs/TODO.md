@@ -2,10 +2,11 @@
 
 ### xsrv/xsrv
 
+- #966 - WIP: add bash completion to the xsrv script - **`-`** `feature`
+- #965 - libvirt: changing `currentMemory` in the VM XML definition does not change current RAM until VM reboot - **`-`** `bug,enhancement`
+- #961 - WIP nfs-server role + ability to mount filesystems from the common role - **`1.11.0`** `feature`
 - #959 - WIP: libvirt: remove libvirt_port_fowrads, define port forwards at the VM level in libvirt_vms - **`-`** `enhancement`
-- #958 - WIP: tt-rss: run tt-rss under a dedicated user account - **`1.10.0`** `enhancement,security`
-- #956 - WIP: monitoring_netdata: add an option to reboot automatically daily after kernel upgrades - **`-`** `enhancement,security`
-- #955 - xsrv: init-vm-template does not work unless self-upgrade has been run - **`1.10.0`** `bug,easy`
+- #956 - WIP: monitoring_netdata: add an option to reboot automatically daily after kernel upgrades - **`1.11.0`** `easy,enhancement,feature,security`
 - #953 - nextcloud: upgrade to v25.x - **`-`** `maintenance`
 - #949 - loki role - **`-`** `feature`
 - #943 - nextcloud: enable clean URLs by default - **`1.11.0`** `configuration,enhancement`
@@ -15,8 +16,6 @@
 - #927 - jitsi: permanently disable RECENT_LIST_ENABLED - **`1.11.0`** `easy,enhancement,security,upstream`
 - #925 - jitsi: setup TURN server for P2P one-to-one calls? - **`-`** `enhancement,question`
 - #924 - init-vm: add ability to attach more network interfaces? - **`-`** `enhancement,question`
-- #923 - tt_rss: use a dedicated tt-rss user account for the php-fpm pool - **`1.10.0`** `easy,enhancement,security`
-- #921 - WIP: openldap: update ldap-account-manager to v8.1 - **`1.10.0`** `maintenance`
 - #920 - xsrv: graphical user interface? - **`-`** `question`
 - #915 - Snipe-IT role - **`2.0.0`** `feature`
 - #912 - mount /tmp noexec? - **`-`** `question,security`
@@ -45,24 +44,20 @@
 - #833 - monitoring_utils: lynis: suggestion[]=FILE-7524|Consider restricting file permissions - **`-`** `easy,enhancement,question,security`
 - #832 - monitoring_utils: lynis: suggestion[]=FINT-4350|Install a file integrity tool to monitor changes to critical and sensitive files - **`-`** `easy,enhancement,question,security`
 - #831 - monitoring_utils: lynis: suggestion[]=TIME-3128|Check ntpq peers output for time source candidates - **`-`** `enhancement,question,security`
-- #830 - monitoring_utils: lynis: suggestion[]=ACCT-9626|Enable sysstat to collect accounting (no results) - **`1.10.0`** `easy,enhancement,question,security`
 - #829 - monitoring_utils: lynis: suggestion[]=ACCT-9622|Enable process accounting - **`-`** `configuration,easy,enhancement,monitoring,question,security`
 - #817 - monitoring_utils: lynis: suggestion[]=HTTP-6643|Install Apache modsecurity to guard webserver against web application attacks - **`-`** `enhancement,security`
 - #816 - monitoring_utils: lynis: suggestion[]=FIRE-4513|Check iptables rules to see which rules are currently not used - **`-`** `enhancement,question,security`
 - #811 - monitoring_utils: lynis: suggestion[]=FILE-6430|Consider disabling unused kernel modules - **`-`** `enhancement,question,security`
-- #810 - monitoring_utils: lynis: suggestion[]=AUTH-9284|Look at the locked accounts and consider removing them - **`-`** `configuration,enhancement,question,security`
-- #809 - monitoring_utils: lynis: suggestion[]=AUTH-9282|When possible set expire dates for all password protected accounts - **`-`** `configuration,enhancement,question,security`
 - #808 - monitoring_utils: lynis: suggestion[]=AUTH-9229|Check PAM configuration, add rounds if applicable and expire passwords to encrypt with new values - **`-`** `configuration,enhancement,security`
 - #804 - homepage: improve layout - **`2.0.0`** `enhancement`
 - #802 - apache: allow using LDAP for basic auth - **`-`** `enhancement`
 - #798 - tt_rss: document LDAP over SSL/TLS + self-signed certificate setup - **`-`** `documentation,enhancement,security`
 - #796 - shaarli: document LDAP over SSL/TLS + self-signed certificate setup - **`2.0.0`** `documentation,enhancement,security`
-- #794 - openldap: self-service-password: allow trusting self-signed certificates - **`1.10.0`** `configuration,easy,enhancement,security`
-- #789 - apache: allow configuration of arbitrary reverse proxies - **`1.10.0`** `easy,enhancement,feature`
+- #794 - openldap: self-service-password: allow trusting self-signed certificates - **`1.11.0`** `configuration,easy,enhancement,security`
+- #789 - apache: allow configuration of arbitrary reverse proxies - **`1.11.0`** `easy,enhancement,feature`
 - #782 - xsrv init-vm: don't require sudo to fix cloned disk image permissions - **`2.0.0`** `enhancement,question`
-- #781 - shaarli: 'server reached pm.max_children setting (5), consider raising it' when mass-fetching thumbnails - **`1.10.0`** `easy,enhancement,performance,question`
 - #778 - systemd-nspawn/systemd-machined role? - **`-`** `feature,question`
-- #771 - WIP: netdata: add netdata-apt module (monitor number of upgradeable packages) - **`1.10.0`** `difficult,feature,monitoring`
+- #771 - WIP: netdata: add netdata-apt module (monitor number of upgradeable packages) - **`1.11.0`** `difficult,feature,monitoring`
 - #770 - graylog: document example extractors - **`-`** `documentation,enhancement,monitoring`
 - #768 - add ldap-client role (LDAP PAM/SSH authentication)? - **`-`** `feature,question`
 - #764 - rocketchat: lynis: warning[]=DBS-1820|MongoDB instance allows any user to access databases - **`2.0.0`** `enhancement,monitoring,question,security`
@@ -152,17 +147,17 @@
 - #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - **`2.0.0`** `enhancement,maintenance`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900 - **`-`** `configuration,documentation,enhancement,upstream`
 - #393 - Samba: performance improvements (socket options)? - **`-`** `configuration,enhancement,performance,question,wontfix`
-- #389 - WIP: add autoreadme role - **`1.10.0`** `difficult,enhancement,question`
+- #389 - WIP: add autoreadme role - **`1.11.0`** `difficult,enhancement,question`
 - #384 - jellyfin: allow/document uploading files from nextcloud - **`-`** `documentation,enhancement`
 - #379 - setup IPV6 support (sysctl, firewall, applications...)? - **`-`** `question`
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ? - **`-`** `monitoring`
 - #376 - netdata: enable samba monitoring when samba role is installed - **`-`** `enhancement,monitoring`
-- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - **`1.10.0`** `configuration,easy,enhancement,security,upstream,wontfix`
+- #375 - rocketchat: set Offline_Message_Use_DeepLink to false - **`1.11.0`** `configuration,easy,enhancement,security,upstream,wontfix`
 - #374 - makefile/readthedocs: include roles documentation in generated docs - **`-`** `documentation,enhancement`
 - #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis?) - **`1.11.0`** `configuration,performance,question`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone - **`-`** `documentation`
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles - **`-`** `enhancement,monitoring`
-- #357 - mattermost role? - **`1.10.0`** `feature,question`
+- #357 - mattermost role? - **`1.11.0`** `feature,question`
 - #351 - nextcloud: enable pretty URLs - **`-`** `configuration,easy,enhancement`
 - #348 - ldap-account-manager: Unable to set locale - **`-`** `bug`
 - #344 - nextcloud: replace onlyoffice integration with collabora/nextcloud office? - **`-`** `feature`
@@ -222,12 +217,12 @@
 - #176 - netdata: add Qualys SSL check module - **`-`** `feature,monitoring`
 - #174 - netdata: allow setting a repetition period for alarms - **`-`** `enhancement`
 - #172 - netdata: support long-term archiving - **`-`** `enhancement,monitoring`
-- #171 - needrestart: add a config variable to automatically reboot when a kernel upgrade is pending - **`1.10.0`** `easy,enhancement,security`
+- #171 - needrestart: add a config variable to automatically reboot when a kernel upgrade is pending - **`1.11.0`** `easy,enhancement,security`
 - #170 - netdata: add support for postgresql monitoring - **`-`** `enhancement,monitoring`
 - #167 - monitoring: add spectre-meltdown-checker - **`-`** `feature,monitoring,security`
-- #165 - gitea: Enable search/indexing for repository/code/issues - **`1.10.0`** `documentation,easy,enhancement,performance`
+- #165 - gitea: Enable search/indexing for repository/code/issues - **`1.11.0`** `documentation,easy,enhancement,performance`
 - #164 - gitea: add CI/CD service - **`1.11.0`** `feature`
-- #155 - nextcloud: add Fulltextsearch App + OCR - **`1.10.0`** `feature`
+- #155 - nextcloud: add Fulltextsearch App + OCR - **`1.11.0`** `feature,question`
 - #150 - nextcloud: add maintenance on/off switch - **`-`** `easy,enhancement`
 - #149 - nextcloud: add bookmarks app? - **`-`** `enhancement,question`
 - #148 - nextcloud: verify downloads with GPG signature - **`-`** `enhancement,security`
@@ -296,9 +291,10 @@
 - #33 - Minecraft server role? - **`-`** `feature,question,wontfix`
 - #31 - Add bash completion to xsrv script - **`-`** `enhancement`
 - #30 - Gitlab role - **`-`** `feature`
-- #26 - Dynamic DNS updater - **`1.10.0`** `feature`
+- #26 - dynamic DNS updater role? - **`1.11.0`** `feature`
 - #24 - DHCP/TFTP/PXE server role? - **`-`** `feature,question`
 - #16 - Automated performance benchmarks - **`-`** `feature`
+- #10 - xsrv init-vm: use cloud-init images? - **`-`** `feature,question`
 - #9 - openvpn-server role? - **`-`** `feature,question,security`
-- #5 - Matrix IM server role? - **`1.10.0`** `feature,question`
+- #5 - Matrix IM server role? - **`1.11.0`** `feature,question`
 - #3 - Mail server role? - **`-`** `feature,question`
