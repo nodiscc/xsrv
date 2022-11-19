@@ -41,7 +41,10 @@ sysctl_vm_swappiness: '10'
 sysctl_vm_vfs_cache_pressure: '150'
 # yes/no: enable/disable creation of core dumps on kernel crashes
 # These are usually not needed and may contain sensitive information
-os_security_kernel_enable_core_dump: no
+kernel_enable_core_dump: no
+# no/yes: configure /proc mountpoint to hide processes from other users
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, netdata...)
+kernel_proc_hidepid: no
 # list of kernel modules to prevent from being loaded
 kernel_modules_blacklist:
   - dccp # CIS 3.4.1 Ensure DCCP is disabled
@@ -50,28 +53,28 @@ kernel_modules_blacklist:
   - tipc # 3.4.4 Ensure TIPC is disabled
   - firewire-ohci # disable IEEE 1394 (FireWire) Support
   - firewire-core # disable IEEE 1394 (FireWire) Support
-  - bluetooth # bluetooth support, STIG V-38682
-  - bnep # bluetooth support, STIG V-38682
-  - btusb # bluetooth support, STIG V-38682
-  - net-pf-31 # bluetooth support, STIG V-38682
   - cpia2 # CPiA2 cameras
   - floppy # floppy drives
   - n_hdlc # HDLC line discipline
   - pcspkr # PC speaker/beep
-  - soundcore # audio input/output
   - thunderbolt # thunderbolt devices
-  - usb-midi # USB MIDI
-  - usb-storage # USB storage
-  - uvcvideo # UVC video devices
-  - v4l2_common # V4L2 video devices
   - cramfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
   - freevxfs # CIS 1.1.1.1 mounting of freevxfs filesystems is disabled
   - hfs # CIS 1.1.1.3 mounting of hfs filesystems is disabled
   - hfsplus # CIS 1.1.1.4 mounting of hfsplus filesystems is disabled
   - jffs2 # CIS 1.1.1.2 mounting of jffs2 filesystems is disabled
-  - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
   - udf # CIS 1.1.1.6 mounting of udf filesystems is disabled
-  - vfat # 1.1.1.7 mounting of FAT filesystems is limited
+  # - soundcore # audio input/output
+  # - usb-midi # USB MIDI
+  # - usb-storage # CIS 1.1.10 disable USB storage - prevents usage of USB mass storage
+  # - bluetooth # bluetooth support, STIG V-38682
+  # - bnep # bluetooth support, STIG V-38682
+  # - btusb # bluetooth support, STIG V-38682
+  # - net-pf-31 # bluetooth support, STIG V-38682
+  # - uvcvideo # UVC video devices
+  # - v4l2_common # V4L2 video devices
+  # - vfat # 1.1.1.7 mounting of FAT filesystems is limited - prevents EFI boot
+  # - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
 
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
@@ -97,6 +100,8 @@ apt_unattended_upgrades_origins_patterns:
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=buster,site=repo.mongodb.org" # nodiscc.xsrv.graylog
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
+  - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
+  - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
 
 # yes/no: setup apt-listbugs
 apt_listbugs: no
@@ -148,7 +153,9 @@ apt_listbugs_ignore_list:
   - 1002047 # https://bugs.debian.org/1002047 - no impact when base option is present in configuration file
   - 895823 # https://bugs.debian.org/895823 - only happens after purging dovecot
   - 1009872 # https://bugs.debian.org/1009872 - only happens when /etc/ssl/certs/ssl-cert-snakeoil* were deleted manually
-
+  - 1019564 # https://bugs.debian.org/1019564 - unreproducible
+  - 1019855 # https://bugs.debian.org/1019855 - only affects 4th gen Intel Core CPUs
+  - 1023812 # https://bugs.debian.org/1019855 - packaging bug without impact
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -160,7 +167,7 @@ setup_datetime: yes
 # setup/harden SSH server (yes/no)
 setup_ssh: yes
 # List of public SSH key files to authorize on the server for the ansible user
-# Example: ['public_keys/john.pub', 'public_keys/jane.pub']
+# Example: ['data/public_keys/john.pub', 'data/public_keys/jane.pub']
 # Removing a key here does not remove it on the server!
 ssh_authorized_keys: []
 # a list of public keys that are never accepted by the ssh server
@@ -208,7 +215,7 @@ firewalld_log_denied: all
 firewalld_zone_sources:
   - zone: internal # add all RFC1918 addresses to the internal zone
     sources:
-      - 192.168.0.0/24
+      - 192.168.0.0/16
       - 172.16.0.0/12
       - 10.0.0.0/8
 # Services to allow in firewalld zones
@@ -267,13 +274,13 @@ setup_users: yes
 #   - name: "remotebackup"
 #     groups: [ "ssh", "sudo" ]
 #     comment: "limited user account for remote backups"
-#     ssh_authorized_keys: ['public_keys/root@backup.EXAMPLE.org.pub']
+#     ssh_authorized_keys: ['data/public_keys/root@backup.EXAMPLE.org.pub']
 #     home: "/home/remotebackup"
 #     sudo_nopasswd_commands: ['/usr/bin/rsync']
 #   - name: "my-sftp-account"
 #     home: "/var/lib/sftp/my-sftp-account"
 #     comment: "SFTP-only account"
-#     ssh_authorized_keys: [ "public_keys/gitlab-runner@my.EXAMPLE.org.pub", "public_keys/client1@EXAMPLE.org.pub" ]
+#     ssh_authorized_keys: [ "data/public_keys/gitlab-runner@my.EXAMPLE.org.pub", "data/public_keys/client1@EXAMPLE.org.pub" ]
 #     groups: [ 'ssh', 'sftponly' ]
 #   - name: "{{ ansible_user }}"
 #     groups: adm
@@ -340,7 +347,6 @@ packages_install:
   - locate # maintain and query an index of a directory tree
   - man # view manual pages
   - at # task scheduler - required for ansible at module/one-shot job scheduling
-  - haveged # Linux entropy source using the HAVEGE algorithm - good to have on virtual machines where system is frequently running out of entropy
 
 # packages to remove (list)
 packages_remove:

@@ -1,14 +1,17 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   become: yes
   tags:
     - mumble
     - checks
 
-- include: mumble.yml
+- name: include mumble configuration tasks
+  import_tasks: mumble.yml
   become: yes
   tags: mumble
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - mumble
@@ -17,7 +20,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  import_tasks: backups.yml
   become: yes
   tags:
     - mumble
@@ -26,7 +30,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - mumble
@@ -36,7 +41,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - mumble
@@ -46,7 +52,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - mumble
@@ -55,7 +62,8 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: mumble
 

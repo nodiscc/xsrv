@@ -1,8 +1,8 @@
 deb https://deb.debian.org/debian/ {{ ansible_facts.distribution_release }} contrib
 deb https://deb.debian.org/debian/ {{ ansible_facts.distribution_release }}-updates contrib
 {% if ansible_facts.distribution_release == 'bullseye' %}
-deb http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}-security contrib
+deb https://security.debian.org/debian-security {{ ansible_facts.distribution_release }}-security contrib
 {% else %}
-deb http://security.debian.org/debian-security {{ ansible_facts.distribution_release }}/updates contrib
+deb https://security.debian.org/debian-security {{ ansible_facts.distribution_release }}/updates contrib
 {% endif %}
 deb http://download.proxmox.com/debian/pve {{ ansible_facts.distribution_release }} pve-no-subscription

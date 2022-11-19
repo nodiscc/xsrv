@@ -18,3 +18,18 @@
   apt:
     state: present
     package: "{{ packages_install }}"
+
+##### RNG #####
+
+- name: install haveged random number generator if the host is a KVM/VMware VM
+  apt:
+    state: present
+    package: haveged
+  when: "('kvm' in ansible_facts.virtualization_tech_guest) or ('VMware' in ansible_facts.virtualization_tech_guest)"
+
+- name: install hardware random number generator support packages if the CPU supports it
+  apt:
+    state: present
+    package: rng-tools5
+  when: ansible_local.common.cpu_rdrand
+  ignore_errors: "{{ ansible_check_mode }}"

@@ -146,6 +146,16 @@ TLS_CACERT /etc/ssl/certs/ldap.xinit.se.openldap.crt
 sudo systemctl restart php7.4-fpm
 ```
 
+**Access files from other services:** [External storage](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage_configuration_gui.html) can be configured to make files from other services available in Nextcloud. This includes local directories on the server, SFTP, other Nextcloud instances, SMB/CIFS, WebDav, S3...
+
+Example configuration to access files from the [transmission](../transmission/) bittorrent service running on the same host: Under `Settings > Administration > Extrenal storage`, add a new storage:
+- Folder name: `TORRENTS`
+- External storage: `Local`
+- Configuration/location: `/var/lib/transmission-daemon/downloads/`
+
+Note: for the `Local` external storage type, the target directory must be readable by the `nextcloud` user.
+
+
 **Uninstallation**
 
 This will remove all application files and data, and related configuration
@@ -158,6 +168,18 @@ $ sudo -u postgres psql -c 'DROP DATABASE nextcloud;'
 $ sudo -u postgres psql -c 'DROP USER nextcloud;'
 $ sudo userdel --remove nextcloud
 ```
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+nextcloud - setup nextcloud file sharing/collaboration platform
+nextcloud-applications - setup nextcloud applications
+nextcloud-config - setup main nextcloud configuration settings
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

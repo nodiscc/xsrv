@@ -8,14 +8,14 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.9.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.10.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
 
 This project provides:
 
-- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install/configure various network services, applications and management tools (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, infrastructure...)
+- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) for automated installation/configuration of various network services, applications and management tools (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, infrastructure...)
 - an optional [command-line tool](usage.md) for common operations, configuration, deployment and maintenance of your servers
 - a template to [get started with a single server](installation.md) in a few minutes
 
@@ -32,6 +32,8 @@ This project provides:
 - [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - Media solution that puts you in control of your media
+- [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) - Video conferencing solution
+- [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) - libvirt virtualization toolkit
 - [mail_dovecot](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) - IMAP mailbox server
 - [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
@@ -66,6 +68,7 @@ This project provides:
 [![](https://i.imgur.com/H3PIWrt.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog)
 [![](https://i.imgur.com/UWjyTqP.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge)
+[![](https://i.imgur.com/g0jUMXE.jpg)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi)
 
 ## Source code
 
@@ -88,7 +91,6 @@ This project provides:
 - [Usage](usage.md)
 - [List of all configuration variables](configuration-variables.md)
 - [Maintenance](maintenance.md)
-- [Advanced usage](advanced.md)
 - [Contributing](contributing.md)
 - [Appendices](appendices.md)
 - [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)

@@ -53,7 +53,7 @@
 #ftp             -       chroot          /ftp
 #@student        -       maxlogins       4
 
-{% if not os_security_kernel_enable_core_dump %}
+{% if not kernel_enable_core_dump %}
 # Prevent core dumps for all users. These are usually not needed and may contain sensitive information
 *    hard    core    0 
 {% endif %}

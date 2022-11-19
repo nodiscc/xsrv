@@ -102,6 +102,22 @@
   command: rsnapshot configtest
   changed_when: no
 
+### LIBVIRT ###
+
+- name: restart libvirtd
+  become: yes
+  service:
+    name: libvirtd
+    state: restarted
+    enabled: yes
+  listen:
+    - restart firewalld
+    - reload firewalld
+  when:
+    - ansible_local.libvirt.ansible_managed is defined
+    - ansible_local.libvirt.ansible_managed | bool
+  ignore_errors: "{{ ansible_check_mode }}"
+
 ### GENERAL PURPOSE ###
 
 - name: reload systemd unit files

@@ -33,7 +33,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.0.1"
+ldap_account_manager_version: "8.1"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -63,15 +63,18 @@ ldap_account_manager_php_upload_max_filesize: '2M'
 openldap_setup_ssp: no
 # domain name (FQDN) for Self Service Password
 self_service_password_fqdn: "ssp.CHANGEME.org"
-# comma-separated list of IP addresses/networks allowed to access self service password ((CIDR notation))
+# list of IP addresses/networks allowed to access self service password (CIDR notation)
 # for security reasons only private/RFC1918 addresses are allowed by default
-self_service_password_allowed_hosts: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
+self_service_password_allowed_hosts:
+  - 10.0.0.0/8
+  - 192.168.0.0/16
+  - 172.16.0.0/12
 # yes/no: enable self service password debug log messages
 self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.5.1"
+self_service_password_version: "1.5.2"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost

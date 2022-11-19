@@ -39,6 +39,16 @@ Access gotty from a [web browser](https://www.mozilla.org/en-US/firefox/) at `ht
 ## References/Documentation
 -->
 
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+gotty - setup gotty web terminal
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

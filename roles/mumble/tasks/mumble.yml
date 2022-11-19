@@ -22,7 +22,7 @@
 - name: update mumble superuser password (does not report changes)
   become: yes
   become_user: mumble-server
-  command: murmurd -ini /etc/mumble-server.ini -supw {{ mumble_superuser_password }} # noqa 301
+  command: murmurd -ini /etc/mumble-server.ini -supw {{ mumble_superuser_password }} # noqa no-changed-when
   register: mumble_update_superuser
   failed_when:
     - 'mumble_update_superuser.rc not in [0, 1]'

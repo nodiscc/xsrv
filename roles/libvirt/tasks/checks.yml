@@ -1,0 +1,34 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
+  with_items:
+    - libvirt_port_forwards | type_debug == 'list'
+    - libvirt_service_after | type_debug == 'list'
+
+
+- name: check that variables are correctly defined (libvirt_port_forwards)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
+    that:
+      - item.host_ip|ansible.netcommon.ipaddr
+      - item.host_port == item.host_port|int
+      - item.protocol in ['tcp', 'udp']
+      - item.vm_ip|ansible.netcommon.ipaddr
+      - item.vm_port == item.vm_port|int
+      - item.vm_name is string
+      - item.bridge is string
+  with_items: "{{ libvirt_port_forwards }}"
+
+- name: check that variables are correctly defined (libvirt_vms)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
+    that:
+      - item.name is string
+      - (item.state is not defined) or (item.state in ['present', 'running', 'destroyed', 'shutdown', 'absent'])
+      - (item.xml_file is string) or (item.state == "absent")
+      - (item.autostart is not defined) or (item.autostart == item.autostart | bool) or (item.state == "absent")
+  with_items: "{{ libvirt_vms }}"

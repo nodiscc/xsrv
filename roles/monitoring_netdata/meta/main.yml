@@ -4,6 +4,7 @@
 # @tag netdata-needrestart - setup netdata needrestart module
 # @tag netdata-logcount - setup netdata logcount module
 # @tag netdata-debsecan - setup netdata debsecan module
+# @tag utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 
 galaxy_info:
   role_name: monitoring_netdata

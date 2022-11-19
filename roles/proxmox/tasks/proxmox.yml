@@ -7,7 +7,7 @@
     mode: 0644
   notify: update apt cache
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: "{{ item }}"

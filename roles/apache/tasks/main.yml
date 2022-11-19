@@ -1,4 +1,5 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - apache
     - checks
@@ -11,24 +12,28 @@
     - monitoring
     - rsyslog
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
     - ssl
 
-- include: apache.yml
+- name: include apache configuration tasks
+  import_tasks: apache.yml
   become: yes
   tags:
     - apache
 
-- include: mail.yml
+- name: include system mail configuration tasks
+  import_tasks: mail.yml
   become: yes
   tags:
     - apache
     - mail
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - apache
@@ -37,7 +42,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - apache
@@ -47,7 +53,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - apache
@@ -57,11 +64,13 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: apache
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - apache

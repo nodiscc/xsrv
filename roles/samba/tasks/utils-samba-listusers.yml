@@ -1,0 +1,8 @@
+- name: build samba users list
+  command: pdbedit -L # -v for more detail
+  changed_when: no
+  register: samba_users_list
+
+- name: show samba users list
+  debug:
+    msg: "{{ samba_users_list.stdout }}"

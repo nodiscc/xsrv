@@ -1,13 +1,16 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - rss_bridge
     - checks
 
-- include: rss-bridge.yml
+- name: include rss-bridge configuration tasks
+  import_tasks: rss-bridge.yml
   become: yes
   tags: rss_bridge
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -15,13 +18,15 @@
     - rss_bridge
   when: rss_bridge_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  import_tasks: apache.yml
   become: yes
   tags:
     - rss_bridge
     - apache
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - rss_bridge
@@ -30,7 +35,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - rss_bridge
@@ -40,7 +46,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: rss_bridge
 

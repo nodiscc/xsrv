@@ -1,0 +1,39 @@
+- name: install requirments for python virtualenv
+  apt:
+    package: python3-venv
+    state: present
+
+- name: create working directory for python-shaarli-client
+  file:
+    state: directory
+    path: /var/shaarli
+    owner: shaarli
+    group: shaarli
+    mode: 0770
+
+- name: install python-shaarli-client in virtualenv
+  pip:
+    name: git+https://github.com/shaarli/python-shaarli-client
+    virtualenv: /var/shaarli/.venv
+    virtualenv_command: python3 -m venv
+    extra_args: --force
+
+- name: install python-shaarli-client configuration
+  template:
+    src: var_shaarli_python-shaarli-client.ini.j2
+    dest: /var/shaarli/python-shaarli-client.ini
+    owner: shaarli
+    group: shaarli
+    mode: 0600
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create cron job for python-shaarli-client
+  cron:
+    cron_file: shaarli-client
+    month: "*"
+    day: "*"
+    hour: "*" # every hour
+    minute: "0"
+    job: '/bin/bash -c "source /var/shaarli/.venv/bin/activate && shaarli {{ "--insecure " if shaarli_https_mode == "selfsigned" }}--config /var/shaarli/python-shaarli-client.ini --outfile /var/shaarli/shaarli.json get-links" 2>&1 | logger -t python-shaarli-client'
+    name: periodic export of shaarli data to file
+    user: shaarli

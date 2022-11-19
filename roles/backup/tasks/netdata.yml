@@ -13,7 +13,7 @@
     - src: etc_netdata_health.d_filecheck.conf.d_rsnapshot.conf.j2
       dest: /etc/netdata/health.d/filecheck.conf.d/rsnapshot.conf
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: "{{ item }}"

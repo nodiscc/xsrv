@@ -1,23 +1,32 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - samba
     - checks
 
-- include: samba.yml
+- name: include samba configuration tasks
+  import_tasks: samba.yml
   become: yes
   tags: samba
 
-- include: samba-ldapsam.yml
+- name: include samba ldapsam backend configuration tasks
+  import_tasks: samba-ldapsam.yml
   become: yes
+  tags:
+    - samba
+    - samba-users
   when: samba_passdb_backend == 'ldapsam'
-  tags: samba
 
-- include: samba-tdbsam.yml
+- name: include samba tdbsam backend configuration tasks
+  import_tasks: samba-tdbsam.yml
   become: yes
+  tags:
+    - samba
+    - samba-users
   when: samba_passdb_backend == 'tdbsam'
-  tags: samba
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  import_tasks: backups.yml
   become: yes
   tags:
     - samba
@@ -26,7 +35,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - samba
@@ -36,7 +46,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - samba
@@ -45,10 +56,20 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: samba
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: samba
+
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include samba users listing tasks
+  import_tasks: utils-samba-listusers.yml
+  become: yes
+  tags:
+    - never
+    - utils-samba-listusers

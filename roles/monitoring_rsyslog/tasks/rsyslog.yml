@@ -6,7 +6,8 @@
       - rsyslog-gnutls # TLS forwarding support
 
 - name: setup keys/certificates for TCP/TLS message forwarding
-  include_tasks: rsyslog-ssl.yml
+  import_tasks: rsyslog-ssl.yml
+  tags: ssl
   when: rsyslog_enable_forwarding | bool
 
 - name: set retention/rotation policy for rsyslog logs
@@ -32,7 +33,7 @@
     - apt # apt logs aggregation
 
 # DEPRECATED this task will be removed in a future version of the role
-- name: remove rsyslog config files from old versions of the role
+- name: migration - remove rsyslog config files from old versions of the role
   file:
     state: absent
     path: /etc/rsyslog.d/{{ item }}.conf

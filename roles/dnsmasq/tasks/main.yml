@@ -1,13 +1,16 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - dnsmasq
     - checks
 
-- include: dnsmasq.yml
+- name: include dnsmasq configuration tasks
+  import_tasks: dnsmasq.yml
   become: yes
   tags: dnsmasq
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - dnsmasq
@@ -16,7 +19,8 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: backup
 

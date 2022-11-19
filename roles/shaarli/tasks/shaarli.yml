@@ -12,8 +12,6 @@
 - name: install required packages for shaarli
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - php7.4-gd
       - php7.4-curl
@@ -22,6 +20,7 @@
       - php7.4-intl
       - php7.4-curl
       - php7.4-gettext
+      - php7.4-ldap
 
 ### SHAARLI INSTALLATION ###
 
@@ -156,10 +155,10 @@
   file:
     path: "{{ item.path }}"
     state: directory
-    owner: root
+    owner: "{{ item.owner | default('root') }}"
     group: shaarli
     recurse: "{{ item.recurse | default(True) }}"
-    mode: "{{ item.mode | default('0770') }}"
+    mode: "{{ item.mode | default('u=rwX,g=rwX,o=') }}"
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - path: "{{ shaarli_install_dir }}"
@@ -168,6 +167,7 @@
     - path: "{{ shaarli_install_dir }}/data"
     - path: "{{ shaarli_install_dir }}/tmp"
     - path: "{{ shaarli_install_dir }}/cache"
+      owner: www-data
     - path: "{{ shaarli_install_dir }}/pagecache"
 
 - name: create ansible facts.d directory

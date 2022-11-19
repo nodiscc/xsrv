@@ -1,0 +1,12 @@
+- name: copy jitsi fail2ban jail config
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0600
+  tags: fail2ban
+  notify: reload fail2ban
+  with_items:
+    - src: etc_fail2ban_jail.d_prosody.conf.j2
+      dest: /etc/fail2ban/jail.d/prosody.conf
+    - src: etc_fail2ban_filter.d_prosody-auth.conf.j2
+      dest: /etc/fail2ban/filter.d/prosody-auth.conf

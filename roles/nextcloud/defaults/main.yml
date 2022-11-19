@@ -2,7 +2,7 @@
 # Nextcloud admin username/password
 nextcloud_user: "CHANGEME"
 nextcloud_password: "CHANGEME"
-# nextcloud adminstrator e-mail address
+# nextcloud administrator e-mail address
 nextcloud_admin_email: "CHANGEME@CHANGEME.org"
 # Fully Qualified Domain Name for the nextcloud instance
 nextcloud_fqdn: "cloud.CHANGEME.org"
@@ -25,54 +25,65 @@ nextcloud_https_mode: selfsigned
 nextcloud_data_dir: "/var/nextcloud/data"
 # Nextcloud installation directory (must be under a valid documentroot)
 nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
-# full public URL of your tt-rss installation (update this if you changed the install location to a subdirectory)
+# full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "24.0.5"
+nextcloud_version: "24.0.7"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
+# default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
+nextcloud_defaultapp: 'dashboard,files'
+# Loglevel to start logging at (integer 1-4, 0=Debug, 1=Info, 2=Warning, 3=Error, 4=Fatal)
+nextcloud_loglevel: 1
 # workaround for old nextcloud-desktop clients which don't support TLSv1.3
 nextcloud_allow_tls12: true
 # Nextcloud applications to enable or disable
 #   state: enable/disable
 #   app: nextcloud app name
 nextcloud_apps:
-  - { state: "disable", app: "accessibility" }
-  - { state: "disable", app: "encryption" }
-  - { state: "disable", app: "files_antivirus" }
-  - { state: "disable", app: "files_versions" }
-  - { state: "disable", app: "news" }
-  - { state: "disable", app: "user_external" }
-  - { state: "disable", app: "recommendations" }
-  - { state: "enable", app: "activity" }
-  - { state: "enable", app: "calendar" }
-  - { state: "enable", app: "comments" }
-  - { state: "enable", app: "contacts" }
-  - { state: "enable", app: "dav" }
-  - { state: "enable", app: "federatedfilesharing" }
-  - { state: "enable", app: "federation" }
-  - { state: "enable", app: "files" }
-  - { state: "enable", app: "files_external" }
-  - { state: "enable", app: "files_pdfviewer" }
-  - { state: "enable", app: "files_sharing" }
-  - { state: "enable", app: "files_trashbin" }
+  - { state: "disable", app: "encryption" } # https://nextcloud.com/encryption/
+  - { state: "disable", app: "files_antivirus" } # https://apps.nextcloud.com/apps/files_antivirus
+  - { state: "disable", app: "files_versions" } # https://docs.nextcloud.com/server/latest/user_manual/en/files/version_control.html
+  - { state: "disable", app: "news" } # https://apps.nextcloud.com/apps/news
+  - { state: "disable", app: "user_external" } # https://apps.nextcloud.com/apps/user_external
+  - { state: "disable", app: "recommendations" } # https://github.com/nextcloud/recommendations/
+  - { state: "enable", app: "activity" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/activity_configuration.html
+  - { state: "enable", app: "calendar" } # https://apps.nextcloud.com/apps/calendar
+  - { state: "enable", app: "comments" } # comments on files
+  - { state: "enable", app: "contacts" } # https://apps.nextcloud.com/apps/contacts
+  - { state: "enable", app: "dav" } # https://docs.nextcloud.com/server/20/user_manual/en/files/access_webdav.html
+  - { state: "enable", app: "federatedfilesharing" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/federated_cloud_sharing_configuration.html
+  - { state: "enable", app: "federation" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/federated_cloud_sharing_configuration.html
+  - { state: "enable", app: "files" } # https://nextcloud.com/files/
+  - { state: "enable", app: "files_external" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage_configuration_gui.html
+  - { state: "enable", app: "files_pdfviewer" } # https://apps.nextcloud.com/apps/files_pdfviewer
+  - { state: "enable", app: "files_sharing" } # https://docs.nextcloud.com/server/stable/user_manual/en/files/sharing.html
+  - { state: "enable", app: "files_trashbin" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/trashbin_configuration.html
   - { state: "enable", app: "files_videoplayer" }
-  - { state: "enable", app: "firstrunwizard" }
-  - { state: "enable", app: "groupfolders" }
-  - { state: "enable", app: "photos" }
-  - { state: "enable", app: "music" }
-  - { state: "enable", app: "maps" }
-  - { state: "enable", app: "notifications" }
-  - { state: "enable", app: "systemtags" }
-  - { state: "enable", app: "tasks" }
-  - { state: "enable", app: "updatenotification" }
-  - { state: "enable", app: "user_ldap" }
-  - { state: "enable", app: "notes" }
-  - { state: "disable", app: "deck" }
-  - { state: "enable", app: "admin_audit" }
-  - { state: "disable", app: "documentserver_community" }
-  - { state: "disable", app: "onlyoffice" }
-  - { state: "disable", app: "bookmarks" }
+  - { state: "enable", app: "viewer" } # https://github.com/nextcloud/viewer
+  - { state: "enable", app: "firstrunwizard" } # https://github.com/nextcloud/firstrunwizard
+  - { state: "enable", app: "groupfolders" } # https://apps.nextcloud.com/apps/groupfolders
+  - { state: "enable", app: "photos" } # https://github.com/nextcloud/photos
+  - { state: "enable", app: "music" } # https://apps.nextcloud.com/apps/music
+  - { state: "enable", app: "maps" } # https://apps.nextcloud.com/apps/maps
+  - { state: "enable", app: "notifications" } # https://github.com/nextcloud/notifications
+  - { state: "enable", app: "systemtags" } # https://docs.nextcloud.com/server/latest/user_manual/ca/files/access_webgui.html#tagging-files
+  - { state: "enable", app: "tasks" } # https://apps.nextcloud.com/apps/tasks
+  - { state: "enable", app: "updatenotification" } # https://docs.nextcloud.com/server/latest/admin_manual/maintenance/update.html
+  - { state: "enable", app: "user_ldap" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_user/user_auth_ldap.html
+  - { state: "enable", app: "notes" } # https://apps.nextcloud.com/apps/notes
+  - { state: "disable", app: "deck" } # https://apps.nextcloud.com/apps/deck
+  - { state: "enable", app: "admin_audit" } # https://portal.nextcloud.com/article/7/using-the-audit-log-44.html
+  - { state: "disable", app: "documentserver_community" } # https://apps.nextcloud.com/apps/documentserver_community
+  - { state: "disable", app: "onlyoffice" } # https://apps.nextcloud.com/apps/onlyoffice
+  - { state: "disable", app: "bookmarks" } # https://apps.nextcloud.com/apps/bookmarks
+  - { state: "disable", app: "cookbook" } # https://apps.nextcloud.com/apps/cookbook
+  - { state: "disable", app: "keeweb" } # https://apps.nextcloud.com/apps/keeweb
+  - { state: "disable", app: "passman" } # https://apps.nextcloud.com/apps/passman
+  - { state: "disable", app: "passwords" } # https://apps.nextcloud.com/apps/passwords
+  - { state: "disable", app: "polls" } # https://apps.nextcloud.com/apps/polls
+  - { state: "disable", app: "apporder" } # https://apps.nextcloud.com/apps/apporder
+  - { state: "disable", app: "keeporsweep" } # https://apps.nextcloud.com/apps/keeporsweep
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'

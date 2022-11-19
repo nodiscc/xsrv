@@ -1,5 +1,7 @@
 # @tag samba - setup samba file server
-# @tag samba-config - setup main samba configuration
+# @tag samba-shares - configfure samba file shares
+# @tag samba-users - configfure samba user accounts
+# @tag utils-samba-listusers - (manual) list samba users
 
 galaxy_info:
   role_name: samba

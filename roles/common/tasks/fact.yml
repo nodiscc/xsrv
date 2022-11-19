@@ -8,6 +8,11 @@
   template:
     src: etc_ansible_facts.d_common.fact.j2
     dest: /etc/ansible/facts.d/common.fact
-    mode: 0644
+    mode: 0755
   notify: update ansible facts
   ignore_errors: "{{ ansible_check_mode }}"
+
+# update ansible facts immediately to detect CPU TRNG support
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: common

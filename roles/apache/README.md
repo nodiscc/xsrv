@@ -42,6 +42,19 @@ linux_users:
     comment: "ansible user/allowed to read/write web application files"
 ```
 
+**Let's Encrypt certificates**: newly generated certificates may take up to 1 minute to become available.
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+apache - setup the apache web server
+ssl - setup SSL certificates and configuration
+apache-mod-evasive - setup apache anti-DoS module
+```
+<!--END TAGS LIST-->
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

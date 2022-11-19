@@ -1,14 +1,16 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - wireguard
     - checks
 
-- include: wireguard.yml
+- name: include wireguard configuration tasks
+  import_tasks: wireguard.yml
   become: yes
-  tags:
-    - wireguard
+  tags: wireguard
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  import_tasks: backups.yml
   become: yes
   tags:
     - wireguard
@@ -17,7 +19,8 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - wireguard
@@ -27,11 +30,13 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: wireguard
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - wireguard

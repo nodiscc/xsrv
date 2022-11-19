@@ -1,17 +1,25 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - tt_rss
     - checks
 
-- include: postgresql.yml
+- name: include postgresql configuration tasks
+  import_tasks: postgresql.yml
   become: yes
-  tags: tt_rss
+  tags:
+    - tt_rss
+    - tt_rss-postgresql
 
-- include: tt-rss.yml
+- name: include tt-rss configuration tasks
+  import_tasks: tt-rss.yml
   become: yes
-  tags: tt_rss
+  tags:
+    - tt_rss
+    - tt_rss-app
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -19,23 +27,15 @@
     - tt_rss
   when: tt_rss_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  import_tasks: apache.yml
   become: yes
   tags:
     - tt_rss
     - apache
 
-- include: themes.yml
-  become: yes
-  tags: tt_rss
-  when: tt_rss_install_themes | bool
-
-- include: plugins.yml
-  become: yes
-  tags: tt_rss
-  when: tt_rss_install_plugins | bool
-
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - tt_rss
@@ -44,7 +44,8 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - tt_rss
@@ -54,7 +55,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: tt_rss
 

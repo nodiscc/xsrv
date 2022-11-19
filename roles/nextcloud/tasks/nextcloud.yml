@@ -167,17 +167,19 @@
 
 - name: run first setup (this can take a while)
   become_user: nextcloud
-  command: /usr/bin/php occ \
-           maintenance:install \
-           --database="{{ nextcloud_db_type }}" \
-           --database-host="{{ nextcloud_db_host }}" \
-           --database-name="{{ nextcloud_db_name }}" \
-           --database-user="{{ nextcloud_db_user }}" \
-           --database-pass="{{ nextcloud_db_password }}" \
-           --admin-user="{{ nextcloud_user }}" \
-           --admin-pass="{{ nextcloud_password }}"
-           --data-dir="{{ nextcloud_data_dir }}"
-           --admin-email="{{ nextcloud_admin_email }}"
+  command:
+    cmd: |
+      /usr/bin/php occ
+      maintenance:install
+      --database="{{ nextcloud_db_type }}"
+      --database-host="{{ nextcloud_db_host }}"
+      --database-name="{{ nextcloud_db_name }}"
+      --database-user="{{ nextcloud_db_user }}"
+      --database-pass="{{ nextcloud_db_password }}"
+      --admin-user="{{ nextcloud_user }}"
+      --admin-pass="{{ nextcloud_password }}"
+      --data-dir="{{ nextcloud_data_dir }}"
+      --admin-email="{{ nextcloud_admin_email }}"
   register: nextcloud_first_setup
   args:
     chdir: "{{ nextcloud_install_dir }}"
@@ -197,12 +199,14 @@
   when: nextcloud_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
 
-# occ doesn't report changed status, not idempotent, alwyas returns changd
+# occ doesn't report changed status, not idempotent, alwyas returns changed
 # Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
+# Some possible additional settings are documented here. See https://github.com/nextcloud/server/blob/master/config/config.sample.php for all available configuration settings
 - name: set nextcloud config.php values (always returns changed)
   become: yes
   become_user: nextcloud
-  command: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301
+  command:
+    cmd: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301
   args:
     chdir: "{{ nextcloud_install_dir }}/"
   with_items:
@@ -217,20 +221,49 @@
     - { key: "logtimezone", value: "UTC" }
     - { key: "log_type", value: "file" }
     - { key: "log_authfailip", value: "true", type: "boolean" }
-    - { key: "loglevel", value: "1", type: "integer" }
+    - { key: "loglevel", value: "{{ nextcloud_loglevel }}", type: "integer" }
     - { key: "trashbin_retention_obligation", value: "auto" }
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
     - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
+    - { key: "defaultapp", value: "{{ nextcloud_defaultapp }}" }
+    - { key: "upgrade.disable-web", value: "true", type: "boolean" }
+    - { key: "simpleSignUpLink.shown", value: "false", type: "boolean" }
+    # - { key: "appstoreenabled", value: "true", type: "boolean" }
+    # - { key: "enable_previews", value: "true", type: "boolean" }
+    # - { key: "preview_max_x", value: "4096", type: "integer" }
+    # - { key: "preview_max_y", value: "4096", type: "integer" }
+    # - { key: "preview_max_filesize_image", value: "50", type: "integer" }
+    # - { key: "preview_max_memory", value: "128", type: "integer" }
+    # - { key: "preview_libreoffice_path", value: '/usr/bin/libreoffice' }
+    # - { key: "skeletondirectory", value: '/path/to/nextcloud/core/skeleton' }
+    # - { key: "lost_password_link", value: 'https://example.org/link/to/password/reset' }
+    # - { key: "updater.server.url", value: 'https://updates.nextcloud.com/updater_server/' }
+    # - { key: "updater.release.channel", value: 'stable' }
+    # - { key: "updatechecker", value: "true", type: "boolean" }
+    # - { key: "has_internet_connection", value: "true", type: "boolean" }
+    # - { key: "config_is_read_only", value: "false", type: "boolean" }
+    # - { key: "maintenance", value: "false", type: "boolean" }
+    # - { key: "auth.bruteforce.protection.enabled", value: "true", type: "boolean" }
+    # - { key: "token_auth_enforced", value: "false", type: "boolean" }
+    # - { key: "session_lifetime", value: "86400", type: "integer" }
+    # - { key: "auto_logout", value: "false", type: "boolean" }
+    # - { key: "session_keepalive", value: "true", type: "boolean" }
+    # - { key: "hide_login_form", value: "false", type: "boolean" }
+    # - { key: "logo_url", value: "https://www.example.org" }
+    # - { key: "mail_domain", value: "example.com" }
+    # - { key: "mail_from_address", value: "noreply" }
+    # - { key: "mail_smtphost", value: "smtp.example.com" }
+    # - { key: "mail_smtpport", value: "587", type: "integer" }
+    # - { key: "mail_smtpsecure", value: "tls" }
+    # - { key: "mail_smtpauth", value: "true", type: "boolean" }
+    # - { key: "mail_smtpname", value: "noreply" }
+    # - { key: "mail_smtppassword", value: "CHANGEME" }
+    # - { key: "filesystem_check_changes", value: "0", type: "integer" }
+    # - { key: "filelocking.enabled", value: "true", type: "boolean" }
+    # - { key: "filelocking.ttl", value: "3600", type: "integer" }
   no_log: "{{ item.no_log | default(False) }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config
-
-# trashbin_retention_obligation:
-#   auto: keep for 30 days, then delete IF space needed
-#   D, auto: keep at least D+ days, then delete IF space needed
-#   auto, D: max D days, but delete if space needed
-#   D1, D2: keep lat east D1 days and max D2 days
-#   disabled: auto clean disabled
 
 - name: run nextcloud upgrade command
   become_user: nextcloud
@@ -287,7 +320,8 @@
 
 ### NEXTCLOUD APPLICATIONS ####
 
-- include: nextcloud-applications.yml
+- name: include nextcloud applications configuration tasks
+  import_tasks: nextcloud-applications.yml
   tags: nextcloud-applications
 
 ### CLEANUP ###

@@ -19,6 +19,8 @@
     - nextcloud_password is not search("CHANGEME")
     - nextcloud_user is not search("CHANGEME")
     - nextcloud_version is string
+    - nextcloud_defaultapp is string
+    - nextcloud_loglevel == nextcloud_loglevel | int
     - nextcloud_php_memory_limit|regex_search('[KMG]$')
     - nextcloud_php_max_execution_time == nextcloud_php_max_execution_time|int
     - nextcloud_php_max_input_time == nextcloud_php_max_input_time|int

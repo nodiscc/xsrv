@@ -1,12 +1,15 @@
-- include: proxmox.yml
+- name: include proxmox configuration tasks
+  import_tasks: proxmox.yml
   become: yes
   tags: proxmox
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: proxmox
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - proxmox
@@ -15,11 +18,13 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - proxmox
     - firewall
+    - fail2ban
   when:
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool

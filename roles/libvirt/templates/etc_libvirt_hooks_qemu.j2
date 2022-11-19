@@ -1,0 +1,15 @@
+#!/bin/bash
+{% for item in libvirt_port_forwards %}
+# forward traffic from {{ item.host_ip }}:{{ item.host_port }}/{{ item.protocol }} to guest {{ item.vm_name }} ({{ item.vm_ip }}:{{ item.vm_port }}/{{ item.protocol }}) on bridge {{ item.bridge }}
+if [ "${1}" = "{{ item.vm_name }}" ]; then
+    if [ "${2}" = "stopped" ] || [ "${2}" = "reconnect" ]; then
+        /sbin/iptables -D FORWARD -o {{ item.bridge }} -p tcp -d {{ item.vm_ip }} --dport {{ item.vm_port }} -j ACCEPT
+        /sbin/iptables -t nat -D PREROUTING -p tcp --dport {{ item.host_port }} -d {{ item.host_ip }} -j DNAT --to {{ item.vm_ip }}:{{ item.vm_port }}
+    fi
+    if [ "${2}" = "start" ] || [ "${2}" = "reconnect" ]; then
+        /sbin/iptables -I FORWARD -o {{ item.bridge }} -p tcp -d {{ item.vm_ip }} --dport {{ item.vm_port }} -j ACCEPT
+        /sbin/iptables -t nat -I PREROUTING -p tcp --dport {{ item.host_port }} -d {{ item.host_ip }} -j DNAT --to {{ item.vm_ip }}:{{ item.vm_port }}
+    fi
+fi
+
+{% endfor %}

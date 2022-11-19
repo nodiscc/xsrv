@@ -15,6 +15,7 @@
       # - iotop # simple top-like I/O monitor
       # - iftop # displays bandwidth usage information on a network interface
       # - inxi # full featured system information script
+      # - arpscan # count machines on LAN
 
 - name: remove default logwatch cron job
   file:

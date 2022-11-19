@@ -66,7 +66,7 @@ sudo -u postgres pg_restore --clean --create /tmp/ttrss.sql > /tmp/ttrss.txt.sql
 # restore the plaintext sql dump
 sudo -u postgres psql --echo-errors --file /tmp/ttrss.txt.sql
 # remove temporary files
-sudo rm /tmp/ttrss.sql /tmp/ttrss.sql.txt
+sudo rm /tmp/ttrss.sql /tmp/ttrss.txt.sql
 ```
 
 
@@ -76,6 +76,15 @@ Re-apply the role on a regular basis to ensure the application stays up to date.
 
 _Note: due to TT-RSS "rolling" release model (always install the latest `master` branch), the role may upgrade the application without warning. Pin `tt_rss_version` to a specific commit hash from https://git.tt-rss.org/fox/tt-rss/commits/branch/master if you need to prevent this (but remember to update it manually/periodically).
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+tt_rss - setup tt-rss feed reader
+tt_rss-postgresql - setup tt-rss postgresql database
+tt_rss-app - setup tt-rss appllication
+```
+<!--END TAGS LIST-->
 
 ## License
 

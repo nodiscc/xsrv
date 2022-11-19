@@ -41,6 +41,13 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmsssion.conf.j2) for the [backup](../backup) role.
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+transmission - setup transmission bittorrent client
+```
+<!--END TAGS LIST-->
 
 ## License
 

@@ -3,3 +3,4 @@
   service:
     name: wg-quick@wg0
     state: reloaded
+  when: wireguard_enable_service | bool

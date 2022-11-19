@@ -108,9 +108,13 @@ sudo update-ca-certificates
 
 ### Repository mirroring
 
-#### Mirror from gitea to other hosts
+**Mirror from gitea to other hosts**
 
-To mirror a gitea repository to github/gitlab [[1]](https://github.com/go-gitea/gitea/issues/3480), add a post-receive hook in the project settings:
+Got to your project `Settings > Repository` and configue the remote repository to mirror to.
+
+<!--
+<summary>DEPRECATED git hooks method</summary>
+This method uses git hooks, which are disabled by default (`gitea_enable_git_hooks: no`). To mirror a gitea repository to github/gitlab [[1]](https://github.com/go-gitea/gitea/issues/3480), add a post-receive hook in the project settings:
 
 ```bash
 #!/bin/bash
@@ -121,8 +125,9 @@ repo="myproject"
 git push --mirror --quiet https://$user:$token@$host/$user/$repo.git &> /dev/null
 echo "$host/$user/$repo updated"
 ```
+-->
 
-#### Mirror from other hosts to gitea
+**Mirror from other hosts to gitea**
 
 Gitea also allows setting up an automatic, local/self-hosted git mirror of your favorite projects from other forges:
 
@@ -133,7 +138,6 @@ Gitea also allows setting up an automatic, local/self-hosted git mirror of your 
 - `Migrate` repository
 
 Repeat for every repository, you can then see your list list of mirrors at https://my.example.org/gitea/my-org
-
 
 ### API usage
 
@@ -171,6 +175,15 @@ gitea --description "My new project" --private new myusername/myproject
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role and [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+gitea - setup gitea git service/software forge
+```
+<!--END TAGS LIST-->
 
 
 ## License

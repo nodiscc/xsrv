@@ -1,13 +1,16 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - backup
     - checks
 
-- include: rsnapshot.yml
+- name: include rsnapshot configuration tasks
+  import_tasks: rsnapshot.yml
   become: yes
   tags: backup
 
-- include: rsyslog.yml
+- name: include rsyslog configuration tasks
+  import_tasks: rsyslog.yml
   become: yes
   tags:
     - backup
@@ -17,7 +20,8 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - backup
@@ -27,7 +31,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansibel facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: backup
 

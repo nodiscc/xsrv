@@ -1,7 +1,8 @@
 ##### HOSTNAME ####
 
 - name: set hostname
-  hostname: name={{ inventory_hostname }}
+  hostname:
+    name: "{{ inventory_hostname }}"
 
 - name: update /etc/hosts with new hostname
   lineinfile:

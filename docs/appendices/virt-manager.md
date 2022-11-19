@@ -68,13 +68,7 @@ Click `Finish` and start the VM from virt-manager's main window.
 
 ### Automated
 
-You can also create a VM from the command-line using the [virsh](https://manpages.debian.org/buster/libvirt-clients/virsh.1.en.html) command-line tool:
-
-```bash
-virt-install --name my.CHANGEME.org --os-type linux --ram 1024M --vcpu 2 --disk path=/path/to/my.CHANGEME.org.qcow2,size=20 --graphics virtio --noautoconsole --hvm --cdrom /path/to/debian-10.3.1_amd64.iso --boot cdrom,hd
-```
-
-<!-- TODO preseed -->
+You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bullseye/virtinst/virt-install.1.en.html) - [`xsrv init-vm/init-vm-template`](../usage.md) automates running `virt-install` with the correct options.
 
 ## Cloning VMs
 

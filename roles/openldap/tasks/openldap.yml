@@ -10,7 +10,7 @@
 
 ### DEBCONF ###
 
-# preconfigure the LDAP base DN in debconf - else it will be automatically derived from the machine's hostname
+# preconfigure the LDAP base DN in debconf - else it will be automatically derived from the machine's hostname when slapd is installed
 - name: pre-configure openldap server
   debconf:
     name: slapd
@@ -23,7 +23,7 @@
 
 ### PACKAGES ###
 
-- name: install openLDAP server
+- name: install openldap server packages
   apt:
     state: present
     update_cache: yes

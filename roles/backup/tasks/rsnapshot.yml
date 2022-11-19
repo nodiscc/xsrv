@@ -66,6 +66,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: store root public SSH key to local fact file
+  tags: rsnapshot-ssh-key
   block:
     - name: create ansible facts.d directory
       file:
@@ -79,17 +80,24 @@
         mode: 0644
       notify: update ansible facts
       ignore_errors: "{{ ansible_check_mode }}" # root_ssh_key.public_key is never set in check mode, always returns empty/changed
-  tags: rsnapshot-ssh-key
 
 # reload ansible local facts
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: rsnapshot-ssh-key
 
+- name: create local public_keys directory on the controller
+  become: no
+  delegate_to: localhost
+  file:
+    path: "{{ playbook_dir }}/data/public_keys/"
+    state: directory
+    mode: 0755
+
 - name: copy root public SSH key to the controller
   fetch:
     src: /root/.ssh/id_rsa.pub
-    dest: "public_keys/root@{{ inventory_hostname }}.pub"
+    dest: "{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"
     flat: yes
   tags: rsnapshot-ssh-key
 

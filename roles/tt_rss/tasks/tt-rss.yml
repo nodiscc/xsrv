@@ -1,3 +1,12 @@
+##### USER #####
+
+- name: create tt-rss user
+  user:
+    name: tt-rss
+    state: present
+    home: "{{ tt_rss_install_dir }}"
+    create_home: no
+
 ##### PACKAGES #####
 
 - name: install required packages for tt-rss
@@ -34,44 +43,36 @@
 # https://discourse.tt-rss.org/t/rate-limiting-for-some-git-related-requests/32
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: give required read permissions to the web server
+- name: set permissions on tt-rss files (always returns changed)
   file:
-    path: "{{ tt_rss_install_dir }}"
-    owner: root
-    group: www-data
-    recurse: yes
-    mode: g+rX,o=
-
-- name: give required write permissions to the web server
-  file:
-    path: "{{ tt_rss_install_dir }}/{{ item }}"
-    state: directory
-    owner: www-data
-    group: www-data
-    mode: g+rwX
-    recurse: yes
+    path: "{{ item.path }}"
+    owner: "{{ item.owner | default('tt-rss') }}"
+    group: "{{ item.group | default('www-data') }}"
+    mode: "{{ item.mode }}"
+    recurse: "{{ item.recurse }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   with_items:
-    - cache
-    - feed-icons
-    - lock
+    - { path: "{{ tt_rss_install_dir }}", owner: "root", group: "tt-rss", mode: "u=rwX,g=rwX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}", mode: "0755", recurse: no }
+    - { path: "{{ tt_rss_install_dir }}/lib", mode: "u=rwX,g=rX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}/js", mode: "u=rwX,g=rX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}/images", mode: "u=rwX,g=rX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}/themes", mode: "u=rwX,g=rX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}/vendor", mode: "u=rwX,g=rX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}/cache", mode: "u=rwX,g=rX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}/feed-icons", mode: "u=rwX,g=rX,o=", recurse: yes }
+    - { path: "{{ tt_rss_install_dir }}/lock", mode: "u=rwX,g=rX,o=", recurse: yes }
 
 - name: copy tt-rss configuration file
   template:
     src: var_www_tt-rss_config.php.j2
     dest: "{{ tt_rss_install_dir }}/config.php"
     owner: root
-    group: www-data
+    group: tt-rss
     mode: 0640
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### INITIAL DB POPULATION ###
-
-# workaround for postgresql_query module bug https://github.com/ansible-collections/community.postgresql/issues/50
-- name: remove comments from SQL schema file
-  lineinfile:
-    path: "{{ tt_rss_install_dir }}/sql/pgsql/schema.sql"
-    state: absent
-    regexp: '^--.*'
-  when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
 
 - name: import tt-rss database schema to postgresql
   postgresql_query:
@@ -80,22 +81,26 @@
     login_password: "{{ tt_rss_db_password }}"
     db: "{{ tt_rss_db_name }}"
     path_to_script: "{{ tt_rss_install_dir }}/sql/pgsql/schema.sql"
+    as_single_query: yes
   when: (ansible_local.tt_rss.general.db_imported is not defined) or (not ansible_local.tt_rss.general.db_imported)
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: load/upgrade tt-rss database schema
+  become: yes
+  become_user: tt-rss
+  command:
+    cmd: /usr/bin/php {{ tt_rss_install_dir }}/update.php --update-schema=force-yes
+  register: tt_rss_db_upgrade
+  changed_when: "'Database schema is already at latest version.' not in tt_rss_db_upgrade.stdout"
+  ignore_errors: "{{ ansible_check_mode }}"
+  vars:
+    ansible_remote_tmp: /tmp
 
 - name: update tt-rss admin account in postgresql database (always returns changed)
   become_user: postgres
   postgresql_query:
     db: "{{ tt_rss_db_name }}"
     query: UPDATE ttrss_users SET login = '{{ tt_rss_user }}', pwd_hash = 'MODE2:{{ (tt_rss_password_salt + tt_rss_password) | hash('sha256') }}', salt     = '{{ tt_rss_password_salt }}' WHERE id = 1;
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: load/upgrade tt-rss database schema
-  become: yes
-  become_user: www-data
-  command: /usr/bin/php {{ tt_rss_install_dir }}/update.php --update-schema=force-yes
-  register: tt_rss_db_upgrade
-  changed_when: "'Database schema is already at latest version.' not in tt_rss_db_upgrade.stdout"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create tt-rss installed fact file
@@ -109,7 +114,7 @@
 
 - name: setup tt-rss feed update cron job
   cron:
-    user: www-data
+    user: tt-rss
     cron_file: '/etc/cron.d/tt-rss'
     name: ttrss_update
     hour: '*'

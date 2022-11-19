@@ -35,19 +35,27 @@
     state: absent
   notify: restart netdata
 
-- name: add netdata APT repository signing key
+- name: remove old netdata key from APT keyring
   apt_key:
-    url: https://packagecloud.io/netdata/netdata/gpgkey
-    state: present
+    id: A799AB702EA6DEE3E21AA716B4188B90F6FB8FD3
+    state: absent
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: remove APT configuration from old versions of the role
+- name: migration - remove APT configuration from old versions of the role
   file:
     path: /etc/apt/sources.list.d/packagecloud_io_netdata_netdata_debian.list
     state: absent
   notify: update apt cache
 
-# DEBT replace with apt_repository module and automatic update_cache
+- name: add netdata APT signing keys
+  copy:
+    src: usr_share_keyrings_netdata.gpg
+    dest: /usr/share/keyrings/netdata.gpg
+    owner: root
+    group: root
+    mode: 0644
+  notify: update apt cache
+
 - name: copy netdata/packagecloud APT sources/pinning configuration
   template:
     src: "{{ item.src }}"
@@ -61,6 +69,8 @@
     - src: etc_apt_sources.list.d_netdata-packagecloud.list.j2
       dest: /etc/apt/sources.list.d/netdata-packagecloud.list
   notify: update apt cache
+
+# update APT cache for netdata packages to become available
 - name: update APT cache to apply configuration changes
   meta: flush_handlers
 
@@ -187,7 +197,8 @@
     - { src: 'etc_netdata_go.d_x509check.conf.d_000-x509check.conf.j2', dest: '/etc/netdata/go.d/x509check.conf.d/000-x509check.conf' } # SSL certificate checks
     - { src: 'etc_netdata_go.d_portcheck.conf.d_000-portcheck.conf.j2', dest: '/etc/netdata/go.d/portcheck.conf.d/000-portcheck.conf' } # TCP port checks
     - { src: 'etc_netdata_python.d_apache.conf.j2', dest: '/etc/netdata/python.d/apache.conf' } # apache status checks
-    - { src: 'etc_netdata_fping.conf.j2', dest: '/etc/netdata/fping.conf' }
+    - { src: 'etc_netdata_fping.conf.j2', dest: '/etc/netdata/fping.conf' } # fping checks
+    - { src: 'etc_netdata_health.d_fping.conf.j2', dest: '/etc/netdata/health.d/fping.conf' } # fping checks
   notify:
     - assemble netdata configuration
     - restart netdata
@@ -203,7 +214,7 @@
     mode: 0644
   tags: netdata-downtime
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     state: absent
     path: "{{ item }}"

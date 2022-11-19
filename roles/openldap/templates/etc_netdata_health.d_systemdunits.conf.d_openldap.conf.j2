@@ -1,5 +1,5 @@
     alarm: systemd_service_slapd
-       on: systemdunits_service_units.service_unit_state
+       on: systemdunits_service-units.service_unit_state
      calc: $slapd
     every: 10s
      crit: ($this = 5)

@@ -1,7 +1,110 @@
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
+
+#### [v1.10.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.10.0) - 2022-11-19
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- move the `public_keys/` directory from the root of your project directory, under the `data/` directory.
+- if it exists, move the `certificates/` directory from the root of your project directory, under the `data/` directory.
+- **common:** if you had changed the variable `os_security_kernel_enable_core_dump` from its default value in your hosts/groups configuration, rename it to [`kernel_enable_core_dump`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- **graylog/monitoring_rsyslog:** move the `*-graylog-ca.crt` file from the `public_keys/` directory to the `data/certificates/` directory (create it if it does not exist)
+- **openldap: self-sevice-password:** if you had changed the variable [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) from its default value in your host/groups configuration, update it to the new format (YAML list instead of a list of addresses separated by spaces):
+
+```yaml
+# old format
+self_service_password_allowed_hosts: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
+# new format
+self_service_password_allowed_hosts:
+  - 10.0.0.0/8
+  - 192.168.0.0/16
+  - 172.16.0.0/12
+```
+
+**Added:**
+- add [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) role - video conferencing solution
+- add [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role - libvirt virtualization toolkit
+- xsrv: add [`xsrv open`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (open the project directory in the default file manager)
+- xsrv: `init-vm`: add [`--dump`](https://xsrv.readthedocs.io/en/latest/usage.html#provision-hosts) option (display the VM XML definition after creation)
+- apache: automatically load new Let's Encrypt certificates every minute, manually reloading the server is no longer needed
+- nextcloud: allow configuration of nextcloud log level, default app on login ([`nextcloud_loglevel`/`nextcloud_defaultapp`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
+- common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- shaarli: add ability to install the python API client ([`shaarli_setup_python_client: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and export all shaarli data to a JSON file every hour
+- wireguard: add ability to enable/disable the wireguard server service ([`wireguard_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml))
+- monitoring/netdata: allow disabling notifications for ping check alarms ([`netdata_fping_alarms_silent: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- apache/monitoring: netdata: monitor state of the php-fpm service and alert in case of failure
+- apache: start/stop the php7.4-fpm service alongside the apache service depending on `apache_enable_service: yes/no`
+- shaarli: add required packages for LDAP authentication
+- monitoring_netdata: add `utils-autorestart` tag (reboot hosts if required after a kernel update, will only run if the `utils-autorestart` tag is explicitly called)
+- samba: add `utils-samba-listusers` tag (list samba users)
+- common: install hardware true random number generator (TRNG) support packages on hosts where the CPU suports [RDRAND](https://en.wikipedia.org/wiki/RDRAND)
+
+**Removed:**
+- tt_rss: remove installation of custom plugins/themes
+
+**Changed:**
+- nextcloud: no longer disable accessibility app by default
+- nextcloud: disable the web updater
+- nextcloud: disable link to https://nextcloud.com/signup/ on public pages
+- nextcloud: backup: add `config.php` to the list of files to backup (may contain the encryption secret if encryption was enabled by the admin)
+- openldap: self-service-password: update format of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) (use a YAML list instead of space-separated list)
+- common: kernel: rename variable `os_security_kernel_enable_core_dump` -> [`kernel_enable_core_dump`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
+- common: kernel/sysctl: ensure ipv4/ipv6 configuration is applied to all new/future interfaces as well
+- common: kernel/sysctl: don't disable USB storage, audio input/output, USB MIDI, bluetooth and camera modules by default
+- common: kernel/sysctl: don't disable audio input/output module by default
+- common: kernel/sysctl: don't disable bluetooth modules by default
+- common: kernel/sysctl: don't disable camera modules by default
+- common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
+- common/graylog: apt: use HTTPS to access APT packages repositories
+- common: dns: check that valid IP addresses are specified in [`dns_nameservers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
+- common: kernel/sysctl: load all sysctl variables, not just those in `custom.conf`
+- common: users: configure bash to terminate idle sessions after 15 minutes
+- common: packages: always install haveged entropy source on KVM/VMware VMs
+- common: packages: remove haveged from the default list of packages to install everywhere
+- wireguard: firewalld: setup firewall to allow blocking/allowing traffic from VPN clients to services on the host, independently
+- monitoring_utils: lynis: whitelist suggestion to disable USB storage
+- monitoring_utils: lynis: whitelist suggestion to install sysstat, when netdata is installed
+- tt_rss: run the web application (php-fpm pool) un der a dedicated user account
+- xsrv: `init-vm-template`: make the `--template` option optional, default to `debian11-base`
+- xsrv: `init-vm-template`: make the `--sudo-user` option optional, default to `deploy`
+- xsrv: `init-vm/init-vm-template`: clarify use of units `M` or `G` for `--memory` option
+- nextcloud: update to v24.0.7 [[1]](https://nextcloud.com/blog/maintenance-releases-24-0-6-and-23-0-10-are-out-plus-5th-beta-of-our-upcoming-release/) [[2]](https://nextcloud.com/changelog/)
+- gitea: update to [v1.17.3](https://github.com/go-gitea/gitea/releases/tag/v1.17.3)
+- openldap: update self-service-password to [v1.5.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.2)
+- openldap: ldap-account-manager: upgrade to [v8.1](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_1)
+- graylog: update mongodb to v4.4
+- rocketchat: upgrade to [v3.18.7](https://raw.githubusercontent.com/RocketChat/Rocket.Chat/develop/HISTORY.md)
+- cleanup: replace deprecated `apt_key/apt_repository` modules, install all APT keys in `/usr/share/keyrings/`
+- xsrv: update ansible to [v6.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/6/CHANGELOG-v6.rst)
+- postgresql: update pgmetrics to [v1.14.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.14.0)
+- general cleanup and maintenance, remove deprecated ansible modules
+- update ansible tags
+- update documentation
+- update/improve test tooling
+
+**Fixed:**
+- shaarli: fix shaarli unable to save thumbnails to disk
+- shaarli: fix broken link (HTTP 403) to documentation
+- jellyfin: fix jellyfin unable to upgrade on machines migrated from Debian 10 -> 11
+- common: kernel/sysctl: don't disable `vfat` module required by EFI boot
+- graylog: fix installation of elasticsearch packages
+- graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
+- monitoring/netdata: fix individual alarms for failed systemd services
+- common: firewalld: add all addresses from `192.168.0.0/16` to the `internal` zone by default, not just `192.168.0.0/24`
+- xsrv: `init-vm-template`: fix non-working options `--sudo-password, --root-password, --sudo-user, --nameservers`
+- xsrv: `init-vm`: fix an issue where VMs would be created with 1MB of memory when `--memory 1024` was used
+- xsrv: fix `init-vm-template` command not working unless `xsrv self-upgrade` had already been run
+
+**Security:**
+- jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- common: fix [`kernel_enable_core_dump`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) not having any effect
+
+[Full changes since v1.9.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.9.0...1.10.0)
+
+-------------------------------
 
 #### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
 
@@ -40,7 +143,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: sudo: hardening: configure sudo to run processes in a pseudo-terminal
 - common: users/pam: hardening: increase the number of rounds for hashing group passwords
 - common: sysctl: hardening: only allow root/users with CAP_SYS_PTRACE to use ptrace
-- common: sysctl: hardening: disable more kernel modules by default (bluetooth, audio I/O, USB storage, USB MIDI, UVC/V4L2/CPIA2 video devices, thunderbolt, floppy, PC speaker beep
+- common: sysctl: hardening: disable more kernel modules by default (bluetooth, audio I/O, USB storage, USB MIDI, UVC/V4L2/CPIA2 video devices, thunderbolt, floppy, PC speaker beep)
 - common: sysctl: hardening: restrict loading TTY line disciplines to the CAP_SYS_MODULE capability
 - common: sysctl: hardening: protect against unintentional writes to an attacker-controlled FIFO
 - common: sysctl: hardening: prevent even the root user from reading kernel memory maps
@@ -53,6 +156,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - common: users: fix errors during creation fo `sftponly` user accounts when no groups are defined in the user definition
 
+[Full changes since v1.8.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.1...1.9.0)
+
+-------------------------------
 
 #### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-10
 
@@ -63,6 +169,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - backup/rsnapshot: fix rsnapshot installation, always install from Debian repositories
 
+[Full changes since v1.8.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.0...1.8.1)
+
+-------------------------------
 
 #### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-04
 
@@ -148,6 +257,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Security:**
 - proxmox: fail2ban: fix detection of failed login attempts
 
+[Full changes since v1.7.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.7.0...1.8.0)
+
+-------------------------------
 
 #### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
 

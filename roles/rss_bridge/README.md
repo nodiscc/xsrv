@@ -38,7 +38,6 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ### Troubleshooting
 
-
 To consume RSS-Bridge feeds from another service on the same host, add an entry to the machine's `hosts` file:
 
 ```bash
@@ -59,6 +58,15 @@ $ sudo update-ca-certificates
 ### Backup
 
 There is no data to backup/restore.
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+rss_bridge - setup rss-bridge - The RSS feed for websites missing it
+```
+<!--END TAGS LIST-->
 
 
 ## License

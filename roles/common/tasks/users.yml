@@ -101,12 +101,12 @@
 - name: configure the pam_limits module
   template:
     src: etc_security_limits.conf.j2
-    dest: /etc/security/limits.con
+    dest: /etc/security/limits.conf
     owner: root
     group: root
     mode: 0600
 
-- name: remove files from old versions of the role
+- name: migration - remove files from old versions of the role
   file:
     path: /etc/security/limits.d/10.hardcore.conf
     state: absent
@@ -134,6 +134,14 @@
 # update pam configuration, restart systemd-logind
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+- name: configure bash to terminate sessions after 15 minutes of idle
+  template:
+    src: etc_profile.d_tmout.sh.j2
+    dest: /etc/profile.d/tmout.sh
+    mode: 0755
+    owner: root
+    group: root
 
 ##### OTHER ####
 

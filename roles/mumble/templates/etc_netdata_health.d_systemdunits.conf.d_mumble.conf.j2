@@ -1,5 +1,5 @@
     alarm: systemd_service_mumble_server
-       on: systemdunits_service_units.service_unit_state
+       on: systemdunits_service-units.service_unit_state
      calc: $mumble_server
     every: 10s
      crit: ($this = 5)

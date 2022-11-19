@@ -57,12 +57,12 @@
   become: no
   delegate_to: localhost
   file:
-    path: "{{ playbook_dir }}/certificates/"
+    path: "{{ playbook_dir }}/data/certificates/"
     state: directory
     mode: 0755
 
 - name: download self-signed certificate to the controller
   fetch:
     src: "/etc/ssl/openldap/{{ openldap_fqdn }}.crt"
-    dest: "{{ playbook_dir }}/certificates/{{ openldap_fqdn }}.openldap.crt"
+    dest: "{{ playbook_dir }}/data/certificates/{{ openldap_fqdn }}.openldap.crt"
     flat: yes

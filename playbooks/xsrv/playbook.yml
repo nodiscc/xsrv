@@ -17,11 +17,13 @@
     # - nodiscc.xsrv.docker # application containerization
     # - nodiscc.xsrv.rocketchat # instant messaging & communication platform
     # - nodiscc.xsrv.jellyfin # media server
+    # - nodiscc.xsrv.jitsi # video conferencing solution
     # - nodiscc.xsrv.samba # file sharing server
     # - nodiscc.xsrv.dnsmasq # lightweight DNS server
     # - nodiscc.xsrv.wireguard # fast and modern VPN server
     # - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
     # - nodiscc.xsrv.gotty # access server terminal as a web application
     # - nodiscc.xsrv.proxmox # basic setup steps for proxmox hypervisors
+    # - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
     # - nodiscc.xsrv.graylog # log management, capture and analysis platform
     # - nodiscc.xsrv.homepage # simple webserver homepage

@@ -1,13 +1,16 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - homepage
     - checks
 
-- include: homepage.yml
+- name: include homepage configuration tasks
+  import_tasks: homepage.yml
   become: yes
   tags: homepage
 
-- include: ssl-selfsigned.yml
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
     - apache
@@ -15,13 +18,15 @@
     - homepage
   when: homepage_https_mode == 'selfsigned'
 
-- include: apache.yml
+- name: include apache configuration tasks
+  import_tasks: apache.yml
   become: yes
   tags:
     - homepage
     - apache
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - homepage
@@ -31,7 +36,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: homepage
 

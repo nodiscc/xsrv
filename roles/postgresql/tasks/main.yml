@@ -1,14 +1,17 @@
-- include: postgresql.yml
+- name: include postgresql configuration tasks
+  import_tasks: postgresql.yml
   become: yes
   tags: postgresql
 
-- include: backups.yml
+- name: include rsnapshot/backup configuration tasks
+  import_tasks: backups.yml
   become: yes
   tags:
     - postgresql
     - backup
 
-- include: netdata.yml
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
   become: yes
   tags:
     - postgresql
@@ -18,7 +21,8 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- include: fact.yml
+- name: include ansible-facts configuration tasks
+  import_tasks: fact.yml
   become: yes
   tags: postgresql
 
@@ -28,7 +32,8 @@
 
 ##### UTILITIES #####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- include: utils-pgmetrics.yml
+- name: include pgmetrics tasks
+  import_tasks: utils-pgmetrics.yml
   become: yes
   tags:
     - never

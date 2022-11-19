@@ -14,6 +14,13 @@
   notify: reload firewalld
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: add wireguard server network to wireguard firewalld zone
+  firewalld:
+    zone: wireguard
+    source: "{{ wireguard_server_ip }}"
+    state: enabled
+    permanent: yes
+
 - name: enable masquerade on firewalld public zone
   firewalld:
     masquerade: yes

@@ -10,10 +10,8 @@
       - firehol
       - firehol-tools
     state: absent
-    autoremove: yes
-    purge: yes
 
-- name: remove other firewall management tools configuration
+- name: migration - remove other firewall management tools configuration
   file:
     state: absent
     path:
@@ -81,6 +79,7 @@
   when: (item.0.delete is not defined) or (not item.0.delete)
   loop: "{{ q('subelements', firewalld_zone_sources, 'sources', {'skip_missing': True}) }}"
   ignore_errors: "{{ ansible_check_mode }}"
+  notify: reload firewalld
 
 - name: configure firewalld zone services
   firewalld:

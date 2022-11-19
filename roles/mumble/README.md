@@ -40,7 +40,6 @@ Mumble [clients](https://wiki.mumble.info/wiki/Main_Page) are available many com
 - [Desktop client (Linux/OSX/Windows)](https://wiki.mumble.info/wiki/Main_Page#Download_Mumble)
 - Android: [Plumble](https://f-droid.org/en/packages/com.morlunk.mumbleclient/)
 
-
 ### Backups
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d/mumble-server.conf.j2) for the [backup](../backup/) role.
@@ -50,6 +49,16 @@ To restore backups, deploy the role and restore the `/var/lib/mumble-server/` di
 ```bash
 sudo rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/lib/mumble-server /var/lib/
 ```
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+mumble - setup mumble voip server
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

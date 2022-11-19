@@ -52,7 +52,6 @@ Hardware requirements [[1]](https://docs.rocket.chat/quick-start/installing-and-
 
 Rocket.chat can be used from any [web browser](https://www.mozilla.org/en-US/firefox/) or one of the mobile clients ([Android](https://f-droid.org/en/packages/chat.rocket.android/), [iOS](https://apps.apple.com/us/app/rocket-chat/id1148741252))
 
-
 ### Post-installation
 
 After first deployment, access your rocket.chat instance at https://chat.CHANGEME.org, and provide configuration details:
@@ -97,7 +96,6 @@ After first deployment, access your rocket.chat instance at https://chat.CHANGEM
 - Enable in channels: `yes`
 - `Save changes`
 
-
 **Markdown support:** For better markdown support ([CommonMark](https://spec.commonmark.org/0.29/), [GFM](https://github.github.com/gfm/))):
 - Access https://chat.CHANGEME.org/admin/Message
 - Markdown > Markdown parser: `Marked`
@@ -123,6 +121,15 @@ sudo rm -rf /etc/apache2/sites-available/rocketchat.conf /etc/apache2/sites-enab
 sudo systemctl reload apache2
 sudo systemctl restart netdata
 ```
+
+
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+rocketchat - setup rocketchat communication platform
+```
+<!--END TAGS LIST-->
 
 
 ## License

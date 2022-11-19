@@ -52,6 +52,31 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
 - Get current firewall configuration: `ansible-playbook --tags utils-firewalld-info playbook.yml`
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+common - setup base system
+apt - setup APT package management
+checks - check that variables are correctly defined
+datetime - setup date/time configuration
+dns - setup DNS resolution
+fail2ban - setup fail2ban intrusion prevention system
+firewall - setup firewall
+hostname - setup hostname
+hosts - setup /etc/hosts entries
+packages - additional package istallation/removal
+sysctl - setup sysctl kernel configuration
+users - setup users and groups
+ssh - setup SSH server
+ssh-authorized-keys - setup ssh authorized keys
+mail - setup outgoing system mail
+msmtp - setup outgoing system mail
+services - start/stop/enable/disable services
+utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
+```
+<!--END TAGS LIST-->
+
 
 ## License
 

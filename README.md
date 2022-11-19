@@ -8,14 +8,14 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.9.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.10.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
 
 This project provides:
 
-- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) to install/configure various network services, applications and management tools (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, infrastructure...)
+- [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) [roles](#roles) for automated installation/configuration of various network services, applications and management tools (sharing, communication, collaboration systems, file storage, multimedia, office/organization, development, automation, infrastructure...)
 - an optional [command-line tool](docs/usage.md) for common operations, configuration, deployment and maintenance of your servers
 - a template to [get started with a single server](docs/installation.md) in a few minutes
 
@@ -32,6 +32,8 @@ This project provides:
 - [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
+- [jitsi](roles/jitsi) - Video conferencing solution
+- [libvirt](roles/libvirt) - libvirt virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
@@ -66,6 +68,7 @@ This project provides:
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
 [![](https://i.imgur.com/UWjyTqP.png)](roles/rss_bridge)
+[![](https://i.imgur.com/g0jUMXE.jpg)](roles/jitsi)
 
 ## Source code
 
@@ -88,7 +91,6 @@ This project provides:
 - [Usage](docs/usage.md)
 - [List of all configuration variables](docs/configuration-variables.md)
 - [Maintenance](docs/maintenance.md)
-- [Advanced usage](docs/advanced.md)
 - [Contributing](docs/contributing.md)
 - [Appendices](docs/appendices.md)
 - [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)

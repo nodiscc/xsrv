@@ -20,6 +20,15 @@ See [meta/main.yml](meta/main.yml)
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+rsyslog - setup system log processing
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

@@ -13,7 +13,7 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.7.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.9.0
 
 USAGE: xsrv COMMAND [project] [host]
 
@@ -23,7 +23,7 @@ edit-inventory [project]            edit/show inventory file (hosts/groups)
 edit-playbook [project]             edit/show playbook (roles for each host)
 edit-requirements [project]         edit ansible requirements/collections
 edit-cfg [project]                  edit ansible configuration (ansible.cfg)
-upgrade [project]                   upgrade a projects roles/collections to latest versions
+upgrade [project]                   upgrade a project's roles/collections to latest versions
 init-host [project] [host]          add a new host to an existing project
 edit-host [project] [host]          edit host configuration (host_vars)
 edit-vault [project] [host]         edit encrypted (vault) host configuration (host_vars)
@@ -35,6 +35,7 @@ fetch-backups [project] [host]      fetch backups from a host to the local backu
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
+o|open [project]                    open the project directory in the default file manager
 show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
@@ -302,14 +303,19 @@ nextcloud_admin_email: "admin@example.org"
 nextcloud_db_password: "ucB77fNLX4qOoj2GhLBy"
 ```
 
-Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. **Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, encrypt underlying disk).
+Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. 
 
 ```bash
 # cat ~/playbooks/default/.ansible-vault-password
 Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY
 ```
+**Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, full-disk encryption on underlying storage).
 
-You may also write a custom script in `.ansible-vault-password` that will fetch the master password from a secret storage/keyring of your choice. See [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html).
+You may also place a custom script in `.ansible-vault-password`, that will fetch the master password from a secret storage/keyring of your choice (in this case the file must be made executable - `chmod +x .ansible-vault-password`).
+
+To disable reading the master password from a file/script: in the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting.
+
+See [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html).
 
 
 ### xsrv edit-group
@@ -484,9 +490,14 @@ Directory structure for a project:
 │   └── my.other.org/
 │       ├── my.other.org.vault.yml
 │       └── my.other.org.yml
-├── data/ # local cache and data
+├── data/ # other data
 │   ├── backups/
-│   └── cache/
+│   ├── cache/
+│   ├── certificates/
+│   └── public_keys/
+├── playbooks # custom playbooks for one-shot tasks
+│   ├── main.yml
+│   └── operationXYZ.yml
 ├── README.md # documentation about your project
 ├── ansible.cfg # ansible configuration
 ├── requirements.yml # required ansible collections
@@ -494,17 +505,6 @@ Directory structure for a project:
     └── nodiscc
         └── xsrv
 ```
-
-<!--TODO
- (output format, verbosity, logging, paths...)
-├── public_keys/ # public SSH keys
-│   └── user@laptop.pub
- and their versions
-├── playbooks # custom playbooks for one-shot tasks
-│   ├── main.yml
-│   └── operationXYZ.yml
-```
--->
 
 ### Version control
 

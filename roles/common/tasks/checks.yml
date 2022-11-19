@@ -8,7 +8,7 @@
     - dns_nameservers|type_debug == "list"
     - setup_users == setup_users | bool
     - linux_users|type_debug == "list"
-    - os_security_kernel_enable_core_dump == os_security_kernel_enable_core_dump | bool
+    - kernel_enable_core_dump == kernel_enable_core_dump | bool
     - setup_apt == setup_apt | bool
     - apt_listbugs == apt_listbugs | bool
     - apt_clean_days == apt_clean_days|int
@@ -104,7 +104,7 @@
     - apt
     - apt-listbugs
 
-- name: check that obsolete variables have been removed
+- name: migration - check that obsolete variables have been removed
   assert:
     quiet: yes
     that: "{{ item }}"
@@ -151,3 +151,20 @@
   tags:
     - firewall
     - firewalld
+
+- name: check that DNS resolvers are configured
+  assert:
+    quiet: yes
+    that:
+      - dns_nameservers | length != 0
+    fail_msg: "setup_dns is set to yes but no resolvers (dns_nameservers) have been configured"
+  when: setup_dns | bool
+  tags: dns
+
+- name: check that variables are correctly defined (dns_nameservers)
+  assert:
+    quiet: yes
+    that: item == item | ansible.utils.ipaddr('address')
+    fail_msg: "dns_nameservers: {{ item }} is not a valid IP address"
+  when: setup_dns | bool
+  with_items: "{{ dns_nameservers }}"

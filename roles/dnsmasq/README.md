@@ -46,6 +46,15 @@ dns_nameservers:
 Or use your DHCP server to automatically configure clients.
 
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+dnsmasq - setup dnsmasq DNS server
+```
+<!--END TAGS LIST-->
+
+
 ## License
 
 [GNU GPLv3](../../LICENSE)

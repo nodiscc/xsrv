@@ -1,102 +1,117 @@
-- include: checks.yml
+- name: include variable checks tasks
+  import_tasks: checks.yml
   tags:
     - common
     - checks
 
-- include: hostname.yml
+- name: include hostname configuration tasks
+  import_tasks: hostname.yml
   become: yes
   tags:
     - common
     - hostname
   when: setup_hostname | bool
 
-- include: hosts.yml
+- name: include hosts file configuration tasks
+  import_tasks: hosts.yml
   become: yes
   tags:
     - common
     - hosts
   when: setup_hosts_file | bool
 
-- include: dns.yml
+- name: include dns resolution configuration tasks
+  import_tasks: dns.yml
   become: yes
   tags:
     - common
     - dns
   when: setup_dns | bool
 
-- include: sysctl.yml
+- name: include kernel/sysctl configuration tasks
+  import_tasks: sysctl.yml
   become: yes
   tags:
     - common
     - sysctl
   when: setup_sysctl | bool
 
-- include: apt.yml
+- name: include APT package management configuration tasks
+  import_tasks: apt.yml
   become: yes
   tags:
     - common
     - apt
   when: setup_apt | bool
 
-- include: datetime.yml
+- name: include date/time configuration tasks
+  import_tasks: datetime.yml
   become: yes
   tags:
     - common
     - datetime
   when: setup_datetime | bool
 
-- include: ssh.yml
+- name: include SSH server configuration tasks
+  import_tasks: ssh.yml
   become: yes
   tags:
     - common
     - ssh
   when: setup_ssh | bool
 
-- include: firewalld.yml
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
   become: yes
   tags:
     - common
     - firewall
-    - firewalld
   when: setup_firewall | bool
 
-- include: fail2ban.yml
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
   become: yes
   tags:
     - common
     - fail2ban
   when: setup_fail2ban | bool
 
-- include: users.yml
+- name: include Linux users configuration tasks
+  import_tasks: users.yml
   become: yes
   tags:
     - common
     - users
   when: setup_users | bool
 
-- include: cron.yml
+- name: include cron configuration tasks
+  import_tasks: cron.yml
   become: yes
   tags:
     - common
     - cron
   when: setup_cron | bool
 
-- include: mail.yml
+- name: include system mail configuration tasks
+  import_tasks: mail.yml
   become: yes
   tags:
     - common
     - mail
     - msmtp
 
-- include: packages.yml
+# detect CPU TRNG support before installing related packages
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: common
+
+- name: include base package instalaltion/removal tasks
+  import_tasks: packages.yml
   become: yes
   tags:
     - common
     - packages
-
-- include: fact.yml
-  become: yes
-  tags: common
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
@@ -104,7 +119,8 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- include: utils-debian10to11.yml
+- name: include debian 10->11 migration tasks
+  import_tasks: utils-debian10to11.yml
   become: yes
   tags:
     - never

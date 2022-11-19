@@ -1,0 +1,189 @@
+- name: install libvirt tools
+  apt:
+    state: present
+    package:
+      - virt-manager
+      - virtinst
+      - virt-viewer
+      - dnsmasq-base
+      - libvirt-daemon-system
+      - gir1.2-spiceclientgtk-3.0
+      - qemu-kvm
+      - qemu-utils
+      - netcat-openbsd
+      # - ebtables
+
+- name: configure libvirt-guests
+  template:
+    src: etc_default_libvirt-guests.j2
+    dest: /etc/default/libvirt-guests
+    owner: root
+    group: root
+    mode: 0644
+
+- name: create directory for libvirtd systemd overrides
+  file:
+    state: directory
+    path: /etc/systemd/system/libvirtd.service.d/
+    owner: root
+    group: root
+    mode: 0755
+
+- name: configure libvirt systemd unit overrides
+  template:
+    src: etc_systemd_system_libvirtd.service.d_override.conf.j2
+    dest: /etc/systemd/system/libvirtd.service.d/override.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload systemd unit files
+
+- name: enable libvirtd/libvirt-guests services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - libvirtd
+    - libvirt-guests
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### NETWORK #####
+
+- name: configure libvirt port forwards
+  template:
+    src: etc_libvirt_hooks_qemu.j2
+    dest: /etc/libvirt/hooks/qemu
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart libvirtd
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-port-forwards
+
+- name: configure libvirt networks
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    command: define
+    xml: "{{ lookup('template', 'network.xml.j2') }}"
+    autostart: "{{ item.autostart | default(True) }}"
+    state: "{{ item.state | default('active') }}"
+  with_items: "{{ libvirt_networks }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  tags: libvirt-networks
+
+- name: delete libvirt networks
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ libvirt_networks }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (item.state is defined) and (item.state == "absent")
+  tags: libvirt-networks
+
+- name: configure libvirt networks autostart
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    autostart: "{{ item.autostart | default(True) }}"
+  with_items: "{{ libvirt_networks }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-networks
+
+
+##### STORAGE #####
+
+- name: create storage pool directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: "{{ item.mode | default('0750') }}"
+  with_items: "{{ libvirt_storage_pools }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-storage
+
+- name: define/undefine/stop/delete storage pools
+  community.libvirt.virt_pool:
+    name: "{{ item.name }}"
+    command: define
+    xml: "{{ lookup('template', 'pool.xml.j2') }}"
+  with_items: "{{ libvirt_storage_pools }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-storage
+
+- name: setup storage pools autostart
+  community.libvirt.virt_pool:
+    name: "{{ item.name }}"
+    autostart: "{{ item.autostart | default(True) }}"
+  with_items: "{{ libvirt_storage_pools }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-storage
+
+- name: start storage pools
+  community.libvirt.virt_pool:
+    command: define
+    name: "{{ item.name }}"
+    state: "{{ 'active' if (item.state is not defined or item.state == 'active') else item.state }}"
+    autostart: "{{ item.autostart | default(True) }}"
+  with_items: "{{ libvirt_storage_pools }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-storage
+
+##### VMS #####
+
+- name: create/define virtual machines
+  community.libvirt.virt:
+    command: define
+    xml: "{{ lookup('file', item.xml_file) }}"
+    autostart: "{{ item.autostart | default(True) }}"
+  when: (item.state is not defined) or (item.state in ['present', 'running', 'destroyed', 'shutdown'])
+  with_items: "{{ libvirt_vms }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-vms
+
+- name: list virtual machines
+  community.libvirt.virt:
+    command: list_vms
+  register: listed_vms
+  check_mode: no # always run
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-vms
+
+- name: stop VMs to be deleted
+  community.libvirt.virt:
+    name: "{{ item.name }}"
+    state: "destroyed"
+  when:
+    - item.state is defined
+    - item.state == "absent"
+    - item.name in listed_vms.list_vms
+  with_items: "{{ libvirt_vms }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-vms
+
+- name: delete/undefine virtual machines
+  community.libvirt.virt:
+    command: undefine
+    name: "{{ item.name }}"
+  when:
+    - item.state is defined
+    - item.state == "absent"
+    - item.name in listed_vms.list_vms
+  with_items: "{{ libvirt_vms }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-vms
+
+- name: start/pause/shutdown/stop libvirt VMs
+  community.libvirt.virt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  when:
+    - item.state is defined
+    - item.state in ['running', 'destroyed', 'shutdown']
+  with_items: "{{ libvirt_vms }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-vms

@@ -22,6 +22,11 @@ MDomain {{ jellyfin_fqdn }}
   SSLCertificateKeyFile /etc/ssl/private/{{ jellyfin_fqdn }}.key
 {% endif %}
 
+  <Location />
+  AllowOverride None
+  Require ip 127.0.0.1 {{ jellyfin_allowed_hosts | join(' ') }}
+  </Location>
+
   ProxyPreserveHost On
   ProxyPass "/socket" "ws://127.0.0.1:8096/socket"
   ProxyPassReverse "/socket" "ws://127.0.0.1:8096/socket"

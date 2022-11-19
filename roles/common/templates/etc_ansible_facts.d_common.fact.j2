@@ -1,3 +1,14 @@
-{
-    "ansible_managed": true
-}
+#!/bin/bash
+set -o errexit
+set -o nounset
+
+echo '{
+    "ansible_managed": true,'
+
+if grep -sqo rdrand /proc/cpuinfo; then
+  echo '    "cpu_rdrand" : true'
+else
+  echo '    "cpu_rdrand" : false'
+fi
+
+echo '}'

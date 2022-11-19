@@ -1,0 +1,14 @@
+<pool type='dir'>
+  <name>{{ item.name }}</name>
+  <source>
+  </source>
+  <target>
+    <path>{{ item.path }}</path>
+    <permissions>
+      <mode>{{ item.mode | default('0750') }}</mode>
+      <owner>{{ item.owner_uid | default('0') }}</owner>
+      <group>{{ item.group_gid | default ('64055') }}</group>
+    </permissions>
+  </target>
+</pool>
+
