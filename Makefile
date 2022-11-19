@@ -61,8 +61,8 @@ test_init_vm:
 	./xsrv init-vm --template my.template.test --name my.example.test \
 		--ip 10.0.10.241 --netmask 24 --gateway 10.0.10.1 \
 		--sudo-user deploy --sudo-password $(SUDO_PASSWORD) --root-password $(ROOT_PASSWORD) \
-		--ssh-pubkey 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJKlvXZ7snonbBj2xmRfzQi+/5iXLWiD8Eq9atICCvp4jF/ocdem13wGHkForElqsqMHbOWFJskQDS6lVTvORdMpgSiJmkR0wI9VD/AeInPCesWVxO1pyF2xqsnd8OhnaK9+igioz6iG0iE318lX2LmxN5JpauVx8cesoOVp0b2LKpSiXaoyxr4Sd8dQjT5GiUBz8mlDQPVdMOZRnXdr9y1tQt6kNvfRMesJ5594cOBY6nMtbQB6/rnbn77LLkq1am1y4XBwTPQ/3DJFuxyaixq/A3+SfiFOlFHcijq/mfw0O2pI4K4vFPVl3n5bHXgJJ57QIQdkYQW2Tir/Mv1zDj4c+lhScX4jNNxmde/nZ2TE+ynW2OapiodXlCjBTVysOMgizSA96HZcHNwNhSdodqOJxGW+U9FIF4K8RUXbUkrWmoWDGmlDHkjkNszdKBieGT4tjuzB3NN9J93CDdwqlEIPg0xRUImCkc4zeTwTWVgFW1TD9o/CBz3l+hlF2wV8wvCzBfx42cTjeEMrWMb/8CSz9VK+Q6R2l27MqhLJUmOnlWEqiQaponAoPUpocBd703oOnJGnX3anJjY+LNeqlye++T2iTr0SwIWXohX9NzVgJZIDmEIRd7ThjTvdWoebR7pKpox4x48LR6f4K6p/tnG7BM9O+7MkglSdFj0tn5NQ==' \
-		--memory 7G --vcpus 4
+		--ssh-pubkey "$$(cat ~/.ssh/id_rsa.pub)"
+		--memory 4G --vcpus 4
 
 .PHONY: test_check_mode # test full playbook run (--check mode) against the host created with test_init_vm
 test_check_mode:
