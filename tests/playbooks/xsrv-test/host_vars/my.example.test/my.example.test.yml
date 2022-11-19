@@ -21,6 +21,7 @@ transmission_fqdn: "torrent.example.test"
 tt_rss_fqdn: "rss.example.test"
 ##### ROCKETCHAT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
 rocketchat_fqdn: "chat.example.test"
+rocketchat_enable_service: no
 #### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
 openldap_fqdn: "ldap.example.test"
 openldap_domain: "example.test"
@@ -28,6 +29,7 @@ openldap_organization: "example"
 openldap_base_dn: "dc=example,dc=test"
 ##### GRAYLOG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml
 graylog_fqdn: "logs.example.test"
+graylog_enable_service: no
 ##### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_fqdn: "tty.example.test"
 gotty_run_username: "deploy"
@@ -49,3 +51,4 @@ dovecot_ldap_bind_dn: "cn=bind,ou=system,dc=example,dc=test"
 wireguard_server_public_ip: "1.2.3.4"
 ##### WIREGUARD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jisti/defaults/main.yml
 jitsi_fqdn: "conference.example.test"
+jitsi_enable_service: no
