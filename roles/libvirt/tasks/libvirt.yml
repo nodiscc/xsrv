@@ -46,6 +46,7 @@
   with_items:
     - libvirtd
     - libvirt-guests
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### NETWORK #####
 

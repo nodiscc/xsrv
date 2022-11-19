@@ -116,6 +116,7 @@
   when:
     - ansible_local.libvirt.ansible_managed is defined
     - ansible_local.libvirt.ansible_managed | bool
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### GENERAL PURPOSE ###
 
