@@ -42,18 +42,18 @@
   notify: display jellyfin first run message
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: build dictionary for jellyfin remote IP filter
-  set_fact:
-    jellyfin_allowed_hosts_dict: "{{ jellyfin_allowed_hosts | map('community.general.dict_kv', 'string') }}"
-
-- name: configure jellyfin remote IP filter
-  xml:
-    path: /etc/jellyfin/network.xml
-    xpath: /NetworkConfiguration/RemoteIPFilter
-    set_children: "{{ jellyfin_allowed_hosts_dict }}"
-    pretty_print: yes
-  notify: restart jellyfin
-  ignore_errors: "{{ ansible_check_mode }}"
+# Disabled as it has no effect https://github.com/jellyfin/jellyfin/issues/8533
+# - name: build dictionary for jellyfin remote IP filter
+#   set_fact:
+#     jellyfin_allowed_hosts_dict: "{{ jellyfin_allowed_hosts | map('community.general.dict_kv', 'string') }}"
+# - name: configure jellyfin remote IP filter
+#   xml:
+#     path: /etc/jellyfin/network.xml
+#     xpath: /NetworkConfiguration/RemoteIPFilter
+#     set_children: "{{ jellyfin_allowed_hosts_dict }}"
+#     pretty_print: yes
+#   notify: restart jellyfin
+#   ignore_errors: "{{ ansible_check_mode }}"
 
 ##### MEDIA DIRECTORIES #####
 
