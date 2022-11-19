@@ -53,6 +53,7 @@
     set_children: "{{ jellyfin_allowed_hosts_dict }}"
     pretty_print: yes
   notify: restart jellyfin
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### MEDIA DIRECTORIES #####
 
