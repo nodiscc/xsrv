@@ -134,7 +134,6 @@
     name: "{{ item }}"
     enabled: "{{ jitsi_enable_service }}"
     state: "{{ 'started' if jitsi_enable_service else 'stopped' }}"
-    daemon_reload: yes
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - prosody
