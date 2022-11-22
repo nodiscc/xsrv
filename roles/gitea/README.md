@@ -182,6 +182,7 @@ See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.
 <!--BEGIN TAGS LIST-->
 ```
 gitea - setup gitea git service/software forge
+gitea-config - update gitea configuration
 ```
 <!--END TAGS LIST-->
 

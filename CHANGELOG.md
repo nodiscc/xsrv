@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- add ansible tags `gitea-config`
+
 
 [Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
 

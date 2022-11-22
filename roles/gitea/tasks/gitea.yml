@@ -105,6 +105,7 @@
     group: gitea
     mode: 0640 # read only for gitea
   notify: restart gitea
+  tags: gitea-config
 
 - name: create gitea database tables
   become: yes
