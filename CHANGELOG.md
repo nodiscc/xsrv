@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- update test tooling
 
 **Fixed:**
 - gitea: fix configuration file templating failures in `check` mode
