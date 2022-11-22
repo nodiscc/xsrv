@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - gitea: fix configuration file templating failures in `check` mode
+- apache: fix default virtualhost/direct IP access not redirecting to error 403 page
 
 [Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
 
