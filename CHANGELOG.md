@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 - add ansible tags `gitea-config`
 
+**Changed:**
+- monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 
 [Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
 
