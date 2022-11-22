@@ -73,6 +73,13 @@ gitea_webhook_allowed_hosts:
   - "external"
 # port to expose in the clone URL
 gitea_ssh_url_port: 22
+# enable indexing/searching of repository contents (can consume a lot of system resources)
+gitea_repo_indexer_enabled: no
+# list of filenames (glob patterns) to exclude from the index. Example:
+# gitea_repo_indexer_exclude:
+#   - 'resources/bin/**'
+#   - '.npm/**'
+gitea_repo_indexer_exclude: []
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
 # Mail settings below are required if gitea mailer is enabled

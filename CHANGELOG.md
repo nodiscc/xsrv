@@ -4,6 +4,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.11.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+
+**Added:**
+- gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+
+[Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
+
+
 #### [v1.10.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.10.0) - 2022-11-19
 
 **Upgrade procedure:**
