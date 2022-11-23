@@ -5,6 +5,7 @@
 # @tag dns - setup DNS resolution
 # @tag fail2ban - setup fail2ban intrusion prevention system
 # @tag firewall - setup firewall
+# @tag firewalld - setup firewall
 # @tag hostname - setup hostname
 # @tag hosts - setup /etc/hosts entries
 # @tag packages - additional package istallation/removal
@@ -16,6 +17,8 @@
 # @tag msmtp - setup outgoing system mail
 # @tag services - start/stop/enable/disable services
 # @tag utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
+# @tag cron - configure cron task scheduler
+# @tag apt-listbugs - configure apt-listbugs bug prevention tool
 
 galaxy_info:
   role_name: common

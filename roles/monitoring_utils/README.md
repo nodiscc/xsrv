@@ -64,7 +64,7 @@ linux_users:
 <!--BEGIN TAGS LIST-->
 ```
 lynis - setup lynis security audit tool
-monitoring-cli-utils - setup command-line/additional monitoring utilities
+monitoring_utils - setup command-line/additional monitoring utilities
 ```
 <!--END TAGS LIST-->
 

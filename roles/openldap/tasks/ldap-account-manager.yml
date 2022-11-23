@@ -59,7 +59,7 @@
 
 - name: include ldap-account-manager self-signed certificates configuration tasks
   import_tasks: ldap-account-manager-ssl-selfsigned.yml
-  tags: ssl-selfsigned
+  tags: ssl
   when: ldap_account_manager_https_mode == 'selfsigned'
 
 ### APACHE CONFIGURATION ###
