@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: upgrade to v25.0.2 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - nextcloud: enable clean URLs
 - nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
+- xsrv: update ansible to [v7.1.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - update test tooling
 - update documentation
 
