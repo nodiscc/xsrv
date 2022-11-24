@@ -183,7 +183,8 @@ ssh_permit_root_login: "no"
 # enable/disable SSH password authentication (yes, no - QUOTED)
 ssh_password_authentication: "no"
 
-### FIREWALL ###
+##### FIREWALL #####
+
 # setup firewall (yes/no)
 setup_firewall: yes
 # log rejected/dropped packets (all/unicast/broadcast/multicast/off)
@@ -321,7 +322,7 @@ msmtp_host: "smtp.CHANGEME.org"
 msmtp_port: 587
 msmtp_username: "CHANGEME"
 msmtp_password: "CHANGEME"
-# mail address to send adminbistrator email to (multiple recipients can be added, separated by ', ')
+# mail address to send administrator email to (multiple recipients can be added, separated by ', ')
 msmtp_admin_email: "CHANGEME"
 # (auto/admin@CHANGEME.org) sender address for outgoing mail
 msmtp_from: 'auto'
