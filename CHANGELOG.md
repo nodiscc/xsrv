@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 - common: make the timeout for interactive bash sessions configurable ([`bash_timeout`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml), default 900s)
+- common: add [bash-completion](https://packages.debian.org/bullseye/bash-completion) to the list of default packages to install ([`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - add ansible tags `gitea-config`
 
 **Changed:**
