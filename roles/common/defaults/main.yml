@@ -300,6 +300,8 @@ systemd_logind_kill_user_processes: yes
 systemd_logind_kill_exclude_users: ['root']
 # time after which idle interactive login sessions are automatically closed
 systemd_logind_lock_after_idle_min: 15
+# terminate interactive bash processes after this number of seconds if no input is received (set to 0 to disable)
+bash_timeout: 900
 
 
 ### CRON TASK SCHEDULER ###

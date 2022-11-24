@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- common: make the timeout for interactive bash sessions configurable ([`bash_timeout`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml), default 900s)
 - add ansible tags `gitea-config`
 
 **Changed:**

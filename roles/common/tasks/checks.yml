@@ -41,6 +41,7 @@
     - systemd_logind_kill_user_processes == systemd_logind_kill_user_processes|bool
     - systemd_logind_kill_exclude_users|type_debug == "list"
     - systemd_logind_lock_after_idle_min == systemd_logind_lock_after_idle_min|int
+    - bash_timeout == bash_timeout | int
   tags:
     - ssh
     - sysctl
