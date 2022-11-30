@@ -286,7 +286,7 @@
 
 - name: update .htaccess for clean URL support (always returns changed)
   become_user: nextcloud
-  command: "/usr/bin/php ./occ maintenance:update:htaccess"
+  command: "/usr/bin/php ./occ maintenance:update:htaccess" # noqa no-changed-when
   args:
     chdir: "{{ nextcloud_install_dir }}"
   ignore_errors: "{{ ansible_check_mode }}"
