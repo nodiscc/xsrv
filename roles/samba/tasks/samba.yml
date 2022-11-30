@@ -25,7 +25,7 @@
     mode: 0640
 
 - name: set samba LDAP admin dn password (always returns changed)
-  command: "smbpasswd -w {{ openldap_admin_password }}"  # noqa 301
+  command: "smbpasswd -w {{ openldap_admin_password }}"  # noqa no-changed-when
   when: samba_passdb_backend == 'ldapsam'
 
 - name: get samba server SID
