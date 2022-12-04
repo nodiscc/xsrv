@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- nextcloud: if you changed `nextcloud_apps` from the default value in your group/hosts vars, remove `files_videoplayer` from the list
 
 **Added:**
 - netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - nextcloud: upgrade to v25.0.1 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - nextcloud: enable clean URLs
+- nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
 - update test tooling
 - update documentation
 
