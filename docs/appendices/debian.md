@@ -66,6 +66,8 @@ USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS --gateway 
 
 The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overriden using `--preseed /path/to/custom/preseed.cfg`.
 
+[![](https://asciinema.org/a/FIlybeNFgNlAAhQVnDl96FPUv.svg)](https://asciinema.org/a/FIlybeNFgNlAAhQVnDl96FPUv?speed=2&theme=monokai&autoplay=true)
+
 
 ### Automated, from a VM template
 
@@ -91,6 +93,9 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP --ne
         --vcpus         number of vCPUs (default: same value as the template)
         --dump          display the VM XML definition after creation, for use with the nodiscc.xsrv.libvirt role
 ```
+
+[![](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k.svg)](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k?speed=2&theme=monokai&autoplay=true)
+
 
 ### From a hosting provider
 
