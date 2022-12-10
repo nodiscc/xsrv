@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
-- nextcloud: upgrade to v25.0.1 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
+- nextcloud: upgrade to v25.0.2 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - nextcloud: enable clean URLs
 - nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
 - update test tooling
