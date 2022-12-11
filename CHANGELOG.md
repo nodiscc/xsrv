@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - nextcloud: if you changed `nextcloud_apps` from the default value in your group/hosts vars, remove `files_videoplayer` from the list
+- jitsi: set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
 
 **Added:**
 - netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
@@ -31,6 +32,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: fix default virtualhost/direct IP access not redirecting to error 403 page
 - common: fix [`kernel_proc_hidepid`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) changes not being applied unless the host is rebooted
 - graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
+- jitsi: fix jitsi meet/jicofo unable to authenticate to XMPP server (`Unfortunately something went wrong. We're trying to fix this. Reconnecting in...`)
+
 
 [Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
 

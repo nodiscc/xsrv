@@ -63,6 +63,10 @@
       value: "{{ jitsi_turn_secret }}"
       vtype: string
     - name: jitsi-meet-prosody
+      question: jicofo/jicofo_auth_password
+      value: "{{ jitsi_prosody_password }}"
+      vtype: string
+    - name: jitsi-meet-prosody
       question: jitsi-meet/cert-choice
       value: "Generate a new self-signed certificate"
       vtype: string
