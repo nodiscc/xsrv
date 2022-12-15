@@ -117,7 +117,6 @@
     - firehol_custom_services is not defined
   tags:
     - firewall
-    - firewalld
 
 - name: check that variables are correctly defined (firewalld_zone_sources)
   assert:
@@ -135,7 +134,6 @@
   with_items: "{{ firewalld_zone_sources }}"
   tags:
     - firewall
-    - firewalld
 
 - name: check that variables are correctly defined (firewalld_zone_services)
   assert:
@@ -151,7 +149,6 @@
   with_items: "{{ firewalld_zone_services }}"
   tags:
     - firewall
-    - firewalld
 
 - name: check that DNS resolvers are configured
   assert:

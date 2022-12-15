@@ -18,6 +18,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: add [bash-completion](https://packages.debian.org/bullseye/bash-completion) to the list of default packages to install ([`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - add ansible tags `gitea-config`
 
+**Removed:**
+- remove ansible tag `firewalld` (use `firewall` instead)
+
 **Changed:**
 - monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - nextcloud: upgrade to v25.0.2 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)

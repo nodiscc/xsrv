@@ -63,7 +63,6 @@ datetime - setup date/time configuration
 dns - setup DNS resolution
 fail2ban - setup fail2ban intrusion prevention system
 firewall - setup firewall
-firewalld - setup firewall
 hostname - setup hostname
 hosts - setup /etc/hosts entries
 packages - additional package istallation/removal
