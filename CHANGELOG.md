@@ -27,7 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: enable clean URLs
 - nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
 - openldap: update ldap-account-manager to [v8.2](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_2)
-
+- common: ensure `/var/log/wtmp` does not become world-readable again after log rotation
 - xsrv: update ansible to [v7.1.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - update test tooling
 - update documentation

@@ -27,6 +27,14 @@
     follow: yes
     mode: o-rw
 
+- name: copy logrotate configuration for /var/log/wtmp
+  template:
+    src: etc_logrotate.d_wtmp.j2
+    dest: /etc/logrotate.d/wtmp
+    owner: root
+    group: root
+    mode: 0644
+
 - name: ensure ansible user home directory is not world-readable
   file:
     state: directory
