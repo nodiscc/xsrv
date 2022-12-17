@@ -89,7 +89,7 @@ imap.CHANGEME.org # mail_dovecot
 
 For your applications/services/monitoring tools to be able to send e-mail (notifications, confirmations, reports...), a valid account on an external e-mail (SMTP) server must be configured (see [`msmtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) and `*mailer*` configuration variables). By default all outgoing e-mail functionality is disabled and you will not receive any e-mail from your servers.
 
-You can use your own SMTP server or a commercial e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT [DNS records](#domain-names) for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other [[1]](https://www.ovhcloud.com/en-ie/emails/) [[2]](https://posteo.de/en) e-mail account.
+You can use your own SMTP server or a commercial e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT [DNS records](#domain-names) for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other [[1]](https://www.ovhcloud.com/en-ie/emails/) [[2]](https://posteo.de/en) [[3]](https://mailbox.org/en/services#tariffs) e-mail account.
 
 
 ## Base Operating System
