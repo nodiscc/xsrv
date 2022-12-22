@@ -85,7 +85,7 @@
   file:
     path: '{{ ldap_account_manager_install_dir }}'
     state: absent
-    no_log: yes
+  no_log: yes
   when: ldap_account_manager_action == 'upgrade'
 
 - name: move ldap_account_manager extraction directory to install directory
