@@ -53,9 +53,6 @@ graylog_secret_key: "vuVCF8pxoX2NYX9V37MVsMAaLS32UrlQluDwm3FfPl8NBEXNysbf2MviDIX
 #### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_auth_username: "ROLyT4HAUjyLejZSkmnV"
 gotty_auth_password: "OvbvaXDvQ2KUzNb7qSS6"
-##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
-rss_bridge_auth_username: "{{ xsrv_admin_username }}"
-rss_bridge_auth_password: "{{ xsrv_admin_password }}"
 ##### DOVECOT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml
 dovecot_ldap_bind_password: "{{ openldap_bind_password }}"
 ##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml

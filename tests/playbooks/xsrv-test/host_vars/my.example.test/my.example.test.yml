@@ -33,8 +33,6 @@ graylog_enable_service: no
 ##### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_fqdn: "tty.example.test"
 gotty_run_username: "deploy"
-##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
-rss_bridge_fqdn: "rss-bridge.example.test"
 ##### DNSMASQ - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml
 dnsmasq_upstream_servers:
   - 1.1.1.1

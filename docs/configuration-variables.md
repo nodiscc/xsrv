@@ -29,7 +29,6 @@ Then run `xsrv deploy` to apply changes.
 - [roles/postgresql/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/postgresql/defaults/main.yml)
 - [roles/proxmox/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/proxmox/defaults/main.yml)
 - [roles/rocketchat/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml)
-- [roles/rss_bridge/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml)
 - [roles/samba/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml)
 - [roles/shaarli/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)
 - [roles/transmission/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml)

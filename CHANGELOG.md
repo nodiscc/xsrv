@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - nextcloud: if you changed `nextcloud_apps` from the default value in your group/hosts vars, remove `files_videoplayer` from the list
 - jitsi: set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
+- **rss_bridge:** if you are using the [`rss_bridge`](https://gitlab.com/nodiscc/xsrv/-/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. Thins can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
 
 **Added:**
 - netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
@@ -19,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - add ansible tags `gitea-config`
 
 **Removed:**
+- rss_bridge: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (use https://nitter.net instead if you only need RSS feeds for Twitter)
 - remove ansible tag `firewalld` (use `firewall` instead)
 
 **Changed:**

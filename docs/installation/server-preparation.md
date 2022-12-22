@@ -81,7 +81,6 @@ chat.CHANGEME.org # rocketchat
 media.CHANGEME.org # jellyfin
 logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
-rss-bridge.CHANGEME.org # rss_bridge
 imap.CHANGEME.org # mail_dovecot
 ```
 

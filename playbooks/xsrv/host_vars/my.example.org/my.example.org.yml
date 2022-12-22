@@ -43,9 +43,6 @@ graylog_fqdn: "logs.CHANGEME.org"
 gotty_fqdn: "tty.CHANGEME.org"
 gotty_run_username: "CHANGEME"
 
-##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
-rss_bridge_fqdn: "rss-bridge.CHANGEME.org"
-
 ##### DNSMASQ - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml
 dnsmasq_upstream_servers:
   - 1.1.1.1

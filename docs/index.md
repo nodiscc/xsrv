@@ -45,7 +45,6 @@ This project provides:
 - [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) - PostgreSQL database engine
 - [proxmox](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/proxmox) - Proxmox VE hypervisor configuration
 - [rocketchat](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat) - Instant messaging & communication platform
-- [rss_bridge](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge) - The RSS feed for websites missing it
 - [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - Cross-platform file sharing server
 - [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli) - Bookmarking & link sharing web application
 - [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - Transmission Bittorrent client/web interface
@@ -67,7 +66,6 @@ This project provides:
 [![](https://i.imgur.com/qR3vIN4.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog)
-[![](https://i.imgur.com/UWjyTqP.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge)
 [![](https://i.imgur.com/g0jUMXE.jpg)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi)
 
 ## Source code
