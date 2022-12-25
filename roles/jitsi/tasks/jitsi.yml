@@ -133,6 +133,16 @@
     line: "    RECENT_LIST_ENABLED: {{ 'true' if jitsi_enable_recent_list else 'false' }},"
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: prevent debsums warnings about modified interface_config.js
+  lineinfile:
+    path: /etc/debsums-ignore
+    line: "/usr/share/jitsi-meet/interface_config.js"
+    state: present
+    owner: root
+    group: root
+    mode: 0600
+    create: yes
+
 - name: enable/disable start/stop jitsi service
   systemd:
     name: "{{ item }}"
