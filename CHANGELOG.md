@@ -8,8 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- nextcloud: if you changed `nextcloud_apps` from the default value in your group/hosts vars, remove `files_videoplayer` from the list
-- jitsi: set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
+- **nextcloud:** if you changed [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml) from its default value, remove `files_videoplayer` from the list (`xsrv edit-host/edit-group`)
+- **jitsi:** set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
 - **rss_bridge:** if you are using the [`rss_bridge`](https://gitlab.com/nodiscc/xsrv/-/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. Thins can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
 
 **Added:**
@@ -17,31 +17,31 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 - common: make the timeout for interactive bash sessions configurable ([`bash_timeout`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml), default 900s)
 - common: add [bash-completion](https://packages.debian.org/bullseye/bash-completion) to the list of default packages to install ([`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- add ansible tags `gitea-config`
 
 **Removed:**
-- rss_bridge: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (use https://nitter.net instead if you only need RSS feeds for Twitter)
+- rss_bridge: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - remove ansible tag `firewalld` (use `firewall` instead)
 
 **Changed:**
-- monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
-- nextcloud: upgrade to v25.0.2 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - nextcloud: enable clean URLs
 - nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
+- monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- common: ensure `/var/log/wtmp` does not become world-readable again after log rotation
+- nextcloud: upgrade to v25.0.2 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - gitea: update to [v1.17.4](https://github.com/go-gitea/gitea/releases/tag/v1.17.4)
 - openldap: update ldap-account-manager to [v8.2](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_2)
-- common: ensure `/var/log/wtmp` does not become world-readable again after log rotation
 - xsrv: update ansible to [v7.1.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- update ansible tags (see `xsrv help-tags`)
 - update test tooling
 - update documentation
 
 **Fixed:**
-- gitea: fix configuration file templating failures in `check` mode
+- jitsi: fix jitsi meet/jicofo unable to authenticate to XMPP server (`Unfortunately something went wrong. We're trying to fix this. Reconnecting in...`)
 - apache: fix default virtualhost/direct IP access not redirecting to error 403 page
 - common: fix [`kernel_proc_hidepid`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) changes not being applied unless the host is rebooted
+- gitea: fix configuration file templating failures in `check` mode
 - jitsi: prevent debsums warnings about modified `interface_config.js`
 - graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
-- jitsi: fix jitsi meet/jicofo unable to authenticate to XMPP server (`Unfortunately something went wrong. We're trying to fix this. Reconnecting in...`)
 
 
 [Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
