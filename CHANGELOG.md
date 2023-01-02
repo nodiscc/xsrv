@@ -44,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jitsi: prevent debsums warnings about modified `interface_config.js`
 - graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
 - gitea/gotty: fix systemd services automatic restart limits in case of failure
+- gitea: fixes slow browsing that may be experienced in particular cases
 
 
 [Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
