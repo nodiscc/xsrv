@@ -4,6 +4,8 @@
 Description=Gitea git service
 After=syslog.target
 After=network.target
+StartLimitIntervalSec=10s
+StartLimitBurst=4
 ###
 # Don't forget to add the database service requirements
 ###
@@ -49,8 +51,6 @@ After=redis.service
 #LimitMEMLOCK=infinity
 #LimitNOFILE=65535
 RestartSec=2s
-StartLimitIntervalSec=10s
-StartLimitBurst=4
 Type=simple
 User=gitea
 Group=gitea
