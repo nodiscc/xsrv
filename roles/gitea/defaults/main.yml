@@ -27,7 +27,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "{{ gitea_db_password }}" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: '1.17.4'
+gitea_version: '1.18.0'
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -85,7 +85,12 @@ gitea_mailer_enabled: no
 # Mail settings below are required if gitea mailer is enabled
 # 'From' address used in mails sent by gitea
 # gitea_mail_from: "gitea-noreply@{{ gitea_fqdn }}"
-# SMTP host, username and password for outgoing mail from gitea
-# gitea_mail_host: "CHANGEME"
+
 # gitea_mail_user: "CHANGEME"
 # gitea_mail_password: "CHANGEME"
+# Mail server address, e.g. smtp.gmail.com.
+# gitea_mail_host: "CHANGEME"
+# Mail server protocol (smtp/smtps/smtp+starttls/smtp+unix/sendmail/dummy)
+# gitea_mail_protocol: "CHANGEME"
+# Mail server port (e.g. 25/465/587)
+# gitea_mail_port: "CHANGEME"
