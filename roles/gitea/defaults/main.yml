@@ -93,4 +93,4 @@ gitea_mailer_enabled: no
 # Mail server protocol (smtp/smtps/smtp+starttls/smtp+unix/sendmail/dummy)
 # gitea_mail_protocol: "CHANGEME"
 # Mail server port (e.g. 25/465/587)
-# gitea_mail_smtp_port: "CHANGEME"
+# gitea_mail_port: "CHANGEME"
