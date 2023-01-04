@@ -4,6 +4,8 @@
 Description=gotty - share your terminal as a web application
 After=syslog.target
 After=network.target
+StartLimitIntervalSec=10s
+StartLimitBurst=4
 
 [Service]
 RestartSec=2s
@@ -13,8 +15,6 @@ Group={{ gotty_run_username }}
 WorkingDirectory=~
 ExecStart=/usr/local/bin/gotty --config /etc/gotty/gotty.conf  "{{ gotty_run_command }}"
 Restart=on-failure
-StartLimitIntervalSec=10s
-StartLimitBurst=4
 
 [Install]
 WantedBy=multi-user.target
