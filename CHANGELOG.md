@@ -42,6 +42,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: fix configuration file templating failures in `check` mode
 - jitsi: prevent debsums warnings about modified `interface_config.js`
 - graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
+- gitea: fixes slow browsing that may be experienced in particular case
+
 
 
 [Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
