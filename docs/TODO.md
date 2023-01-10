@@ -2,18 +2,17 @@
 
 ### xsrv/xsrv
 
+- #977 - Soulseek client? (slskd) - **`-`** `feature,question`
+- #975 - libvirt: simplify management of libvirt_port_forwards - **`1.11.0`** `easy,enhancement`
+- #973 - nextcloud: enable nextcloud talk app by default - **`1.11.0`** `easy,enhancement,feature`
+- #969 - graylog/elasticsearch: setup "minimal security"/authentication - **`-`** `enhancement,security`
 - #966 - WIP: add bash completion to the xsrv script - **`-`** `feature`
 - #965 - libvirt: changing `currentMemory` in the VM XML definition does not change current RAM until VM reboot - **`-`** `bug,enhancement`
-- #961 - WIP nfs-server role + ability to mount filesystems from the common role - **`1.11.0`** `feature`
-- #959 - WIP: libvirt: remove libvirt_port_fowrads, define port forwards at the VM level in libvirt_vms - **`-`** `enhancement`
-- #956 - WIP: monitoring_netdata: add an option to reboot automatically daily after kernel upgrades - **`1.11.0`** `easy,enhancement,feature,security`
-- #953 - nextcloud: upgrade to v25.x - **`-`** `maintenance`
 - #949 - loki role - **`-`** `feature`
-- #943 - nextcloud: enable clean URLs by default - **`1.11.0`** `configuration,enhancement`
 - #937 - DDoS mitigation mode? - **`-`** `question,security`
 - #936 - jitsi: prosody: add mod-listusers? - **`-`** `easy,enhancement,question`
 - #931 - jitsi: noise cancellation/suppression doesn't work - **`1.11.0`** `bug,upstream`
-- #927 - jitsi: permanently disable RECENT_LIST_ENABLED - **`1.11.0`** `easy,enhancement,security,upstream`
+- #927 - jitsi: permanently disable RECENT_LIST_ENABLED - **`-`** `enhancement,security,upstream`
 - #925 - jitsi: setup TURN server for P2P one-to-one calls? - **`-`** `enhancement,question`
 - #924 - init-vm: add ability to attach more network interfaces? - **`-`** `enhancement,question`
 - #920 - xsrv: graphical user interface? - **`-`** `question`
@@ -53,7 +52,7 @@
 - #802 - apache: allow using LDAP for basic auth - **`-`** `enhancement`
 - #798 - tt_rss: document LDAP over SSL/TLS + self-signed certificate setup - **`-`** `documentation,enhancement,security`
 - #796 - shaarli: document LDAP over SSL/TLS + self-signed certificate setup - **`2.0.0`** `documentation,enhancement,security`
-- #794 - openldap: self-service-password: allow trusting self-signed certificates - **`1.11.0`** `configuration,easy,enhancement,security`
+- #794 - openldap: self-service-password: allow trusting self-signed certificates? - **`-`** `enhancement,question,security`
 - #789 - apache: allow configuration of arbitrary reverse proxies - **`1.11.0`** `easy,enhancement,feature`
 - #782 - xsrv init-vm: don't require sudo to fix cloned disk image permissions - **`2.0.0`** `enhancement,question`
 - #778 - systemd-nspawn/systemd-machined role? - **`-`** `feature,question`
@@ -64,12 +63,11 @@
 - #755 - [debops] Join forces? - **`2.0.0`** `documentation,enhancement`
 - #752 - monitoring_utils: add duc disk usage analyzer? - **`-`** `feature,monitoring,question`
 - #751 - monitoring_utils: add scripts to measure disk usage by type/extension/path? - **`-`** `easy,enhancement,monitoring,question`
-- #750 - rocketchat: update to v4.5? - **`2.0.0`** `maintenance,wontfix`
+- #750 - rocketchat: update to v4.5? - **`1.11.0`** `maintenance,wontfix`
 - #734 - nextcloud: add whiteboard app? - **`-`** `enhancement,question`
 - #733 - monitoring_netdata: allow whitelisting debsecan bugs - **`-`** `enhancement,monitoring,security`
 - #732 - allow disabling web applications - **`-`** `configuration,easy,enhancement`
 - #731 - doc: add a role template - **`-`** `documentation,enhancement`
-- #728 - rss_bridge: allow configuration of whitelisted bridges - **`-`** `enhancement`
 - #723 - Automate DNS scans with dnsspy.io? - **`-`** `feature,question,security`
 - #722 - Allow hdparm/disk spindown time configuration? - **`-`** `feature,question`
 - #721 - Browser synchronization service? - **`2.0.0`** `feature,question`
@@ -107,7 +105,6 @@
 - #543 - homepage: add (optional) links section with links to recommendend mobile/desktop software - **`-`** `easy,enhancement`
 - #540 - tt-rss: add an option to silence feed update error reports mail - **`-`** `enhancement,monitoring`
 - #535 - Add hardening measures from ANSSI guidelines - **`-`** `enhancement,security`
-- #529 - proxmox backup server role? - **`-`** `backups,feature,question`
 - #522 - openldap: performance optimizations? - **`-`** `enhancement,performance,question`
 - #518 - Mumble web interface - **`2.0.0`** `feature`
 - #517 - allow configuration of a custom MOTD? - **`-`** `feature,question`
@@ -131,7 +128,7 @@
 - #465 - lynis: add detection of SUID files? - **`-`** `enhancement,monitoring,question,security,wontfix`
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html) - **`-`** `easy,feature`
 - #457 - samba: setup dfs_samba4/acl_xattr VFS modules? - **`-`** `configuration,enhancement,question,wontfix`
-- #454 - postgresql: add an option to enable pg_stat_statements view - **`1.11.0`** `enhancement,maintenance,monitoring,performance`
+- #454 - postgresql: add an option to enable pg_stat_statements view? - **`-`** `difficult,enhancement,maintenance,monitoring,performance`
 - #453 - postgresql: enable checksums? - **`-`** `configuration,question,wontfix`
 - #451 - Document management system? - **`-`** `feature,question`
 - #450 - netdata: setup ML-based anomaly detection? - **`-`** `configuration,enhancement,monitoring,question,wontfix`
@@ -154,7 +151,7 @@
 - #376 - netdata: enable samba monitoring when samba role is installed - **`-`** `enhancement,monitoring`
 - #375 - rocketchat: set Offline_Message_Use_DeepLink to false - **`1.11.0`** `configuration,easy,enhancement,security,upstream,wontfix`
 - #374 - makefile/readthedocs: include roles documentation in generated docs - **`-`** `documentation,enhancement`
-- #366 - nextcloud: file locking sometimes causes synchronization errors (enable redis?) - **`1.11.0`** `configuration,performance,question`
+- #366 - nextcloud: setup redis memcache backend? - **`-`** `configuration,performance,question`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone - **`-`** `documentation`
 - #360 - netdata: add httpchecks on each apache virtualhost setup by other roles - **`-`** `enhancement,monitoring`
 - #357 - mattermost role? - **`1.11.0`** `feature,question`
@@ -217,11 +214,9 @@
 - #176 - netdata: add Qualys SSL check module - **`-`** `feature,monitoring`
 - #174 - netdata: allow setting a repetition period for alarms - **`-`** `enhancement`
 - #172 - netdata: support long-term archiving - **`-`** `enhancement,monitoring`
-- #171 - needrestart: add a config variable to automatically reboot when a kernel upgrade is pending - **`1.11.0`** `easy,enhancement,security`
 - #170 - netdata: add support for postgresql monitoring - **`-`** `enhancement,monitoring`
 - #167 - monitoring: add spectre-meltdown-checker - **`-`** `feature,monitoring,security`
-- #165 - gitea: Enable search/indexing for repository/code/issues - **`1.11.0`** `documentation,easy,enhancement,performance`
-- #164 - gitea: add CI/CD service - **`1.11.0`** `feature`
+- #164 - gitea: add CI/CD service - **`-`** `feature`
 - #155 - nextcloud: add Fulltextsearch App + OCR - **`1.11.0`** `feature,question`
 - #150 - nextcloud: add maintenance on/off switch - **`-`** `easy,enhancement`
 - #149 - nextcloud: add bookmarks app? - **`-`** `enhancement,question`
