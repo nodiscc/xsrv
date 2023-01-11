@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.12.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.12.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Changed:**
+- gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
+
+[Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.12.0)
+
+------------------
+
+
 #### [v1.11.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.1) - 2023-01-22
 
 **Upgrade procedure:**
