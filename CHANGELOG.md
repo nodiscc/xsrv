@@ -31,7 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
 - monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - common: ensure `/var/log/wtmp` does not become world-readable again after log rotation
-- nextcloud: upgrade to v25.0.2 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
+- nextcloud: upgrade to v25.0.3 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - gitea: update to v1.18.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.17.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.0) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.1)
 - openldap: update ldap-account-manager to [v8.2](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_2)
 - xsrv: update ansible to [v7.1.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
