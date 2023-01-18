@@ -24,7 +24,7 @@ gitea_db_type: "postgres" # postgres/mysql
 gitea_db_name: "gitea"
 gitea_db_user: "gitea"
 gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql database/peer authentication
-gitea_db_password: "{{ gitea_db_password }}" # leave empty for local postgresql database/peer authentication
+gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
 gitea_version: '1.18.1'

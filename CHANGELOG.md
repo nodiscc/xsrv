@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: fix configuration file templating failures in `check` mode
 - jitsi: prevent debsums warnings about modified `interface_config.js`
 - graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
+- gitea: fix incorrect default value for `gitea_db_password`
 - gitea/gotty: fix systemd services automatic restart limits in case of failure
 - gitea: fixes slow browsing that may be experienced in particular cases
 
