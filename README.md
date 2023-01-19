@@ -46,7 +46,6 @@ This project provides:
 - [postgresql](roles/postgresql) - PostgreSQL database engine
 - [proxmox](roles/proxmox) - Proxmox VE hypervisor configuration
 - [readme_gen](roles/readme_gen) - add an inventory of hosts and services to the project's README.md
-- [rocketchat](roles/rocketchat) - Instant messaging & communication platform
 - [samba](roles/samba) - Cross-platform file sharing server
 - [shaarli](roles/shaarli) - Bookmarking & link sharing web application
 - [transmission](roles/transmission) - Transmission Bittorrent client/web interface
@@ -64,7 +63,6 @@ This project provides:
 [![](https://i.imgur.com/Imb0dqO.png)](roles/transmission)
 [![](https://i.imgur.com/6Im61B0.png)](roles/mumble)
 [![](https://i.imgur.com/REzcZVh.png)](roles/openldap)
-[![](https://i.imgur.com/Mib9YkX.png)](roles/rocketchat)
 [![](https://i.imgur.com/udEAnKA.png)](roles/matrix)
 [![](https://i.imgur.com/qR3vIN4.png)](roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)

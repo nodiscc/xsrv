@@ -19,9 +19,6 @@ shaarli_fqdn: "links.example.test"
 transmission_fqdn: "torrent.example.test"
 ##### TT-RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.example.test"
-##### ROCKETCHAT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
-rocketchat_fqdn: "chat.example.test"
-rocketchat_enable_service: no
 #### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
 openldap_fqdn: "ldap.example.test"
 openldap_domain: "example.test"

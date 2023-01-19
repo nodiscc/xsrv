@@ -27,9 +27,6 @@ transmission_fqdn: "torrent.CHANGEME.org"
 ##### TT-RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.CHANGEME.org"
 
-##### ROCKETCHAT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
-rocketchat_fqdn: "chat.CHANGEME.org"
-
 #### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
 openldap_fqdn: "ldap.CHANGEME.org"
 openldap_domain: "CHANGEME.org"

@@ -265,12 +265,12 @@ The value in host_vars will take [precedence](https://docs.ansible.com/ansible/l
 
 ```yaml
 # $ xsrv show-defaults
-# yes/no: enable rocketchat services
-rocketchat_enable_service: yes
+# yes/no: enable the mumble service
+mumble_enable_service: yes
 
 # $ xsrv edit-host
-# disable rocketchat services on this host
-rocketchat_enable_service: no
+# disable the mumble service on this host
+mumble_enable_service: no
 ```
 
 Use [`xsrv show-defaults`](#xsrv-show-defaults) to list all available variables and their default values.

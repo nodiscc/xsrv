@@ -46,7 +46,6 @@ This project provides:
 - [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) - PostgreSQL database engine
 - [proxmox](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/proxmox) - Proxmox VE hypervisor configuration
 - [readme_gen](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) - add an inventory of hosts and services to the project's README.md
-- [rocketchat](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat) - Instant messaging & communication platform
 - [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - Cross-platform file sharing server
 - [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli) - Bookmarking & link sharing web application
 - [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - Transmission Bittorrent client/web interface
@@ -64,7 +63,6 @@ This project provides:
 [![](https://i.imgur.com/Imb0dqO.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission)
 [![](https://i.imgur.com/6Im61B0.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble)
 [![](https://i.imgur.com/REzcZVh.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap)
-[![](https://i.imgur.com/Mib9YkX.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rocketchat)
 [![](https://i.imgur.com/udEAnKA.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix)
 [![](https://i.imgur.com/qR3vIN4.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin)

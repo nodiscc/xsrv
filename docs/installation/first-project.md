@@ -34,23 +34,31 @@ nodiscc.xsrv:1.3.1 was installed successfully
 # enable additional roles by uncommenting them
 - hosts: my.example.org
   roles:
-    - nodiscc.xsrv.common
-    - nodiscc.xsrv.monitoring
-    # - nodiscc.xsrv.backup
-    # - nodiscc.xsrv.apache
-    # - nodiscc.xsrv.openldap
-    # - nodiscc.xsrv.postgresql
-    # - nodiscc.xsrv.nextcloud
-    # - nodiscc.xsrv.tt_rss
-    # - nodiscc.xsrv.shaarli
-    # - nodiscc.xsrv.gitea
-    # - nodiscc.xsrv.transmission
-    # - nodiscc.xsrv.mumble
-    # - nodiscc.xsrv.docker
-    # - nodiscc.xsrv.rocketchat
-    # - nodiscc.xsrv.jellyfin
-    # - nodiscc.xsrv.samba
-    # - nodiscc.xsrv.homepage
+    - nodiscc.xsrv.common # base setup
+    - nodiscc.xsrv.monitoring # monitoring, alerting and logging
+    # - nodiscc.xsrv.backup # backup service
+    # - nodiscc.xsrv.apache # web server + PHP interpreter
+    # - nodiscc.xsrv.openldap # LDAP directory server
+    # - nodiscc.xsrv.postgresql # database engine
+    # - nodiscc.xsrv.nextcloud # file hosting/sharing/synchronization and collaboration
+    # - nodiscc.xsrv.tt_rss # news feed reader
+    # - nodiscc.xsrv.shaarli # bookmarking & link sharing
+    # - nodiscc.xsrv.gitea # git service/software forge
+    # - nodiscc.xsrv.transmission # bittorrent client
+    # - nodiscc.xsrv.mumble # VoIP/voice chat server
+    # - nodiscc.xsrv.docker # application containerization
+    # - nodiscc.xsrv.matrix # real-time secure communication server and web client
+    # - nodiscc.xsrv.jellyfin # media server
+    # - nodiscc.xsrv.jitsi # video conferencing solution
+    # - nodiscc.xsrv.samba # file sharing server
+    # - nodiscc.xsrv.dnsmasq # lightweight DNS server
+    # - nodiscc.xsrv.wireguard # fast and modern VPN server
+    # - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
+    # - nodiscc.xsrv.gotty # access server terminal as a web application
+    # - nodiscc.xsrv.proxmox # basic setup steps for proxmox hypervisors
+    # - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
+    # - nodiscc.xsrv.graylog # log management, capture and analysis platform
+    # - nodiscc.xsrv.homepage # simple webserver homepage
 ```
 ```
 [xsrv] INFO: opening host vars file /home/live/playbooks/default/host_vars/my.example.org/my.example.org.yml
@@ -81,9 +89,6 @@ transmission_fqdn: "torrent.CHANGEME.org"
 
 ##### TT-RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.CHANGEME.org"
-
-##### ROCKETCHAT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
-rocketchat_fqdn: "chat.CHANGEME.org"
 ...
 ```
 ```

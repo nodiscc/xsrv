@@ -17,7 +17,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.apache # (required) web server and SSL/TLS certificates
     - nodiscc.xsrv.shaarli # (example) any supported role, a link to this application on the homepage will be added
-    - nodiscc.xsrv.rocketchat # (example) any supported role, a link to this application on the homepage will be added
+    - nodiscc.xsrv.nextcloud # (example) any supported role, a link to this application on the homepage will be added
     - nodiscc.xsrv.homepage # the homepage role must be deployed *after* application roles
 
 # required variables:
