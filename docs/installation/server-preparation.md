@@ -77,7 +77,8 @@ torrent.CHANGEME.org # transmission
 mumble.CHANGEME.org # mumble server
 ldap.CHANGEME.org # openldap server/LDAP account manager
 ssp.CHANGEME.org # LDAP self-service password
-chat.CHANGEME.org # rocketchat
+chat.CHANGEME.org # matrix/element web client
+matrix.CHANGEME.org # matrix/synapse server
 media.CHANGEME.org # jellyfin
 logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty

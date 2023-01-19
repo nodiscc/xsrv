@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 
 **Added:**
+- add [`matrix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) role - real-time, secure communication server and web client
 - add [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command and role - generate a markdown inventory in the project's README.md
 - netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))

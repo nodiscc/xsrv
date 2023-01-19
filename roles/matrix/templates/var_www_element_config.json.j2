@@ -1,0 +1,68 @@
+{
+    "default_server_config": {
+        "m.homeserver": {
+            "base_url": "https://{{ matrix_synapse_fqdn }}",
+            "server_name": "{{ matrix_synapse_fqdn }}"
+        },
+        "m.identity_server": {
+            "base_url": "https://vector.im"
+        }
+    },
+    "disable_custom_urls": true,
+    "disable_guests": true,
+    "disable_login_language_selector": false,
+    "disable_3pid_login": true,
+    "brand": "{{ matrix_element_fqdn }}",
+    "branding": {
+        "welcome_background_url": "/themes/element/img/backgrounds/white.png",
+        "auth_footer_links": []
+    },
+    "integrations_ui_url": "https://scalar.vector.im/",
+    "integrations_rest_url": "https://scalar.vector.im/api",
+    "integrations_widgets_urls": [
+        "https://scalar.vector.im/_matrix/integrations/v1",
+        "https://scalar.vector.im/api",
+        "https://scalar-staging.vector.im/_matrix/integrations/v1",
+        "https://scalar-staging.vector.im/api",
+        "https://scalar-staging.riot.im/scalar/api"
+    ],
+    "uisi_autorageshake_app": "element-auto-uisi",
+    "default_country_code": "GB",
+    "show_labs_settings": false,
+    "features": {
+        "feature_pinning": true,
+        "feature_presence_in_room_list": true,
+        "feature_thread": true,
+        "feature_video_rooms": true,
+        {{ '"feature_element_call_video_rooms": true,' if matrix_element_video_rooms_mode == 'element_call' }}
+        "feature_group_calls": true
+    },
+    "default_federate": true,
+    "default_theme": "light",
+    "room_directory": {
+        "servers": [
+            "matrix.org",
+            "{{ matrix_synapse_fqdn }}"
+        ]
+    },
+    "enable_presence_by_hs_url": {
+        "https://matrix.org": false,
+        "https://matrix-client.matrix.org": false
+    },
+    "setting_defaults": {
+        "UIFeature.feedback": false,
+        "UIFeature.shareSocial": false,
+        "UIFeature.identityServer": false,
+        "UIFeature.thirdPartyId": false,
+        "UIFeature.registration": false
+    },
+    "jitsi": {
+        "preferred_domain": "{{ matrix_element_jitsi_preferred_domain }}"
+    },
+    "element_call": {
+        "url": "https://call.element.io",
+        "participant_limit": 8,
+        "brand": "Element Call"
+    },
+    "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx"
+}

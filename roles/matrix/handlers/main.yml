@@ -1,0 +1,8 @@
+- name: restart synapse
+  service:
+    name: matrix-synapse
+    state: restarted
+    enabled: yes
+  become: yes
+  when: matrix_synapse_enable_service | bool
+  ignore_errors: "{{ ansible_check_mode }}"

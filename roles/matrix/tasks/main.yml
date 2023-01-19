@@ -1,0 +1,123 @@
+- name: include variable checks tasks
+  import_tasks: checks.yml
+  tags:
+    - matrix
+    - synapse
+    - element
+    - checks
+
+- name: include postgresql configuration tasks
+  import_tasks: postgresql.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+
+- name: include synapse configuration tasks
+  import_tasks: synapse.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+
+- name: include element configuration tasks
+  import_tasks: element.yml
+  become: yes
+  tags:
+    - matrix
+    - element
+
+# - name: include fail2ban configuration tasks
+#   import_tasks: fail2ban.yml
+#   become: yes
+#   tags:
+#     - matrix
+#     - synapse
+#     - fail2ban
+#   when:
+#     - ansible_local.fail2ban.ansible_managed is defined
+#     - ansible_local.fail2ban.ansible_managed | bool
+
+- name: include firewalld configuration tasks
+  import_tasks: firewalld.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed | bool
+
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+    - element
+    - ssl
+
+- name: include apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+    - element
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include rsnapshot/backups configuration tasks
+  import_tasks: backups.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed | bool
+
+- name: include rsyslog configuration tasks
+  import_tasks: rsyslog.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+    - monitoring
+    - rsyslog
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed | bool
+
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed | bool
+
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse
+    - element
+    - matrix-facts
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - matrix
+    - synapse
+    - monitoring
+    - fail2ban

@@ -1,0 +1,24 @@
+# @tag matrix - setup matrix chat server and web client
+# @tag synapse - setup synapse (matrix) chat server
+# @tag element - setup element matrix web chat client
+
+galaxy_info:
+  role_name: matrix
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Real-time secure communication server and web client"
+  license: "GPL-3.0"
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "11"
+  galaxy_tags:
+    - chat
+    - matrix
+    - server
+    - messaging
+    - element
+    - synapse
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.postgresql

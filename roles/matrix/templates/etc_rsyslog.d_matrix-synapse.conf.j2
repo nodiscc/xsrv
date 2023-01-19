@@ -1,0 +1,9 @@
+# rsyslog configuration for synapse logs
+
+{% if matrix_synapse_homeserver_logs_to_syslog %}
+input(type="imfile"
+      File="/var/log/matrix-synapse/homeserver.log"
+      Tag="matrix-synapse:"
+      Facility="daemon"
+      PersistStateInterval="0")
+{% endif %}

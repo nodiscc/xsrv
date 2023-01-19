@@ -67,3 +67,7 @@ wireguard_server_public_ip: "CHANGEME"
 
 ##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
 jitsi_fqdn: "conference.CHANGEME.org"
+
+##### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
+matrix_synapse_fqdn: "matrix.CHANGEME.org"
+matrix_element_fqdn: "chat.CHANGEME.org"

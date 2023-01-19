@@ -1,0 +1,136 @@
+# Configuration file for Synapse.
+#
+# This is a YAML file: see [1] for a quick introduction. Note in particular
+# that *indentation is important*: all the elements of a list or dictionary
+# should have the same indentation.
+#
+# [1] https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+#
+# For more information on how to configure Synapse, including a complete accounting of
+# each option, go to docs/usage/configuration/config_documentation.md or
+# https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
+#
+# This is set in /etc/matrix-synapse/conf.d/server_name.yaml for Debian installations.
+# server_name: "SERVERNAME"
+pid_file: "/var/run/matrix-synapse.pid"
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['127.0.0.1']
+    resources:
+      - names: [client, federation]
+        compress: false
+database:
+  name: psycopg2
+  args:
+    user: synapse
+    password: "{{ matrix_synapse_db_password }}"
+    database: synapse
+    host: 127.0.0.1
+    cp_min: 5
+    cp_max: 10
+log_config: "/etc/matrix-synapse/log.yaml"
+media_store_path: /var/lib/matrix-synapse/media
+signing_key_path: "/etc/matrix-synapse/homeserver.signing.key"
+trusted_key_servers:
+  - server_name: "matrix.org"
+web_client_location: https://{{ matrix_element_fqdn }}
+public_baseurl: https://{{ matrix_synapse_fqdn }}
+serve_server_wellknown: true
+presence:
+  enabled: true
+require_auth_for_profile_requests: true
+allow_public_rooms_without_auth: false
+allow_public_rooms_over_federation: false
+block_non_admin_invites: {{ 'true' if matrix_synapse_block_non_admin_invites else 'false' }}
+enable_search: true
+max_avatar_size: 3M
+allowed_avatar_mimetypes: ["image/png", "image/jpeg", "image/gif"]
+redaction_retention_period: 7d
+federation_domain_whitelist: []
+max_upload_size: 60M
+# media_retention:
+#     local_media_lifetime: 90d
+#     remote_media_lifetime: 14d
+url_preview_enabled: {{ 'true' if matrix_synapse_enable_url_previews else 'false' }}
+url_preview_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+# url_preview_url_blacklist:
+#   - username: '*'
+#   - netloc: 'google.com'
+#   - netloc: '*.google.com'
+#   - scheme: 'http'
+#   - netloc: 'www.acme.com'
+#     path: '/foo'
+#   - netloc: '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$'
+max_spider_size: 10M
+enable_registration: false
+enable_registration_without_verification: false
+registration_requires_token: true
+registration_shared_secret: {{ matrix_synapse_registration_shared_secret }}
+allow_guest_access: false
+enable_set_displayname: true
+enable_set_avatar_url: true
+auto_join_rooms: []
+autocreate_auto_join_rooms: true
+autocreate_auto_join_rooms_federated: false
+autocreate_auto_join_room_preset: public_chat
+auto_join_rooms_for_guests: false
+# session_lifetime: 24h
+enable_metrics: false
+report_stats: false
+app_service_config_files: []
+macaroon_secret_key: {{ matrix_synapse_macaroon_secret_key }}
+# email:
+#   smtp_host: mail.server
+#   smtp_port: 587
+#   smtp_user: "exampleusername"
+#   smtp_pass: "examplepassword"
+#   force_tls: true
+#   require_transport_security: true
+#   enable_tls: false
+#   notif_from: "Your Friendly %(app)s homeserver <noreply@example.com>"
+#   app_name: my_branded_matrix_server
+#   enable_notifs: true
+#   notif_for_new_users: false
+#   client_base_url: "http://localhost/riot"
+#   validation_token_lifetime: 15m
+#   invite_client_location: https://app.element.io
+#   subjects:
+#     message_from_person_in_room: "[%(app)s] You have a message on %(app)s from %(person)s in the %(room)s room..."
+#     message_from_person: "[%(app)s] You have a message on %(app)s from %(person)s..."
+#     messages_from_person: "[%(app)s] You have messages on %(app)s from %(person)s..."
+#     messages_in_room: "[%(app)s] You have messages on %(app)s in the %(room)s room..."
+#     messages_in_room_and_others: "[%(app)s] You have messages on %(app)s in the %(room)s room and others..."
+#     messages_from_person_and_others: "[%(app)s] You have messages on %(app)s from %(person)s and others..."
+#     invite_from_person_to_room: "[%(app)s] %(person)s has invited you to join the %(room)s room on %(app)s..."
+#     invite_from_person: "[%(app)s] %(person)s has invited you to chat on %(app)s..."
+#     password_reset: "[%(server_name)s] Password reset"
+#     email_validation: "[%(server_name)s] Validate your email"
+# push:
+#   enabled: true
+#   include_content: false
+#   group_unread_count_by_room: false
+encryption_enabled_by_default_for_room_type: all
+user_directory:
+    enabled: true
+    search_all_users: false
+    prefer_local_users: true
+stats:
+  enabled: true
+# server_notices:
+#   system_mxid_localpart: notices
+#   system_mxid_display_name: "Server Notices"
+#   system_mxid_avatar_url: "mxc://server.com/oumMVlgDnLYFaPVkExemNVVZ"
+#   room_name: "Server Notices"
+enable_room_list_search: true
+# room_list_publication_rules:
+#   - user_id: "*"
+#     alias: "*"
+#     room_id: "*"
+#     action: allow

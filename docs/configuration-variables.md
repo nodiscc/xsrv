@@ -19,6 +19,7 @@ Then run `xsrv deploy` to apply changes.
 - [roles/jitsi/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml)
 - [roles/libvirt/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml)
 - [roles/mail_dovecot/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml)
+- [roles/matrix/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml)
 - [roles/monitoring/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml)
 - [roles/monitoring_netdata/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
 - [roles/monitoring_rsyslog/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)

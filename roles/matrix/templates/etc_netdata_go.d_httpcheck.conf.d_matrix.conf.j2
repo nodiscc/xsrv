@@ -1,0 +1,15 @@
+  - name: matrix-synapse
+    timeout: 3
+    tls_skip_verify: true
+    update_every: 10
+    url: https://127.0.0.1/_matrix/client/versions
+    headers:
+      Host: "{{ matrix_synapse_fqdn }}"
+  - name: matrix-element
+    timeout: 3
+    tls_skip_verify: true
+    update_every: 10
+    url: https://127.0.0.1/
+    headers:
+      Host: "{{ matrix_element_fqdn }}"
+

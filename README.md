@@ -35,6 +35,7 @@ This project provides:
 - [jitsi](roles/jitsi) - Video conferencing solution
 - [libvirt](roles/libvirt) - libvirt virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
+- [matrix](roles/matrix) - Real-time secure communication server and web client
 - [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
 - [monitoring_rsyslog](roles/monitoring_rsyslog) - Log aggregation, processing and forwarding system
@@ -64,6 +65,7 @@ This project provides:
 [![](https://i.imgur.com/6Im61B0.png)](roles/mumble)
 [![](https://i.imgur.com/REzcZVh.png)](roles/openldap)
 [![](https://i.imgur.com/Mib9YkX.png)](roles/rocketchat)
+[![](https://i.imgur.com/udEAnKA.png)](roles/matrix)
 [![](https://i.imgur.com/qR3vIN4.png)](roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)

@@ -1,0 +1,31 @@
+<VirtualHost *:80>
+    DocumentRoot {{ element_install_dir }}
+    ServerName {{ matrix_element_fqdn }}
+    ServerAdmin webmaster@{{ matrix_element_fqdn }}
+{% if matrix_element_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if matrix_element_https_mode == 'letsencrypt' %}
+MDomain {{ matrix_element_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  DocumentRoot {{ element_install_dir }}
+  ServerName  {{ matrix_element_fqdn }}
+  ServerAdmin webmaster@{{ matrix_element_fqdn }}
+  SSLEngine on
+{% if matrix_element_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ matrix_element_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ matrix_element_fqdn }}.key
+{% endif %}
+  DirectoryIndex index.html
+  Header set X-Frame-Options SAMEORIGIN
+  Header set X-Content-Type-Options nosniff
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Content-Security-Policy "frame-ancestors 'self'"
+</VirtualHost>
