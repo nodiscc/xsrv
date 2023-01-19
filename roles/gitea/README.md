@@ -14,11 +14,6 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 - Wikis
 - LDAP authentication
 
-It will also configure:
-- login bruteforce prevention with fail2ban
-- (optional) aggregation of apache log files to syslog
-
-
 [![](https://i.imgur.com/Rks90zV.png)](https://i.imgur.com/2TGIshE.png)
 [![](https://i.imgur.com/cBktctp.png)](https://i.imgur.com/EauaJxq.png)
 [![](https://i.imgur.com/gvcfs6G.png)](https://i.imgur.com/DHku4ke.png)
