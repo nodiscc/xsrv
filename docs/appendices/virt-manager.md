@@ -29,7 +29,7 @@ sudo apt install virt-manager libguestfs-tools
 (Optional) add your normal/unprivileged user account to the `libvirt` group to allow it to manage virtual machines without using `sudo`/entering your password for common operations:
 
 ```bash
-sudo usermod -G $USER libvirt
+sudo usermod -G $USER libvirt kvm
 ```
 
 
