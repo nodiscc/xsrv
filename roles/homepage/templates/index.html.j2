@@ -66,6 +66,12 @@
             .rocketchat-cb {
                 background-color: #CC4E53;
             }
+            .element :hover{
+                border-color: #0DBD8B;
+            }
+            .element-cb {
+                background-color: #0DBD8B;
+            }
             .shaarli :hover{
                 border-color: #166E4C;
             }
@@ -199,6 +205,16 @@
                     <div class="content">
                         <div class="colorblock rocketchat-cb"><img class="app-icon" src="res/rocketchat.png"></div>
                         <p class="app-name">Rocket.chat</p>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.matrix.element.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 element">
+                <a href="https://{{ ansible_local.matrix.element.fqdn }}">
+                    <div class="content">
+                        <div class="colorblock element-cb"><img class="app-icon" src="res/element.png"></div>
+                        <p class="app-name">Matrix (Element)</p>
                     </div>
                 </a>
             </div>
