@@ -1,0 +1,104 @@
+- name: check element if installation directory exists
+  stat:
+    path: "{{ element_install_dir }}"
+  register: element_dir
+
+- name: abort on unsupported conditions
+  fail:
+    msg: "ERROR: unsupported conditions: element_dir.stat.exists: {{ element_dir.stat.exists }}, but ansible_local.matrix.element.installed.version says otherwise" # noqa 204
+  when: '((not element_dir.stat.exists) and (ansible_local.matrix.element.installed.version is defined)) or
+         ((element_dir.stat.exists) and (ansible_local.matrix.element.installed.version is not defined))'
+
+- name: check if initial installation should be performed
+  set_fact:
+    element_action: initial
+  when: '(ansible_local.matrix.element.installed.version is not defined) and (not element_dir.stat.exists)'
+
+- name: check if upgrade should be performed
+  set_fact:
+    element_action: upgrade
+  when: '(ansible_local.matrix.element.installed.version is defined) and (ansible_local.matrix.element.installed.version < matrix_element_version) and (element_dir.stat.exists)' # noqa 204
+
+- name: download element tarball
+  get_url:
+    url: https://github.com/vector-im/element-web/releases/download/v{{ matrix_element_version }}/element-v{{ matrix_element_version }}.tar.gz
+    dest: /root/element-v{{ matrix_element_version }}.tar.gz
+    owner: root
+    group: root
+    mode: 0640
+  retries: 3
+
+- name: remove element zip extraction directory
+  file:
+    path: /root/element-unpack
+    state: absent
+  no_log: yes # very verbose
+  when:
+    - element_action is defined
+    - element_action == 'upgrade'
+
+- name: create element zip extraction directory
+  file:
+    path: /root/element-unpack
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  when:
+    - element_action is defined
+    - (element_action == 'initial') or (element_action == 'upgrade')
+
+- name: extract element tarball
+  unarchive:
+    src: "/root/element-v{{ matrix_element_version }}.tar.gz"
+    dest: "/root/element-unpack"
+    remote_src: yes
+    mode: u=rwX
+  when:
+    - element_action is defined
+    - (element_action == 'initial') or (element_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: remove old element installation directory
+  file:
+    path: "{{ element_install_dir }}"
+    state: absent
+  no_log: yes
+  when:
+    - element_action is defined
+    - element_action == 'upgrade'
+
+- name: move element extraction directory to install directory
+  command: "mv /root/element-unpack/element-v{{ matrix_element_version }} {{ element_install_dir }}"
+  when:
+    - element_action is defined
+    - (element_action == 'initial') or (element_action == 'upgrade')
+
+- name: copy element configuration
+  template:
+    src: var_www_element_config.json.j2
+    dest: "{{ element_install_dir }}/config.{{ matrix_element_fqdn }}.json"
+    owner: root
+    group: root
+    mode: 0644
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set file ownership
+  file:
+    path: "{{ element_install_dir }}"
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
+    recurse: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy element login background image
+  copy:
+    src: white.png
+    dest: "{{ element_install_dir }}/themes/element/img/backgrounds/white.png"
+    owner: root
+    group: root
+    mode: 0644
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# Note: when using self-signed certificates for the matrix server, users will receive a warning "Can't connect to homeserver - please check your connectivity, ensure your homeserver's SSL certificate is trusted, and that a browser extension is not blocking requests." on th elogin form. To bypass this warning, click on the "homeserver SSL certificate" link in the error message, and manually accept the certificate (on Firefox, `Advanced` > `Accept the risk and continue`)

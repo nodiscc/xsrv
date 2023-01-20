@@ -55,6 +55,7 @@ netdata-needrestart - setup netdata needrestart module
 netdata-logcount - setup netdata logcount module
 netdata-debsecan - setup netdata debsecan module
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
+netdata-downtime - configure netdata downtime/silence schedules
 ```
 <!--END TAGS LIST-->
 

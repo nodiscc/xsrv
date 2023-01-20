@@ -15,6 +15,10 @@ MDomain {{ gitea_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ gitea_fqdn }}
+
+  # Workaround for https://github.com/go-gitea/gitea/issues/19265
+  Protocols http/1.1
+
   ServerAdmin webmaster@{{ gitea_fqdn }}
   SSLEngine on
 {% if gitea_https_mode == 'selfsigned' %}

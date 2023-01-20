@@ -27,7 +27,6 @@
   tags:
     - ssl
     - openldap
-    - openldap-ssl
 
 - name: include ldap-account-manager configuration tasks
   import_tasks: ldap-account-manager.yml

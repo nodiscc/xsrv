@@ -36,6 +36,7 @@
     - setup_needrestart == setup_needrestart | bool
     - setup_netdata_debsecan == setup_netdata_debsecan | bool
     - setup_netdata_logcount == setup_netdata_logcount | bool
+    - (not needrestart_autorestart_cron) or (needrestart_autorestart_cron is string)
 
 - name: check that variables are correctly defined (netdata_notification_downtimes)
   assert:

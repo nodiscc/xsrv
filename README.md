@@ -8,7 +8,7 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.10.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.11.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -35,6 +35,7 @@ This project provides:
 - [jitsi](roles/jitsi) - Video conferencing solution
 - [libvirt](roles/libvirt) - libvirt virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
+- [matrix](roles/matrix) - Real-time secure communication server and web client
 - [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
 - [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
 - [monitoring_rsyslog](roles/monitoring_rsyslog) - Log aggregation, processing and forwarding system
@@ -44,8 +45,7 @@ This project provides:
 - [openldap](roles/openldap) - LDAP directory server and web management tools
 - [postgresql](roles/postgresql) - PostgreSQL database engine
 - [proxmox](roles/proxmox) - Proxmox VE hypervisor configuration
-- [rocketchat](roles/rocketchat) - Instant messaging & communication platform
-- [rss_bridge](roles/rss_bridge) - The RSS feed for websites missing it
+- [readme_gen](roles/readme_gen) - add an inventory of hosts and services to the project's README.md
 - [samba](roles/samba) - Cross-platform file sharing server
 - [shaarli](roles/shaarli) - Bookmarking & link sharing web application
 - [transmission](roles/transmission) - Transmission Bittorrent client/web interface
@@ -63,12 +63,12 @@ This project provides:
 [![](https://i.imgur.com/Imb0dqO.png)](roles/transmission)
 [![](https://i.imgur.com/6Im61B0.png)](roles/mumble)
 [![](https://i.imgur.com/REzcZVh.png)](roles/openldap)
-[![](https://i.imgur.com/Mib9YkX.png)](roles/rocketchat)
+[![](https://i.imgur.com/udEAnKA.png)](roles/matrix)
 [![](https://i.imgur.com/qR3vIN4.png)](roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
-[![](https://i.imgur.com/UWjyTqP.png)](roles/rss_bridge)
 [![](https://i.imgur.com/g0jUMXE.jpg)](roles/jitsi)
+[![](https://i.imgur.com/v3lHJGx.png)](roles/readme_gen)
 
 ## Source code
 

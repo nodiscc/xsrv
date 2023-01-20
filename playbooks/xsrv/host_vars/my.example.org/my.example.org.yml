@@ -27,9 +27,6 @@ transmission_fqdn: "torrent.CHANGEME.org"
 ##### TT-RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.CHANGEME.org"
 
-##### ROCKETCHAT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
-rocketchat_fqdn: "chat.CHANGEME.org"
-
 #### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
 openldap_fqdn: "ldap.CHANGEME.org"
 openldap_domain: "CHANGEME.org"
@@ -42,9 +39,6 @@ graylog_fqdn: "logs.CHANGEME.org"
 ##### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_fqdn: "tty.CHANGEME.org"
 gotty_run_username: "CHANGEME"
-
-##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
-rss_bridge_fqdn: "rss-bridge.CHANGEME.org"
 
 ##### DNSMASQ - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml
 dnsmasq_upstream_servers:
@@ -70,3 +64,7 @@ wireguard_server_public_ip: "CHANGEME"
 
 ##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
 jitsi_fqdn: "conference.CHANGEME.org"
+
+##### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
+matrix_synapse_fqdn: "matrix.CHANGEME.org"
+matrix_element_fqdn: "chat.CHANGEME.org"

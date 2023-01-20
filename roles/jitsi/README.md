@@ -28,6 +28,7 @@ jitsi_fqdn: "conference.CHANGEME.org"
 
 # ansible-vault edit host_vars/my.CHANGEME.org/my.CHANGEME.org.vault.yml
 jitsi_turn_secret: "CHANGEME"
+jitsi_prosody_password: "CHANGEME"
 jitsi_users:
   - name: CHANGEME
     password: CHANGEME

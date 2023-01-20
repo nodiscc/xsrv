@@ -137,8 +137,14 @@ netdata_api_key: "CHANGEME"
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)
 setup_needrestart: yes
-# automatically restart services that require it after an upgrade (yes/no)
+# automatically restart services that require it immediately after upgrades (yes/no)
 needrestart_autorestart_services: yes
+# reboot the OS automatically if required after a Linux kernel upgrade
+# set to no to disable automatic reboot/services restart completely,
+# or use cron syntax (https://crontab.guru/) to define the schedule
+# you may want to schedule a monitoring downtime for a few minutes at the same time, see netdata_downtimes
+# Example: needrestart_autorestart_cron: "00 5 * * *" # every day at 05:00
+needrestart_autorestart_cron: no
 # setup netdata-logcount module (yes/no)
 setup_netdata_logcount: yes
 # (minutes) interval between updates of log message counts in the logcount module

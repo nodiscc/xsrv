@@ -106,7 +106,7 @@
   become: yes
   tags: common
 
-- name: include base package instalaltion/removal tasks
+- name: include base package installation/removal tasks
   import_tasks: packages.yml
   become: yes
   tags:

@@ -1,8 +1,62 @@
-
 # Change Log
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
+
+#### [v1.11.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.0) - 2023-01-20
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **nextcloud:** if you changed [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml) from its default value, remove `files_videoplayer` from the list (`xsrv edit-host/edit-group`)
+- **jitsi:** set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
+- **gitea:** if `gitea_mailer_enabled` is set to `yes`, add the new [`gitea_mail_protocol/gitea_mail_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml) settings to your host configuration.
+- **rss_bridge:** if you want to keep using the [`rss_bridge`](https://gitlab.com/nodiscc/xsrv/-/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. This can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
+- **rocketchat:** consider [uninstalling rocket.chat](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#uninstall), and migrating to [Matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix). Alternatively, a simple instant messaging application (Nextcloud Talk) is available through the [`nextcloud`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) role, by enabling the `spreed` app under [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml). If you want to keep using the `rocketchat` role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rocketchat`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. Reasons for the deprecation can be found [here](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#deprecated).
+- **readme_gen:** if you want to use the [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command, make sure `fact_caching_timeout` is commented out in your project's `ansible.cfg` (`xsrv edit-cfg`) - or at least set to a large value like `86400`, and that your project's `README.md` contains the markers `<!-- BEGIN/END AUTOMATICALLY GENERATED CONTENT - README_GEN ROLE -->`
+
+
+**Added:**
+- add [`matrix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) role - real-time, secure communication server and web client
+- add [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command and role - generate a markdown inventory in the project's README.md
+- netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- common: make the timeout for interactive bash sessions configurable ([`bash_timeout`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml), default 900s)
+- common: add [bash-completion](https://packages.debian.org/bullseye/bash-completion) to the list of default packages to install ([`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+
+**Removed:**
+- rocketchat: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- rss_bridge: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- remove ansible tag `firewalld` (use `firewall` instead)
+
+**Changed:**
+- nextcloud: enable clean URLs
+- nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
+- monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- common: ensure `/var/log/wtmp` does not become world-readable again after log rotation
+- nextcloud: upgrade to v25.0.3 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
+- gitea: update to v1.18.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.17.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.0) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.1) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.18.2)
+- openldap: update ldap-account-manager to [v8.2](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_2)
+- xsrv: update ansible to [v7.1.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- update ansible tags (see `xsrv help-tags`)
+- update test tooling
+- update documentation
+
+**Fixed:**
+- jitsi: fix jitsi meet/jicofo unable to authenticate to XMPP server (`Unfortunately something went wrong. We're trying to fix this. Reconnecting in...`)
+- apache: fix default virtualhost/direct IP access not redirecting to error 403 page
+- common: fix [`kernel_proc_hidepid`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) changes not being applied unless the host is rebooted
+- libvirt: fix libvirtd service not properly reloaded after updating firewall/port forwarding rules
+- gitea: fix configuration file templating failures in `check` mode
+- jitsi: prevent debsums warnings about modified `interface_config.js`
+- graylog: prevent incorrect debsums reports about missing files in `mongodb-database-tools`
+- gitea: fix incorrect default value for `gitea_db_password`
+- gitea/gotty: fix systemd services automatic restart limits in case of failure
+- gitea: fixes slow browsing that may be experienced in particular cases
+
+
+[Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
+
 
 #### [v1.10.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.10.0) - 2022-11-19
 

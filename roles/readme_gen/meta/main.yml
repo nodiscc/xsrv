@@ -1,0 +1,18 @@
+# @tag readme_gen - add hosts information to the project's README.md
+
+galaxy_info:
+  role_name: readme_gen
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "add an inventory of hosts and services to the project's README.md"
+  license: "GPL-3.0"
+  min_ansible_version: 2.12
+  platforms: # should work on all platforms/distributions
+    - name: Debian
+      versions:
+        - 11
+  galaxy_tags:
+    - readme
+    - inventory
+    - dashboard
+    - cmdb
+dependencies: []

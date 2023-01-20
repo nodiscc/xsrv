@@ -39,3 +39,5 @@
     - gitea_enable_webhooks == gitea_enable_webhooks | bool
     - gitea_ssh_url_port == gitea_ssh_url_port|int
     - gitea_webhook_allowed_hosts | type_debug == "list"
+    - gitea_repo_indexer_enabled == gitea_repo_indexer_enabled | bool
+    - gitea_repo_indexer_exclude | type_debug == "list"

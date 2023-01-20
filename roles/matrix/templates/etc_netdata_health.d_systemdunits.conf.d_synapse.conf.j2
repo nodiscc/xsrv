@@ -1,0 +1,8 @@
+    alarm: systemd_service_synapse
+       on: systemdunits_service-units.service_unit_state
+     calc: $matrix_synapse
+    every: 10s
+     crit: ($this = 5)
+    units: state
+     info: matrix-synapse service status
+       to: sysadmin

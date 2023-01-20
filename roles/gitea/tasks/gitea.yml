@@ -96,6 +96,8 @@
 - name: set gitea_root_url variable
   set_fact:
     gitea_root_url: "https://{{ gitea_fqdn }}{{ gitea_base_url }}"
+  check_mode: no
+  tags: gitea-config
 
 - name: copy gitea configuration file
   template:
@@ -105,6 +107,7 @@
     group: gitea
     mode: 0640 # read only for gitea
   notify: restart gitea
+  tags: gitea-config
 
 - name: create gitea database tables
   become: yes

@@ -10,6 +10,10 @@ jicofo {
 {% endif %}
   xmpp: {
     client: {
+      xmpp-domain: "{{ jitsi_fqdn }}"
+      domain: "auth.{{ jitsi_fqdn }}"
+      username: "focus"
+      password: "{{ jitsi_prosody_password }}"
       client-proxy: focus.{{ jitsi_fqdn }}
     }
     trusted-domains: [ "recorder.{{ jitsi_fqdn }}" ]

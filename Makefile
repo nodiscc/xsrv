@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.8.6 yamllint ansible==6.6.0
+	pip3 install isort ansible-lint==6.11.0 yamllint ansible==7.1.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -34,7 +34,7 @@ install_collection: venv build_collection
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ansible-lint -v -x fqcn[action-core],fqcn[action],truthy,braces,line-length,name[casing],yaml[truthy],schema[meta],yaml[line-length],name[template] roles/*
+	ansible-lint -v -x fqcn[action-core],fqcn[action],truthy,braces,line-length,name[casing],yaml[truthy],schema[meta],yaml[line-length],name[template],args[module] roles/*
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:

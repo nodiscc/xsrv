@@ -74,6 +74,8 @@ mail - setup outgoing system mail
 msmtp - setup outgoing system mail
 services - start/stop/enable/disable services
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
+cron - configure cron task scheduler
+apt-listbugs - configure apt-listbugs bug prevention tool
 ```
 <!--END TAGS LIST-->
 

@@ -28,7 +28,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "24.0.7"
+nextcloud_version: "25.0.3"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -59,7 +59,6 @@ nextcloud_apps:
   - { state: "enable", app: "files_pdfviewer" } # https://apps.nextcloud.com/apps/files_pdfviewer
   - { state: "enable", app: "files_sharing" } # https://docs.nextcloud.com/server/stable/user_manual/en/files/sharing.html
   - { state: "enable", app: "files_trashbin" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/trashbin_configuration.html
-  - { state: "enable", app: "files_videoplayer" }
   - { state: "enable", app: "viewer" } # https://github.com/nextcloud/viewer
   - { state: "enable", app: "firstrunwizard" } # https://github.com/nextcloud/firstrunwizard
   - { state: "enable", app: "groupfolders" } # https://apps.nextcloud.com/apps/groupfolders
@@ -84,6 +83,7 @@ nextcloud_apps:
   - { state: "disable", app: "polls" } # https://apps.nextcloud.com/apps/polls
   - { state: "disable", app: "apporder" } # https://apps.nextcloud.com/apps/apporder
   - { state: "disable", app: "keeporsweep" } # https://apps.nextcloud.com/apps/keeporsweep
+  - { state: "disable", app: "jitsi" } # https://apps.nextcloud.com/apps/jitsi
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'

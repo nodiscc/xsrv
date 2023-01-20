@@ -1,4 +1,5 @@
 # @tag gitea - setup gitea git service/software forge
+# @tag gitea-config - update gitea configuration
 
 galaxy_info:
   role_name: gitea

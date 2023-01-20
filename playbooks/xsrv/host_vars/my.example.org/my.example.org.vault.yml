@@ -65,15 +65,19 @@ graylog_secret_key: "CHANGEME96"
 gotty_auth_username: "CHANGEME"
 gotty_auth_password: "CHANGEME"
 
-##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
-rss_bridge_auth_username: "{{ xsrv_admin_username }}"
-rss_bridge_auth_password: "{{ xsrv_admin_password }}"
-
 ##### DOVECOT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml
 dovecot_ldap_bind_password: "CHANGEME"
 
 ##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
 jitsi_turn_secret: "CHANGEME16"
+jitsi_prosody_password: "CHANGEME8"
 jitsi_users:
   - name: "{{ xsrv_admin_username }}"
     password: "{{ xsrv_admin_password }}"
+
+##### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
+matrix_synapse_admin_user: "{{ xsrv_admin_username }}"
+matrix_synapse_admin_password: "{{ xsrv_admin_password }}"
+matrix_synapse_db_password: "CHANGEME20"
+matrix_synapse_registration_shared_secret: "CHANGEME25"
+matrix_synapse_macaroon_secret_key: "CHANGEME25"

@@ -2,7 +2,8 @@
 # setup lynis security audit tool (yes/no)
 setup_lynis: yes
 # list of strings to extract from lynis reports and forward by mail
-lynis_report_regex: 'warning|suggestion|manual'
+# Example: lynis_report_regex: 'warning|suggestion|manual'
+lynis_report_regex: 'warning'
 # list of lynis tests to ignore/skip (https://cisofy.com/lynis/controls/)
 lynis_skip_tests:
   - "CUST-0285" # Install libpam-usb to enable multi-factor authentication for PAM sessions (we don't use multi-factor auth for SSH)

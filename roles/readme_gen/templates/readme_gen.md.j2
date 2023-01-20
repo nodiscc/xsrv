@@ -1,0 +1,76 @@
+{% for item in readme_gen_limit %}
+
+### {{ hostvars[item].inventory_hostname }}
+
+- Groups: **{{ ', '.join(hostvars[item].group_names) }}**
+- Configuration: [host_vars/{{ hostvars[item].inventory_hostname }}/](host_vars/{{ hostvars[item].inventory_hostname }}/)
+- IP addresses: `{{ ', '.join(hostvars[item]['ansible_facts']['all_ipv4_addresses'] | default('?')) }}`
+- OS/Virtualization: {{ hostvars[item]['ansible_facts']['lsb']['description'] | default('?') }} ({{ hostvars[item]['ansible_facts']['virtualization_type'] | default('?') }} {{ hostvars[item]['ansible_facts']['virtualization_role'] | default('?') }})
+- CPU: {{ hostvars[item]['ansible_facts']['processor'][2] | default('?') }} ({{ hostvars[item]['ansible_facts']['processor_vcpus'] | default('?')}} VCPUs)
+- Memory: {{ hostvars[item]['ansible_facts']['memtotal_mb'] | default('?') }}MB
+- SSH: `ssh -p {{ hostvars[item].ansible_ssh_port|default('22') }} {{ hostvars[item].ansible_user | default('') }}@{{ hostvars[item].inventory_hostname }}`
+- SFTP: `sftp://{{ hostvars[item].ansible_user | default('?') }}@{{ hostvars[item].inventory_hostname }}:{{ hostvars[item].ansible_ssh_port|default('22') }}`
+{% if hostvars[item]['ansible_facts']['ansible_local']['netdata']['ansible_managed'] is defined %}
+- Monitoring: https://{{ hostvars[item].ansible_host|default(hostvars[item].inventory_hostname) }}:{{ hostvars[item].readme_gen_netdata_public_port|default('19999') }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] is defined %}
+- Gitea: https://{{ hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['gotty']['fqdn'] is defined %}
+- Gotty: https://{{ hostvars[item]['ansible_facts']['ansible_local']['gotty']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] is defined %}
+- Graylog: https://{{ hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['jellyfin']['fqdn'] is defined %}
+- Jellyfin: https://{{ hostvars[item]['ansible_facts']['ansible_local']['jellyfin']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] is defined %}
+- LDAP Account Manager: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['self_service_password']['fqdn'] is defined %}
+- LDAP Self-Service Password: https://{{ hostvars[item]['ansible_facts']['ansible_local']['self_service_password']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['nextcloud']['fqdn'] is defined %}
+- Nextcloud: https://{{ hostvars[item]['ansible_facts']['ansible_local']['nextcloud']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['matrix']['synapse']['fqdn'] is defined %}
+- Matrix/Synapse: https://{{ hostvars[item]['ansible_facts']['ansible_local']['matrix']['synapse']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['matrix']['element']['fqdn'] is defined %}
+- Matrix/Element: https://{{ hostvars[item]['ansible_facts']['ansible_local']['matrix']['element']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['rocketchat']['fqdn'] is defined %}
+- Rocket.chat: https://{{ hostvars[item]['ansible_facts']['ansible_local']['rocketchat']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['rss_bridge']['fqdn'] is defined %}
+- RSS-Bridge: https://{{ hostvars[item]['ansible_facts']['ansible_local']['rss_bridge']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['shaarli']['fqdn'] is defined %}
+- Shaarli: https://{{ hostvars[item]['ansible_facts']['ansible_local']['shaarli']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['transmission']['fqdn'] is defined %}
+- Transmission: https://{{ hostvars[item]['ansible_facts']['ansible_local']['transmission']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['tt_rss']['fqdn'] is defined %}
+- Tiny Tiny RSS: https://{{ hostvars[item]['ansible_facts']['ansible_local']['tt_rss']['fqdn'] }}
+{% endif %}
+{% if hostvars[item].readme_gen_comment is defined %}
+- Comments: {{ hostvars[item].readme_gen_comment }}
+{% endif %}
+
+{% endfor %}
+
+
+## SSH client configuration
+
+```
+# ~/.ssh/xsrv-PROJECTNAME.conf
+{% for item in readme_gen_limit %}
+Host {{ hostvars[item].inventory_hostname }}
+    HostName {{ hostvars[item].ansible_host | default(hostvars[item].inventory_hostname) }}{{ '
+    User ' + hostvars[item].ansible_user if hostvars[item].ansible_user is defined }}
+    Port {{ hostvars[item].ansible_ssh_port | default('22') }}
+
+{% endfor %}
+```

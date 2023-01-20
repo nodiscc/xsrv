@@ -3,6 +3,8 @@
 jitsi_fqdn: "conference.CHANGEME.org"
 # random secret shared between the TURN and XMPP server
 jitsi_turn_secret: "CHANGEME"
+# random secret shared between jitsi and the XMPP server
+jitsi_prosody_password: "CHANGEME"
 # only allow registered users to create rooms (yes/no)
 # if yes, whenever a new room is about to be created, Jitsi Meet will prompt for a user name and password. After the room is created, guests will be able to join without authentication.
 jitsi_secure_domain: yes

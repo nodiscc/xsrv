@@ -63,6 +63,10 @@
       value: "{{ jitsi_turn_secret }}"
       vtype: string
     - name: jitsi-meet-prosody
+      question: jicofo/jicofo_auth_password
+      value: "{{ jitsi_prosody_password }}"
+      vtype: string
+    - name: jitsi-meet-prosody
       question: jitsi-meet/cert-choice
       value: "Generate a new self-signed certificate"
       vtype: string
@@ -129,12 +133,21 @@
     line: "    RECENT_LIST_ENABLED: {{ 'true' if jitsi_enable_recent_list else 'false' }},"
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: prevent debsums warnings about modified interface_config.js
+  lineinfile:
+    path: /etc/debsums-ignore
+    line: "/usr/share/jitsi-meet/interface_config.js"
+    state: present
+    owner: root
+    group: root
+    mode: 0600
+    create: yes
+
 - name: enable/disable start/stop jitsi service
   systemd:
     name: "{{ item }}"
     enabled: "{{ jitsi_enable_service }}"
     state: "{{ 'started' if jitsi_enable_service else 'stopped' }}"
-    daemon_reload: yes
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - prosody

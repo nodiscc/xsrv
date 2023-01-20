@@ -1,0 +1,5 @@
+# the set of hosts for which documentation should be auto-generated
+# Example: readme_gen_limit: ['host1.CHANGEME.org', 'host2.CHANGEME.org']
+readme_gen_limit: "{{ groups['all'] }}"
+# Path to the markdown template
+readme_gen_template: "readme_gen.md.j2"

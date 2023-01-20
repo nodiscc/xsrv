@@ -129,7 +129,7 @@
 
 - name: remove apache default sites
   file:
-    path: "/etc/apache2/sites-enabled/000-default.conf"
+    path: "{{ item }}"
     state: absent
   with_items:
     - /etc/apache2/sites-enabled/000-default.conf

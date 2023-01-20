@@ -1,4 +1,5 @@
 # @tag postgresql - setup postgresql database server
+# @tag utils-pgmetrics - (manual) get postgresql server metrics
 
 galaxy_info:
   role_name: postgresql

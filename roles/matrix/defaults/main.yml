@@ -1,0 +1,48 @@
+# fully qualified domain name of the matrix-synapse server instance
+matrix_synapse_fqdn: matrix.CHANGEME.org # TODO add to default playbook, add to README
+# username/password for the matrix admin user
+matrix_synapse_admin_user: "CHANGEME"
+matrix_synapse_admin_password: "CHANGEME25"
+# postgresql database password for synapse
+matrix_synapse_db_password: "CHANGEME20"
+# random secret used to register new users
+matrix_synapse_registration_shared_secret: "CHANGEME25"
+# random secret used to sign access tokens
+matrix_synapse_macaroon_secret_key: "CHANGEME25"
+# yes/no: whether room invites to users on this server should be blocked (except those sent by local server admins).
+matrix_synapse_block_non_admin_invites: no
+# yes/no: whether to enable URL previews
+matrix_synapse_enable_url_previews: yes
+# start/stop the matrix-synapse service, enable/disable it on boot (yes/no)
+matrix_synapse_enable_service: yes
+# yes/no: aggregate (verbose) synapse logs to syslog
+matrix_synapse_homeserver_logs_to_syslog: no
+# HTTPS and SSL/TLS certificate mode for the matrix-synapse webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+matrix_synapse_https_mode: selfsigned
+# firewall zones for the matrix server, if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+matrix_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: disabled
+
+# fully qualified domain name of the element application instance
+matrix_element_fqdn: "chat.CHANGEME.org"
+# mode for element video rooms (jitsi/element_call)
+matrix_element_video_rooms_mode: "element_call"
+# when matrix_element_video_rooms_mode = 'jitsi', domain of the Jitsi instance to use for video calls
+# you can set this to your own Jitsi domain if you are hosting one, but this will NOT work with Jitsi instances set up as "secure domain"/authenticated
+matrix_element_jitsi_preferred_domain: "meet.element.io"
+# when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
+matrix_element_call_domain: "call.element.io"
+# matrix element web client version (https://github.com/vector-im/element-web/releases)
+matrix_element_version: "1.11.20"
+# element installation directory
+element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
+# HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+matrix_element_https_mode: selfsigned

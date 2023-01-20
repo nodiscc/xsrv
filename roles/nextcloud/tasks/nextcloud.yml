@@ -96,7 +96,7 @@
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: give write permissions to the webserver
+- name: give write/execute permissions to the nextcloud user
   file:
     path: "{{ item.path }}"
     owner: nextcloud
@@ -199,6 +199,14 @@
   when: nextcloud_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: give write permissions on .htaccess to the nextcloud user
+  file:
+    path: "{{ nextcloud_install_dir }}/.htaccess"
+    owner: nextcloud
+    group: www-data
+    mode: 0640
+  ignore_errors: "{{ ansible_check_mode }}"
+
 # occ doesn't report changed status, not idempotent, alwyas returns changed
 # Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
 # Some possible additional settings are documented here. See https://github.com/nextcloud/server/blob/master/config/config.sample.php for all available configuration settings
@@ -206,7 +214,7 @@
   become: yes
   become_user: nextcloud
   command:
-    cmd: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa 301
+    cmd: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa no-changed-when
   args:
     chdir: "{{ nextcloud_install_dir }}/"
   with_items:
@@ -228,6 +236,7 @@
     - { key: "defaultapp", value: "{{ nextcloud_defaultapp }}" }
     - { key: "upgrade.disable-web", value: "true", type: "boolean" }
     - { key: "simpleSignUpLink.shown", value: "false", type: "boolean" }
+    - { key: "htaccess.rewritebase", value: "/" }
     # - { key: "appstoreenabled", value: "true", type: "boolean" }
     # - { key: "enable_previews", value: "true", type: "boolean" }
     # - { key: "preview_max_x", value: "4096", type: "integer" }
@@ -273,6 +282,13 @@
   register: nextcloud_upgrade
   changed_when: not 'Nextcloud is already at the latest version' in nextcloud_upgrade.stdout
   when: (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: update .htaccess for clean URL support (always returns changed)
+  become_user: nextcloud
+  command: "/usr/bin/php ./occ maintenance:update:htaccess" # noqa no-changed-when
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: schedule nextcloud background tasks

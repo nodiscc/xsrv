@@ -1,0 +1,24 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix_synapse"
+  with_items:
+    - matrix_synapse_fqdn is not search("CHANGEME")
+    - matrix_synapse_db_password is not search("CHANGEME")
+    - matrix_synapse_macaroon_secret_key is not search("CHANGEME")
+    - matrix_synapse_registration_shared_secret is not search("CHANGEME")
+    - matrix_synapse_admin_user is not search("CHANGEME")
+    - matrix_synapse_admin_password is not search("CHANGEME")
+    - matrix_synapse_enable_url_previews == matrix_synapse_enable_url_previews | bool
+    - matrix_synapse_homeserver_logs_to_syslog == matrix_synapse_homeserver_logs_to_syslog | bool
+    - matrix_synapse_https_mode in ['selfsigned', 'letsencrypt']
+    - matrix_synapse_enable_service == matrix_synapse_enable_service | bool
+    - matrix_firewalld_zones | type_debug == "list"
+    - matrix_element_version is string
+    - matrix_element_fqdn is not search("CHANGEME")
+    - matrix_element_https_mode in ['selfsigned', 'letsencrypt']
+    - matrix_synapse_block_non_admin_invites == matrix_synapse_block_non_admin_invites | bool
+    - matrix_element_video_rooms_mode in ['jitsi', 'element_call']
+    - matrix_element_call_domain is string
+    - matrix_element_jitsi_preferred_domain is string

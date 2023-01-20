@@ -1,0 +1,25 @@
+{% if matrix_synapse_https_mode == 'letsencrypt' %}
+MDomain {{ matrix_synapse_fqdn }}
+{% endif %}
+
+Listen 8448
+
+<VirtualHost *:443 *:8448>
+  ServerName  {{ matrix_synapse_fqdn }}
+  ServerAdmin webmaster@{{ matrix_synapse_fqdn }}
+  SSLEngine on
+{% if matrix_synapse_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ matrix_synapse_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ matrix_synapse_fqdn }}.key
+{% endif %}
+
+  RequestHeader set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
+  ProxyPreserveHost On
+  ProxyRequests off
+  AllowEncodedSlashes NoDecode
+  ProxyPass /_matrix http://127.0.0.1:8008/_matrix nocanon
+  ProxyPassReverse /_matrix http://127.0.0.1:8008/_matrix
+  ProxyPass /_synapse/client http://127.0.0.1:8008/_synapse/client nocanon
+  ProxyPassReverse /_synapse/client http://127.0.0.1:8008/_synapse/client
+
+</VirtualHost>

@@ -1,0 +1,15 @@
+# - name: gather facts from all hosts
+#   ansible.builtin.setup:
+#   delegate_to: "{{ item }}"
+#   delegate_facts: true
+#   with_items: "{{ readme_gen_limit }}"
+#   ignore_unreachable: yes
+
+# facts for all hosts must be cached beforehand:
+# ansible -m setup all
+# ansible --connection local --verbose --diff --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost
+- name: update local documentation
+  blockinfile:
+    path: "{{ playbook_dir }}/README.md"
+    marker: "<!-- {mark} AUTOMATICALLY GENERATED CONTENT - README_GEN ROLE -->"
+    block: "{{ lookup('template', readme_gen_template) }}"

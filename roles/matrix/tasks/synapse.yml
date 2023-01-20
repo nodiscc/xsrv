@@ -1,0 +1,63 @@
+- name: add synapse APT repository
+  template:
+    src: etc_apt_sources.list.d_matrix.list.j2
+    dest: /etc/apt/sources.list.d/matrix.list
+    owner: root
+    group: root
+    mode: 0644
+  notify: update apt cache
+
+- name: add synapse APT signing keys
+  copy:
+    src: usr_share_keyrings_matrix.gpg
+    dest: /usr/share/keyrings/matrix.gpg
+    owner: root
+    group: root
+    mode: 0644
+  notify: update apt cache
+
+# update APT cache for synapse packages to become available
+- name: run all notified handlers now
+  meta: flush_handlers
+
+- name: install synapse
+  package:
+    state: present
+    name: matrix-synapse-py3
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy synapse configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart synapse
+  with_items:
+    - src: etc_matrix-synapse_homeserver.yaml.j2
+      dest: /etc/matrix-synapse/homeserver.yaml
+    - src: etc_matrix-synapse_conf.d_server_name.yaml.j2
+      dest: /etc/matrix-synapse/conf.d/server_name.yaml
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+##### SERVICE #####
+
+- name: start/stop/enable/disable matrix-synapse service
+  service:
+    name: matrix-synapse
+    state: "{{ 'started' if matrix_synapse_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if matrix_synapse_enable_service else 'no' }}"
+  tags: services
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### USERS #####
+
+- name: register synapse admin user
+  command: register_new_matrix_user --config /etc/matrix-synapse/homeserver.yaml --admin --user {{ matrix_synapse_admin_user }} --password {{ matrix_synapse_admin_password }}
+  register: synapse_create_user
+  failed_when: synapse_create_user.rc != 0 and 'User ID already taken.' not in synapse_create_user.stdout
+  changed_when: "'Success!' in synapse_create_user.stdout"

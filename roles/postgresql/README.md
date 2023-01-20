@@ -45,6 +45,7 @@ ansible-playbook playbook.yml --tags=utils-pgmetrics
 <!--BEGIN TAGS LIST-->
 ```
 postgresql - setup postgresql database server
+utils-pgmetrics - (manual) get postgresql server metrics
 ```
 <!--END TAGS LIST-->
 

@@ -11,13 +11,12 @@
     - nodiscc.xsrv.postgresql # database engine
     - nodiscc.xsrv.nextcloud # file hosting/sharing/synchronization and collaboration
     - nodiscc.xsrv.tt_rss # news feed reader
-    - nodiscc.xsrv.rss_bridge # the RSS feed for websites missing it
     - nodiscc.xsrv.shaarli # bookmarking & link sharing
     - nodiscc.xsrv.gitea # git service/software forge
     - nodiscc.xsrv.transmission # bittorrent client
     - nodiscc.xsrv.mumble # VoIP/voice chat server
     - nodiscc.xsrv.docker # application containerization
-    - nodiscc.xsrv.rocketchat # instant messaging & communication platform
+    - nodiscc.xsrv.matrix # real-time secure communication server and web client
     - nodiscc.xsrv.jellyfin # media server
     - nodiscc.xsrv.jitsi # video conferencing solution
     - nodiscc.xsrv.samba # file sharing server

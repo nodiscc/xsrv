@@ -19,9 +19,6 @@ shaarli_fqdn: "links.example.test"
 transmission_fqdn: "torrent.example.test"
 ##### TT-RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.example.test"
-##### ROCKETCHAT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rocketchat/defaults/main.yml
-rocketchat_fqdn: "chat.example.test"
-rocketchat_enable_service: no
 #### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
 openldap_fqdn: "ldap.example.test"
 openldap_domain: "example.test"
@@ -33,8 +30,6 @@ graylog_enable_service: no
 ##### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_fqdn: "tty.example.test"
 gotty_run_username: "deploy"
-##### RSS-BRIDGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/rss_bridge/defaults/main.yml
-rss_bridge_fqdn: "rss-bridge.example.test"
 ##### DNSMASQ - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml
 dnsmasq_upstream_servers:
   - 1.1.1.1
@@ -49,6 +44,9 @@ dovecot_ldap_base: "ou=users,dc=example,dc=test"
 dovecot_ldap_bind_dn: "cn=bind,ou=system,dc=example,dc=test"
 ##### WIREGUARD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml
 wireguard_server_public_ip: "1.2.3.4"
-##### WIREGUARD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jisti/defaults/main.yml
+##### JITSI- https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
 jitsi_fqdn: "conference.example.test"
 jitsi_enable_service: no
+#### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
+matrix_synapse_fqdn: "matrix.example.test"
+matrix_element_fqdn: "chat.example.test"

@@ -1,0 +1,16 @@
+{
+    "synapse": {
+        "ansible_managed": true,
+        "installed": {
+            "version": "next"
+        },
+        "fqdn": "{{ matrix_synapse_fqdn }}"
+    },
+    "element": {
+        "ansible_managed": true,
+        "installed": {
+            "version": "{{ matrix_element_version }}"
+        },
+        "fqdn": "{{ matrix_element_fqdn }}"
+    }
+}

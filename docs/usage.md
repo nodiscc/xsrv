@@ -36,6 +36,7 @@ shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
 o|open [project]                    open the project directory in the default file manager
+readme-gen [project]                generate a markdown inventory in the projects README.md
 show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
@@ -264,12 +265,12 @@ The value in host_vars will take [precedence](https://docs.ansible.com/ansible/l
 
 ```yaml
 # $ xsrv show-defaults
-# yes/no: enable rocketchat services
-rocketchat_enable_service: yes
+# yes/no: enable the mumble service
+mumble_enable_service: yes
 
 # $ xsrv edit-host
-# disable rocketchat services on this host
-rocketchat_enable_service: no
+# disable the mumble service on this host
+mumble_enable_service: no
 ```
 
 Use [`xsrv show-defaults`](#xsrv-show-defaults) to list all available variables and their default values.

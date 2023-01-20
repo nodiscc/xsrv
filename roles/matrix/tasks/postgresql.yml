@@ -1,0 +1,41 @@
+##### synapse DATABASE (postgresql) #####
+
+- name: create synapse postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: synapse
+    state: present
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set synapse postgresql user password
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: synapse
+    password: "{{ matrix_synapse_db_password }}"
+  no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create synapse postgresql database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: synapse
+    state: present
+    owner: synapse
+    encoding: 'UTF8'
+    lc_collate: 'C'
+    lc_ctype: 'C'
+    template: template0
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: grant privileges on synapse database to synapse postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_privs:
+    db: synapse
+    privs: ALL
+    type: database
+    role: synapse
+  ignore_errors: "{{ ansible_check_mode }}"
