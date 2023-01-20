@@ -60,3 +60,9 @@ jitsi_turn_secret: "4QrsaPYn7Y9g8yJW"
 jitsi_users:
   - name: "{{ xsrv_admin_username }}"
     password: "{{ xsrv_admin_password }}"
+##### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
+matrix_synapse_db_password: Wr1ofTQoFssv2HxcvrQr
+matrix_synapse_macaroon_secret_key: YXx9oNFQaPznAWVY5jXebBu3
+matrix_synapse_registration_shared_secret: VTDelSuKAtqMPGdzEGi6tFdc
+matrix_synapse_admin_user: "{{ xsrv_admin_username }}"
+matrix_synapse_admin_password: "{{ xsrv_admin_password }}"
