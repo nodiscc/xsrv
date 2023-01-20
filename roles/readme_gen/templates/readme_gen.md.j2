@@ -34,6 +34,12 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['nextcloud']['fqdn'] is defined %}
 - Nextcloud: https://{{ hostvars[item]['ansible_facts']['ansible_local']['nextcloud']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['matrix']['synapse']['fqdn'] is defined %}
+- Matrix/Synapse: https://{{ hostvars[item]['ansible_facts']['ansible_local']['matrix']['synapse']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['matrix']['element']['fqdn'] is defined %}
+- Matrix/Element: https://{{ hostvars[item]['ansible_facts']['ansible_local']['matrix']['element']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['rocketchat']['fqdn'] is defined %}
 - Rocket.chat: https://{{ hostvars[item]['ansible_facts']['ansible_local']['rocketchat']['fqdn'] }}
 {% endif %}
