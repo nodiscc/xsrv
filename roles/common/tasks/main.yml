@@ -134,3 +134,10 @@
   tags:
     - never
     - utils-debian11to12
+
+- name: include fail2ban status report tasks
+  import_tasks: utils-fail2ban-get-banned.yml
+  become: yes
+  tags:
+    - never
+    - utils-fail2ban-get-banned
