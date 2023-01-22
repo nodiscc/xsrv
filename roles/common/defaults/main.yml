@@ -95,7 +95,7 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
   - "origin=packagecloud.io/netdata/netdata,label=netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
-  - "o=Proxmox,site=download.proxmox.com" # nodiscc.xsrv.proxmox
+  - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
   - "o=Docker,site=download.docker.com" # nodiscc.xsrv.docker
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=buster,site=repo.mongodb.org" # nodiscc.xsrv.graylog
