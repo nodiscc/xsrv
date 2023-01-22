@@ -18,12 +18,11 @@ or your private DNS server ([pfSense](pfsense.md) is a good start to boostrap a 
   - Enable the `root` account, set a strong password and store it somewhere safe like a Keepass database
   - Do **not** create an additional user account yet
   - Any disk partitioning scheme is OK, here are some generic recommendations:
-    - 10-15GB should be enough for the root `/` partition.
-    - Set a size of 1GB for the `/boot` partition.
-    - Define a separate `/var` partition, make it as large as possible (user data is stored under `/var/`).
-    - Add a swap partition with a size of 1.5x your RAM if the RAM is less than 8GB, or 2GB if the RAM is more than 8GB.
     - Use LVM (Logical Volumes) instead of raw partitions/disks if possible. This will greatly facilitate disk management (resizing, adding drives...).
-    - Setup RAID to increase availability (RAID is not a backup)
+    - 10-15GB should be enough for the root `/` filesystem.
+    - Define a separate `/var` filesystem/partition, make it as large as possible (user data is stored under `/var/`).
+    - 1GB should be allocated to the `/boot` filesystem/partition if it is separate from the root partition.
+    - Add a swap partition with a size of 1.5x your RAM if the RAM is less than 8GB, or 2GB if the RAM is more than 8GB.
     - `noatime` and `nodiratime` mount options are recommended for better disk performance
   - When asked, only install `Standard system utilities` and `SSH server`
   - Finish installation and reboot to disk.
