@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.11.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.1) - 2023-01-22
+#### [v1.11.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.1) - 2023-01-22
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: fix gitea settings [`gitea_enable_api/gitea_api_max_results`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml) not having any effect
 
 
-[Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.11.1)
+[Full changes since v1.11.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.11.1)
 
 ------------------
 
