@@ -53,12 +53,12 @@ libvirt_parallel_shutdown_number: 3
 # NAT/port forwarding to libvirt VMs
 # Example:
 # libvirt_port_forwards:
-#   - host_ip: 192.168.1.20 # forward traffic arriving on this IP address on the libvirt host
-#     host_port: 443 # forward traffic arriving on this port
+#   - vm_name: vm01.CHANGEME.org # VM name (rules will be applied/removed when this VM starts/shuts down)
+#     host_port: 443 # forward traffic arriving on this port on the libvirt host
+#     vm_port: 443 # forward traffic to this port on the VM
 #     protocol: tcp # (tcp/udp) forward traffic using this protocol
-#     vm_ip: 10.0.0.101 # forward traffic to this IP address
-#     vm_port: 443 # forward traffic to this port
-#     vm_name: vm01.CHANGEME.org # VM name (rules will be applied/removed when this VM starts/shuts down)
+#     host_ip: 192.168.1.20 # forward traffic arriving on this IP address on the libvirt host
+#     vm_ip: 10.0.0.101 # forward traffic to this IP address on the VM
 #     bridge: virbr1 # bridge used by the VM's libvirt network, see virsh net-dumpxml
 libvirt_port_forwards: []
 
