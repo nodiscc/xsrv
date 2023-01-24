@@ -102,6 +102,18 @@ Setup [authentication](https://docs.graylog.org/en/latest/pages/permission_manag
 - `Finish & Save Service`
 - In the Configured AUthentication Services list, `Activate` the LDAP service
 
+
+**Uninstallation:**
+```bash
+sudo systemctl stop elasticsearch graylog-server mongod
+sudo apt purge elasticsearch graylog-4.0-repository  graylog-server mongodb-org
+sudo rm -rf /etc/apache2/sites-available/graylog.conf /etc/apache2/sites-enabled/graylog.conf /usr/share/keyrings/elasticsearch.gpg /etc/apt/sources.list.d/elasticsearch.list /etc/systemd/system/elasticsearch.service.d/ /etc/elasticsearch /etc/ansible/facts.d/graylog.fact /etc/firewalld/services/graylog-tcp.xml /etc/graylog/ /usr/share/keyrings/mongodb.gpg /etc/apt/sources.list.d/mongodb.list /etc/netdata/go.d/httpcheck.conf.d/graylog.conf /etc/netdata/health.d/processes.conf.d/graylog.conf /etc/rsyslog.d/graylog.conf /var/log/mongodb/ /var/log/elasticsearch/ /var/log/graylog-server/ /var/lib/elasticsearch
+sudo firewall-cmd --remove-service=graylog-tcp --zone internal --permanent
+sudo systemctl daemon-reload
+sudo systemctl reload apache2 firewalld
+sudo systemctl restart rsyslog
+```
+
 ## Backups
 
 TODO
