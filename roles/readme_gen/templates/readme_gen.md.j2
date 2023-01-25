@@ -8,10 +8,14 @@
 - OS/Virtualization: {{ hostvars[item]['ansible_facts']['lsb']['description'] | default('?') }} ({{ hostvars[item]['ansible_facts']['virtualization_type'] | default('?') }} {{ hostvars[item]['ansible_facts']['virtualization_role'] | default('?') }})
 - CPU: {{ hostvars[item]['ansible_facts']['processor'][2] | default('?') }} ({{ hostvars[item]['ansible_facts']['processor_vcpus'] | default('?')}} VCPUs)
 - Memory: {{ hostvars[item]['ansible_facts']['memtotal_mb'] | default('?') }}MB
-- SSH: `ssh -p {{ hostvars[item].ansible_ssh_port|default('22') }} {{ hostvars[item].ansible_user | default('') }}@{{ hostvars[item].inventory_hostname }}`
+- SSH: `ssh -p {{ hostvars[item].ansible_ssh_port|default('22') }} {{ hostvars[item].ansible_user | default('') }}@{{ hostvars[item].inventory_hostname }}` / `xsrv shell {{ xsrv_project_name|default('default') }} {{ hostvars[item].inventory_hostname }}`
 - SFTP: `sftp://{{ hostvars[item].ansible_user | default('?') }}@{{ hostvars[item].inventory_hostname }}:{{ hostvars[item].ansible_ssh_port|default('22') }}`
+- Logs: `xsrv logs {{ xsrv_project_name|default('default') }} {{ hostvars[item].inventory_hostname }}`
+{% if hostvars[item]['ansible_facts']['ansible_local']['rsnapshot']['ansible_managed'] is defined %}
+- Fetch latest backups: `xsrv fetch-backups {{ xsrv_project_name|default('default') }} {{ hostvars[item].inventory_hostname }}`
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['netdata']['ansible_managed'] is defined %}
-- Monitoring: https://{{ hostvars[item].ansible_host|default(hostvars[item].inventory_hostname) }}:{{ hostvars[item].readme_gen_netdata_public_port|default('19999') }}
+- Monitoring (Netdata): https://{{ hostvars[item].ansible_host|default(hostvars[item].inventory_hostname) }}:{{ hostvars[item].readme_gen_netdata_public_port|default('19999') }}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] is defined %}
 - Gitea: https://{{ hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] }}
@@ -65,7 +69,12 @@
 ## SSH client configuration
 
 ```
-# ~/.ssh/xsrv-PROJECTNAME.conf
+# ~/.ssh/config
+Include ~/.ssh/*.conf
+```
+
+```
+# ~/.ssh/xsrv-{{ xsrv_project_name|default('default') }}.conf
 {% for item in readme_gen_limit %}
 Host {{ hostvars[item].inventory_hostname }}
     HostName {{ hostvars[item].ansible_host | default(hostvars[item].inventory_hostname) }}{{ '
