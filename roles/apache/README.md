@@ -36,7 +36,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 **Integration with other roles:** Each role relying on this one must install its own configuration in `/etc/apache2/{conf,sites}-{available,enabled}/` and notify the `reload/restart apache` handlers.
 
-**Allow a user to read apache/web applications files:** Add you user to the `www-data` group. For example using the [`common`](../common/) role:
+**Allow a user to read apache/web applications files:** Add the user to the `www-data` group. For example using the [`common`](../common/) role:
 
 ```yaml
 linux_users:
