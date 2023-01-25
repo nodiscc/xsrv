@@ -21,6 +21,10 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
      - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, bruteforce prevention
      - nodiscc.xsrv monitoring # (optional) apache/virtualhost monitoring, log aggregation
      - nodiscc.xsrv.apache
+
+# required variables:
+# ansible-vault edit host_vars/my.CHANGEME.org/my.CHANGEME.org.vault.yml
+apache_letsencrypt_email: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
