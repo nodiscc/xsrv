@@ -62,7 +62,7 @@ Gitea can be used from:
 
 ### LDAP authentication
 
-The xample below is given for a LDAP server configured with the [openldap](../openldap) role.
+The example below is given for a LDAP server configured with the [openldap](../openldap) role.
 
 - Access `Site administration > Authentication sources` (https://git.CHANGEME.org/admin/auths)
 - Click `Add authentication source`
