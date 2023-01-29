@@ -97,6 +97,9 @@ libvirt_vms:
     autostart: no
 ```
 
+Note: changing VM resources (RAM/CPU) in the XML definition, and applying the role will not affect **running** VMs until they are stopped and restarted. To force the current memory values defined in XML definitions to be applied immediately, without stopping/restarting VMs, use the tag `utils-libvirt-setmem` (or SSH to the hypervisor and use [`virsh setmem --live`](https://manpages.debian.org/bullseye-backports/libvirt-clients/virsh.1.en.html#setmem) directly). The maximum memory allocation for the VM (`<memory>` XML tag ) must already be greater than the requested/current memory (`<currentMemory>` XML tag).
+
+
 ## Tags
 
 <!--BEGIN TAGS LIST-->
@@ -106,6 +109,7 @@ libvirt-storage - setup libvirt storage pools
 libvirt-networks - setup libvirt virtual networks
 libvirt-port-forwards - setup libvirt port forwards
 libvirt-vms - setup libvirt virtual machines
+utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 ```
 <!--END TAGS LIST-->
 

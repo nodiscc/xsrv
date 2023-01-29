@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 - **proxmox:** if you want to keep using the [`proxmox`](https://gitlab.com/nodiscc/xsrv/-/tree/1.11.1/roles/proxmox) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.proxmox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.libvirt`] includes more features and is now the recommended role for simplified management of hypervisors and virtual machines. Proxmox VE remains suitable for more complex setups where management through a Web interface is desirable.
 
+**Added:**
+- libvirt add `utils-libvirt-setmem` [tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
+
 **Changed:**
 - readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
