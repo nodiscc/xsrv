@@ -101,7 +101,8 @@ mysql -u root -p -e 'DROP database nextcloud;'
 rm -rv /var/www/my.example.org/nextcloud
 # Remove the nextcloud data directory
 rm -rv /var/nextcloud/data
-# Reinstall nextcloud by running the playbook/nextcloud role, then
+# Reinstall nextcloud by running the playbook/nextcloud role
+xsrv deploy
 # Restore the database
 mysql -u root -p nextcloud < /var/backups/rsnapshot/daily.0/localhost/var/backups/mysql/nextcloud/nextcloud.sql
 # Restore the data directory
