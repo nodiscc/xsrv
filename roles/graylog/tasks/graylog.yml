@@ -110,7 +110,7 @@
 - name: download CA/server certificate to the controller
   fetch:
     src: /etc/graylog/ssl/graylog-ca.crt
-    dest: "{{ playbook_dir }}/data/certificates/{{ inventory_hostname }}-graylog-ca.crt"
+    dest: "{{ playbook_dir }}/data/certificates/{{ graylog_fqdn }}-graylog-ca.crt"
     flat: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
