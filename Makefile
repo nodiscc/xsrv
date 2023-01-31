@@ -61,8 +61,9 @@ test_init_vm:
 	./xsrv init-vm --template my.template.test --name my.example.test \
 		--ip 10.0.10.241 --netmask 24 --gateway 10.0.10.1 \
 		--sudo-user deploy --sudo-password $(SUDO_PASSWORD) --root-password $(ROOT_PASSWORD) \
-		--ssh-pubkey "$$(cat ~/.ssh/id_rsa.pub)"
-		--memory 4G --vcpus 4
+		--ssh-pubkey "$$(cat ~/.ssh/id_rsa.pub)" \
+		--memory 4G --vcpus 4 \
+		--dumpxml my.example.test.xml
 
 .PHONY: test_check_mode # test full playbook run (--check mode) against the host created with test_init_vm
 test_check_mode:

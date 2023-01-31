@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - libvirt add `utils-libvirt-setmem` [tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
 
 **Changed:**
+- xsrv: [init-vm](docs/appendices/virt-manager.md): rename `--dump` option to `--dumpxml`, require an output file as argument
 - readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)

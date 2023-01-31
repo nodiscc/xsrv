@@ -74,8 +74,8 @@ If you already have a [libvirt](virt-manager.md) Debian VM set up as described a
 
 ```bash
 $ ./xsrv init-vm --help
-USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
-        EXAMPLE: ./xsrv init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dump]
+USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP [--netmask 24] --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
+        EXAMPLE: ./xsrv init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /path/to/libvirt/vm/definition.xml]
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
         --template      name of the template to create the new VM from (default debian11-base)
@@ -90,7 +90,7 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP --ne
         --disk-path     path to the qcow2 disk image to create (default: /var/lib/libvirt/images/VM_NAME.qcow2)
         --memory        VM memory with M or G suffix (default 1G)
         --vcpus         number of vCPUs (default: same value as the template)
-        --dump          display the VM XML definition after creation, for use with the nodiscc.xsrv.libvirt role
+        --dumpxml       write the VM XML definition to a file after creation
 ```
 
 [![](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k.svg)](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k?speed=2&theme=monokai&autoplay=true)
