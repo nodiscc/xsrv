@@ -7,7 +7,7 @@
   delegate_to: localhost
   tags: utils-libvirt-setmem
 
-- name: set VM current memory (alwyas returns changed)
+- name: set VM current memory (always returns changed)
   command:
     cmd: "virsh setmem {{ item.name }} --size {{ mem.matches[0].currentMemory }} --current"
   register: setmem
