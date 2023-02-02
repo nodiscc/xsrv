@@ -96,6 +96,42 @@ srvadmin@hv2:~$ virsh define my.virtual.machine.xml
 srvadmin@hv2:~$ virsh start my.virtual.machine.xml
 ```
 
+If your VMs are managed by the [libvirt role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt), instead of dumping/transferring the XML definition and loading it manually, you should just copy the relevant `libvirt_vms` entry to the target hypervisor host_vars, and set its state to `absent` on the original hypervisor. Don't forget to migrate any port forwards related to it:
+
+```diff
+# host_vars/hv1/hv1.yml
+ libvirt_vms:
+-  - name: my.virtual.machine
+-    xml_file: "{{ playbook_dir }}/data/libvirt/my.virtual.machine.xml"
++  - name: my.virtual.machine
++    state: absent
+   - name: an.other.vm
+     xml_file: "{{ playbook_dir }}/data/libvirt/an.other.vm.xml"
+-libvirt_port_forwards:
+-  - vm_name: my.virtual.machine
+-    host_port: 443
+-    vm_port: 443
+-    protocol: tcp
+-    host_ip: 192.168.1.20
+-    vm_ip: 10.0.0.101
+-    bridge: virbr1
+
+# host_vars/hv2/hv2.yml
+ libvirt_vms:
++  - name: my.virtual.machine
++    xml_file: "{{ playbook_dir }}/data/libvirt/my.virtual.machine.xml"
+   - name: yet.another.vm
+     xml_file: "{{ playbook_dir }}/data/libvirt/yet.another.vm.xml"
++libvirt_port_forwards:
++  - vm_name: my.virtual.machine
++    host_port: 443
++    vm_port: 443
++    protocol: tcp
++    host_ip: 192.168.1.21
++    vm_ip: 10.0.0.101
++    bridge: virbr1
+```
+
 <!-- TODO
 
 ## Managing resources
