@@ -1,5 +1,7 @@
-# The default virtualhost will be served for requests that do not match any known servername,
-# for example trying to access the server with just an IP address. It just displays/logs a 404 error.
+##### DEFAULT VIRTUALHOST #####
+# Will be served for requests that do not match any known servername,
+# for example trying to access the server directly by IP address.
+# It displays and logs a 403 error.
 <VirtualHost *:80>
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
