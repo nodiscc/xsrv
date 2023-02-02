@@ -22,7 +22,7 @@ This project provides:
 
 ## Roles
 <!--BEGIN ROLES LIST-->
-- [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) - Apache web server + PHP-FPM interpreter
+- [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) - Apache web server/reverse proxy + PHP-FPM interpreter
 - [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) - Remote/local backup service (rsnapshot)
 - [common](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) - Base setup for Debian servers
 - [dnsmasq](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq) - Lightweight DNS server

@@ -22,7 +22,7 @@ This project provides:
 
 ## Roles
 <!--BEGIN ROLES LIST-->
-- [apache](roles/apache) - Apache web server + PHP-FPM interpreter
+- [apache](roles/apache) - Apache web server/reverse proxy + PHP-FPM interpreter
 - [backup](roles/backup) - Remote/local backup service (rsnapshot)
 - [common](roles/common) - Base setup for Debian servers
 - [dnsmasq](roles/dnsmasq) - Lightweight DNS server
