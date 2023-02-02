@@ -18,6 +18,8 @@ galaxy_info:
     - apache
     - php
     - server
+    - webserver
+    - reverseproxy
     - lamp
 dependencies:
   - nodiscc.xsrv.handlers
