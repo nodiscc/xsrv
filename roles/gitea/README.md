@@ -171,6 +171,31 @@ gitea --description "My new project" --private new myusername/myproject
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_gitea.conf.j2) for the [backup](../backup) role and [Gitea docs - backup and restore](https://docs.gitea.io/en-us/backup-and-restore/)
 
+To restore a backup:
+
+```bash
+# Stop the gitea service
+sudo systemctl stop gitea
+# Remove the gitea postgresql database and user
+sudo -u postgres psql --command 'DROP database gitea;'
+sudo -u postgres psql --command 'DROP user gitea;'
+# Remove the gitea data directory and installation state file
+sudo rm -r /var/lib/gitea/ /etc/ansible/facts.d/gitea.fact
+# Reinstall gitea by running the playbook/gitea role
+xsrv deploy
+# Stop the gitea service
+sudo systemctl stop gitea
+# Restore the database
+sudo cp /var/backups/rsnapshot/daily.0/localhost/var/backups/postgresql/gitea.sql /var/tmp/
+sudo chown postgres:postgres /var/tmp/gitea.sql
+sudo -u postgres pg_restore --clean --dbname gitea --verbose /var/tmp/gitea.sql
+sudo rm /var/tmp/gitea.sql
+# Restore the data directory
+sudo rsync -avP --delete /var/backups/rsnapshot/daily.0/localhost/var/lib/gitea/ /var/lib/gitea/
+# Start the gitea service
+sudo systemctl start gitea
+```
+
 
 ## Tags
 
