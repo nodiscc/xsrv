@@ -6,6 +6,16 @@ This role will install a [Matrix](https://en.wikipedia.org/wiki/Matrix_(protocol
 
 The configuration is designed for a private (i.e. not federated) server, for use inside your organization.
 
+Matrix/Element features include:
+- End-to-end encryption
+- Interoperability with other messaging apps/services through [bridges](https://matrix.org/bridges/)
+- Integration with other services through [bots and widgets](https://element.io/integrations)
+- Web, desktop and mobile clients
+- Secure device verification and authorization
+- Public and private chats
+- Chat room grouping/organization though Spaces
+- Unlimited 1:1 and group voice and video calls
+
 [![](https://i.imgur.com/NphBOWR.png)](https://i.imgur.com/NphBOWR.png)
 
 
