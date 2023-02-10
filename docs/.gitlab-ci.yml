@@ -16,7 +16,9 @@ variables:
   ANSIBLE_FORCE_COLOR: "True"
   XSRV_PLAYBOOKS_DIR: "$CI_PROJECT_DIR/../"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
-  TAGS: "all"
+  TAGS:
+    value: "all"
+    description: "run tasks tagged with these tags, comma-separated (default all)"
 
 cache:
   paths:
