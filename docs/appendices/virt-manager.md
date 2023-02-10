@@ -68,7 +68,7 @@ Click `Finish` and start the VM from virt-manager's main window.
 
 ### Automated
 
-You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bullseye/virtinst/virt-install.1.en.html) - [`xsrv init-vm/init-vm-template`](../usage.md) automates running `virt-install` with the correct options.
+You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bullseye/virtinst/virt-install.1.en.html) command. The `xsrv` [init-vm and init-vm-template commands](../usage.md) automate running `virt-install` with the correct options.
 
 ## Cloning VMs
 
