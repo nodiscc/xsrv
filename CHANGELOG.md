@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
 - gitea: update to [1.18.3](https://github.com/go-gitea/gitea/releases/tag/v1.18.3)
 - matrix: update element-web to v1.11.23 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.21) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.22) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.23)
+- postgresql: update pgmetrics to [v1.14.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.14.1)
 - xsrv: update ansible to [v7.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - cleanup: standardize task names
 
