@@ -156,6 +156,8 @@ apt_listbugs_ignore_list:
   - 1019564 # https://bugs.debian.org/1019564 - unreproducible
   - 1019855 # https://bugs.debian.org/1019855 - only affects 4th gen Intel Core CPUs
   - 1023812 # https://bugs.debian.org/1019855 - packaging bug without impact
+  - 916596 # https://bugs.debian.org/916596 - not reproducible on a fresh debian installation
+
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
