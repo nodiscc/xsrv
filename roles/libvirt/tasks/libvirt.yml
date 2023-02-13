@@ -145,7 +145,6 @@
     command: define
     name: "{{ item.name }}"
     state: "{{ 'active' if (item.state is not defined or item.state == 'active') else item.state }}"
-    autostart: "{{ item.autostart | default(True) }}"
   with_items: "{{ libvirt_storage_pools }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage
