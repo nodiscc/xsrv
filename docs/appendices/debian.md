@@ -30,7 +30,7 @@
 
 - From the server console, login as `root`
 - Install ansible requirements: `apt update && apt --no-install-recommends install python3 aptitude sudo openssh-server`
-- Create an administrator user account (replace `deploy` with the desired name): `useradd --create-home --groups ssh,sudo --shell /bin/bash deploy`
+- Create an administrator user account (replace `deploy` with the desired name): `useradd --create-home --groups sudo --shell /bin/bash deploy`
 - Set the `sudo` password for this user: `passwd deploy`
 - Lock the console: `logout`
 
