@@ -67,11 +67,27 @@
     name: "{{ item.name }}"
     command: define
     xml: "{{ lookup('template', 'network.xml.j2') }}"
+  with_items: "{{ libvirt_networks }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-networks
+
+- name: setup libvirt networks autostart
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
     autostart: "{{ item.autostart | default(True) }}"
-    state: "{{ item.state | default('active') }}"
+  with_items: "{{ libvirt_networks }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-networks
+
+- name: start/stop libvirt networks
+  community.libvirt.virt_net:
+    command: define
+    name: "{{ item.name }}"
+    state: "{{ 'active' if (item.state is not defined or item.state == 'active') else item.state }}"
   with_items: "{{ libvirt_networks }}"
   ignore_errors: "{{ ansible_check_mode }}"
-  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
   tags: libvirt-networks
 
 - name: delete libvirt networks
