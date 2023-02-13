@@ -111,7 +111,7 @@
 
 ##### STORAGE #####
 
-- name: create storage pool directories
+- name: create libvirt storage pool directories
   file:
     state: directory
     path: "{{ item.path }}"
@@ -121,7 +121,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage
 
-- name: define/undefine/stop/delete storage pools
+- name: define libvirt storage pools
   community.libvirt.virt_pool:
     name: "{{ item.name }}"
     command: define
@@ -131,7 +131,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage
 
-- name: setup storage pools autostart
+- name: setup libvirt storage pools autostart
   community.libvirt.virt_pool:
     name: "{{ item.name }}"
     autostart: "{{ item.autostart | default(True) }}"
@@ -140,7 +140,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage
 
-- name: start storage pools
+- name: start/stop libvirt storage pools
   community.libvirt.virt_pool:
     command: define
     name: "{{ item.name }}"
