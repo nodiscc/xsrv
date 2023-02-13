@@ -2,16 +2,16 @@
   apt:
     state: present
     package:
-      - virt-manager
       - virtinst
-      - virt-viewer
       - dnsmasq-base
       - libvirt-daemon-system
-      - gir1.2-spiceclientgtk-3.0
       - qemu-kvm
       - qemu-utils
       - netcat-openbsd
       # - ebtables
+      # - virt-manager # graphical environments only
+      # - virt-viewer # graphical environments only
+      # - gir1.2-spiceclientgtk-3.0 # graphical environments only
 
 - name: configure libvirt-guests
   template:
