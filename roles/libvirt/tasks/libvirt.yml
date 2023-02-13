@@ -8,6 +8,7 @@
       - qemu-kvm
       - qemu-utils
       - netcat-openbsd
+      - python3-lxml
       # - ebtables
       # - virt-manager # graphical environments only
       # - virt-viewer # graphical environments only
