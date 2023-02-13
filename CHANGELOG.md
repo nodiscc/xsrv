@@ -29,6 +29,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 - proxmox: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 
+**Fixed:**
+- common: apt: ensure ca-certificates is installed (required for HTTP APT sources)
+
+
 [Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.12.0)
 
 ------------------

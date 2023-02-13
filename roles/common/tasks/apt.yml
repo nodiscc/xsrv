@@ -1,7 +1,9 @@
 - name: install packages for HTTPS APT sources support
   apt:
     state: present
-    package: apt-transport-https
+    package:
+      - apt-transport-https
+      - ca-certificates
 
 - name: copy apt sources lists (debian + security + backports)
   template:
