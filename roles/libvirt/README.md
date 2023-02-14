@@ -53,7 +53,7 @@ libvirt_storage_pools:
 
 # wait for the shared storage to be mounted before autostarting VMs
 libvirt_service_after:
-  - 'media-EXT4\x2d2TB\x2dA.mount'
+  - 'mnt-LIBVIRT\x2dSTORAGE.mount'
 ```
 
 ```yaml
@@ -93,7 +93,7 @@ libvirt_vms:
   - name: demo2.example.org
     xml_file: "{{ playbook_dir }}/data/libvirt/demo2.example.org.xml"
   - name: demo777.example.org
-    xml_file: "{{ playbook_dir }}/data/libvirt/builder.example.org.xml"
+    xml_file: "{{ playbook_dir }}/data/libvirt/demo777.example.org.xml"
     autostart: no
 ```
 
