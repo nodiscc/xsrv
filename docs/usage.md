@@ -421,17 +421,14 @@ VMs created using this method can then be added to your project using [`xsrv ini
 Using the server/host as its own controller is not recommended, but can help with single-server setups where no separate administration machine is available. By not using a separate controller, you lose the ability to easily redeploy a new system from scratch in case of emergency/distaster, and centralized management of multiple hosts will become more difficult. Your host will also have access to configuration of other hosts in your project.
 
 - [Install](installation/controller-preparation.md) the `xsrv` main script directly on the host
-- During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `connection: local` in the playbook for this host:
+- During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
 
 ```yaml
-# $ xsrv edit-playbook
-- hosts: my.example.org
-  connection: local
-  roles:
-    - nodiscc.xsrv.common
-    - nodiscc.xsrv.apache
-    - nodiscc.xsrv.jellyfin
-    - ...
+##### CONNNECTION
+# SSH host/port, if different from my.example.org:22
+# ansible_host: "my.example.org"
+# ansible_port: 22
+ansible_connection: local
 ```
 
 <!--
