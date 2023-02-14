@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - proxmox: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 
 **Fixed:**
+- tt_rss: `fatal: detected dubious ownership in repository` error when upgrading tt-rss
 - common: apt: ensure ca-certificates is installed (required for HTTP APT sources)
 - libvirt: ensure requirements for libvirt network/storage/VM configuration tasks are installed
 - libvirt: fix `configure libvirt networks` failing if the network does not already exist
