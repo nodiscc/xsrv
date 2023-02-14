@@ -109,6 +109,11 @@ Initialize a new project from the [template](https://gitlab.com/nodiscc/xsrv/-/t
 
 <!-- TODO screencast -->
 
+
+### xsrv edit-requirements
+
+Edit the project's [`requirements.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) file, which lists [ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/index.html) (a distribution format for Ansible content) used by the project.
+
 -----------------------
 
 ## Manage hosts
