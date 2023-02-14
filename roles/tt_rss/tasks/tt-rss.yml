@@ -81,14 +81,19 @@
       mode: "0755"
   tags: tt_rss-permissions
 
-- name: copy tt-rss configuration file
+- name: copy tt-rss configuration files
   template:
-    src: var_www_tt-rss_config.php.j2
-    dest: "{{ tt_rss_install_dir }}/config.php"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: tt-rss
     mode: 0640
   ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - src: var_www_tt-rss_config.php.j2
+      dest: "{{ tt_rss_install_dir }}/config.php"
+    - src: var_www_tt-rss_version_static.txt.j2
+      dest: "{{ tt_rss_install_dir }}/version_static.txt"
 
 ### INITIAL DB POPULATION ###
 

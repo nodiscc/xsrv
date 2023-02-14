@@ -40,3 +40,7 @@
 
 	putenv('TTRSS_LOG_DESTINATION={{ tt_rss_log_destination }}');
 	// available options: sql (default, event log), syslog, stdout (for debugging)
+
+	putenv('TT_RSS_CHECK_FOR_UPDATES=false');
+	putenv('TT_RSS_CHECK_FOR_PLUGIN_UPDATES=false');
+	// disable version checks, upgrades are managed by ansible
