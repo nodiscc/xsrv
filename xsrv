@@ -419,7 +419,7 @@ function init_vm() {
         esac
     done
     # check mandatory options
-    for i in "$name" "$ip" "$gateway" "$sudo_user" "$ssh_pubkey"; do
+    for i in "$name" "$ip" "$gateway" "$ssh_pubkey"; do
         if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option"; echo "[xsrv] USAGE: $INIT_VM_USAGE"; exit 1; fi
     done
     # build /etc/network/interfaces for the target system 
