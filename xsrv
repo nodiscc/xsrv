@@ -487,7 +487,7 @@ EOF
 
     if [[ "$dump" == "yes" ]]; then
         echo "[xsrv] INFO: dumping VM XML definition to $dumpxml_file"
-        echo "[xsrv] INFO: You may now start managing this VM using th nodiscc.xsrv.libvirt_role."
+        echo "[xsrv] INFO: You may now start managing this VM using the nodiscc.xsrv.libvirt_role."
         echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '{{ playbook_dir }}/data/libvirt/$name.xml'"
         virsh --connect qemu:///system dumpxml "$name" > "$dumpxml_file"
     fi
