@@ -6,7 +6,7 @@
   with_items:
     - libvirt_port_forwards | type_debug == 'list'
     - libvirt_service_after | type_debug == 'list'
-
+    - libvirt_users | type_debug == 'list'
 
 - name: check that variables are correctly defined (libvirt_port_forwards)
   assert:

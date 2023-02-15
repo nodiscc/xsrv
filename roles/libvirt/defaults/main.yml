@@ -68,3 +68,9 @@ libvirt_port_forwards: []
 #  - mnt-KVMSTORAGE1.mount
 #  - mnt-KVMSTORAGE2.mount
 libvirt_service_after: []
+
+# list of users who will be added to the libvirt group
+# Example:
+# libvirt_users:
+#   - "{{ ansible_user }}"
+libvirt_users: []

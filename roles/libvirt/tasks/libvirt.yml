@@ -49,6 +49,16 @@
     - libvirt-guests
   ignore_errors: "{{ ansible_check_mode }}"
 
+##### USERS #####
+
+- name: ensure libvirt users are added to the libvirt group
+  user:
+    name: "{{ item }}"
+    groups: libvirt
+    append: true
+  with_items: "{{ libvirt_users }}"
+  notify: reset ssh connection
+
 ##### NETWORK #####
 
 - name: configure libvirt port forwards
