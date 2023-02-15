@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - libvirt: fix `configure libvirt networks` failing if the network does not already exist
 - libvirt: fix storage ppol owner/group ID not being applied
 - xsrv: init-vm-template: fix `unrecognized option '--preseed-file'` error
+- xsrv: init-vm/init-vm-template: fix inconsistent libvirt connection URI, always connect to the `qemu:///system` URI
 
 [Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.12.0)
 

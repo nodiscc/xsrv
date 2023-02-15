@@ -444,7 +444,8 @@ EOF
     getent hosts "$name" || (echo "[xsrv] ERROR: resolving $name failed! Make sure a record exists in the DNS system or add this entry to /etc/hosts: $ip      $name"; exit 1)
     if [[ -z "$disk_path" ]]; then disk_path="/var/lib/libvirt/images/$name.qcow2"; fi
     echo "[xsrv] INFO: cloning template $template to $name..."
-    virt-clone --original "$template" \
+    virt-clone --connect qemu:///system \
+        --original "$template" \
         --name "$name" \
         --file "$disk_path"
     # virt-clone always creates the disk image with owner/group root:root mode 0600
@@ -452,7 +453,8 @@ EOF
     sudo chown libvirt-qemu:libvirt "$disk_path"
     sudo chmod 0660 "$disk_path"
     echo "[xsrv] INFO: cleaning up $name..."
-    virt-sysprep --domain "$name" \
+    virt-sysprep --connect qemu:///system \
+        --domain "$name" \
         --hostname "$name" \
         --password "$sudo_user:password:$sudo_password" \
         --root-password "password:$root_password" \
@@ -461,16 +463,16 @@ EOF
         --ssh-inject "$sudo_user:string:$ssh_pubkey"
     if [[ -n "$memory" ]]; then
         echo "[xsrv] INFO: updating memory settings for $name..."
-        virsh setmaxmem --domain "$name" --size "$memory" --config
-        virsh setmem --domain "$name" --size "$memory" --config
+        virsh --connect qemu:///system setmaxmem --domain "$name" --size "$memory" --config
+        virsh --connect qemu:///system setmem --domain "$name" --size "$memory" --config
     fi
     if [[ -n "$vcpus" ]]; then
         echo "[xsrv] INFO: updating CPU settings for $name..."
-        virsh setvcpus --domain "$name" --count "$vcpus" --config --maximum
-        virsh setvcpus --domain "$name" --count "$vcpus" --config
+        virsh --connect qemu:///system setvcpus --domain "$name" --count "$vcpus" --config --maximum
+        virsh --connect qemu:///system setvcpus --domain "$name" --count "$vcpus" --config
     fi
     echo "[xsrv] INFO: starting VM $name..."
-    virsh start "$name"
+    virsh --connect qemu:///system start "$name"
     echo "[xsrv] INFO: waiting for $name SSH server to start accepting connections..."
     until nc -w 1 "$name" "$ssh_port"; do sleep 1; done
     echo "[xsrv] INFO: adding $name ssh server's hostkey to known_hosts file..."
@@ -487,7 +489,7 @@ EOF
         echo "[xsrv] INFO: dumping VM XML definition to $dumpxml_file"
         echo "[xsrv] INFO: You may now start managing this VM using th nodiscc.xsrv.libvirt_role."
         echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '{{ playbook_dir }}/data/libvirt/$name.xml'"
-        virsh dumpxml "$name" > "$dumpxml_file"
+        virsh --connect qemu:///system dumpxml "$name" > "$dumpxml_file"
     fi
 }
 
@@ -574,6 +576,7 @@ function init_vm_template() {
     sudo sed -i "s/%%NAMESERVERS%%/${nameservers}/g" /var/lib/libvirt/preseed.cfg
     echo "[xsrv] INFO: installing operating system using preseed to VM $name..."
     sudo virt-install \
+        --connect qemu:///system \
         --name "$name" \
         --memory "$memory" \
         --disk "$storage_path/$name.qcow2,size=$disk_size,device=disk,bus=virtio,cache=none" \
@@ -591,7 +594,7 @@ function init_vm_template() {
     echo "[xsrv] INFO: cleaning up $name..."
     sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
     sudo chmod 0660 "$storage_path/$name.qcow2"
-    virt-sysprep --domain "$name"
+    virt-sysprep --connect qemu:///system --domain "$name"
     echo "[xsrv] INFO password for $sudo_user: $sudo_password"
     echo "[xsrv] INFO: password for root: $root_password"
 }
