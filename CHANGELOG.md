@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
 - libvirt: add [`utils-libvirt-setmem` tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
-- libvirt: allow adding users to the `libvirt` group so that they can use `virsh` without sudo ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml))
+- libvirt: allow adding users to the `libvirt/libvirt-qemu` group so that they can use `virsh` without sudo ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml))
 
 **Changed:**
 - xsrv: `init-vm`: rename `--dump` option to `--dumpxml`, require an output file as argument

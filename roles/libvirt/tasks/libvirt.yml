@@ -54,7 +54,9 @@
 - name: ensure libvirt users are added to the libvirt group
   user:
     name: "{{ item }}"
-    groups: libvirt
+    groups:
+      - libvirt
+      - libvirt-qemu
     append: true
   with_items: "{{ libvirt_users }}"
   notify: reset ssh connection
