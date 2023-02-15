@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 - **proxmox:** if you want to keep using the [`proxmox`](https://gitlab.com/nodiscc/xsrv/-/tree/1.11.1/roles/proxmox) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.proxmox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) includes more features and is now the recommended role for simplified management of hypervisors and virtual machines. Proxmox VE remains suitable for more complex setups where management through a Web interface is desirable.
-- **rsyslog/graylog**: if you use the `rsyslog_forward_to_hostname` variable and it is pointing to a graylog instance deployed with the `graylog` role, udpate it to use the graylog instance FQDN (e.g. `logs.example.org`) instead of the graylog host inventory hostname (e.g. `host1.example.org`)
+- **rsyslog/graylog**: if you use the `rsyslog_forward_to_hostname` variable and it is pointing to a graylog instance deployed with the `graylog` role, update it to use the graylog instance FQDN (e.g. `logs.example.org`) instead of the graylog host inventory hostname (e.g. `host1.example.org`)
 
 **Added:**
 - apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
