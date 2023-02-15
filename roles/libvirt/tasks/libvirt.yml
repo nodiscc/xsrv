@@ -116,6 +116,8 @@
     state: directory
     path: "{{ item.path }}"
     mode: "{{ item.mode | default('0750') }}"
+    owner: "{{ item.owner_uid | default('0') }}"
+    group: "{{ item.group_gid | default('64055') }}"
   with_items: "{{ libvirt_storage_pools }}"
   when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
