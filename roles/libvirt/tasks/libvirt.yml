@@ -57,6 +57,7 @@
     groups:
       - libvirt
       - libvirt-qemu
+      - kvm
     append: true
   with_items: "{{ libvirt_users }}"
   notify: reset ssh connection
