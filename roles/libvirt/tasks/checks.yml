@@ -14,13 +14,24 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
     that:
       - item.host_ip|ansible.netcommon.ipaddr
-      - item.host_port == item.host_port|int
-      - item.protocol in ['tcp', 'udp']
       - item.vm_ip|ansible.netcommon.ipaddr
-      - item.vm_port == item.vm_port|int
       - item.vm_name is string
       - item.bridge is string
+      - item.ports | type_debug == 'list'
   with_items: "{{ libvirt_port_forwards }}"
+
+- name: check that variables are correctly defined (libvirt_port_forwards/ports)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
+    that:
+      - (item.1.host_port == item.1.host_port|int) or (item.1.host_port | regex_search('^\d*\-\d*$'))
+      - (item.1.vm_port == item.1.vm_port|int) or (item.1.vm_port | regex_search('^\d*\-\d*$'))
+      - (item.1.protocol is not defined) or (item.1.protocol in ['tcp', 'udp'])
+  with_subelements:
+    - "{{ libvirt_port_forwards }}"
+    - ports
+
 
 - name: check that variables are correctly defined (libvirt_vms)
   assert:

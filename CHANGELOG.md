@@ -12,11 +12,49 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - **proxmox:** if you want to keep using the [`proxmox`](https://gitlab.com/nodiscc/xsrv/-/tree/1.11.1/roles/proxmox) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.proxmox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) includes more features and is now the recommended role for simplified management of hypervisors and virtual machines. Proxmox VE remains suitable for more complex setups where management through a Web interface is desirable.
 - **rsyslog/graylog**: if you use the `rsyslog_forward_to_hostname` variable and it is pointing to a graylog instance deployed with the `graylog` role, update it to use the graylog instance FQDN instead of the graylog host inventory hostname (e.g. `logs.example.org` instead of `host1.example.org`)
 - **libvirt:** you will need to restart all libvirt networks and attached VMs for the changes to take effect (a full hypervisor reboot may be simpler)
+- **libvirt:** if you have defined custom [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), update them to use the new syntax:
+
+```yaml
+# old syntax
+libvirt_port_forwards:
+  - vm_name: vm01.CHANGEME.org
+    host_port: 80
+    vm_port: 80
+    protocol: tcp
+    host_ip: 192.168.1.20
+    vm_ip: 10.0.0.101
+    bridge: virbr1
+  - vm_name: vm01.CHANGEME.org
+    host_port: 443
+    vm_port: 443
+    protocol: tcp
+    host_ip: 192.168.1.20
+    vm_ip: 10.0.0.101
+    bridge: virbr1
+```
+```yaml
+# new syntax
+libvirt_port_forwards:
+  - vm_name: vm01.CHANGEME.org
+    host_ip: 192.168.1.20
+    vm_ip: 10.0.0.101
+    bridge: virbr1
+    ports:
+      - host_port: 80
+        vm_port: 80
+        protocol: tcp # tcp is now the default and can be omitted
+      - host_port: 443
+        vm_port: 443
+      - host_port: "30000-30100" # port ranges separated by - are now supported
+        vm_port: "30000-30100"
+        protocol: udp
+```
 
 **Added:**
 - apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
 - libvirt: add [`utils-libvirt-setmem` tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
 - libvirt: allow adding users to the `libvirt/libvirt-qemu/kvm` groups so that they can use `virsh` without sudo ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml))
+- libvirt: [`port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding port ranges
 
 **Changed:**
 - xsrv: `init-vm`: rename `--dump` option to `--dumpxml`, require an output file as argument
@@ -25,6 +63,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
 - libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks](https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): add a `ports` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding rules (each one with its `vm_port,host_port,protocol`)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (make `protocol: tcp` optional)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
 - gitea: update to [1.18.3](https://github.com/go-gitea/gitea/releases/tag/v1.18.3)
