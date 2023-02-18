@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: create the `ssh` group automatically during initial setup, don't require manually adding the ansible user to the group
 - tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
-- libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks}(https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
+- libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks](https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
 - gitea: update to [1.18.3](https://github.com/go-gitea/gitea/releases/tag/v1.18.3)
