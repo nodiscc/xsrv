@@ -49,6 +49,7 @@
 - name: import samba schema to LDAP database
   command: ldapadd -Q -Y EXTERNAL -H ldapi:/// -f /usr/share/doc/samba/examples/LDAP/samba.ldif
   when: (ansible_local.samba.general.ldap_schema_installed is not defined) or (not ansible_local.samba.general.ldap_schema_installed)
+  changed_when: yes
 
 - name: create ansible local facts directory
   file:

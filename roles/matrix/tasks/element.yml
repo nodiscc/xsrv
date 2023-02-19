@@ -73,6 +73,7 @@
   when:
     - element_action is defined
     - (element_action == 'initial') or (element_action == 'upgrade')
+  changed_when: yes
 
 - name: copy element configuration
   template:

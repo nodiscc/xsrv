@@ -118,6 +118,7 @@
   when:
     - (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized)
     - not ansible_check_mode
+  changed_when: yes
 
 - name: create gitea admin user
   become: yes

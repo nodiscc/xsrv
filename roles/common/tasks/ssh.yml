@@ -63,6 +63,7 @@
       [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
   notify: restart ssh
   when: sshd_register_moduli.stdout
+  changed_when: yes
 
 - name: replace default 2048 bits RSA keypair with 4096 bits keypair
   openssh_keypair:

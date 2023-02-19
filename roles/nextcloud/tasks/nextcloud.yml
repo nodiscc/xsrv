@@ -120,6 +120,7 @@
 - name: move nextcloud extraction directory to install directory
   command: mv /root/nextcloud-unpack/nextcloud '{{ nextcloud_install_dir }}'
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
+  changed_when: yes
 
 ### USER MIGRATION WWW-DATA -> NEXTCLOUD ###
 

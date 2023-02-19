@@ -91,6 +91,7 @@
 - name: move ldap_account_manager extraction directory to install directory
   command: mv /root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }} '{{ ldap_account_manager_install_dir }}'
   when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  changed_when: yes
 
 ##### ANSIBLE FACTS #####
 

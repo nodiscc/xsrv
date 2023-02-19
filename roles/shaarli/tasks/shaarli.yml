@@ -117,6 +117,7 @@
   when:
     - shaarli_action is defined
     - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  changed_when: yes
 
 - name: copy data directory from old installation
   copy:
