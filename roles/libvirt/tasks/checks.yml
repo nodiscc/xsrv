@@ -13,8 +13,8 @@
     quiet: yes
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
     that:
-      - item.host_ip|ansible.netcommon.ipaddr
-      - item.vm_ip|ansible.netcommon.ipaddr
+      - item.host_ip|ansible.utils.ipaddr
+      - item.vm_ip|ansible.utils.ipaddr
       - item.vm_name is string
       - item.bridge is string
       - item.ports | type_debug == 'list'
