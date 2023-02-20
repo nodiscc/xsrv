@@ -18,37 +18,40 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 # old syntax
 libvirt_port_forwards:
   - vm_name: vm01.CHANGEME.org
+    host_ip: 1.2.3.4
+    vm_ip: 10.0.0.101
+    bridge: virbr1
     host_port: 80
     vm_port: 80
     protocol: tcp
-    host_ip: 192.168.1.20
-    vm_ip: 10.0.0.101
-    bridge: virbr1
   - vm_name: vm01.CHANGEME.org
-    host_port: 443
-    vm_port: 443
-    protocol: tcp
-    host_ip: 192.168.1.20
+    host_ip: 1.2.3.4
     vm_ip: 10.0.0.101
     bridge: virbr1
+    host_port: 19101
+    vm_port: 19999
+    protocol: tcp
 ```
 ```yaml
 # new syntax
 libvirt_port_forwards:
   - vm_name: vm01.CHANGEME.org
-    host_ip: 192.168.1.20
     vm_ip: 10.0.0.101
-    bridge: virbr1
-    ports:
-      - host_port: 80
+    vm_bridge: virbr1
+    dnat:
+      - host_ip: 1.2.3.4
+        host_port: 80
         vm_port: 80
         protocol: tcp # tcp is now the default and can be omitted
-      - host_port: 443
-        vm_port: 443
-      - host_port: "30000-30100" # port ranges separated by - are now supported
-        vm_port: "30000-30100"
+      - host_interface: eth0 # the host "outside" network interface must now be specified instead of the IP address
+        host_port: 19101
+        vm_port: 19999
+      - host_interface: eth0
+        host_port: 30000-30100 # port ranges separated by - are now supported
+        vm_port: 30000-30100
         protocol: udp
 ```
+
 
 **Added:**
 - apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
@@ -63,7 +66,9 @@ libvirt_port_forwards:
 - tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
 - libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks](https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): add a `ports` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding rules (each one with its `vm_port,host_port,protocol`)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): add a `dnat` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding/DNAT rules (each one with its `host_interface/host_ip,host_port,vm_port,protocol`)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow limiting DNAT rules to user-defined source IPs/networks (`libvirt_port_forwards.*.dnat.*.source_ip`)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow configuring forwarding rules without DNAT (between libvirt bridges/networks - `libvirt_port_forwards.*.forward`)
 - libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (allow omitting `protocol: tcp`)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)

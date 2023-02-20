@@ -13,14 +13,15 @@
     quiet: yes
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
     that:
-      - item.host_ip|ansible.utils.ipaddr
-      - item.vm_ip|ansible.utils.ipaddr
+      - item.vm_ip | ansible.utils.ipaddr
       - item.vm_name is string
-      - item.bridge is string
-      - item.ports | type_debug == 'list'
+      - item.vm_bridge is string
+      - (item.dnat is defined) or (item.forward is defined)
+      - (item.dnat is not defined) or (item.dnat | type_debug == 'list' and item.dnat)
+      - (item.forward is not defined) or (item.forward | type_debug == 'list' and item.forward)
   with_items: "{{ libvirt_port_forwards }}"
 
-- name: check that variables are correctly defined (libvirt_port_forwards/ports)
+- name: check that variables are correctly defined (libvirt_port_forwards.*.dnat)
   assert:
     quiet: yes
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
@@ -28,10 +29,29 @@
       - (item.1.host_port == item.1.host_port|int) or (item.1.host_port | regex_search('^\d*\-\d*$'))
       - (item.1.vm_port == item.1.vm_port|int) or (item.1.vm_port | regex_search('^\d*\-\d*$'))
       - (item.1.protocol is not defined) or (item.1.protocol in ['tcp', 'udp'])
+      - (item.1.host_interface is defined) or (item.1.host_ip is defined)
+      - (item.1.host_interface is not defined) or (item.1.host_interface is string)
+      - (item.1.host_ip is not defined) or (item.1.host_ip | ansible.utils.ipaddr)
+      - (item.1.source_ip is not defined) or (item.1.source_ip | ansible.utils.ipaddr)
   with_subelements:
     - "{{ libvirt_port_forwards }}"
-    - ports
+    - dnat
+    - skip_missing: True
 
+- name: check that variables are correctly defined (libvirt_port_forwards.*.forward)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
+    that:
+      - (item.1.vm_port == item.1.vm_port|int) or (item.1.vm_port | regex_search('^\d*\-\d*$'))
+      - (item.1.protocol is not defined) or (item.1.protocol in ['tcp', 'udp'])
+      - (item.1.source_interface is defined) or (item.1.source_ip is defined)
+      - (item.1.source_interface is not defined) or (item.1.source_interface is string)
+      - (item.1.source_ip is not defined) or (item.1.source_ip | ansible.utils.ipaddr)
+  with_subelements:
+    - "{{ libvirt_port_forwards }}"
+    - forward
+    - skip_missing: True
 
 - name: check that variables are correctly defined (libvirt_vms)
   assert:

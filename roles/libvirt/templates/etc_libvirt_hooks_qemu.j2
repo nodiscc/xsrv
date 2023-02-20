@@ -1,17 +1,26 @@
 #!/bin/bash
 {% for item in libvirt_port_forwards %}
 if [ "${1}" = "{{ item.vm_name }}" ]; then
-{% for port in item.ports %}
     if [ "${2}" = "stopped" ] || [ "${2}" = "reconnect" ]; then
-        /sbin/iptables --table filter --delete FORWARD --out-interface {{ item.bridge }} --protocol {{ port.protocol | default('tcp') }} --destination {{ item.vm_ip }} --match multiport --dports {{ port.vm_port | regex_replace('-', ':') }} --jump ACCEPT
-        /sbin/iptables --table nat --delete PREROUTING --protocol {{ port.protocol | default('tcp') }} --destination {{ item.host_ip }} --dport {{ port.host_port | regex_replace('-', ':') }} --jump DNAT --to-destination {{ item.vm_ip }}:{{ port.vm_port }}
+{% for dnat_rule in item.dnat | default([]) %}
+        /sbin/iptables --table filter --delete FORWARD --in-interface {{ dnat_rule.host_interface }} --out-interface {{ item.vm_bridge }} --destination {{ item.vm_ip }} --protocol {{ dnat_rule.protocol | default('tcp') }} --match multiport --dports {{ dnat_rule.vm_port | regex_replace('-', ':') }} {% if dnat_rule.source_ip is defined %}--source {{ dnat_rule.source_ip }}{% endif %} --jump ACCEPT
+        /sbin/iptables --table nat --delete PREROUTING --in-interface {{ dnat_rule.host_interface }} --protocol {{ dnat_rule.protocol | default('tcp') }} --dport {{ dnat_rule.host_port | regex_replace('-', ':') }} {% if dnat_rule.source_ip is defined %}--source {{ dnat_rule.source_ip }}{% endif %} --jump DNAT --to-destination {{ item.vm_ip }}:{{ dnat_rule.vm_port }}
+{% endfor %}
+{% for forward_rule in item.forward | default([]) %}
+        # /sbin/iptables --table filter --delete FORWARD --protocol {{ forward_rule.protocol | default('tcp') }} {% if forward_rule.source_ip is defined %}--source {{ forward_rule.source_ip }}{% endif %} {% if forward_rule.source_interface is defined %}--in-interface {{ forward_rule.source_interface }}{% endif %} --match multiport --dports {{ forward_rule.vm_port | regex_replace('-', ':') }} --out-interface {{ item.vm_bridge }} --jump ACCEPT
+        # /sbin/iptables --table filter --delete FORWARD --protocol {{ forward_rule.protocol | default('tcp') }} --source {{ item.vm_ip }} --in-interface {{ item.vm_bridge }} --match conntrack --ctstate ESTABLISHED --match multiport --sports {{ forward_rule.vm_port | regex_replace('-', ':') }} {% if forward_rule.source_interface is defined %}--out-interface {{ forward_rule.source_interface }}{% endif %} {% if forward_rule.source_ip is defined %} --destination {{ forward_rule.source_ip }}{% endif %} --jump ACCEPT
+{% endfor %}
     fi
     if [ "${2}" = "start" ] || [ "${2}" = "reconnect" ]; then
-        /sbin/iptables --table filter --insert FORWARD --out-interface {{ item.bridge }} --protocol {{ port.protocol | default('tcp') }} --destination {{ item.vm_ip }} --match multiport --dports {{ port.vm_port | regex_replace('-', ':') }} --jump ACCEPT
-        /sbin/iptables --table nat --insert PREROUTING --protocol {{ port.protocol | default('tcp') }} --destination {{ item.host_ip }} --dport {{ port.host_port | regex_replace('-', ':') }} --jump DNAT --to-destination {{ item.vm_ip }}:{{ port.vm_port }}
-    fi
-    ################
+{% for dnat_rule in item.dnat | default([]) %}
+        /sbin/iptables --table filter --insert FORWARD --in-interface {{ dnat_rule.host_interface }} --out-interface {{ item.vm_bridge }} --destination {{ item.vm_ip }} --protocol {{ dnat_rule.protocol | default('tcp') }} --match multiport --dports {{ dnat_rule.vm_port | regex_replace('-', ':') }} {% if dnat_rule.source_ip is defined %} -source {{ dnat_rule.source_ip }}{% endif %} --jump ACCEPT
+        /sbin/iptables --table nat --insert PREROUTING --in-interface {{ dnat_rule.host_interface }} --protocol {{ dnat_rule.protocol | default('tcp') }} --dport {{ dnat_rule.host_port | regex_replace('-', ':') }} {% if dnat_rule.source_ip is defined %}--source {{ dnat_rule.source_ip }}{% endif %} --jump DNAT --to-destination {{ item.vm_ip }}:{{ dnat_rule.vm_port }}
 {% endfor %}
+{% for forward_rule in item.forward | default([]) %}
+        # /sbin/iptables --table filter --insert FORWARD --protocol {{ forward_rule.protocol | default('tcp') }} {% if forward_rule.source_ip is defined %}--source {{ forward_rule.source_ip }}{% endif %} {% if forward_rule.source_interface is defined %}--in-interface {{ forward_rule.source_interface }}{% endif %} --match multiport --dports {{ forward_rule.vm_port | regex_replace('-', ':') }} --out-interface {{ item.vm_bridge }} --jump ACCEPT
+        # /sbin/iptables --table filter --insert FORWARD --protocol {{ forward_rule.protocol | default('tcp') }} --source {{ item.vm_ip }} --in-interface {{ item.vm_bridge }} --match conntrack --ctstate ESTABLISHED --match multiport --sports {{ forward_rule.vm_port | regex_replace('-', ':') }} {% if forward_rule.source_interface is defined %}--out-interface {{ forward_rule.source_interface }}{% endif %} {% if forward_rule.source_ip is defined %} --destination {{ forward_rule.source_ip }}{% endif %} --jump ACCEPT
+{% endfor %}
+    fi
 fi
 
 {% endfor %}
