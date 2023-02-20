@@ -71,7 +71,9 @@
     owner: root
     group: root
     mode: 0755
-  notify: restart libvirtd
+  notify:
+    - restart firewalld
+    - restart libvirtd
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-port-forwards
 

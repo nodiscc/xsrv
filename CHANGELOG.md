@@ -83,6 +83,7 @@ libvirt_port_forwards:
 - libvirt: ensure requirements for libvirt network/storage/VM configuration tasks are installed
 - libvirt: fix `configure libvirt networks` failing if the network does not already exist
 - libvirt: fix storage pool owner/group ID not being applied
+- libvirt: ensure old port forwarding rules are removed when `libvirt_port_forwards` is changed (restart firewalld) 
 - xsrv: [`init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix `unrecognized option '--preseed-file'` error
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix inconsistent libvirt connection URI, always connect to the `qemu:///system` URI
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): do not require `--sudo-user` option, use the default value `deploy` if not provided
