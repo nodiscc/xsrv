@@ -1,15 +1,15 @@
 # libvirt / virt-manager
 
-[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [`libvirt`](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more.
+[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [libvirt](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more.
 
-The [libvirt](https://en.wikipedia.org/wiki/Libvirt) project allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical (`virt-manager`) and command-line (`virsh`) interfaces.
+libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical (`virt-manager`) and command-line (`virsh`) interfaces.
 
 Advantages of virtualization include:
 
-- Run many independent operating systems/environmnents on a single machine.
+- Run many independent operating systems/environmnents on a single physical machine
 - Quickly create, clone and delete virtual machines for temporary/testing environments or horizontal scaling
 - VM operating systems are strongly isolated from each other and from the hypervisor
-- Easy, dynamic management of resources, virtual storage, RAM, CPU...
+- Easy, dynamic management of resources, virtual storage, RAM, CPU... (vertical scaling)
 - Easy rollback: snapshot the state of a VM, make changes, then restore the snapshot to return to the previous state
 - Create simple or complex virtual networks with routing, switching, firewalling...
 - Easy migration of VMs between hypervisors for emergencies or load balancing

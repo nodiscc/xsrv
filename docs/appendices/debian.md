@@ -69,7 +69,7 @@ The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/b
 
 ### Automated, from a VM template
 
-If you already have a [libvirt](virt-manager.md) Debian VM set up as described above, it can be reused as a template for other VMs. This significantly reduces the time needed to setup a new VM and make it ready for deployment. The time required to provision a new host using this method should not exceed 1 minute.
+If you already have a [libvirt](virt-manager.md) Debian VM set up as described above, it can be reused as a template (_golden image_) for other VMs. This significantly reduces the time needed to setup a new VM and make it ready for deployment. The time required to provision a new host using this method should not exceed 1 minute.
 
 ```bash
 $ ./xsrv init-vm --help

@@ -54,17 +54,17 @@ libvirt_port_forwards:
 - apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
 - libvirt: add [`utils-libvirt-setmem` tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
 - libvirt: allow adding users to the `libvirt/libvirt-qemu/kvm` groups so that they can use `virsh` without sudo ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml))
-- libvirt: [`port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding port ranges
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding port ranges
 
 **Changed:**
-- xsrv: `init-vm`: rename `--dump` option to `--dumpxml`, require an output file as argument
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): rename `--dump` option to `--dumpxml`, require an output file as argument
 - readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
 - common: create the `ssh` group automatically during initial setup, don't require manually adding the ansible user to the group
 - tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
 - libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks](https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
 - libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): add a `ports` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding rules (each one with its `vm_port,host_port,protocol`)
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (make `protocol: tcp` optional)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (allow omitting `protocol: tcp`)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
 - gitea: update to [1.18.3](https://github.com/go-gitea/gitea/releases/tag/v1.18.3)
@@ -82,10 +82,10 @@ libvirt_port_forwards:
 - common: apt: ensure ca-certificates is installed (required for HTTP APT sources)
 - libvirt: ensure requirements for libvirt network/storage/VM configuration tasks are installed
 - libvirt: fix `configure libvirt networks` failing if the network does not already exist
-- libvirt: fix storage ppol owner/group ID not being applied
-- xsrv: `init-vm-template`: fix `unrecognized option '--preseed-file'` error
-- xsrv: `init-vm/init-vm-template`: fix inconsistent libvirt connection URI, always connect to the `qemu:///system` URI
-- xsrv: `init-vm`: do not require `--sudo-user` option, use the default value `deploy` if not provided
+- libvirt: fix storage pool owner/group ID not being applied
+- xsrv: [`init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix `unrecognized option '--preseed-file'` error
+- xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix inconsistent libvirt connection URI, always connect to the `qemu:///system` URI
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): do not require `--sudo-user` option, use the default value `deploy` if not provided
 
 [Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.12.0)
 
