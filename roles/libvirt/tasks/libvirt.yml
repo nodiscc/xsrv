@@ -20,7 +20,7 @@
     dest: /etc/default/libvirt-guests
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: create directory for libvirtd systemd overrides
   file:
@@ -28,7 +28,7 @@
     path: /etc/systemd/system/libvirtd.service.d/
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: configure libvirt systemd unit overrides
   template:
@@ -36,7 +36,7 @@
     dest: /etc/systemd/system/libvirtd.service.d/override.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: reload systemd unit files
 
 - name: enable libvirtd/libvirt-guests services
@@ -70,7 +70,7 @@
     dest: /etc/libvirt/hooks/qemu
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   notify:
     - restart firewalld
     - restart libvirtd

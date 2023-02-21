@@ -87,7 +87,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: tt-rss
-    mode: 0640
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - src: var_www_tt-rss_config.php.j2
@@ -130,7 +130,7 @@
   template:
     src: etc_ansible_facts.d_tt_rss.fact.j2
     dest: /etc/ansible/facts.d/tt_rss.fact
-    mode: 0644
+    mode: "0644"
 
 
 ### SCHEDULING ###

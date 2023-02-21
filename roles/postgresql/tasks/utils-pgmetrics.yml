@@ -4,13 +4,13 @@
     dest: /root/pgmetrics_1.14.1_linux_amd64.tar.gz
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
 
 - name: create pgmetrics tarball extraction directory
   file:
     path: /root/pgmetrics-unpack
     state: directory
-    mode: 0750
+    mode: "0750"
 
 - name: extract pgmetrics tar.gz
   unarchive:
@@ -29,7 +29,7 @@
     dest: /usr/local/bin/pgmetrics
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: run pgmetrics
@@ -45,7 +45,7 @@
     path: /var/log/postgresql/pgmetrics.log
     owner: postgres
     group: adm
-    mode: 0640
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: download pgmetrics report to data/pgmetrics-*.log

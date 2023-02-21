@@ -9,7 +9,7 @@
   template:
     src: 'etc_needrestart_conf.d_autorestart.conf.j2'
     dest: '/etc/needrestart/conf.d/autorestart.conf'
-    mode: 0600
+    mode: "0600"
 
 - name: clone netdata-needrestart module
   git:
@@ -41,7 +41,7 @@
     remote_src: yes
     src: "/root/netdata-needrestart/etc_apt_apt.conf.d_99needrestart"
     dest: "/etc/apt/apt.conf.d/99needrestart"
-    mode: 0644
+    mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: install netdata-needrestart module/configuration/alarms
@@ -51,7 +51,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: netdata
-    mode: 0640
+    mode: "0640"
   with_items:
     - { src: '/root/netdata-needrestart/needrestart.chart.py', dest: '/usr/libexec/netdata/python.d/needrestart.chart.py' }
     - { src: '/root/netdata-needrestart/needrestart.conf', dest: '/etc/netdata/python.d/needrestart.conf' }
@@ -65,7 +65,7 @@
     dest: /usr/local/bin/needrestart-autorestart
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: setup needrestart cron job
   template:
@@ -73,7 +73,7 @@
     dest: /etc/cron.d/needrestart-autorestart
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 ##### MIGRATION #####
 

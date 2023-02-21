@@ -13,7 +13,7 @@
     dest: "/etc/transmission-daemon/settings.json"
     owner: debian-transmission
     group: debian-transmission
-    mode: 0600
+    mode: "0600"
   notify: reload transmission-daemon
   # no_log: True
 

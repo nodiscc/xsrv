@@ -14,7 +14,7 @@
     dest: /etc/apache2/sites-available/jitsi.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: reload apache
 
 - name: enable jitsi apache virtualhost configuration

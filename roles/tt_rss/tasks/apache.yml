@@ -8,14 +8,14 @@
     dest: /etc/apache2/sites-available/tt-rss.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: reload apache
 
 - name: copy php-fpm configuration
   template:
     src: etc_php_PHPVERSION_fpm_pool.d_tt-rss.conf.j2
     dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/tt-rss.conf
-    mode: 0644
+    mode: "0644"
   notify: restart php-fpm
 
 - name: enable tt-rss apache virtualhost configuration

@@ -26,7 +26,7 @@
     dest: /usr/share/keyrings/docker.gpg
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 - name: add docker APT repository
@@ -35,7 +35,7 @@
     dest: /etc/apt/sources.list.d/docker.list
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 # update APT cache for docker packages to become available
@@ -48,7 +48,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: copy docker daemon configuration
   template:
@@ -56,7 +56,7 @@
     dest: /etc/docker/daemon.json
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart docker
 
 - name: install Docker

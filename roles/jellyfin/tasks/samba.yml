@@ -6,7 +6,7 @@
     path: "{{ item }}"
     owner: root
     group: sambausers
-    mode: 0755
+    mode: "0755"
   with_items:
     - /var/lib/jellyfin/sambashare
     - "{{ ansible_local.samba.shares_path }}/jellyfin"
@@ -25,7 +25,7 @@
     state: directory
     owner: jellyfin
     group: sambausers
-    mode: 02775
+    mode: "02775"
   with_items:
     - movies
     - music

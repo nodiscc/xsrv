@@ -2,5 +2,5 @@
   template:
     src: etc_rsnapshot.d_jellyfin.conf.j2
     dest: /etc/rsnapshot.d/jellyfin.conf
-    mode: 0600
+    mode: "0600"
   notify: check rsnapshot configuration

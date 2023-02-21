@@ -13,7 +13,7 @@
     dest: /etc/lynis/custom.prf
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
 
 - name: setup lynis daily cron job
   cron:
@@ -33,4 +33,4 @@
     dest: /etc/default/debsums
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"

@@ -16,7 +16,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0700
+    mode: "0700"
   with_items:
     - /etc/wireguard
     - /etc/wireguard/private
@@ -76,7 +76,7 @@
   file:
     state: directory
     path: "{{ playbook_dir }}/data/wireguard"
-    mode: 0700
+    mode: "0700"
 
 - name: generate client configuration files on the controller
   delegate_to: localhost
@@ -84,7 +84,7 @@
   template:
     src: wireguard-client.conf.j2
     dest: "{{ playbook_dir }}/data/wireguard/wg0-{{ item.name }}.conf"
-    mode: 0600
+    mode: "0600"
   with_items: "{{ wireguard_peers }}"
 
 - name: show information about sending configuration files to clients
@@ -99,7 +99,7 @@
     dest: /etc/wireguard/wg0.conf
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: reload wireguard configuration
 

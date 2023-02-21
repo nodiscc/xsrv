@@ -25,7 +25,7 @@
     dest: /root/element-v{{ matrix_element_version }}.tar.gz
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
   retries: 3
 
 - name: remove element zip extraction directory
@@ -41,7 +41,7 @@
   file:
     path: /root/element-unpack
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:
@@ -81,7 +81,7 @@
     dest: "{{ element_install_dir }}/config.{{ matrix_element_fqdn }}.json"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set file ownership
@@ -99,7 +99,7 @@
     dest: "{{ element_install_dir }}/themes/element/img/backgrounds/white.png"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
 
 # Note: when using self-signed certificates for the matrix server, users will receive a warning "Can't connect to homeserver - please check your connectivity, ensure your homeserver's SSL certificate is trusted, and that a browser extension is not blocking requests." on th elogin form. To bypass this warning, click on the "homeserver SSL certificate" link in the error message, and manually accept the certificate (on Firefox, `Advanced` > `Accept the risk and continue`)

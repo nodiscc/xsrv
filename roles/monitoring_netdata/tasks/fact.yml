@@ -2,12 +2,12 @@
   file:
     path: /etc/ansible/facts.d
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: create netdata fact file
   template:
     src: etc_ansible_facts.d_netdata.fact.j2
     dest: /etc/ansible/facts.d/netdata.fact
-    mode: 0644
+    mode: "0644"
   notify: update ansible facts
   ignore_errors: "{{ ansible_check_mode }}"

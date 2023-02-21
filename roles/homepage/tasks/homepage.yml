@@ -4,7 +4,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: copy homepage HTML file
   template:
@@ -12,7 +12,7 @@
     dest: "/var/www/{{ homepage_fqdn }}/index.html"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: copy static files/homepage resources
   copy:
@@ -20,4 +20,4 @@
     dest: "/var/www/{{ homepage_fqdn }}/"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"

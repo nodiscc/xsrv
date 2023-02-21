@@ -9,7 +9,7 @@
     path: /var/shaarli
     owner: shaarli
     group: shaarli
-    mode: 0770
+    mode: "0770"
 
 - name: install python-shaarli-client in virtualenv
   pip:
@@ -24,7 +24,7 @@
     dest: /var/shaarli/python-shaarli-client.ini
     owner: shaarli
     group: shaarli
-    mode: 0600
+    mode: "0600"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create cron job for python-shaarli-client

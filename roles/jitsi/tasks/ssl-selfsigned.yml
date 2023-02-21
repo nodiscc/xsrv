@@ -34,7 +34,7 @@
     src: "/etc/ssl/certs/{{ jitsi_fqdn }}.crt"
     dest: "/usr/local/share/ca-certificates/{{ jitsi_fqdn }}.crt"
     remote_src: yes
-    mode: 0644
+    mode: "0644"
   notify:
     - update CA certificates store
     - restart jitsi

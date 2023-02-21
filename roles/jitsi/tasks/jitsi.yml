@@ -4,7 +4,7 @@
     dest: /etc/apt/sources.list.d/{{ item }}.list
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
   with_items:
     - prosody
@@ -24,7 +24,7 @@
     dest: /usr/share/keyrings/{{ item }}.gpg
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
   with_items:
     - prosody
@@ -36,7 +36,7 @@
     dest: /etc/apt/preferences.d/jitsi
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 # update APT cache for jitsi/prosody packages to become available
 - name: run all notified handlers now
@@ -94,7 +94,7 @@
     path: /etc/jitsi/meet
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: configure jitsi meet
   template:
@@ -102,7 +102,7 @@
     dest: /etc/jitsi/meet/{{ jitsi_fqdn }}-config.js
     owner: root
     group: www-data
-    mode: 0640
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure jicofo
@@ -111,7 +111,7 @@
     dest: /etc/jitsi/jicofo/jicofo.conf
     owner: jicofo
     group: jitsi
-    mode: 0644
+    mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart jitsi
 
@@ -121,7 +121,7 @@
     dest: /etc/prosody/conf.avail/{{ jitsi_fqdn }}.cfg.lua
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart prosody
 
@@ -140,7 +140,7 @@
     state: present
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
     create: yes
 
 - name: enable/disable start/stop jitsi service

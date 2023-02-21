@@ -4,7 +4,7 @@
     dest: /etc/firewalld/services/netdata.xml
     owner: root
     group: adm
-    mode: 0640
+    mode: "0640"
   notify: reload firewalld
   ignore_errors: "{{ ansible_check_mode }}"
 

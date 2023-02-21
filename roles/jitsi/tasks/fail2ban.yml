@@ -2,7 +2,7 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: 0600
+    mode: "0600"
   tags: fail2ban
   notify: reload fail2ban
   with_items:

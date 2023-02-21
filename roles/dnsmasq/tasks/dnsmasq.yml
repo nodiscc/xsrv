@@ -9,7 +9,7 @@
     dest: /etc/dnsmasq.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart dnsmasq
 
 - name: enable/disable start/stop dnsmasq service

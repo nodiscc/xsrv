@@ -24,7 +24,7 @@
     dest: /usr/share/keyrings/mongodb.gpg
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 - name: add mongodb APT repository
@@ -33,7 +33,7 @@
     dest: /etc/apt/sources.list.d/mongodb.list
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 # update APT cache for mongodb packages to become available
@@ -55,7 +55,7 @@
     state: present
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
     create: yes
   with_items:
     - '/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/bsondump'
@@ -77,7 +77,7 @@
     state: absent
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   with_items:
     - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/bsondump$'
     - '^/mongodb-database-tools-debian10-x86_64-100.6.1/usr/bin/mongodump$'

@@ -2,7 +2,7 @@
   template:
     src: etc_default_cron.j2
     dest: /etc/default/cron
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   notify: restart crond
@@ -11,7 +11,7 @@
   template:
     src: etc_cron.allow.j2
     dest: /etc/cron.allow
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 

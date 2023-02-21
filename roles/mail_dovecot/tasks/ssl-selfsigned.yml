@@ -10,7 +10,7 @@
     path: "/etc/ssl/private/dovecot.key"
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   notify: restart dovecot
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -22,7 +22,7 @@
     key_usage: "digitalSignature,keyEncipherment"
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
@@ -33,6 +33,6 @@
     provider: selfsigned
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart dovecot
   ignore_errors: "{{ ansible_check_mode }}"
