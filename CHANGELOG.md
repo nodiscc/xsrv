@@ -43,7 +43,7 @@ libvirt_port_forwards:
         host_port: 80
         vm_port: 80
         protocol: tcp # tcp is now the default and can be omitted
-      - host_interface: eth0 # the host "outside" network interface must now be specified instead of the IP address
+      - host_interface: eth0 # the "outside" network interface can now be specified instead of the IP address
         host_port: 19101
         vm_port: 19999
       - host_interface: eth0
