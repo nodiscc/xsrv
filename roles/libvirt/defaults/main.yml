@@ -92,10 +92,10 @@ libvirt_parallel_shutdown_number: 3
 #     vm_ip: 10.3.0.226
 #     vm_bridge: virbr3
 #     dnat:
-#       - host_interface: eth0 
+#       - host_interface: eth0
 #         host_port: 22226
 #         vm_port: 22
-#       - host_interface: eth0 
+#       - host_interface: eth0
 #         host_port: 19226
 #         vm_port: 19999
 libvirt_port_forwards: []
