@@ -72,7 +72,7 @@ libvirt_port_forwards:
 - libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (allow omitting `protocol: tcp`)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
-- gitea: update to [1.18.3](https://github.com/go-gitea/gitea/releases/tag/v1.18.3)
+- gitea: update to v1.18.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.18.3) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.4) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.5)
 - matrix: update element-web to v1.11.23 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.21) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.22) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.23)
 - postgresql: update pgmetrics to [v1.14.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.14.1)
 - xsrv: update ansible to [v7.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
