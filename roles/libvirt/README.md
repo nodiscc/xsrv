@@ -25,25 +25,23 @@ Below is an example of a simple setup with 2 libvirt hypervisors using shared st
 # ~/playbooks/default/group_vars/all/all.yml
 libvirt_networks:
   - name: default
-    mac_address: "52:55:56:78:91:11"
-    forward_dev: "eth0"
-    bridge_name: "virbr0"
-    ip_address: "10.100.100.1"
-    netmask: "255.255.255.0"
-    dhcp_start: "10.100.100.128"
-    dhcp_end: "10.100.100.254"
-  - name: lambdacore
+    state: absent
+  - name: prod1
     mac_address: "52:54:00:18:0c:cd"
-    bridge_name: "virbr1"
-    ip_address: "10.10.10.1"
-    netmask: "255.255.255.0"
-  - name: test
+    forward_dev: eth0
+    bridge_name: virbr1
+    ip_address: 10.10.10.1
+    netmask: 255.255.255.0
+    autostart: yes
+    state: active
+  - name: prod2
     mac_address: "52:54:00:18:0c:cd"
-    bridge_name: "virbr2"
-    ip_address: "10.200.200.1"
-    netmask: "255.255.255.0"
-    state: inactive
-    autostart: no
+    forward_dev: eth0
+    bridge_name: virbr2
+    ip_address: 10.20.20.1
+    netmask: 255.255.255.0
+    autostart: yes
+    state: active
 
 # shared storage
 libvirt_storage_pools:
@@ -59,34 +57,40 @@ libvirt_service_after:
 ```yaml
 # $ xsrv edit-host default hv1.example.org
 # playbooks/default/host_vars/hv1.example.org/hv1.example.org.yml
-# forward ports 443 and 22003 to th VM vm21.example.org
-libvirt_port_forwards:
-  - host_ip: 192.168.127.3
-    host_port: 443
-    protocol: tcp
-    vm_ip: 10.10.10.21
-    vm_port: 443
-    vm_name: vm21.example.org
-    bridge: virbr1
-  - host_ip: 192.168.127.3
-    host_port: 22003
-    protocol: tcp
-    vm_ip: 10.10.10.23
-    vm_port: 22
-    vm_name: vm21.example.org
-    bridge: virbr1
-
-# VMs on hv1.example.org
 libvirt_vms:
-  - name: vm21.example.org
-    xml_file: "{{ playbook_dir }}/data/libvirt/vm21.example.org.xml"
+  - name: web.example.org
+    xml_file: "{{ playbook_dir }}/data/libvirt/web.example.org.xml"
     state: running
+  - name: tools.example.org
+    xml_file: "{{ playbook_dir }}/data/libvirt/web.example.org.xml"
+    state: running
+
+libvirt_port_forwards:
+  - vm_name: web.example.org
+    vm_ip: 10.10.10.100
+    vm_bridge: virbr1
+    dnat:
+      - host_interface: eth0 # forward HTTP connections on the host's public interface to this VM
+        host_port: 80
+        vm_port: 80
+      - host_interface: eth0 # forward HTTPS connections on the host's public interface to this VM
+        host_port: 443
+        vm_port: 443
+      - host_interface: eth0 # forward SSH connections on port 22100 of the host's public interface to this VM on port 22
+        host_port: 22100
+        vm_port: 22
+    forward:
+      - source_interface: virbr2 # allow VMs on virbr2/libvirt network prod2 to access netdata on this VM
+        vm_port: 19999
+      - source_interface: virbr2 # only allow the VM with IP 10.20.20.113 on virbr2/libvirt network prod2 to access port udp/123 on this VM
+        source_ip: 10.20.20.113
+        vm_port: 123
+        protocol: udp
 ```
 
 ```yaml
 # $ xsrv edit-host default hv1.example.org
 # playbooks/default/host_vars/hv1.example.org/hv1.example.org.yml
-# VMs on hv2.example.org
 libvirt_vms:
   - name: demo1.example.org
     xml_file: "{{ playbook_dir }}/data/libvirt/demo1.example.org.xml"
