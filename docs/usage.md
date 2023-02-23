@@ -54,8 +54,6 @@ EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
 ```
 
-If no `project` is specified, the `default` project is assumed. If no `host` or `group` is specified, `all` hosts are assumed.
-
 Examples:
 
 ```bash
@@ -87,7 +85,7 @@ xsrv check default prod
 ## Manage projects
 
 Each project contains:
-- an [inventory](#manage-hosts) of managed servers
+- an [inventory](#manage-hosts) of managed servers (_hosts_)
 - a list of [roles](#manage-roles) assigned to each host/group (_playbook_)
 - [configuration](#manage-hosts-configuration) values for host/group (*host_vars/group_vars*)
 - deployment logic/tasks used in your project ([collections](#use-as-ansible-collection)/roles)
