@@ -123,9 +123,3 @@
     state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
     daemon_reload: yes
   ignore_errors: "{{ ansible_check_mode }}"
-
-# - name: configure rsyslog to send logs to local UDP 5140
-#   template:
-#     src: etc_rsyslog.d_local-to-local-udp.conf.j2
-#     dest: /etc/rsyslog.d/local-to-local-udp.conf
-#   notify: restart rsyslog
