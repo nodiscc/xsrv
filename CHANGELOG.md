@@ -93,6 +93,7 @@ libvirt_port_forwards:
 - libvirt: fix `configure libvirt networks` failing if the network does not already exist
 - libvirt: fix storage pool owner/group ID not being applied
 - libvirt: ensure old port forwarding rules are removed when `libvirt_port_forwards` is changed (restart firewalld) 
+- graylog: fix `error: peer name not authorized -  not permitted to talk to it.` error
 - xsrv: [`init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix `unrecognized option '--preseed-file'` error
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix inconsistent libvirt connection URI, always connect to the `qemu:///system` URI
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): refuse to run if the current user is not part of required groups

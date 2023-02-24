@@ -81,7 +81,7 @@
   openssl_csr:
     path: "/etc/graylog/ssl/graylog-ca.csr"
     privatekey_path: "/etc/graylog/ssl/graylog-ca.key"
-    common_name: "{{ inventory_hostname }}"
+    common_name: "{{ graylog_fqdn }}"
     owner: root
     group: graylog
     mode: "0640"
