@@ -12,11 +12,11 @@ for db in $DBLIST; do
         echo "[INFO] Skipping database $db";
     else
         echo "[INFO] Dumping database $db ..."
-        sudo -u postgres pg_dump --format custom --dbname "$db" --file "/var/backups/postgresql/$db.sql"
+        sudo -u postgres /usr/bin/pg_dump --format custom --dbname "$db" --file "/var/backups/postgresql/$db.sql"
         echo "[INFO] Finished dumping database $db"
     fi
 done
 
 echo "[INFO] dumping global variables..."
-sudo -u postgres pg_dumpall --globals-only --file "/var/backups/postgresql/postgres-globals.sql"
+sudo -u postgres /usr/bin/pg_dumpall --globals-only --file "/var/backups/postgresql/postgres-globals.sql"
 echo "[INFO] Finished dumping global variables"
