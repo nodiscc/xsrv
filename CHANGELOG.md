@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
 - monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
+- gitea: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `1.9 OK`)
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - nextcloud: upgrade to [v25.0.5](https://nextcloud.com/changelog/)
 - openldap: update ldap-account-manager to [v8.3](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_3)
