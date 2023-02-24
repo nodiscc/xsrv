@@ -1,13 +1,13 @@
 {% if ansible_user_allow_sudo_rsync_nopasswd %}
 Defaults:{{ ansible_user }} !requiretty
-{{ ansible_user }} ALL=(root) NOPASSWD: /usr/bin/rsync
+{{ ansible_user }} ALL=(ALL) NOPASSWD: /usr/bin/rsync
 {% endif %}
 
 {% for user in linux_users %}
 {% if user.sudo_nopasswd_commands is defined %}
 Defaults:{{ user.name }} !requiretty
 {% for command in user.sudo_nopasswd_commands %}
-{{ user.name }} ALL=(root) NOPASSWD: {{ command }}
+{{ user.name }} ALL=(ALL) NOPASSWD: {{ command }}
 {% endfor %}
 {% endif %}
 {% endfor %}

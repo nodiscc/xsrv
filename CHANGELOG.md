@@ -64,6 +64,7 @@ libvirt_port_forwards:
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): rename `--dump` option to `--dumpxml`, require an output file as argument
 - readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
 - common: create the `ssh` group automatically during initial setup, don't require manually adding the ansible user to the group
+- common: [`users.*.sudo_nopasswd_commands`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml): allow using passwordless sudo as any user, not just root
 - common/matrix: enable automatic upgrades for matrix (synapse) packages by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
