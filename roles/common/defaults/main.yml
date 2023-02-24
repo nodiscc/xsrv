@@ -102,6 +102,7 @@ apt_unattended_upgrades_origins_patterns:
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
+  - "o=matrix.org,site=packages.matrix.org" # nodiscc.xsrv.matrix
 
 # yes/no: setup apt-listbugs
 apt_listbugs: no
