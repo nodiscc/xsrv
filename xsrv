@@ -377,6 +377,7 @@ function init_vm() {
         --vcpus         number of vCPUs (default: same value as the template)
         --dumpxml       write the VM XML definition to a file after creation
         "
+    check_user_in_libvirt_groups
     # parse command-line options
     long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:,dumpxml:"
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
@@ -514,6 +515,7 @@ function init_vm_template() {
         --preseed-file  path to the preseed/preconfiguration file (default $xsrv_clone_dir/docs/preseed.cfg)
 
         "
+    check_user_in_libvirt_groups
     # parse command-line options
     long_opts="help,name:,storage-path:,memory:,vcpus:,disk-size:,network:,ip:,gateway:,netmask:,preseed-file:,root-password:,sudo-password:,sudo-user:,nameservers:"
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
@@ -716,6 +718,18 @@ function migrate_group_vars_file() {
         fi
         mkdir -p "$projects_dir/$project_name/group_vars/$group_name"
         mv "$legacy_group_vars_file" "$group_vars_file"
+    fi
+}
+
+function check_user_in_libvirt_groups() {
+    # check if the user is in the required groups to use init-vm/init-vm-template commands
+    missing_groups=""
+    for groupname in libvirt libvirt-qemu kvm ghsghgh; do
+        id --name --groups --zero | grep -qzxF "$groupname" || missing_groups="$missing_groups $groupname"
+    done
+    if [[ "$(whoami)" != "root" && -n "$missing_groups" ]]; then
+        echo "[xsrv] ERROR: the current user is not a member of groups:$missing_groups. Please add your user to appropriate groups: sudo usermod $(whoami) -aG libvirt libvirt-qemu kvm. Logging out and in again might be needed to apply group membership changes."
+        exit 1
     fi
 }
 
