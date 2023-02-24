@@ -111,6 +111,25 @@ rsync -avP --delete /var/backups/rsnapshot/daily.0/localhost/var/nextcloud/data 
 sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
 ```
 
+To backup files from a remote host with the `nodiscc.xsrv.backup` role:
+
+```yaml
+# xsrv edit-host default backup.CHANGEME.org
+rsnapshot_backup_execs:
+  - 'ssh -oStrictHostKeyChecking=no rsnapshot@nextcloud.CHANGEME.org /usr/local/bin/postgres-dump-all-databases.sh'
+rsnapshot_remote_backups:
+  - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/backups/postgresql' }
+  - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/nextcloud' }
+```
+```yaml
+# xsrv edit-host default nextcloud.CHANGEME.org
+  - name: "rsnapshot"
+    groups: [ "ssh", "sudo", "postgres", "nextcloud" ]
+    comment: "limited user account for remote backups"
+    ssh_authorized_keys: ['data/public_keys/root@backup.CHANGEME.org.pub']
+    sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]
+```
+
 ### Other
 
 **Changing database password** is not supported by the role at this time. To change the database password, you must first set the new password manually in `/var/www/$nextcloud_fqdn/config.php`, then change the value of `nexctloud_db_password` in host variables, and run the playbook.
