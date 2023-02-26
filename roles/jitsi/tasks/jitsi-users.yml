@@ -19,4 +19,5 @@
 - name: set prosody account password for the jicofo user
   command:
     cmd: "prosodyctl register focus auth.{{ jitsi_fqdn }} {{ jitsi_prosody_password }}"
+  no_log: yes
   changed_when: no # never return changed, instead of always
