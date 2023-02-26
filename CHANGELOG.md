@@ -94,6 +94,7 @@ libvirt_port_forwards:
 - xsrv: update ansible to [v7.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - common/monitoring_netdata/rsyslog/utils: make roles compatible with [Debian 12 Bookworm](https://www.debian.org/releases/bookworm/)
 - cleanup: standardize task names, file permissions
+- improve check mode support
 - update documentation
 
 **Removed:**

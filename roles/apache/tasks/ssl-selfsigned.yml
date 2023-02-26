@@ -35,6 +35,7 @@
   openssl_privatekey:
     path: "/etc/ssl/private/{{ item.servername }}.key"
   notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
   when: (item.https_mode is not defined) or (item.https_mode == 'selfsigned')
   with_items: "{{ apache_reverseproxies }}"
 
