@@ -101,7 +101,8 @@ libvirt_port_forwards:
 - proxmox: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 
 **Fixed:**
-- netdata/backup: fix netdata not detecting outdated or absent last successful backup timestamp file
+- netdata: fix netdata not alerting on failed systemd services
+- netdata/backup: fix netdata not alerting on outdated or absent last successful backup timestamp file
 - tt_rss: `fatal: detected dubious ownership in repository` error when upgrading tt-rss
 - tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - jitsi: fix jicofo unable to connect to prosody (`Failed to connect/login: SASLError using SCRAM-SHA-1: not-authorized`)
