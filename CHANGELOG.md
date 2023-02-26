@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **proxmox:** if you want to keep using the [`proxmox`](https://gitlab.com/nodiscc/xsrv/-/tree/1.11.1/roles/proxmox) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.proxmox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) includes more features and is now the recommended role for simplified management of hypervisors and virtual machines. Proxmox VE remains suitable for more complex setups where management through a Web interface is desirable.
-- **rsyslog/graylog**: if you use the `rsyslog_forward_to_hostname` variable and it is pointing to a graylog instance deployed with the `graylog` role, update it to use the graylog instance FQDN instead of the graylog host inventory hostname (e.g. `logs.example.org` instead of `host1.example.org`)
+- **rsyslog/graylog**: if you use the [`rsyslog_forward_to_hostname`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variable and it is pointing to a graylog instance deployed with the `graylog` role, update it to use the graylog instance FQDN instead of the graylog host inventory hostname (e.g. `logs.example.org` instead of `host1.example.org`)
 - **libvirt:** you will need to restart all libvirt networks and attached VMs for the changes to take effect (a full hypervisor reboot may be simpler)
 - **libvirt:** if you have defined custom [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), update them to use the new syntax:
 - **tt_rss:** to prevent a possible error during upgrade (`fatal: detected dubious ownership in repository`), run the playbook with the `tt_rss-permissions` tag first (`TAGS=tt_rss-permissions xsrv deploy`)
@@ -44,37 +44,49 @@ libvirt_port_forwards:
         host_port: 80
         vm_port: 80
         protocol: tcp # tcp is now the default and can be omitted
-      - host_interface: eth0 # the "outside" network interface can now be specified instead of the IP address
+      - host_interface: eth0 # the outside network interface can now be specified instead of the IP
         host_port: 19101
         vm_port: 19999
+  # additional examples
+  - vm_name: vm201.CHANGEME.org
+    vm_ip: 10.2.0.100
+    vm_bridge: virbr2
+    dnat:
       - host_interface: eth0
         host_port: 30000-30100 # port ranges separated by - are now supported
         vm_port: 30000-30100
         protocol: udp
+      - host_interface: eth0 # host_interface/host_ip can be combined for finer control
+        host_ip: 192.168.12.0/24
+        host_port: 123
+        vm_port: 123
+    forward: # it is now possible to setup forwarding rules between interfaces/bridges without DNAT
+      - source_interface: virbr2
+        source_ip: 10.2.1.31
+        vm_port: 5140
 ```
 
 
 **Added:**
 - apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
 - libvirt: add [`utils-libvirt-setmem` tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
-- libvirt: allow adding users to the `libvirt/libvirt-qemu/kvm` groups so that they can use `virsh` without sudo ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml))
+- libvirt: add [`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml) variable: users to add to the `libvirt/libvirt-qemu/kvm` groups so that they can use `virsh` without sudo
 - libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding port ranges
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow limiting DNAT rules to specific source IPs/networks (`libvirt_port_forwards.*.dnat.*.source_ip`)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding ports between libvirt bridges/networks without DNAT (`libvirt_port_forwards.*.forward`)
+- readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
 
 **Changed:**
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): rename `--dump` option to `--dumpxml`, require an output file as argument
-- readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
-- common: create the `ssh` group automatically during initial setup, don't require manually adding the ansible user to the group
 - common: [`users.*.sudo_nopasswd_commands`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml): allow using passwordless sudo as any user, not just root
+- common: create the `ssh` group automatically during initial setup, don't require manually adding the ansible user to the group
 - common/matrix: enable automatic upgrades for matrix (synapse) packages by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
 - libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks](https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
 - libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): add a `dnat` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding/DNAT rules (each one with its `host_interface/host_ip,host_port,vm_port,protocol`)
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow limiting DNAT rules to user-defined source IPs/networks (`libvirt_port_forwards.*.dnat.*.source_ip`)
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow configuring forwarding rules without DNAT (between libvirt bridges/networks - `libvirt_port_forwards.*.forward`)
 - libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (allow omitting `protocol: tcp`)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
-- graylog: don't aggregate noisy graylog access logs to syslog
+- graylog/rsyslog: don't aggregate noisy graylog access logs to syslog
 - gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
 - gitea: update to v1.18.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.18.3) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.4) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.5)
 - matrix: update element-web to v1.11.23 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.21) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.22) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.23)
@@ -89,6 +101,7 @@ libvirt_port_forwards:
 
 **Fixed:**
 - tt_rss: `fatal: detected dubious ownership in repository` error when upgrading tt-rss
+- tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
 - jitsi: fix jicofo unable to connect to prosody (`Failed to connect/login: SASLError using SCRAM-SHA-1: not-authorized`)
 - common: apt: ensure ca-certificates is installed (required for HTTP APT sources)
 - libvirt: ensure requirements for libvirt network/storage/VM configuration tasks are installed
