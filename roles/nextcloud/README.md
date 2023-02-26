@@ -92,25 +92,6 @@ Other:
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_nextcloud.conf.j2) for the [backup](../backup/README.md) role.
 
-To restore a backup:
-
-```bash
-# Remove the nextcloud database (nextcloud by default)
-mysql -u root -p -e 'DROP database nextcloud;'
-# Remove the nextcloud installation directory
-rm -rv /var/www/my.example.org/nextcloud
-# Remove the nextcloud data directory
-rm -rv /var/nextcloud/data
-# Reinstall nextcloud by running the playbook/nextcloud role
-xsrv deploy
-# Restore the database
-mysql -u root -p nextcloud < /var/backups/rsnapshot/daily.0/localhost/var/backups/mysql/nextcloud/nextcloud.sql
-# Restore the data directory
-rsync -avP --delete /var/backups/rsnapshot/daily.0/localhost/var/nextcloud/data /var/nextcloud/
-# Rescan files
-sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
-```
-
 To backup files from a remote host with the `nodiscc.xsrv.backup` role:
 
 ```yaml
@@ -130,6 +111,32 @@ rsnapshot_remote_backups:
     ssh_authorized_keys: ['data/public_keys/root@backup.CHANGEME.org.pub']
     sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]
 ```
+
+To restore a backup:
+
+```bash
+# deploy the nextcloud role
+xsrv deploy
+# SSH to the backup server
+xsrv shell default  backup.CHANGEME.org
+# copy the last database dump somewhere readable by the postgres user
+deploy@backup:~$ sudo rsync -avzP --rsync-path '/usr/bin/sudo /usr/bin/rsync' /var/backups/rsnapshot/daily.0/nextcloud.CHANGEME.org/var/backups/postgresql/nextcloud.sql rsnapshot@nextcloud.CHANGEME.org:/tmp/
+# restore the data directory and configuration file
+deploy@backup:~$ sudo rsync -avzP --rsync-path '/usr/bin/sudo /usr/bin/rsync' /var/backups/rsnapshot/daily.0/nextcloud.CHANGEME.org/var/nextcloud/ rsnapshot@nextcloud.CHANGEME.org:/var/nextcloud/
+deploy@backup:~$ sudo rsync -avzP --rsync-path '/usr/bin/sudo /usr/bin/rsync' /var/backups/rsnapshot/daily.0/nextcloud.CHANGEME.org/var/www/cloud.CHANGEME.org/config/config.php rsnapshot@nextcloud.CHANGEME.org:/var/www/cloud.CHANGEME.org/config/config.php
+
+# SSH to the nextcloud server
+xsrv shell default nextcloud.CHANGEME.org
+# fix permissions on restored files
+deploy@nextcloud:~$ sudo chown -R nextcloud:nextcloud /var/nextcloud/ /var/www/cloud.CHANGEME.org/config/config.php 
+# create a plaintext sql dump from the custom-formatted dump
+deploy@nextcloud:~$ sudo -u postgres pg_restore --file - --clean --create /tmp/nextcloud.sql > /tmp/nextcloud.txt.sql
+# restore the plaintext sql dump
+deploy@nextcloud:~$ sudo -u postgres psql --echo-errors --file /tmp/nextcloud.txt.sql 
+# rescan files
+deploy@nextcloud:~$ sudo -u nextcloud /usr/bin/php /var/www/cloud.CHANGEME.org/occ files:scan --all
+```
+
 
 ### Other
 
