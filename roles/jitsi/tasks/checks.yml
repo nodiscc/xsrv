@@ -7,6 +7,7 @@
     - jitsi_fqdn is not search('CHANGEME')
     - jitsi_turn_secret is not search('CHANGEME')
     - jitsi_prosody_password is not search('CHANGEME')
+    - jitsi_jvb_prosody_password is not search('CHANGEME')
     - jitsi_firewalld_zones|type_debug == "list"
     - jitsi_users|type_debug == "list"
     - jitsi_https_mode in ['selfsigned', 'letsencrypt']

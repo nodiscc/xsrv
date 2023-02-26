@@ -42,13 +42,18 @@
 - name: run all notified handlers now
   meta: flush_handlers
 
-# since we don't install the jitsi-meet metapackage these options must be set manually before instalaltion
+# since we don't install the jitsi-meet metapackage these options must be set manually before installation
 - name: set debconf values for jitsi meet
   debconf: "{{ item }}"
+  no_log: yes
   loop:
     - name: jitsi-videobridge
       question: jitsi-videobridge/jvb-hostname
       value: "{{ jitsi_fqdn }}"
+      vtype: string
+    - name: jitsi-videobridge
+      question: jitsi-videobridge/jvbsecret
+      value: "{{ jitsi_jvb_prosody_password }}"
       vtype: string
     - name: jitsi-meet
       question: jitsi-meet/jvb-serve
@@ -59,17 +64,25 @@
       value: "{{ jitsi_fqdn }}"
       vtype: string
     - name: jitsi-meet-prosody
-      question: jitsi-meet-prosody/turn-secret
-      value: "{{ jitsi_turn_secret }}"
+      question: jitsi-videobridge/jvbsecret
+      value: "{{ jitsi_jvb_prosody_password }}"
       vtype: string
     - name: jitsi-meet-prosody
-      question: jicofo/jicofo_auth_password
-      value: "{{ jitsi_prosody_password }}"
+      question: jitsi-meet-prosody/turn-secret
+      value: "{{ jitsi_turn_secret }}"
       vtype: string
     - name: jitsi-meet-prosody
       question: jitsi-meet/cert-choice
       value: "Generate a new self-signed certificate"
       vtype: string
+    - name: jitsi-meet-prosody
+      question: jicofo/jicofo-authpassword
+      value: "{{ jitsi_prosody_password }}"
+      vtype: password
+    - name: jicofo
+      question: jicofo-authpassword
+      value: "{{ jitsi_prosody_password }}"
+      vtype: password
 
 
 # we don't install the jitsi-meet metapackage because it pulls jitsi-meet-web-config and breaks apache configuration
@@ -110,6 +123,17 @@
     src: etc_jitsi_jicofo_jicofo.conf.j2
     dest: /etc/jitsi/jicofo/jicofo.conf
     owner: jicofo
+    group: jitsi
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart jitsi
+
+- name: configure jitsi-videobridge
+  lineinfile:
+    path: /etc/jitsi/videobridge/sip-communicator.properties
+    regexp: '^org.jitsi.videobridge.xmpp.user.shard.PASSWORD'
+    line: 'org.jitsi.videobridge.xmpp.user.shard.PASSWORD={{ jitsi_jvb_prosody_password }}'
+    owner: jvb
     group: jitsi
     mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"

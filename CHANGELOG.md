@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - **libvirt:** you will need to restart all libvirt networks and attached VMs for the changes to take effect (a full hypervisor reboot may be simpler)
 - **libvirt:** if you have defined custom [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), update them to use the new syntax:
 - **tt_rss:** to prevent a possible error during upgrade (`fatal: detected dubious ownership in repository`), run the playbook with the `tt_rss-permissions` tag first (`TAGS=tt_rss-permissions xsrv deploy`)
+- **jitsi:** set the variable `jitsi_jvb_prosody_password` to a random 8 character string in your host configuration
 - make sure `fact_caching_timeout = 1` is set in your project's `ansible.cfg` (`xsrv edit-cfg`) since long cache timeouts can cause problems with tasks that expect up-to-date facts
 - `xsrv deploy` to apply changes
 
@@ -108,7 +109,7 @@ libvirt_port_forwards:
 - netdata/backup: fix netdata not alerting on outdated or absent last successful backup timestamp file
 - tt_rss: `fatal: detected dubious ownership in repository` error when upgrading tt-rss
 - tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
-- jitsi: fix jicofo unable to connect to prosody (`Failed to connect/login: SASLError using SCRAM-SHA-1: not-authorized`)
+- jitsi: fix jicofo/jitsi-videobridge unable to connect to prosody
 - common: apt: ensure ca-certificates is installed (required for HTTP APT sources)
 - libvirt: ensure requirements for libvirt network/storage/VM configuration tasks are installed
 - libvirt: fix `configure libvirt networks` failing if the network does not already exist

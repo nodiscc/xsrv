@@ -71,6 +71,7 @@ dovecot_ldap_bind_password: "CHANGEME"
 ##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
 jitsi_turn_secret: "CHANGEME16"
 jitsi_prosody_password: "CHANGEME8"
+jitsi_jvb_prosody_password: "CHANGEME8"
 jitsi_users:
   - name: "{{ xsrv_admin_username }}"
     password: "{{ xsrv_admin_password }}"

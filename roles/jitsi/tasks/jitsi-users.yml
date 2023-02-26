@@ -14,10 +14,16 @@
   when:
     - item.state is defined
     - item.state == 'absent'
+  no_log: yes
   with_items: "{{ jitsi_users }}"
 
-- name: set prosody account password for the jicofo user
+- name: migration/1.12.0 - set prosody account password for jicofo/jvb users
   command:
-    cmd: "prosodyctl register focus auth.{{ jitsi_fqdn }} {{ jitsi_prosody_password }}"
+    cmd: "prosodyctl register {{ item.name }} auth.{{ jitsi_fqdn }} {{ item.password }}"
   no_log: yes
   changed_when: no # never return changed, instead of always
+  with_items:
+    - name: focus
+      password: "{{ jitsi_prosody_password }}"
+    - name: jvb
+      password: "{{ jitsi_jvb_prosody_password }}"
