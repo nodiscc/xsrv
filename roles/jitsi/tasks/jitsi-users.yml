@@ -15,3 +15,8 @@
     - item.state is defined
     - item.state == 'absent'
   with_items: "{{ jitsi_users }}"
+
+- name: set prosody account password for the jicofo user
+  command:
+    cmd: "prosodyctl register focus auth.{{ jitsi_fqdn }} {{ jitsi_prosody_password }}"
+  changed_when: no # never return changed, instead of always

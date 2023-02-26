@@ -89,6 +89,7 @@ libvirt_port_forwards:
 
 **Fixed:**
 - tt_rss: `fatal: detected dubious ownership in repository` error when upgrading tt-rss
+- jitsi: fix jicofo unable to connect to prosody (`Failed to connect/login: SASLError using SCRAM-SHA-1: not-authorized`)
 - common: apt: ensure ca-certificates is installed (required for HTTP APT sources)
 - libvirt: ensure requirements for libvirt network/storage/VM configuration tasks are installed
 - libvirt: fix `configure libvirt networks` failing if the network does not already exist

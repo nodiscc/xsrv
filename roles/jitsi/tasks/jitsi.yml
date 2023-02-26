@@ -153,3 +153,6 @@
     - prosody
     - jicofo
     - jitsi-videobridge2
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
