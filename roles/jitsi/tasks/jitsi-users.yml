@@ -7,7 +7,7 @@
   no_log: yes
   with_items: "{{ jitsi_users }}"
 
-- name: create jitsi user accounts
+- name: delete jitsi user accounts
   command:
     cmd: "prosodyctl unregister {{ item.name }} {{ jitsi_fqdn }}"
     removes: "/var/lib/prosody/{{ jitsi_fqdn | replace('.', '%2e') }}/accounts/{{ item.name }}"
