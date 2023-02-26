@@ -724,7 +724,7 @@ function migrate_group_vars_file() {
 function check_user_in_libvirt_groups() {
     # check if the user is in the required groups to use init-vm/init-vm-template commands
     missing_groups=""
-    for groupname in libvirt libvirt-qemu kvm ghsghgh; do
+    for groupname in libvirt libvirt-qemu kvm; do
         id --name --groups --zero | grep -qzxF "$groupname" || missing_groups="$missing_groups $groupname"
     done
     if [[ "$(whoami)" != "root" && -n "$missing_groups" ]]; then
