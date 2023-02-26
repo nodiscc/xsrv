@@ -120,6 +120,7 @@ rsnapshot_backup_execs:
 rsnapshot_remote_backups:
   - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/backups/postgresql' }
   - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/nextcloud' }
+  - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/www/cloud.CHANGEME.org/config/config.php' }
 ```
 ```yaml
 # xsrv edit-host default nextcloud.CHANGEME.org
