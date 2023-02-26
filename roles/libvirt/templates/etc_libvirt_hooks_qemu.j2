@@ -13,7 +13,7 @@ if [ "${1}" = "{{ item.vm_name }}" ]; then
     fi
     if [ "${2}" = "start" ] || [ "${2}" = "reconnect" ]; then
 {% for dnat_rule in item.dnat | default([]) %}
-        /sbin/iptables --table filter --insert FORWARD --in-interface {{ dnat_rule.host_interface }} --out-interface {{ item.vm_bridge }} --destination {{ item.vm_ip }} --protocol {{ dnat_rule.protocol | default('tcp') }} --match multiport --dports {{ dnat_rule.vm_port | regex_replace('-', ':') }} {% if dnat_rule.source_ip is defined %} -source {{ dnat_rule.source_ip }}{% endif %} --jump ACCEPT
+        /sbin/iptables --table filter --insert FORWARD --in-interface {{ dnat_rule.host_interface }} --out-interface {{ item.vm_bridge }} --destination {{ item.vm_ip }} --protocol {{ dnat_rule.protocol | default('tcp') }} --match multiport --dports {{ dnat_rule.vm_port | regex_replace('-', ':') }} {% if dnat_rule.source_ip is defined %} --source {{ dnat_rule.source_ip }}{% endif %} --jump ACCEPT
         /sbin/iptables --table nat --insert PREROUTING --in-interface {{ dnat_rule.host_interface }} --protocol {{ dnat_rule.protocol | default('tcp') }} --dport {{ dnat_rule.host_port | regex_replace('-', ':') }} {% if dnat_rule.source_ip is defined %}--source {{ dnat_rule.source_ip }}{% endif %} --jump DNAT --to-destination {{ item.vm_ip }}:{{ dnat_rule.vm_port }}
 {% endfor %}
 {% for forward_rule in item.forward | default([]) %}
