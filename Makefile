@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.13.1 yamllint ansible==7.2.0
+	pip3 install isort ansible-lint==6.13.1 yamllint ansible==7.3.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv

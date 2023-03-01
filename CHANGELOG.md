@@ -91,7 +91,7 @@ libvirt_port_forwards:
 - gitea: update to v1.18.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.18.3) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.4) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.5)
 - matrix: update element-web to v1.11.23 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.21) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.22) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.23)
 - postgresql: update pgmetrics to [v1.14.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.14.1)
-- xsrv: update ansible to [v7.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- xsrv: update ansible to [v7.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - common/monitoring_netdata/rsyslog/utils: make roles compatible with [Debian 12 Bookworm](https://www.debian.org/releases/bookworm/)
 - cleanup: standardize task names, file permissions
 - improve check mode support
