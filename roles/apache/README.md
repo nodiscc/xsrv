@@ -56,6 +56,7 @@ linux_users:
 apache - setup the apache web server
 ssl - setup SSL certificates and configuration
 apache-mod-evasive - setup apache anti-DoS module
+apache-reverseproxy - setup apache custom reverseproxies
 ```
 <!--END TAGS LIST-->
 

@@ -83,6 +83,7 @@ _Note: due to TT-RSS "rolling" release model (always install the latest `master`
 tt_rss - setup tt-rss feed reader
 tt_rss-postgresql - setup tt-rss postgresql database
 tt_rss-app - setup tt-rss appllication
+tt_rss-permissions - set/fix permissions/ownership on tt-rss directories
 ```
 <!--END TAGS LIST-->
 
