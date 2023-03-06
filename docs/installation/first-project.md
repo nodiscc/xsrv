@@ -55,7 +55,6 @@ nodiscc.xsrv:1.3.1 was installed successfully
     # - nodiscc.xsrv.wireguard # fast and modern VPN server
     # - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
     # - nodiscc.xsrv.gotty # access server terminal as a web application
-    # - nodiscc.xsrv.proxmox # basic setup steps for proxmox hypervisors
     # - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
     # - nodiscc.xsrv.graylog # log management, capture and analysis platform
     # - nodiscc.xsrv.homepage # simple webserver homepage

@@ -13,7 +13,7 @@
     dest: /etc/apache2/sites-available/graylog.conf
     owner: root
     group: root
-    mode: 0600
+    mode: "0644"
   notify: reload apache
 
 - name: enable graylog apache virtualhost configuration

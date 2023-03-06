@@ -18,7 +18,7 @@
     dest: "/etc/nslcd.conf"
     owner: root
     group: nslcd
-    mode: 0640
+    mode: "0640"
   notify: restart nslcd
 
 - name: copy nscd configuration
@@ -27,7 +27,7 @@
     dest: "/etc/nscd.conf"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart nscd
 
 - name: copy nsswitch configuration
@@ -37,7 +37,7 @@
     trim_blocks: no
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart nscd
 
 - name: decompress samba LDAP schema
@@ -49,18 +49,19 @@
 - name: import samba schema to LDAP database
   command: ldapadd -Q -Y EXTERNAL -H ldapi:/// -f /usr/share/doc/samba/examples/LDAP/samba.ldif
   when: (ansible_local.samba.general.ldap_schema_installed is not defined) or (not ansible_local.samba.general.ldap_schema_installed)
+  changed_when: yes
 
 - name: create ansible local facts directory
   file:
     path: "/etc/ansible/facts.d"
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: create samba fact file
   template:
     src: etc_ansible_facts.d_samba.fact.j2
     dest: /etc/ansible/facts.d/samba.fact
-    mode: 0644
+    mode: "0644"
   notify: update ansible facts
 
 # update ansible facts from files in /etc/ansible/facts.d/

@@ -4,7 +4,7 @@
   template:
     src: etc_fail2ban_jail.d_shaarli.conf.j2
     dest: /etc/fail2ban/jail.d/shaarli.conf
-    mode: 0600
+    mode: "0600"
   tags: fail2ban
   notify: reload fail2ban
 
@@ -12,6 +12,6 @@
   copy:
     src: etc_fail2ban_filter.d_shaarli-auth.conf
     dest: /etc/fail2ban/filter.d/shaarli-auth.conf
-    mode: 0600
+    mode: "0600"
   tags: fail2ban
   notify: reload fail2ban

@@ -31,6 +31,24 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_postgresql.conf.j2) for the [backup](../backup/README.md) role.
 
+To backup postgresql data from a remote host with the `nodiscc.xsrv.backup` role:
+
+```yaml
+# xsrv edit-host default backup.CHANGEME.org
+rsnapshot_backup_execs:
+  - 'ssh -oStrictHostKeyChecking=no rsnapshot@db.CHANGEME.org /usr/local/bin/postgres-dump-all-databases.sh'
+rsnapshot_remote_backups:
+  - { user: 'rsnapshot', host: 'db.CHANGEME.org', path: '/var/backups/postgresql' }
+```
+```yaml
+# xsrv edit-host default db.CHANGEME.org
+  - name: "rsnapshot"
+    groups: [ "ssh", "sudo", "postgres" ]
+    comment: "limited user account for remote backups"
+    ssh_authorized_keys: ['data/public_keys/root@backup.CHANGEME.org.pub']
+    sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]
+```
+
 ### Metrics
 
 To install and run [pgmetrics](https://pgmetrics.io/) agains the installed PostgreSQL instance, pass the `utils-pgmetrics` tag to ansible-playbook:

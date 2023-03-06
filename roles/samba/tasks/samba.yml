@@ -22,7 +22,7 @@
     dest: /etc/modules-load.d/nf-conntrack-netbios-ns.conf
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
 
 - name: set samba LDAP admin dn password (always returns changed)
   command: "smbpasswd -w {{ openldap_admin_password }}"  # noqa no-changed-when
@@ -39,7 +39,7 @@
     dest: /etc/samba/smb.conf
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
   notify: reload samba
   tags: samba-shares
 
@@ -57,7 +57,7 @@
     state: directory
     owner: root
     group: sambausers
-    mode: 0750
+    mode: "0750"
   tags: samba-shares
 
 - name: create individual samba shares directories
@@ -66,6 +66,6 @@
     state: "{{ item.state | default('directory') }}"
     owner: root
     group: sambausers
-    mode: 0775
+    mode: "0775"
   with_items: "{{ samba_shares }}"
   tags: samba-shares

@@ -1,0 +1,17 @@
+- name: get VM current memory from XML definition
+  community.general.xml:
+    path: "{{ item.xml_file }}"
+    xpath: /domain/currentMemory
+    content: text
+  register: mem
+  delegate_to: localhost
+  tags: utils-libvirt-setmem
+
+- name: set VM current memory (always returns changed)
+  command:
+    cmd: "virsh setmem {{ item.name }} --size {{ mem.matches[0].currentMemory }} --current"
+  register: setmem
+  become: yes
+  changed_when: yes
+  failed_when: (setmem.rc != 0) and ('cannot set memory higher than max memory' not in setmem.stderr)
+  tags: utils-libvirt-setmem

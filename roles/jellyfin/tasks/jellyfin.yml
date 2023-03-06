@@ -19,7 +19,7 @@
     dest: /usr/share/keyrings/jellyfin.gpg
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 - name: add jellyfin APT repository
@@ -28,7 +28,7 @@
     dest: /etc/apt/sources.list.d/jellyfin.list
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 # update APT cache for jellyfin packages to become available
@@ -63,7 +63,7 @@
     state: directory
     owner: jellyfin
     group: jellyfin
-    mode: 02770
+    mode: "2770"
   with_items:
     - media
     - media/movies
@@ -87,7 +87,7 @@
     path: /var/lib/jellyfin
     owner: jellyfin
     group: jellyfin
-    mode: 0770
+    mode: "0770"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: allow ansible user to read/write jellyfin data files

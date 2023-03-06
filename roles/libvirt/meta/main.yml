@@ -3,6 +3,7 @@
 # @tag libvirt-networks - setup libvirt virtual networks
 # @tag libvirt-port-forwards - setup libvirt port forwards
 # @tag libvirt-vms - setup libvirt virtual machines
+# @tag utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 
 galaxy_info:
   role_name: libvirt

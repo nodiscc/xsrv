@@ -74,7 +74,7 @@
     dest: /etc/netdata/{{ item }}
     owner: root
     group: netdata
-    mode: 0640
+    mode: "0640"
     delimiter: ''
   with_items:
     - go.d/filecheck.conf

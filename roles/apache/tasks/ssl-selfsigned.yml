@@ -28,3 +28,35 @@
     provider: selfsigned
   notify: restart apache
   ignore_errors: "{{ ansible_check_mode }}"
+
+##### REVERSE PROXIES #####
+
+- name: generate private keys for self-signed certificates
+  openssl_privatekey:
+    path: "/etc/ssl/private/{{ item.servername }}.key"
+  notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (item.https_mode is not defined) or (item.https_mode == 'selfsigned')
+  with_items: "{{ apache_reverseproxies }}"
+
+- name: generate certificate signing request for self-signed certificates
+  openssl_csr:
+    path: "/etc/ssl/private/{{ item.servername }}.csr"
+    privatekey_path: "/etc/ssl/private/{{ item.servername }}.key"
+    common_name: "localhost"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (item.https_mode is not defined) or (item.https_mode == 'selfsigned')
+  with_items: "{{ apache_reverseproxies }}"
+
+- name: generate self-signed certificate for self-signed certificates
+  openssl_certificate:
+    path: "/etc/ssl/certs/{{ item.servername }}.crt"
+    privatekey_path: "/etc/ssl/private/{{ item.servername }}.key"
+    csr_path: "/etc/ssl/private/{{ item.servername }}.csr"
+    provider: selfsigned
+  notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (item.https_mode is not defined) or (item.https_mode == 'selfsigned')
+  with_items: "{{ apache_reverseproxies }}"

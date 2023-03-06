@@ -9,7 +9,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
   with_items:
     - url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64"
       dest: "/root/gitea-{{ gitea_version }}-linux-amd64"
@@ -25,7 +25,7 @@
     dest: /root/gitea.key
     owner: root
     group: root
-    mode: 0660
+    mode: "0660"
 
 - name: import gitea GPG key
   command: gpg --import /root/gitea.key
@@ -75,7 +75,7 @@
   template:
     src: "etc_systemd_system_gitea.service.j2"
     dest: "/etc/systemd/system/gitea.service"
-    mode: 0644
+    mode: "0644"
   notify: reload systemd unit files
 
 # re-read systemd service configuration
@@ -86,7 +86,7 @@
   copy:
     src: "/root/gitea-{{ gitea_version }}-linux-amd64"
     dest: "/usr/local/bin/gitea"
-    mode: 0755
+    mode: "0755"
     remote_src: yes
     owner: root
     group: root
@@ -105,7 +105,7 @@
     dest: '/etc/gitea/app.ini'
     owner: root
     group: gitea
-    mode: 0640 # read only for gitea
+    mode: "0640" # read only for gitea
   notify: restart gitea
   tags: gitea-config
 
@@ -118,6 +118,7 @@
   when:
     - (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized)
     - not ansible_check_mode
+  changed_when: yes
 
 - name: create gitea admin user
   become: yes
@@ -138,7 +139,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0755
+    mode: "0755"
   with_items:
     - /etc/ansible/
     - /etc/ansible/facts.d
@@ -147,7 +148,7 @@
   template:
     src: etc_ansible_facts.d_gitea.fact.j2
     dest: /etc/ansible/facts.d/gitea.fact
-    mode: 0644
+    mode: "0644"
 
 ###### FAIL2BAN ############
 
@@ -155,7 +156,7 @@
   template:
     src: etc_fail2ban_jail.d_gitea.conf.j2
     dest: /etc/fail2ban/jail.d/gitea.conf
-    mode: 0600
+    mode: "0600"
   tags: fail2ban
   notify: reload fail2ban
 
@@ -163,7 +164,7 @@
   template:
     src: etc_fail2ban_filter.d_gitea-auth.conf.j2
     dest: /etc/fail2ban/filter.d/gitea-auth.conf
-    mode: 0600
+    mode: "0600"
   tags: fail2ban
   notify: reload fail2ban
 

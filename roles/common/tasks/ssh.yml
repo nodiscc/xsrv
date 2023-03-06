@@ -2,16 +2,21 @@
   template:
     src: 'etc_ssh_revoked_keys.j2'
     dest: '/etc/ssh/revoked_keys'
-    mode: 0600
+    mode: "0600"
   notify: restart ssh
 
-- name: Add authorized keys
+- name: add authorized keys
   authorized_key:
     user: "{{ ansible_user }}"
     state: present
     key: "{{ item }}"
   with_file: "{{ ssh_authorized_keys }}"
   tags: ssh-authorized-keys
+
+- name: create ssh group
+  group:
+    name: ssh
+    state: present
 
 # SSH configuration only allows users in the ssh group
 - name: ensure the ansible user belongs to the ssh group
@@ -28,13 +33,13 @@
   file:
     path: /var/lib/sftp
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: copy sshd configuration
   template:
     src: etc_ssh_sshd_config.j2
     dest: /etc/ssh/sshd_config
-    mode: 0600
+    mode: "0600"
   notify: restart ssh
 
 - name: install openssh server
@@ -58,6 +63,7 @@
       [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
   notify: restart ssh
   when: sshd_register_moduli.stdout
+  changed_when: yes
 
 - name: replace default 2048 bits RSA keypair with 4096 bits keypair
   openssh_keypair:
@@ -76,7 +82,7 @@
   file:
     state: directory
     path: /root/.ssh
-    mode: 0700
+    mode: "0700"
     owner: root
     group: root
 

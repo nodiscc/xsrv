@@ -55,8 +55,8 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.11.1"
-ansible_version="7.1.0"
+version="1.12.0"
+ansible_version="7.3.0"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
@@ -359,8 +359,8 @@ function self_upgrade() {
 ########## LIBVIRT RELATED COMMANDS ##########
 
 function init_vm() {
-    INIT_VM_USAGE="$0 init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
-        EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dump]
+    INIT_VM_USAGE="$0 init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP [--netmask 24] --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
+        EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /path/to/libvirt/vm/definition.xml]
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
         --template      name of the template to create the new VM from (default debian11-base)
@@ -375,10 +375,11 @@ function init_vm() {
         --disk-path     path to the qcow2 disk image to create (default: /var/lib/libvirt/images/VM_NAME.qcow2)
         --memory        VM memory with M or G suffix (default 1G)
         --vcpus         number of vCPUs (default: same value as the template)
-        --dump          display the VM XML definition after creation, for use with the nodiscc.xsrv.libvirt role
+        --dumpxml       write the VM XML definition to a file after creation
         "
+    check_user_in_libvirt_groups
     # parse command-line options
-    long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:,dump"
+    long_opts="help,template:,name:,ip:,netmask:,gateway:,ssh-port:,root-password:,sudo-user:,sudo-password:,ssh-pubkey:,disk-path:,memory:,vcpus:,dumpxml:"
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
     # default values
@@ -413,14 +414,14 @@ function init_vm() {
             --disk-path) disk_path=$2; shift 2;;
             --memory) memory=$2; shift 2;;
             --vcpus) vcpus=$2; shift 2;;
-            --dump) dump=yes; shift;;
+            --dumpxml) dump=yes; dumpxml_file=$2; shift 2;;
             --) shift; break;;
             *) echo "[xsrv] ERROR: invalid option $1"; echo "USAGE: $INIT_VM_USAGE"; exit 1;;
         esac
     done
     # check mandatory options
-    for i in "$template" "$name" "$ip" "$gateway" "$sudo_user" "$ssh_pubkey"; do
-        if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option --$i"; echo "[xsrv] USAGE: $INIT_VM_USAGE"; exit 1; fi
+    for i in "$name" "$ip" "$gateway" "$ssh_pubkey"; do
+        if [[ -z "$i" ]]; then echo "[xsrv] ERROR: missing required option"; echo "[xsrv] USAGE: $INIT_VM_USAGE"; exit 1; fi
     done
     # build /etc/network/interfaces for the target system 
     cat > ./libvirt-clone-interfaces.txt << EOF
@@ -444,7 +445,8 @@ EOF
     getent hosts "$name" || (echo "[xsrv] ERROR: resolving $name failed! Make sure a record exists in the DNS system or add this entry to /etc/hosts: $ip      $name"; exit 1)
     if [[ -z "$disk_path" ]]; then disk_path="/var/lib/libvirt/images/$name.qcow2"; fi
     echo "[xsrv] INFO: cloning template $template to $name..."
-    virt-clone --original "$template" \
+    virt-clone --connect qemu:///system \
+        --original "$template" \
         --name "$name" \
         --file "$disk_path"
     # virt-clone always creates the disk image with owner/group root:root mode 0600
@@ -452,7 +454,8 @@ EOF
     sudo chown libvirt-qemu:libvirt "$disk_path"
     sudo chmod 0660 "$disk_path"
     echo "[xsrv] INFO: cleaning up $name..."
-    virt-sysprep --domain "$name" \
+    virt-sysprep --connect qemu:///system \
+        --domain "$name" \
         --hostname "$name" \
         --password "$sudo_user:password:$sudo_password" \
         --root-password "password:$root_password" \
@@ -461,17 +464,17 @@ EOF
         --ssh-inject "$sudo_user:string:$ssh_pubkey"
     if [[ -n "$memory" ]]; then
         echo "[xsrv] INFO: updating memory settings for $name..."
-        virsh setmaxmem --domain "$name" --size "$memory" --config
-        virsh setmem --domain "$name" --size "$memory" --config
+        virsh --connect qemu:///system setmaxmem --domain "$name" --size "$memory" --config
+        virsh --connect qemu:///system setmem --domain "$name" --size "$memory" --config
     fi
     if [[ -n "$vcpus" ]]; then
         echo "[xsrv] INFO: updating CPU settings for $name..."
-        virsh setvcpus --domain "$name" --count "$vcpus" --config --maximum
-        virsh setvcpus --domain "$name" --count "$vcpus" --config
+        virsh --connect qemu:///system setvcpus --domain "$name" --count "$vcpus" --config --maximum
+        virsh --connect qemu:///system setvcpus --domain "$name" --count "$vcpus" --config
     fi
     echo "[xsrv] INFO: starting VM $name..."
-    virsh start "$name"
-    echo "[xsrv] INFO: waiting $name ssh server to start accepting connections..."
+    virsh --connect qemu:///system start "$name"
+    echo "[xsrv] INFO: waiting for $name SSH server to start accepting connections..."
     until nc -w 1 "$name" "$ssh_port"; do sleep 1; done
     echo "[xsrv] INFO: adding $name ssh server's hostkey to known_hosts file..."
     ssh-keyscan -H "$name" 2>/dev/null >> ~/.ssh/known_hosts
@@ -484,10 +487,10 @@ EOF
     rm ./libvirt-clone-interfaces.txt
 
     if [[ "$dump" == "yes" ]]; then
-        echo "[xsrv] INFO: You may now start managing this VM using th nodiscc.xsrv.libvirt_role."
+        echo "[xsrv] INFO: dumping VM XML definition to $dumpxml_file"
+        echo "[xsrv] INFO: You may now start managing this VM using the nodiscc.xsrv.libvirt_role."
         echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '{{ playbook_dir }}/data/libvirt/$name.xml'"
-        echo "[xsrv] INFO: $projects_dir/default/data/libvirt/$name.xml:"
-        virsh dumpxml "$name"
+        virsh --connect qemu:///system dumpxml "$name" > "$dumpxml_file"
     fi
 }
 
@@ -512,8 +515,9 @@ function init_vm_template() {
         --preseed-file  path to the preseed/preconfiguration file (default $xsrv_clone_dir/docs/preseed.cfg)
 
         "
+    check_user_in_libvirt_groups
     # parse command-line options
-    long_opts="help,name:,storage-path:,memory:,vcpus:,disk-size:,network:,ip:,gateway:,netmask:,preseed:,root-password:,sudo-password:,sudo-user:,nameservers:"
+    long_opts="help,name:,storage-path:,memory:,vcpus:,disk-size:,network:,ip:,gateway:,netmask:,preseed-file:,root-password:,sudo-password:,sudo-user:,nameservers:"
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
     # default values
@@ -574,6 +578,7 @@ function init_vm_template() {
     sudo sed -i "s/%%NAMESERVERS%%/${nameservers}/g" /var/lib/libvirt/preseed.cfg
     echo "[xsrv] INFO: installing operating system using preseed to VM $name..."
     sudo virt-install \
+        --connect qemu:///system \
         --name "$name" \
         --memory "$memory" \
         --disk "$storage_path/$name.qcow2,size=$disk_size,device=disk,bus=virtio,cache=none" \
@@ -591,7 +596,7 @@ function init_vm_template() {
     echo "[xsrv] INFO: cleaning up $name..."
     sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
     sudo chmod 0660 "$storage_path/$name.qcow2"
-    virt-sysprep --domain "$name"
+    virt-sysprep --connect qemu:///system --domain "$name"
     echo "[xsrv] INFO password for $sudo_user: $sudo_password"
     echo "[xsrv] INFO: password for root: $root_password"
 }
@@ -600,7 +605,7 @@ function readme_gen() {
     # generate a markdown inventory with information on ansible facts in the project's README.md
     # see https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen
     (cd "$project_dir" && (ansible --one-line --module-name setup all || true))
-    (cd "$project_dir" && ansible --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost)
+    (cd "$project_dir" && ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --extra-vars="xsrv_project_name=$project_name" --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost)
 }
 
 ########## INTERNAL HELPERS ##########
@@ -713,6 +718,18 @@ function migrate_group_vars_file() {
         fi
         mkdir -p "$projects_dir/$project_name/group_vars/$group_name"
         mv "$legacy_group_vars_file" "$group_vars_file"
+    fi
+}
+
+function check_user_in_libvirt_groups() {
+    # check if the user is in the required groups to use init-vm/init-vm-template commands
+    missing_groups=""
+    for groupname in libvirt libvirt-qemu kvm; do
+        id --name --groups --zero | grep -qzxF "$groupname" || missing_groups="$missing_groups $groupname"
+    done
+    if [[ "$(whoami)" != "root" && -n "$missing_groups" ]]; then
+        echo "[xsrv] ERROR: the current user is not a member of groups:$missing_groups. Please add your user to appropriate groups: sudo usermod $(whoami) -aG libvirt libvirt-qemu kvm. Logging out and in again might be needed to apply group membership changes."
+        exit 1
     fi
 }
 

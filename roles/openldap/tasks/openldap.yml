@@ -43,7 +43,7 @@
     state: directory
     owner: openldap
     group: openldap
-    mode: 0750
+    mode: "0750"
 
 - name: copy slapd configuration
   template:
@@ -51,7 +51,7 @@
     dest: /etc/default/slapd
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart slapd
 
 - name: apply configuration (flush handlers)

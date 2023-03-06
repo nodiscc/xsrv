@@ -7,7 +7,7 @@ The server (_host_) machine can be:
 - a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) (VM)
 - a [VPS](https://en.wikipedia.org/wiki/Virtual_private_server) from a hosting provider
 
-Virtualization software ([hypervisors](https://en.wikipedia.org/wiki/Hypervisor)) include [libvirt/virt-manager](../../appendices/virt-manager.md), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox), ...
+Virtualization software ([hypervisors](https://en.wikipedia.org/wiki/Hypervisor)) include [libvirt/virt-manager](../appendices/virt-manager.md), [Proxmox VE](https://en.wikipedia.org/wiki/Proxmox_Virtual_Environment), [Virtualbox](https://en.wikipedia.org/wiki/VirtualBox), ...
 
 Resource usage will vary depending on installed components (read each role's documentation), the number of concurrent users, and how much user data you need to store. Example minimal configuration for a personal/small team server with 2-10 users:
 

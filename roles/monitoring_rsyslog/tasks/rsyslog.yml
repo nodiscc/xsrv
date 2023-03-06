@@ -14,7 +14,7 @@
   template:
     src: etc_logrotate.d_rsyslog.j2
     dest: /etc/logrotate.d/rsyslog
-    mode: 0644
+    mode: "0644"
 
 - name: configure rsyslog
   template:
@@ -22,7 +22,7 @@
     dest: /etc/rsyslog.d/{{ item }}.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart rsyslog
   with_items:
     - 000-discard # discard useless messages

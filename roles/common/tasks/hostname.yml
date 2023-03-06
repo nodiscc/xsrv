@@ -11,6 +11,6 @@
     regexp: '^{{ item }}'
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items:
     - '127.0.1.1'

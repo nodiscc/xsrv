@@ -13,7 +13,7 @@
     dest: /etc/mumble-server.ini
     owner: mumble-server
     group: root
-    mode: 0600
+    mode: "0600"
   notify: restart mumble
   no_log: True
 

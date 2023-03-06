@@ -64,7 +64,7 @@
     state: directory
     owner: root
     group: graylog
-    mode: 0750
+    mode: "0750"
   with_items:
     - ssl
     - ssl/signing
@@ -81,7 +81,7 @@
   openssl_csr:
     path: "/etc/graylog/ssl/graylog-ca.csr"
     privatekey_path: "/etc/graylog/ssl/graylog-ca.key"
-    common_name: "{{ inventory_hostname }}"
+    common_name: "{{ graylog_fqdn }}"
     owner: root
     group: graylog
     mode: "0640"
@@ -104,13 +104,13 @@
   file:
     path: "{{ playbook_dir }}/data/certificates/"
     state: directory
-    mode: 0755
+    mode: "0755"
 
 # the certificate will be uploaded to syslog clients (hosts with rsyslog_enable_forwarding: yes)
 - name: download CA/server certificate to the controller
   fetch:
     src: /etc/graylog/ssl/graylog-ca.crt
-    dest: "{{ playbook_dir }}/data/certificates/{{ inventory_hostname }}-graylog-ca.crt"
+    dest: "{{ playbook_dir }}/data/certificates/{{ graylog_fqdn }}-graylog-ca.crt"
     flat: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -123,9 +123,3 @@
     state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
     daemon_reload: yes
   ignore_errors: "{{ ansible_check_mode }}"
-
-# - name: configure rsyslog to send logs to local UDP 5140
-#   template:
-#     src: etc_rsyslog.d_local-to-local-udp.conf.j2
-#     dest: /etc/rsyslog.d/local-to-local-udp.conf
-#   notify: restart rsyslog

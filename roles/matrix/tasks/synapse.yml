@@ -4,7 +4,7 @@
     dest: /etc/apt/sources.list.d/matrix.list
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 - name: add synapse APT signing keys
@@ -13,7 +13,7 @@
     dest: /usr/share/keyrings/matrix.gpg
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 # update APT cache for synapse packages to become available
@@ -32,7 +32,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart synapse
   with_items:

@@ -2,16 +2,17 @@
   apt:
     state: present
     package:
-      - virt-manager
       - virtinst
-      - virt-viewer
       - dnsmasq-base
       - libvirt-daemon-system
-      - gir1.2-spiceclientgtk-3.0
       - qemu-kvm
       - qemu-utils
       - netcat-openbsd
+      - python3-lxml
       # - ebtables
+      # - virt-manager # graphical environments only
+      # - virt-viewer # graphical environments only
+      # - gir1.2-spiceclientgtk-3.0 # graphical environments only
 
 - name: configure libvirt-guests
   template:
@@ -19,7 +20,7 @@
     dest: /etc/default/libvirt-guests
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: create directory for libvirtd systemd overrides
   file:
@@ -27,7 +28,7 @@
     path: /etc/systemd/system/libvirtd.service.d/
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: configure libvirt systemd unit overrides
   template:
@@ -35,7 +36,7 @@
     dest: /etc/systemd/system/libvirtd.service.d/override.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: reload systemd unit files
 
 - name: enable libvirtd/libvirt-guests services
@@ -48,6 +49,19 @@
     - libvirt-guests
   ignore_errors: "{{ ansible_check_mode }}"
 
+##### USERS #####
+
+- name: ensure libvirt users are added to the libvirt group
+  user:
+    name: "{{ item }}"
+    groups:
+      - libvirt
+      - libvirt-qemu
+      - kvm
+    append: true
+  with_items: "{{ libvirt_users }}"
+  notify: reset ssh connection
+
 ##### NETWORK #####
 
 - name: configure libvirt port forwards
@@ -56,8 +70,10 @@
     dest: /etc/libvirt/hooks/qemu
     owner: root
     group: root
-    mode: 0755
-  notify: restart libvirtd
+    mode: "0755"
+  notify:
+    - restart firewalld
+    - restart libvirtd
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-port-forwards
 
@@ -66,11 +82,27 @@
     name: "{{ item.name }}"
     command: define
     xml: "{{ lookup('template', 'network.xml.j2') }}"
+  with_items: "{{ libvirt_networks }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-networks
+
+- name: setup libvirt networks autostart
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
     autostart: "{{ item.autostart | default(True) }}"
-    state: "{{ item.state | default('active') }}"
+  with_items: "{{ libvirt_networks }}"
+  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: libvirt-networks
+
+- name: start/stop libvirt networks
+  community.libvirt.virt_net:
+    command: define
+    name: "{{ item.name }}"
+    state: "{{ 'active' if (item.state is not defined or item.state == 'active') else item.state }}"
   with_items: "{{ libvirt_networks }}"
   ignore_errors: "{{ ansible_check_mode }}"
-  when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
   tags: libvirt-networks
 
 - name: delete libvirt networks
@@ -94,17 +126,19 @@
 
 ##### STORAGE #####
 
-- name: create storage pool directories
+- name: create libvirt storage pool directories
   file:
     state: directory
     path: "{{ item.path }}"
     mode: "{{ item.mode | default('0750') }}"
+    owner: "{{ item.owner_uid | default('0') }}"
+    group: "{{ item.group_gid | default('64055') }}"
   with_items: "{{ libvirt_storage_pools }}"
   when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage
 
-- name: define/undefine/stop/delete storage pools
+- name: define libvirt storage pools
   community.libvirt.virt_pool:
     name: "{{ item.name }}"
     command: define
@@ -114,7 +148,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage
 
-- name: setup storage pools autostart
+- name: setup libvirt storage pools autostart
   community.libvirt.virt_pool:
     name: "{{ item.name }}"
     autostart: "{{ item.autostart | default(True) }}"
@@ -123,12 +157,11 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage
 
-- name: start storage pools
+- name: start/stop libvirt storage pools
   community.libvirt.virt_pool:
     command: define
     name: "{{ item.name }}"
     state: "{{ 'active' if (item.state is not defined or item.state == 'active') else item.state }}"
-    autostart: "{{ item.autostart | default(True) }}"
   with_items: "{{ libvirt_storage_pools }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-storage

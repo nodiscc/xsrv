@@ -11,7 +11,7 @@
     path: /etc/ssl/rsyslog
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 # generate a private key and CSR on the syslog client machine
 - name: generate syslog client openssl private key
@@ -19,7 +19,7 @@
     path: "/etc/ssl/rsyslog/rsyslog.key"
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   notify: restart rsyslog
 
 - name: generate syslog client openssl certificate signing request (CSR)
@@ -29,7 +29,7 @@
     common_name: "{{ inventory_hostname }}"
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
 
 - name: generate self-signed openssl client certificate
   openssl_certificate:
@@ -39,7 +39,7 @@
     provider: selfsigned
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
     force: no
   notify: restart rsyslog
 
@@ -49,4 +49,4 @@
     dest: /etc/ssl/rsyslog/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"

@@ -17,3 +17,13 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: libvirt
+
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include libvirt VM current memory size update tasks
+  include_tasks: utils-libvirt-setmem.yml
+  with_items: "{{ libvirt_vms }}"
+  when: (item.state is not defined) or (item.state in ['present', 'running', 'destroyed', 'shutdown'])
+  tags:
+    - never
+    - utils-libvirt-setmem

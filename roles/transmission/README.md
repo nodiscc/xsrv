@@ -39,7 +39,24 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ### Backups
 
-See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmsssion.conf.j2) for the [backup](../backup) role.
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_transmission.conf.j2) for the [backup](../backup) role.
+
+To restore a backup:
+
+```bash
+# reinstall transmission by running the playbook/transmission role
+xsrv deploy
+# stop the transmission-daemon service
+xsrv shell
+sudo systemctl stop transmission-daemon
+# Restore the data directory
+rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/lib/transmission-daemon/.config /var/lib/transmission-daemon/
+rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/lib/transmission-daemon/info /var/lib/transmission-daemon/
+# restart the transmission-daemon service
+xsrv shell
+sudo systemctl start transmission-daemon
+```
+
 
 ## Tags
 

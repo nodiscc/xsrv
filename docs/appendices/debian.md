@@ -13,8 +13,7 @@
 - Follow the installation procedure, using the following options:
   - Set the machine's locale/language to English (`en_US.UTF-8`)
   - IP address: preferably a static IP address and the correct network mask/gateway, or use automatic configuration/DHCP
-  - DNS server: specify your ISP/hoster's DNS server, a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server),
-or your private DNS server ([pfSense](pfsense.md) is a good start to boostrap a private DNS server)
+  - DNS server: specify your ISP/hoster's DNS server, a [public DNS service](https://en.wikipedia.org/wiki/Public_recursive_name_server), or your private/internal DNS server
   - Enable the `root` account, set a strong password and store it somewhere safe like a Keepass database
   - Do **not** create an additional user account yet
   - Any disk partitioning scheme is OK, here are some generic recommendations:
@@ -31,14 +30,14 @@ or your private DNS server ([pfSense](pfsense.md) is a good start to boostrap a 
 
 - From the server console, login as `root`
 - Install ansible requirements: `apt update && apt --no-install-recommends install python3 aptitude sudo openssh-server`
-- Create an administrator user account (replace `deploy` with the desired name): `useradd --create-home --groups ssh,sudo --shell /bin/bash deploy`
+- Create an administrator user account (replace `deploy` with the desired name): `useradd --create-home --groups sudo --shell /bin/bash deploy`
 - Set the `sudo` password for this user: `passwd deploy`
 - Lock the console: `logout`
 
 
 ### Automated, from preseed file
 
-`xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be installed installed on the machine where these commands are run.
+`xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) and must be [installed](../installation/controller-preparation.md) on the machine where these commands are run.
 
 The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/bullseye/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
 
@@ -70,12 +69,12 @@ The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/b
 
 ### Automated, from a VM template
 
-If you already have a [libvirt](virt-manager.md) Debian VM set up as described above, it can be reused as a template for other VMs. This significantly reduces the time needed to setup a new VM and make it ready for deployment. The time required to provision a new host using this method should not exceed 1 minute.
+If you already have a [libvirt](virt-manager.md) Debian VM set up as described above, it can be reused as a template (_golden image_) for other VMs. This significantly reduces the time needed to setup a new VM and make it ready for deployment. The time required to provision a new host using this method should not exceed 1 minute.
 
 ```bash
 $ ./xsrv init-vm --help
-USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP --netmask VM_NETMASK --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
-        EXAMPLE: ./xsrv init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dump]
+USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP [--netmask 24] --gateway VM_GATEWAY [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] --ssh-pubkey 'ssh-rsa AAAAB...' [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
+        EXAMPLE: ./xsrv init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.1 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /path/to/libvirt/vm/definition.xml]
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
         --template      name of the template to create the new VM from (default debian11-base)
@@ -90,7 +89,7 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP --ne
         --disk-path     path to the qcow2 disk image to create (default: /var/lib/libvirt/images/VM_NAME.qcow2)
         --memory        VM memory with M or G suffix (default 1G)
         --vcpus         number of vCPUs (default: same value as the template)
-        --dump          display the VM XML definition after creation, for use with the nodiscc.xsrv.libvirt role
+        --dumpxml       write the VM XML definition to a file after creation
 ```
 
 [![](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k.svg)](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k?speed=2&theme=monokai&autoplay=true)

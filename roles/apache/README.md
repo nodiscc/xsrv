@@ -21,6 +21,10 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
      - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, bruteforce prevention
      - nodiscc.xsrv monitoring # (optional) apache/virtualhost monitoring, log aggregation
      - nodiscc.xsrv.apache
+
+# required variables:
+# ansible-vault edit host_vars/my.CHANGEME.org/my.CHANGEME.org.vault.yml
+apache_letsencrypt_email: "CHANGEME"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
@@ -32,7 +36,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 **Integration with other roles:** Each role relying on this one must install its own configuration in `/etc/apache2/{conf,sites}-{available,enabled}/` and notify the `reload/restart apache` handlers.
 
-**Allow a user to read apache/web applications files:** Add you user to the `www-data` group. For example using the [`common`](../common/) role:
+**Allow a user to read apache/web applications files:** Add the user to the `www-data` group. For example using the [`common`](../common/) role:
 
 ```yaml
 linux_users:
@@ -52,6 +56,7 @@ linux_users:
 apache - setup the apache web server
 ssl - setup SSL certificates and configuration
 apache-mod-evasive - setup apache anti-DoS module
+apache-reverseproxy - setup apache custom reverseproxies
 ```
 <!--END TAGS LIST-->
 

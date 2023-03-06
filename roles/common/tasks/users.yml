@@ -12,14 +12,14 @@
   template:
     src: etc_login.defs.j2
     dest: /etc/login.defs
-    mode: 0600
+    mode: "0600"
 
 - name: set shadow file owner to root and mode to 0600
   file:
     path: /etc/shadow
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
 
 - name: ensure /var/log/wtmp is not world-readable
   file:
@@ -33,7 +33,7 @@
     dest: /etc/logrotate.d/wtmp
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: ensure ansible user home directory is not world-readable
   file:
@@ -41,7 +41,7 @@
     path: "{{ ansible_env.HOME }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-    mode: 0750
+    mode: "0750"
 
 - name: create additional user accounts
   user:
@@ -67,13 +67,13 @@
   template:
     src: etc_sudoers.d_nopasswd.j2
     dest: /etc/sudoers.d/nopasswd
-    mode: 0440
+    mode: "0440"
 
 - name: configure sudo to run processes in a pseudo-terminal
   template:
     src: etc_sudoers.d_use-pty.j2
     dest: /etc/sudoers.d/use-pty
-    mode: 0440
+    mode: "0440"
 
 
 ##### SFTP #####
@@ -97,7 +97,7 @@
     path: "{{ item.home }}/{{ item.name }}"
     owner: "{{ item.name }}"
     group: "{{ item.name }}"
-    mode: 0770
+    mode: "0770"
   when:
     - item.groups is defined
     - '"sftponly" in item.groups'
@@ -112,7 +112,7 @@
     dest: /etc/security/limits.conf
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
 
 - name: migration - remove files from old versions of the role
   file:
@@ -136,7 +136,7 @@
     dest: /etc/systemd/logind.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart systemd-logind
 
 # update pam configuration, restart systemd-logind
@@ -147,7 +147,7 @@
   template:
     src: etc_profile.d_tmout.sh.j2
     dest: /etc/profile.d/tmout.sh
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 

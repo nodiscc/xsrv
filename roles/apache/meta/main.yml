@@ -1,11 +1,12 @@
 # @tag apache - setup the apache web server
 # @tag ssl - setup SSL certificates and configuration
 # @tag apache-mod-evasive - setup apache anti-DoS module
+# @tag apache-reverseproxy - setup apache custom reverseproxies
 
 galaxy_info:
   role_name: apache
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Apache web server + PHP-FPM interpreter"
+  description: "Apache web server/reverse proxy + PHP-FPM interpreter"
   license: "GPL-3.0"
   min_ansible_version: "2.12"
   platforms:
@@ -18,6 +19,8 @@ galaxy_info:
     - apache
     - php
     - server
+    - webserver
+    - reverseproxy
     - lamp
 dependencies:
   - nodiscc.xsrv.handlers

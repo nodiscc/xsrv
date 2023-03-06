@@ -3,7 +3,130 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.11.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.1) - 2023-01-22
+#### [v1.12.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.12.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **proxmox:** if you want to keep using the [`proxmox`](https://gitlab.com/nodiscc/xsrv/-/tree/1.11.1/roles/proxmox) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.proxmox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) includes more features and is now the recommended role for simplified management of hypervisors and virtual machines. Proxmox VE remains suitable for more complex setups where management through a Web interface is desirable.
+- **rsyslog/graylog**: if you use the [`rsyslog_forward_to_hostname`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variable and it is pointing to a graylog instance deployed with the `graylog` role, update it to use the graylog instance FQDN instead of the graylog host inventory hostname (e.g. `logs.example.org` instead of `host1.example.org`)
+- **libvirt:** you will need to restart all libvirt networks and attached VMs for the changes to take effect (a full hypervisor reboot may be simpler)
+- **libvirt:** if you have defined custom [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), update them to use the new syntax:
+- **tt_rss:** to prevent a possible error during upgrade (`fatal: detected dubious ownership in repository`), run the playbook with the `tt_rss-permissions` tag first (`TAGS=tt_rss-permissions xsrv deploy`)
+- **jitsi:** set the variable `jitsi_jvb_prosody_password` to a random 8 character string in your host configuration
+- make sure `fact_caching_timeout = 1` is set in your project's `ansible.cfg` (`xsrv edit-cfg`) since long cache timeouts can cause problems with tasks that expect up-to-date facts
+- `xsrv deploy` to apply changes
+
+```yaml
+# old syntax
+libvirt_port_forwards:
+  - vm_name: vm01.CHANGEME.org
+    host_ip: 1.2.3.4
+    vm_ip: 10.0.0.101
+    bridge: virbr1
+    host_port: 80
+    vm_port: 80
+    protocol: tcp
+  - vm_name: vm01.CHANGEME.org
+    host_ip: 1.2.3.4
+    vm_ip: 10.0.0.101
+    bridge: virbr1
+    host_port: 19101
+    vm_port: 19999
+    protocol: tcp
+```
+```yaml
+# new syntax
+libvirt_port_forwards:
+  - vm_name: vm01.CHANGEME.org
+    vm_ip: 10.0.0.101
+    vm_bridge: virbr1
+    dnat:
+      - host_ip: 1.2.3.4
+        host_port: 80
+        vm_port: 80
+        protocol: tcp # tcp is now the default and can be omitted
+      - host_interface: eth0 # the outside network interface can now be specified instead of the IP
+        host_port: 19101
+        vm_port: 19999
+  # additional examples
+  - vm_name: vm201.CHANGEME.org
+    vm_ip: 10.2.0.100
+    vm_bridge: virbr2
+    dnat:
+      - host_interface: eth0
+        host_port: 30000-30100 # port ranges separated by - are now supported
+        vm_port: 30000-30100
+        protocol: udp
+      - host_interface: eth0 # host_interface/host_ip can be combined for finer control
+        host_ip: 192.168.12.0/24
+        host_port: 123
+        vm_port: 123
+    forward: # it is now possible to setup forwarding rules between interfaces/bridges without DNAT
+      - source_interface: virbr2
+        source_ip: 10.2.1.31
+        vm_port: 5140
+```
+
+
+**Added:**
+- apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
+- libvirt: add [`utils-libvirt-setmem` tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
+- libvirt: add [`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml) variable: users to add to the `libvirt/libvirt-qemu/kvm` groups so that they can use `virsh` without sudo
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding port ranges
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow limiting DNAT rules to specific source IPs/networks (`libvirt_port_forwards.*.dnat.*.source_ip`)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding ports between libvirt bridges/networks without DNAT (`libvirt_port_forwards.*.forward`)
+- readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
+
+**Changed:**
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): rename `--dump` option to `--dumpxml`, require an output file as argument
+- common: [`users.*.sudo_nopasswd_commands`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml): allow using passwordless sudo as any user, not just root
+- common: create the `ssh` group automatically during initial setup, don't require manually adding the ansible user to the group
+- common/matrix: enable automatic upgrades for matrix (synapse) packages by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
+- libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks](https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): add a `dnat` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding/DNAT rules (each one with its `host_interface/host_ip,host_port,vm_port,protocol`)
+- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (allow omitting `protocol: tcp`)
+- graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
+- graylog/rsyslog: don't aggregate noisy graylog access logs to syslog
+- xsrv: don't require setting a long fact caching timeout in `ansible.cfg` anymore
+- default playbook: decrease default ansible fact caching timeout to 1s
+- gotty: update to v1.5.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.0) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.4.0) [[3]](https://github.com/sorenisanerd/gotty/releases/tag/v1.3.0)
+- gitea: update to v1.18.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.18.3) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.4) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.5)
+- matrix: update element-web to v1.11.24 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.21) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.22) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.23) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.24)
+- postgresql: update pgmetrics to [v1.14.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.14.1)
+- xsrv: update ansible to [v7.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- common/monitoring_netdata/rsyslog/utils: make roles compatible with [Debian 12 Bookworm](https://www.debian.org/releases/bookworm/)
+- cleanup: standardize task names, file permissions
+- improve check mode support
+- update documentation
+
+**Removed:**
+- proxmox: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+
+**Fixed:**
+- netdata: fix netdata not alerting on failed systemd services
+- netdata/backup: fix netdata not alerting on outdated or absent last successful backup timestamp file
+- tt_rss: `fatal: detected dubious ownership in repository` error when upgrading tt-rss
+- tt-rss: disable internal version checks completely, fixes `Unable to determine version` in logs
+- jitsi: fix jicofo/jitsi-videobridge unable to connect to prosody
+- common: apt: ensure ca-certificates is installed (required for HTTP APT sources)
+- libvirt: ensure requirements for libvirt network/storage/VM configuration tasks are installed
+- libvirt: fix `configure libvirt networks` failing if the network does not already exist
+- libvirt: fix storage pool owner/group ID not being applied
+- libvirt: ensure old port forwarding rules are removed when `libvirt_port_forwards` is changed (restart firewalld) 
+- graylog: fix `error: peer name not authorized -  not permitted to talk to it.` error
+- xsrv: [`init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix `unrecognized option '--preseed-file'` error
+- xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): fix inconsistent libvirt connection URI, always connect to the `qemu:///system` URI
+- xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): refuse to run if the current user is not part of required groups
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): do not require `--sudo-user` option, use the default value `deploy` if not provided
+
+[Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.12.0)
+
+------------------
+
+
+#### [v1.11.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.1) - 2023-01-22
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
@@ -13,7 +136,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: fix gitea settings [`gitea_enable_api/gitea_api_max_results`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml) not having any effect
 
 
-[Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.11.1)
+[Full changes since v1.11.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.11.1)
 
 ------------------
 
@@ -25,9 +148,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - **nextcloud:** if you changed [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml) from its default value, remove `files_videoplayer` from the list (`xsrv edit-host/edit-group`)
 - **jitsi:** set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
 - **gitea:** if `gitea_mailer_enabled` is set to `yes`, add the new [`gitea_mail_protocol/gitea_mail_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml) settings to your host configuration.
-- **rss_bridge:** if you want to keep using the [`rss_bridge`](https://gitlab.com/nodiscc/xsrv/-/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. This can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
-- **rocketchat:** consider [uninstalling rocket.chat](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#uninstall), and migrating to [Matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix). Alternatively, a simple instant messaging application (Nextcloud Talk) is available through the [`nextcloud`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) role, by enabling the `spreed` app under [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml). If you want to keep using the `rocketchat` role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rocketchat`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. Reasons for the deprecation can be found [here](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#deprecated).
-- **readme_gen:** if you want to use the [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command, make sure `fact_caching_timeout` is commented out in your project's `ansible.cfg` (`xsrv edit-cfg`) - or at least set to a large value like `86400`, and that your project's `README.md` contains the markers `<!-- BEGIN/END AUTOMATICALLY GENERATED CONTENT - README_GEN ROLE -->`
+- **rss_bridge:** if you want to keep using the [`rss_bridge`](https://gitlab.com/nodiscc/xsrv/-/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. This can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
+- **rocketchat:** consider [uninstalling rocket.chat](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#uninstall), and migrating to [Matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix). Alternatively, a simple instant messaging application (Nextcloud Talk) is available through the [`nextcloud`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) role, by enabling the `spreed` app under [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml). If you want to keep using the `rocketchat` role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rocketchat`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. Reasons for the deprecation can be found [here](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#deprecated).
+- **readme_gen:** if you want to use the [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command, make sure that your project's `README.md` contains the markers `<!-- BEGIN/END AUTOMATICALLY GENERATED CONTENT - README_GEN ROLE -->`
 - `xsrv deploy` to apply changes
 
 **Added:**
@@ -48,7 +171,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
 - monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
 - common: ensure `/var/log/wtmp` does not become world-readable again after log rotation
-- nextcloud: upgrade to v25.0.3 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
+- nextcloud: upgrade to v25.0.4 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - gitea: update to v1.18.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.17.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.0) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.1) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.18.2)
 - openldap: update ldap-account-manager to [v8.2](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_2)
 - xsrv: update ansible to [v7.1.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
@@ -248,7 +371,7 @@ self_service_password_allowed_hosts:
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss:** ensure the `apache` role or equivalent is explicitly deployed to the host *before* deploying any of these roles.
 - **jellyfin/samba:** if both jellyfin and samba roles are deployed on the same host, ensure `samba` is deployed before `jellyfin` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook))
-- **valheim_server:** if you are using the [`valheim_server`](https://gitlab.com/nodiscc/xsrv/-/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
+- **valheim_server:** if you are using the [`valheim_server`](https://gitlab.com/nodiscc/xsrv/-/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 - `xsrv deploy` to apply changes
 
 **Added:**
@@ -425,7 +548,7 @@ self_service_password_allowed_hosts:
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - `TAGS=utils-debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html). Debian 10 compatibility will not be maintained after this release.
 - **common/firewall:** remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if firewalld is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L74))
-- **common/hosts:** if the `hosts:` variable (hosts file entries) is used in your `host/group_vars`, rename it to  `host_file_entries`. If `setup_hosts` is used in your `host/group_vars`, rename it to `setup_hosts_file`.
+- **common/hosts:** if the `hosts:` variable (hosts file entries) is used in your `host/group_vars`, rename it to  `hosts_file_entries`. If `setup_hosts` is used in your `host/group_vars`, rename it to `setup_hosts_file`.
 - **mariadb:** if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION).
 - **gitea/nextcloud/tt_rss:** if any of these roles is listed in your playbook, ensure `nodiscc.xsrv.postgresql` is explicitly deployed before it.
 - **jellyfin/proxmox/docker:** remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48) list, automatic upgrades are enabled by default for these components.
@@ -652,7 +775,7 @@ self_service_password_allowed_hosts:
 - rocketchat: allow disabling rocketchat/mongodb services (`rocketchat_enable_service: yes/no`)
 - xsrv: add [`xsrv edit-group`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (edit group variables - default group: `all`)
 - xsrv: add [`xsrv ls`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (list files in the playbooks directory - accepts a path)
-- xsrv: add [`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (edit ansible collections/requirements)
+- xsrv: add [`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements) subcommand (edit ansible collections/requirements)
 - xsrv: add [`xsrv edit-cfg`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (edit ansible configuration/`ansible.cfg`)
 - xsrv: add syntax highlighting to default text editor/pager (nano - requires manual installation of yaml syntax highlighting file), improve display
 - homepage: add favicon

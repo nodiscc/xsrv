@@ -112,7 +112,6 @@
     - matrix
     - synapse
     - element
-    - matrix-facts
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

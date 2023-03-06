@@ -1,14 +1,14 @@
 alarm: filecheck_rsnapshot_last_success_exists
    on: filecheck_rsnapshot_last_success.file_existence
- calc: $_var_log_rsnapshot_last_success
+ calc: ${/var/log/rsnapshot_last_success}
 every: 5m
- crit: $this = 0
+ crit: $this != 1
  info: /var/log/rsnapshot_last_success timestamp file present
 
 # Raise a warning when backup success timestamp file is older than 24h30min, critical alert when older than 25h
 alarm: filecheck_rsnapshot_last_success_mtime
    on: filecheck_rsnapshot_last_success.file_mtime_ago
- calc: $_var_log_rsnapshot_last_success
+ calc: ${/var/log/rsnapshot_last_success}
 every: 5m
 units: seconds
  warn: $this > 88200

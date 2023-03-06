@@ -1,15 +1,15 @@
 # libvirt / virt-manager
 
-[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [`libvirt`](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more.
+[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [libvirt](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more.
 
-The [libvirt](https://en.wikipedia.org/wiki/Libvirt) project allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical (`virt-manager`) and command-line (`virsh`) interfaces.
+libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical (`virt-manager`) and command-line (`virsh`) interfaces.
 
 Advantages of virtualization include:
 
-- Run many independent operating systems/environmnents on a single machine.
+- Run many independent operating systems/environmnents on a single physical machine
 - Quickly create, clone and delete virtual machines for temporary/testing environments or horizontal scaling
 - VM operating systems are strongly isolated from each other and from the hypervisor
-- Easy, dynamic management of resources, virtual storage, RAM, CPU...
+- Easy, dynamic management of resources, virtual storage, RAM, CPU... (vertical scaling)
 - Easy rollback: snapshot the state of a VM, make changes, then restore the snapshot to return to the previous state
 - Create simple or complex virtual networks with routing, switching, firewalling...
 - Easy migration of VMs between hypervisors for emergencies or load balancing
@@ -23,13 +23,16 @@ Advantages of virtualization include:
 On Debian-based systems:
 
 ```bash
-sudo apt install virt-manager libguestfs-tools
+# base packages
+sudo apt install virtinst dnsmasq-base libvirt-daemon-system qemu-kvm qemu-utils libguestfs-tools
+# graphical tools (desktop machines only)
+sudo apt install virt-manager virt-viewer
 ```
 
 (Optional) add your normal/unprivileged user account to the `libvirt` group to allow it to manage virtual machines without using `sudo`/entering your password for common operations:
 
 ```bash
-sudo usermod -G $USER libvirt kvm
+sudo usermod -G $USER libvirt,kvm,libvirt-qemu
 ```
 
 
@@ -68,7 +71,7 @@ Click `Finish` and start the VM from virt-manager's main window.
 
 ### Automated
 
-You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bullseye/virtinst/virt-install.1.en.html) - [`xsrv init-vm/init-vm-template`](../usage.md) automates running `virt-install` with the correct options.
+You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bullseye/virtinst/virt-install.1.en.html) command. The `xsrv` [init-vm and init-vm-template commands](../usage.md) automate running `virt-install` with the correct options.
 
 ## Cloning VMs
 
@@ -94,6 +97,42 @@ srvadmin@hv1:~$ ssh srvadmin@hv2.example.org
 srvadmin@hv2:~$ virsh define my.virtual.machine.xml
 # start the VM
 srvadmin@hv2:~$ virsh start my.virtual.machine.xml
+```
+
+If your VMs are managed by the [libvirt role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt), instead of dumping/transferring the XML definition and loading it manually, you should just copy the relevant `libvirt_vms` entry to the target hypervisor host_vars, and set its state to `absent` on the original hypervisor. Don't forget to migrate any port forwards related to it:
+
+```diff
+# host_vars/hv1/hv1.yml
+ libvirt_vms:
+-  - name: my.virtual.machine
+-    xml_file: "{{ playbook_dir }}/data/libvirt/my.virtual.machine.xml"
++  - name: my.virtual.machine
++    state: absent
+   - name: an.other.vm
+     xml_file: "{{ playbook_dir }}/data/libvirt/an.other.vm.xml"
+-libvirt_port_forwards:
+-  - vm_name: my.virtual.machine
+-    host_port: 443
+-    vm_port: 443
+-    protocol: tcp
+-    host_ip: 192.168.1.20
+-    vm_ip: 10.0.0.101
+-    bridge: virbr1
+
+# host_vars/hv2/hv2.yml
+ libvirt_vms:
++  - name: my.virtual.machine
++    xml_file: "{{ playbook_dir }}/data/libvirt/my.virtual.machine.xml"
+   - name: yet.another.vm
+     xml_file: "{{ playbook_dir }}/data/libvirt/yet.another.vm.xml"
++libvirt_port_forwards:
++  - vm_name: my.virtual.machine
++    host_port: 443
++    vm_port: 443
++    protocol: tcp
++    host_ip: 192.168.1.21
++    vm_ip: 10.0.0.101
++    bridge: virbr1
 ```
 
 <!-- TODO

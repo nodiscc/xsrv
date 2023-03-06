@@ -59,7 +59,7 @@ AutomaticHelpers=system
 #	- iptables (iptables, ip6tables, ebtables and ipset)
 FirewallBackend=iptables
 
-{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye' %}
+{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye' or ansible_facts.distribution_release == 'bookworm' %}
 # FlushAllOnReload
 # Flush all runtime rules on a reload. In previous releases some runtime
 # configuration was retained during a reload, namely; interface to zone

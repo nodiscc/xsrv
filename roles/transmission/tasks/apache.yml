@@ -23,7 +23,7 @@
     password: '{{ transmission_password }}'
     owner: root
     group: www-data
-    mode: 0640
+    mode: "0640"
   notify: reload apache
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -31,7 +31,7 @@
   template:
     src: etc_apache2_sites-available_transmission.conf.j2
     dest: /etc/apache2/sites-available/transmission.conf
-    mode: 0644
+    mode: "0644"
   notify: reload apache
 
 - name: enable apache2 virtualhost

@@ -23,7 +23,7 @@
     password: '{{ gotty_auth_password }}'
     owner: root
     group: www-data
-    mode: 0640
+    mode: "0640"
   notify: reload apache
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -33,7 +33,7 @@
     dest: /etc/apache2/sites-available/gotty.conf
     owner: root
     group: root
-    mode: 0600
+    mode: "0644"
   notify: reload apache
 
 - name: enable apache virtualhost configuration

@@ -92,23 +92,51 @@ Other:
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_nextcloud.conf.j2) for the [backup](../backup/README.md) role.
 
+To backup files from a remote host with the `nodiscc.xsrv.backup` role:
+
+```yaml
+# xsrv edit-host default backup.CHANGEME.org
+rsnapshot_backup_execs:
+  - 'ssh -oStrictHostKeyChecking=no rsnapshot@nextcloud.CHANGEME.org /usr/local/bin/postgres-dump-all-databases.sh'
+rsnapshot_remote_backups:
+  - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/backups/postgresql' }
+  - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/nextcloud' }
+  - { user: 'rsnapshot', host: 'nextcloud.CHANGEME.org', path: '/var/www/cloud.CHANGEME.org/config/config.php' }
+```
+```yaml
+# xsrv edit-host default nextcloud.CHANGEME.org
+  - name: "rsnapshot"
+    groups: [ "ssh", "sudo", "postgres", "nextcloud" ]
+    comment: "limited user account for remote backups"
+    ssh_authorized_keys: ['data/public_keys/root@backup.CHANGEME.org.pub']
+    sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]
+```
+
 To restore a backup:
 
 ```bash
-# Remove the nextcloud database (nextcloud by default)
-mysql -u root -p -e 'DROP database nextcloud;'
-# Remove the nextcloud installation directory
-rm -rv /var/www/my.example.org/nextcloud
-# Remove the nextcloud data directory
-rm -rv /var/nextcloud/data
-# Reinstall nextcloud by running the playbook/nextcloud role, then
-# Restore the database
-mysql -u root -p nextcloud < /var/backups/rsnapshot/daily.0/localhost/var/backups/mysql/nextcloud/nextcloud.sql
-# Restore the data directory
-rsync -avP --delete /var/backups/rsnapshot/daily.0/localhost/var/nextcloud/data /var/nextcloud/
-# Rescan files
-sudo -u www-data /usr/bin/php /var/www/my.example.org/nextcloud/occ files:scan
+# deploy the nextcloud role
+xsrv deploy
+# SSH to the backup server
+xsrv shell default  backup.CHANGEME.org
+# copy the last database dump somewhere readable by the postgres user
+deploy@backup:~$ sudo rsync -avzP --rsync-path '/usr/bin/sudo /usr/bin/rsync' /var/backups/rsnapshot/daily.0/nextcloud.CHANGEME.org/var/backups/postgresql/nextcloud.sql rsnapshot@nextcloud.CHANGEME.org:/tmp/
+# restore the data directory and configuration file
+deploy@backup:~$ sudo rsync -avzP --rsync-path '/usr/bin/sudo /usr/bin/rsync' /var/backups/rsnapshot/daily.0/nextcloud.CHANGEME.org/var/nextcloud/ rsnapshot@nextcloud.CHANGEME.org:/var/nextcloud/
+deploy@backup:~$ sudo rsync -avzP --rsync-path '/usr/bin/sudo /usr/bin/rsync' /var/backups/rsnapshot/daily.0/nextcloud.CHANGEME.org/var/www/cloud.CHANGEME.org/config/config.php rsnapshot@nextcloud.CHANGEME.org:/var/www/cloud.CHANGEME.org/config/config.php
+
+# SSH to the nextcloud server
+xsrv shell default nextcloud.CHANGEME.org
+# fix permissions on restored files
+deploy@nextcloud:~$ sudo chown -R nextcloud:nextcloud /var/nextcloud/ /var/www/cloud.CHANGEME.org/config/config.php 
+# create a plaintext sql dump from the custom-formatted dump
+deploy@nextcloud:~$ sudo -u postgres pg_restore --file - --clean --create /tmp/nextcloud.sql > /tmp/nextcloud.txt.sql
+# restore the plaintext sql dump
+deploy@nextcloud:~$ sudo -u postgres psql --echo-errors --file /tmp/nextcloud.txt.sql 
+# rescan files
+deploy@nextcloud:~$ sudo -u nextcloud /usr/bin/php /var/www/cloud.CHANGEME.org/occ files:scan --all
 ```
+
 
 ### Other
 
@@ -148,7 +176,7 @@ sudo systemctl restart php7.4-fpm
 
 **Access files from other services:** [External storage](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage_configuration_gui.html) can be configured to make files from other services available in Nextcloud. This includes local directories on the server, SFTP, other Nextcloud instances, SMB/CIFS, WebDav, S3...
 
-Example configuration to access files from the [transmission](../transmission/) bittorrent service running on the same host: Under `Settings > Administration > Extrenal storage`, add a new storage:
+Example configuration to access files from the [transmission](../transmission/) bittorrent service running on the same host: Under `Settings > Administration > External storage`, add a new storage:
 - Folder name: `TORRENTS`
 - External storage: `Local`
 - Configuration/location: `/var/lib/transmission-daemon/downloads/`
@@ -163,7 +191,7 @@ This will remove all application files and data, and related configuration
 ```bash
 $ sudo rm -r /var/www/cloud.CHANGEME.org/ /var/nextcloud/ /etc/ansible/facts.d/nextcloud.fact /etc/apache2/sites-available/nextcloud.conf  /etc/apache2/sites-enabled/nextcloud.conf /etc/php/7.4/fpm/pool.d/nextcloud.conf /etc/netdata/go.d/httpcheck.conf.d/nextcloud.conf /etc/rsnapshot.d/nextcloud.conf /etc/rsyslog.d/nextcloud.conf /etc/fail2ban/filter.d/nextcloud-auth.conf /etc/fail2ban/jail.d/nextcloud.conf 
 $ sudo find /etc/netdata/go.d/httpcheck.conf.d/ -type f |sort | xargs sudo cat | sudo tee /etc/netdata/go.d/httpcheck.conf
-$ sudo systemctl restart apache2.service php7.4-fpm.service fail2ban.service
+$ sudo systemctl restart apache2.service php7.4-fpm.service fail2ban.service netdata.service
 $ sudo -u postgres psql -c 'DROP DATABASE nextcloud;'
 $ sudo -u postgres psql -c 'DROP USER nextcloud;'
 $ sudo userdel --remove nextcloud

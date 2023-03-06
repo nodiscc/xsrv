@@ -13,7 +13,7 @@
     dest: /etc/apache2/sites-available/jellyfin.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: reload apache
 
 - name: enable jellyfin apache virtualhost configuration

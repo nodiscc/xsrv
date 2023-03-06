@@ -4,6 +4,6 @@
     dest: /etc/rsyslog.d/matrix-synapse.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart rsyslog
   tags: rsyslog

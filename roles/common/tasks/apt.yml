@@ -1,13 +1,15 @@
 - name: install packages for HTTPS APT sources support
   apt:
     state: present
-    package: apt-transport-https
+    package:
+      - apt-transport-https
+      - ca-certificates
 
 - name: copy apt sources lists (debian + security + backports)
   template:
     src: "etc_apt_sources.list.j2"
     dest: "/etc/apt/sources.list"
-    mode: 0644
+    mode: "0644"
   when: ansible_facts.distribution == 'Debian'
   notify: update apt cache
 
@@ -15,7 +17,7 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: 0644
+    mode: "0644"
   with_items:
     - { src: 'etc_apt_apt.conf.d_99no-overwrite-conffiles.j2', dest: '/etc/apt/apt.conf.d/99no-overwrite-conffiles' }
     - { src: 'etc_apt_apt.conf.d_99norecommends.j2', dest: '/etc/apt/apt.conf.d/99norecommends' }
@@ -68,7 +70,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items:
     - src: etc_apt_listbugs_ignore_bugs.j2
       dest: /etc/apt/listbugs/ignore_bugs

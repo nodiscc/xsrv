@@ -52,7 +52,7 @@
     dest: "{{ ldap_account_manager_configcfg_dir }}/serverCerts.pem"
     owner: root
     group: www-data
-    mode: 0640
+    mode: "0640"
   when: ldap_account_manager_ldaps_cert != ""
 
 ### SSL/TLS CERTIFICATES ###
@@ -72,14 +72,14 @@
   template:
     src: etc_php_PHPVERSION_fpm_pool.d_ldap-account-manager.conf.j2
     dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/ldap-account-manager.conf
-    mode: 0644
+    mode: "0644"
   notify: restart php-fpm
 
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_ldap-account-manager.conf.j2
     dest: /etc/apache2/sites-available/ldap-account-manager.conf
-    mode: 0644
+    mode: "0644"
   notify: reload apache
 
 - name: enable apache2 virtualhost

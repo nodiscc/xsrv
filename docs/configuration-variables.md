@@ -28,7 +28,6 @@ Then run `xsrv deploy` to apply changes.
 - [roles/nextcloud/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)
 - [roles/openldap/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml)
 - [roles/postgresql/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/postgresql/defaults/main.yml)
-- [roles/proxmox/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/proxmox/defaults/main.yml)
 - [roles/readme_gen/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml)
 - [roles/samba/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml)
 - [roles/shaarli/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)

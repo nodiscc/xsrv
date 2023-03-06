@@ -1,5 +1,7 @@
-# The default virtualhost will be served for requests that do not match any known servername,
-# for example trying to access the server with just an IP address. It just displays/logs a 404 error.
+##### DEFAULT VIRTUALHOST #####
+# Will be served for requests that do not match any known servername,
+# for example trying to access the server directly by IP address.
+# It displays and logs a 403 error.
 <VirtualHost *:80>
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -16,3 +18,50 @@
     SSLCertificateFile /etc/ssl/certs/localhost.crt
     SSLCertificateKeyFile /etc/ssl/private/localhost.key
 </VirtualHost>
+
+##### REVERSE PROXIES #####
+# Configured through apache_reverseproxies
+{% for item in apache_reverseproxies %}
+<VirtualHost *:80>
+    ServerName {{ item.servername }}
+    # Redirect all HTTP requests to HTTPS
+{% if (item.https_mode is not defined or item.https_mode == 'selfsigned') and (item.redirect_https is not defined or item.redirect_https) %}
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if item.https_mode is defined and item.https_mode == 'letsencrypt' %}
+MDomain {{ item.servername }}
+{% if item.redirect_https is not defined or item.redirect_https %}
+MDRequireHttps permanent
+{% endif %}
+{% endif %}
+<VirtualHost *:443>
+  ServerName  {{ item.servername }}
+  SSLEngine on
+  LogLevel warn
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+{% if item.https_mode is not defined or item.https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ item.servername }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ item.servername }}.key
+{% endif %}
+  # Inform the upstream server that the original request was done over HTTPS
+  RequestHeader set X-Forwarded-Proto https
+  RequestHeader set X-Forwarded-Ssl on
+  SSLProxyEngine on
+  SSLProxyCheckPeerCN off
+  SSLProxyCheckPeerName off
+  ProxyPreserveHost On
+  ProxyRequests off
+  ProxyPass / {{ item.upstream }}/
+  ProxyPassReverse / {{ item.upstream }}/
+{% if item.extra_directives is defined %}
+{% for directive in item.extra_directives %}
+  {{ directive }}
+{% endfor %}
+{% endif %}
+</VirtualHost>
+{% endfor %}

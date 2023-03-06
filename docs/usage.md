@@ -10,10 +10,10 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ## Command-line usage
 
 
-```bash
+```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.9.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.11.1
 
 USAGE: xsrv COMMAND [project] [host]
 
@@ -36,7 +36,7 @@ shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 ls                                  list files in the projects directory (accepts a path)
 o|open [project]                    open the project directory in the default file manager
-readme-gen [project]                generate a markdown inventory in the projects README.md
+readme-gen [project]                generate a markdown inventory in the project's README.md
 show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
@@ -53,8 +53,6 @@ TAGS               deploy/check only: list of ansible tags (TAGS=ssh,samba,... x
 EDITOR             text editor to use (default: nano)
 PAGER              pager to use (default: nano --syntax=YAML --view +1 -)
 ```
-
-If no `project` is specified, the `default` project is assumed. If no `host` or `group` is specified, `all` hosts are assumed.
 
 Examples:
 
@@ -87,7 +85,7 @@ xsrv check default prod
 ## Manage projects
 
 Each project contains:
-- an [inventory](#manage-hosts) of managed servers
+- an [inventory](#manage-hosts) of managed servers (_hosts_)
 - a list of [roles](#manage-roles) assigned to each host/group (_playbook_)
 - [configuration](#manage-hosts-configuration) values for host/group (*host_vars/group_vars*)
 - deployment logic/tasks used in your project ([collections](#use-as-ansible-collection)/roles)
@@ -108,6 +106,11 @@ A single project is suitable for most setups (you can still organize hosts as di
 Initialize a new project from the [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv) - creates all necessary files and prepares a playbook/environment with a single host.
 
 <!-- TODO screencast -->
+
+
+### xsrv edit-requirements
+
+Edit the project's [`requirements.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) file, which lists [ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/index.html) (a distribution format for Ansible content) used by the project.
 
 -----------------------
 
@@ -416,17 +419,14 @@ VMs created using this method can then be added to your project using [`xsrv ini
 Using the server/host as its own controller is not recommended, but can help with single-server setups where no separate administration machine is available. By not using a separate controller, you lose the ability to easily redeploy a new system from scratch in case of emergency/distaster, and centralized management of multiple hosts will become more difficult. Your host will also have access to configuration of other hosts in your project.
 
 - [Install](installation/controller-preparation.md) the `xsrv` main script directly on the host
-- During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `connection: local` in the playbook for this host:
+- During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
 
 ```yaml
-# $ xsrv edit-playbook
-- hosts: my.example.org
-  connection: local
-  roles:
-    - nodiscc.xsrv.common
-    - nodiscc.xsrv.apache
-    - nodiscc.xsrv.jellyfin
-    - ...
+##### CONNNECTION
+# SSH host/port, if different from my.example.org:22
+# ansible_host: "my.example.org"
+# ansible_port: 22
+ansible_connection: local
 ```
 
 <!--

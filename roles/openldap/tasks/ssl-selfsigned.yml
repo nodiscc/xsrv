@@ -11,14 +11,14 @@
     state: directory
     owner: root
     group: openldap
-    mode: 0750
+    mode: "0750"
 
 - name: generate openssl private key
   openssl_privatekey:
     path: "/etc/ssl/openldap/{{ openldap_fqdn }}.key"
     owner: root
     group: openldap
-    mode: 0640
+    mode: "0640"
   notify: restart slapd
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -39,7 +39,7 @@
     provider: selfsigned
     owner: root
     group: openldap
-    mode: 0640
+    mode: "0640"
   notify: restart slapd
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -59,7 +59,7 @@
   file:
     path: "{{ playbook_dir }}/data/certificates/"
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: download self-signed certificate to the controller
   fetch:

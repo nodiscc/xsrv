@@ -8,7 +8,7 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.11.1-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.12.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -22,7 +22,7 @@ This project provides:
 
 ## Roles
 <!--BEGIN ROLES LIST-->
-- [apache](roles/apache) - Apache web server + PHP-FPM interpreter
+- [apache](roles/apache) - Apache web server/reverse proxy + PHP-FPM interpreter
 - [backup](roles/backup) - Remote/local backup service (rsnapshot)
 - [common](roles/common) - Base setup for Debian servers
 - [dnsmasq](roles/dnsmasq) - Lightweight DNS server
@@ -44,7 +44,6 @@ This project provides:
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [openldap](roles/openldap) - LDAP directory server and web management tools
 - [postgresql](roles/postgresql) - PostgreSQL database engine
-- [proxmox](roles/proxmox) - Proxmox VE hypervisor configuration
 - [readme_gen](roles/readme_gen) - add an inventory of hosts and services to the project's README.md
 - [samba](roles/samba) - Cross-platform file sharing server
 - [shaarli](roles/shaarli) - Bookmarking & link sharing web application

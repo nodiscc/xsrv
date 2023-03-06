@@ -4,7 +4,7 @@
   template:
     src: etc_apt_preferences.d_99-apache2-buster-backports.j2
     dest: /etc/apt/preferences.d/99-apache2-buster-backports
-    mode: 0644
+    mode: "0644"
   when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
 
 - name: install apache/php packages
@@ -43,7 +43,7 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: 0644
+    mode: "0644"
   with_items:
     - { src: 'etc_apache2_conf-available_security.conf.j2', dest: '/etc/apache2/conf-available/security.conf' }
     - { src: 'etc_apache2_conf-available_logging.conf.j2', dest: '/etc/apache2/conf-available/logging.conf' }
@@ -82,6 +82,7 @@
     - 'ssl'
     - 'mpm_event'
     - 'proxy'
+    - 'proxy_http'
     - 'proxy_fcgi'
     - 'http2'
   notify: restart apache
@@ -108,14 +109,16 @@
   template:
     src: etc_apache2_sites-available_000-sites.conf.j2
     dest: /etc/apache2/sites-available/000-sites.conf
-    mode: 0644
+    mode: "0644"
   notify: reload apache
+  tags: apache-reverseproxy
 
 - name: enable apache sites configuration
   command: a2ensite 000-sites
   args:
     creates: /etc/apache2/sites-enabled/000-sites.conf
   notify: reload apache
+  tags: apache-reverseproxy
 
 - name: migration - remove apache/php configuration from old versions of the role
   file:
@@ -143,7 +146,7 @@
     path: /var/lib/apache2/md
     owner: www-data
     group: www-data
-    mode: 0755
+    mode: "0755"
 
 - name: copy automatic reload script for mod_md MDMessageCmd
   copy:
@@ -151,7 +154,7 @@
     dest: /usr/local/bin/apache-mod-md-reload
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: schedule automatic reload of the service on mod_md certificate changes
   cron:

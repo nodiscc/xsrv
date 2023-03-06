@@ -11,4 +11,19 @@
     - apache_allow_robots == apache_allow_robots | bool
     - php_fpm_enable_default_pool == php_fpm_enable_default_pool | bool
     - apache_access_log_to_syslog == apache_access_log_to_syslog | bool
-    - apache_firewalld_zones|type_debug == "list"
+    - apache_firewalld_zones | type_debug == "list"
+    - apache_reverseproxies | type_debug == "list"
+
+- name: check that variables are correctly defined (apache_reverseproxies)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache"
+    that:
+      - item.servername is string
+      - item.upstream is string
+      - (item.https_mode is not defined) or (item.https_mode in ['selfsigned', 'letsencrypt'])
+      - (item.redirect_https is not defined) or (item.redirect_https == item.redirect_https | bool)
+      - (item.extra_directives is not defined) or (item.extra_directives | type_debug == "list")
+      - (item.monitor_http is not defined) or (item.monitor_http == item.monitor_http | bool)
+  with_items: "{{ apache_reverseproxies }}"
+  tags: apache-reverseproxy

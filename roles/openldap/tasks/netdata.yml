@@ -4,7 +4,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: netdata
-    mode: 0640
+    mode: "0640"
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:

@@ -18,7 +18,7 @@
   file:
     path: /opt/netdata-logcount/
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: copy configuration/lnav script for netdata-logcount
   template:
@@ -26,7 +26,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: netdata
-    mode: 0640
+    mode: "0640"
   with_items:
     - { src: 'opt_netdata-logcount_logcount.sql.j2', dest: '/opt/netdata-logcount/logcount.sql' }
     - { src: 'etc_netdata_python.d_logcount.conf.j2', dest: '/etc/netdata/python.d/logcount.conf' }
@@ -40,7 +40,7 @@
     dest: "/usr/libexec/netdata/python.d/logcount.chart.py"
     owner: root
     group: netdata
-    mode: 0750
+    mode: "0750"
   notify: restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -61,6 +61,6 @@
     state: touch
     owner: root
     group: netdata
-    mode: 0640
+    mode: "0640"
     modification_time: preserve
     access_time: preserve

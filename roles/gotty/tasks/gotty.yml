@@ -4,7 +4,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
   with_items:
     - { url: "https://github.com/sorenisanerd/gotty/releases/download/v{{ gotty_version }}/gotty_v{{ gotty_version }}_linux_amd64.tar.gz",
         dest: "/root/gotty_v{{ gotty_version }}_linux_amd64.tar.gz" }
@@ -17,7 +17,7 @@
   file:
     path: /root/gotty-unpack
     state: directory
-    mode: 0750
+    mode: "0750"
 
 - name: extract gotty tarball
   unarchive:
@@ -32,7 +32,7 @@
   copy:
     src: "/root/gotty-unpack/gotty"
     dest: "/usr/local/bin/gotty"
-    mode: 0755
+    mode: "0755"
     remote_src: yes
     owner: root
     group: root
@@ -45,7 +45,7 @@
     path: /etc/gotty
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: copy gotty configuration file
   template:
@@ -53,14 +53,14 @@
     dest: '/etc/gotty/gotty.conf'
     owner: root
     group: "{{ gotty_run_username }}"
-    mode: 0640
+    mode: "0640"
   notify: restart gotty
 
 - name: install gotty systemd service/unit file
   template:
     src: "etc_systemd_system_gotty.service.j2"
     dest: "/etc/systemd/system/gotty.service"
-    mode: 0644
+    mode: "0644"
   notify:
     - reload systemd unit files
     - restart gotty

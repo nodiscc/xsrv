@@ -13,7 +13,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: reload apache
   with_items:
     - src: etc_apache2_sites-available_matrix-synapse.conf.j2

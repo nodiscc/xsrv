@@ -3,7 +3,7 @@
 This role will install [Jitsi Meet](https://jitsi.org/jitsi-meet/), a fully encrypted, 100% open source video conferencing solution that you can use all day, every day, for free.
 - High quality audio and video meetings
 - No account needed to join public rooms
-- Encrypted by default, advanced seurity settings
+- Encrypted by default, advanced security settings
 - Web, desktop and mobile clients
 
 [![](https://i.imgur.com/WyhF0tl.jpg)](https://i.imgur.com/WyhF0tl.jpg)
@@ -29,6 +29,7 @@ jitsi_fqdn: "conference.CHANGEME.org"
 # ansible-vault edit host_vars/my.CHANGEME.org/my.CHANGEME.org.vault.yml
 jitsi_turn_secret: "CHANGEME"
 jitsi_prosody_password: "CHANGEME"
+jitsi_jvb_prosody_password: "CHANGEME"
 jitsi_users:
   - name: CHANGEME
     password: CHANGEME

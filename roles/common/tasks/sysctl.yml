@@ -2,14 +2,14 @@
   template:
     src: 'etc_sysctl.d_custom.conf.j2'
     dest: '/etc/sysctl.d/custom.conf'
-    mode: 0600
+    mode: "0600"
   notify: apply sysctl configuration
 
 - name: setup kernel modules blacklist
   template:
     src: etc_modprobe.d_blacklist.conf.j2
     dest: /etc/modprobe.d/blacklist.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
@@ -19,7 +19,7 @@
     dest: /etc/default/rcS
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: mount /proc
   mount:

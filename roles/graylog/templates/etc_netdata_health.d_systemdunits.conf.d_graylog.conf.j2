@@ -1,27 +1,27 @@
     alarm: systemd_service_mongod
-       on: systemdunits_service-units.service_unit_state
-     calc: $mongod
+       on: systemdunits_service-units.unit_mongod_service_state
+     calc: $failed
     every: 10s
-     crit: ($this = 5)
-    units: state
+     crit: $this = 1
+    units: failed service
      info: mongodb service status
        to: sysadmin
 
     alarm: systemd_service_elasticsearch
-       on: systemdunits_service-units.service_unit_state
-     calc: $elasticsearch
+       on: systemdunits_service-units.unit_elasticsearch_service_state
+     calc: $failed
     every: 10s
-     crit: ($this = 5)
-    units: state
+     crit: $this = 1
+    units: failed service
      info: elasticsearch service status
        to: sysadmin
 
     alarm: systemd_service_graylog
-       on: systemdunits_service-units.service_unit_state
-     calc: $graylog_server
+       on: systemdunits_service-units.unit_graylog-server_service_state
+     calc: $failed
     every: 10s
-     crit: ($this = 5)
-    units: state
+     crit: $this = 1
+    units: failed service
      info: graylog-server service status
        to: sysadmin
 

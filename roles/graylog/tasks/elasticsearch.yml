@@ -12,7 +12,7 @@
     dest: /usr/share/keyrings/elasticsearch.gpg
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 - name: add elasticsearch APT repository
@@ -21,7 +21,7 @@
     dest: /etc/apt/sources.list.d/elasticsearch.list
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: update apt cache
 
 # update APT cache for elasticsearch packages to become available
@@ -40,7 +40,7 @@
     path: /etc/systemd/system/elasticsearch.service.d/
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: fix permissions on elasticsearch configuration directory
   file:
@@ -48,7 +48,7 @@
     path: /etc/elasticsearch
     owner: root
     group: elasticsearch
-    mode: 0770
+    mode: "0770"
 
 - name: configure elasticsearch
   template:
