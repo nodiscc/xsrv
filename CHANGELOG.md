@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.13.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Changed:**
+- readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
+
+
 #### [v1.12.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.12.0) - 2023-03-06
 
 **Upgrade procedure:**

@@ -44,6 +44,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['matrix']['element']['fqdn'] is defined %}
 - Matrix/Element: https://{{ hostvars[item]['ansible_facts']['ansible_local']['matrix']['element']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['jitsi']['fqdn'] is defined %}
+- Jitsi: https://{{ hostvars[item]['ansible_facts']['ansible_local']['jitsi']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['rocketchat']['fqdn'] is defined %}
 - Rocket.chat: https://{{ hostvars[item]['ansible_facts']['ansible_local']['rocketchat']['fqdn'] }}
 {% endif %}
