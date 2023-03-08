@@ -86,13 +86,13 @@ test_idempotence:
 ##### RELEASE PROCEDURE #####
 # - make test_init_vm_template test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
 # - check test environment logs for warning/errors: ssh -t deploy@my.example.test sudo lnav /var/log/syslog
-# - make bump_versions update_todo changelog new_tag=$new_tag
-# - update changelog.md, add and commit version bumps and changelog updates
+# - make bump_versions update_todo new_tag=$new_tag
+# - update release date in CHANGELOG.md, add and commit version bumps/changelog updates
 # - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
 # - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag
 # - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tag
-# - ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
+# - touch roles/README.md && ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
 # - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
@@ -158,11 +158,6 @@ update_todo:
 	echo -e "\n### xsrv/xsrv\n" >> docs/TODO.md; \
 	./gitea-cli/bin/gitea issues xsrv/xsrv | jq -r '.[] | "- #\(.number) - \(.title) - **`\(.milestone.title // "-")`** `\(.labels | map(.name) | join(","))`"'  | sed 's/ - `null`//' >> docs/TODO.md
 	rm -rf gitea-cli
-
-.PHONY: changelog # manual - establish a changelog since the last git tag
-changelog:
-	@echo "[INFO] changes since last tag $(LAST_TAG)" && \
-	git log --oneline $(LAST_TAG)...HEAD | cat
 
 .PHONY: doc_md # manual - generate markdown documentation
 doc_md:
