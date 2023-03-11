@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - update documentation
 
+**Fixed:**
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 
 [Full changes since v1.12.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.12.0...1.13.0)
 
