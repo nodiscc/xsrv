@@ -63,6 +63,15 @@ sudo systemctl restart rsyslog firewalld netdata
 
 There is no data worth backing up.
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+jitsi - setup jitsi videoconferencing server
+jitsi-users - setup jitsi registered users
+```
+<!--END TAGS LIST-->
+
 
 ## License
 
