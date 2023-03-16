@@ -54,6 +54,9 @@ rsnapshot_remote_backups:
 To install and run [pgmetrics](https://pgmetrics.io/) agains the installed PostgreSQL instance, pass the `utils-pgmetrics` tag to ansible-playbook:
 
 ```bash
+# using xsrv
+TAGS=utils-pgmetrics xsrv deploy
+# using ansible-playbook
 ansible-playbook playbook.yml --tags=utils-pgmetrics
 ```
 
