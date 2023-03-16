@@ -50,7 +50,6 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
   - Linux clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/), `sftp`, `rsync`, `scp`,
   - Windows clients: [WinSCP](https://winscp.net/eng/index.php)
 - Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
-- Get current firewall configuration: `ansible-playbook --tags utils-firewalld-info playbook.yml`
 
 ## Tags
 
