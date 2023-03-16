@@ -96,6 +96,16 @@ synapse=# UPDATE users SET admin=1 WHERE name = '@USER:DOMAIN';
 
 See the included [rsnapshot configuration](templates/etc/rsnapshot.d_matrix.conf.j2) for information about directories to backup/restore.
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+matrix - setup matrix chat server and web client
+synapse - setup synapse (matrix) chat server
+element - setup element matrix web chat client
+```
+<!--END TAGS LIST-->
+
 
 ## License
 
