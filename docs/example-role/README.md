@@ -42,6 +42,13 @@ Notes about using the deployed service.
 
 Notes about backing up data generated/used by the service. See the included [rsnapshot configuration](templates/etc/rsnapshot.d_EXAMPLE.conf.j2) for information about directories to backup/restore.
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+```
+<!--END TAGS LIST-->
+
 
 ## License
 
