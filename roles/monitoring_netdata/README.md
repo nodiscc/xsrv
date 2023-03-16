@@ -30,7 +30,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 [netdata documentation](https://docs.netdata.cloud/)
 
-- To reboot hosts that have Linux kernel upgrade pending:
+- To reboot hosts that have a pending Linux kernel upgrade:
 
 ```bash
 # using xsrv
