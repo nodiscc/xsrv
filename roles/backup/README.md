@@ -64,6 +64,14 @@ linux_users:
 
 **Removing old backups:** if a backup job is added at some point, than later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
 
+## Tags
+
+<!--BEGIN TAGS LIST-->
+```
+backup - setup rsnapshot backup utility
+rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
+```
+<!--END TAGS LIST-->
 
 
 ## References
