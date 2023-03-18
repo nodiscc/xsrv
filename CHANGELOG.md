@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - update documentation
+- matrix: update element-web to v1.11.25 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25)
 
 **Fixed:**
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
