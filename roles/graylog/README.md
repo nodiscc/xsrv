@@ -13,7 +13,7 @@ Features:
 - LDAP authentication support
 - And [more](https://www.graylog.org/features)
 
-_Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-sspl) used by Graylog and MongoDB is [not recognized as an Open-Source license](https://opensource.org/node/1099) by the Open-Source Initiative. Make sure you understand the license before offering a publicly available Graylog-as-a-service instance._
+_Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-sspl) used by Graylog and MongoDB is [not recognized as an Open-Source license](https://blog.opensource.org/the-sspl-is-not-an-open-source-license/) by the Open-Source Initiative. Make sure you understand the license before offering a publicly available Graylog-as-a-service instance._
 
 [![](https://i.imgur.com/tC4G9mQm.png)](https://i.imgur.com/tC4G9mQ.png)
 [![](https://i.imgur.com/eGCL45L.jpg)](https://i.imgur.com/6Zu7YKy.png)
@@ -59,7 +59,7 @@ rsyslog_forward_to_port: 5140
 
 ### Basic setup
 
-Login to your graylog instance and configure a basic **[input](https://docs.graylog.org/en/latest/pages/sending_data.html)** to accept syslog messages on TCP port 5140 (using TLS):
+Login to your graylog instance and configure a basic **[input](https://go2docs.graylog.org/5-0/getting_in_log_data/getting_in_log_data.html)** to accept syslog messages on TCP port 5140 (using TLS):
 
 - Title: `Syslog/TLS/TCP`
 - Port: `5140`
@@ -72,7 +72,7 @@ Login to your graylog instance and configure a basic **[input](https://docs.gray
 
 -----------------
 
-Add **[Extractors](https://docs.graylog.org/en/4.0/pages/extractors.html)** to the input to build meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages (using regex or _Grok patterns_).
+Add **[Extractors](https://archivedocs.graylog.org/en/latest/pages/extractors.html)** to the input to build meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages (using regex or _Grok patterns_).
 
 - Go to the main `Search` page and confirm log messages are being ingested (click the `> Not updating` button to display new messages as they arrive)
 - Select a message from which you wish to extract data/fields
@@ -109,19 +109,19 @@ The graylog pattern editor provides a set of premade patterns to extract common 
 
 ---------------
 
-Create **[streams](https://docs.graylog.org/en/latest/pages/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select wether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
+Create **[streams](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select wether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
 
 <!-- TODO ADD EXAMPLE STREAM SETUP -->
 
 --------------
 
-Start using Graylog to [search and filter](https://docs.graylog.org/en/4.0/pages/searching/query_language.html) through messages, edit table fields, create aggregations (bar/area/line/pie charts, tables...) and progressively build useful **[dashboards](https://docs.graylog.org/en/latest/pages/dashboards.html)** showing important indicators for your specific setup.
+Start using Graylog to [search and filter](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/writing_search_queries.html) through messages, edit table fields, create aggregations (bar/area/line/pie charts, tables...) and progressively build useful **[dashboards](https://docs.graylog.org/en/latest/pages/dashboards.html)** showing important indicators for your specific setup.
 
 ![](https://i.imgur.com/0OCFJlx.png)
 
 -------------
 
-Setup [authentication](https://docs.graylog.org/en/latest/pages/permission_management.htmln#authentication) and [roles](https://docs.graylog.org/en/latest/pages/permission_management.html#roles) settings allow granting read or write access to specific users/groups. LDAP is supported.
+Setup [authentication and roles](https://go2docs.graylog.org/5-0/setting_up_graylog/permission_management.html) to grand read or write access to specific users/groups. LDAP is supported.
 
 **LDAP authentication:** This example is given for [openldap](../openldap) server:
 - Open the `System > Authentication` menu (https://logs.CHANGEME.org/system/authentication/services/create)
