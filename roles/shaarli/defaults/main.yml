@@ -44,3 +44,5 @@ shaarli_php_max_input_time: 60
 shaarli_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 shaarli_php_upload_max_filesize: '2M'
+# enable/disable the shaarli php-fpm pool (redirect users to maintenance page if disabled)
+shaarli_enable_service: yes

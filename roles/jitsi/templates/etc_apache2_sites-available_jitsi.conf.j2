@@ -21,6 +21,13 @@ MDomain {{ jitsi_fqdn }}
     SSLCertificateFile /etc/ssl/certs/{{ jitsi_fqdn }}.crt
     SSLCertificateKeyFile /etc/ssl/private/{{ jitsi_fqdn }}.key
 {% endif %}
+{% if not jitsi_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
     DocumentRoot "/usr/share/jitsi-meet"
 
     <Directory "/usr/share/jitsi-meet">
@@ -58,4 +65,5 @@ MDomain {{ jitsi_fqdn }}
 
     RewriteEngine on
     RewriteRule ^/([a-zA-Z0-9]+)$ /index.html
+{% endif %}
 </VirtualHost>

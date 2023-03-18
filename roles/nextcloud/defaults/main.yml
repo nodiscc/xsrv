@@ -103,3 +103,5 @@ nextcloud_php_pm_start_servers: 3
 nextcloud_php_pm_min_spare_servers: 2
 # php-fpm: desired maximum number of idle server processes
 nextcloud_php_pm_max_max_spare_servers: 4
+# enable/disable the nextcloud php-fpm pool (redirect users to maintenance page if disabled)
+nextcloud_enable_service: yes

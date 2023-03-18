@@ -1,3 +1,4 @@
+{% if shaarli_enable_service %}
 [shaarli]
 user = shaarli
 group = shaarli
@@ -37,3 +38,6 @@ php_admin_value[upload_max_filesize] = {{ shaarli_php_upload_max_filesize }}
 ;rlimit_files = 1024
 ;chroot =
 ;chdir = /
+{% else %}
+; this pool is disabled
+{% endif %}

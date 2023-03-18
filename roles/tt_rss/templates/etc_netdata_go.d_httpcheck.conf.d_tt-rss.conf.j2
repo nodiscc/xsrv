@@ -5,3 +5,6 @@
     url: https://127.0.0.1
     headers:
       Host: "{{ tt_rss_fqdn }}"
+{% if not tt_rss_enable_service %}
+    status_accepted: [503]
+{% endif %}

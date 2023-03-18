@@ -34,3 +34,5 @@ tt_rss_php_max_input_time: 60
 tt_rss_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 tt_rss_php_upload_max_filesize: '2M'
+# enable/disable the tt-rss php-fpm pool (redirect users to maintenance page if disabled)
+tt_rss_enable_service: yes

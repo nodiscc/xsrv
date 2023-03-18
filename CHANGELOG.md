@@ -12,11 +12,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - monitoring/netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
+- apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
+- allow disabling individual web applications (`homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss_enable_service: yes/no`), redirect to the maintenance page when disabled
 
 **Changed:**
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - matrix: update element-web to v1.11.25 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25)
 - monitoring/netdata: disable more netdata modules by default (coredns, unbound, rabbitmq, mysql, prometheus, bind, pihole, k8s_kubelet, pulsar, solr, supervisord, lighttpd)
+- monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - shaarli: simplify installed version/upgrade detection logic

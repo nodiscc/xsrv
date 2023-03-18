@@ -13,7 +13,7 @@ matrix_synapse_macaroon_secret_key: "CHANGEME25"
 matrix_synapse_block_non_admin_invites: no
 # yes/no: whether to enable URL previews
 matrix_synapse_enable_url_previews: yes
-# start/stop the matrix-synapse service, enable/disable it on boot (yes/no)
+# start/stop the matrix-synapse service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 matrix_synapse_enable_service: yes
 # yes/no: aggregate (verbose) synapse logs to syslog
 matrix_synapse_homeserver_logs_to_syslog: no
@@ -46,3 +46,5 @@ element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
 matrix_element_https_mode: selfsigned
+# enable/disable the element virtualhost (redirect users to maintenance page if disabled)
+matrix_element_enable_service: yes

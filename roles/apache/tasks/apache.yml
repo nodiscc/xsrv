@@ -105,6 +105,8 @@
   import_tasks: apache-mod-evasive.yml
   tags: apache-mod-evasive
 
+##### VIRTUALHOSTS #####
+
 - name: copy apache sites config
   template:
     src: etc_apache2_sites-available_000-sites.conf.j2
@@ -140,6 +142,8 @@
     - /var/www/html/index.html
   notify: reload apache
 
+##### MOD_MD #####
+
 - name: create work directory for mod_md automatic reload script
   file:
     state: directory
@@ -165,6 +169,25 @@
     minute: '*'
     day: '*'
     job: '/usr/local/bin/apache-mod-md-reload check-reload | logger -t apache-mod-md-reload'
+
+##### MAINTENANCE PAGE #####
+
+- name: create directory for maintenance page
+  file:
+    state: directory
+    path: /var/www/maintenance
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: copy maintenance page
+  copy:
+    src: var_www_maintenance_maintenance.html
+    dest: /var/www/maintenance/maintenance.html
+    owner: root
+    group: root
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SERVICES #####
 

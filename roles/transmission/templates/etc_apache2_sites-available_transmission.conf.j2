@@ -21,7 +21,13 @@ MDomain {{ transmission_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ transmission_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ transmission_fqdn }}.key
 {% endif %}
-
+{% if not transmission_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
   <Location "/">
     AuthType Basic
     AuthName "Authorization required"
@@ -35,4 +41,5 @@ MDomain {{ transmission_fqdn }}
   ProxyRequests off
   ProxyPass / http://localhost:9091/
   ProxyPassReverse / http://localhost:9091/
+{% endif %}
 </VirtualHost>

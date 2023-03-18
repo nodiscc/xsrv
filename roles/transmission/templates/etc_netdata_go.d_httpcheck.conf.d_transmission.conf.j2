@@ -8,3 +8,6 @@
     status_accepted:
       - 401
       - 200
+{% if not transmission_enable_service %}
+    status_accepted: [503]
+{% endif %}

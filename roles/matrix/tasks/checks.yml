@@ -16,6 +16,7 @@
     - matrix_synapse_enable_service == matrix_synapse_enable_service | bool
     - matrix_firewalld_zones | type_debug == "list"
     - matrix_element_version is string
+    - matrix_element_enable_service == matrix_element_enable_service | bool
     - matrix_element_fqdn is not search("CHANGEME")
     - matrix_element_https_mode in ['selfsigned', 'letsencrypt']
     - matrix_synapse_block_non_admin_invites == matrix_synapse_block_non_admin_invites | bool

@@ -21,6 +21,13 @@ MDomain {{ graylog_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ graylog_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ graylog_fqdn }}.key
 {% endif %}
+{% if not graylog_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
     ProxyRequests Off
 
     <Proxy *>
@@ -33,5 +40,5 @@ MDomain {{ graylog_fqdn }}
         ProxyPass http://127.0.0.1:9109/
         ProxyPassReverse http://127.0.0.1:9109/
     </Location>
-
+{% endif %}
 </VirtualHost>

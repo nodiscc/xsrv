@@ -15,21 +15,25 @@ MDomain {{ gitea_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ gitea_fqdn }}
-
-  # Workaround for https://github.com/go-gitea/gitea/issues/19265
-  Protocols http/1.1
-
   ServerAdmin webmaster@{{ gitea_fqdn }}
   SSLEngine on
 {% if gitea_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ gitea_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ gitea_fqdn }}.key
 {% endif %}
-
+{% if not gitea_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+  # Workaround for https://github.com/go-gitea/gitea/issues/19265
+  Protocols http/1.1
   ProxyPreserveHost On
   ProxyRequests off
   AllowEncodedSlashes NoDecode
   ProxyPass / http://localhost:3003/ nocanon
   ProxyPassReverse / http://localhost:3003/
-
+{% endif %}
 </VirtualHost>

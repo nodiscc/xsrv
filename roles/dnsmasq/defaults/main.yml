@@ -17,7 +17,7 @@ dnsmasq_records: []
 dnsmasq_firewalld_zones:
   - zone: internal
     state: enabled
-# yes/no: enable/disable the dsnmasq service
+# start/stop the dsnmasq service, enable/disable it on boot (yes/no)
 dnsmasq_enable_service: yes
 # list of network interfaces dnsmasq should listen on. Leave empty to listen on all interfaces
 # Example:

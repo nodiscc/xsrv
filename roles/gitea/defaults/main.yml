@@ -17,7 +17,7 @@ gitea_lfs_jwt_secret: "CHANGEME"
 gitea_user_home: /var/lib/gitea
 # gitea base URL under the domain name (eg change. it to /gitea to serve from https://git.CHANGEME.org/gitea)
 gitea_base_url: "/"
-# start/stop the gitea service, enable/disable it on boot (yes/no)
+# start/stop the gitea service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 gitea_enable_service: yes
 # gitea database settings
 gitea_db_type: "postgres" # postgres/mysql

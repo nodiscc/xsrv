@@ -5,7 +5,7 @@ jellyfin_fqdn: "media.CHANGEME.org"
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
 jellyfin_https_mode: selfsigned
-# yes/no: start/stop the jellyfin webserver, enable/disable it on boot
+# yes/no: start/stop the jellyfin webserver, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 jellyfin_enable_service: yes
 # yes/no: enable automatic backups of the default jellyfin media directory (when the nodiscc.xsrv.backup role is managed by ansible)
 # disabled by default - this can consume a lot of space on the backup storage, please configure backups manually or set this to yes if you really want to backup all media
