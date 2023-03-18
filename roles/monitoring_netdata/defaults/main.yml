@@ -104,6 +104,10 @@ netdata_x509_checks: []
 #     host: 192.168.10.10
 #     ports: [389, 636]
 #     interval: 10
+#   - name: mumble
+#     host: 192.168.10.10
+#     ports: [64738]
+#     interval: 10
 netdata_port_checks: []
 # Netdata file checks
 # see https://raw.githubusercontent.com/netdata/go.d.plugin/master/config/go.d/filecheck.conf
