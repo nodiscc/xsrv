@@ -90,6 +90,7 @@
     remote_src: yes
     mode: u=rwX
   when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  no_log: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set file permissions
@@ -175,3 +176,4 @@
   file:
     path: '{{ shaarli_install_dir }}.old'
     state: absent
+  no_log: yes
