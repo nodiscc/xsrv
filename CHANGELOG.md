@@ -18,7 +18,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.25 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25)
 - monitoring/netdata: disable more netdata modules by default (coredns, unbound, rabbitmq, mysql, prometheus, bind, pihole, k8s_kubelet, pulsar, solr, supervisord, lighttpd)
 - update documentation
-- cleanup: emove duplicate tasks
+- shaarli: simplify installed version/upgrade detection logic
+- cleanup: remove duplicate tasks
+
 **Fixed:**
 - monitoring/netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages

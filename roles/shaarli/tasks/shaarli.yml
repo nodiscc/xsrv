@@ -22,7 +22,7 @@
       - php7.4-gettext
       - php7.4-ldap
 
-### SHAARLI INSTALLATION ###
+### CHECK INSTALLATION STATUS ###
 
 - name: check shaarli if installation directory exists
   stat:
@@ -38,12 +38,26 @@
 - name: check if initial installation should be performed
   set_fact:
     shaarli_action: initial
-  when: '(ansible_local.shaarli.installed.version is undefined) and (not shaarli_dir.stat.exists)'
+  when:
+    - ansible_local.shaarli.installed.version is undefined
+    - not shaarli_dir.stat.exists
 
 - name: check if upgrade should be performed
   set_fact:
     shaarli_action: upgrade
-  when: '(ansible_local.shaarli.installed.version is defined) and (ansible_local.shaarli.installed.version < shaarli_version) and (shaarli_dir.stat.exists)' # noqa 204
+  when:
+    - ansible_local.shaarli.installed.version is defined
+    - ansible_local.shaarli.installed.version < shaarli_version
+    - shaarli_dir.stat.exists
+
+- name: check if no upgrade or initial installation should be performed
+  set_fact:
+    shaarli_action: configure_only
+  when:
+    - ansible_local.shaarli.installed.version is defined
+    - ansible_local.shaarli.installed.version == shaarli_version
+
+### SHAARLI INSTALLATION/UPGRADE ###
 
 - name: download shaarli zip
   get_url:
@@ -52,17 +66,13 @@
     owner: root
     group: root
     mode: "0640"
-  when:
-    - shaarli_action is defined
-    - shaarli_action == 'initial' or shaarli_action == 'upgrade'
+  when: shaarli_action == 'initial' or shaarli_action == 'upgrade'
 
 - name: remove shaarli zip extraction directory
   file:
     path: /root/shaarli-unpack
     state: absent
-  when:
-    - shaarli_action is defined
-    - shaarli_action == 'upgrade'
+  when: shaarli_action == 'upgrade'
 
 - name: create shaarli zip extraction directory
   file:
@@ -71,9 +81,7 @@
     mode: "0755"
     owner: root
     group: root
-  when:
-    - shaarli_action is defined
-    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
 
 - name: extract shaarli zip
   unarchive:
@@ -81,9 +89,7 @@
     dest: "/root/shaarli-unpack"
     remote_src: yes
     mode: u=rwX
-  when:
-    - shaarli_action is defined
-    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set file permissions
@@ -100,23 +106,17 @@
     - { path: "/root/shaarli-unpack/Shaarli/cache", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/pagecache", mode: "0770" }
   ignore_errors: "{{ ansible_check_mode }}"
-  when:
-    - shaarli_action is defined
-    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
 
 - name: move old shaarli installation to temporary dir
   command: mv '{{ shaarli_install_dir }}' '{{ shaarli_install_dir }}.old'
   args:
     removes: '{{ shaarli_install_dir }}'
-  when:
-    - shaarli_action is defined
-    - shaarli_action == 'upgrade'
+  when: shaarli_action == 'upgrade'
 
 - name: move shaarli extraction directory to install directory
   command: mv /root/shaarli-unpack/Shaarli '{{ shaarli_install_dir }}'
-  when:
-    - shaarli_action is defined
-    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
   changed_when: yes
 
 - name: copy data directory from old installation
@@ -127,9 +127,7 @@
     mode: preserve
     owner: root
     group: shaarli
-  when:
-    - shaarli_action is defined
-    - shaarli_action == 'upgrade'
+  when: shaarli_action == 'upgrade'
 
 - name: copy shaarli configuration
   template:
@@ -175,6 +173,3 @@
   file:
     path: '{{ shaarli_install_dir }}.old'
     state: absent
-  when:
-    - shaarli_action is defined
-    - shaarli_action == 'upgrade'
