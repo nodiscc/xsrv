@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - matrix: update element-web to v1.11.25 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25)
 - monitoring/netdata: disable more netdata modules by default (coredns, unbound, rabbitmq, mysql, prometheus, bind, pihole, k8s_kubelet, pulsar, solr, supervisord, lighttpd)
+- shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - update documentation
 - shaarli: simplify installed version/upgrade detection logic
 - cleanup: remove duplicate tasks
