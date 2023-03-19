@@ -1,4 +1,4 @@
-- name: install requirments for python virtualenv
+- name: install requirements for python virtualenv
   apt:
     package: python3-venv
     state: present
