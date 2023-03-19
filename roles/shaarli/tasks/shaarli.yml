@@ -146,9 +146,10 @@
     path: "{{ shaarli_install_dir }}/data/log.txt"
     access_time: preserve
     modification_time: preserve
-    owner: shaarli
+    owner: root
     group: shaarli
     mode: "0660"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: update ownership/mode of directories
   file:
