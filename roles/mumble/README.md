@@ -9,7 +9,7 @@ It also configures:
 [![](https://i.imgur.com/S5Z6IEw.png)](https://i.imgur.com/S5Z6IEw.png)
 
 
-## Requirements/eependencies/example playbook
+## Requirements/dependencies/example playbook
 
 See [meta/main.yml](meta/main.yml)
 
