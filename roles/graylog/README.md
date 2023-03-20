@@ -99,7 +99,7 @@ Example: given this message:
 The following Grok expression will generate new fields `action`, `in_interface`, `source_ip`, `destination_ip`, `packet_length`, `ttl`, `connection_id`, `protocol`, `source_port`, `destination_port` which can be used in your queries and custom widgets/dashboards:
 
 ```
-\[%{SPACE}?%{INT:UNWANTED}.%{INT:UNWANTED}\] %{WORD:action}: IN=%{WORD:in_interface} OUT=%{WORD:out_interface}? MAC=%{NOTSPACE:mac_address}? SRC=%{IPV4:source_ip} DST=%{IPV4:destination_ip} LEN=%{INT:packet_length} TOS=0x%{INT:UNWANTED} PREC=0x00 TTL=%{INT:ttl} ID=%{INT:connection_id} DF PROTO=%{WORD:protocol} SPT=%{INT:source_port} DPT=%{INT:destination_port} (WINDOW=%{INT:window_size} )?(RES=0x00 )?(SYN )?(URGP=0 )?(LEN=%{INT:packet_length})?
+\[%{SPACE}?%{INT:UNWANTED}.%{INT:UNWANTED}\] %{WORD:action}: IN=%{WORD:in_interface} OUT=%{WORD:out_interface}? MAC=%{NOTSPACE:mac_address}? SRC=%{IPV4:source_ip} DST=%{IPV4:destination_ip} LEN=%{INT:packet_length} TOS=0x%{INT:UNWANTED} PREC=0x00 TTL=%{INT:ttl} ID=%{INT:connection_id} (DF )?PROTO=%{WORD:protocol} SPT=%{INT:source_port} DPT=%{INT:destination_port} (WINDOW=%{INT:window_size} )?(RES=0x00 )?(SYN )?(URGP=0 )?(LEN=%{INT:packet_length})?
 ```
 
 The graylog pattern editor provides a set of premade patterns to extract common data formats (dates, usernames, words, numbers, ...). You can find other examples [here](https://github.com/hpcugent/logstash-patterns/blob/master/files/grok-patterns) and expermiment with the [Grok Debugger](https://grokdebugger.com/).
