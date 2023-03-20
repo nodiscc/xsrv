@@ -72,6 +72,12 @@
             .element-cb {
                 background-color: #0DBD8B;
             }
+            .jitsi :hover{
+                border-color: #1D76BA;
+            }
+            .jitsi-cb {
+                background-color: #1D76BA;
+            }
             .shaarli :hover{
                 border-color: #166E4C;
             }
@@ -215,6 +221,16 @@
                     <div class="content">
                         <div class="colorblock element-cb"><img class="app-icon" src="res/element.png"></div>
                         <p class="app-name">Matrix (Element)</p>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.jitsi.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 jitsi">
+                <a href="https://{{ ansible_local.jitsi.fqdn }}">
+                    <div class="content">
+                        <div class="colorblock jitsi-cb"><img class="app-icon" src="res/jitsi.png"></div>
+                        <p class="app-name">Jitsi</p>
                     </div>
                 </a>
             </div>
