@@ -4,6 +4,7 @@ This role will install and configure [Netdata](https://my-netdata.io/), a real-t
  - [needrestart](https://gitlab.com/nodiscc/netdata-needrestart)
  - [logcount](https://gitlab.com/nodiscc/netdata-logcount)
  - [debsecan](https://gitlab.com/nodiscc/netdata-debsecan)
+ - [apt](https://gitlab.com/nodiscc/netdata-apt)
 
 [![](https://i.imgur.com/vqfWelH.png)](https://i.imgur.com/vqfWelH.png)
 
