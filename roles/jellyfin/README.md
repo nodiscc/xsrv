@@ -9,9 +9,8 @@ Stream to any device from your own server, with no strings attached. Your media,
  - Your data: no tracking, phone-home, or central servers collecting your data.
  - LDAP authentication support
 
-[![](https://jellyfin.org/images/screenshots/home_thumb.png)](https://jellyfin.org/images/screenshots/home_full.png)
-[![](https://jellyfin.org/images/screenshots/movie_thumb.png)](https://jellyfin.org/images/screenshots/movie_full.png)
-[![](https://jellyfin.org/images/screenshots/playback_thumb.png)](hthttps://jellyfin.org/images/screenshots/playback_full.png)
+[![](https://i.imgur.com/yd06nxh.png)](https://i.imgur.com/YA8bBGX.jpg)
+[![](https://i.imgur.com/gmJspSD.png)](https://i.imgur.com/kyqr1mh.jpg)
 
 
 ## Requirements/dependencies/example playbook
