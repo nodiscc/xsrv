@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: self-service-password: fix self-service-password application not being served by the correct php-fpm pool
 - shaarli: fix custom favicon location
 - shaarli: make task `create initial shaarli log.txt` idempotent
+- matrix: don't attempt to create synapse users when the service is disabled
 
 [Full changes since v1.12.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.12.0...1.13.0)
 
