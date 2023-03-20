@@ -161,6 +161,7 @@ apt_listbugs_ignore_list:
   - 1028638 # https://bugs.debian.org/1028638 - unreproducible
   - 1031336 # https://bugs.debian.org/1031336 - only affects debian sid
   - 1029342 # https://bugs.debian.org/1029342 - packaging bug without impact
+  - 983393 # https://bugs.debian.org/983393 - ignored in bullseye, fixed in unstable
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
