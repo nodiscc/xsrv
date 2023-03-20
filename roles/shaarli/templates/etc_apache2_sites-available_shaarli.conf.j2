@@ -35,7 +35,6 @@ MDomain {{ shaarli_fqdn }}
       Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com; frame-ancestors 'none'"
   </Directory>
 
-  # BE CAREFUL: directives order matter!
   <FilesMatch ".*\.(?!(ico|css|js|gif|jpe?g|png|ttf|oet|woff2?)$)[^\.]*$">
     Require all denied
   </FilesMatch>
@@ -59,6 +58,6 @@ MDomain {{ shaarli_fqdn }}
   </FilesMatch>
 
   # serve the Shaarli favicon from its custom location
-  Alias favicon.ico /var/www/shaarli.mydomain.org/images/favicon.ico
-
+  Alias favicon.ico {{ shaarli_install_dir }}/images/favicon.ico
+{% endif %}
 </VirtualHost>
