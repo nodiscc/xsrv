@@ -6,7 +6,9 @@ Clients of the wireguard server will be able to route their traffic through it.
 
 ## Requirements/dependencies/example playbook
 
-See [meta/main.yml](meta/main.yml)
+- See [meta/main.yml](meta/main.yml)
+- The server's UDP port `51820` must be reachable by clients. Configure NAT/port forwarding on your router if necessary, and allow port `51820/udp` in the host's firewall (if the [`ansible.xsrv.common`](../common) role is deployed, a `firewalld` rule is automatically added).
+- IP forwarding must be enabled on the host, for example using the [common](../common) role: `sysctl_allow_forwarding: yes`
 
 ```yaml
 # playbook.yml
@@ -29,13 +31,6 @@ wireguard_peers:
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
-The server's UDP port `51820` must be reachable by clients. Configure NAT/port forwarding on your router if necessary, and allow port `51820/udp` in the host's firewall (if the [`ansible.xsrv.common`](../common) role is deployed, a `firewalld` rule is automatically added).
-
-IP forwarding must be enabled on the host, for example using the [common](../common) role:
-
-```yaml
-sysctl_allow_forwarding: yes
-```
 
 ## Usage
 

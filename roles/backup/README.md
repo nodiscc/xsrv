@@ -15,7 +15,8 @@ This role will setup [rsnapshot](https://rsnapshot.org), an incremental backup s
 
 ## Requirements/dependencies/example playbook
 
-See [meta/main.yml](meta/main.yml)
+- See [meta/main.yml](meta/main.yml)
+- On hosts that should be backed up, firewall/NAT rules allowing SSH connections from the backup server
 
 ```yaml
 # playbook.yml
@@ -28,7 +29,6 @@ See [meta/main.yml](meta/main.yml)
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-- Firewall rules allowing outbound SSH connections/ports to machines that should be backed up
 
 
 

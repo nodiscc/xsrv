@@ -12,9 +12,8 @@ This role will install and configure a [LDAP](https://en.wikipedia.org/wiki/Ligh
 
 ## Requirements/dependencies/example playbook
 
-See [meta/main.yml](meta/main.yml)
-
-The server must be reachable by clients over TCP ports 389 and 636 (SSL/TLS).
+- See [meta/main.yml](meta/main.yml)
+- The server must be reachable by clients over TCP ports 389 and 636 (SSL/TLS).
 
 ```yaml
 # playbook.yml

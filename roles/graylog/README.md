@@ -23,6 +23,7 @@ _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-ss
 
 - See [meta/main.yml](meta/main.yml)
 - Graylog/ElasticSearch requires at least 4GB of RAM to run with acceptable performance in a basic setup [[1](https://community.graylog.org/t/graylog2-system-requirement/2752/2)]. Fast disks are recommended.
+- Firewall/NAT rules allowing connections on TCP port 5140, from clients that send their logs to the graylog instance
 
 ```yaml
 # playbook.yml
@@ -44,6 +45,9 @@ graylog_secret_key: "CHANGEME96"
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
+## Usage
+
+### Clients
 
 Remote hosts must be configured to send their logs to the graylog instance. For example with the [monitoring](../monitoring) role:
 
@@ -53,9 +57,6 @@ rsyslog_enable_forwarding: yes
 rsyslog_forward_to_hostname: "my.CHANGEME.org"
 rsyslog_forward_to_port: 5140
 ```
-
-
-## Usage
 
 ### Basic setup
 

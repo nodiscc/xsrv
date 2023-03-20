@@ -11,7 +11,9 @@ This role will install [Jitsi Meet](https://jitsi.org/jitsi-meet/), a fully encr
 
 ## Requirements/dependencies/example playbook
 
-See [meta/main.yml](meta/main.yml)
+- See [meta/main.yml](meta/main.yml)
+- See [Jitsi documentation](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-requirements) on hardware and network requirements for acceptable performance.
+
 
 ```yaml
 # playbook.yml
@@ -37,7 +39,6 @@ jitsi_users:
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
-See [Jitsi documentation](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-requirements) on hardware and network requirements for acceptable performance.
 
 ## Usage
 

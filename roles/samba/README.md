@@ -8,7 +8,8 @@ The server is set up as a "standalone"/workgroup server (ie. not part of a domai
 
 ## Requirements/dependencies/example playbook
 
-See [meta/main.yml](meta/main.yml)
+- See [meta/main.yml](meta/main.yml)
+- The LDAP server must be running on the same host as the samba server if `samba_passdb_backend: ldpsam` is used.
 
 ```yaml
 # playbook.yml
@@ -23,7 +24,6 @@ See [meta/main.yml](meta/main.yml)
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-Currently, the LDAP server must be running on the same host as the samba server if `samba_passdb_backend: ldpsam` is used.
 
 ## Usage
 
