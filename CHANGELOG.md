@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - shaarli: simplify installed version/upgrade detection logic
 - shaarli: make installation/upgrade tasks less verbose
+- monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
 - update documentation
 - improve check mode support
 - cleanup: remove duplicate tasks
