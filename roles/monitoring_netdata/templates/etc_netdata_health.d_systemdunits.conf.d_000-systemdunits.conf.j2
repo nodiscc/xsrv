@@ -9,7 +9,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd service unit in the failed state
        to: sysadmin
@@ -23,7 +23,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd socket unit in the failed state
        to: sysadmin
@@ -37,7 +37,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd target unit in the failed state
        to: sysadmin
@@ -51,7 +51,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd path unit in the failed state
        to: sysadmin
@@ -65,7 +65,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd device unit in the failed state
        to: sysadmin
@@ -79,7 +79,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd mount units in the failed state
        to: sysadmin
@@ -93,7 +93,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd automount unit in the failed state
        to: sysadmin
@@ -107,7 +107,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd swap units in the failed state
        to: sysadmin
@@ -121,7 +121,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd scope units in the failed state
        to: sysadmin
@@ -135,7 +135,7 @@ component: Systemd units
      calc: $failed
     units: state
     every: 10s
-     warn: $this != nan AND $this == 1
+     crit: $this != nan AND $this == 1
     delay: down 5m multiplier 1.5 max 1h
      info: systemd slice units in the failed state
        to: sysadmin

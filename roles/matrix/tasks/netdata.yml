@@ -1,14 +1,15 @@
 - name: install netdata http/systemd checks/alarms for synapse/element
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: etc_netdata_go.d_httpcheck.conf.d_matrix.conf.j2
+    dest: /etc/netdata/go.d/httpcheck.conf.d/matrix.conf
     owner: root
     group: netdata
     mode: "0640"
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
-  with_items:
-    - src: etc_netdata_go.d_httpcheck.conf.d_matrix.conf.j2
-      dest: /etc/netdata/go.d/httpcheck.conf.d/matrix.conf
-    - src: etc_netdata_health.d_systemdunits.conf.d_synapse.conf.j2
-      dest: /etc/netdata/health.d/systemdunits.conf.d/synapse.conf
+
+- name: migration/1.13.0 - remove files from old versions of the role
+  file:
+    state: absent
+    path: /etc/netdata/health.d/systemdunits.conf.d/synapse.conf
+  notify: assemble netdata configuration

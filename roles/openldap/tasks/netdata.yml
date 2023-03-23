@@ -1,20 +1,18 @@
-- name: install netdata http/systemd checks for openldap
+- name: install netdata http checks for openldap
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: etc_netdata_go.d_httpcheck.conf.d_openldap.conf.j2
+    dest: /etc/netdata/go.d/httpcheck.conf.d/openldap.conf
     owner: root
     group: netdata
     mode: "0640"
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
-  with_items:
-    - src: etc_netdata_go.d_httpcheck.conf.d_openldap.conf.j2
-      dest: /etc/netdata/go.d/httpcheck.conf.d/openldap.conf
-    - src: etc_netdata_health.d_systemdunits.conf.d_openldap.conf.j2
-      dest: /etc/netdata/health.d/systemdunits.conf.d/openldap.conf
 
-- name: migration - remove files from old versions of the role
+- name: migration/1.13.0 - remove files from old versions of the role
   file:
     state: absent
-    path: "/etc/netdata/health.d/processes.conf.d/openldap.conf"
+    path: "{{ item }}"
   notify: assemble netdata configuration
+  with_items:
+    - /etc/netdata/health.d/processes.conf.d/openldap.conf
+    - /etc/netdata/health.d/systemdunits.conf.d/openldap.conf

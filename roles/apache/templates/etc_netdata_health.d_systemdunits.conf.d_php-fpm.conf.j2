@@ -1,9 +1,0 @@
-    alarm: systemd_service_php7.4_fpm
-       on: systemdunits_service-units.unit_php7.4-fpm_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: php7.4-fpm service status
-       to: sysadmin
-

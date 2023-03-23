@@ -1,9 +1,0 @@
-    alarm: systemd_service_postgresql
-       on: systemdunits_service-units.unit_postgresql_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: postgresql server service status
-       to: sysadmin
-

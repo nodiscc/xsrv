@@ -1,14 +1,15 @@
-- name: install netdata http/systemd checks/alarms for transmission
+- name: install netdata http checks for transmission
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: etc_netdata_go.d_httpcheck.conf.d_transmission.conf.j2
+    dest: /etc/netdata/go.d/httpcheck.conf.d/transmission.conf
     owner: root
     group: netdata
     mode: "0640"
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
-  with_items:
-    - src: etc_netdata_go.d_httpcheck.conf.d_transmission.conf.j2
-      dest: /etc/netdata/go.d/httpcheck.conf.d/transmission.conf
-    - src: etc_netdata_health.d_systemdunits.conf.d_transmission.conf.j2
-      dest: /etc/netdata/health.d/systemdunits.conf.d/transmission.conf
+
+- name: migration/1.13.0 - remove files from old versions of the role
+  file:
+    path: /etc/netdata/health.d/systemdunits.conf.d/transmission.conf
+    state: absent
+  notify: assemble netdata configuration
