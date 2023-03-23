@@ -68,6 +68,7 @@ This project provides:
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
 [![](https://i.imgur.com/g0jUMXE.jpg)](roles/jitsi)
 [![](https://i.imgur.com/v3lHJGx.png)](roles/readme_gen)
+[![](https://i.imgur.com/XYmHNqT.png)](roles/libvirt)
 
 ## Source code
 
