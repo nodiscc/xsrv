@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
+- nextcloud: upgrade to [v25.0.5](https://nextcloud.com/changelog/)
 - shaarli: simplify installed version/upgrade detection logic
 - shaarli: make installation/upgrade tasks less verbose
 - monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
