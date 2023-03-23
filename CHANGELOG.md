@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
 - allow disabling individual web applications (`homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss_enable_service: yes/no`), redirect to the maintenance page when disabled
 
+**Removed:**
+- common: remove task `ensure /var/log/wtmp is not world-readable`
+
 **Changed:**
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - matrix: update element-web to v1.11.25 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25)
