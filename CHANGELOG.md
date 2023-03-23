@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - nextcloud: upgrade to [v25.0.5](https://nextcloud.com/changelog/)
+- graylog: update graylog-server and mongodb to v5.0 [[1]](https://www.graylog.org/post/graylog-5-0-a-new-day-for-it-secops/) [[2]](https://www.graylog.org/releases/)
 - shaarli: simplify installed version/upgrade detection logic
 - shaarli: make installation/upgrade tasks less verbose
 - monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected

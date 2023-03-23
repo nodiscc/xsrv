@@ -40,6 +40,14 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
+# these tasks will only run if the graylog role is already deployed from a previous version
+- name: migration/1.13.0 - include mongodb 4.4 -> 5.0 upgrade tasks
+  import_tasks: mongodb-upgrade-4.4-5.0.yml
+  become: yes
+  when:
+    - ansible_local.graylog.ansible_managed is defined
+    - ansible_local.graylog.mongodb_upgraded_44_50 is not defined
+
 - name: install mongodb-org package
   apt:
     package: mongodb-org
