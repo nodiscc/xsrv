@@ -33,3 +33,4 @@
 - name: migration/1.13.0 - update mongodb compatibility version to 5.0
   community.mongodb.mongodb_shell:
     eval: 'db.adminCommand({setFeatureCompatibilityVersion: "5.0"})'
+  changed_when: yes
