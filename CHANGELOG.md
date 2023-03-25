@@ -24,22 +24,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/netdata: disable more netdata modules by default (coredns, unbound, rabbitmq, mysql, prometheus, bind, pihole, k8s_kubelet, pulsar, solr, supervisord, lighttpd)
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
+- monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - nextcloud: upgrade to [v25.0.5](https://nextcloud.com/changelog/)
 - openldap: update ldap-account-manager to [v8.3](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_3)
 - graylog: update graylog-server and mongodb to v5.0 [[1]](https://www.graylog.org/post/graylog-5-0-a-new-day-for-it-secops/) [[2]](https://www.graylog.org/releases/)
-- shaarli: simplify installed version/upgrade detection logic
-- shaarli: make installation/upgrade tasks less verbose
-- monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
 - update documentation
 - improve check mode support
-- cleanup: remove duplicate tasks
+- cleanup: remove duplicate tasks, simplify installed version/upgrade detection logic, make installation/upgrade tasks less verbose...
 
 **Fixed:**
 - homepage: display a link to the Jitsi Meet instance if deployed
 - monitoring/netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
 - monitoring/netdata: prevent duplicate alarms on failed systemd services
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
+- monitoring_utils/lynis: prevent lynis from running twice per day, disable duplicate systemd timer
 - openldap: self-service-password: fix self-service-password application not being served by the correct php-fpm pool
 - shaarli: fix custom favicon location
 - shaarli: make task `create initial shaarli log.txt` idempotent
