@@ -26,7 +26,7 @@ openldap_organization: "example"
 openldap_base_dn: "dc=example,dc=test"
 ##### GRAYLOG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml
 graylog_fqdn: "logs.example.test"
-graylog_enable_service: no
+elasticsearch_heap_size: "1g"
 ##### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_fqdn: "tty.example.test"
 gotty_run_username: "deploy"
