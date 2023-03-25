@@ -1,7 +1,7 @@
 - name: install mongodb shell
   apt:
-   package: mongodb-mongosh
-   state: present
+    package: mongodb-mongosh
+    state: present
 
 - name: migration/1.13.0 - update mongodb compatibility version to 4.4
   community.mongodb.mongodb_shell:
