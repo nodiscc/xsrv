@@ -94,6 +94,8 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip VM_IP [--n
 
 [![](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k.svg)](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k?speed=2&theme=monokai&autoplay=true)
 
+You can then use the [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role to manage VMs, the [`virsh`](https://manpages.debian.org/bullseye-backports/libvirt-clients/virsh.1.en.html) command-line tool, and/or [virt-manager](virt-manager.md) to manage the hypervisor from a remote machine.
+
 
 ### From a hosting provider
 
