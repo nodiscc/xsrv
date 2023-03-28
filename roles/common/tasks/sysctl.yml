@@ -2,6 +2,8 @@
   template:
     src: 'etc_sysctl.d_custom.conf.j2'
     dest: '/etc/sysctl.d/custom.conf'
+    owner: root
+    group: root
     mode: "0600"
   notify: apply sysctl configuration
 
