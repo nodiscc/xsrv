@@ -20,7 +20,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
-- matrix: update element-web to v1.11.26 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26)
 - monitoring/netdata: disable more netdata modules by default (coredns, unbound, rabbitmq, mysql, prometheus, bind, pihole, k8s_kubelet, pulsar, solr, supervisord, lighttpd)
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
@@ -28,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `1.9 OK`)
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - nextcloud: upgrade to [v25.0.5](https://nextcloud.com/changelog/)
+- matrix: update element-web to v1.11.26 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26)
 - openldap: update ldap-account-manager to [v8.3](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_3)
 - graylog: update graylog-server and mongodb to v5.0 [[1]](https://www.graylog.org/post/graylog-5-0-a-new-day-for-it-secops/) [[2]](https://www.graylog.org/releases/)
 - update documentation
