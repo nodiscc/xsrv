@@ -1,8 +1,3 @@
-- name: apply sysctl configuration
-  become: yes
-  command: sysctl --system
-  changed_when: yes
-
 - name: update pam configuration
   become: yes
   command: 'pam-auth-update --package'

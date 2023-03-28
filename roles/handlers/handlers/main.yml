@@ -120,6 +120,11 @@
 
 ### GENERAL PURPOSE ###
 
+- name: apply sysctl configuration
+  become: yes
+  command: sysctl --system
+  changed_when: yes
+
 - name: reload systemd unit files
   become: yes
   systemd:
