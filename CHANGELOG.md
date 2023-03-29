@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - monitoring/netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
 - apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
-- allow disabling individual web applications (`homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss_enable_service: yes/no`), redirect to the maintenance page when disabled
+- homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss: allow disabling individual web applications (`*_enable_service: yes/no`), redirect to the maintenance page when disabled
 - dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
 - samba: allow enabling/disabling the service ([`samba_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
 - postgresql: netdata: allow netdata to gather detailed statistics about the postgresql instance [[1]](https://learn.netdata.cloud/docs/data-collection/monitor-anything/Databases/PostgresSQL) [[2]](https://blog.netdata.cloud/postgresql-monitoring/)
@@ -22,6 +22,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: remove task `ensure /var/log/wtmp is not world-readable`
 
 **Changed:**
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--gateway` optional, by default use the value of `--ip` with the last octet replaced by `.1`
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--ssh-pubkey` optional, by default use the contents of `~/.ssh/id_rsa.pub`
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): always dump VM XML definition to a file (`--dumpxml`), by default to `$projects_dir/VM_NAME.xml`
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - monitoring/netdata: disable more netdata modules by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
@@ -40,7 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to [v7.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - update documentation
 - improve check mode support
-- cleanup: remove duplicate tasks, simplify installed version/upgrade detection logic, make installation/upgrade tasks less verbose...
+- cleanup: remove duplicate tasks, simplify installed version/upgrade detection logic, make installation/upgrade tasks less verbose, cleanup main script
 
 **Fixed:**
 - homepage: display a link to the Jitsi Meet instance if deployed
