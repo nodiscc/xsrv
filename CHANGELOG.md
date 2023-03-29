@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `1.9 OK`)
 - gitea: make gitea data directories owned by gitea (prevents `fatal: detected dubious ownership in repository` when manipulating files/repos from a shell as the gitea user)
 - common: users: ensure that both the ansible user and root home directories permissions are set to `0700`
+- gitea: update to v1.19.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.4) [[3]](https://blog.gitea.io/2023/03/gitea-1.19.0-is-released/) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.19.1)
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - nextcloud: update to [v25.0.5](https://nextcloud.com/changelog/)
 - matrix: update element-web to v1.11.29 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.27) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.28) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.29)
