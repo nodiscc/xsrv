@@ -31,7 +31,6 @@
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 {% endif %}
 </VirtualHost>
-
 {% if item.https_mode is defined and item.https_mode == 'letsencrypt' %}
 MDomain {{ item.servername }}
 {% if item.redirect_https is not defined or item.redirect_https %}
@@ -41,9 +40,6 @@ MDRequireHttps permanent
 <VirtualHost *:443>
   ServerName  {{ item.servername }}
   SSLEngine on
-  LogLevel warn
-  ErrorLog ${APACHE_LOG_DIR}/error.log
-  CustomLog ${APACHE_LOG_DIR}/access.log combined
 {% if item.https_mode is not defined or item.https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ item.servername }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ item.servername }}.key
@@ -64,4 +60,5 @@ MDRequireHttps permanent
 {% endfor %}
 {% endif %}
 </VirtualHost>
+
 {% endfor %}
