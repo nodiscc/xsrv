@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils/lynis: prevent lynis from running twice per day, disable duplicate systemd timer
 - openldap: self-service-password: fix self-service-password application not being served by the correct php-fpm pool
 - apache/netdata: fix unproperly formatted log lines causing `web log unmatched` alarms/high `excluded_requests` rate
+- openldap/rsyslog: fix warning `file '/var/log/nscd.log' does not exist` when samba is coonfigured with `samba_passdb_backend: ldapsam`
 - shaarli: fix custom favicon location
 - shaarli: make task `create initial shaarli log.txt` idempotent
 - matrix: don't attempt to create synapse users when the service is disabled
