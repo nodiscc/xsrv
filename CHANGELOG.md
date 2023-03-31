@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
 - apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
 - allow disabling individual web applications (`homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss_enable_service: yes/no`), redirect to the maintenance page when disabled
+- dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
 
 **Removed:**
 - common: remove task `ensure /var/log/wtmp is not world-readable`

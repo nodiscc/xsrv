@@ -16,7 +16,6 @@
   with_items:
     - "/var/mail/vhosts"
 
-
 - name: copy dovecot configuration
   template:
     src: "{{ item.src }}"
@@ -39,3 +38,13 @@
 # $ nc -Cv 127.0.0.1 993
 # * OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE LITERAL+ STARTTLS AUTH=PLAIN] Dovecot (Debian) ready.
 # A1 login user@CHANGEME.org CHANGEME_PASSWORD
+
+##### SERVICE #####
+
+- name: start/stop/enable/disable dovecot service
+  service:
+    name: dovecot
+    state: "{{ 'started' if dovecot_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if dovecot_enable_service else 'no' }}"
+  tags: services
+  ignore_errors: "{{ ansible_check_mode }}"
