@@ -10,9 +10,9 @@ transmission_download_dir: '/var/lib/transmission-daemon/downloads'
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 transmission_https_mode: selfsigned
-# yes/no: start/stop the transmission bitorrent client, enable/disable it on boot (redirect users to maintenance page if disabled)
+# start/stop the transmission bitorrent client, enable/disable it on boot, redirect users to maintenance page if disabled (yes/no)
 transmission_enable_service: yes
-# yes/no: if the nodiscc.xsrv.backup role is enabled, backup transmission downloads automatically
+# backup transmission downloads automatically, if the nodiscc.xsrv.backup role is enabled (yes/no)
 # disabled by default as it can consume a lot of disk space
 transmission_backup_downloads: no
 # firewall zones for the transmission bittorrent service (peer communication), if nodiscc.xsrv.common/firewalld role is deployed
