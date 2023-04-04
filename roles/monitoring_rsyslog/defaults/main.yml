@@ -3,6 +3,6 @@
 syslog_retention_days: 186
 # yes/no: enable forwarding of syslog logs to a syslog server (over TLS/TCP)
 rsyslog_enable_forwarding: no
-# if forwarding is enabled, hostname/port to forward logs to (must be a host with the nodiscc.xrv.graylog role already deployed)
-rsyslog_forward_to_hostname: "my.CHANGEME.org"
+# if forwarding is enabled, hostname/port to forward logs to (e.g. host with the nodiscc.xsrv.graylog role)
+rsyslog_forward_to_hostname: "logs.CHANGEME.org"
 rsyslog_forward_to_port: 5140
