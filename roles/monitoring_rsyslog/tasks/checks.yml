@@ -4,8 +4,9 @@
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog"
   with_items:
-    - syslog_retention_days == syslog_retention_days|int
+    - syslog_retention_days == syslog_retention_days | int
     - rsyslog_enable_forwarding == rsyslog_enable_forwarding | bool
+    - rsyslog_custom_config | type_debug == "list"
 
 - name: check that mandatory variables are correctly defined (syslog forwarding)
   assert:
@@ -15,4 +16,4 @@
   when: rsyslog_enable_forwarding
   with_items:
     - rsyslog_forward_to_hostname is not search('CHANGEME')
-    - rsyslog_forward_to_port == rsyslog_forward_to_port|int
+    - rsyslog_forward_to_port == rsyslog_forward_to_port | int

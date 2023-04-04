@@ -23,6 +23,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/netdata: disable more netdata modules by default (coredns, unbound, rabbitmq, mysql, prometheus, bind, pihole, k8s_kubelet, pulsar, solr, supervisord, lighttpd)
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
+- monitoring/rsyslog: allow setting custom configuration directives ([`rsyslog_custom_config`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
+- monitoring/rsyslog: don't discard any messages by default, custom discard rules can be configured through `rsyslog_custom_config`
 - monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
 - gitea: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `1.9 OK`)
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
@@ -817,7 +819,7 @@ self_service_password_allowed_hosts:
 **Added:**
 - add [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) log analyzer role
 - add [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) role
-- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add [`rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port`]([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitorign_rsyslog/defaults/main.yml)) variables)
+- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add [`rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port`]([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variables)
 - jellyfin/common/apt: enable automatic upgrades for jellyfin by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48))
 - monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in [`netdata_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
 - monitoring/netdata: add [`netdata_x509_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
