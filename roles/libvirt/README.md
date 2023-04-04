@@ -1,6 +1,6 @@
 # xsrv.libvirt
 
-This role will install and configure [libvirt], a collection of software that provides a convenient way to manage virtual machines and other virtualization functionality, such as storage and network interface management.
+This role will install and configure [libvirt](https://en.wikipedia.org/wiki/Libvirt), a collection of software that provides a convenient way to manage virtual machines and other virtualization functionality, such as storage and network interface management.
 
 [![](https://i.imgur.com/KLtl38W.png)](https://i.imgur.com/AbZkpvF.png)
 [![](https://i.imgur.com/aZ6rtn3.png)](https://i.imgur.com/XNCGMBr.png)
