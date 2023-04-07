@@ -58,39 +58,21 @@
   file:
     state: directory
     path: "{{ item.path }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
+    owner: "{{ item.owner | default('gitea') }}"
+    group: gitea
+    mode: "{{ item.mode | default('u=rwX,g=rwX') }}"
     recurse: no
   with_items:
     - path: "/etc/gitea"
       owner: root
-      group: gitea
       mode: "u=rwX,g=rX"
+    - path: "{{ gitea_user_home }}"
     - path: "{{ gitea_user_home }}/custom"
-      owner: root
-      group: root
-      mode: "u=rwX"
     - path: "{{ gitea_user_home }}/public"
-      owner: root
-      group: root
-      mode: "u=rwX"
     - path: "{{ gitea_user_home }}/data"
-      owner: root
-      group: gitea
-      mode: "u=rwX,g=rwX"
     - path: "{{ gitea_user_home }}/indexers"
-      owner: gitea
-      group: gitea
-      mode: "u=rwX,g=rwX"
     - path: "{{ gitea_user_home }}/log"
-      owner: gitea
-      group: gitea
-      mode: "u=rwX,g=rwX"
     - path: '{{ gitea_user_home }}/repos'
-      owner: gitea
-      group: gitea
-      mode: "u=rwX,g=rwX"
 
 - name: install gitea systemd service/unit file
   template:
