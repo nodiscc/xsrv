@@ -21,13 +21,16 @@
     group: root
     mode: "0600"
 
-- name: ensure ansible user home directory is not world-readable
+- name: set permissions/mode of ansible user and root home directories to 0700
   file:
     state: directory
-    path: "{{ ansible_env.HOME }}"
+    path: "{{ item }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-    mode: "0750"
+    mode: "0700"
+  with_items:
+    - "{{ ansible_env.HOME }}"
+    - "/root"
 
 - name: create additional user accounts
   user:

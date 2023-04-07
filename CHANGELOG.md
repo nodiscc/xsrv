@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
 - gitea: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `1.9 OK`)
 - gitea: make gitea data directories owned by gitea (prevents `fatal: detected dubious ownership in repository` when manipulating files/repos from a shell as the gitea user)
+- common: users: ensure that both the ansible user and root home directories permissions are set to `0700`
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - nextcloud: upgrade to [v25.0.5](https://nextcloud.com/changelog/)
 - matrix: update element-web to v1.11.26 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.27) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.28)
