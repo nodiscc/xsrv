@@ -5,6 +5,8 @@ This example will create a new project based on a [template](https://gitlab.com/
 
 ```bash
 $ xsrv init-project
+```
+```bash
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
   ╹ ╹┗━┛╹┗╸┗┛ v1.3.1
