@@ -1,3 +1,31 @@
+- name: create netdata postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: netdata
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart netdata
+
+- name: grant pg_monitor privilege to netdata postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_membership:
+    db: postgres
+    source_role: netdata
+    target_role: pg_monitor
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart netdata
+
+- name: install netdata postgresql module configuration
+  template:
+    src: etc_netdata_go.d_postgres.conf.j2
+    dest: /etc/netdata/go.d/postgres.conf
+    owner: root
+    group: root
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart netdata
+
 - name: migration/1.13.0 - remove files from old versions of the role
   file:
     path: "{{ item }}"

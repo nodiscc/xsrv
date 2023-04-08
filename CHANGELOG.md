@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - allow disabling individual web applications (`homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss_enable_service: yes/no`), redirect to the maintenance page when disabled
 - dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
 - samba: allow enabling/disabling the service ([`samba_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
+- postgresql: netdata: allow netdata to gather detailed statistics about the postgresql instance [[1]](https://learn.netdata.cloud/docs/data-collection/monitor-anything/Databases/PostgresSQL) [[2]](https://blog.netdata.cloud/postgresql-monitoring/)
 
 **Removed:**
 - common: remove task `ensure /var/log/wtmp is not world-readable`
