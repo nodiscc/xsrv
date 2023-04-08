@@ -24,13 +24,15 @@
 - name: set permissions/mode of ansible user and root home directories to 0700
   file:
     state: directory
-    path: "{{ item }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.owner }}"
     mode: "0700"
   with_items:
-    - "{{ ansible_env.HOME }}"
-    - "/root"
+    - path: "{{ ansible_env.HOME }}"
+      owner: "{{ ansible_user }}"
+    - path: /root
+      owner: root
 
 - name: create additional user accounts
   user:
