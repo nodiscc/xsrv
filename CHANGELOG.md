@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
-- monitoring/netdata: disable more netdata modules by default (coredns, unbound, rabbitmq, mysql, prometheus, bind, pihole, k8s_kubelet, pulsar, solr, supervisord, lighttpd)
+- monitoring/netdata: disable more netdata modules by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
 - monitoring/rsyslog: allow setting custom configuration directives ([`rsyslog_custom_config`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
