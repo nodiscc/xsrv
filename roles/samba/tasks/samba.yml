@@ -69,3 +69,16 @@
     mode: "0775"
   with_items: "{{ samba_shares }}"
   tags: samba-shares
+
+##### SERVICES #####
+
+- name: enable/disable start/stop samba service
+  systemd:
+    name: "{{ item }}"
+    enabled: "{{ samba_enable_service }}"
+    state: "{{ 'started' if samba_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - smbd
+    - nmbd

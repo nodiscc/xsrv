@@ -13,6 +13,7 @@
     - smbd
     - nmbd
   ignore_errors: "{{ ansible_check_mode }}"
+  when: samba_enable_service | bool
 
 - name: restart nslcd
   become: yes
