@@ -67,8 +67,7 @@ USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway
 
 The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overriden using `--preseed /path/to/custom/preseed.cfg`.
 
-[![](https://asciinema.org/a/FIlybeNFgNlAAhQVnDl96FPUv.svg)](https://asciinema.org/a/FIlybeNFgNlAAhQVnDl96FPUv?speed=2&theme=monokai&autoplay=true)
-
+[![](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z.svg)](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z?speed=2&theme=monokai&autoplay=true)
 
 ### Automated, from a VM template
 
@@ -97,7 +96,7 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip IP_ADDRESS
 
 ```
 
-[![](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k.svg)](https://asciinema.org/a/XXqAHsCMA7JNdEjxWnrsz7z0k?speed=2&theme=monokai&autoplay=true)
+[![](https://asciinema.org/a/v7B0c8ulfMz14OqF5b5yRb3VE.svg)](https://asciinema.org/a/v7B0c8ulfMz14OqF5b5yRb3VE?speed=2&theme=monokai&autoplay=true)
 
 You can then use the [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role to manage VMs, the [`virsh`](https://manpages.debian.org/bullseye-backports/libvirt-clients/virsh.1.en.html) command-line tool, and/or [virt-manager](virt-manager.md) to manage the hypervisor from a remote machine.
 
