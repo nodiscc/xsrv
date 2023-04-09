@@ -16,6 +16,8 @@ netdata_self_monitoring_enabled: no
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
 netdata_disable_access_log: yes
+# public port (i.e. outside NAT) used to access netdata, used for links in mail notifications, and the xsrv.homepage role
+netdata_public_port: 19999
 # netdata plugins to disable
 netdata_disabled_plugins:
   - ebpf

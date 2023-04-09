@@ -38,6 +38,7 @@
     - setup_netdata_logcount == setup_netdata_logcount | bool
     - setup_netdata_apt == setup_netdata_apt | bool
     - (not needrestart_autorestart_cron) or (needrestart_autorestart_cron is string)
+    - netdata_public_port == netdata_public_port | int
 
 - name: check that variables are correctly defined (netdata_notification_downtimes)
   assert:

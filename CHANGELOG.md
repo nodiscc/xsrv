@@ -11,12 +11,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/netdata: if you have configured custom [`netdata_port_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml), ensure the `ports:` parameter is a list, even if it only contains a single port (e.g. `ports: [64738]`)
 
 **Added:**
-- monitoring/netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
+- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
 - apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
 - homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss: allow disabling individual web applications (`*_enable_service: yes/no`), redirect to the maintenance page when disabled
 - dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
 - samba: allow enabling/disabling the service ([`samba_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
 - postgresql: netdata: allow netdata to gather detailed statistics about the postgresql instance [[1]](https://learn.netdata.cloud/docs/data-collection/monitor-anything/Databases/PostgresSQL) [[2]](https://blog.netdata.cloud/postgresql-monitoring/)
+- monitoring_netdata: allow declaring the public port (i.e. outside NAT) used to access netdata ([`netdata_public_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)), and use it in mail notifications/[`nodiscc.xsrv.homepage`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) role
 
 **Removed:**
 - common: remove task `ensure /var/log/wtmp is not world-readable`
@@ -47,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - homepage/readme-gen/jitsi: display Jitsi Meet instances URLs
 - monitoring/netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
+- monitoring/netdata: fix `Go to chart` links in mail notifications pointing to Netdata Cloud/SaaS instead of the netdata instance
 - monitoring/netdata: prevent duplicate alarms on failed systemd services
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - monitoring_utils/lynis: prevent lynis from running twice per day, disable duplicate systemd timer
