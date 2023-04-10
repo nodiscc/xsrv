@@ -47,9 +47,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - homepage/readme-gen/jitsi: display Jitsi Meet instances URLs
-- monitoring/netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
-- monitoring/netdata: fix `Go to chart` links in mail notifications pointing to Netdata Cloud/SaaS instead of the netdata instance
-- monitoring/netdata: prevent duplicate alarms on failed systemd services
+- monitoring_netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
+- monitoring_netdata: fix `Go to chart` links in mail notifications pointing to Netdata Cloud/SaaS instead of the netdata instance
+- monitoring_netdata: prevent duplicate alarms on failed systemd services
+- monitoring_netdata: prevent duplicate alarm notifications when streaming is enabled (only send notifications from the child node)
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - monitoring_utils/lynis: prevent lynis from running twice per day, disable duplicate systemd timer
 - openldap: self-service-password: fix self-service-password application not being served by the correct php-fpm pool
