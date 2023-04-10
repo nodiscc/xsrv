@@ -25,7 +25,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--gateway` optional, by default use the value of `--ip` with the last octet replaced by `.1`
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--ssh-pubkey` optional, by default use the contents of `~/.ssh/id_rsa.pub`
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): always dump VM XML definition to a file (`--dumpxml`), by default to `$projects_dir/VM_NAME.xml`
-- readme_gen/jitsi: add jitsi instances URLs to the auto-generated markdown inventory
 - monitoring/netdata: disable more netdata modules by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
@@ -36,7 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: make gitea data directories owned by gitea (prevents `fatal: detected dubious ownership in repository` when manipulating files/repos from a shell as the gitea user)
 - common: users: ensure that both the ansible user and root home directories permissions are set to `0700`
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
-- nextcloud: upgrade to [v25.0.5](https://nextcloud.com/changelog/)
+- nextcloud: update to [v25.0.5](https://nextcloud.com/changelog/)
 - matrix: update element-web to v1.11.26 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.27) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.28)
 - openldap: update ldap-account-manager to [v8.3](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_3)
 - graylog: update graylog-server and mongodb to v5.0 [[1]](https://www.graylog.org/post/graylog-5-0-a-new-day-for-it-secops/) [[2]](https://www.graylog.org/releases/)
@@ -46,14 +45,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: remove duplicate tasks, simplify installed version/upgrade detection logic, make installation/upgrade tasks less verbose, cleanup main script
 
 **Fixed:**
-- homepage: display a link to the Jitsi Meet instance if deployed
+- homepage/readme-gen/jitsi: display Jitsi Meet instances URLs
 - monitoring/netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
 - monitoring/netdata: prevent duplicate alarms on failed systemd services
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - monitoring_utils/lynis: prevent lynis from running twice per day, disable duplicate systemd timer
 - openldap: self-service-password: fix self-service-password application not being served by the correct php-fpm pool
 - apache/netdata: fix unproperly formatted log lines causing `web log unmatched` alarms/high `excluded_requests` rate
-- openldap/rsyslog: fix warning `file '/var/log/nscd.log' does not exist` when samba is coonfigured with `samba_passdb_backend: ldapsam`
+- samba/rsyslog: fix warning `file '/var/log/nscd.log' does not exist` when samba is configured with `samba_passdb_backend: ldapsam`
 - shaarli: fix custom favicon location
 - shaarli: make task `create initial shaarli log.txt` idempotent
 - matrix: don't attempt to create synapse users when the service is disabled
