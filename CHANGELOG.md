@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - common: remove task `ensure /var/log/wtmp is not world-readable`
+- readme-gen: remove support for `readme_gen_netdata_public_port` variable (use `netdata_public_port` instead)
 
 **Changed:**
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--gateway` optional, by default use the value of `--ip` with the last octet replaced by `.1`

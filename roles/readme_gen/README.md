@@ -62,8 +62,6 @@ readme_gen_comment: "[hypervisor 1 VM 112](https://proxmox1.CHANGEME.org:8006/#v
 readme_gen_comment: |
   ![](https://my.CHANGEME.org:19999/api/v1/badge.svg?chart=systemdunits_service-units.service_unit_state&alarm=systemd_service_units_state&refresh=auto)
   ![](https://my.CHANGEME.org:19999//api/v1/badge.svg?chart=logcount.messages&alarm=logcount_error&refresh=auto)
-# public TCP port for netdata access, if netdata is behind a NAT/port forwarding
-readme_gen_netdata_public_port: 19901
 ```
 
 You may also use your own/customized template instead:

@@ -15,7 +15,7 @@
 - Fetch latest backups: `xsrv fetch-backups {{ xsrv_project_name|default('default') }} {{ hostvars[item].inventory_hostname }}`
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['netdata']['ansible_managed'] is defined %}
-- Monitoring (Netdata): https://{{ hostvars[item].ansible_host|default(hostvars[item].inventory_hostname) }}:{{ hostvars[item].readme_gen_netdata_public_port|default('19999') }}
+- Monitoring (Netdata): https://{{ hostvars[item].ansible_host|default(hostvars[item].inventory_hostname) }}:{{ hostvars[item]['ansible_facts']['ansible_local']['netdata']['public_port' }}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] is defined %}
 - Gitea: https://{{ hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] }}
