@@ -140,9 +140,12 @@ deploy@nextcloud:~$ sudo -u nextcloud /usr/bin/php /var/www/cloud.CHANGEME.org/o
 
 ### Other
 
-**Changing database password** is not supported by the role at this time. To change the database password, you must first set the new password manually in `/var/www/$nextcloud_fqdn/config.php`, then change the value of `nexctloud_db_password` in host variables, and run the playbook.
+#### Change the database password
 
-**LDAP authentication support:**
+Changing the database password is not supported by the role at this time. To change the database password, you must first set the new password manually in `/var/www/$nextcloud_fqdn/config.php`, then change the value of `nexctloud_db_password` in host variables, and run the playbook.
+
+#### LDAP authentication
+
 - Create a group (eg. `posixGroup: access_nextcloud`) in your LDAP directory and add users that should be able to access Nextcloud to this group
 - Access your Nextcloud LDAP settings (https://cloud.CHANGEME.org/index.php/settings/admin/ldap):
   - `Server > Host: ldap.CHANGEME.org` or `ldaps://ldap.CHANGEME.org`
@@ -174,17 +177,39 @@ TLS_CACERT /etc/ssl/certs/ldap.xinit.se.openldap.crt
 sudo systemctl restart php7.4-fpm
 ```
 
-**Access files from other services:** [External storage](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage_configuration_gui.html) can be configured to make files from other services available in Nextcloud. This includes local directories on the server, SFTP, other Nextcloud instances, SMB/CIFS, WebDav, S3...
+#### Share files with other services
 
-Example configuration to access files from the [transmission](../transmission/) bittorrent service running on the same host: Under `Settings > Administration > External storage`, add a new storage:
+[External storage](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage_configuration_gui.html) can be configured to make files from other services available in Nextcloud. This includes local directories on the server, SFTP, other Nextcloud instances, SMB/CIFS, WebDav, S3...
+
+
+##### Transmission
+
+Example configuration to access files from the [transmission](../transmission/) bittorrent service running on the same host.
+
+Under `Settings > Administration > External storage`, add a new storage:
 - Folder name: `TORRENTS`
 - External storage: `Local`
 - Configuration/location: `/var/lib/transmission-daemon/downloads/`
 
-Note: for the `Local` external storage type, the target directory must be readable by the `nextcloud` user.
+##### Jellyfin
+
+Example configuration to access files from the [jellyfin](../jellyfin/) media center service running on the same host:
+
+The jellyfin media directory must be readable by the `nextcloud` user:
+```bash
+# access the server over SSH
+$ xsrv shell
+# add the nextcloud user to the jellyfin group
+deploy@EXAMPLE:~ $ sudo usermod --append --groups jellyfin nextcloud
+```
+
+Under `Settings > Administration > External storage`, add a new storage:
+- Folder name: `JELLYFIN`
+- External storage: `Local`
+- Configuration/location: `/var/lib/jellyfin/media/`
 
 
-**Uninstallation**
+#### Uninstallation
 
 This will remove all application files and data, and related configuration
 

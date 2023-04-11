@@ -50,6 +50,8 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
 - If the [samba](../samba) role is enabled and [`jellyfin_samba_share_enabled: yes` and a list of valid users](defaults/main.yml) are specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
 - Download files from bittorrent using [transmission](../transmission)
+- If the [nextcloud](../nextcloud) role is enabled, you may mount jellyfin's media directory as an [External Storage](../nextcloud/README.md#jellyfin)
+
 
 ### Playing media
 
