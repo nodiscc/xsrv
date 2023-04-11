@@ -38,7 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: users: ensure that both the ansible user and root home directories permissions are set to `0700`
 - shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
 - nextcloud: update to [v25.0.5](https://nextcloud.com/changelog/)
-- matrix: update element-web to v1.11.26 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.27) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.28)
+- matrix: update element-web to v1.11.29 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.27) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.28) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.29)
 - openldap: update ldap-account-manager to [v8.3](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_3)
 - graylog: update graylog-server and mongodb to v5.0 [[1]](https://www.graylog.org/post/graylog-5-0-a-new-day-for-it-secops/) [[2]](https://www.graylog.org/releases/)
 - xsrv: update ansible to [v7.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
