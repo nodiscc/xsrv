@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.13.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.1) - 2023-04-14
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Fixed:**
+- readme-gen: fix syntax error in template (`template error while templating string`)
+
+[Full changes since v1.13.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.0...1.13.1)
+
+------------------
+
 #### [v1.13.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.0) - 2023-04-14
 
 **Upgrade procedure:**
