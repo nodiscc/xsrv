@@ -1,5 +1,0 @@
-# netdata go.d.plugin configuration for httpcheck
-{% if netdata_http_checks %}
-jobs:
-{{ netdata_http_checks|to_nice_yaml(indent=2) | indent(2, first=True) }}
-{% endif %}
