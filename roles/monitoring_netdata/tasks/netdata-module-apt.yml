@@ -7,6 +7,7 @@
     version: "1.0.0"
     accept_hostkey: yes
     force: yes # discard modified files
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: install netdata-apt module/script/configuration
   copy:
