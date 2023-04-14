@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.13.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.1) - UNRELEASED
+#### [v1.13.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.1) - 2023-04-14
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
