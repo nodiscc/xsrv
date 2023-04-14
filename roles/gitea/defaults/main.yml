@@ -17,7 +17,7 @@ gitea_lfs_jwt_secret: "CHANGEME"
 gitea_user_home: /var/lib/gitea
 # gitea base URL under the domain name (eg change. it to /gitea to serve from https://git.CHANGEME.org/gitea)
 gitea_base_url: "/"
-# start/stop the gitea service, enable/disable it on boot (yes/no)
+# start/stop the gitea service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 gitea_enable_service: yes
 # gitea database settings
 gitea_db_type: "postgres" # postgres/mysql
@@ -27,7 +27,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: '1.18.5'
+gitea_version: '1.19.1'
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate

@@ -1,22 +1,19 @@
-- name: install netdata systemd/http checks for apache
+- name: install netdata http checks for apache
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: etc_netdata_go.d_httpcheck.conf.d_apache-reverseproxies.conf.j2
+    dest: /etc/netdata/go.d/httpcheck.conf.d/apache-reverseproxies.conf
     owner: root
     group: netdata
     mode: "0640"
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
-  with_items:
-    - src: etc_netdata_health.d_systemdunits.conf.d_apache.conf.j2
-      dest: /etc/netdata/health.d/systemdunits.conf.d/apache.conf
-    - src: etc_netdata_health.d_systemdunits.conf.d_php-fpm.conf.j2
-      dest: /etc/netdata/health.d/systemdunits.conf.d/php-fpm.conf
-    - src: etc_netdata_go.d_httpcheck.conf.d_apache-reverseproxies.conf.j2
-      dest: /etc/netdata/go.d/httpcheck.conf.d/apache-reverseproxies.conf
 
-- name: migration - remove files from old versions of the role
+- name: migration/1.13.0 - remove files from old versions of the role
   file:
     state: absent
-    path: "/etc/netdata/health.d/processes.conf.d/apache.conf"
+    path: "{{ item }}"
   notify: assemble netdata configuration
+  with_items:
+    - /etc/netdata/health.d/processes.conf.d/apache.conf
+    - /etc/netdata/health.d/systemdunits.conf.d/apache.conf
+    - /etc/netdata/health.d/systemdunits.conf.d/php-fpm.conf

@@ -61,3 +61,4 @@
   register: synapse_create_user
   failed_when: synapse_create_user.rc != 0 and 'User ID already taken.' not in synapse_create_user.stdout
   changed_when: "'Success!' in synapse_create_user.stdout"
+  when: matrix_synapse_enable_service | bool

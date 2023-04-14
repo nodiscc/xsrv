@@ -4,6 +4,7 @@ This role will install and configure [Netdata](https://my-netdata.io/), a real-t
  - [needrestart](https://gitlab.com/nodiscc/netdata-needrestart)
  - [logcount](https://gitlab.com/nodiscc/netdata-logcount)
  - [debsecan](https://gitlab.com/nodiscc/netdata-debsecan)
+ - [apt](https://gitlab.com/nodiscc/netdata-apt)
 
 [![](https://i.imgur.com/vqfWelH.png)](https://i.imgur.com/vqfWelH.png)
 
@@ -30,7 +31,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 [netdata documentation](https://docs.netdata.cloud/)
 
-- To reboot hosts that have Linux kernel upgrade pending:
+- To reboot hosts that have a pending Linux kernel upgrade:
 
 ```bash
 # using xsrv
@@ -55,6 +56,7 @@ netdata-needrestart - setup netdata needrestart module
 netdata-logcount - setup netdata logcount module
 netdata-debsecan - setup netdata debsecan module
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
+utils-netdata-test-notifications - send test netdata notification
 netdata-downtime - configure netdata downtime/silence schedules
 ```
 <!--END TAGS LIST-->

@@ -25,3 +25,4 @@
     - shaarli_php_max_input_time == shaarli_php_max_input_time|int
     - shaarli_php_post_max_size|regex_search('[KMG]$')
     - shaarli_php_upload_max_filesize|regex_search('[KMG]$')
+    - shaarli_enable_service == shaarli_enable_service | bool

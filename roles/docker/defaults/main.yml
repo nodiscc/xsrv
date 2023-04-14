@@ -4,7 +4,7 @@ docker_apt_release_channel: stable
 docker_apt_arch: amd64
 # A list of users who will be added to the docker group
 docker_users: []
-# yes/no: start/stop docker service, enable/disable it on boot
+# start/stop docker service, enable/disable it on boot (yes/no)
 docker_enable_service: yes
 # the log driver for the docker daemon (none/local/json-file/syslog/journaled/gelf/fluentd/awslogs/splunk/etwlogs/gcplogs/logentries)
 docker_log_driver: "syslog"

@@ -3,6 +3,13 @@
 syslog_retention_days: 186
 # yes/no: enable forwarding of syslog logs to a syslog server (over TLS/TCP)
 rsyslog_enable_forwarding: no
-# if forwarding is enabled, hostname/port to forward logs to (must be a host with the nodiscc.xrv.graylog role already deployed)
-rsyslog_forward_to_hostname: "my.CHANGEME.org"
+# if forwarding is enabled, hostname/port to forward logs to (e.g. host with the nodiscc.xsrv.graylog role)
+rsyslog_forward_to_hostname: "logs.CHANGEME.org"
 rsyslog_forward_to_port: 5140
+# custom rsyslog configuration directives, applied before forwarding/single-file aggregation (list)
+# Example:
+# rsyslog_custom_config:
+#   - ':msg, contains, "failed to read Temperature" stop' # discard messages containing this string
+#   - 'if $programname == "apache" and re_match($msg, ".* 127.0.0.1 - - .* \"GET /server-status\\?auto HTTP/1.1\" 200") then stop' # discard messages matching this program name and regular expression
+#   - 'if $programname == "CRON" and re_match($msg, "cron:session): session (opened|closed) for user .*") then stop'
+rsyslog_custom_config: []

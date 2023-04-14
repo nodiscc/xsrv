@@ -1,0 +1,6 @@
+- name: restart systemd-journald
+  become: yes
+  systemd:
+    name: systemd-journald
+    state: restarted
+    enabled: yes

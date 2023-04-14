@@ -1,9 +1,0 @@
-    alarm: systemd_service_apache2
-       on: systemdunits_service-units.unit_apache2_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: apache web server service status
-       to: sysadmin
-

@@ -1,9 +1,0 @@
-    alarm: systemd_service_mumble_server
-       on: systemdunits_service-units.unit_mumble-server_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: mumble server service status
-       to: sysadmin
-

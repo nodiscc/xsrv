@@ -1,17 +1,17 @@
 ### GRAYLOG ###
 
-- name: download graylog-4.0-repository deb package
+- name: download graylog-5.0-repository deb package
   get_url:
-    url: "https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb"
-    dest: "/root/graylog-4.0-repository_latest.deb"
+    url: "https://packages.graylog2.org/repo/packages/graylog-5.0-repository_latest.deb"
+    dest: "/root/graylog-5.0-repository_latest.deb"
     owner: root
     group: root
     mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}" # HEAD requests are forbidden/403
 
-- name: install graylog-4.0-repository package
+- name: install graylog-5.0-repository package
   apt:
-    deb: "/root/graylog-4.0-repository_latest.deb"
+    deb: "/root/graylog-5.0-repository_latest.deb"
     state: present
     dpkg_options: "force-all"
   notify: update apt cache
@@ -20,6 +20,16 @@
 # update apt cache immediately if graylog-repository package was installed
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+# will only run if the graylog role is already deployed from a previous version
+- name: migration/1.13.0 - upgrade graylog-server from 4.0 to 5.0
+  apt:
+    package: graylog-server
+    state: latest # noqa package-latest
+  notify: restart graylog-server
+  when:
+    - ansible_local.graylog.ansible_managed is defined
+    - ansible_local.graylog.graylog_server_upgraded_4_5 is not defined
 
 - name: install graylog-server package
   apt:

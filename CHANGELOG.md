@@ -3,7 +3,70 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.12.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.12.0) - UNRELEASED
+#### [v1.13.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.0) - 2023-04-14
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+- monitoring/netdata: if you have configured custom [`netdata_port_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml), ensure the `ports:` parameter is a list, even if it only contains a single port (e.g. `ports: [64738]`)
+
+**Added:**
+- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
+- apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
+- homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss: allow disabling individual web applications (`*_enable_service: yes/no`), redirect to the maintenance page when disabled
+- dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
+- samba: allow enabling/disabling the service ([`samba_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
+- postgresql: netdata: allow netdata to gather detailed statistics about the postgresql instance [[1]](https://learn.netdata.cloud/docs/data-collection/monitor-anything/Databases/PostgresSQL) [[2]](https://blog.netdata.cloud/postgresql-monitoring/)
+- monitoring_netdata: allow declaring the public port (i.e. outside NAT) used to access netdata ([`netdata_public_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)), and use it in mail notifications/[`nodiscc.xsrv.homepage`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) role
+
+**Removed:**
+- common: remove task `ensure /var/log/wtmp is not world-readable`
+- readme-gen: remove support for `readme_gen_netdata_public_port` variable (use `netdata_public_port` instead)
+
+**Changed:**
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--gateway` optional, by default use the value of `--ip` with the last octet replaced by `.1`
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--ssh-pubkey` optional, by default use the contents of `~/.ssh/id_rsa.pub`
+- xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): always dump VM XML definition to a file (`--dumpxml`), by default to `$projects_dir/VM_NAME.xml`
+- monitoring/netdata: disable more netdata modules by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
+- monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
+- monitoring/rsyslog: allow setting custom configuration directives ([`rsyslog_custom_config`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
+- monitoring/rsyslog: don't discard any messages by default, custom discard rules can be configured through `rsyslog_custom_config`
+- monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
+- gitea: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `1.9 OK`)
+- gitea: make gitea data directories owned by gitea (prevents `fatal: detected dubious ownership in repository` when manipulating files/repos from a shell as the gitea user)
+- common: users: ensure that both the ansible user and root home directories permissions are set to `0700`
+- gitea: update to v1.19.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.4) [[3]](https://blog.gitea.io/2023/03/gitea-1.19.0-is-released/) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.19.1)
+- shaarli: update to [v0.12.2](https://github.com/shaarli/Shaarli/releases/tag/v0.12.2)
+- nextcloud: update to [v25.0.5](https://nextcloud.com/changelog/)
+- matrix: update element-web to v1.11.29 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.25) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.26) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.27) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.28) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.29)
+- openldap: update ldap-account-manager to [v8.3](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_3)
+- graylog: update graylog-server and mongodb to v5.0 [[1]](https://www.graylog.org/post/graylog-5-0-a-new-day-for-it-secops/) [[2]](https://www.graylog.org/releases/)
+- xsrv: update ansible to [v7.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- update documentation
+- improve check mode support
+- cleanup: remove duplicate tasks, simplify installed version/upgrade detection logic, make installation/upgrade tasks less verbose, cleanup main script
+
+**Fixed:**
+- homepage/readme-gen/jitsi: display Jitsi Meet instances URLs
+- monitoring_netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
+- monitoring_netdata: fix `Go to chart` links in mail notifications pointing to Netdata Cloud/SaaS instead of the netdata instance
+- monitoring_netdata: prevent duplicate alarms on failed systemd services
+- monitoring_netdata: prevent duplicate alarm notifications when streaming is enabled (only send notifications from the child node)
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
+- monitoring_utils/lynis: prevent lynis from running twice per day, disable duplicate systemd timer
+- openldap: self-service-password: fix self-service-password application not being served by the correct php-fpm pool
+- apache/netdata: fix unproperly formatted log lines causing `web log unmatched` alarms/high `excluded_requests` rate
+- samba/rsyslog: fix warning `file '/var/log/nscd.log' does not exist` when samba is configured with `samba_passdb_backend: ldapsam`
+- shaarli: fix custom favicon location
+- shaarli: make task `create initial shaarli log.txt` idempotent
+- matrix: don't attempt to create synapse users when the service is disabled
+
+[Full changes since v1.12.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.12.0...1.13.0)
+
+------------------
+
+#### [v1.12.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.12.0) - 2023-03-06
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -768,7 +831,7 @@ self_service_password_allowed_hosts:
 **Added:**
 - add [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) log analyzer role
 - add [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) role
-- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add [`rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port`]([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitorign_rsyslog/defaults/main.yml)) variables)
+- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add [`rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port`]([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variables)
 - jellyfin/common/apt: enable automatic upgrades for jellyfin by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48))
 - monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in [`netdata_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
 - monitoring/netdata: add [`netdata_x509_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)

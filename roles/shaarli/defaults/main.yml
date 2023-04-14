@@ -33,7 +33,7 @@ shaarli_setup_python_client: no
 # Shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.12.1'
+shaarli_version: 'v0.12.2'
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -44,3 +44,5 @@ shaarli_php_max_input_time: 60
 shaarli_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 shaarli_php_upload_max_filesize: '2M'
+# enable/disable the shaarli php-fpm pool (redirect users to maintenance page if disabled)
+shaarli_enable_service: yes

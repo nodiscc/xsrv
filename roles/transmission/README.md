@@ -34,7 +34,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 - The Web interface can be used from a [web browser](https://www.mozilla.org/en-US/firefox/).
 - Downloaded files can be accessed over SFTP (a link to the downloads directory is created in the admin user's home directory).
-- If the [nextcloud](../nextcloud) role is installed, you may mount the downloads directory as an [External Storage](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage/local.html) (the nextcloud/`www-data` system user must be added to the `transmission-damon` group) and access downloaded files from nextcloud's web interface.
+- If the [nextcloud](../nextcloud) role is installed, you may mount the downloads directory as an [External Storage](../nextcloud/README.md#transmission)
 
 
 ### Backups

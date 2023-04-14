@@ -16,9 +16,23 @@ netdata_self_monitoring_enabled: no
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
 netdata_disable_access_log: yes
+# public port (i.e. outside NAT) used to access netdata, used for links in mail notifications, and the xsrv.homepage role
+netdata_public_port: 19999
 # netdata plugins to disable
 netdata_disabled_plugins:
   - ebpf
+  - coredns
+  - unbound
+  - rabbitmq
+  - mysql
+  - prometheus
+  - bind
+  - pihole
+  - k8s_kubelet
+  - pulsar
+  - solr
+  - supervisord
+  - lighttpd
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
@@ -92,6 +106,10 @@ netdata_x509_checks: []
 #     host: 192.168.10.10
 #     ports: [389, 636]
 #     interval: 10
+#   - name: mumble
+#     host: 192.168.10.10
+#     ports: [64738]
+#     interval: 10
 netdata_port_checks: []
 # Netdata file checks
 # see https://raw.githubusercontent.com/netdata/go.d.plugin/master/config/go.d/filecheck.conf
@@ -160,3 +178,5 @@ netdata_logcount_notification_to: "silent"
 setup_netdata_debsecan: yes
 # monitor systemd units states
 netdata_monitor_systemd_units: yes
+# setup monitoring of pending package upgrades
+setup_netdata_apt: yes

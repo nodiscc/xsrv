@@ -1,3 +1,4 @@
+{% if ldap_account_manager_enable_service %}
 [ldap-account-manager]
 user = www-data
 group = www-data
@@ -37,3 +38,6 @@ php_admin_value[upload_max_filesize] = {{ ldap_account_manager_php_upload_max_fi
 ;rlimit_files = 1024
 ;chroot =
 ;chdir = /
+{% else %}
+; this pool is disabled
+{% endif %}

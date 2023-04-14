@@ -6,23 +6,23 @@
   with_items:
     - netdata_allow_connections_from is string
     - netdata_cloud_enabled == netdata_cloud_enabled | bool
-    - netdata_dbengine_disk_space == netdata_dbengine_disk_space|int
-    - netdata_dbengine_page_cache_size == netdata_dbengine_page_cache_size|int
+    - netdata_dbengine_disk_space == netdata_dbengine_disk_space | int
+    - netdata_dbengine_page_cache_size == netdata_dbengine_page_cache_size | int
     - netdata_disable_access_log == netdata_disable_access_log | bool
     - netdata_disable_debug_log == netdata_disable_debug_log | bool
     - netdata_disable_error_log == netdata_disable_error_log | bool
-    - netdata_fping_ping_every == netdata_fping_ping_every|int
+    - netdata_fping_ping_every == netdata_fping_ping_every | int
     - netdata_fping_alarms_silent == netdata_fping_alarms_silent | bool
-    - netdata_fping_update_every == netdata_fping_update_every|int
+    - netdata_fping_update_every == netdata_fping_update_every | int
     - netdata_fping_hosts|type_debug == "list"
     - netdata_http_checks|type_debug == "list"
     - netdata_x509_checks|type_debug == "list"
     - netdata_notification_downtimes|type_debug == "list"
-    - netdata_logcount_error_threshold_crit == netdata_logcount_error_threshold_crit|int
-    - netdata_logcount_error_threshold_warn == netdata_logcount_error_threshold_warn|int
+    - netdata_logcount_error_threshold_crit == netdata_logcount_error_threshold_crit | int
+    - netdata_logcount_error_threshold_warn == netdata_logcount_error_threshold_warn | int
     - netdata_logcount_notification_to is string
-    - netdata_logcount_update_interval == netdata_logcount_update_interval|int
-    - netdata_logcount_warning_threshold_warn == netdata_logcount_warning_threshold_warn|int
+    - netdata_logcount_update_interval == netdata_logcount_update_interval | int
+    - netdata_logcount_warning_threshold_warn == netdata_logcount_warning_threshold_warn | int
     - netdata_monitor_systemd_units == netdata_monitor_systemd_units | bool
     - netdata_streaming_send_enabled == netdata_streaming_send_enabled | bool
     - netdata_streaming_receive_enabled == netdata_streaming_receive_enabled | bool
@@ -36,7 +36,9 @@
     - setup_needrestart == setup_needrestart | bool
     - setup_netdata_debsecan == setup_netdata_debsecan | bool
     - setup_netdata_logcount == setup_netdata_logcount | bool
+    - setup_netdata_apt == setup_netdata_apt | bool
     - (not needrestart_autorestart_cron) or (needrestart_autorestart_cron is string)
+    - netdata_public_port == netdata_public_port | int
 
 - name: check that variables are correctly defined (netdata_notification_downtimes)
   assert:

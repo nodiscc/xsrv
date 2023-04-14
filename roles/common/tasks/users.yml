@@ -21,27 +21,18 @@
     group: root
     mode: "0600"
 
-- name: ensure /var/log/wtmp is not world-readable
-  file:
-    path: /var/log/wtmp
-    follow: yes
-    mode: o-rw
-
-- name: copy logrotate configuration for /var/log/wtmp
-  template:
-    src: etc_logrotate.d_wtmp.j2
-    dest: /etc/logrotate.d/wtmp
-    owner: root
-    group: root
-    mode: "0644"
-
-- name: ensure ansible user home directory is not world-readable
+- name: set permissions/mode of ansible user and root home directories to 0700
   file:
     state: directory
-    path: "{{ ansible_env.HOME }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: "0750"
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.owner }}"
+    mode: "0700"
+  with_items:
+    - path: "{{ ansible_env.HOME }}"
+      owner: "{{ ansible_user }}"
+    - path: /root
+      owner: root
 
 - name: create additional user accounts
   user:

@@ -72,6 +72,12 @@
             .element-cb {
                 background-color: #0DBD8B;
             }
+            .jitsi :hover{
+                border-color: #1D76BA;
+            }
+            .jitsi-cb {
+                background-color: #1D76BA;
+            }
             .shaarli :hover{
                 border-color: #166E4C;
             }
@@ -219,6 +225,16 @@
                 </a>
             </div>
 {% endif %}
+{% if ansible_local.jitsi.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 jitsi">
+                <a href="https://{{ ansible_local.jitsi.fqdn }}">
+                    <div class="content">
+                        <div class="colorblock jitsi-cb"><img class="app-icon" src="res/jitsi.png"></div>
+                        <p class="app-name">Jitsi</p>
+                    </div>
+                </a>
+            </div>
+{% endif %}
 {% if ansible_local.shaarli.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 shaarli">
                 <a href="https://{{ ansible_local.shaarli.fqdn }}">
@@ -321,7 +337,7 @@
 {% endif %}
 {% if ansible_local.netdata.ansible_managed is defined %}
             <div class="col-1-3 mobile-col-1-1">
-                <a class="netdata" href="https://{{ inventory_hostname }}:19999/">
+                <a class="netdata" href="https://{{ inventory_hostname }}:{{ ansible_local.netdata.public_port }}/">
                     <div class="content">
                         <div class="colorblock netdata-cb"><img class="app-icon" src="res/netdata.png"></div>
                         <p class="app-name">Netdata</p>

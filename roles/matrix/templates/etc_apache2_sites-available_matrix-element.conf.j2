@@ -15,7 +15,6 @@ MDomain {{ matrix_element_fqdn }}
 {% endif %}
 
 <VirtualHost *:443>
-  DocumentRoot {{ element_install_dir }}
   ServerName  {{ matrix_element_fqdn }}
   ServerAdmin webmaster@{{ matrix_element_fqdn }}
   SSLEngine on
@@ -23,9 +22,18 @@ MDomain {{ matrix_element_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ matrix_element_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ matrix_element_fqdn }}.key
 {% endif %}
+{% if not matrix_element_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+  DocumentRoot {{ element_install_dir }}
   DirectoryIndex index.html
   Header set X-Frame-Options SAMEORIGIN
   Header set X-Content-Type-Options nosniff
   Header set X-XSS-Protection "1; mode=block"
   Header set Content-Security-Policy "frame-ancestors 'self'"
+{% endif %}
 </VirtualHost>

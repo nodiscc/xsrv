@@ -12,7 +12,13 @@ Listen 8448
   SSLCertificateFile /etc/ssl/certs/{{ matrix_synapse_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ matrix_synapse_fqdn }}.key
 {% endif %}
-
+{% if not matrix_synapse_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
   RequestHeader set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
   ProxyPreserveHost On
   ProxyRequests off
@@ -21,5 +27,5 @@ Listen 8448
   ProxyPassReverse /_matrix http://127.0.0.1:8008/_matrix
   ProxyPass /_synapse/client http://127.0.0.1:8008/_synapse/client nocanon
   ProxyPassReverse /_synapse/client http://127.0.0.1:8008/_synapse/client
-
+{% endif %}
 </VirtualHost>

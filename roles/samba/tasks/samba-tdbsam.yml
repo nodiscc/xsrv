@@ -9,8 +9,8 @@
     groups: sambausers
   with_items: "{{ samba_users }}"
 
-- name: update samba users/passwords database (not idempotent, always returns changed)
-  shell: "set -o pipefail; printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}" # noqa 301
+- name: update samba users/passwords database (always returns changed)
+  shell: "set -o pipefail; printf '{{ item.password }}\n{{ item.password }}' | smbpasswd -s -a {{ item.username }}" # noqa no-changed-when
   args:
     executable: /bin/bash
   with_items: "{{ samba_users }}"

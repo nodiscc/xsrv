@@ -1,9 +1,0 @@
-    alarm: systemd_service_gitea
-       on: systemdunits_service-units.unit_gitea_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: gitea service status
-       to: sysadmin
-

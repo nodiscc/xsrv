@@ -9,9 +9,8 @@ Stream to any device from your own server, with no strings attached. Your media,
  - Your data: no tracking, phone-home, or central servers collecting your data.
  - LDAP authentication support
 
-[![](https://jellyfin.org/images/screenshots/home_thumb.png)](https://jellyfin.org/images/screenshots/home_full.png)
-[![](https://jellyfin.org/images/screenshots/movie_thumb.png)](https://jellyfin.org/images/screenshots/movie_full.png)
-[![](https://jellyfin.org/images/screenshots/playback_thumb.png)](hthttps://jellyfin.org/images/screenshots/playback_full.png)
+[![](https://i.imgur.com/yd06nxh.png)](https://i.imgur.com/YA8bBGX.jpg)
+[![](https://i.imgur.com/gmJspSD.png)](https://i.imgur.com/kyqr1mh.jpg)
 
 
 ## Requirements/dependencies/example playbook
@@ -51,6 +50,8 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
 - If the [samba](../samba) role is enabled and [`jellyfin_samba_share_enabled: yes` and a list of valid users](defaults/main.yml) are specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
 - Download files from bittorrent using [transmission](../transmission)
+- If the [nextcloud](../nextcloud) role is enabled, you may mount jellyfin's media directory as an [External Storage](../nextcloud/README.md#jellyfin)
+
 
 ### Playing media
 

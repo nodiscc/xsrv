@@ -1,9 +1,0 @@
-    alarm: systemd_service_slapd
-       on: systemdunits_service-units.unit_slapd_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: openldap server service status
-       to: sysadmin
-

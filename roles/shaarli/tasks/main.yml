@@ -9,6 +9,11 @@
   become: yes
   tags: shaarli
 
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: shaarli
+
 - name: include self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
@@ -66,11 +71,6 @@
   when:
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
-
-- name: include ansible facts configuration tasks
-  import_tasks: fact.yml
-  become: yes
-  tags: shaarli
 
 - name: include python-shaarli-client configuration tasks
   import_tasks: shaarli-client.yml

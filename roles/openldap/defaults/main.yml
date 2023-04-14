@@ -33,7 +33,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.2"
+ldap_account_manager_version: "8.3"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -57,6 +57,9 @@ ldap_account_manager_php_max_input_time: 60
 ldap_account_manager_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 ldap_account_manager_php_upload_max_filesize: '2M'
+# enable/disable the ldap-account-manager php-fpm pool (redirect users to maintenance page if disabled)
+ldap_account_manager_enable_service: yes
+
 
 ##### LDAP SELF SERVICE PASSWORD #####
 # setup Self Service Password password change tool (yes/no)
@@ -91,3 +94,5 @@ self_service_password_php_max_input_time: 60
 self_service_password_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 self_service_password_php_upload_max_filesize: '2M'
+# enable/disable the self-service-password php-fpm pool (redirect users to maintenance page if disabled)
+self_service_password_enable_service: yes

@@ -1,7 +1,7 @@
-- name: install netdata checks/alarms for docker engine
+- name: install netdata checks for docker engine
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: etc_netdata_health.d_dockerd.conf.j2
+    dest: /etc/netdata/health.d/dockerd.conf
     owner: root
     group: netdata
     mode: "0640"
@@ -9,8 +9,9 @@
     - assemble netdata configuration
     - restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
-  with_items:
-    - src: etc_netdata_health.d_dockerd.conf.j2
-      dest: /etc/netdata/health.d/dockerd.conf
-    - src: etc_netdata_health.d_systemdunits.conf.d_docker.conf.j2
-      dest: /etc/netdata/health.d/systemdunits.conf.d/docker.conf
+
+- name: migration/1.13.0 - remove files from old versions of the role
+  file:
+    state: absent
+    path: /etc/netdata/health.d/systemdunits.conf.d/docker.conf
+  notify: assemble netdata configuration

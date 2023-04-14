@@ -7,3 +7,4 @@
     - homepage_fqdn is not search("CHANGEME")
     - homepage_title is not search("CHANGEME")
     - homepage_https_mode in ['selfsigned', 'letsencrypt']
+    - homepage_enable_service == homepage_enable_service | bool

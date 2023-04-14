@@ -66,6 +66,8 @@ samba_firewalld_zones:
 # disable this and/or set backup paths manually if samba backups consume too
 # much disk space on the backup storage, or if you don't care about losing the data.
 samba_enable_backups: yes
+# start/stop samba service, enable/disable it on boot (yes/no)
+samba_enable_service: yes
 # Samba log level (1-10, allows additional component:level)
 samba_log_level: '1 passdb:2 auth:2 auth_audit:3'
 # Log the following audit events (on success)

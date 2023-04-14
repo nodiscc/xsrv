@@ -21,7 +21,13 @@ MDomain {{ jellyfin_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ jellyfin_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ jellyfin_fqdn }}.key
 {% endif %}
-
+{% if not jellyfin_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
   <Location />
   AllowOverride None
   Require ip 127.0.0.1 {{ jellyfin_allowed_hosts | join(' ') }}
@@ -32,5 +38,5 @@ MDomain {{ jellyfin_fqdn }}
   ProxyPassReverse "/socket" "ws://127.0.0.1:8096/socket"
   ProxyPass "/" "http://127.0.0.1:8096/"
   ProxyPassReverse "/" "http://127.0.0.1:8096/"
-
+{% endif %}
 </VirtualHost>

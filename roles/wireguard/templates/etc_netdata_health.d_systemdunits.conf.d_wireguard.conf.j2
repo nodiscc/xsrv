@@ -1,9 +1,0 @@
-    alarm: systemd_service_wireguard
-       on: systemdunits_service-units.unit_wg-quick_wg0_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: wireguard service status
-       to: sysadmin
-

@@ -1,4 +1,4 @@
-# teh domain name used to access the IMAP server
+# domain name used to access the IMAP server
 dovecot_fqdn: "imap.CHANGEME.org"
 # URI of the LDAP server to use for authentication (use ldap:// or ldaps://)
 dovecot_ldap_uri: "ldap://ldap.CHANGEME.org"
@@ -12,7 +12,7 @@ dovecot_ldap_bind_password: "CHANGEME"
 dovecot_ldap_user_filter: "(&(objectClass=inetOrgPerson)(|(uid=%u)(mail=%u)))"
 # mappign between LDAP attributes and IMAP user/password
 dovecot_ldap_pass_attrs: "mail=user,userPassword=password"
-# yes/no: log authentication debugging messages
+# log authentication debugging messages (yes/no)
 dovecot_auth_debug: no
 # allow unencrypted IMAP on port 143/tcp (yes/no)
 dovecot_listen_imap: no
@@ -20,6 +20,8 @@ dovecot_listen_imap: no
 dovecot_ssl_required: yes
 # disable plaintext authentication when SSL is not used (yes/no)
 dovecot_disable_plaintext_auth: yes
+# start/stop the dovecot service, enable/disable it on boot (yes/no)
+dovecot_enable_service: yes
 # firewall zones for the IMAPS service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 dovecot_firewalld_zones:

@@ -9,7 +9,7 @@ graylog_secret_key: "CHANGEME96"
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
 graylog_https_mode: selfsigned
-# start/stop the graylog/elasticsearch/mongodb services, enable/disable them on boot (yes/no)
+# start/stop the graylog/elasticsearch/mongodb services, enable/disable them on boot (yes/no) (redirect users to maintenance page if disabled)
 graylog_enable_service: yes
 # (512m/1g...) JVM memory heap size for graylog
 graylog_heap_size: "1g"

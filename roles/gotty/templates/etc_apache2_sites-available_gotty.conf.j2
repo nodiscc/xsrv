@@ -21,7 +21,13 @@ MDomain {{ gotty_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ gotty_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ gotty_fqdn }}.key
 {% endif %}
-
+{% if not gotty_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
   <Location "/">
     AuthType Basic
     AuthName "Authorization required"
@@ -37,5 +43,5 @@ MDomain {{ gotty_fqdn }}
   ProxyPassReverse /ws ws://localhost:3004/ws
   ProxyPass / http://localhost:3004/
   ProxyPassReverse / http://localhost:3004/
-
+{% endif %}
 </VirtualHost>

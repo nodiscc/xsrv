@@ -1,4 +1,0 @@
-# Discard these messages, never log them
-:msg, contains, "failed to read Temperature" stop
-if $programname == 'apache' and re_match($msg, '.* 127.0.0.1 - - .* "GET /server-status\\?auto HTTP/1.1" 200') then stop
-if $programname == 'CRON' and re_match($msg, 'cron:session): session (opened|closed) for user .*') then stop

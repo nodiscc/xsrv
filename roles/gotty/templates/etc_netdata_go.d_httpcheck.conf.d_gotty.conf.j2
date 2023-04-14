@@ -1,4 +1,3 @@
-{% if gotty_enable_service %}
   - name: gotty
     timeout: 1
     tls_skip_verify: true
@@ -8,4 +7,6 @@
       Host: "{{ gotty_fqdn }}"
     status_accepted:
       - 401
+{% if not gotty_enable_service %}
+    status_accepted: [503]
 {% endif %}

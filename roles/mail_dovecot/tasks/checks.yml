@@ -14,4 +14,5 @@
       - dovecot_listen_imap == dovecot_listen_imap | bool
       - dovecot_ssl_required == dovecot_ssl_required | bool
       - dovecot_disable_plaintext_auth == dovecot_disable_plaintext_auth | bool
+      - dovecot_enable_service == dovecot_enable_service | bool
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot"

@@ -23,6 +23,10 @@
    web files group = netdata
    accept a streaming request every seconds = 0
 
+[registry]
+   enabled = yes
+   registry to announce = https://{{ inventory_hostname }}:{{ netdata_public_port | default('19999') }}
+
 [plugins]
 {% for plugin in netdata_disabled_plugins %}
    {{ plugin }} = no

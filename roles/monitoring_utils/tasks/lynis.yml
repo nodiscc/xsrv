@@ -27,6 +27,13 @@
       grep -i -E '{{ lynis_report_regex }}' /var/log/lynis-report.txt
     user: root
 
+- name: disable lynis systemd timer
+  systemd:
+    name: lynis.timer
+    state: stopped
+    enabled: no
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: copy debsums cron job configuration
   template:
     src: etc_default_debsums.j2

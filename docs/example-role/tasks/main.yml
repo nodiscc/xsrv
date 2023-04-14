@@ -55,17 +55,6 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: include netdata configuration tasks
-  import_tasks: netdata.yml
-  become: yes
-  tags:
-    - EXAMPLE
-    - monitoring
-    - netdata
-  when:
-    - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed | bool
-
 - name: include ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes

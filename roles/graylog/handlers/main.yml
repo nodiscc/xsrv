@@ -1,15 +1,25 @@
 - name: restart elasticsearch
   become: yes
-  service:
+  systemd:
     name: elasticsearch
     state: restarted
   when: graylog_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: restart mongodb
+  become: yes
+  systemd:
+    name: mongod
+    state: restarted
+    daemon_reload: yes
+  when: graylog_enable_service | bool
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: restart graylog-server
   become: yes
-  service:
+  systemd:
     name: graylog-server
     state: restarted
+    daemon_reload: yes
   when: graylog_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"

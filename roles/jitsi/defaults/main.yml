@@ -27,7 +27,7 @@ jitsi_enable_recent_list: no
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
 jitsi_https_mode: selfsigned
-# start/stop the jitsi service, enable/disable it on boot (yes/no)
+# start/stop the jitsi service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 jitsi_enable_service: yes
 # firewall zones for the jitsi server, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)

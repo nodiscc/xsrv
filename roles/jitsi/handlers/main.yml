@@ -1,6 +1,7 @@
 - name: update CA certificates store
   become: yes
   command: update-ca-certificates
+  changed_when: yes
 
 - name: restart jitsi
   service:

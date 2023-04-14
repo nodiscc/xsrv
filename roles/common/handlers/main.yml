@@ -1,10 +1,7 @@
-- name: apply sysctl configuration
-  become: yes
-  command: sysctl --system
-
 - name: update pam configuration
   become: yes
   command: 'pam-auth-update --package'
+  changed_when: yes
 
 - name: restart systemd-logind
   become: yes

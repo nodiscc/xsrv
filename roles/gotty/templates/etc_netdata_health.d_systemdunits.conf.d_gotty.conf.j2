@@ -1,9 +1,0 @@
-    alarm: systemd_service_gotty
-       on: systemdunits_service-units.unit_gotty_service_state
-     calc: $failed
-    every: 10s
-     crit: $this = 1
-    units: failed service
-     info: gotty service status
-       to: sysadmin
-

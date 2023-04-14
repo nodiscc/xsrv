@@ -17,3 +17,4 @@
     - samba_hosts_allow|type_debug == "list"
     - samba_firewalld_zones|type_debug == "list"
     - samba_log_full_audit_success_events is string
+    - samba_enable_service == samba_enable_service | bool

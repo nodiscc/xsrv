@@ -58,25 +58,30 @@
   file:
     state: directory
     path: "{{ item.path }}"
-    owner: "root"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
+    owner: "{{ item.owner | default('gitea') }}"
+    group: gitea
+    mode: "{{ item.mode | default('u=rwX,g=rwX') }}"
     recurse: no
   with_items:
-    - { path: "/etc/gitea", group: "gitea", mode: "u=rwX,g=rX" }
-    - { path: "{{ gitea_user_home }}/custom", group: "root", mode: "u=rwX" }
-    - { path: "{{ gitea_user_home }}/public", group: "root", mode: "u=rwX" }
-    - { path: "{{ gitea_user_home }}/data", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: "{{ gitea_user_home }}/indexers", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: "{{ gitea_user_home }}/log", group: "gitea", mode: "u=rwX,g=rwX" }
-    - { path: '{{ gitea_user_home }}/repos', group: "gitea", mode: "u=rwX,g=rwX" }
+    - path: "/etc/gitea"
+      owner: root
+      mode: "u=rwX,g=rX"
+    - path: "{{ gitea_user_home }}"
+    - path: "{{ gitea_user_home }}/custom"
+    - path: "{{ gitea_user_home }}/public"
+    - path: "{{ gitea_user_home }}/data"
+    - path: "{{ gitea_user_home }}/indexers"
+    - path: "{{ gitea_user_home }}/log"
+    - path: '{{ gitea_user_home }}/repos'
 
 - name: install gitea systemd service/unit file
   template:
     src: "etc_systemd_system_gitea.service.j2"
     dest: "/etc/systemd/system/gitea.service"
     mode: "0644"
-  notify: reload systemd unit files
+  notify:
+    - reload systemd unit files
+    - restart gitea
 
 # re-read systemd service configuration
 - name: apply configuration (flush handlers)
