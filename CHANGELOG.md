@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.13.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.0) - 2023-04-14
 
 **Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 - monitoring/netdata: if you have configured custom [`netdata_port_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml), ensure the `ports:` parameter is a list, even if it only contains a single port (e.g. `ports: [64738]`)
