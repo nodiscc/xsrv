@@ -48,7 +48,7 @@ test_command_line:
 .PHONY: test_init_vm_template # test correct execution of xsrv init-vm-template
 test_init_vm_template:
 	if [[ -f /etc/libvirt/qemu/my.template.test.xml ]]; then virsh undefine --domain my.template.test --remove-all-storage; fi
-	./xsrv init-vm-template --name my.template.test --ip 10.0.10.240 --gateway 10.0.10.1 --network=$(NETWORK)	
+	./xsrv init-vm-template --name my.template.test --ip 10.0.10.240 --network=$(NETWORK)
 
 # TODO the resulting VM has no video output, access over serial console only, --graphics spice,listen=none during init-vm-template will prevent it from working, spice console must be added during init_vm
 # requirements: libvirt libguestfs-tools, prebuilt debian VM template, host configuration initialized with xsrv init-host
@@ -59,7 +59,7 @@ test_init_vm:
 	ssh-keygen -R 10.0.10.241
 	if [[ -f /etc/libvirt/qemu/my.example.test.xml ]]; then virsh undefine --domain my.example.test --remove-all-storage; fi
 	./xsrv init-vm --template my.template.test --name my.example.test \
-		--ip 10.0.10.241 --netmask 24 --gateway 10.0.10.1 \
+		--ip 10.0.10.241 \
 		--sudo-user deploy --sudo-password $(SUDO_PASSWORD) --root-password $(ROOT_PASSWORD) \
 		--ssh-pubkey "$$(cat ~/.ssh/id_rsa.pub)" \
 		--memory 4G --vcpus 4 \
