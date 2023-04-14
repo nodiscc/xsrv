@@ -32,6 +32,7 @@
     name: lynis.timer
     state: stopped
     enabled: no
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy debsums cron job configuration
   template:
