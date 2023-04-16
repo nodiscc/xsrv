@@ -132,7 +132,7 @@ xsrv init-host
 <!-- TODO full output -->
 
 - An editor will let you set the list of [roles](#manage-roles) for the host
-- An editor wil let you set required [configuration variables](#manage-hosts-configuration).
+- An editor will let you set required [configuration variables](#manage-hosts-configuration).
 
 
 ### xsrv edit-inventory
@@ -145,7 +145,7 @@ all:
   my.example.org:
 ```
 ```yaml
-# an inventory with mutiple hosts/groups
+# an inventory with multiple hosts/groups
 all:
   children:
     tools:
@@ -422,7 +422,7 @@ Using the server/host as its own controller is not recommended, but can help wit
 - During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
 
 ```yaml
-##### CONNNECTION
+##### CONNECTION
 # SSH host/port, if different from my.example.org:22
 # ansible_host: "my.example.org"
 # ansible_port: 22

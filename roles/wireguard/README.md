@@ -61,7 +61,7 @@ firewalld_zone_sources:
       - 10.0.0.0/8
     state: absent
 
-# disallow connections from LAN to the service, but explicitely allow from wireguard
+# disallow connections from LAN to the service, but explicitly allow from wireguard
 apache_firewalld_zones:
   - zone: public
     state: disabled

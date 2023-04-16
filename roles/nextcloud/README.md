@@ -14,7 +14,7 @@ Default installed applications include:
 - [Calendar](https://apps.nextcloud.com/apps/calendar): Manage calendar events with search, alarms, invitation management, contacts integration, sharing and synchronization across devices (CalDAV/ICS)
 - [Contacts](https://apps.nextcloud.com/apps/contacts):E dit, view, share address books and synchronize them across devices (CardDav)
 - [Tasks](https://apps.nextcloud.com/apps/tasks): Task/todo-list management (supports due dates, reminders, priorities, comments, tasks sharing, sub-tasks), and synchronize them across devices (CalDAV)
-- [Music](https://apps.nextcloud.com/apps/music): Play audio files directly from teh file list or in a library view (supports playlists, search, ampache and more)
+- [Music](https://apps.nextcloud.com/apps/music): Play audio files directly from the file list or in a library view (supports playlists, search, ampache and more)
 - [Photos](https://github.com/nextcloud/photos#readme): Media gallery with previews for all media types
 - [Notes](https://apps.nextcloud.com/apps/notes): Note taking app with markdown support, notes are saved as files in your Nextcloud so you can view and edit them from anywhere.
 - [Maps](https://apps.nextcloud.com/apps/maps): Map and routing service using [OpenStreetMap](https://www.openstreetmap.org/)

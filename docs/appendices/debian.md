@@ -65,7 +65,7 @@ USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway
 
 ```
 
-The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overriden using `--preseed /path/to/custom/preseed.cfg`.
+The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overridden using `--preseed /path/to/custom/preseed.cfg`.
 
 [![](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z.svg)](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z?speed=2&theme=monokai&autoplay=true)
 

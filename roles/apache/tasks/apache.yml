@@ -37,7 +37,7 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-##### APACHE MODULES/CONFIGURATON #####
+##### APACHE MODULES/CONFIGURATION #####
 
 - name: copy apache/php configuration
   template:

@@ -1,7 +1,7 @@
 # configuration variables for my.example.test
 # please set required configuration variables (CHANGEME), and remove variables for roles you don't use
 
-##### CONNNECTION
+##### CONNECTION
 # SSH host/port, if different from my.example.test:22
 # ansible_host: "my.example.test"
 # ansible_port: 22

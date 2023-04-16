@@ -102,7 +102,7 @@ The following Grok expression will generate new fields `action`, `in_interface`,
 \[%{SPACE}?%{INT:UNWANTED}.%{INT:UNWANTED}\] %{WORD:action}: IN=%{WORD:in_interface} OUT=%{WORD:out_interface}? MAC=%{NOTSPACE:mac_address}? SRC=%{IPV4:source_ip} DST=%{IPV4:destination_ip} LEN=%{INT:packet_length} TOS=%{BASE16NUM:UNWANTED} PREC=%{BASE16NUM:UNWANTED} TTL=%{INT:ttl} ID=%{INT:connection_id} (DF )?PROTO=%{WORD:protocol} SPT=%{INT:source_port} DPT=%{INT:destination_port} (WINDOW=%{INT:window_size} )?(RES=0x00 )?(SYN )?(URGP=0 )?(LEN=%{INT:packet_length})?
 ```
 
-The graylog pattern editor provides a set of premade patterns to extract common data formats (dates, usernames, words, numbers, ...). You can find other examples [here](https://github.com/hpcugent/logstash-patterns/blob/master/files/grok-patterns) and expermiment with the [Grok Debugger](https://grokdebugger.com/).
+The graylog pattern editor provides a set of premade patterns to extract common data formats (dates, usernames, words, numbers, ...). You can find other examples [here](https://github.com/hpcugent/logstash-patterns/blob/master/files/grok-patterns) and experiment with the [Grok Debugger](https://grokdebugger.com/).
 
 ![](https://i.imgur.com/7Ntq4gl.png)
 
@@ -110,7 +110,7 @@ The graylog pattern editor provides a set of premade patterns to extract common 
 
 ---------------
 
-Create **[streams](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select wether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
+Create **[streams](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select whether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
 
 <!-- TODO ADD EXAMPLE STREAM SETUP -->
 

@@ -308,7 +308,7 @@ self_service_password_allowed_hosts:
 - shaarli: add required packages for LDAP authentication
 - monitoring_netdata: add `utils-autorestart` tag (reboot hosts if required after a kernel update, will only run if the `utils-autorestart` tag is explicitly called)
 - samba: add `utils-samba-listusers` tag (list samba users)
-- common: install hardware true random number generator (TRNG) support packages on hosts where the CPU suports [RDRAND](https://en.wikipedia.org/wiki/RDRAND)
+- common: install hardware true random number generator (TRNG) support packages on hosts where the CPU supports [RDRAND](https://en.wikipedia.org/wiki/RDRAND)
 
 **Removed:**
 - tt_rss: remove installation of custom plugins/themes
@@ -422,7 +422,7 @@ self_service_password_allowed_hosts:
 - tools/tests: improve/simplify test tools
 
 **Fixed:**
-- common: users: fix errors during creation fo `sftponly` user accounts when no groups are defined in the user definition
+- common: users: fix errors during creation of `sftponly` user accounts when no groups are defined in the user definition
 
 [Full changes since v1.8.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.1...1.9.0)
 
@@ -473,7 +473,7 @@ self_service_password_allowed_hosts:
 - monitoring: utils: add `iputils-ping` package (ping utility)
 
 **Removed:**
-- common: firewalld/mail/msmtp: drop compatibilty with Debian 10
+- common: firewalld/mail/msmtp: drop compatibility with Debian 10
 - valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
@@ -874,7 +874,7 @@ self_service_password_allowed_hosts:
 - common: cron: ensure only root can access cron job files and directories (CIS 5.1.2 - 5.1.7)
 - common: ssh: lower maximum concurrent unauthenticated connections to 60
 - common/mail: don't overwrite `/etc/aliases`, ensure `root` mail is forwarded to the configured user (set to `ansible_user` by default)
-- docker: speed up role execution - dont't force APT cache update when not necessary
+- docker: speed up role execution - don't force APT cache update when not necessary
 - transmission: disable automatic backups of the downloads directory by default, add `transmission_backup_downloads: yes/no` variable allowing to enable it
 - rocketchat/monitoring: disable HTTP check when rocketchat service is explicitly disabled in the configuration
 - mumble/checks: ensure that `mumble_welcome_text` is set
@@ -894,9 +894,9 @@ self_service_password_allowed_hosts:
 - nextcloud: fix condition for dependency on postgresql role
 - nextcloud: fix `allowed memory size exhausted` during nextcloud upgrades
 - openldap: fix condition for dependency on apache role
-- rsyslog: fix automatic aggregation fo fail2ban logs to syslog
+- rsyslog: fix automatic aggregation of fail2ban logs to syslog
 - rocketchat: fix automatic backups when the service is disabled
-- samba/rsnapshot/gitea: fix role when runing in 'check' mode, fix idempotence
+- samba/rsnapshot/gitea: fix role when running in 'check' mode, fix idempotence
 - tools: fix release procedure/ansible-galaxy collection publication
 - xsrv: fix wrong inventory formatting after running `xsrv init-host`
 - remove unused/duplicate/leftover task files
@@ -1242,7 +1242,7 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - simplify domain name/location/root URL templating
 - require manual configuration of gitea instance FQDN/URL, JWT secrets and internal token
 - LFS JWT secret must not contain /+= characters
-- only configure a subset of gitea settings in the configuration file, let gitea use defaut values for other settings
+- only configure a subset of gitea settings in the configuration file, let gitea use default values for other settings
 - disable displaying gitea version in footer
 - upgrade gitea to latest stable version (https://github.com/go-gitea/gitea/releases)
 - download binary from github.com instea of gitea.io
@@ -1356,7 +1356,7 @@ sudo lnav /var/log/syslog
 # re-apply the playbook and check that it finishes without error
 TAGS=gitea xsrv deploy
 
-# Check that all gitea funtionality works
+# Check that all gitea functionality works
 ```
 
 
@@ -1431,7 +1431,7 @@ make deploy
 **rocketchat role:**
  - add a role to deploy the rocket.chat instant messaging/communication software
  - deploy rocket.chat as a stack of docker swarm services
- - add apache cofiguration to proxy traffic from the host's apache instance, add let's encrypt/self-signed certificate generation tasks
+ - add apache configuration to proxy traffic from the host's apache instance, add let's encrypt/self-signed certificate generation tasks
 
 **openldap role:**
  - add a role to install openldap server and optionally ldap-account-manager

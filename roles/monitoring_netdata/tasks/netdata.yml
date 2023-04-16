@@ -136,7 +136,7 @@
     - '/etc/systemd/system.conf.d' # systemd dynamic configuration directory
     - '/var/log/smartd' # smartd log directory
 
-- name: enable systemd cgroups ressource accounting (systemd services chart)
+- name: enable systemd cgroups resource accounting (systemd services chart)
   template:
     src: 'etc_systemd_system.conf.d_accounting.conf.j2'
     dest: '/etc/systemd/system.conf.d/accounting.conf'

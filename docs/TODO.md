@@ -19,7 +19,7 @@
 - #1027 - shaarli: update ownership/mode of directories is not idempotent - **`-`** `enhancement,maintenance`
 - #1026 - libvirt: changing a libvirt network's nsettings does not work if the network already exists - **`-`** `bug,upstream`
 - #1025 - apache/fail2ban: ban IP addresses repeatingly hitting 403 errors/the default localhost vhost (and other vhosts?) - **`1.14.0`** `easy,enhancement,security`
-- #1012 - dovecot: encrypt all incoming e-mail wit the recipient's GPG key? - **`-`** `enhancement,question,security`
+- #1012 - dovecot: encrypt all incoming e-mail with the recipient's GPG key? - **`-`** `enhancement,question,security`
 - #1003 - jellyfin: automate opensubtitles plugin installation/configuration - **`1.14.0`** `enhancement,feature`
 - #1001 - libvirt: add support for EFI as an alternative to legacy BIOS - **`-`** `enhancement`
 - #999 - WIP: common: fail2ban: add manual fail2ban tasks - **`-`** `feature`
@@ -93,14 +93,14 @@
 - #720 - podman role/replace docker with podman? - **`1.14.0`** `enhancement,feature,maintenance,question`
 - #717 - transmission: configuration templating task always returns changed (cleartext/hashed password) - **`2.0.0`** `enhancement,maintenance,upstream`
 - #715 - dnsmasq: DNS-over-HTTPS support? - **`-`** `configuration,enhancement,question,security`
-- #714 - dnsmasq: DNS-based ad blocking/fitering? - **`-`** `feature,question`
+- #714 - dnsmasq: DNS-based ad blocking/filtering? - **`-`** `feature,question`
 - #686 - samba: announce shares over  MDNS - **`-`** `enhancement`
 - #685 - apache: automate running Qualys SSLLabs scans against all virtualhosts - **`1.14.0`** `feature,monitoring,security`
 - #684 - alltube role? - **`-`** `feature,question`
 - #668 - apache: allow defining custom ErrorDocuments - **`-`** `enhancement`
-- #648 - graylog: setup authentication fro mongodb - **`-`** `easy,enhancement,security`
+- #648 - graylog: setup authentication for mongodb - **`-`** `easy,enhancement,security`
 - #642 - mumble: LDAP user backend? - **`-`** `question`
-- #641 - common: implement manual reboot/shudown (utils-reboot/utils-shutdown ansible tags) - **`1.14.0`** `easy,enhancement,feature`
+- #641 - common: implement manual reboot/shutdown (utils-reboot/utils-shutdown ansible tags) - **`1.14.0`** `easy,enhancement,feature`
 - #640 - common: apt: enable purging data/configuration files by default - **`-`** `configuration,enhancement`
 - #638 - common: apt: implement forced/manual apt upgrade (utils-apt-upgrade ansible tag) - **`-`** `easy,feature`
 - #637 - firewalld: implement DNAT/SNAT - **`-`** `enhancement`
@@ -176,7 +176,7 @@
 - #309 - apply postgresqltuner recommended settings? - **`-`** `enhancement,performance`
 - #307 - apache: mod_md: make certificate status endpoint enable/disable configurable - **`-`** `enhancement,monitoring`
 - #280 - Samba Directory Controller or other Identity Management solution? - **`-`** `feature,question`
-- #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban - **`-`** `enhancement,security`
+- #277 - Samba: protect samba accounts from bruteforce attempts with fail2ban - **`-`** `enhancement,security`
 - #276 - Samba: protect file shares from cryptolockers - **`-`** `enhancement,security`
 - #275 - Samba: implement filesystem/size quotas - **`-`** `enhancement`
 - #274 - Samba: advertise samba server over avahi/zeroconf? - **`-`** `configuration,enhancement`
@@ -184,13 +184,13 @@
 - #271 - apache: enable mod_md status handler - **`-`** `enhancement,monitoring`
 - #267 - apache: make disabled modules list configurable, disable more modules by default - **`-`** `enhancement,performance`
 - #265 - apache: provide custom error pages - **`-`** `enhancement`
-- #256 - CAS, SAML or Oauth Sigle Sign On (SSO)? - **`-`** `feature`
+- #256 - CAS, SAML or Oauth Single Sign On (SSO)? - **`-`** `feature`
 - #254 - apache: allow using LDAP for basic auth? - **`-`** `enhancement,question,security`
 - #237 - WIP: install and configure auditd (Linux Auditing Framework) - **`2.0.0`** `feature,monitoring,security`
 - #231 - apache: letsencrypt/selfsigned: reach A+ grade on Mozilla Security Observatory - **`-`** `enhancement,security,tools`
 - #229 - apache: add a config variable to log times taken to serve requests - **`-`** `enhancement,monitoring,performance`
 - #228 - apache: additional hardening measures - **`-`** `enhancement,security`
-- #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost - **`-`** `feature,security`
+- #222 - apache: add ability to specify a whitelist/blacklist of IP addresses per-virtualhost - **`-`** `feature,security`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage - **`-`** `feature`
 - #208 - netdata: graph/alert on logwatch warnings - **`-`** `feature,monitoring,security`
 - #205 - netdata: monitor debsums warnings/return status - **`2.0.0`** `easy,feature,monitoring,security`

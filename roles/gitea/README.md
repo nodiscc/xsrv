@@ -76,9 +76,9 @@ The example below is given for a LDAP server configured with the [openldap](../o
 - User search base: `ou=users,dc=CHANGEME,dc=org`
 - User filter: `(&(objectClass=posixAccount)(uid=%s))`
 - Admin filter: ``
-- Restructed filter: ``
+- Restricted filter: ``
 - Username attribute: `uid`
-- First name attribue: `givenName`
+- First name attribute: `givenName`
 - Surname attribute: `sn`
 - Email attribute: `mail`
 - Public SSH key attribute: `SshPublicKey`
@@ -105,7 +105,7 @@ sudo update-ca-certificates
 
 **Mirror from gitea to other hosts**
 
-Got to your project `Settings > Repository` and configue the remote repository to mirror to.
+Got to your project `Settings > Repository` and configure the remote repository to mirror to.
 
 <!--
 <summary>DEPRECATED git hooks method</summary>
@@ -161,7 +161,7 @@ gitea --description "My new project" --private new myusername/myproject
 ./gitea issues myusername/myproject | jq -r '.[] | "#\(.number) - \(.title)"'
 ```
 
-[tea](https://gitea.com/gitea/tea) will be the officially suported command line Gitea API client.
+[tea](https://gitea.com/gitea/tea) will be the officially supported command line Gitea API client.
 
 ### Troubleshooting
 

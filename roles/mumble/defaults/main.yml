@@ -3,7 +3,7 @@
 mumble_password: "CHANGEME"
 # administrator password for the mumble server (login as 'superuser' - NO SPACES)
 mumble_superuser_password: "CHANGEME"
-# exposes current/maximum user count and max bandwidth per client to unauthenticated users (ture/false - QUOTED)
+# exposes current/maximum user count and max bandwidth per client to unauthenticated users (true/false - QUOTED)
 mumble_allowping: 'false'
 # Welcome message sent to clients when they connect
 mumble_welcome_text: "<br />Welcome to this server running <b>Murmur</b>.<br />Enjoy your stay!<br />"

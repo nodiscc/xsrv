@@ -1,5 +1,5 @@
 #!/bin/bash
-# gracefully restart (reload) apache2 when a required by mod_md after certficate generation/renewal
+# gracefully restart (reload) apache2 when a required by mod_md after certificate generation/renewal
 # https://httpd.apache.org/docs/2.4/mod/mod_md.html#mdmessagecmd
 # - mod_md must be configured with 'MDMessageCmd /usr/local/bin/apache-mod-md-reload request'
 # - a cron job run as root must check periodically the presence of the file using '/usr/local/bin/apache-mod-md-reload reload'
