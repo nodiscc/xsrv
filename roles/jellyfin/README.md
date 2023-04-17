@@ -8,6 +8,7 @@ Stream to any device from your own server, with no strings attached. Your media,
  - Live TV & DVR: Watch Live TV and set automatic recordings to expand your library.
  - Your data: no tracking, phone-home, or central servers collecting your data.
  - LDAP authentication support
+ - (optional) Automatic subtitles download from https://opensubtitles.com
 
 [![](https://i.imgur.com/yd06nxh.png)](https://i.imgur.com/YA8bBGX.jpg)
 [![](https://i.imgur.com/gmJspSD.png)](https://i.imgur.com/kyqr1mh.jpg)
@@ -98,7 +99,27 @@ When using Jellyfin from a web browser, media will be converted/transcoded on-th
 
 ### Subtitles
 
-To search and download video subtitles, register an account on https://opensubtitles.com, enable the `Opensubtitles` plugin from `Admin > Plugins` and set your opensubtitles.org username/password in the plugin preferences. Then obtain an API key by following the link the plugin settings. You will then be able to use right-click > `Edit subtitles` on any video from your library and search for matching subtitles.
+To search and download video subtitles, register an account on https://opensubtitles.com, and generate an API key from https://www.opensubtitles.com/en/consumers.
+Then enable and setup the Opensubtitles plugin in your host's configuration/secrets:
+
+```bash
+$ xsrv edit-host
+```
+```yaml
+jellyfin_setup_opensubtitles_plugin: yes
+```
+```bash
+$ xsrv edit-vault
+```
+```yaml
+jellyfin_opensubtitles_plugin_username: myusername
+jellyfin_opensubtitles_plugin_password: mypassword
+jellyfin_opensubtitles_plugin_apikey: 716nIiK5bfWGNoeaRozz2slfHqPQ9iMz
+```
+
+You may also enable and configure the `Opensubtitles` plugin manually from `Admin > Plugins`.
+You will then be able to use right-click > `Edit subtitles` on any video from your library and search for matching subtitles.
+
 
 ### Metadata
 

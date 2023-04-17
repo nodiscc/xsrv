@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.14.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.14.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Added:**
+- jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+
+[Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
+
+------------------
+
+
 #### [v1.13.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.1) - 2023-04-14
 
 **Upgrade procedure:**
