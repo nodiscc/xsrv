@@ -60,6 +60,8 @@ rsyslog_forward_to_port: 5140
 
 ### Basic setup
 
+#### Inputs
+
 Login to your graylog instance and configure a basic **[input](https://go2docs.graylog.org/5-0/getting_in_log_data/getting_in_log_data.html)** to accept syslog messages on TCP port 5140 (using TLS):
 
 - Title: `Syslog/TLS/TCP`
@@ -71,56 +73,25 @@ Login to your graylog instance and configure a basic **[input](https://go2docs.g
 - [x] Allow overriding date?
 - Save
 
------------------
-
-Add **[Extractors](https://archivedocs.graylog.org/en/latest/pages/extractors.html)** to the input to build meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages (using regex or _Grok patterns_).
-
-- Go to the main `Search` page and confirm log messages are being ingested (click the `> Not updating` button to display new messages as they arrive)
-- Select a message from which you wish to extract data/fields
-- Click `Copy ID`
-- Go back to  `System > Inputs`, next to the `Input` you just created, click `Manage extractors`
-- Click `Get Started`
-- Select the `Message ID` tab
-- Paste the ID in the `Message ID` field, enter `graylog_0` (the name of Graylog's default index) in the `Index` field
-- Click `Load Message`, the selected message should appear with some pre-extracted fields. For example, for logs received from syslog inputs, `application_name`, `facility`, `level`...  should be detected automatically
-- Next to the `message` field, click `Select extractor type > Grok pattern`
-- In the `Grok pattern` field, enter the _Grok expression_ that will be used to extract fields from the message (see below)
-- Click `Try against example` and verify that relevant fields are correctly extracted from the message. Edit your Grok pattern and repeat until you are satisfied with the result.
-- (Recommended) Check `Only attempt extraction if field contains string` and enter a string that is constant across all relevant messages (i.e. not variable/present/absent depending on the particular message). This can significantly decrease CPU usage as Graylog will not attempt to parse messages that don't contain the string.
-- Set a unique name for the extractor (e.g. `Firewall messages`)
-- Click `Create Extractor`
-
-Example: given this message:
-
-```
-[20731.854936] FINAL_REJECT: IN=ens3 OUT= MAC= SRC=10.0.10.101 DST=239.255.255.250 LEN=174 TOS=0x00 PREC=0x00 TTL=4 ID=63089 DF PROTO=UDP SPT=35084 DPT=1900 LEN=154
-```
-
-The following Grok expression will generate new fields `action`, `in_interface`, `source_ip`, `destination_ip`, `packet_length`, `ttl`, `connection_id`, `protocol`, `source_port`, `destination_port` which can be used in your queries and custom widgets/dashboards:
-
-```
-\[%{SPACE}?%{INT:UNWANTED}.%{INT:UNWANTED}\] %{WORD:action}: IN=%{WORD:in_interface} OUT=%{WORD:out_interface}? MAC=%{NOTSPACE:mac_address}? SRC=%{IPV4:source_ip} DST=%{IPV4:destination_ip} LEN=%{INT:packet_length} TOS=%{BASE16NUM:UNWANTED} PREC=%{BASE16NUM:UNWANTED} TTL=%{INT:ttl} ID=%{INT:connection_id} (DF )?PROTO=%{WORD:protocol} SPT=%{INT:source_port} DPT=%{INT:destination_port} (WINDOW=%{INT:window_size} )?(RES=0x00 )?(SYN )?(URGP=0 )?(LEN=%{INT:packet_length})?
-```
-
-The graylog pattern editor provides a set of premade patterns to extract common data formats (dates, usernames, words, numbers, ...). You can find other examples [here](https://github.com/hpcugent/logstash-patterns/blob/master/files/grok-patterns) and experiment with the [Grok Debugger](https://grokdebugger.com/).
-
-![](https://i.imgur.com/7Ntq4gl.png)
-
-![](https://i.imgur.com/IemwLaz.png)
-
 ---------------
+
+#### Streams
 
 Create **[streams](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select whether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
 
 <!-- TODO ADD EXAMPLE STREAM SETUP -->
 
---------------
+---------------
+
+#### Search and filter
 
 Start using Graylog to [search and filter](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/writing_search_queries.html) through messages, edit table fields, create aggregations (bar/area/line/pie charts, tables...) and progressively build useful **[dashboards](https://docs.graylog.org/en/latest/pages/dashboards.html)** showing important indicators for your specific setup.
 
 ![](https://i.imgur.com/0OCFJlx.png)
 
--------------
+---------------
+
+#### Authentication and roles
 
 Setup [authentication and roles](https://go2docs.graylog.org/5-0/setting_up_graylog/permission_management.html) to grand read or write access to specific users/groups. LDAP is supported.
 
@@ -144,7 +115,84 @@ Setup [authentication and roles](https://go2docs.graylog.org/5-0/setting_up_gray
 
 ---------------
 
-**Uninstallation:**
+#### Extractors
+
+Add **[Extractors](https://archivedocs.graylog.org/en/latest/pages/extractors.html)** to the input to build meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages (using regex or _Grok patterns_).
+
+- Go to the main `Search` page and confirm log messages are being ingested (click the `> Not updating` button to display new messages as they arrive)
+- Select a message from which you wish to extract data/fields
+- Click `Copy ID`
+- Go back to  `System > Inputs`, next to the `Input` you just created, click `Manage extractors`
+- Click `Get Started`
+- Select the `Message ID` tab
+- Paste the ID in the `Message ID` field, enter `graylog_0` (the name of Graylog's default index) in the `Index` field
+- Click `Load Message`, the selected message should appear with some pre-extracted fields. For example, for logs received from syslog inputs, `application_name`, `facility`, `level`...  should be detected automatically
+- Next to the `message` field, click `Select extractor type > Grok pattern`
+- In the `Grok pattern` field, enter the _Grok expression_ that will be used to extract fields from the message (see below)
+- Click `Try against example` and verify that relevant fields are correctly extracted from the message. Edit your Grok pattern and repeat until you are satisfied with the result.
+- (Recommended) Check `Only attempt extraction if field contains string` and enter a string that is constant across all relevant messages (i.e. not variable/present/absent depending on the particular message). This can significantly decrease CPU usage as Graylog will not attempt to parse messages that don't contain the string.
+- Set a unique name for the extractor (e.g. `Firewall messages`)
+- Click `Create Extractor`
+
+Given this example message:
+
+```
+[20731.854936] FINAL_REJECT: IN=ens3 OUT= MAC= SRC=10.0.10.101 DST=239.255.255.250 LEN=174 TOS=0x00 PREC=0x00 TTL=4 ID=63089 DF PROTO=UDP SPT=35084 DPT=1900 LEN=154
+```
+
+The following Grok expression will generate new fields `action`, `in_interface`, `source_ip`, `destination_ip`, `packet_length`, `ttl`, `connection_id`, `protocol`, `source_port`, `destination_port` which can be used in your queries and custom widgets/dashboards:
+
+```
+\[%{SPACE}?%{INT:UNWANTED}.%{INT:UNWANTED}\] %{WORD:action}: IN=%{WORD:in_interface} OUT=%{WORD:out_interface}? MAC=%{NOTSPACE:mac_address}? SRC=%{IPV4:source_ip} DST=%{IPV4:destination_ip} LEN=%{INT:packet_length} TOS=%{BASE16NUM:UNWANTED} PREC=%{BASE16NUM:UNWANTED} TTL=%{INT:ttl} ID=%{INT:connection_id} (DF )?PROTO=%{WORD:protocol} SPT=%{INT:source_port} DPT=%{INT:destination_port} (WINDOW=%{INT:window_size} )?(RES=0x00 )?(SYN )?(URGP=0 )?(LEN=%{INT:packet_length})?
+```
+
+The graylog pattern editor provides a set of premade patterns to extract common data formats (dates, usernames, words, numbers, ...). You can find other examples [here](https://github.com/hpcugent/logstash-patterns/blob/master/files/grok-patterns) and experiment with the [Grok Debugger](https://grokdebugger.com/).
+
+![](https://i.imgur.com/7Ntq4gl.png)
+
+![](https://i.imgur.com/IemwLaz.png)
+
+---------------
+
+#### Pipelines and rules
+
+[Pipelines](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/rules.html) are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](#extractors). This example shows how to setup a pipeline to extract fields from JSON-formatted log messages sent by [nextcloud](../nextcloud/). Given this example message:
+
+```
+{"reqId":"1iDjNtFdkmJyxQ0q6BKU","level":1,"time":"2023-03-24T17:55:17+00:00","remoteAddr":"192.168.0.24","user":"ncuser","app":"admin_audit","method":"PROPFIND","url":"/remote.php/dav/addressbooks/users/ncuser/contacts/","message":"Login successful: \"ncuser\"","userAgent":"DAVx5/4.3-ose (2023/02/11; dav4jvm; okhttp/4.10.0) Android/10","version":"25.0.5.1","data":{"app":"admin_audit"}}
+```
+
+- Click `System > Pipelines` 
+- Click the `Manage rules` tab
+- Click `Create rule`
+- Enter description: `Extract fields from Nextcloud JSON logs`
+- Enter the rule source:
+```bash
+rule "nextcloud logs processing"
+when
+to_string($message.application_name) == "nextcloud"
+then
+let msg = parse_json(to_string($message.message));
+set_fields(to_map(msg));
+end
+```
+- Click `Update rule & close`
+- Click the `Manage pipelines` tab
+- CLick `Add new pipeline`
+- Enter title: `Field extraction`
+- Enter description: `Extract fields from received messages`
+- Click `Edit connections` and select the `All messages` stream, then click `Update connections`
+- In front of `Stage 0`, click `Edit`
+- In `Stage rules`, select `nextcloud logs processing` and click `Update stage`
+
+Graylog will now create `reqId`, `level`, `time`, `remoteAddr`, `user` `app`, `method`, `url` and `message` fields which you can then use in your [search and filters](#search-and-filter) and dashboards.
+
+![](https://i.imgur.com/fY3pJgh.png)
+
+---------------
+
+### Uninstallation
+
 ```bash
 sudo systemctl stop elasticsearch graylog-server mongod
 sudo apt purge elasticsearch graylog-4.0-repository  graylog-server mongodb-org
