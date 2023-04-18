@@ -156,7 +156,9 @@ The graylog pattern editor provides a set of premade patterns to extract common 
 
 #### Pipelines and rules
 
-[Pipelines](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/rules.html) are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](#extractors). This example shows how to setup a pipeline to extract fields from JSON-formatted log messages sent by [nextcloud](../nextcloud/). Given this example message:
+[Pipelines](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/rules.html) are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](#extractors).
+
+This example shows how to setup a pipeline to extract fields from JSON-formatted log messages sent by [nextcloud](../nextcloud/). Given this example message:
 
 ```
 {"reqId":"1iDjNtFdkmJyxQ0q6BKU","level":1,"time":"2023-03-24T17:55:17+00:00","remoteAddr":"192.168.0.24","user":"ncuser","app":"admin_audit","method":"PROPFIND","url":"/remote.php/dav/addressbooks/users/ncuser/contacts/","message":"Login successful: \"ncuser\"","userAgent":"DAVx5/4.3-ose (2023/02/11; dav4jvm; okhttp/4.10.0) Android/10","version":"25.0.5.1","data":{"app":"admin_audit"}}
@@ -167,6 +169,7 @@ The graylog pattern editor provides a set of premade patterns to extract common 
 - Click `Create rule`
 - Enter description: `Extract fields from Nextcloud JSON logs`
 - Enter the rule source:
+
 ```bash
 rule "nextcloud logs processing"
 when
@@ -176,6 +179,7 @@ let msg = parse_json(to_string($message.message));
 set_fields(to_map(msg));
 end
 ```
+
 - Click `Update rule & close`
 - Click the `Manage pipelines` tab
 - CLick `Add new pipeline`
@@ -185,9 +189,27 @@ end
 - In front of `Stage 0`, click `Edit`
 - In `Stage rules`, select `nextcloud logs processing` and click `Update stage`
 
-Graylog will now create `reqId`, `level`, `time`, `remoteAddr`, `user` `app`, `method`, `url` and `message` fields which you can then use in your [search and filters](#search-and-filter) and dashboards.
+Graylog will now create `reqId`, `level`, `time`, `remoteAddr`, `user` `app`, `method`, `url` and `message` fields which you can then use in your [search queries and filters](#search-and-filter) and dashboards.
 
 ![](https://i.imgur.com/fY3pJgh.png)
+
+Given this example message:
+
+```
+Invoked with append=True groups=['ssh'] name=deploy state=present non_unique=False force=False remove=False create_home=True system=False move_home=False ssh_key_bits=0 ssh_key_type=rsa ssh_key_comment=ansible-generated on home.lambdacore.network update_password=always uid=None group=None comment=None home=None shell=None password=NOT_LOGGING_PARAMETER login_class=None password_expire_max=None password_expire_min=None hidden=None seuser=None skeleton=None generate_ssh_key=None ssh_key_file=None ssh_key_passphrase=NOT_LOGGING_PARAMETER expires=None password_lock=None local=None profile=None authorization=None role=None umask=None
+```
+
+This rule will map each `key=value` pair to a Graylog field (hence create fields named `append`, `groups`, `name`, `state`...):
+
+```bash
+rule "Map Ansible log message fields to Graylog fields"
+when
+    starts_with(to_string($message.application_name), "ansible")
+then
+    set_fields(key_value(to_string($message.message)));
+end
+```
+
 
 ---------------
 
