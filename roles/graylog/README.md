@@ -176,7 +176,7 @@ when
 to_string($message.application_name) == "nextcloud"
 then
 let msg = parse_json(to_string($message.message));
-set_fields(to_map(msg));
+set_fields(to_map(msg), "nextcloud_");
 end
 ```
 
@@ -189,7 +189,7 @@ end
 - In front of `Stage 0`, click `Edit`
 - In `Stage rules`, select `nextcloud logs processing` and click `Update stage`
 
-Graylog will now create `reqId`, `level`, `time`, `remoteAddr`, `user` `app`, `method`, `url` and `message` fields which you can then use in your [search queries and filters](#search-and-filter) and dashboards.
+Graylog will now create `nextcloud_reqId`, `nextcloud_level`, `nextcloud_time`, `nextcloud_remoteAddr`, `nextcloud_user` `nextcloud_app`, `nextcloud_method`, `nextcloud_url` and `nextcloud_message` fields which you can then use in your [search queries and filters](#search-and-filter) and dashboards.
 
 ![](https://i.imgur.com/fY3pJgh.png)
 
@@ -199,14 +199,14 @@ Given this example message:
 Invoked with append=True groups=['ssh'] name=deploy state=present non_unique=False force=False remove=False create_home=True system=False move_home=False ssh_key_bits=0 ssh_key_type=rsa ssh_key_comment=ansible-generated on home.lambdacore.network update_password=always uid=None group=None comment=None home=None shell=None password=NOT_LOGGING_PARAMETER login_class=None password_expire_max=None password_expire_min=None hidden=None seuser=None skeleton=None generate_ssh_key=None ssh_key_file=None ssh_key_passphrase=NOT_LOGGING_PARAMETER expires=None password_lock=None local=None profile=None authorization=None role=None umask=None
 ```
 
-This rule will map each `key=value` pair to a Graylog field (hence create fields named `append`, `groups`, `name`, `state`...):
+This rule will process all log messages from `ansible` modules, and map each `key=value` pair to a Graylog field whose name is prefixed by `ansible_` (hence create fields named `ansible_append`, `ansible_groups`, `ansible_name`, `ansible_state`...):
 
 ```bash
 rule "Map Ansible log message fields to Graylog fields"
 when
     starts_with(to_string($message.application_name), "ansible")
 then
-    set_fields(key_value(to_string($message.message)));
+    set_fields(key_value(to_string($message.message)), "ansible_");
 end
 ```
 
