@@ -77,6 +77,8 @@ TAGS=nextcloud,gitea xsrv deploy infra ex3.CHANGEME.org
 xsrv deploy default '!ex1.CHANGEME.org,!ex7.CHANGEME.org'
 # deploy all hosts in group 'prod' in default project (dry-run/simulation mode)
 xsrv check default prod
+# deploy all hosts whose hostnames begin with srv
+xsrv deploy default srv*
 ```
 
 
