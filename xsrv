@@ -261,6 +261,13 @@ function _xdg_open() {
     xdg-open "$projects_dir/$project_name"
 }
 
+_validate_ip_address() {
+    # validate an IPv4 address
+    ip="$1"
+    echo -n "$ip" | grep -q -P '^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$' || \
+        (echo "[xsrv] ERROR: $ip is not a valid IPv4 address"; exit 1)
+}
+
 function show_defaults() {
     # show all role defaults
     role=${2:-}
@@ -427,6 +434,7 @@ function init_vm() {
         gateway="$(echo "$ip" | cut -d'.' -f1-3).1"
         echo "[xsrv] INFO: --gateway not provided, automatically set to $gateway"
     fi
+    for i in "$ip" "$gateway"; do _validate_ip_address "$i"; done
     if [[ -z "$dumpxml_file" ]]; then
         dumpxml_file="$projects_dir/$name.xml"
         echo "[xsrv] INFO: --dumpxml not provided, automatically set to $projects_dir/$name.xml"
@@ -571,6 +579,7 @@ function init_vm_template() {
         gateway="$(echo "$ip" | cut -d'.' -f1-3).1"
         echo "[xsrv] INFO: --gateway not provided, automatically set to $gateway"
     fi
+    for i in "$ip" "$gateway"; do _validate_ip_address "$i"; done
     if [[ ! -d "$xsrv_clone_dir/.git" ]]; then
         git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
     fi
