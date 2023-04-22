@@ -169,7 +169,7 @@
                 background-color: #D2B58D;
             }
             .gotty :hover{
-                border-color: #58FE00;
+                border-color: #313131;
             }
             .gotty-cb {
                 background-color: #313131;
@@ -183,8 +183,19 @@
             .app-icon {
                 margin-top: 30px;
             }
+            .app-text {
+                margin-top: 30px;
+                flex-direction: column;
+                text-align: left;
+                margin: 0 0 0 0;
+            }
             .app-name {
-                font-size: 1.5em;
+                font-size: 1.2em;
+                margin: 0px;
+            }
+            .app-description {
+                color: #555;
+                margin: 0px;
             }
         </style>
     </head>
@@ -200,7 +211,10 @@
                 <a href="https://{{ ansible_local.nextcloud.fqdn }}">
                     <div class="content">
                         <div class="colorblock nextcloud-cb"><img class="app-icon" src="res/nextcloud.png"></div>
-                        <p class="app-name">Nextcloud</p>
+                        <div class="app-text">
+                            <p class="app-name">Nextcloud</p>
+                            <p class="app-description">Collaboration, file sharing and synchronization</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -210,7 +224,10 @@
                 <a href="https://{{ ansible_local.rocketchat.fqdn }}">
                     <div class="content">
                         <div class="colorblock rocketchat-cb"><img class="app-icon" src="res/rocketchat.png"></div>
-                        <p class="app-name">Rocket.chat</p>
+                        <div class="app-text">
+                            <p class="app-name">Rocket.chat</p>
+                            <p class="app-description">Communication platform</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -220,7 +237,10 @@
                 <a href="https://{{ ansible_local.matrix.element.fqdn }}">
                     <div class="content">
                         <div class="colorblock element-cb"><img class="app-icon" src="res/element.png"></div>
-                        <p class="app-name">Matrix (Element)</p>
+                        <div class="app-text">
+                            <p class="app-name">Matrix (Element)</p>
+                            <p class="app-description">Secure communication platform</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -230,7 +250,10 @@
                 <a href="https://{{ ansible_local.jitsi.fqdn }}">
                     <div class="content">
                         <div class="colorblock jitsi-cb"><img class="app-icon" src="res/jitsi.png"></div>
-                        <p class="app-name">Jitsi</p>
+                        <div class="app-text">
+                           <p class="app-name">Jitsi</p>
+                           <p class="app-description">Video conferencing</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -240,7 +263,10 @@
                 <a href="https://{{ ansible_local.shaarli.fqdn }}">
                     <div class="content">
                         <div class="colorblock shaarli-cb"><img class="app-icon" src="res/shaarli.png"></div>
-                        <p class="app-name">Shaarli</p>
+                        <div class="app-text">
+                            <p class="app-name">Shaarli</p>
+                            <p class="app-description">Bookmarks and link sharing</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -250,7 +276,10 @@
                 <a href="https://{{ ansible_local.tt_rss.fqdn }}">
                     <div class="content">
                         <div class="colorblock tt-rss-cb"><img class="app-icon" src="res/tt-rss.png"></div>
-                        <p class="app-name">Tiny Tiny RSS</p>
+                        <div class="app-text">
+                            <p class="app-name">Tiny Tiny RSS</p>
+                            <p class="app-description">RSS/ATOM feed reader</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -260,7 +289,10 @@
                 <a href="https://{{ ansible_local.rss_bridge.fqdn }}">
                     <div class="content">
                         <div class="colorblock rss-bridge-cb"><img class="app-icon" src="res/rss-bridge.png"></div>
-                        <p class="app-name">RSS-Bridge</p>
+                        <div class="app-text">
+                            <p class="app-name">RSS-Bridge</p>
+                            <p class="app-description">RSS feed for websites missing it</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -270,7 +302,10 @@
                 <a href="https://{{ ansible_local.transmission.fqdn }}">
                     <div class="content">
                         <div class="colorblock transmission-cb"><img class="app-icon" src="res/transmission.png"></div>
-                        <p class="app-name">Transmission</p>
+                        <div class="app-text">
+                            <p class="app-name">Transmission</p>
+                            <p class="app-description">Bittorrent client</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -280,7 +315,10 @@
                 <a href="https://{{ ansible_local.gitea.fqdn }}">
                     <div class="content">
                         <div class="colorblock gitea-cb"><img class="app-icon" src="res/gitea.png"></div>
-                        <p class="app-name">Gitea</p>
+                        <div class="app-text">
+                            <p class="app-name">Gitea</p>
+                            <p class="app-description">Software forge</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -290,7 +328,10 @@
                 <a href="https://{{ ansible_local.jellyfin.fqdn }}">
                     <div class="content">
                         <div class="colorblock jellyfin-cb"><img class="app-icon" src="res/jellyfin.png"></div>
-                        <p class="app-name">Jellyfin</p>
+                        <div class="app-text">
+                            <p class="app-name">Jellyfin</p>
+                            <p class="app-description">Media server</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -300,7 +341,10 @@
                 <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ ansible_local.mumble.port }}">
                     <div class="content">
                         <div class="colorblock mumble-cb"><img class="app-icon" src="res/mumble.png"></div>
-                        <p class="app-name">Mumble</p>
+                        <div class="app-text">
+                            <p class="app-name">Mumble</p>
+                            <p class="app-description">Low-latency VoIP server</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -310,7 +354,10 @@
                 <a class="mail" href="imap://{{ dovecot_fqdn }}:993">
                     <div class="content">
                         <div class="colorblock mail-cb"><img class="app-icon" src="res/mail.png"></div>
-                        <p class="app-name">Mail</p>
+                        <div class="app-text">
+                            <p class="app-name">Mail</p>
+                            <p class="app-description">E-mail (IMAP) server</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -320,7 +367,10 @@
                 <a class="ldap-account-manager" href="https://{{ ansible_local.ldap_account_manager.fqdn }}">
                     <div class="content">
                         <div class="colorblock ldap-account-manager-cb"><img class="app-icon" src="res/ldap-account-manager.png"></div>
-                        <p class="app-name">LDAP Account Manager</p>
+                        <div class="app-text">
+                            <p class="app-name">LDAP Account Manager</p>
+                            <p class="app-description">Users and groups management</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -330,7 +380,10 @@
                 <a class="self-service-password" href="https://{{ ansible_local.self_service_password.fqdn }}">
                     <div class="content">
                         <div class="colorblock self-service-password-cb"><img class="app-icon" src="res/self-service-password.png"></div>
-                        <p class="app-name">Self-Service Password</p>
+                        <div class="app-text">
+                            <p class="app-name">Self-Service Password</p>
+                            <p class="app-description">Reset LDAP passwords</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -340,7 +393,10 @@
                 <a class="netdata" href="https://{{ inventory_hostname }}:{{ ansible_local.netdata.public_port }}/">
                     <div class="content">
                         <div class="colorblock netdata-cb"><img class="app-icon" src="res/netdata.png"></div>
-                        <p class="app-name">Netdata</p>
+                        <div class="app-text">
+                            <p class="app-name">Netdata</p>
+                            <p class="app-description">Realtime monitoring</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -350,7 +406,10 @@
                 <a class="graylog" href="https://{{ ansible_local.graylog.fqdn }}/">
                     <div class="content">
                         <div class="colorblock graylog-cb"><img class="app-icon" src="res/graylog.png"></div>
-                        <p class="app-name">Graylog</p>
+                        <div class="app-text">
+                            <p class="app-name">Graylog</p>
+                            <p class="app-description">Log management and analysis</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -360,7 +419,10 @@
                 <a class="gotty" href="https://{{ ansible_local.gotty.fqdn }}/">
                     <div class="content">
                         <div class="colorblock gotty-cb"><img class="app-icon" src="res/gotty.png"></div>
-                        <p class="app-name">Gotty</p>
+                        <div class="app-text">
+                            <p class="app-name">Gotty</p>
+                            <p class="app-description">In-browser terminal</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -369,7 +431,10 @@
                 <a class="ssh" href="ssh://{{ inventory_hostname }}:{{ ansible_ssh_port|default('22') }}">
                     <div class="content">
                         <div class="colorblock ssh-cb"><img class="app-icon" src="res/ssh.png"></div>
-                        <p class="app-name">SSH</p>
+                        <div class="app-text">
+                            <p class="app-name">SSH</p>
+                            <p class="app-description">Remote administrative access</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -377,7 +442,10 @@
                 <a class="sftp" href="sftp://{{ inventory_hostname }}:{{ ansible_ssh_port|default('22') }}">
                     <div class="content">
                         <div class="colorblock sftp-cb"><img class="app-icon" src="res/sftp.png"></div>
-                        <p class="app-name">SFTP</p>
+                        <div class="app-text">
+                            <p class="app-name">SFTP</p>
+                            <p class="app-description">Secure file transfer</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -386,7 +454,10 @@
                 <a class="ssh" href="smb://{{ inventory_hostname }}">
                     <div class="content">
                         <div class="colorblock samba-cb"><img class="app-icon" src="res/samba.png"></div>
-                        <p class="app-name">Samba</p>
+                        <div class="app-text">
+                            <p class="app-name">Samba</p>
+                            <p class="app-description">Multi-platform file sharing server</p>
+                        </div>
                     </div>
                 </a>
             </div>

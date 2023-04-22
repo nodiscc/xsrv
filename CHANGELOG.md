@@ -14,8 +14,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: [`init-vm/init-vm-template`]((https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
 
 **Changed:**
+- homepage: display descriptions for each applications/services, improve layout
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
-
 
 [Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
 
