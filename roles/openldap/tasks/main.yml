@@ -13,6 +13,7 @@
   import_tasks: populate.yml
   become: yes
   tags: openldap
+  when: openldap_enable_service | bool
 
 - name: include rsnapshot/backup configuration tasks
   import_tasks: backups.yml

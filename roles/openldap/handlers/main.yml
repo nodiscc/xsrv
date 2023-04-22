@@ -4,5 +4,5 @@
     name: slapd
     state: restarted
     enabled: yes
-  when: not ansible_check_mode
+  when: openldap_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"

@@ -30,6 +30,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - readme-gen: allow displaying custom netdata badges for each host ([`readme_gen_netdata_badges`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
+- openldap: allow enabling/disabling the service ([`openldap_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+
 
 **Fixed:**
 - readme-gen: fix syntax error in template (`template error while templating string`)

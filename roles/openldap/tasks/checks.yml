@@ -11,10 +11,11 @@
     - openldap_bind_username is not search("CHANGEME")
     - openldap_bind_password is not search("CHANGEME")
     - openldap_admin_password is not search("CHANGEME")
-    - openldap_log_level == openldap_log_level|int
+    - openldap_log_level == openldap_log_level | int
     - openldap_setup_lam == openldap_setup_lam | bool
     - openldap_setup_ssp == openldap_setup_ssp | bool
     - openldap_firewalld_zones|type_debug == "list"
+    - openldap_enable_service == openldap_enable_service | bool
 
 - name: check that mandatory variables are correctly defined (ldap-account-manager)
   assert:

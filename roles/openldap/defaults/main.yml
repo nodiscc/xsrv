@@ -14,6 +14,8 @@ openldap_admin_password: "CHANGEME"
 # This account will be allowed to to browse the directory/resolve UIDs and GIDs)
 openldap_bind_username: "bind"
 openldap_bind_password: "CHANGEME"
+# yes/no: start/stop the LDAP server, enable/disable it on boot
+openldap_enable_service: yes
 # log level for the openldap server (integer) - https://openldap.org/doc/admin24/slapdconf2.html
 openldap_log_level: 512
 # firewall zones for the LDAP service, if nodiscc.xsrv.common/firewalld role is deployed
