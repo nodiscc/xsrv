@@ -28,6 +28,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+**Added:**
+- readme-gen: allow displaying custom netdata badges for each host ([`readme_gen_netdata_badges`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
+
 **Fixed:**
 - readme-gen: fix syntax error in template (`template error while templating string`)
 

@@ -16,6 +16,7 @@
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['netdata']['ansible_managed'] is defined %}
 - Monitoring (Netdata): https://{{ hostvars[item].ansible_host|default(hostvars[item].inventory_hostname) }}:{{ hostvars[item]['ansible_facts']['ansible_local']['netdata']['public_port'] }}
+- Badges (Netdata): {% for badge in readme_gen_netdata_badges %}![](https://{{ hostvars[item].inventory_hostname }}:{{ hostvars[item]['ansible_facts']['ansible_local']['netdata']['public_port'] }}/api/v1/badge.svg?chart={{ badge.chart }}&alarm={{ badge.alarm }}{{ '&label=' + badge.label | urlencode if badge.label is defined else '' }}){% if not loop.last %} {% endif %}{% endfor +%}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] is defined %}
 - Gitea: https://{{ hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] }}
