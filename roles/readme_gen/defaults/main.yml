@@ -28,5 +28,7 @@ readme_gen_netdata_badges:
   - chart: apt.upgradable
     alarm: apt_upgradable
     label: upgradable packages
+# write GTK bookmarks to access hosts over SFTP in the output README.md (yes/no)
+readme_gen_gtk_bookmarks: no
 # path to the markdown template
 readme_gen_template: "readme_gen.md.j2"

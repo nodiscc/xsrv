@@ -90,3 +90,13 @@ Host {{ hostvars[item].inventory_hostname }}
 
 {% endfor %}
 ```
+
+{% if readme_gen_gtk_bookmarks %}
+## GTK bookmarks/SFTP
+```
+# ~/.config/gtk-3.0/bookmarks
+{% for item in readme_gen_limit %}
+sftp://{{ hostvars[item].ansible_host | default(hostvars[item].inventory_hostname) }}:{{ hostvars[item].ansible_ssh_port|default('22') }}/home/{{ hostvars[item].ansible_user | default('') }} {{ hostvars[item].inventory_hostname }}
+{% endfor %}
+```
+{% endif %}
