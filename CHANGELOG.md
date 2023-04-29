@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - xsrv: [`init-vm/init-vm-template`]((https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
+- readme-gen: display the Mumble server URI for hosts where the mumble role is deployed
 
 **Changed:**
 - homepage: display descriptions for each applications/services, improve layout

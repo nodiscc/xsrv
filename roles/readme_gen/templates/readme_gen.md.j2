@@ -36,6 +36,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['self_service_password']['fqdn'] is defined %}
 - LDAP Self-Service Password: https://{{ hostvars[item]['ansible_facts']['ansible_local']['self_service_password']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['mumble']['ansible_managed'] is defined %}
+- Mumble: <mumble://{{ hostvars[item].inventory_hostname }}:{{ hostvars[item]['ansible_facts']['ansible_local']['mumble']['port'] }}>
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['nextcloud']['fqdn'] is defined %}
 - Nextcloud: https://{{ hostvars[item]['ansible_facts']['ansible_local']['nextcloud']['fqdn'] }}
 {% endif %}
