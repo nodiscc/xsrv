@@ -11,7 +11,7 @@
       - logwatch
       - libdate-manip-perl
       - iputils-ping # tools to test the reachability of network hosts
-      # - spectre-meltdown-checker # Spectre & Meltdown vulnerability/mitigation checker # TODO integrate with lynis
+      # - spectre-meltdown-checker # spectre & meltdown CPU vulnerability checker
       # - iotop # simple top-like I/O monitor
       # - iftop # displays bandwidth usage information on a network interface
       # - inxi # full featured system information script
