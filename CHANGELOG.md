@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
 - gitea: update to [v1.19.2](https://github.com/go-gitea/gitea/releases/tag/v1.19.2)
 - matrix: update element-web to v1.11.30 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30)
+- xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 
 [Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
 
