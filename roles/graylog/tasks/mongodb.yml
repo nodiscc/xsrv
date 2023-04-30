@@ -48,9 +48,11 @@
     - ansible_local.graylog.ansible_managed is defined
     - ansible_local.graylog.mongodb_upgraded_44_50 is not defined
 
-- name: install mongodb-org package
+- name: install mongodb packages
   apt:
-    package: mongodb-org
+    package:
+      - mongodb-org
+      - mongodb-database-tools
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 

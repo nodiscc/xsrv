@@ -1,0 +1,7 @@
+# rsnapshot configuration for graylog backups
+# dump mongodb database
+backup_exec	/usr/bin/mongodump --out=/var/backups/mongodb
+# backup mongodb dumps
+backup	/var/backups/mongodb	localhost/
+# remove temporary dumps
+backup_exec	rm -rf /var/backups/mongodb/*	required

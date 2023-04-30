@@ -29,10 +29,11 @@ _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-ss
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
-     - nodiscc.xsrv.monitoring # (optional) server health and performance monitoring
-     - nodiscc.xsrv.apache # (required in the standard configuration) reverse proxy and SSL/TLS certificates
-     - nodiscc.xsrv.graylog
+    - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
+    - nodiscc.xsrv.monitoring # (optional) server health and performance monitoring
+    - nodiscc.xsrv.backup # (optional) automatic backups
+    - nodiscc.xsrv.apache # (required in the standard configuration) reverse proxy and SSL/TLS certificates
+    - nodiscc.xsrv.graylog
 
 # required variables:
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
@@ -158,6 +159,9 @@ The graylog pattern editor provides a set of premade patterns to extract common 
 
 [Pipelines](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/rules.html) are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](#extractors).
 
+
+##### Nextcloud logs
+
 This example shows how to setup a pipeline to extract fields from JSON-formatted log messages sent by [nextcloud](../nextcloud/). Given this example message:
 
 ```
@@ -193,6 +197,9 @@ Graylog will now create `nextcloud_reqId`, `nextcloud_level`, `nextcloud_time`, 
 
 ![](https://i.imgur.com/fY3pJgh.png)
 
+
+##### Ansible logs
+
 Given this example message:
 
 ```
@@ -213,7 +220,19 @@ end
 
 ---------------
 
-### Uninstallation
+## Backups
+
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_graylog.conf.j2) for the [backup](../backup/README.md) role.
+
+Currently, only graylog configuration is backed up, log data stored in Elasticsearch is not backed up.
+
+You may use [`bsondump`](https://www.mongodb.com/docs/database-tools/bsondump/) to read and manipulate mongodb backups.
+
+<!-- TODO backup restoration procedure -->
+
+---------------
+
+## Uninstallation
 
 ```bash
 sudo systemctl stop elasticsearch graylog-server mongod
@@ -226,16 +245,6 @@ sudo systemctl restart rsyslog
 ```
 
 --------------
-
-## Backups
-
-TODO
-
-<!--
-See the included [rsnapshot configuration](templates/etc_rsnapshot.d_graylog.conf.j2)
-There are no backups of log data. Use `bsondump` from the `mongo-tools` package to manipulate mongodb backups.
--->
-
 
 ## Tags
 
