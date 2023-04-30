@@ -28,7 +28,10 @@
     - apache
     - ssl
     - gitea
-  when: gitea_https_mode == 'selfsigned'
+  when:
+    - gitea_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
@@ -36,6 +39,9 @@
   tags:
     - gitea
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include rsnapshot/backup configuration tasks
   import_tasks: backups.yml

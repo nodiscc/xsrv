@@ -18,7 +18,7 @@ Clients of the wireguard server will be able to route their traffic through it.
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic local backup of private keys
     - nodiscc.xsrv.dnsmasq # DNS resolution for VPN clients
-    - nodiscc.xsrv.wireguard # fast and modern VPN server
+    - nodiscc.xsrv.wireguard
 
 # required variables
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml

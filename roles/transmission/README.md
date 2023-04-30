@@ -16,7 +16,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) system/server monitoriong and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups of download/torrent directory
-    - nodiscc.xsrv.apache # (required) webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.transmission
 
 # required variables

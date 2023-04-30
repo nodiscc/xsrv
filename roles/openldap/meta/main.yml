@@ -22,4 +22,4 @@ dependencies:
   # - nodiscc.xsrv.common # optional
   # - nodiscc.xsrv.monitoring # optional
   # - nodiscc.xsrv.backup # optional
-  # - nodiscc.xsrv.apache # required when openldap_setup_lam or openldap_setup_ssp: yes
+  # - nodiscc.xsrv.apache # required in the standard configuration when openldap_setup_lam or openldap_setup_ssp: yes

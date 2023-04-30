@@ -24,6 +24,9 @@
   tags:
     - transmission
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include netdata configuration tasks
   import_tasks: netdata.yml

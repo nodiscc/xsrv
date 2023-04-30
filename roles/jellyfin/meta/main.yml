@@ -21,6 +21,6 @@ galaxy_info:
     - subtitles
 dependencies:
   - nodiscc.xsrv.handlers
-  # - nodiscc.xsrv.common
-  # - nodiscc.xsrv.monitoring
-  # - nodiscc.xsrv.apache # required
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration

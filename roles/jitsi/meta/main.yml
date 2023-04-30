@@ -20,6 +20,6 @@ galaxy_info:
     - messaging
 dependencies:
   - nodiscc.xsrv.handlers
-  # - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce protection
-  # - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
-  # - nodiscc.xsrv.apache # web server/reverse proxy and SSL/TLS certificates
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration

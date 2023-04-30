@@ -30,8 +30,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall
     - nodiscc.xsrv.monitoring # (optional) system/server monitoriong and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups of uploaded media files
-    - nodiscc.xsrv.postgresql # (required) database engine
-    - nodiscc.xsrv.apache # (required) webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.postgresql # (required in the standard configuration) database engine
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.matrix
 
 # required variables

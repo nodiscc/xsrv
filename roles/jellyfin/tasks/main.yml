@@ -37,7 +37,10 @@
     - apache
     - ssl
     - jellyfin
-  when: jellyfin_https_mode == 'selfsigned'
+  when:
+    - jellyfin_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
@@ -45,6 +48,9 @@
   tags:
     - jellyfin
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include fail2ban configuration tasks
   import_tasks: fail2ban.yml

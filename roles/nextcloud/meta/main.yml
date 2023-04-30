@@ -35,4 +35,4 @@ dependencies:
   # - nodiscc.xsrv.backup # optional
   # - nodiscc.xsrv.monitoring # optional
   # - nodiscc.xsrv.postgresql # optional
-  # - nodiscc.xsrv.apache # required
+  # - nodiscc.xsrv.apache # required in the standard configuration

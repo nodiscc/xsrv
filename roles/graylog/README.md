@@ -31,7 +31,7 @@ _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-ss
   roles:
      - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
      - nodiscc.xsrv.monitoring # (optional) server health and performance monitoring
-     - nodiscc.xsrv.apache # (required) reverse proxy and SSL/TLS certificates
+     - nodiscc.xsrv.apache # (required in the standard configuration) reverse proxy and SSL/TLS certificates
      - nodiscc.xsrv.graylog
 
 # required variables:

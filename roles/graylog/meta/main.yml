@@ -22,4 +22,4 @@ galaxy_info:
 dependencies:
   - nodiscc.xsrv.handlers
   # - nodiscc.xsrv.monitoring # optional
-  # - nodiscc.xsrv.apache # required
+  # - nodiscc.xsrv.apache # required in the standard configuration

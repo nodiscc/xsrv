@@ -1,0 +1,23 @@
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+
+- name: copy php-fpm configuration
+  template:
+    src: etc_php_PHPVERSION_fpm_pool.d_ldap-account-manager.conf.j2
+    dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/ldap-account-manager.conf
+    mode: "0644"
+  notify: restart php-fpm
+
+- name: copy apache2 virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_ldap-account-manager.conf.j2
+    dest: /etc/apache2/sites-available/ldap-account-manager.conf
+    mode: "0644"
+  notify: reload apache
+
+- name: enable apache2 virtualhost
+  command: a2ensite ldap-account-manager
+  args:
+    creates: "/etc/apache2/sites-enabled/ldap-account-manager.conf"
+  notify: restart apache

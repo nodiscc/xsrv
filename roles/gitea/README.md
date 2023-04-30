@@ -30,8 +30,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring, log aggregation
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (required) webserver/reverse proxy, SSL certificates
-    - nodiscc.xsrv.postgresql # (required if gitea_db_host: /run/postgresql/) database engine
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.postgresql # (required in the standard configuration) database engine
     - nodiscc.xsrv.gitea
 
 # required variables:

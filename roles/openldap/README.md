@@ -22,7 +22,7 @@ This role will install and configure a [LDAP](https://en.wikipedia.org/wiki/Ligh
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce protection
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (required if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (required in the standard configuration if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.openldap
 
 # required variables:

@@ -21,6 +21,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: update to [v1.19.2](https://github.com/go-gitea/gitea/releases/tag/v1.19.2)
 - matrix: update element-web to v1.11.30 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30)
 - xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- cleanup: improve separation of tasks/files
+- update documentation
+
+**Fixed:**
+- make roles less dependent on the apache role (only run apache configuration tasks if the [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) role is deployed). apache is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 
 [Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
 
