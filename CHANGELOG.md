@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
+- nextcloud: add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps
 - readme-gen: display the Mumble server URI for hosts where the mumble role is deployed
 - readme-gen: allow writing GTK bookmarks to access hosts over SFTP in the output README.md ([`readme_gen_gtk_bookmarks: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
 
