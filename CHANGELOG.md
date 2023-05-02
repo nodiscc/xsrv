@@ -10,24 +10,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
-- jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - graylog: setup automatic local backups of graylog configuration when the `nodiscc.xsrv.backup` role is deployed
-- nextcloud: add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps
-- readme-gen: display the Mumble server URI for hosts where the mumble role is deployed
-- readme-gen: allow writing GTK bookmarks to access hosts over SFTP in the output README.md ([`readme_gen_gtk_bookmarks: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
+- nextcloud add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps ([`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
+- readme-gen: show `mumble://` server URIs/links for hosts where the `nodiscc.xsrv.mumble` role is deployed
+- readme-gen: allow adding SFTP bookmarks for GTK-based file managers to the output markdown file ([`readme_gen_gtk_bookmarks: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
 
 **Changed:**
 - homepage: display descriptions for each applications/services, improve layout
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
 - gitea: update to [v1.19.2](https://github.com/go-gitea/gitea/releases/tag/v1.19.2)
-- matrix: update element-web to v1.11.30 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30)
+- matrix: update element-web to [v1.11.30](https://github.com/vector-im/element-web/releases/tag/v1.11.30)
 - xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - cleanup: improve separation of tasks/files
 - update documentation
 
 **Fixed:**
-- make roles less dependent on the apache role (only run apache configuration tasks if the [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) role is deployed). apache is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
+- decouple web aplication roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 
 [Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
 
@@ -61,7 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring/netdata: if you have configured custom [`netdata_port_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml), ensure the `ports:` parameter is a list, even if it only contains a single port (e.g. `ports: [64738]`)
 
 **Added:**
-- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
+- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades) ([`setup_netdata_apt: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
 - homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss: allow disabling individual web applications (`*_enable_service: yes/no`), redirect to the maintenance page when disabled
 - dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
