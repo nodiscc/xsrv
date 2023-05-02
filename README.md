@@ -63,7 +63,7 @@ This project provides:
 [![](https://i.imgur.com/6Im61B0.png)](roles/mumble)
 [![](https://i.imgur.com/REzcZVh.png)](roles/openldap)
 [![](https://i.imgur.com/udEAnKA.png)](roles/matrix)
-[![](https://i.imgur.com/qR3vIN4.png)](roles/homepage)
+[![](https://i.imgur.com/Vvdj3Zu.png)](roles/homepage)
 [![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
 [![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
 [![](https://i.imgur.com/g0jUMXE.jpg)](roles/jitsi)

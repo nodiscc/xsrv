@@ -3,7 +3,7 @@
 This role will setup a simple webserver homepage/dashboard:
 - list and shortcuts to services installed on the host (if managed by xsrv [roles](https://xsrv.readthedocs.io/en/latest/#roles))
 
-[![](https://i.imgur.com/xAWRADt.png)](https://i.imgur.com/xAWRADt.png)
+[![](https://i.imgur.com/oA8WG4e.png)](https://i.imgur.com/oA8WG4e.png)
 
 
 ## Requirements/dependencies/example playbook
