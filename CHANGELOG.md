@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - graylog: setup automatic local backups of graylog configuration when the `nodiscc.xsrv.backup` role is deployed
 - nextcloud add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps ([`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 - readme-gen: show `mumble://` server URIs/links for hosts where the `nodiscc.xsrv.mumble` role is deployed
+- readme-gen: display a list of storage devices with size, for each host
 - readme-gen: allow adding SFTP bookmarks for GTK-based file managers to the output markdown file ([`readme_gen_gtk_bookmarks: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
 

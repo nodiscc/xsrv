@@ -8,6 +8,7 @@
 - OS/Virtualization: {{ hostvars[item]['ansible_facts']['lsb']['description'] | default('?') }} ({{ hostvars[item]['ansible_facts']['virtualization_type'] | default('?') }} {{ hostvars[item]['ansible_facts']['virtualization_role'] | default('?') }})
 - CPU: {{ hostvars[item]['ansible_facts']['processor'][2] | default('?') }} ({{ hostvars[item]['ansible_facts']['processor_vcpus'] | default('?')}} VCPUs)
 - Memory: {{ hostvars[item]['ansible_facts']['memtotal_mb'] | default('?') }}MB
+- Storage: {% for i in hostvars[item]['ansible_facts']['devices'] | default({}) | dict2items %}{% if i.value.vendor %}`{{ i.key | default('') }}: {{ i.value.size | default('') }}`{{ ', ' if not loop.last }}{% endif %}{% endfor +%}
 - SSH: `ssh -p {{ hostvars[item].ansible_ssh_port|default('22') }} {{ hostvars[item].ansible_user | default('') }}@{{ hostvars[item].inventory_hostname }}` / `xsrv shell {{ xsrv_project_name|default('default') }} {{ hostvars[item].inventory_hostname }}`
 - SFTP: `sftp://{{ hostvars[item].ansible_user | default('?') }}@{{ hostvars[item].inventory_hostname }}:{{ hostvars[item].ansible_ssh_port|default('22') }}`
 - Logs: `xsrv logs {{ xsrv_project_name|default('default') }} {{ hostvars[item].inventory_hostname }}`
