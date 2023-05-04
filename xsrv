@@ -25,7 +25,6 @@ deploy [project] [host|group]       deploy the main playbook (apply configuratio
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
-ls                                  list files in the projects directory (accepts a path)
 o|open [project]                    open the project directory in the default file manager
 readme-gen [project]                generate a markdown inventory in the project's README.md
 show-defaults [project] [role]      show all variables and their default values
@@ -248,12 +247,6 @@ function fetch_backups() {
       --progress --fake-super --rsync-path='/usr/bin/sudo /usr/bin/rsync' \
       "$ssh_user@$host_name:/var/backups/rsnapshot/daily.0/" \
       "$projects_dir/$project_name/$local_backups_dir/daily.0.$backup_date"
-}
-
-function _ls() {
-    # list files in the projects directory
-    path=${1:-}
-    ls "$projects_dir/$path"
 }
 
 function _xdg_open() {
@@ -754,6 +747,8 @@ function check_user_in_libvirt_groups() {
 ########## MAIN ##########
 
 function _main() {
+    # main loop and command-line wrapper
+    # MAINT: when the list of commands is updated, the help text above, docs/usage.md and xsrv-completion.sh must also be updated
     echo "$ascii_banner"
     if [[ -z "$command" ]]; then echo "[xsrv] ERROR: no command provided"; echo "$usage"; exit 1; fi
     case "$command" in
@@ -771,7 +766,6 @@ function _main() {
         "edit-vault") init_venv; shift; edit_vault ;;
         "shell"|"ssh") init_venv; shift; run_shell ;;
         "logs") init_venv; shift; ssh_args="bash -c 'if [[ -r /var/log/syslog ]]; then lnav /var/log/syslog; else sudo lnav /var/log/syslog; fi'"; run_shell ;;
-        "ls") shift; _ls "$@" ;;
         "o"|"open") shift; _xdg_open "$@" ;;
         "help") echo "$usage" ;;
         "help-tags") init_venv; shift; help_tags ;;

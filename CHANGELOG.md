@@ -19,6 +19,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - readme-gen: allow adding SFTP bookmarks for GTK-based file managers to the output markdown file ([`readme_gen_gtk_bookmarks: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
 
+**Removed:**
+- xsrv: remove `ls` command (use bash completion instead, or manually `cd` to your project directory)
+
 **Changed:**
 - homepage: display descriptions for each applications/services, improve layout
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)

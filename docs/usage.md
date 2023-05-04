@@ -34,7 +34,6 @@ deploy [project] [host|group]       deploy the main playbook (apply configuratio
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
-ls                                  list files in the projects directory (accepts a path)
 o|open [project]                    open the project directory in the default file manager
 readme-gen [project]                generate a markdown inventory in the project's README.md
 show-defaults [project] [role]      show all variables and their default values

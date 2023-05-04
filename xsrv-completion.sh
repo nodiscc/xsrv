@@ -10,7 +10,7 @@ _xsrv_completion() {
         COMPREPLY=($(compgen -W "edit-inventory edit-playbook edit-requirements edit-cfg edit-host edit-vault edit-group edit-group-vault init-host init-project check deploy fetch-backups shell logs ls open show-defaults upgrade self-upgrade init-vm-template init-vm readme-gen help help-tags" "$cur"))
     elif [[ "$COMP_CWORD" == "2" ]]; then
         case "$prev" in
-            edit-*|"init-host"|"check"|"deploy"|"fetch-backups"|"shell"|"logs"|"ls"|"open"|"show-defaults"|"upgrade"|"readme-gen"|"help-tags")
+            edit-*|"init-host"|"check"|"deploy"|"fetch-backups"|"shell"|"logs"|"open"|"show-defaults"|"upgrade"|"readme-gen"|"help-tags")
                 # only works with GNU find
                 # shellcheck disable=SC1117
                 dirs=$(find -L  ~/playbooks/ -maxdepth 1 -mindepth 1 -type d -printf "%f\n")
