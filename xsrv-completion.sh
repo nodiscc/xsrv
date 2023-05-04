@@ -12,6 +12,7 @@ _xsrv_completion() {
         case "$prev" in
             edit-*|"init-host"|"check"|"deploy"|"fetch-backups"|"shell"|"logs"|"ls"|"open"|"show-defaults"|"upgrade"|"readme-gen"|"help-tags")
                 # only works with GNU find
+                # shellcheck disable=SC1117
                 dirs=$(find -L  ~/playbooks/ -maxdepth 1 -mindepth 1 -type d -printf "%f\n")
                 # works with coreutils find but calls an external executable
                 #dirs=$(find -L  ~/playbooks/ -maxdepth 1 -mindepth 1 -type d -exec basename '{}' \;)
@@ -22,14 +23,17 @@ _xsrv_completion() {
         local command=${COMP_WORDS[COMP_CWORD-2]}
         case "$command" in
             "edit-host"|"edit-vault"|"fetch-backups"|"shell"|"logs")
+                # shellcheck disable=SC1117
                 dirs=$(find -L  ~/playbooks/"$prev"/host_vars -maxdepth 1 -mindepth 1 -type d -printf "%f\n");
                 # shellcheck disable=SC2207
                 COMPREPLY=($(compgen -W "$dirs" "$cur"));;
             "edit-group"|"edit-group-vault")
+                # shellcheck disable=SC1117
                 dirs=$(find -L  ~/playbooks/"$prev"/group_vars -maxdepth 1 -mindepth 1 -type d -printf "%f\n");
                 # shellcheck disable=SC2207
                 COMPREPLY=($(compgen -W "$dirs" "$cur"));;
             "show-defaults")
+                # shellcheck disable=SC1117
                 dirs=$(find -L  ~/playbooks/"$prev"/ansible_collections/*/*/roles ~/playbooks/"$prev"/roles -maxdepth 1 -mindepth 1 -type d -printf "%f\n" 2>/dev/null);
                 # shellcheck disable=SC2207
                 COMPREPLY=($(compgen -W "$dirs" "$cur"));;
