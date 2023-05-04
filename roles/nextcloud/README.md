@@ -152,7 +152,7 @@ Changing the database password is not supported by the role at this time. To cha
   - click `Detect port`
   - `Server > User DN: cn=bind,ou=system,dc=CHANGEME,dc=org` the DN for your unprivilegied/bind LDAP user
   - `Server > Password:` the password for your bind LDAP user
-  - `Server > Base DN: dc=CHANGEME,dc=org` the base DN for the LDAP directory (or click `Detect base DN`)
+  - `Server > Base DN: ou=users,dc=CHANGEME,dc=org` the base DN for the LDAP directory (or click `Detect base DN`)
   - click `Test base DN`
   - `Users > Object classes: inetOrgPerson` if using OpenLDAP
   - `Users > Groups:` (your LDAP server must support the memberOf overlay)
