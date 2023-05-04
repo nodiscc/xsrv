@@ -32,6 +32,11 @@ _xsrv_completion() {
                 dirs=$(find -L  ~/playbooks/"$prev"/group_vars -maxdepth 1 -mindepth 1 -type d -printf "%f\n");
                 # shellcheck disable=SC2207
                 COMPREPLY=($(compgen -W "$dirs" "$cur"));;
+            "deploy"|"check")
+                # shellcheck disable=SC1117
+                dirs=$(find -L  ~/playbooks/"$prev"/host_vars ~/playbooks/"$prev"/group_vars -maxdepth 1 -mindepth 1 -type d -printf "%f\n");
+                # shellcheck disable=SC2207
+                COMPREPLY=($(compgen -W "$dirs" "$cur"));;
             "show-defaults")
                 # shellcheck disable=SC1117
                 dirs=$(find -L  ~/playbooks/"$prev"/ansible_collections/*/*/roles ~/playbooks/"$prev"/roles -maxdepth 1 -mindepth 1 -type d -printf "%f\n" 2>/dev/null);
