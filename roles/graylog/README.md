@@ -118,7 +118,9 @@ Setup [authentication and roles](https://go2docs.graylog.org/5-0/setting_up_gray
 
 #### Extractors
 
-Add **[Extractors](https://archivedocs.graylog.org/en/latest/pages/extractors.html)** to the input to build meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages (using regex or _Grok patterns_).
+Extractors are deprecated and [Pipelines and rules](#pipelines-and-rules) are now the preferred method to extract Graylog fields from unstructured log data.
+
+<details>
 
 - Go to the main `Search` page and confirm log messages are being ingested (click the `> Not updating` button to display new messages as they arrive)
 - Select a message from which you wish to extract data/fields
@@ -149,15 +151,13 @@ The following Grok expression will generate new fields `action`, `in_interface`,
 
 The graylog pattern editor provides a set of premade patterns to extract common data formats (dates, usernames, words, numbers, ...). You can find other examples [here](https://github.com/hpcugent/logstash-patterns/blob/master/files/grok-patterns) and experiment with the [Grok Debugger](https://grokdebugger.com/).
 
-![](https://i.imgur.com/7Ntq4gl.png)
-
-![](https://i.imgur.com/IemwLaz.png)
+</details>
 
 ---------------
 
 #### Pipelines and rules
 
-[Pipelines](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/rules.html) are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](#extractors).
+[Pipelines](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/rules.html) are used to extract meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages. They are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](https://archivedocs.graylog.org/en/latest/pages/extractors.html).
 
 
 ##### Nextcloud logs
@@ -168,7 +168,7 @@ This example shows how to setup a pipeline to extract fields from JSON-formatted
 {"reqId":"1iDjNtFdkmJyxQ0q6BKU","level":1,"time":"2023-03-24T17:55:17+00:00","remoteAddr":"192.168.0.24","user":"ncuser","app":"admin_audit","method":"PROPFIND","url":"/remote.php/dav/addressbooks/users/ncuser/contacts/","message":"Login successful: \"ncuser\"","userAgent":"DAVx5/4.3-ose (2023/02/11; dav4jvm; okhttp/4.10.0) Android/10","version":"25.0.5.1","data":{"app":"admin_audit"}}
 ```
 
-- Click `System > Pipelines` 
+- Click `System > Pipelines`
 - Click the `Manage rules` tab
 - Click `Create rule`
 - Enter description: `Extract fields from Nextcloud JSON logs`
@@ -216,6 +216,56 @@ then
     set_fields(key_value(to_string($message.message)), "ansible_");
 end
 ```
+
+##### Apache access logs
+
+Given this example message:
+
+```
+cloud.example.org:443 192.168.1.20 - - [08/May/2023:13:22:38 +0200] "PROPFIND /remote.php/dav/files/user/ HTTP/1.1" 207 3463 "-" "Mozilla/5.0 (Linux) mirall/3.1.1-2+deb11u1 (Nextcloud)"
+```
+
+This rule will process apache access log messages and extract its components as Graylog fields (`bytes`, `clientip`, `httpversion`, `ident`, `referrer`, `request`, `response`, `verb`...):
+
+
+```bash
+rule "Extract apache access log fields"
+when
+  $message.application_name == "apache-access"
+then
+  let fields = grok(pattern: "%{COMBINEDAPACHELOG}", value: to_string($message.message), only_named_captures: true);
+  set_fields(fields);
+end
+```
+
+##### Firewalld logs
+
+Given this example message:
+
+```
+[20731.854936] FINAL_REJECT: IN=ens3 OUT= MAC= SRC=10.0.10.101 DST=239.255.255.250 LEN=174 TOS=0x00 PREC=0x00 TTL=4 ID=63089 DF PROTO=UDP SPT=35084 DPT=1900 LEN=154
+```
+
+The following rule will set values for the fields `action`, `in_interface`, `source_ip`, `destination_ip`, `packet_length`, `ttl`, `connection_id`, `protocol`, `source_port`, `destination_port` which can be used in your queries and custom widgets/dashboards:
+
+```bash
+rule "Extract firewalld message fields"
+when
+  $message.application_name == "kernel" AND contains(to_string($message.message), "PROTO")
+then
+  let fields = grok(
+    pattern: "\\[%{SPACE}?%{INT:UNWANTED}.%{INT:UNWANTED}\\] %{WORD:action}: IN=%{WORD:in_interface} OUT=%{WORD:out_interface}? MAC=%{NOTSPACE:mac_address}? SRC=%{IPV4:source_ip} DST=%{IPV4:destination_ip} LEN=%{INT:packet_length} TOS=%{BASE16NUM:UNWANTED} PREC=%{BASE16NUM:UNWANTED} TTL=%{INT:ttl} ID=%{INT:connection_id} (DF )?PROTO=%{WORD:protocol} SPT=%{INT:source_port} DPT=%{INT:destination_port} (WINDOW=%{INT:window_size} )?(RES=0x00 )?(SYN )?(URGP=0 )?(LEN=%{INT:packet_length})?",
+    value: to_string($message.message)
+    );
+  set_fields(fields);
+  set_field("level", 5); // lower the severity to 5/INFO
+  set_field("label", "firewalld"); // add a custom label to this message
+end
+```
+
+![](https://i.imgur.com/7Ntq4gl.png)
+
+![](https://i.imgur.com/IemwLaz.png)
 
 
 ---------------
