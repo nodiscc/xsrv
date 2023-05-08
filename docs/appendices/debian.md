@@ -43,7 +43,7 @@ The template will be created by downloading an [official Debian installer image]
 
 ```bash
 $ xsrv init-vm-template --help
-USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file /home/live/.local/share/xsrv/git/docs/preseed.cfg]
+USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $HOME/.local/share/xsrv/git/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
         --name          name of the VM/template to create (default debian11-base)
@@ -59,7 +59,7 @@ USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway
         --vcpus         VM vCPUs (default 2)
         --disk-size     size of the disk image to create, in GB (default 20)
         --network       name of the libvirt network to attach the VM to (default default)
-        --preseed-file  path to the preseed/preconfiguration file (default /home/live/.local/share/xsrv/git/docs/preseed.cfg)
+        --preseed-file  path to the preseed/preconfiguration file (default $HOME/.local/share/xsrv/git/docs/preseed.cfg)
 
         
 
@@ -91,7 +91,7 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip IP_ADDRESS
         --disk-path     path to the qcow2 disk image to create (default: /var/lib/libvirt/images/VM_NAME.qcow2)
         --memory        VM memory with M or G suffix (default 1G)
         --vcpus         number of vCPUs (default: same value as the template)
-        --dumpxml       write VM XML definition to this file (default /home/live/playbooks/VM_NAME.xml)
+        --dumpxml       write VM XML definition to this file (default $HOME/playbooks/VM_NAME.xml)
         
 
 ```
