@@ -36,7 +36,7 @@ Access the homepage in a [web browser](https://www.mozilla.org/firefox/) at the 
 
 ### Adding custom links
 
-You can add custom links using the `homepage_custom_links` variable (list). For example:
+You can add custom links using the [`homepage_custom_links`](defaults/main.yml) variable/list. For example:
 
 ```yaml
 $ xsrv edit-host default my.example.org
@@ -87,6 +87,15 @@ $ cat roles/homepage-extra-icons/tasks/main.yml
   tags:
     - homepage
     - homepage-extra-icons
+```
+
+```yaml
+$ xsrv edit-playbook
+- hosts: my.example.org
+  roles:
+    - nodiscc.xsrv.homepage
+    - homepage-extra-icons
+
 ```
 
 Icons must have a `.png` extension, and should have dimensions of 16x16px for a consistent appearance.
