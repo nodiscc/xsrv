@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
+- (optional) download and install the tab/auto-completion script:
+
+```bash
+wget https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv-completion.sh
+sudo cp xsrv-completion.sh /etc/bash_completion.d/
+```
 
 **Added:**
 - xsrv: add (optional) bash completion script ([installation](https://xsrv.readthedocs.io/en/latest/installation/controller-preparation.html))
