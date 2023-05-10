@@ -26,7 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - homepage: display descriptions for each applications/services, improve layout
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
 - gitea: update to v1.19.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.19.3)
-- matrix: update element-web to [v1.11.30](https://github.com/vector-im/element-web/releases/tag/v1.11.30)
+- matrix: update element-web to v1.11.31 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.31)
 - xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - cleanup: improve separation of tasks/files
 - update documentation
