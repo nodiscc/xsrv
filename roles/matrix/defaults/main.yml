@@ -29,6 +29,11 @@ matrix_firewalld_zones:
   - zone: public
     state: disabled
 
+# enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
+matrix_synapse_admin_enable_service: yes
+# synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
+matrix_synapse_admin_version: "0.8.7"
+
 # fully qualified domain name of the element application instance
 matrix_element_fqdn: "chat.CHANGEME.org"
 # mode for element video rooms (jitsi/element_call)

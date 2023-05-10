@@ -1,6 +1,7 @@
 # @tag matrix - setup matrix chat server and web client
 # @tag synapse - setup synapse (matrix) chat server
 # @tag element - setup element matrix web chat client
+# @tag synapse-admin - setup synapse-admin matrix administration web interface
 
 galaxy_info:
   role_name: matrix

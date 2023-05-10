@@ -5,6 +5,7 @@
     - synapse
     - element
     - checks
+    - synapse-admin
 
 - name: include postgresql configuration tasks
   import_tasks: postgresql.yml
@@ -26,6 +27,13 @@
   tags:
     - matrix
     - element
+
+- name: include synapse-admin setup tasks
+  import_tasks: synapse-admin.yml
+  become: yes
+  tags:
+    - matrix
+    - synapse-admin
 
 # - name: include fail2ban configuration tasks
 #   import_tasks: fail2ban.yml
@@ -69,6 +77,7 @@
     - synapse
     - element
     - apache
+    - synapse-admin
   when:
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
@@ -104,6 +113,7 @@
     - synapse
     - monitoring
     - netdata
+    - synapse-admin
   when:
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
@@ -115,6 +125,7 @@
     - matrix
     - synapse
     - element
+    - synapse-admin
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

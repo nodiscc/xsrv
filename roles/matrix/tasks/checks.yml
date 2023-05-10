@@ -23,3 +23,5 @@
     - matrix_element_video_rooms_mode in ['jitsi', 'element_call']
     - matrix_element_call_domain is string
     - matrix_element_jitsi_preferred_domain is string
+    - matrix_synapse_admin_enable_service == matrix_synapse_admin_enable_service | bool
+    - matrix_synapse_admin_version is string

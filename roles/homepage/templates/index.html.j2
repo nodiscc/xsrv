@@ -138,6 +138,12 @@
             .self-service-password-cb {
                 background-color: #FF9A2C;
             }
+            .synapse-admin :hover{
+                border-color: #2196F3;
+            }
+            .synapse-admin-cb {
+                background-color: #2196F3;
+            }
             .netdata :hover{
                 border-color: #00FF00;
             }
@@ -389,6 +395,19 @@
                         <div class="app-text">
                             <p class="app-name">Self-Service Password</p>
                             <p class="app-description">Reset LDAP passwords</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.matrix.synapse.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 synapse-admin">
+                <a href="https://{{ ansible_local.matrix.synapse.fqdn }}">
+                    <div class="content">
+                        <div class="colorblock synapse-admin-cb"><img class="app-icon" src="res/synapse-admin.png"></div>
+                        <div class="app-text">
+                            <p class="app-name">Matrix (synapse-admin)</p>
+                            <p class="app-description">Matrix user/room administration interface</p>
                         </div>
                     </div>
                 </a>

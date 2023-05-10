@@ -1,0 +1,83 @@
+### CHECK INSTALLATION STATUS ###
+
+- name: check if synapse-admin installation directory exists
+  stat:
+    path: "/var/www/{{ matrix_synapse_fqdn }}"
+  register: synapse_admin_dir
+
+- name: abort on unsupported conditions
+  fail:
+    msg: "ERROR: unsupported conditions: synapse_admin_dir.stat.exists: {{ synapse_admin_dir.stat.exists }}, but ansible_local.matrix.synapse_admin.installed.version says otherwise" # noqa 204
+  when: '((ansible_local.matrix.synapse_admin.installed.version is defined) and (not synapse_admin_dir.stat.exists)) or
+         ((ansible_local.matrix.synapse_admin.installed.version is undefined) and (synapse_admin_dir.stat.exists))'
+
+- name: check if initial installation should be performed
+  set_fact:
+    synapse_admin_action: initial
+  when:
+    - ansible_local.matrix.synapse_admin.installed.version is undefined
+    - not synapse_admin_dir.stat.exists
+
+- name: check if upgrade should be performed
+  set_fact:
+    synapse_admin_action: upgrade
+  when:
+    - ansible_local.matrix.synapse_admin.installed.version is defined
+    - ansible_local.matrix.synapse_admin.installed.version < matrix_synapse_admin_version
+    - synapse_admin_dir.stat.exists
+
+- name: check if no upgrade or initial installation should be performed
+  set_fact:
+    synapse_admin_action: nothing
+  when:
+    - ansible_local.matrix.synapse_admin.installed.version is defined
+    - ansible_local.matrix.synapse_admin.installed.version == matrix_synapse_admin_version
+
+### SYNAPSE-ADMIN INSTALLATION/UPGRADE ###
+
+- name: download synapse-admin zip
+  get_url:
+    url: "https://github.com/Awesome-Technologies/synapse-admin/releases/download/{{ matrix_synapse_admin_version }}/synapse-admin-{{ matrix_synapse_admin_version }}-dirty.tar.gz"
+    dest: "/root/synapse-admin-{{ matrix_synapse_admin_version }}-dirty.tar.gz"
+    owner: root
+    group: root
+    mode: "0640"
+  when: (synapse_admin_action == 'initial') or (synapse_admin_action == 'upgrade')
+
+- name: remove synapse-admin zip extraction directory
+  file:
+    path: /root/synapse-admin-unpack
+    state: absent
+  when: synapse_admin_action == 'upgrade'
+
+- name: create synapse-admin zip extraction directory
+  file:
+    path: /root/synapse-admin-unpack
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+  when: (synapse_admin_action == 'initial') or (synapse_admin_action == 'upgrade')
+
+- name: extract synapse-admin zip
+  unarchive:
+    src: "/root/synapse-admin-{{ matrix_synapse_admin_version }}-dirty.tar.gz"
+    dest: "/root/synapse-admin-unpack"
+    remote_src: yes
+    owner: root
+    group: root
+    mode: u=rwX,g=rwX,o=rX
+  no_log: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (synapse_admin_action == 'initial') or (synapse_admin_action == 'upgrade')
+
+- name: remove old synapse-admin installation
+  file:
+    state: absent
+    path: "/var/www/{{ matrix_synapse_fqdn }}"
+  when: synapse_admin_action == 'upgrade'
+
+- name: move synapse-admin extraction directory to install directory
+  command: "mv /root/synapse-admin-unpack/synapse-admin-{{ matrix_synapse_admin_version }}-dirty /var/www/{{ matrix_synapse_fqdn }}"
+  changed_when: yes
+  when: (synapse_admin_action == 'initial') or (synapse_admin_action == 'upgrade')

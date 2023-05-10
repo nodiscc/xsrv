@@ -16,6 +16,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 ```
 
 **Added:**
+- matrix: add [synapse-admin](https://github.com/Awesome-Technologies/synapse-admin) user/room administration web interface
 - xsrv: add (optional) bash completion script ([installation](https://xsrv.readthedocs.io/en/latest/installation/controller-preparation.html))
 - jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - homepage: allow adding custom links to the homepage ([`homepage_custom_links`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
