@@ -8,3 +8,15 @@
     - homepage_title is not search("CHANGEME")
     - homepage_https_mode in ['selfsigned', 'letsencrypt']
     - homepage_enable_service == homepage_enable_service | bool
+    - homepage_custom_links | type_debug == "list"
+
+- name: check that variables are correctly defined (homepage_custom_links)
+  assert:
+    quiet: yes
+    that:
+      - item.url is string
+      - item.title is string
+      - (item.description is not defined) or (item.description is string)
+      - (item.icon is not defined) or (item.icon is string)
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"
+  with_items: "{{ homepage_custom_links }}"

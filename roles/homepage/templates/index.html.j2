@@ -174,6 +174,12 @@
             .gotty-cb {
                 background-color: #313131;
             }
+            .customlink :hover{
+                border-color: #FAFAFA;
+            }
+            .customlink-cb {
+                background-color: #FAFAFA;
+            }
             .colorblock {
                 height: 80px;
                 margin-right: 10px;
@@ -337,8 +343,8 @@
             </div>
 {% endif %}
 {% if ansible_local.mumble.ansible_managed is defined %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="mumble" href="mumble://{{ inventory_hostname }}:{{ ansible_local.mumble.port }}">
+            <div class="col-1-3 mobile-col-1-1 mumble">
+                <a href="mumble://{{ inventory_hostname }}:{{ ansible_local.mumble.port }}">
                     <div class="content">
                         <div class="colorblock mumble-cb"><img class="app-icon" src="res/mumble.png"></div>
                         <div class="app-text">
@@ -350,8 +356,8 @@
             </div>
 {% endif %}
 {% if ansible_local.dovecot.ansible_managed is defined %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="mail" href="imap://{{ dovecot_fqdn }}:993">
+            <div class="col-1-3 mobile-col-1-1 mail">
+                <a href="imap://{{ dovecot_fqdn }}:993">
                     <div class="content">
                         <div class="colorblock mail-cb"><img class="app-icon" src="res/mail.png"></div>
                         <div class="app-text">
@@ -363,8 +369,8 @@
             </div>
 {% endif %}
 {% if ansible_local.ldap_account_manager.fqdn is defined %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="ldap-account-manager" href="https://{{ ansible_local.ldap_account_manager.fqdn }}">
+            <div class="col-1-3 mobile-col-1-1 ldap-account-manager">
+                <a href="https://{{ ansible_local.ldap_account_manager.fqdn }}">
                     <div class="content">
                         <div class="colorblock ldap-account-manager-cb"><img class="app-icon" src="res/ldap-account-manager.png"></div>
                         <div class="app-text">
@@ -376,8 +382,8 @@
             </div>
 {% endif %}
 {% if ansible_local.self_service_password.fqdn is defined %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="self-service-password" href="https://{{ ansible_local.self_service_password.fqdn }}">
+            <div class="col-1-3 mobile-col-1-1 self-service-password">
+                <a href="https://{{ ansible_local.self_service_password.fqdn }}">
                     <div class="content">
                         <div class="colorblock self-service-password-cb"><img class="app-icon" src="res/self-service-password.png"></div>
                         <div class="app-text">
@@ -389,8 +395,8 @@
             </div>
 {% endif %}
 {% if ansible_local.netdata.ansible_managed is defined %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="netdata" href="https://{{ inventory_hostname }}:{{ ansible_local.netdata.public_port }}/">
+            <div class="col-1-3 mobile-col-1-1 netdata">
+                <a href="https://{{ inventory_hostname }}:{{ ansible_local.netdata.public_port }}/">
                     <div class="content">
                         <div class="colorblock netdata-cb"><img class="app-icon" src="res/netdata.png"></div>
                         <div class="app-text">
@@ -402,8 +408,8 @@
             </div>
 {% endif %}
 {% if ansible_local.graylog.fqdn is defined %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="graylog" href="https://{{ ansible_local.graylog.fqdn }}/">
+            <div class="col-1-3 mobile-col-1-1 graylog">
+                <a href="https://{{ ansible_local.graylog.fqdn }}/">
                     <div class="content">
                         <div class="colorblock graylog-cb"><img class="app-icon" src="res/graylog.png"></div>
                         <div class="app-text">
@@ -415,8 +421,8 @@
             </div>
 {% endif %}
 {% if ansible_local.gotty.fqdn is defined %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="gotty" href="https://{{ ansible_local.gotty.fqdn }}/">
+            <div class="col-1-3 mobile-col-1-1 gotty">
+                <a href="https://{{ ansible_local.gotty.fqdn }}/">
                     <div class="content">
                         <div class="colorblock gotty-cb"><img class="app-icon" src="res/gotty.png"></div>
                         <div class="app-text">
@@ -427,8 +433,8 @@
                 </a>
             </div>
 {% endif %}
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="ssh" href="ssh://{{ inventory_hostname }}:{{ ansible_ssh_port|default('22') }}">
+            <div class="col-1-3 mobile-col-1-1 ssh">
+                <a href="ssh://{{ inventory_hostname }}:{{ ansible_ssh_port|default('22') }}">
                     <div class="content">
                         <div class="colorblock ssh-cb"><img class="app-icon" src="res/ssh.png"></div>
                         <div class="app-text">
@@ -438,8 +444,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-1-3 mobile-col-1-1">
-                <a class="sftp" href="sftp://{{ inventory_hostname }}:{{ ansible_ssh_port|default('22') }}">
+            <div class="col-1-3 mobile-col-1-1 sftp">
+                <a href="sftp://{{ inventory_hostname }}:{{ ansible_ssh_port|default('22') }}">
                     <div class="content">
                         <div class="colorblock sftp-cb"><img class="app-icon" src="res/sftp.png"></div>
                         <div class="app-text">
@@ -451,7 +457,7 @@
             </div>
 {% if ansible_local.samba.ansible_managed is defined %}
             <div class="col-1-3 mobile-col-1-1 samba">
-                <a class="ssh" href="smb://{{ inventory_hostname }}">
+                <a href="smb://{{ inventory_hostname }}">
                     <div class="content">
                         <div class="colorblock samba-cb"><img class="app-icon" src="res/samba.png"></div>
                         <div class="app-text">
@@ -462,6 +468,19 @@
                 </a>
             </div>
 {% endif %}
+{% for item in homepage_custom_links %}
+            <div class="col-1-3 mobile-col-1-1 customlink">
+                <a href="{{ item.url | e }}">
+                    <div class="content">
+                        <div class="colorblock customlink-cb"><img class="app-icon" src="res/{{ item.icon | default('globe') | e }}.png"></div>
+                        <div class="app-text">
+                            <p class="app-name">{{ item.title | e }}</p>
+                            <p class="app-description">{{ item.description | default ('') | e }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+{% endfor %}
             <div class="col-1-1 mobile-col-1-1 message">
                 {{ homepage_message }}
             </div>
