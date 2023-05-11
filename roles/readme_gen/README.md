@@ -2,7 +2,7 @@
 
 This role automatically inserts useful information about your hosts in your project's README.md file.
 
-[![](https://i.imgur.com/IwDDpyW.png)](https://i.imgur.com/IwDDpyW.png)
+[![](https://imgur.com/G96iP0G.png)](https://imgur.com/G96iP0G.png)
 
 ## Requirements/dependencies/example playbook
 
