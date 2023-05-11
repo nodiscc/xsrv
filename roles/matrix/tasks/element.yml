@@ -1,4 +1,4 @@
-- name: check element if installation directory exists
+- name: check if element installation directory exists
   stat:
     path: "{{ element_install_dir }}"
   register: element_dir
