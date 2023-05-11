@@ -41,6 +41,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - update documentation
 
 **Fixed:**
+- jellyfin: fix idempotence/opensubtitles plugin installation always returning `changed`
 - decouple web aplication roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 
 [Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)

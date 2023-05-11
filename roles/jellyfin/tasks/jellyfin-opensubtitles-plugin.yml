@@ -22,6 +22,7 @@
     mode: u=rwX,g=rX,o=rX
     owner: jellyfin
     group: jellyfin
+    keep_newer: yes
   no_log: yes
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart jellyfin
