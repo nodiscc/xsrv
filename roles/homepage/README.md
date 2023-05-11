@@ -4,7 +4,7 @@ This role will setup a simple webserver homepage/dashboard:
 - Links to services installed on the host (if managed by xsrv [roles](https://xsrv.readthedocs.io/en/latest/#roles))
 - [Custom links](#adding-custom-links)
 
-[![](https://i.imgur.com/oA8WG4e.png)](https://i.imgur.com/oA8WG4e.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/oA8WG4e.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/oA8WG4e.png)
 
 
 ## Requirements/dependencies/example playbook

@@ -2,7 +2,7 @@
 
 This role will install the [Transmission](https://en.wikipedia.org/wiki/Transmission_(BitTorrent_client)) Bittorrent client. [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent) is a [Peer-to-peer](https://en.wikipedia.org/wiki/Peer-to-peer) file sharing network. Transmission allows you to manage torrent downloads from a web interface. Torrents will be downloaded to the server, and can be accessed them using file transfer services (SFTP, Nextcloud...) - also known as a [Seedbox](https://en.wikipedia.org/wiki/Seedbox).
 
-[![](https://i.imgur.com/q1gcHRf.png)](https://i.imgur.com/q1gcHRf.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/q1gcHRf.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/q1gcHRf.png)
 
 
 ## Requirements/dependencies/example playbook

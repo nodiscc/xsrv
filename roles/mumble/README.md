@@ -6,7 +6,7 @@ It also configures:
 - (optional) login bruteforce prevention using [fail2ban](tasks/fail2ban.yml)
 - (optional) aggregation of mumble server logs to [syslog](tasks/rsyslog.yml)
 
-[![](https://i.imgur.com/S5Z6IEw.png)](https://i.imgur.com/S5Z6IEw.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/S5Z6IEw.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/S5Z6IEw.png)
 
 
 ## Requirements/dependencies/example playbook

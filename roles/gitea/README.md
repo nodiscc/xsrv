@@ -14,10 +14,10 @@ Gitea is a lightweight code hosting solution written in Go. Gitea features inclu
 - Wikis
 - LDAP authentication
 
-[![](https://i.imgur.com/Rks90zV.png)](https://i.imgur.com/2TGIshE.png)
-[![](https://i.imgur.com/cBktctp.png)](https://i.imgur.com/EauaJxq.png)
-[![](https://i.imgur.com/gvcfs6G.png)](https://i.imgur.com/DHku4ke.png)
-[![](https://i.imgur.com/4NhXqdG.png)](https://i.imgur.com/d5glB4P.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Rks90zV.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/2TGIshE.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/cBktctp.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/EauaJxq.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/gvcfs6G.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/DHku4ke.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/4NhXqdG.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/d5glB4P.png)
 
 
 ## Requirements/dependencies/example playbook

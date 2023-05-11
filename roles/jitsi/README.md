@@ -6,7 +6,7 @@ This role will install [Jitsi Meet](https://jitsi.org/jitsi-meet/), a fully encr
 - Encrypted by default, advanced security settings
 - Web, desktop and mobile clients
 
-[![](https://i.imgur.com/WyhF0tl.jpg)](https://i.imgur.com/WyhF0tl.jpg)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)
 
 
 ## Requirements/dependencies/example playbook

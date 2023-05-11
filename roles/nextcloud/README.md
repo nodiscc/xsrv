@@ -22,17 +22,17 @@ Default installed applications include:
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).
 
-[![](https://i.imgur.com/PPVIb6V.png)](https://i.imgur.com/1YaT357.png)
-[![](https://i.imgur.com/URs7XH5.png)](https://i.imgur.com/V6CR3we.png)
-[![](https://i.imgur.com/bVMzmr1.png)](https://github.com/nextcloud/photos#readme)
-[![](https://i.imgur.com/Co3DHUr.png)](https://f-droid.org/en/packages/com.nextcloud.client/)
-[![](https://i.imgur.com/wJEAiab.png)](https://f-droid.org/en/packages/it.niedermann.owncloud.notes/)
-[![](https://i.imgur.com/89xj4sa.png)](https://f-droid.org/en/packages/org.tasks/)
-[![](https://i.imgur.com/GFthLWl.png)](https://f-droid.org/packages/at.bitfire.davdroid/)
-[![](https://i.imgur.com/lXroRsI.png)](https://i.imgur.com/XlDrlS4.png)
-[![](https://i.imgur.com/cCg6HgB.png)](https://i.imgur.com/iuWdvKG.png)
-[![](https://i.imgur.com/kQyXV9S.png)](https://i.imgur.com/nCXJMus.png)
-[![](https://i.imgur.com/TJTvqtd.png)](https://i.imgur.com/ztI0rJz.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/PPVIb6V.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/1YaT357.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/URs7XH5.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/V6CR3we.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/bVMzmr1.png)](https://github.com/nextcloud/photos#readme)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Co3DHUr.png)](https://f-droid.org/en/packages/com.nextcloud.client/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/wJEAiab.png)](https://f-droid.org/en/packages/it.niedermann.owncloud.notes/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/89xj4sa.png)](https://f-droid.org/en/packages/org.tasks/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/GFthLWl.png)](https://f-droid.org/packages/at.bitfire.davdroid/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/lXroRsI.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XlDrlS4.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/cCg6HgB.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/iuWdvKG.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kQyXV9S.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nCXJMus.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TJTvqtd.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ztI0rJz.png)
 
 
 

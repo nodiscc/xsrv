@@ -17,7 +17,7 @@ Matrix/Element features include:
 - Chat room grouping/organization though Spaces
 - Unlimited 1:1 and group voice and video calls
 
-[![](https://i.imgur.com/NphBOWR.png)](https://i.imgur.com/NphBOWR.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/NphBOWR.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/NphBOWR.png)
 
 
 ## Requirements/dependencies/example playbook

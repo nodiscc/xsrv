@@ -15,8 +15,8 @@ Features:
 
 _Note: the [SSPL license](https://www.graylog.org/post/graylog-v4-0-licensing-sspl) used by Graylog and MongoDB is [not recognized as an Open-Source license](https://blog.opensource.org/the-sspl-is-not-an-open-source-license/) by the Open-Source Initiative. Make sure you understand the license before offering a publicly available Graylog-as-a-service instance._
 
-[![](https://i.imgur.com/tC4G9mQm.png)](https://i.imgur.com/tC4G9mQ.png)
-[![](https://i.imgur.com/eGCL45L.jpg)](https://i.imgur.com/6Zu7YKy.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/tC4G9mQm.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/tC4G9mQ.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/eGCL45L.jpg)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/6Zu7YKy.png)
 
 
 ## Requirements/dependencies/example playbook
@@ -88,7 +88,7 @@ Create **[streams](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data
 
 Start using Graylog to [search and filter](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/writing_search_queries.html) through messages, edit table fields, create aggregations (bar/area/line/pie charts, tables...) and progressively build useful **[dashboards](https://docs.graylog.org/en/latest/pages/dashboards.html)** showing important indicators for your specific setup.
 
-![](https://i.imgur.com/0OCFJlx.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/0OCFJlx.png)
 
 ---------------
 
@@ -195,7 +195,7 @@ end
 
 Graylog will now create `nextcloud_reqId`, `nextcloud_level`, `nextcloud_time`, `nextcloud_remoteAddr`, `nextcloud_user` `nextcloud_app`, `nextcloud_method`, `nextcloud_url` and `nextcloud_message` fields which you can then use in your [search queries and filters](#search-and-filter) and dashboards.
 
-![](https://i.imgur.com/fY3pJgh.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/fY3pJgh.png)
 
 
 ##### Ansible logs
@@ -263,9 +263,9 @@ then
 end
 ```
 
-![](https://i.imgur.com/7Ntq4gl.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/7Ntq4gl.png)
 
-![](https://i.imgur.com/IemwLaz.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/IemwLaz.png)
 
 
 ---------------

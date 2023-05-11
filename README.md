@@ -54,21 +54,21 @@ This project provides:
 
 ## Screenshots
 
-[![](https://i.imgur.com/pG1xnig.png)](roles/monitoring_netdata)
-[![](https://i.imgur.com/LNaAH2L.png)](roles/nextcloud)
-[![](https://i.imgur.com/5TXg6vm.png)](roles/tt_rss)
-[![](https://i.imgur.com/Jlmj0iE.png)](roles/shaarli)
-[![](https://i.imgur.com/8cAGkf2.png)](roles/gitea)
-[![](https://i.imgur.com/Imb0dqO.png)](roles/transmission)
-[![](https://i.imgur.com/6Im61B0.png)](roles/mumble)
-[![](https://i.imgur.com/REzcZVh.png)](roles/openldap)
-[![](https://i.imgur.com/udEAnKA.png)](roles/matrix)
-[![](https://i.imgur.com/Vvdj3Zu.png)](roles/homepage)
-[![](https://i.imgur.com/H3PIWrt.png)](roles/jellyfin)
-[![](https://i.imgur.com/wa3pkyJ.png)](roles/graylog)
-[![](https://i.imgur.com/g0jUMXE.jpg)](roles/jitsi)
-[![](https://i.imgur.com/v3lHJGx.png)](roles/readme_gen)
-[![](https://i.imgur.com/XYmHNqT.png)](roles/libvirt)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/pG1xnig.png)](roles/monitoring_netdata)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](roles/nextcloud)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](roles/tt_rss)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](roles/shaarli)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8cAGkf2.png)](roles/gitea)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Imb0dqO.png)](roles/transmission)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/6Im61B0.png)](roles/mumble)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/REzcZVh.png)](roles/openldap)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/udEAnKA.png)](roles/matrix)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Vvdj3Zu.png)](roles/homepage)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/H3PIWrt.png)](roles/jellyfin)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/wa3pkyJ.png)](roles/graylog)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](roles/jitsi)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](roles/readme_gen)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)
 
 ## Source code
 
