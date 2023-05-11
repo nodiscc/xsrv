@@ -28,6 +28,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] is defined %}
 - Graylog: https://{{ hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['homepage']['fqdn'] is defined %}
+- Homepage: https://{{ hostvars[item]['ansible_facts']['ansible_local']['homepage']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['jellyfin']['fqdn'] is defined %}
 - Jellyfin: https://{{ hostvars[item]['ansible_facts']['ansible_local']['jellyfin']['fqdn'] }}
 {% endif %}
