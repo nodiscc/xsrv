@@ -1,13 +1,13 @@
 # xsrv.shaarli
 
-This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a minimalist bookmark manager and link sharing service.
-
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8wEBRSG.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WWPfSj0.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/93PpLLs.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/V09kAQt.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/rrsjWYy.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TZzGHMs.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8iRzHfe.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/sfJJ6NT.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/GjZGvIh.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/QsedIuJ.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TFZ9PEq.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/KdtF8Ll.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/uICDOle.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/27wYsbC.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/tVvD3gH.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/zGF4d6L.jpg), and optionally:
+This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a minimalist bookmark manager and link sharing service, and optionally:
 - [apache](tasks/apache.yml) webserver configuration and SSL/TLS certificates
 - automatic local [backups](tasks/backup.yml)
 - [fail2ban](tasks/fail2ban.yml) login bruteforce prevention
 - monitoring and log aggregation through [netdata](tasks/netdata.yml) and [rsyslog](tasks/rsyslog.yml)
 - [python client for the Shaarli API](https://github.com/shaarli/python-shaarli-client/)
+
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8wEBRSG.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WWPfSj0.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/93PpLLs.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/V09kAQt.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/rrsjWYy.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TZzGHMs.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8iRzHfe.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/sfJJ6NT.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/GjZGvIh.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/QsedIuJ.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TFZ9PEq.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/KdtF8Ll.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/uICDOle.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/27wYsbC.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/tVvD3gH.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/zGF4d6L.jpg)
 
 
 ## Requirements/dependencies/example playbook
