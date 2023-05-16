@@ -60,43 +60,7 @@ homepage_custom_links:
     icon: github
 ```
 
-You can use any of the [icons provided by this role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res) as value for the `icon:` key. If you wish to upload custom icons, you can create a custom role as a supplement to this one:
-
-```bash
-$ tree roles/homepage-extra-icons/
-roles/homepage-extra-icons/
-├── files
-│   ├── github.png
-│   ├── gmail.png
-│   └── steam.png
-└── tasks
-    └── main.yml
-```
-
-```yaml
-$ cat roles/homepage-extra-icons/tasks/main.yml
-- name: copy extra icons
-  become: yes
-  copy:
-    src: roles/homepage-extra-icons/files/
-    dest: "/var/www/{{ homepage_fqdn }}/res/"
-    owner: root
-    group: root
-    mode: "0644"
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags:
-    - homepage
-    - homepage-extra-icons
-```
-
-```yaml
-$ xsrv edit-playbook
-- hosts: my.example.org
-  roles:
-    - nodiscc.xsrv.homepage
-    - homepage-extra-icons
-
-```
+You can use any of the [icons provided by this role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res) as value for the `icon:` key. If you wish to upload custom icons, you can create a custom role as a supplement to this one. See the [`nodiscc.toolbox.homepage_extra_icons`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/homepage-extra-icons) role for an example.
 
 Icons must have a `.png` extension, and should have dimensions of 16x16px for a consistent appearance.
 
