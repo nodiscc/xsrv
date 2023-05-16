@@ -84,6 +84,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
 - gitea: update to v1.19.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.19.3)
 - matrix: update element-web to v1.11.31 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.31)
+- openldap: update self-service-password to [v1.5.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.3)
 - xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - cleanup/internal changes: improve separation of tasks/files, clarify variable naming, remove unused/duplicate variables/tasks
 - update documentation
