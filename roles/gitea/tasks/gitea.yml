@@ -140,38 +140,11 @@
   changed_when: "'user already exists' not in gitea_create_user.stdout"
   when: not ansible_check_mode
 
-- name: create ansible local facts directory
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: "0755"
-  with_items:
-    - /etc/ansible/
-    - /etc/ansible/facts.d
+# restart gitea immediately if configuration was changed
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: gitea
 
-- name: create gitea ansible facts file
-  template:
-    src: etc_ansible_facts.d_gitea.fact.j2
-    dest: /etc/ansible/facts.d/gitea.fact
-    mode: "0644"
-
-###### FAIL2BAN ############
-
-- name: copy gitea fail2ban jail config
-  template:
-    src: etc_fail2ban_jail.d_gitea.conf.j2
-    dest: /etc/fail2ban/jail.d/gitea.conf
-    mode: "0600"
-  tags: fail2ban
-  notify: reload fail2ban
-
-- name: copy fail2ban gitea-auth filter
-  template:
-    src: etc_fail2ban_filter.d_gitea-auth.conf.j2
-    dest: /etc/fail2ban/filter.d/gitea-auth.conf
-    mode: "0600"
-  tags: fail2ban
-  notify: reload fail2ban
 
 ##### SERVICE #####
 

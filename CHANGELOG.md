@@ -42,12 +42,13 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - gitea: update to v1.19.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.19.3)
 - matrix: update element-web to v1.11.31 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.31)
 - xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
-- cleanup/internal changes: improve separation of tasks/files, clarify variable naming, remove unused variables/tasks
+- cleanup/internal changes: improve separation of tasks/files, clarify variable naming, remove unused/duplicate variables/tasks
 - update documentation
 
 **Fixed:**
 - matrix: synapse: fix `Failed to update apt cache: unknown reason`/expired repository signing key
 - xsrv: install `lxml` python module, required for `utils-libvirt-setmem` tasks
+- gitea: fix fail2ban restart failing on first installation of gitea
 - jellyfin: fix idempotence/opensubtitles plugin installation always returning `changed`
 - decouple web aplication roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 

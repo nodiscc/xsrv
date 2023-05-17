@@ -53,6 +53,16 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
+  become: yes
+  tags:
+    - apache
+    - fail2ban
+  when:
+    - ansible_local.fail2ban.ansible_managed is defined
+    - ansible_local.fail2ban.ansible_managed | bool
+
 - name: include rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
