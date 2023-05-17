@@ -298,7 +298,7 @@ function create_venv() {
     source "$venv_dir/bin/activate"
     echo "[xsrv] INFO: installing ansible in $venv_dir"
     pip3 install wheel
-    pip3 install ansible=="$ansible_version" netaddr
+    pip3 install ansible=="$ansible_version" netaddr lxml
 }
 
 function init_venv() {
