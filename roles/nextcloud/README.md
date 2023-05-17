@@ -14,7 +14,7 @@ Default installed applications include:
 - [Calendar](https://apps.nextcloud.com/apps/calendar): Manage calendar events with search, alarms, invitation management, contacts integration, sharing and synchronization across devices (CalDAV/ICS)
 - [Contacts](https://apps.nextcloud.com/apps/contacts):E dit, view, share address books and synchronize them across devices (CardDav)
 - [Tasks](https://apps.nextcloud.com/apps/tasks): Task/todo-list management (supports due dates, reminders, priorities, comments, tasks sharing, sub-tasks), and synchronize them across devices (CalDAV)
-- [Music](https://apps.nextcloud.com/apps/music): Play audio files directly from teh file list or in a library view (supports playlists, search, ampache and more)
+- [Music](https://apps.nextcloud.com/apps/music): Play audio files directly from the file list or in a library view (supports playlists, search, ampache and more)
 - [Photos](https://github.com/nextcloud/photos#readme): Media gallery with previews for all media types
 - [Notes](https://apps.nextcloud.com/apps/notes): Note taking app with markdown support, notes are saved as files in your Nextcloud so you can view and edit them from anywhere.
 - [Maps](https://apps.nextcloud.com/apps/maps): Map and routing service using [OpenStreetMap](https://www.openstreetmap.org/)
@@ -22,17 +22,17 @@ Default installed applications include:
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).
 
-[![](https://i.imgur.com/PPVIb6V.png)](https://i.imgur.com/1YaT357.png)
-[![](https://i.imgur.com/URs7XH5.png)](https://i.imgur.com/V6CR3we.png)
-[![](https://i.imgur.com/bVMzmr1.png)](https://github.com/nextcloud/photos#readme)
-[![](https://i.imgur.com/Co3DHUr.png)](https://f-droid.org/en/packages/com.nextcloud.client/)
-[![](https://i.imgur.com/wJEAiab.png)](https://f-droid.org/en/packages/it.niedermann.owncloud.notes/)
-[![](https://i.imgur.com/89xj4sa.png)](https://f-droid.org/en/packages/org.tasks/)
-[![](https://i.imgur.com/GFthLWl.png)](https://f-droid.org/packages/at.bitfire.davdroid/)
-[![](https://i.imgur.com/lXroRsI.png)](https://i.imgur.com/XlDrlS4.png)
-[![](https://i.imgur.com/cCg6HgB.png)](https://i.imgur.com/iuWdvKG.png)
-[![](https://i.imgur.com/kQyXV9S.png)](https://i.imgur.com/nCXJMus.png)
-[![](https://i.imgur.com/TJTvqtd.png)](https://i.imgur.com/ztI0rJz.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/PPVIb6V.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/1YaT357.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/URs7XH5.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/V6CR3we.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/bVMzmr1.png)](https://github.com/nextcloud/photos#readme)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Co3DHUr.png)](https://f-droid.org/en/packages/com.nextcloud.client/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/wJEAiab.png)](https://f-droid.org/en/packages/it.niedermann.owncloud.notes/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/89xj4sa.png)](https://f-droid.org/en/packages/org.tasks/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/GFthLWl.png)](https://f-droid.org/packages/at.bitfire.davdroid/)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/lXroRsI.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XlDrlS4.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/cCg6HgB.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/iuWdvKG.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kQyXV9S.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nCXJMus.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TJTvqtd.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ztI0rJz.png)
 
 
 
@@ -47,8 +47,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring and log aggregation
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (required) webserver, PHP interpreter and SSL certificates
-    - nodiscc.xsrv.postgresql # (required if nextcloud_db_host: localhost) database engine
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.postgresql # (required in the standard configuration) database engine
     - nodiscc.xsrv.nextcloud
 
 # required variables:
@@ -152,7 +152,7 @@ Changing the database password is not supported by the role at this time. To cha
   - click `Detect port`
   - `Server > User DN: cn=bind,ou=system,dc=CHANGEME,dc=org` the DN for your unprivilegied/bind LDAP user
   - `Server > Password:` the password for your bind LDAP user
-  - `Server > Base DN: dc=CHANGEME,dc=org` the base DN for the LDAP directory (or click `Detect base DN`)
+  - `Server > Base DN: ou=users,dc=CHANGEME,dc=org` the base DN for the LDAP directory (or click `Detect base DN`)
   - click `Test base DN`
   - `Users > Object classes: inetOrgPerson` if using OpenLDAP
   - `Users > Groups:` (your LDAP server must support the memberOf overlay)

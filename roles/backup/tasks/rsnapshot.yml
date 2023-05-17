@@ -61,7 +61,7 @@
     path: /root/.ssh/id_rsa
     mode: "0600"
     size: 4096
-  register: root_ssh_key
+  register: backup_root_ssh_key
   tags: rsnapshot-ssh-key
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -79,7 +79,7 @@
         dest: /etc/ansible/facts.d/rsnapshot.fact
         mode: "0644"
       notify: update ansible facts
-      ignore_errors: "{{ ansible_check_mode }}" # root_ssh_key.public_key is never set in check mode, always returns empty/changed
+      ignore_errors: "{{ ansible_check_mode }}" # backup_root_ssh_key.public_key is never set in check mode, always returns empty/changed
 
 # reload ansible local facts
 - name: apply configuration (flush handlers)

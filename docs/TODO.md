@@ -2,41 +2,43 @@
 
 ### xsrv/xsrv
 
+- #1116 - xsrv: init-vm: path to xml file used in `libvirt_vms:` example is incorrect - **`1.15.0`** `bug`
+- #1113 - graylog: update to v5.1 - **`1.15.0`** `maintenance`
+- #1112 - openldap: update self-service-password to v1.5.3 - **`-`** `maintenance`
+- #1111 - WIP: tests: add tests for deploying individual roles to a host - **`-`** `enhancement,tools`
+- #1109 - matrix/synapse/admin: restrict access to admin endpoint to user-defined IPs/subnets - **`1.15.0`** `enhancement,security`
+- #1108 - matrix/element: Cross-Origin Request Blocked: .well-known/matrix/client - **`1.15.0`** `bug`
+- #1103 - xsrv: bash completion: auto-complete init-vm/init-vm-template options - **`1.15.0`** `enhancement`
+- #1100 - WIP: tests: automate testing of xsrv fetch-backups command - **`-`** `tools`
+- #1099 - graylog: document backup restoration procedure - **`1.15.0`** `backups,documentation`
 - #1087 - openldap/netdata: setup netdata OpenLDAP monitoring? - **`-`** `monitoring,question`
 - #1082 - graylog: allow configuration of the graylog admin user timezone (by default, always set to UTC) - **`-`** `enhancement`
-- #1081 - netdata: after v1.39.0, plugins will be split to individual packages - **`1.14.0`** `maintenance`
-- #1075 - xsrv: init-vm/init-vm-template: validate that the value of --ip is a valid IPv4 address - **`1.14.0`** `enhancement`
-- #1074 - xsrv: init-vm: allow passing a path to a public SSH key file instead of the key contents - **`1.14.0`** `easy,enhancement`
-- #1067 - graylog: migrate to opensearch? - **`1.14.0`** `maintenance,question`
+- #1081 - netdata: after v1.39.0, plugins will be split to individual packages - **`1.15.0`** `maintenance`
+- #1074 - xsrv: init-vm: allow passing a path to a public SSH key file instead of the key contents - **`1.15.0`** `easy,enhancement`
+- #1067 - graylog: migrate to opensearch? - **`1.15.0`** `maintenance,question`
 - #1065 - enable kernel command-line haredning options? - **`-`** `configuration,enhancement,question,security`
 - #1062 - dovecot: add a local netdata port check - **`-`** `configuration,easy,enhancement,monitoring`
-- #1060 - openldap: allow disabling the service - **`1.14.0`** `easy,enhancement`
-- #1057 - jellyfin: task `mount jellyfin samba share to jellyfin directory` is not idempotent/always returns changed - **`1.14.0`** `enhancement,maintenance`
-- #1056 - WIP: nextcloud: upgrade to v26.0.0 - **`1.14.0`** `enhancement,maintenance`
+- #1057 - jellyfin: task `mount jellyfin samba share to jellyfin directory` is not idempotent/always returns changed - **`-`** `bug,upstream`
+- #1056 - nextcloud: upgrade to v26.0.1 - **`1.16.0`** `enhancement,maintenance`
 - #1054 - apache: redirect to maintenance page/HTTP 503 when accessing services/applications disabled through `*_enable_service: no` - **`-`** `enhancement`
-- #1040 - jitsi: /var/log/jitsi/jicofo.log does not append to syslog properly - **`1.14.0`** `bug,monitoring`
-- #1031 - apache: allow restricting access by IP address, per-application/virtualhost - **`1.14.0`** `easy,enhancement,security`
+- #1040 - jitsi: /var/log/jitsi/jicofo.log does not append to syslog properly - **`1.15.0`** `bug,monitoring`
+- #1031 - apache: allow restricting access by IP address, per-application/virtualhost - **`1.15.0`** `easy,enhancement,security`
 - #1027 - shaarli: update ownership/mode of directories is not idempotent - **`-`** `enhancement,maintenance`
 - #1026 - libvirt: changing a libvirt network's nsettings does not work if the network already exists - **`-`** `bug,upstream`
-- #1025 - apache/fail2ban: ban IP addresses repeatingly hitting 403 errors/the default localhost vhost (and other vhosts?) - **`1.14.0`** `easy,enhancement,security`
-- #1012 - dovecot: encrypt all incoming e-mail wit the recipient's GPG key? - **`-`** `enhancement,question,security`
-- #1003 - jellyfin: automate opensubtitles plugin installation/configuration - **`1.14.0`** `enhancement,feature`
+- #1025 - apache/fail2ban: ban IP addresses repeatingly hitting 403 errors/the default localhost vhost (and other vhosts?) - **`1.15.0`** `easy,enhancement,security`
+- #1012 - dovecot: encrypt all incoming e-mail with the recipient's GPG key? - **`-`** `enhancement,question,security`
 - #1001 - libvirt: add support for EFI as an alternative to legacy BIOS - **`-`** `enhancement`
 - #999 - WIP: common: fail2ban: add manual fail2ban tasks - **`-`** `feature`
 - #997 - make publish_collection: no role readme found - **`-`** `bug,tools,upstream`
-- #991 - matrix: implement fail2ban login bruteforce protection - **`1.14.0`** `enhancement,security`
-- #990 - matrix: setup IRC bridge - **`1.14.0`** `enhancement,feature`
-- #988 - matrix: allow setting up synapse-admin? - **`1.14.0`** `enhancement,question`
-- #987 - matrix: LDAP user backend? - **`1.14.0`** `enhancement,question`
+- #991 - matrix: implement fail2ban login bruteforce protection - **`1.15.0`** `enhancement,security`
+- #990 - matrix: setup IRC bridge - **`1.15.0`** `enhancement,feature`
+- #987 - matrix: LDAP user backend? - **`1.15.0`** `enhancement,question`
 - #986 - matrix: allow self-hosting Element Call - **`2.0.0`** `enhancement,feature`
 - #985 - homepage: generate homepage based on ansible facts - **`-`** `enhancement`
-- #983 - readme_gen: show netmasks in IP address/host summary? - **`-`** `enhancement,question`
-- #982 - readme_gen: show hardware vendor/ID/serial in host summary? - **`-`** `enhancement,question`
-- #981 - readme_gen: show standard netdata badges in host summary - **`-`** `enhancement`
-- #980 - readme_gen: show disks size in host summary - **`-`** `enhancement`
+- #983 - readme-gen: show netmasks in IP address/host summary? - **`-`** `enhancement,question`
+- #980 - readme-gen: show disks size in host summary - **`-`** `enhancement`
 - #977 - Soulseek client? (slskd) - **`-`** `feature,question`
-- #969 - graylog/elasticsearch: setup "minimal security"/authentication - **`1.14.0`** `enhancement,security`
-- #966 - WIP: add bash completion to the xsrv script - **`-`** `feature`
+- #969 - graylog/elasticsearch: setup "minimal security"/authentication - **`1.15.0`** `enhancement,security`
 - #949 - loki role? - **`-`** `feature,question`
 - #937 - DDoS mitigation mode? - **`-`** `question,security`
 - #936 - jitsi: prosody: add mod-listusers? - **`-`** `easy,enhancement,question`
@@ -45,7 +47,7 @@
 - #925 - jitsi: setup TURN server for P2P one-to-one calls? - **`-`** `enhancement,question`
 - #924 - init-vm: add ability to attach more network interfaces? - **`-`** `enhancement,question`
 - #920 - xsrv: graphical user interface? - **`-`** `question`
-- #915 - Snipe-IT role - **`1.14.0`** `feature`
+- #915 - Snipe-IT role - **`1.15.0`** `feature`
 - #912 - mount /tmp noexec? - **`-`** `question,security`
 - #911 - test compatibility with librelogic.librelogic.gitlab/gitlab-runner? - **`2.0.0`** `documentation,easy,enhancement,feature`
 - #890 - apache: implement modpagespeed? - **`-`** `performance,question`
@@ -53,7 +55,7 @@
 - #870 - xsrv: allow using `xsrv show-defaults | grep some_search_term` to search/filter available configuration variables - **`2.0.0`** `enhancement`
 - #868 - dovecot: document how to open a local copy of a maildir with a mail client - **`-`** `backups,documentation`
 - #867 - dovecot: document/test LDAPS setup - **`-`** `documentation,enhancement,security`
-- #863 - dovecot: setup netdata dovecot plugin? - **`1.14.0`** `enhancement,monitoring`
+- #863 - dovecot: setup netdata dovecot plugin? - **`1.16.0`** `enhancement,monitoring`
 - #862 - dovecot: enable other mail plugins? - **`-`** `question`
 - #861 - dovecot: performance tweaks? - **`-`** `performance,question`
 - #860 - dovecot: harden SSL configuration/ciphers? - **`-`** `question,security`
@@ -62,9 +64,6 @@
 - #857 - dovecot: setup server-side full text search? - **`-`** `question`
 - #856 - dovecot: setup antispam? - **`-`** `question`
 - #855 - dovecot: add autoconfig TXT record or A record + webserver vhost? - **`-`** `question,wontfix`
-- #849 - autoreadme: allow adding all hosts as SFTP servers in GTK bookmarks? - **`-`** `enhancement,question`
-- #848 - autoreadme: display more information? - **`1.14.0`** `question`
-- #847 - autoreadme: allow adding netdata badges automatically? - **`-`** `enhancement,question`
 - #835 - monitoring_utils: lynis: suggestion[]=HOME-9306|Double check the ownership of home directories as some might be incorrect. - **`-`** `enhancement,question,security`
 - #834 - monitoring_utils: lynis: suggestion[]=HOME-9304|Double check the permissions of home directories as some might be not strict enough. - **`-`** `enhancement,question,security`
 - #833 - monitoring_utils: lynis: suggestion[]=FILE-7524|Consider restricting file permissions - **`-`** `easy,enhancement,question,security`
@@ -83,24 +82,23 @@
 - #778 - systemd-nspawn/systemd-machined role? - **`-`** `feature,question`
 - #768 - add ldap-client role (LDAP PAM/SSH authentication)? - **`-`** `feature,question`
 - #764 - rocketchat: lynis: warning[]=DBS-1820|MongoDB instance allows any user to access databases - **`2.0.0`** `enhancement,monitoring,question,security`
-- #755 - [debops] Join forces? - **`2.0.0`** `documentation,enhancement`
 - #752 - monitoring_utils: add duc disk usage analyzer? - **`-`** `feature,monitoring,question`
 - #751 - monitoring_utils: add scripts to measure disk usage by type/extension/path? - **`-`** `easy,enhancement,monitoring,question`
 - #734 - nextcloud: add whiteboard app? - **`-`** `enhancement,question`
 - #733 - monitoring_netdata: allow whitelisting debsecan bugs - **`-`** `enhancement,monitoring,security`
 - #723 - Automate DNS scans with dnsspy.io? - **`-`** `feature,question,security`
 - #722 - Allow hdparm/disk spindown time configuration? - **`-`** `feature,question`
-- #720 - podman role/replace docker with podman? - **`1.14.0`** `enhancement,feature,maintenance,question`
+- #720 - podman role/replace docker with podman? - **`1.15.0`** `enhancement,feature,maintenance,question`
 - #717 - transmission: configuration templating task always returns changed (cleartext/hashed password) - **`2.0.0`** `enhancement,maintenance,upstream`
 - #715 - dnsmasq: DNS-over-HTTPS support? - **`-`** `configuration,enhancement,question,security`
-- #714 - dnsmasq: DNS-based ad blocking/fitering? - **`-`** `feature,question`
+- #714 - dnsmasq: DNS-based ad blocking/filtering? - **`-`** `feature,question`
 - #686 - samba: announce shares over  MDNS - **`-`** `enhancement`
-- #685 - apache: automate running Qualys SSLLabs scans against all virtualhosts - **`1.14.0`** `feature,monitoring,security`
+- #685 - apache: automate running Qualys SSLLabs scans against all virtualhosts - **`1.16.0`** `feature,monitoring,security`
 - #684 - alltube role? - **`-`** `feature,question`
 - #668 - apache: allow defining custom ErrorDocuments - **`-`** `enhancement`
-- #648 - graylog: setup authentication fro mongodb - **`-`** `easy,enhancement,security`
+- #648 - graylog: setup authentication for mongodb - **`-`** `easy,enhancement,security`
 - #642 - mumble: LDAP user backend? - **`-`** `question`
-- #641 - common: implement manual reboot/shudown (utils-reboot/utils-shutdown ansible tags) - **`1.14.0`** `easy,enhancement,feature`
+- #641 - common: implement manual reboot/shutdown (utils-reboot/utils-shutdown ansible tags) - **`1.16.0`** `easy,enhancement,feature`
 - #640 - common: apt: enable purging data/configuration files by default - **`-`** `configuration,enhancement`
 - #638 - common: apt: implement forced/manual apt upgrade (utils-apt-upgrade ansible tag) - **`-`** `easy,feature`
 - #637 - firewalld: implement DNAT/SNAT - **`-`** `enhancement`
@@ -108,10 +106,8 @@
 - #628 - limit fact gathering inside roles to ansible_local facts (speed up setup: tasks) - **`-`** `enhancement,performance`
 - #627 - WIP: add molecule tests - **`2.0.0`** `difficult,enhancement,maintenance,question,tools`
 - #622 - tt_rss: log cron job errors to syslog instead of sending them by mail - **`-`** `configuration,easy,enhancement,monitoring`
-- #616 - common: ssh: make SSH port configurable - **`-`** `enhancement`
 - #614 - common: allow disabling ctrl+alt+del combination - **`-`** `enhancement,security`
 - #613 - common - implement sysctl-34 - link protection settings - **`-`** `enhancement,security`
-- #612 - xsrv: allow wildcards in host names for edit-host, edit-vault,check, deploy... - **`-`** `feature`
 - #604 - use j2cli or yq for init-playbook/init-host templating? - **`-`** `maintenance,question,tools`
 - #598 - CI/CD: automate checks for newer upstream versions of software - **`-`** `enhancement,tools`
 - #593 - tt_rss: role/permission setup tasks are not idempotent - **`-`** `enhancement,maintenance`
@@ -123,23 +119,20 @@
 - #522 - openldap: performance optimizations? - **`-`** `enhancement,performance,question`
 - #518 - Mumble web interface - **`2.0.0`** `feature`
 - #517 - allow configuration of a custom MOTD? - **`-`** `feature,question`
-- #514 - doc: gitea: mirroring method should not try to mirror internal/pull requests refs - **`-`** `documentation,enhancement`
 - #513 - doc: screenshots slideshow on main page instead of thumbnails? - **`-`** `documentation,enhancement`
 - #507 - all roles/apache: disable reverse proxy rules and redirect to maintenance page when target service is disabled in configuration - **`2.0.0`** `enhancement,monitoring`
 - #503 - graylog/rsyslog: authenticate clients using client certificates? - **`-`** `enhancement,monitoring,question,security`
 - #500 - docker: drop all capabilities by default, manually whitelist capabilities per-service? - **`-`** `enhancement,question,security`
 - #498 - firewall: add GeoIP-based blacklist/whitelist mechanism? - **`-`** `feature,question,security`
 - #497 - nextcloud: allow enabling 2-factor authentication? - **`-`** `configuration,enhancement,question,security`
-- #489 - doc: update screencast - **`1.14.0`** `documentation`
 - #485 - monitoring: netdata: disable python.d/go.d/aclk self-monitoring charts - **`-`** `enhancement,maintenance,monitoring,performance`
 - #475 - ACME certificate authority role? - **`-`** `feature,question,security`
 - #473 - Docker daemon hardening/container scanner service? - **`-`** `question,security`
-- #472 - Ansible AWX role? - **`-`** `feature,question`
+- #472 - Ansible AWX or Semaphore role? - **`-`** `feature,question`
 - #466 - netdata: graph lynis warnings/suggestions? - **`-`** `enhancement,monitoring,question,security`
 - #465 - lynis: add detection of SUID files? - **`-`** `enhancement,monitoring,question,security,wontfix`
 - #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html) - **`-`** `easy,feature`
 - #457 - samba: setup dfs_samba4/acl_xattr VFS modules? - **`-`** `configuration,enhancement,question,wontfix`
-- #454 - postgresql: add an option to enable pg_stat_statements view? - **`-`** `difficult,enhancement,maintenance,monitoring,performance`
 - #453 - postgresql: enable checksums? - **`-`** `configuration,question,wontfix`
 - #451 - Document management system? - **`-`** `feature,question`
 - #450 - netdata: setup ML-based anomaly detection? - **`-`** `configuration,enhancement,monitoring,question,wontfix`
@@ -150,16 +143,15 @@
 - #433 - docker: additional hardening/CIS guidelines - **`2.0.0`** `configuration,enhancement,security`
 - #426 - samba: add ability to delete a share by setting state: absent - **`-`** `enhancement`
 - #425 - openldap: self-service-password/ldap-account-manager: checksum/signature download verification? - **`-`** `enhancement,security`
-- #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - **`1.14.0`** `enhancement,maintenance`
+- #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - **`1.16.0`** `enhancement,maintenance`
 - #402 - jellyfin: frequent [ERR] Error sending socket message from 0.0.0.0 to 239.255.255.250:1900 - **`-`** `configuration,documentation,enhancement,upstream`
 - #393 - Samba: performance improvements (socket options)? - **`-`** `configuration,enhancement,performance,question,wontfix`
 - #379 - setup IPV6 support (sysctl, firewall, applications...)? - **`-`** `question`
 - #378 - netdata: add a "proxied" mode (proxy behind apache/mod_proxy) ? - **`-`** `monitoring`
-- #376 - netdata: enable samba monitoring when samba role is installed - **`1.14.0`** `enhancement,monitoring`
+- #376 - netdata: enable samba monitoring when samba role is installed - **`1.16.0`** `enhancement,monitoring`
 - #374 - makefile/readthedocs: include roles documentation in generated docs - **`-`** `documentation,enhancement`
 - #366 - nextcloud: setup redis memcache backend? - **`-`** `configuration,performance,question`
 - #364 - pulseaudio: document setting up streaming from pulseaudio server to android tablet/phone - **`-`** `documentation`
-- #351 - nextcloud: enable pretty URLs - **`-`** `configuration,easy,enhancement`
 - #348 - ldap-account-manager: Unable to set locale - **`-`** `bug`
 - #344 - nextcloud: replace onlyoffice integration with collabora/nextcloud office? - **`-`** `feature`
 - #341 - nextcloud: warning on settings/admin/overview: Some app directories are owned by a different user than the web server one - **`-`** `enhancement`
@@ -171,31 +163,31 @@
 - #330 - netdata: monitor php-fpm - **`-`** `enhancement,monitoring`
 - #328 - apache: mpm_event performance tuning? - **`-`** `enhancement,performance,question`
 - #327 - nextcloud: verify gpg signatures - **`-`** `enhancement,security`
-- #317 - monitoring_utils: lynis: suggestion[]=BOOT-5264|Consider hardening system services - **`1.14.0`** `enhancement,security`
-- #310 - samba: ability to whitelist/blacklist files by extension - **`-`** `enhancement,security`
+- #317 - monitoring_utils: lynis: suggestion[]=BOOT-5264|Consider hardening system services - **`1.15.0`** `enhancement,security`
+- #310 - samba: ability to whitelist/blacklist files by extension? - **`-`** `enhancement,question,security`
 - #309 - apply postgresqltuner recommended settings? - **`-`** `enhancement,performance`
 - #307 - apache: mod_md: make certificate status endpoint enable/disable configurable - **`-`** `enhancement,monitoring`
 - #280 - Samba Directory Controller or other Identity Management solution? - **`-`** `feature,question`
-- #277 - Samba: protect samba accounts from bruteforce attemps with fail2ban - **`-`** `enhancement,security`
-- #276 - Samba: protect file shares from cryptolockers - **`-`** `enhancement,security`
+- #277 - Samba: protect samba accounts from bruteforce attempts with fail2ban - **`-`** `enhancement,security`
+- #276 - Samba: protect file shares from cryptolockers? - **`-`** `enhancement,question,security`
 - #275 - Samba: implement filesystem/size quotas - **`-`** `enhancement`
 - #274 - Samba: advertise samba server over avahi/zeroconf? - **`-`** `configuration,enhancement`
 - #272 - postgresql: hardening - **`-`** `enhancement,security`
 - #271 - apache: enable mod_md status handler - **`-`** `enhancement,monitoring`
 - #267 - apache: make disabled modules list configurable, disable more modules by default - **`-`** `enhancement,performance`
 - #265 - apache: provide custom error pages - **`-`** `enhancement`
-- #256 - CAS, SAML or Oauth Sigle Sign On (SSO)? - **`-`** `feature`
+- #256 - CAS, SAML or Oauth Single Sign On (SSO)? - **`-`** `feature`
 - #254 - apache: allow using LDAP for basic auth? - **`-`** `enhancement,question,security`
 - #237 - WIP: install and configure auditd (Linux Auditing Framework) - **`2.0.0`** `feature,monitoring,security`
 - #231 - apache: letsencrypt/selfsigned: reach A+ grade on Mozilla Security Observatory - **`-`** `enhancement,security,tools`
 - #229 - apache: add a config variable to log times taken to serve requests - **`-`** `enhancement,monitoring,performance`
 - #228 - apache: additional hardening measures - **`-`** `enhancement,security`
-- #222 - apache: add ability to specify a whitelist/blacklist of IP adresses per-virtualhost - **`-`** `feature,security`
+- #222 - apache: add ability to specify a whitelist/blacklist of IP addresses per-virtualhost - **`-`** `feature,security`
 - #219 - xsrv-homepage: main/aggregated RSS feed on the homepage - **`-`** `feature`
 - #208 - netdata: graph/alert on logwatch warnings - **`-`** `feature,monitoring,security`
 - #205 - netdata: monitor debsums warnings/return status - **`2.0.0`** `easy,feature,monitoring,security`
 - #200 - roles for other monitoring software? - **`-`** `feature,monitoring,question`
-- #195 - monitoring: add apt-listchanges - **`1.14.0`** `easy,enhancement,monitoring`
+- #195 - monitoring: add apt-listchanges - **`1.15.0`** `easy,enhancement,monitoring`
 - #193 - netdata: graph tiger warnings - **`-`** `feature,monitoring,security`
 - #192 - monitoring/apache: add goaccess, generate reports for each virtualhost - **`-`** `feature,monitoring`
 - #191 - monitoring_utils: add inxi? - **`-`** `feature,monitoring,question`
@@ -246,19 +238,17 @@
 - #70 - common: ssh: allow setting up endlessh? - **`-`** `feature,question,security`
 - #69 - IDS/IPS role? - **`-`** `feature,question,security`
 - #66 - add show-tasks command - **`-`** `enhancement`
-- #64 - RAID role - **`-`** `feature`
+- #64 - RAID role? - **`-`** `feature,question`
 - #63 - pfSense role? - **`-`** `feature,question,wontfix`
 - #61 - GDPR compliance? - **`-`** `feature,question`
 - #59 - Collaborative pad - **`-`** `feature`
 - #57 - rundeck role? - **`-`** `feature,question`
 - #55 - Guacamole remote control gateway role? - **`-`** `feature,question`
-- #54 - bittorrent tracker role? - **`-`** `feature,question,wontfix`
 - #53 - web analytics/goaccess role? - **`-`** `feature,question`
 - #52 - blogging engine/static site generator role? - **`-`** `feature,question`
-- #51 - dokuwiki role? - **`2.0.0`** `feature,question`
 - #49 - caching HTTP proxy/squid role? - **`-`** `feature,question`
 - #46 - Printer sharing server? - **`-`** `feature,question`
-- #45 - Video hosting/streaming platform - **`-`** `feature`
+- #45 - Video hosting/streaming platform - **`1.15.0`** `feature`
 - #44 - jellyfin: document DLNA/UPnP usage - **`-`** `configuration,documentation,feature,question`
 - #43 - OSM routing service role? - **`-`** `feature,question`
 - #42 - OpenStreetMap/maps tileserver role? - **`-`** `feature,question`
@@ -269,7 +259,6 @@
 - #35 - simple git server role? - **`-`** `feature,question,wontfix`
 - #34 - CentOS compatibility? - **`-`** `feature,question,wontfix`
 - #33 - Minecraft server role? - **`-`** `feature,question,wontfix`
-- #31 - Add bash completion to xsrv script - **`-`** `enhancement`
 - #30 - Gitlab role - **`-`** `feature`
 - #26 - dynamic DNS updater role? - **`2.0.0`** `feature`
 - #24 - DHCP/TFTP/PXE server role? - **`-`** `feature,question`

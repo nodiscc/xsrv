@@ -12,6 +12,7 @@
     - jellyfin_allowed_hosts | type_debug == "list"
     - ( jellyfin_samba_share_allow_write_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
     - ( jellyfin_samba_share_allow_read_users is defined ) and ( jellyfin_samba_share_allow_read_users | type_debug == "list" )
+    - jellyfin_setup_opensubtitles_plugin == jellyfin_setup_opensubtitles_plugin | bool
 
 - name: check that variables are correctly defined (jellyfin_allowed_hosts)
   assert:
@@ -20,3 +21,14 @@
     that:
       - item | ansible.utils.ipv4
   with_items: "{{ jellyfin_allowed_hosts }}"
+
+- name: check that mandatory variables are correctly defined (opensubtitles plugin)
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "OpenSubtitles plugin installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
+  when: jellyfin_setup_opensubtitles_plugin | bool
+  with_items:
+    - jellyfin_opensubtitles_plugin_username is not search("CHANGEME")
+    - jellyfin_opensubtitles_plugin_password is not search("CHANGEME")
+    - jellyfin_opensubtitles_plugin_apikey is not search("CHANGEME")

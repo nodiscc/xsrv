@@ -25,7 +25,10 @@
     - apache
     - ssl
     - tt_rss
-  when: tt_rss_https_mode == 'selfsigned'
+  when:
+    - tt_rss_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
@@ -33,6 +36,9 @@
   tags:
     - tt_rss
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include fail2ban configuration tasks
   import_tasks: fail2ban.yml

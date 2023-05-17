@@ -40,6 +40,16 @@
     - graylog
     - apache
 
+- name: include rsnapshot/backup configuration tasks
+  import_tasks: backups.yml
+  become: yes
+  tags:
+    - graylog
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed | bool
+
 - name: include rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes

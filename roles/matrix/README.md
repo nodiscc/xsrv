@@ -1,8 +1,9 @@
 # xsrv.matrix
 
 This role will install a [Matrix](https://en.wikipedia.org/wiki/Matrix_(protocol)) server. Matrix is an open standard and communication protocol for real-time communication. This role deploys:
-- [Synapse](https://matrix.org/docs/projects/server/synapse), Matrix.org’s reference server
+- [Synapse](https://matrix.org/docs/projects/server/synapse), Matrix.org's reference server
 - [Element Web](https://matrix.org/docs/projects/client/element), a Matrix client for the Web
+- [synapse-admin](https://github.com/Awesome-Technologies/synapse-admin), a Matrix user/room administration web interface
 
 The configuration is designed for a private (i.e. not federated) server, for use inside your organization.
 
@@ -16,7 +17,7 @@ Matrix/Element features include:
 - Chat room grouping/organization though Spaces
 - Unlimited 1:1 and group voice and video calls
 
-[![](https://i.imgur.com/NphBOWR.png)](https://i.imgur.com/NphBOWR.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/NphBOWR.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/NphBOWR.png)
 
 
 ## Requirements/dependencies/example playbook
@@ -30,8 +31,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall
     - nodiscc.xsrv.monitoring # (optional) system/server monitoriong and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups of uploaded media files
-    - nodiscc.xsrv.postgresql # (required) database engine
-    - nodiscc.xsrv.apache # (required) webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.postgresql # (required in the standard configuration) database engine
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.matrix
 
 # required variables
@@ -54,7 +55,15 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 The matrix server can be used from the Element Web client which will be deployed at `https://{{ matrix_element_fqdn }}`, or any of the mobile or desktop [Matrix clients](https://matrix.org/clients/). Element is also available as an Android, iOS, Windows, Linux, MacOS application [here](https://element.io/download).
 
-**Create user accounts:** An admin user is created during deployment. Public registration of new users is disabled by default, but the server admin can create new accounts manually:
+### User accounts management
+
+An admin user (`matrix_synapse_admin_user`) is created during deployment. Public registration of new users is disabled by default, but server admins can create/deactivate and manage user accounts from the synapse-admin administration web interface at `https://{{ matrix_synapse_fqdn }}`.
+
+Alternatively, the user/room management API can be accessed directly using `curl`:
+
+<details>
+
+**Create user accounts:**
 
 ```bash
 # access the server over SSH
@@ -79,6 +88,7 @@ $ curl -X POST --header 'Authorization: Bearer syt_dGVzdA_egQMvgdyrhjosi9kslnlFT
 ```
 
 **Add/remove admin privileges for a user**:
+
 ```bash
 # access the server over SSH
 xsrv shell # using xsrv https://xsrv.readthedocs.io/en/latest/usage.html
@@ -91,6 +101,7 @@ synapse=# SELECT name,admin from USERS;
 synapse=# UPDATE users SET admin=1 WHERE name = '@USER:DOMAIN';
 # or SET admin=0 to remove admin privileges
 ```
+</details>
 
 ### Backups
 
@@ -103,6 +114,7 @@ See the included [rsnapshot configuration](templates/etc/rsnapshot.d_matrix.conf
 matrix - setup matrix chat server and web client
 synapse - setup synapse (matrix) chat server
 element - setup element matrix web chat client
+synapse-admin - setup synapse-admin matrix administration web interface
 ```
 <!--END TAGS LIST-->
 

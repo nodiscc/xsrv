@@ -9,6 +9,17 @@
     status_accepted: [503]
 {% endif %}
 
+  - name: matrix-synapse-admin
+    timeout: 3
+    tls_skip_verify: true
+    update_every: 10
+    url: https://127.0.0.1/
+    headers:
+      Host: "{{ matrix_synapse_fqdn }}"
+{% if not matrix_synapse_admin_enable_service %}
+    status_accepted: [503]
+{% endif %}
+
   - name: matrix-element
     timeout: 3
     tls_skip_verify: true

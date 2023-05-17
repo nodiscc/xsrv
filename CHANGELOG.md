@@ -3,11 +3,70 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.14.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.14.0) - 2023-05-17
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+- matrix: synapse: if you are getting the error `Failed to update apt cache: unknown reason`, this may be caused by the matrix/synapse APT repository signing key having expired. Deploying the `matrix` alone should solve this problem (`TAGS=matrix xsrv deploy`)
+- (optional) download and install the tab/auto-completion script:
+
+```bash
+wget https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv-completion.sh
+sudo cp xsrv-completion.sh /etc/bash_completion.d/
+```
+
+**Added:**
+- matrix: add [synapse-admin](https://github.com/Awesome-Technologies/synapse-admin) user/room administration web interface
+- xsrv: add (optional) bash completion script ([installation](https://xsrv.readthedocs.io/en/latest/installation/controller-preparation.html))
+- jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- homepage: allow adding custom links to the homepage ([`homepage_custom_links`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
+- graylog: setup automatic local backups of graylog configuration when the `nodiscc.xsrv.backup` role is deployed
+- nextcloud add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps ([`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
+- readme-gen: show `mumble://` server URIs/links for hosts where the `nodiscc.xsrv.mumble` role is deployed
+- readme-gen: show homepage URL/link for hosts where the `nodiscc.xsrv.homepage` role is deployed
+- readme-gen: display a list of storage devices with size, for each host
+- readme-gen: allow adding SFTP bookmarks for GTK-based file managers to the output markdown file ([`readme_gen_gtk_bookmarks: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
+- xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
+
+**Removed:**
+- xsrv: remove `ls` command (use bash completion instead, or manually `cd` to your project directory)
+
+**Changed:**
+- monitoring_utils: lynis: disable `Reboot of system is most likely needed` warning, let netdata/needrestart send notifications when a reboot is required
+- monitoring_utils: lynis: disable `Found one or more vulnerable packages` warning, let debsecan handle reporting of vulnerable packages
+- homepage: display descriptions for each applications/services, improve layout
+- xsrv: init-vm-template: remove the temporary preseed file after template creation
+- nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
+- gitea: update to v1.19.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.19.3)
+- matrix: update element-web to v1.11.31 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.31)
+- xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- cleanup/internal changes: improve separation of tasks/files, clarify variable naming, remove unused/duplicate variables/tasks
+- update documentation
+
+**Fixed:**
+- matrix: synapse: fix `Failed to update apt cache: unknown reason`/expired repository signing key
+- xsrv: install `lxml` python module, required for `utils-libvirt-setmem` tasks
+- gitea: fix fail2ban restart failing on first installation of gitea
+- jellyfin: fix idempotence/opensubtitles plugin installation always returning `changed`
+- decouple web aplication roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
+
+[Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
+
+------------------
+
+
 #### [v1.13.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.1) - 2023-04-14
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
+
+**Added:**
+- readme-gen: allow displaying custom netdata badges for each host ([`readme_gen_netdata_badges`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
+- openldap: allow enabling/disabling the service ([`openldap_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+
 
 **Fixed:**
 - readme-gen: fix syntax error in template (`template error while templating string`)
@@ -19,12 +78,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.13.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.0) - 2023-04-14
 
 **Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 - monitoring/netdata: if you have configured custom [`netdata_port_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml), ensure the `ports:` parameter is a list, even if it only contains a single port (e.g. `ports: [64738]`)
 
 **Added:**
-- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades)
+- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades) ([`setup_netdata_apt: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
 - homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss: allow disabling individual web applications (`*_enable_service: yes/no`), redirect to the maintenance page when disabled
 - dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
@@ -307,7 +367,7 @@ self_service_password_allowed_hosts:
 - shaarli: add required packages for LDAP authentication
 - monitoring_netdata: add `utils-autorestart` tag (reboot hosts if required after a kernel update, will only run if the `utils-autorestart` tag is explicitly called)
 - samba: add `utils-samba-listusers` tag (list samba users)
-- common: install hardware true random number generator (TRNG) support packages on hosts where the CPU suports [RDRAND](https://en.wikipedia.org/wiki/RDRAND)
+- common: install hardware true random number generator (TRNG) support packages on hosts where the CPU supports [RDRAND](https://en.wikipedia.org/wiki/RDRAND)
 
 **Removed:**
 - tt_rss: remove installation of custom plugins/themes
@@ -421,7 +481,7 @@ self_service_password_allowed_hosts:
 - tools/tests: improve/simplify test tools
 
 **Fixed:**
-- common: users: fix errors during creation fo `sftponly` user accounts when no groups are defined in the user definition
+- common: users: fix errors during creation of `sftponly` user accounts when no groups are defined in the user definition
 
 [Full changes since v1.8.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.1...1.9.0)
 
@@ -472,7 +532,7 @@ self_service_password_allowed_hosts:
 - monitoring: utils: add `iputils-ping` package (ping utility)
 
 **Removed:**
-- common: firewalld/mail/msmtp: drop compatibilty with Debian 10
+- common: firewalld/mail/msmtp: drop compatibility with Debian 10
 - valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
@@ -873,7 +933,7 @@ self_service_password_allowed_hosts:
 - common: cron: ensure only root can access cron job files and directories (CIS 5.1.2 - 5.1.7)
 - common: ssh: lower maximum concurrent unauthenticated connections to 60
 - common/mail: don't overwrite `/etc/aliases`, ensure `root` mail is forwarded to the configured user (set to `ansible_user` by default)
-- docker: speed up role execution - dont't force APT cache update when not necessary
+- docker: speed up role execution - don't force APT cache update when not necessary
 - transmission: disable automatic backups of the downloads directory by default, add `transmission_backup_downloads: yes/no` variable allowing to enable it
 - rocketchat/monitoring: disable HTTP check when rocketchat service is explicitly disabled in the configuration
 - mumble/checks: ensure that `mumble_welcome_text` is set
@@ -893,9 +953,9 @@ self_service_password_allowed_hosts:
 - nextcloud: fix condition for dependency on postgresql role
 - nextcloud: fix `allowed memory size exhausted` during nextcloud upgrades
 - openldap: fix condition for dependency on apache role
-- rsyslog: fix automatic aggregation fo fail2ban logs to syslog
+- rsyslog: fix automatic aggregation of fail2ban logs to syslog
 - rocketchat: fix automatic backups when the service is disabled
-- samba/rsnapshot/gitea: fix role when runing in 'check' mode, fix idempotence
+- samba/rsnapshot/gitea: fix role when running in 'check' mode, fix idempotence
 - tools: fix release procedure/ansible-galaxy collection publication
 - xsrv: fix wrong inventory formatting after running `xsrv init-host`
 - remove unused/duplicate/leftover task files
@@ -1241,7 +1301,7 @@ sudo rm -r /var/www/rss.example.org/export/ # cleanup
 - simplify domain name/location/root URL templating
 - require manual configuration of gitea instance FQDN/URL, JWT secrets and internal token
 - LFS JWT secret must not contain /+= characters
-- only configure a subset of gitea settings in the configuration file, let gitea use defaut values for other settings
+- only configure a subset of gitea settings in the configuration file, let gitea use default values for other settings
 - disable displaying gitea version in footer
 - upgrade gitea to latest stable version (https://github.com/go-gitea/gitea/releases)
 - download binary from github.com instea of gitea.io
@@ -1355,7 +1415,7 @@ sudo lnav /var/log/syslog
 # re-apply the playbook and check that it finishes without error
 TAGS=gitea xsrv deploy
 
-# Check that all gitea funtionality works
+# Check that all gitea functionality works
 ```
 
 
@@ -1430,7 +1490,7 @@ make deploy
 **rocketchat role:**
  - add a role to deploy the rocket.chat instant messaging/communication software
  - deploy rocket.chat as a stack of docker swarm services
- - add apache cofiguration to proxy traffic from the host's apache instance, add let's encrypt/self-signed certificate generation tasks
+ - add apache configuration to proxy traffic from the host's apache instance, add let's encrypt/self-signed certificate generation tasks
 
 **openldap role:**
  - add a role to install openldap server and optionally ldap-account-manager

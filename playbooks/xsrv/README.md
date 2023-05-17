@@ -2,7 +2,7 @@
 
 Usage: `xsrv COMMAND default [HOST]`
 
-[inventory](inventory.yml) · [main playbook](playbook.yml) · [hosts configuration](host_vars/) · [groups configuration](group_vars/) · [keepass keyring](default.kdbx) · [other playbooks](playbooks/) · [ansible configuration](playbooks/) · [collections configuration](requirements.yml) · [other data](data/)
+[inventory](inventory.yml) · [main playbook](playbook.yml) · [hosts configuration](host_vars/) · [groups configuration](group_vars/) · [keepass keyring](default.kdbx) · [other playbooks](playbooks/) · [ansible configuration](ansible.cfg) · [collections configuration](requirements.yml) · [other data](data/)
 
 <!--
 ## Monitoring

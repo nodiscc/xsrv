@@ -1,5 +1,34 @@
 # the set of hosts for which documentation should be auto-generated
 # Example: readme_gen_limit: ['host1.CHANGEME.org', 'host2.CHANGEME.org']
 readme_gen_limit: "{{ groups['all'] }}"
-# Path to the markdown template
+# list of netdata badges to display for each host
+# Example:
+# readme_gen_netdata_badges:
+#   - chart: disk_space._var # netdata chart name
+#     alarm: disk_space_usage # netdata alarm name
+#     label: /var disk space usage # (optional) badge label, if unset the defautl label will be used
+readme_gen_netdata_badges:
+  - chart: needrestart.status
+    alarm: needrestart_kernel
+  - chart: needrestart.status
+    alarm: needrestart_services
+  - chart: disk_space._
+    alarm: disk_space_usage
+    label: / disk space usage
+  - chart: disk_space._var
+    alarm: disk_space_usage
+    label: /var disk space usage
+  - chart: system.load
+    alarm: load_average_5
+    label: 5min load average
+  - chart: system.ram
+    alarm: ram_in_use
+  - chart: system.swap
+    alarm: used_swap
+  - chart: apt.upgradable
+    alarm: apt_upgradable
+    label: upgradable packages
+# write GTK bookmarks to access hosts over SFTP in the output README.md (yes/no)
+readme_gen_gtk_bookmarks: no
+# path to the markdown template
 readme_gen_template: "readme_gen.md.j2"

@@ -9,9 +9,9 @@ version: 2
 sphinx:
   configuration: docs/conf.py
 
-# Optionally set the version of Python and requirements required to build your docs
-# https://github.com/rtfd/readthedocs.org/issues/5250
-# python:
-#   version: 3.5
-#   install:
-#     - requirements: docs/requirements.txt
+# Set the base OS image and Python version
+# https://github.com/readthedocs/readthedocs.org/issues/10290
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.11"

@@ -5,6 +5,16 @@ homepage_fqdn: "www.CHANGEME.org"
 homepage_title: "{{ homepage_fqdn }}"
 # freeform message/paragraph displayed on the homepage (HTML allowed)
 homepage_message: "<i>Welcome to this server managed by <a href='https://xsrv.readthedocs.io'>xsrv</a></i>"
+# custom links to add to the homepage, in addition to auto-generated links (list)
+# Example:
+# homepage_custom_links:
+#   - url: https://myapp.EXAMPLE.org # URL to link to
+#     title: "My App" # title of the link
+#     description: "A custom application" # (optional, default empty) description of the link
+#     icon: sftp # (optional, default globe) icon file for the link, one of https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res without .png extension
+#   - url: https://anotherapp.EXAMPLE.org
+#     title: "Another App"
+homepage_custom_links: []
 # HTTPS and SSL/TLS certificate mode for the homepage webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate

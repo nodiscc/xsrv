@@ -21,7 +21,10 @@
     - apache
     - ssl
     - shaarli
-  when: shaarli_https_mode == 'selfsigned'
+  when:
+    - shaarli_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
@@ -29,6 +32,9 @@
   tags:
     - shaarli
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include rsnapshot/backup configuration tasks
   import_tasks: backups.yml

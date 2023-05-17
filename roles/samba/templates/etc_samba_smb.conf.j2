@@ -158,7 +158,7 @@
    passdb backend = ldapsam:ldap://127.0.0.1
 # base for all ldap suffixes and for storing the sambaDomain object.
    ldap suffix = {{ openldap_base_dn }}
-# Distinguished Name (DN) name used by Samba to contact the ldap server when retreiving user account information
+# Distinguished Name (DN) name used by Samba to contact the ldap server when retrieving user account information
 # The ldap admin dn is used in conjunction with the admin dn password stored in the private/secrets.tdb filename
 # See the smbpasswd(8) man page for more information on how to accomplish this.
    ldap admin dn = cn=admin,{{ openldap_base_dn }}

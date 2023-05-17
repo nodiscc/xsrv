@@ -18,7 +18,7 @@ Clients of the wireguard server will be able to route their traffic through it.
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic local backup of private keys
     - nodiscc.xsrv.dnsmasq # DNS resolution for VPN clients
-    - nodiscc.xsrv.wireguard # fast and modern VPN server
+    - nodiscc.xsrv.wireguard
 
 # required variables
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
@@ -61,7 +61,7 @@ firewalld_zone_sources:
       - 10.0.0.0/8
     state: absent
 
-# disallow connections from LAN to the service, but explicitely allow from wireguard
+# disallow connections from LAN to the service, but explicitly allow from wireguard
 apache_firewalld_zones:
   - zone: public
     state: disabled

@@ -42,31 +42,31 @@ sudo usermod -G $USER libvirt,kvm,libvirt-qemu
 
 Run virt-manager from your applications menu and click `New virtual machine`
 
-![](https://i.imgur.com/1e2jNP0.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/1e2jNP0.png)
 
 Select QEMU/KVM as the virtual machine type:
 
-![](https://i.imgur.com/F7ZSXFS.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/F7ZSXFS.png)
 
 Select the installation media/ISO image for the operating system you want to install:
 
-![](https://i.imgur.com/o5Fu0IX.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/o5Fu0IX.png)
 
 Set memory amount and virtual CPU number depending on your performance requirements:
 
-![](https://i.imgur.com/0aQlobJ.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/0aQlobJ.png)
 
 Create a new virtual hard disk image for your VM depending on your storage requirements:
 
-![](https://i.imgur.com/Ra4vp3S.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Ra4vp3S.png)
 
 Set a unique name (such as a [FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) for your VM, and attach it to the default `NAT` virtual network:
 
-![](https://i.imgur.com/3Tn34xD.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/3Tn34xD.png)
 
 Click `Finish` and start the VM from virt-manager's main window.
 
-![](https://i.imgur.com/aJGkUJz.png)
+![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/aJGkUJz.png)
 
 
 ### Automated

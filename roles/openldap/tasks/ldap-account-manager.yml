@@ -19,7 +19,7 @@
 
 - name: create ldap-account-manager profile configuration directory
   file:
-    path: "{{ ldap_account_manager_configcfg_dir }}/profiles/lam"
+    path: "{{ openldap_ldap_account_manager_configcfg_dir }}/profiles/lam"
     owner: root
     group: www-data
     mode: u=rwX,g=rwX
@@ -34,7 +34,7 @@
     mode: "{{ item.mode }}"
   with_items:
     - src: "etc_ldap-account-manager_config.cfg.j2"
-      dest: "{{ ldap_account_manager_configcfg_dir }}/config.cfg"
+      dest: "{{ openldap_ldap_account_manager_configcfg_dir }}/config.cfg"
       mode: "0640"
     - src: "var_lib_ldap-account-manager_config_lam.conf.j2"
       dest: "{{ ldap_account_manager_install_dir }}/config/lam.conf"
@@ -49,7 +49,7 @@
 - name: copy ldap-account-manager trusted LDAP server certificate
   copy:
     src: "{{ ldap_account_manager_ldaps_cert }}"
-    dest: "{{ ldap_account_manager_configcfg_dir }}/serverCerts.pem"
+    dest: "{{ openldap_ldap_account_manager_configcfg_dir }}/serverCerts.pem"
     owner: root
     group: www-data
     mode: "0640"
@@ -60,33 +60,20 @@
 - name: include ldap-account-manager self-signed certificates configuration tasks
   import_tasks: ldap-account-manager-ssl-selfsigned.yml
   tags: ssl
-  when: ldap_account_manager_https_mode == 'selfsigned'
+  when:
+    - ldap_account_manager_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 ### APACHE CONFIGURATION ###
 
-- name: load distribution-specific variables
-  include_vars:
-    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
-
-- name: copy php-fpm configuration
-  template:
-    src: etc_php_PHPVERSION_fpm_pool.d_ldap-account-manager.conf.j2
-    dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/ldap-account-manager.conf
-    mode: "0644"
-  notify: restart php-fpm
-
-- name: copy apache2 virtualhost configuration
-  template:
-    src: etc_apache2_sites-available_ldap-account-manager.conf.j2
-    dest: /etc/apache2/sites-available/ldap-account-manager.conf
-    mode: "0644"
-  notify: reload apache
-
-- name: enable apache2 virtualhost
-  command: a2ensite ldap-account-manager
-  args:
-    creates: "/etc/apache2/sites-enabled/ldap-account-manager.conf"
-  notify: restart apache
+- name: include ldap-account-manager apache configuration tasks
+  import_tasks: ldap-account-manager-apache.yml
+  tags: apache
+  when:
+    - ldap_account_manager_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

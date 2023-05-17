@@ -12,7 +12,7 @@ lynis_skip_tests:
   - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
   - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
   - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by netdata)
-  - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers wil be selected automatically)
+  - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
   - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
   - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
   - "BANN-7126" # legal banner for local logins is not needed
@@ -25,8 +25,10 @@ lynis_skip_tests:
   - "SSH-7408:MaxSessions" # 10 is an acceptable values, SSH connection multiplexing cannot be abused/cause performance issues unless the user is authenticated
   - "PHP-2376" # allow_url_fopen is used legitimately by several applications in file_get_contents() to fetch remote files
   - "HRDN-7230" # malware/rootkit detection software is inefficient when run on a compromised host
-  - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils depency
+  - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
   - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
   - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
+  - "KRNL-5830" # let needrestart/netdata send alarms when reboot is required
+  - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"

@@ -12,5 +12,11 @@
             "version": "{{ matrix_element_version }}"
         },
         "fqdn": "{{ matrix_element_fqdn }}"
+    },
+    "synapse_admin": {
+        "ansible_managed": true,
+        "installed": {
+            "version": "{{ matrix_synapse_admin_version }}"
+        }
     }
 }

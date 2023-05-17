@@ -7,9 +7,9 @@ A feed reader allows subscribing to many blogs/websites updates (using the [RSS]
 * **[Homepage/features](https://tt-rss.org/)**
 * **[Community/forums](https://discourse.tt-rss.org/)**
 
-[![](https://i.imgur.com/UoKs3x1.png)](https://i.imgur.com/yDozQPU.jpg)
-[![](https://i.imgur.com/7oO67Xq.png)](https://i.imgur.com/rNTiRva.png)
-[![](https://i.imgur.com/CqoOfXo.png)](https://i.imgur.com/mv2fppi.jpg)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/UoKs3x1.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/yDozQPU.jpg)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/7oO67Xq.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/rNTiRva.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/CqoOfXo.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/mv2fppi.jpg)
 
 
 ## Requirements/dependencies/example playbook
@@ -23,8 +23,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) system monitoring and application health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (required) webserver, PHP interpreter and SSL certificates
-    - nodiscc.xsrv.postgresql # (required) database engine
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.postgresql # (required in the standard configuration) database engine
     - nodiscc.xsrv.tt_rss
 
 # required variables:

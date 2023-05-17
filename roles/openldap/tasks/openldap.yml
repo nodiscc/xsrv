@@ -26,8 +26,6 @@
 - name: install openldap server packages
   apt:
     state: present
-    update_cache: yes
-    cache_valid_time: 900
     package:
       - slapd
       - ldap-utils
@@ -62,3 +60,13 @@
     path: /etc/hosts
     line: '127.0.0.1	{{ openldap_fqdn }}' # noqa no-tabs
     state: present
+
+##### SERVICE #####
+
+- name: start/stop/enable/disable slapd service
+  service:
+    name: slapd
+    state: "{{ 'started' if openldap_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if openldap_enable_service else 'no' }}"
+  tags: services
+  ignore_errors: "{{ ansible_check_mode }}"

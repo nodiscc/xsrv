@@ -28,7 +28,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "25.0.5"
+nextcloud_version: "25.0.6"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -84,6 +84,7 @@ nextcloud_apps:
   - { state: "disable", app: "apporder" } # https://apps.nextcloud.com/apps/apporder
   - { state: "disable", app: "keeporsweep" } # https://apps.nextcloud.com/apps/keeporsweep
   - { state: "disable", app: "jitsi" } # https://apps.nextcloud.com/apps/jitsi
+  - { state: "disable", app: "tables" } # https://apps.nextcloud.com/apps/tables
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'

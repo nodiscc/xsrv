@@ -16,7 +16,10 @@
     - apache
     - ssl
     - gotty
-  when: gotty_https_mode == 'selfsigned'
+  when:
+    - gotty_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
@@ -24,6 +27,9 @@
   tags:
     - gotty
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include netdata configuration tasks
   import_tasks: netdata.yml

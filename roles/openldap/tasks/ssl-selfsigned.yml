@@ -52,6 +52,7 @@
       olcTLSCertificateFile: '/etc/ssl/openldap/{{ openldap_fqdn }}.crt'
     state: 'exact'
   ignore_errors: "{{ ansible_check_mode }}"
+  when: openldap_enable_service | bool
 
 - name: create local certificates directory on the controller
   become: no

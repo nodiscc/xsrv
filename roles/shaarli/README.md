@@ -1,13 +1,13 @@
 # xsrv.shaarli
 
-This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a minimalist bookmark manager and link sharing service.
-
-[![](https://i.imgur.com/8wEBRSG.png)](https://i.imgur.com/WWPfSj0.png) [![](https://i.imgur.com/93PpLLs.png)](https://i.imgur.com/V09kAQt.png) [![](https://i.imgur.com/rrsjWYy.png)](https://i.imgur.com/TZzGHMs.png) [![](https://i.imgur.com/8iRzHfe.png)](https://i.imgur.com/sfJJ6NT.png) [![](https://i.imgur.com/GjZGvIh.png)](https://i.imgur.com/QsedIuJ.png) [![](https://i.imgur.com/TFZ9PEq.png)](https://i.imgur.com/KdtF8Ll.png) [![](https://i.imgur.com/uICDOle.png)](https://i.imgur.com/27wYsbC.png) [![](https://i.imgur.com/tVvD3gH.png)](https://i.imgur.com/zGF4d6L.jpg), and optionally:
+This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a minimalist bookmark manager and link sharing service, and optionally:
 - [apache](tasks/apache.yml) webserver configuration and SSL/TLS certificates
 - automatic local [backups](tasks/backup.yml)
 - [fail2ban](tasks/fail2ban.yml) login bruteforce prevention
 - monitoring and log aggregation through [netdata](tasks/netdata.yml) and [rsyslog](tasks/rsyslog.yml)
 - [python client for the Shaarli API](https://github.com/shaarli/python-shaarli-client/)
+
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8wEBRSG.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WWPfSj0.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/93PpLLs.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/V09kAQt.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/rrsjWYy.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TZzGHMs.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8iRzHfe.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/sfJJ6NT.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/GjZGvIh.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/QsedIuJ.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/TFZ9PEq.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/KdtF8Ll.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/uICDOle.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/27wYsbC.png) [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/tVvD3gH.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/zGF4d6L.jpg)
 
 
 ## Requirements/dependencies/example playbook
@@ -21,7 +21,7 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.backup # (optional) automatic backups
     - nodiscc.xsrv.monitoring # (optional) apache monitoring
-    - nodiscc.xsrv.apache # (required) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.shaarli
 
 # required variables:

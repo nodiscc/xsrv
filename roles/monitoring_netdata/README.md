@@ -6,7 +6,7 @@ This role will install and configure [Netdata](https://my-netdata.io/), a real-t
  - [debsecan](https://gitlab.com/nodiscc/netdata-debsecan)
  - [apt](https://gitlab.com/nodiscc/netdata-apt)
 
-[![](https://i.imgur.com/vqfWelH.png)](https://i.imgur.com/vqfWelH.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/vqfWelH.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/vqfWelH.png)
 
 
 ## Requirements/dependencies/example playbook

@@ -12,14 +12,14 @@ tests: test_shellcheck test_ansible_lint test_command_line
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
-	shellcheck -e SC1090 xsrv
+	shellcheck -e SC1090 xsrv xsrv-completion.sh
 
 .PHONY: venv # install dev tools in virtualenv
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.14.6 yamllint ansible==7.4.0
+	pip3 install isort ansible-lint==6.16.1 yamllint ansible==7.5.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -86,6 +86,7 @@ test_idempotence:
 ##### RELEASE PROCEDURE #####
 # - make test_init_vm_template test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
 # - check test environment logs for warning/errors: ssh -t deploy@my.example.test sudo lnav /var/log/syslog
+# - make clean
 # - make bump_versions update_todo new_tag=$new_tag
 # - update release date in CHANGELOG.md, add and commit version bumps/changelog updates
 # - git tag $new_tag && git push && git push --tags
@@ -118,7 +119,7 @@ endif
 	--data '{ "name": "$(new_tag)", "tag_name": "$(new_tag)" }' \
 	--request POST "https://gitlab.com/api/v4/projects/14306200/releases"
 
-.PHONY: github_release # create a new github release (new_tag=X.Y.Z required, GITHUB_PRIVATE_TOKEN must be defined in the environement)
+.PHONY: github_release # create a new github release (new_tag=X.Y.Z required, GITHUB_PRIVATE_TOKEN must be defined in the environment)
 github_release:
 ifndef new_tag
 	$(error new_tag is undefined)
@@ -217,11 +218,18 @@ doc_html: doc_md
 
 ### MANUAL/UTILITY TARGETS ###
 
+.PHONY: codespell # manual - run interactive spell checker
+codespell: venv
+	source .venv/bin/activate && \
+    pip3 install codespell && \
+	codespell --write-changes --interactive 3 --ignore-words ./tests/codespell.ignore --uri-ignore-words-list '*' \
+	--skip '*.venv/*,./.git/*,./tests/playbooks/xsrv-test/ansible_collections/*'
+
 .PHONY: test_install_test_deps # manual - install requirements for test suite
 test_install_test_deps:
 	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq
 
-# can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginnning of the role
+# can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginning of the role
 .PHONY: list_default_variables # manual - list all variables names from role defaults
 list_default_variables:
 	for i in roles/*; do \

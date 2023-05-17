@@ -1,5 +1,5 @@
 # fully qualified domain name of the matrix-synapse server instance
-matrix_synapse_fqdn: matrix.CHANGEME.org # TODO add to default playbook, add to README
+matrix_synapse_fqdn: matrix.CHANGEME.org
 # username/password for the matrix admin user
 matrix_synapse_admin_user: "CHANGEME"
 matrix_synapse_admin_password: "CHANGEME25"
@@ -29,6 +29,11 @@ matrix_firewalld_zones:
   - zone: public
     state: disabled
 
+# enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
+matrix_synapse_admin_enable_service: yes
+# synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
+matrix_synapse_admin_version: "0.8.7"
+
 # fully qualified domain name of the element application instance
 matrix_element_fqdn: "chat.CHANGEME.org"
 # mode for element video rooms (jitsi/element_call)
@@ -39,7 +44,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.29"
+matrix_element_version: "1.11.31"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost

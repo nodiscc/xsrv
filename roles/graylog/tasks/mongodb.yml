@@ -2,7 +2,7 @@
 
 - name: set distribution for mongodb APT repository
   set_fact:
-    mongodb_apt_repo_distribution: "{{ item.apt_repository }}"
+    graylog_mongodb_apt_repo_distribution: "{{ item.apt_repository }}"
   when: ansible_facts.distribution_release == "{{ item.distribution_release }}" # noqa no-jinja-when
   with_items:
     - apt_repository: stretch
@@ -48,9 +48,11 @@
     - ansible_local.graylog.ansible_managed is defined
     - ansible_local.graylog.mongodb_upgraded_44_50 is not defined
 
-- name: install mongodb-org package
+- name: install mongodb packages
   apt:
-    package: mongodb-org
+    package:
+      - mongodb-org
+      - mongodb-database-tools
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 

@@ -181,7 +181,7 @@
 - name: list virtual machines
   community.libvirt.virt:
     command: list_vms
-  register: listed_vms
+  register: libvirt_listed_vms
   check_mode: no # always run
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-vms
@@ -193,7 +193,7 @@
   when:
     - item.state is defined
     - item.state == "absent"
-    - item.name in listed_vms.list_vms
+    - item.name in libvirt_listed_vms.list_vms
   with_items: "{{ libvirt_vms }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-vms
@@ -205,7 +205,7 @@
   when:
     - item.state is defined
     - item.state == "absent"
-    - item.name in listed_vms.list_vms
+    - item.name in libvirt_listed_vms.list_vms
   with_items: "{{ libvirt_vms }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-vms

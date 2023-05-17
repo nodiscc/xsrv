@@ -1,4 +1,5 @@
 # @tag jellyfin - setup jellyfin media server
+# @tag jellyfin-opensubtitles-plugin - setup jellyfin opensubtitles plugin
 
 galaxy_info:
   role_name: jellyfin
@@ -10,6 +11,7 @@ galaxy_info:
     - name: Debian
       versions:
         - "10"
+        - "11"
   galaxy_tags:
     - media
     - server
@@ -17,8 +19,9 @@ galaxy_info:
     - streaming
     - movies
     - music
+    - subtitles
 dependencies:
   - nodiscc.xsrv.handlers
-  # - nodiscc.xsrv.common
-  # - nodiscc.xsrv.monitoring
-  # - nodiscc.xsrv.apache # required
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration

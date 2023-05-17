@@ -28,7 +28,10 @@
     - apache
     - ssl
     - nextcloud
-  when: nextcloud_https_mode == 'selfsigned'
+  when:
+    - nextcloud_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
@@ -36,6 +39,9 @@
   tags:
     - nextcloud
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include rsnapshot/backups configuration tasks
   import_tasks: backups.yml

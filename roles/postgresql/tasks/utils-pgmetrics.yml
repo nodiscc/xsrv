@@ -38,7 +38,6 @@
   command:
     cmd: /usr/local/bin/pgmetrics --no-password --output=/var/log/postgresql/pgmetrics.log
   changed_when: yes
-  register: pgmetrics
 
 - name: harden read permissions on pgmetrics report
   file:

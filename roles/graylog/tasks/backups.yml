@@ -1,0 +1,15 @@
+- name: create mongodb backup directory
+  file:
+    state: directory
+    path: /var/backups/mongodb
+    owner: root
+    group: root
+    mode: "0770"
+
+- name: copy rsnapshot configuration for graylog backups
+  template:
+    src: etc_rsnapshot.d_graylog.conf.j2
+    dest: /etc/rsnapshot.d/graylog.conf
+    mode: "0600"
+  notify: check rsnapshot configuration
+  ignore_errors: "{{ ansible_check_mode }}"

@@ -2,7 +2,7 @@
 
 This role automatically inserts useful information about your hosts in your project's README.md file.
 
-[![](https://i.imgur.com/IwDDpyW.png)](https://i.imgur.com/IwDDpyW.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/G96iP0G.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/G96iP0G.png)
 
 ## Requirements/dependencies/example playbook
 
@@ -60,8 +60,8 @@ If these variable are present in a host's `host_vars`, they will be added to the
 readme_gen_comment: "[hypervisor 1 VM 112](https://proxmox1.CHANGEME.org:8006/#v1:0:=qemu%2F112:4:::::8::)"
 # example using multi-line YAML comment - https://yaml-multiline.info/
 readme_gen_comment: |
-  ![](https://my.CHANGEME.org:19999/api/v1/badge.svg?chart=systemdunits_service-units.service_unit_state&alarm=systemd_service_units_state&refresh=auto)
-  ![](https://my.CHANGEME.org:19999//api/v1/badge.svg?chart=logcount.messages&alarm=logcount_error&refresh=auto)
+  - This host has a faulty power supply
+  - This host's warranty expires on 2099/01/01
 ```
 
 You may also use your own/customized template instead:

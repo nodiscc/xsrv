@@ -34,7 +34,6 @@ deploy [project] [host|group]       deploy the main playbook (apply configuratio
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
-ls                                  list files in the projects directory (accepts a path)
 o|open [project]                    open the project directory in the default file manager
 readme-gen [project]                generate a markdown inventory in the project's README.md
 show-defaults [project] [role]      show all variables and their default values
@@ -77,6 +76,8 @@ TAGS=nextcloud,gitea xsrv deploy infra ex3.CHANGEME.org
 xsrv deploy default '!ex1.CHANGEME.org,!ex7.CHANGEME.org'
 # deploy all hosts in group 'prod' in default project (dry-run/simulation mode)
 xsrv check default prod
+# deploy all hosts whose hostnames begin with srv
+xsrv deploy default srv*
 ```
 
 
@@ -132,7 +133,7 @@ xsrv init-host
 <!-- TODO full output -->
 
 - An editor will let you set the list of [roles](#manage-roles) for the host
-- An editor wil let you set required [configuration variables](#manage-hosts-configuration).
+- An editor will let you set required [configuration variables](#manage-hosts-configuration).
 
 
 ### xsrv edit-inventory
@@ -145,7 +146,7 @@ all:
   my.example.org:
 ```
 ```yaml
-# an inventory with mutiple hosts/groups
+# an inventory with multiple hosts/groups
 all:
   children:
     tools:
@@ -422,7 +423,7 @@ Using the server/host as its own controller is not recommended, but can help wit
 - During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
 
 ```yaml
-##### CONNNECTION
+##### CONNECTION
 # SSH host/port, if different from my.example.org:22
 # ansible_host: "my.example.org"
 # ansible_port: 22

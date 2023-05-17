@@ -7,7 +7,7 @@ This role will install and configure a [LDAP](https://en.wikipedia.org/wiki/Ligh
 
 [![](https://screenshots.debian.net/shrine/screenshot/6946/simage/small-58bc88c5ca84c0544180e2c0f7de1445.png)](https://screenshots.debian.net/package/ldap-account-manager)
 [![](https://screenshots.debian.net/shrine/screenshot/16087/simage/small-d9cc1bf64acddc45d98715f41fada68c.png)](https://screenshots.debian.net/package/ldap-account-manager)
-[![](https://i.imgur.com/loA7FGf.png)](https://i.imgur.com/vaimb8j.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/loA7FGf.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/vaimb8j.png)
 
 
 ## Requirements/dependencies/example playbook
@@ -22,7 +22,7 @@ This role will install and configure a [LDAP](https://en.wikipedia.org/wiki/Ligh
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce protection
     - nodiscc.xsrv.monitoring # (optional) system/server monitoring and health checks
     - nodiscc.xsrv.backup # (optional) automatic backups
-    - nodiscc.xsrv.apache # (required if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
+    - nodiscc.xsrv.apache # (required in the standard configuration if openldap_setup_lam/ssp: yes) webserver, PHP interpreter and SSL certificates
     - nodiscc.xsrv.openldap
 
 # required variables:

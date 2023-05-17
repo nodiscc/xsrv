@@ -33,11 +33,11 @@
       - cron.d
       - crontab
     file_type: any
-  register: cron_directories
+  register: common_cron_directories
 - name: ensure only root can access cron files and directories
   ansible.builtin.file:
     path: "{{ item.path }}"
     owner: root
     group: root
     mode: og-rwx
-  with_items: "{{ cron_directories.files }}"
+  with_items: "{{ common_cron_directories.files }}"

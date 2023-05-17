@@ -110,7 +110,7 @@
     path: /etc/security/limits.d/10.hardcore.conf
     state: absent
 
-# remove libpam-ccreds to disable password caching (prevents connections using cached LDAP credentials, when no connnection to the LDAP server is not available)
+# remove libpam-ccreds to disable password caching (prevents connections using cached LDAP credentials, when no connection to the LDAP server is not available)
 # add libpam-tmpdir to use per-user temporary directories
 - name: install/remove PAM modules
   apt:

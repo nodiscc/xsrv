@@ -29,7 +29,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 - Show htop process manager: `ssh -t user@my.CHANGEME.org sudo htop`
 - Analyze disk usage by directory: `ssh -t user@my.CHANGEME.org sudo ncdu /`
-- Show network bandwith usage by process: `ssh -t user@my.CHANGEME.org sudo nethogs`
+- Show network bandwidth usage by process: `ssh -t user@my.CHANGEME.org sudo nethogs`
 - Show network connections: `ssh -t user@my.CHANGEME.org sudo watch -n 2 ss -laptu`
 - Use [lnav](https://lnav.readthedocs.io/) to navigate/search/filter aggregated system logs:
 

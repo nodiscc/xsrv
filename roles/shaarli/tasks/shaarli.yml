@@ -24,7 +24,7 @@
 
 ### CHECK INSTALLATION STATUS ###
 
-- name: check shaarli if installation directory exists
+- name: check if shaarli installation directory exists
   stat:
     path: "{{ shaarli_install_dir }}"
   register: shaarli_dir
@@ -66,7 +66,7 @@
     owner: root
     group: root
     mode: "0640"
-  when: shaarli_action == 'initial' or shaarli_action == 'upgrade'
+  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
 
 - name: remove shaarli zip extraction directory
   file:
@@ -141,7 +141,7 @@
     force: "{{ shaarli_overwrite_config }}"
   tags: shaarli-config
 
-# fail2ban jail requires an existsing log file, but shaarli oly creates this on first access
+# fail2ban jail requires an existing log file, but shaarli only creates this on first access
 - name: create initial shaarli log.txt
   file:
     state: touch

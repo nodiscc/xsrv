@@ -6,7 +6,7 @@ This role will install [Jitsi Meet](https://jitsi.org/jitsi-meet/), a fully encr
 - Encrypted by default, advanced security settings
 - Web, desktop and mobile clients
 
-[![](https://i.imgur.com/WyhF0tl.jpg)](https://i.imgur.com/WyhF0tl.jpg)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)
 
 
 ## Requirements/dependencies/example playbook
@@ -21,7 +21,7 @@ This role will install [Jitsi Meet](https://jitsi.org/jitsi-meet/), a fully encr
   roles:
     - nodiscc.xsrv.common # (optional) base server setup, hardening, firewall, bruteforce prevention
     - nodiscc.xsrv.monitoring # (optional) server monitoring, log aggregation
-    - nodiscc.xsrv.apache # webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.apache # (required in the standard configuration) webserver/reverse proxy, SSL certificates
     - nodiscc.xsrv.jitsi
 
 # required variables

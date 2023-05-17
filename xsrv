@@ -25,7 +25,6 @@ deploy [project] [host|group]       deploy the main playbook (apply configuratio
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
-ls                                  list files in the projects directory (accepts a path)
 o|open [project]                    open the project directory in the default file manager
 readme-gen [project]                generate a markdown inventory in the project's README.md
 show-defaults [project] [role]      show all variables and their default values
@@ -55,8 +54,8 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.13.1"
-ansible_version="7.4.0"
+version="1.14.0"
+ansible_version="7.5.0"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
@@ -250,15 +249,16 @@ function fetch_backups() {
       "$projects_dir/$project_name/$local_backups_dir/daily.0.$backup_date"
 }
 
-function _ls() {
-    # list files in the projects directory
-    path=${1:-}
-    ls "$projects_dir/$path"
-}
-
 function _xdg_open() {
     # open the project directory in the default file manager
     xdg-open "$projects_dir/$project_name"
+}
+
+_validate_ip_address() {
+    # validate an IPv4 address
+    local address="$1"
+    echo -n "$address" | grep -q -P '^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$' || \
+        (echo "[xsrv] ERROR: $address is not a valid IPv4 address"; exit 1)
 }
 
 function show_defaults() {
@@ -298,7 +298,7 @@ function create_venv() {
     source "$venv_dir/bin/activate"
     echo "[xsrv] INFO: installing ansible in $venv_dir"
     pip3 install wheel
-    pip3 install ansible=="$ansible_version" netaddr
+    pip3 install ansible=="$ansible_version" netaddr lxml
 }
 
 function init_venv() {
@@ -427,6 +427,7 @@ function init_vm() {
         gateway="$(echo "$ip" | cut -d'.' -f1-3).1"
         echo "[xsrv] INFO: --gateway not provided, automatically set to $gateway"
     fi
+    for i in "$ip" "$gateway"; do _validate_ip_address "$i"; done
     if [[ -z "$dumpxml_file" ]]; then
         dumpxml_file="$projects_dir/$name.xml"
         echo "[xsrv] INFO: --dumpxml not provided, automatically set to $projects_dir/$name.xml"
@@ -571,6 +572,7 @@ function init_vm_template() {
         gateway="$(echo "$ip" | cut -d'.' -f1-3).1"
         echo "[xsrv] INFO: --gateway not provided, automatically set to $gateway"
     fi
+    for i in "$ip" "$gateway"; do _validate_ip_address "$i"; done
     if [[ ! -d "$xsrv_clone_dir/.git" ]]; then
         git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
     fi
@@ -605,6 +607,7 @@ function init_vm_template() {
         --noreboot
     reset
     echo "[xsrv] INFO: cleaning up $name..."
+    sudo rm /var/lib/libvirt/preseed.cfg
     sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
     sudo chmod 0660 "$storage_path/$name.qcow2"
     virt-sysprep --connect qemu:///system --domain "$name"
@@ -745,6 +748,8 @@ function check_user_in_libvirt_groups() {
 ########## MAIN ##########
 
 function _main() {
+    # main loop and command-line wrapper
+    # MAINT: when the list of commands is updated, the help text above, docs/usage.md and xsrv-completion.sh must also be updated
     echo "$ascii_banner"
     if [[ -z "$command" ]]; then echo "[xsrv] ERROR: no command provided"; echo "$usage"; exit 1; fi
     case "$command" in
@@ -762,7 +767,6 @@ function _main() {
         "edit-vault") init_venv; shift; edit_vault ;;
         "shell"|"ssh") init_venv; shift; run_shell ;;
         "logs") init_venv; shift; ssh_args="bash -c 'if [[ -r /var/log/syslog ]]; then lnav /var/log/syslog; else sudo lnav /var/log/syslog; fi'"; run_shell ;;
-        "ls") shift; _ls "$@" ;;
         "o"|"open") shift; _xdg_open "$@" ;;
         "help") echo "$usage" ;;
         "help-tags") init_venv; shift; help_tags ;;
