@@ -33,6 +33,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 
 **Changed:**
 - monitoring_utils: lynis: disable `Reboot of system is most likely needed` warning, let netdata/needrestart send notifications when a reboot is required
+- monitoring_utils: lynis: disable `Found one or more vulnerable packages` warning, let debsecan handle reporting of vulnerable packages
 - homepage: display descriptions for each applications/services, improve layout
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
 - gitea: update to v1.19.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.19.3)

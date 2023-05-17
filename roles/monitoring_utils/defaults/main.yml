@@ -29,5 +29,6 @@ lynis_skip_tests:
   - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
   - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
   - "KRNL-5830" # let needrestart/netdata send alarms when reboot is required
+  - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
