@@ -256,9 +256,9 @@ function _xdg_open() {
 
 _validate_ip_address() {
     # validate an IPv4 address
-    ip="$1"
-    echo -n "$ip" | grep -q -P '^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$' || \
-        (echo "[xsrv] ERROR: $ip is not a valid IPv4 address"; exit 1)
+    local address="$1"
+    echo -n "$address" | grep -q -P '^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$' || \
+        (echo "[xsrv] ERROR: $address is not a valid IPv4 address"; exit 1)
 }
 
 function show_defaults() {
