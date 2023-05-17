@@ -86,6 +86,7 @@ test_idempotence:
 ##### RELEASE PROCEDURE #####
 # - make test_init_vm_template test_init_vm test_check_mode test_idempotence SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
 # - check test environment logs for warning/errors: ssh -t deploy@my.example.test sudo lnav /var/log/syslog
+# - make clean
 # - make bump_versions update_todo new_tag=$new_tag
 # - update release date in CHANGELOG.md, add and commit version bumps/changelog updates
 # - git tag $new_tag && git push && git push --tags
