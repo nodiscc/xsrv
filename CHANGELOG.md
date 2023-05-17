@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
+- matrix: synapse: if you are getting the error `Failed to update apt cache: unknown reason`, this may be caused by the matrix/synapse APT repository signing key having expired. Deploying the `matrix` alone should solve this problem (`TAGS=matrix xsrv deploy`)
 - (optional) download and install the tab/auto-completion script:
 
 ```bash
@@ -43,6 +44,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - update documentation
 
 **Fixed:**
+- matrix: synapse: fix `Failed to update apt cache: unknown reason`/expired repository signing key
 - jellyfin: fix idempotence/opensubtitles plugin installation always returning `changed`
 - decouple web aplication roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 
