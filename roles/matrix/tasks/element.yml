@@ -1,23 +1,23 @@
 - name: check if element installation directory exists
   stat:
     path: "{{ element_install_dir }}"
-  register: element_dir
+  register: matrix_element_dir
 
 - name: abort on unsupported conditions
   fail:
-    msg: "ERROR: unsupported conditions: element_dir.stat.exists: {{ element_dir.stat.exists }}, but ansible_local.matrix.element.installed.version says otherwise" # noqa 204
-  when: '((not element_dir.stat.exists) and (ansible_local.matrix.element.installed.version is defined)) or
-         ((element_dir.stat.exists) and (ansible_local.matrix.element.installed.version is not defined))'
+    msg: "ERROR: unsupported conditions: matrix_element_dir.stat.exists: {{ matrix_element_dir.stat.exists }}, but ansible_local.matrix.element.installed.version says otherwise" # noqa 204
+  when: '((not matrix_element_dir.stat.exists) and (ansible_local.matrix.element.installed.version is defined)) or
+         ((matrix_element_dir.stat.exists) and (ansible_local.matrix.element.installed.version is not defined))'
 
 - name: check if initial installation should be performed
   set_fact:
-    element_action: initial
-  when: '(ansible_local.matrix.element.installed.version is not defined) and (not element_dir.stat.exists)'
+    matrix_element_action: initial
+  when: '(ansible_local.matrix.element.installed.version is not defined) and (not matrix_element_dir.stat.exists)'
 
 - name: check if upgrade should be performed
   set_fact:
-    element_action: upgrade
-  when: '(ansible_local.matrix.element.installed.version is defined) and (ansible_local.matrix.element.installed.version < matrix_element_version) and (element_dir.stat.exists)' # noqa 204
+    matrix_element_action: upgrade
+  when: '(ansible_local.matrix.element.installed.version is defined) and (ansible_local.matrix.element.installed.version < matrix_element_version) and (matrix_element_dir.stat.exists)' # noqa 204
 
 - name: download element tarball
   get_url:
@@ -34,8 +34,8 @@
     state: absent
   no_log: yes # very verbose
   when:
-    - element_action is defined
-    - element_action == 'upgrade'
+    - matrix_element_action is defined
+    - matrix_element_action == 'upgrade'
 
 - name: create element zip extraction directory
   file:
@@ -45,8 +45,8 @@
     owner: root
     group: root
   when:
-    - element_action is defined
-    - (element_action == 'initial') or (element_action == 'upgrade')
+    - matrix_element_action is defined
+    - (matrix_element_action == 'initial') or (matrix_element_action == 'upgrade')
 
 - name: extract element tarball
   unarchive:
@@ -55,8 +55,8 @@
     remote_src: yes
     mode: u=rwX
   when:
-    - element_action is defined
-    - (element_action == 'initial') or (element_action == 'upgrade')
+    - matrix_element_action is defined
+    - (matrix_element_action == 'initial') or (matrix_element_action == 'upgrade')
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: remove old element installation directory
@@ -65,14 +65,14 @@
     state: absent
   no_log: yes
   when:
-    - element_action is defined
-    - element_action == 'upgrade'
+    - matrix_element_action is defined
+    - matrix_element_action == 'upgrade'
 
 - name: move element extraction directory to install directory
   command: "mv /root/element-unpack/element-v{{ matrix_element_version }} {{ element_install_dir }}"
   when:
-    - element_action is defined
-    - (element_action == 'initial') or (element_action == 'upgrade')
+    - matrix_element_action is defined
+    - (matrix_element_action == 'initial') or (matrix_element_action == 'upgrade')
   changed_when: yes
 
 - name: copy element configuration

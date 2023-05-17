@@ -2,31 +2,31 @@
 
 - name: set variables for tar.bz2 installation method
   set_fact:
-    ldap_account_manager_configcfg_dir: "{{ ldap_account_manager_install_dir }}/config"
+    openldap_ldap_account_manager_configcfg_dir: "{{ ldap_account_manager_install_dir }}/config"
 
 - name: check if ldap-account-manager installation directory exists
   stat:
     path: "{{ ldap_account_manager_install_dir }}"
-  register: ldap_account_manager_dir
+  register: openldap_ldap_account_manager_dir
 
 - name: set the default installation action (do nothing)
   set_fact:
-    ldap_account_manager_action: none
+    openldap_ldap_account_manager_action: none
 
 - name: check if initial installation should be performed
   set_fact:
-    ldap_account_manager_action: initial
+    openldap_ldap_account_manager_action: initial
   when:
     - ansible_local.ldap_account_manager.installed.version is undefined
-    - not ldap_account_manager_dir.stat.exists
+    - not openldap_ldap_account_manager_dir.stat.exists
 
 - name: check if upgrade should be performed
   set_fact:
-    ldap_account_manager_action: upgrade
+    openldap_ldap_account_manager_action: upgrade
   when:
     - ansible_local.ldap_account_manager.installed.version is defined
     - ansible_local.ldap_account_manager.installed.version < ldap_account_manager_version
-    - ldap_account_manager_dir.stat.exists
+    - openldap_ldap_account_manager_dir.stat.exists
 
 ##### CLEANUP #####
 
@@ -47,7 +47,7 @@
     group: root
     mode: "0640"
   retries: 3
-  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  when: openldap_ldap_account_manager_action == 'initial' or openldap_ldap_account_manager_action == 'upgrade'
   check_mode: no
 
 - name: create ldap-account-manager tar.bz2 extraction directory
@@ -55,7 +55,7 @@
     path: /root/ldap-account-manager-unpack
     state: directory
     mode: "0750"
-  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  when: openldap_ldap_account_manager_action == 'initial' or openldap_ldap_account_manager_action == 'upgrade'
   check_mode: no
 
 - name: extract ldap-account-manager tar.bz2
@@ -66,7 +66,7 @@
     owner: root
     group: www-data
     mode: u=rwX,g=rX
-  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  when: openldap_ldap_account_manager_action == 'initial' or openldap_ldap_account_manager_action == 'upgrade'
 
 - name: give required write permissions to the webserver
   file:
@@ -79,18 +79,18 @@
     - "/root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }}/tmp"
     - "/root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }}/tmp/internal"
     - "/root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }}/config"
-  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  when: openldap_ldap_account_manager_action == 'initial' or openldap_ldap_account_manager_action == 'upgrade'
 
 - name: delete old ldap-account-manager installation
   file:
     path: '{{ ldap_account_manager_install_dir }}'
     state: absent
   no_log: yes
-  when: ldap_account_manager_action == 'upgrade'
+  when: openldap_ldap_account_manager_action == 'upgrade'
 
 - name: move ldap_account_manager extraction directory to install directory
   command: mv /root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }} '{{ ldap_account_manager_install_dir }}'
-  when: ldap_account_manager_action == 'initial' or ldap_account_manager_action == 'upgrade'
+  when: openldap_ldap_account_manager_action == 'initial' or openldap_ldap_account_manager_action == 'upgrade'
   changed_when: yes
 
 ##### ANSIBLE FACTS #####

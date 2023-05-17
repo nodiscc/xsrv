@@ -1,7 +1,7 @@
 - name: get firewall zones
   ansible.posix.firewalld_info:
-  register: firewalld_info
+  register: common_firewalld_info
 
 - name: list firewall zones
   debug:
-    var: firewalld_info
+    var: common_firewalld_info

@@ -14,7 +14,7 @@
 
 - name: hash LDAP admin password
   shell: slappasswd -s {{ openldap_admin_password }} # noqa command-instead-of-shell
-  register: slapd_admin_password
+  register: openldap_slapd_admin_password
   changed_when: False # does not change anything
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -41,11 +41,11 @@
     - dn: 'olcDatabase={1}mdb,cn=config'
       no_log: True
       attributes:
-        olcRootPW: '{{ slapd_admin_password.stdout }}'
+        olcRootPW: '{{ openldap_slapd_admin_password.stdout }}'
     - dn: 'olcDatabase={0}config,cn=config'
       no_log: True
       attributes:
-        olcRootPW: '{{ slapd_admin_password.stdout }}'
+        olcRootPW: '{{ openldap_slapd_admin_password.stdout }}'
     - dn: 'cn=config'
       attributes:
         olcLogLevel: '{{ openldap_log_level }}'

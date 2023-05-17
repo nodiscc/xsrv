@@ -3,15 +3,15 @@
     path: "{{ item.xml_file }}"
     xpath: /domain/currentMemory
     content: text
-  register: mem
+  register: libvirt_mem
   delegate_to: localhost
   tags: utils-libvirt-setmem
 
 - name: set VM current memory (always returns changed)
   command:
-    cmd: "virsh setmem {{ item.name }} --size {{ mem.matches[0].currentMemory }} --current"
-  register: setmem
+    cmd: "virsh setmem {{ item.name }} --size {{ libvirt_mem.matches[0].currentMemory }} --current"
+  register: libvirt_setmem
   become: yes
   changed_when: yes
-  failed_when: (setmem.rc != 0) and ('cannot set memory higher than max memory' not in setmem.stderr)
+  failed_when: (libvirt_setmem.rc != 0) and ('cannot set memory higher than max memory' not in libvirt_setmem.stderr)
   tags: utils-libvirt-setmem

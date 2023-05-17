@@ -19,7 +19,7 @@
 
 - name: create ldap-account-manager profile configuration directory
   file:
-    path: "{{ ldap_account_manager_configcfg_dir }}/profiles/lam"
+    path: "{{ openldap_ldap_account_manager_configcfg_dir }}/profiles/lam"
     owner: root
     group: www-data
     mode: u=rwX,g=rwX
@@ -34,7 +34,7 @@
     mode: "{{ item.mode }}"
   with_items:
     - src: "etc_ldap-account-manager_config.cfg.j2"
-      dest: "{{ ldap_account_manager_configcfg_dir }}/config.cfg"
+      dest: "{{ openldap_ldap_account_manager_configcfg_dir }}/config.cfg"
       mode: "0640"
     - src: "var_lib_ldap-account-manager_config_lam.conf.j2"
       dest: "{{ ldap_account_manager_install_dir }}/config/lam.conf"
@@ -49,7 +49,7 @@
 - name: copy ldap-account-manager trusted LDAP server certificate
   copy:
     src: "{{ ldap_account_manager_ldaps_cert }}"
-    dest: "{{ ldap_account_manager_configcfg_dir }}/serverCerts.pem"
+    dest: "{{ openldap_ldap_account_manager_configcfg_dir }}/serverCerts.pem"
     owner: root
     group: www-data
     mode: "0640"

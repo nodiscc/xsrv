@@ -58,7 +58,7 @@
 
 - name: register synapse admin user
   command: register_new_matrix_user --config /etc/matrix-synapse/homeserver.yaml --admin --user {{ matrix_synapse_admin_user }} --password {{ matrix_synapse_admin_password }}
-  register: synapse_create_user
-  failed_when: synapse_create_user.rc != 0 and 'User ID already taken.' not in synapse_create_user.stdout
-  changed_when: "'Success!' in synapse_create_user.stdout"
+  register: matrix_synapse_create_user
+  failed_when: matrix_synapse_create_user.rc != 0 and 'User ID already taken.' not in matrix_synapse_create_user.stdout
+  changed_when: "'Success!' in matrix_synapse_create_user.stdout"
   when: matrix_synapse_enable_service | bool
