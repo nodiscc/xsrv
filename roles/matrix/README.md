@@ -114,6 +114,7 @@ See the included [rsnapshot configuration](templates/etc/rsnapshot.d_matrix.conf
 matrix - setup matrix chat server and web client
 synapse - setup synapse (matrix) chat server
 element - setup element matrix web chat client
+synapse-admin - setup synapse-admin matrix administration web interface
 ```
 <!--END TAGS LIST-->
 

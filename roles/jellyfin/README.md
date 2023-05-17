@@ -139,6 +139,7 @@ Due to [potential security issues](https://github.com/jellyfin/jellyfin/issues/5
 <!--BEGIN TAGS LIST-->
 ```
 jellyfin - setup jellyfin media server
+jellyfin-opensubtitles-plugin - setup jellyfin opensubtitles plugin
 ```
 <!--END TAGS LIST-->
 
