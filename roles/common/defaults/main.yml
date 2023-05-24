@@ -163,6 +163,7 @@ apt_listbugs_ignore_list:
   - 1029342 # https://bugs.debian.org/1029342 - packaging bug without impact
   - 983393 # https://bugs.debian.org/983393 - ignored in bullseye, fixed in unstable
   - 1035483 # https://bugs.debian.org/1035483 - minor bug leading to false positive/debsums incorrectly detecting missing file
+  - 993714 # https://bugs.debian.org/993714 - minor bug leading to false positive/debsums incorrectly detecting missing file
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
