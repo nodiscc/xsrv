@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.15.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.15.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+
+**Fixed:**
+- xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
+
+[Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.14.0...1.15.0)
+
+------------------
+
+
 #### [v1.14.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.14.0) - 2023-05-17
 
 **Upgrade procedure:**
