@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 
+**Changed:**
+- nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
+
 **Fixed:**
 - xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
 - xsrv: init-vm: fix the VM XML filename printed out in the `libvirt_vms` copy-pastable snippet
