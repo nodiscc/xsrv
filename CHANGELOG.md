@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
 - xsrv: update ansible to [v7.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- update documentation
 
 **Fixed:**
 - xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)

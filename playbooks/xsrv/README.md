@@ -14,10 +14,7 @@ Usage: `xsrv COMMAND default [HOST]`
 - **Appliances:** [APPLIANCES.md](APPLIANCES.md)
 - **Licenses: [LICENSES.md](LICENSES.md)
 - **Maintenance:** [MAINTENANCE.md](MAINTENANCE.md)
-
-### Network
-
-- Routing/NAT/firewall: [PFSENSE.md](PFSENSE.md)
+- **Routing/NAT/firewall**: [PFSENSE.md](PFSENSE.md)
 
 #### VLANs
 
