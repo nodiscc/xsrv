@@ -1,7 +1,7 @@
 - name: download pgmetrics
   get_url:
-    url: https://github.com/rapidloop/pgmetrics/releases/download/v1.14.1/pgmetrics_1.14.1_linux_amd64.tar.gz
-    dest: /root/pgmetrics_1.14.1_linux_amd64.tar.gz
+    url: https://github.com/rapidloop/pgmetrics/releases/download/v1.15.0/pgmetrics_1.15.0_linux_amd64.tar.gz
+    dest: /root/pgmetrics_1.15.0_linux_amd64.tar.gz
     owner: root
     group: root
     mode: "0640"
@@ -14,7 +14,7 @@
 
 - name: extract pgmetrics tar.gz
   unarchive:
-    src: "/root/pgmetrics_1.14.1_linux_amd64.tar.gz"
+    src: "/root/pgmetrics_1.15.0_linux_amd64.tar.gz"
     dest: "/root/pgmetrics-unpack"
     remote_src: yes
     owner: root
@@ -25,7 +25,7 @@
 - name: copy pgmetrics binary in place
   copy:
     remote_src: yes
-    src: /root/pgmetrics-unpack/pgmetrics_1.14.1_linux_amd64/pgmetrics
+    src: /root/pgmetrics-unpack/pgmetrics_1.15.0_linux_amd64/pgmetrics
     dest: /usr/local/bin/pgmetrics
     owner: root
     group: root
