@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
 - xsrv: update ansible to [v7.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
+- improve check mode support
 - update documentation
 
 **Fixed:**
