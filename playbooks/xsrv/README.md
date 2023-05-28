@@ -4,11 +4,6 @@ Usage: `xsrv COMMAND default [HOST]`
 
 [inventory](inventory.yml) · [main playbook](playbook.yml) · [hosts configuration](host_vars/) · [groups configuration](group_vars/) · [keepass keyring](default.kdbx) · [other playbooks](playbooks/) · [ansible configuration](ansible.cfg) · [collections configuration](requirements.yml) · [other data](data/)
 
-<!--
-## Monitoring
-insert netdata badges here
--->
-
 <!-- ## Documentation
 ![](diagram.png) Source ([Dia]((https://packages.debian.org/buster/dia)): [diagram.dia](diagram.dia)
 - **Adding/removing/provisioning hosts: [PROXMOX.md](PROXMOX.md), [DEBIAN.md](DEBIAN.md), [PFSENSE.md](PFSENSE.md), [NAMING.md](NAMING.md)
