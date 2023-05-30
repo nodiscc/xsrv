@@ -74,7 +74,7 @@
     zone: "{{ item.0.zone }}"
     state: "{{ item.0.state | default('enabled') }}"
     permanent: "{{ item.0.permanent | default('yes') }}"
-    immediate: "{{ item.0.immediate | default('yes') }}"
+    immediate: "{{ item.0.immediate | default('no') }}"
     source: "{{ item.1 }}"
   when: (item.0.delete is not defined) or (not item.0.delete)
   loop: "{{ q('subelements', firewalld_zone_sources, 'sources', {'skip_missing': True}) }}"
@@ -86,7 +86,7 @@
     zone: "{{ item.0.zone }}"
     state: "{{ item.0.state | default('enabled') }}"
     permanent: "{{ item.0.permanent | default('yes') }}"
-    immediate: "{{ item.0.immediate | default('yes') }}"
+    immediate: "{{ item.0.immediate | default('no') }}"
     service: "{{ item.1 }}"
   with_subelements:
     - "{{ firewalld_zone_services }}"
