@@ -247,6 +247,9 @@ firewalld_zone_services:
   - zone: public
     services:
       - ssh # allow SSH from anywhere
+  - zone: internal
+    services:
+      - ssh # allow SSH from internal zone
   - zone: public
     services:
       - dhcpv6-client # remove dhcpv6-client rule from the default public zone
