@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - common: firewalld: fix conflicting default values for `immediate` and `permanent` during `configure firewalld zone sources` (default to `permanent: yes, immediate: no`)
 - common: firewalld: allow SSH connections from both the internal and public zones by default
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
 - xsrv: init-vm: fix the VM XML filename printed out in the `libvirt_vms` copy-pastable snippet
 
