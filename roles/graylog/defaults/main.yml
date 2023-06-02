@@ -5,6 +5,8 @@ graylog_fqdn: "logs.CHANGEME.org"
 graylog_root_username: "CHANGEME"
 graylog_root_password: "CHANGEME20"
 graylog_secret_key: "CHANGEME96"
+# timezone of the graylog admin user, from https://www.joda.org/joda-time/timezones.html
+graylog_root_timezone: "UTC"
 # HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate

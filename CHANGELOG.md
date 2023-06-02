@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+**Added:**
+- graylog: allow setting the admin user account timezone ([`graylog_root_timezone`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+
 **Changed:**
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
