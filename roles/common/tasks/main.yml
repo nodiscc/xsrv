@@ -104,7 +104,9 @@
 - name: include ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
-  tags: common
+  tags:
+    - common
+    - firewall
 
 - name: include base package installation/removal tasks
   import_tasks: packages.yml

@@ -26,6 +26,13 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: restart fail2ban
+  become: yes
+  service:
+    name: fail2ban
+    state: restarted
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### APACHE ###
 
