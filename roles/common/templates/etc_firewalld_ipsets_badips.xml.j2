@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <ipset type="hash:net">
+  <short>bad-ips</short>
+{% for item in firewalld_bad_ips %}
+  <entry>{{ item }}</entry>
+{% endfor %}
+</ipset>

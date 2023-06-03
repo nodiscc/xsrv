@@ -278,6 +278,13 @@ firewalld_zone_services:
     services:
       - dhcpv6-client # remove dhcpv6-client rule from the default public zone
     state: disabled
+
+firewalld_bad_ips:
+  - 222.168.30.19
+  - 176.111.173.193
+  - 83.97.73.83
+  - 194.110.203.131
+
 # additional firewalld configuration - https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
 firewalld: []
 

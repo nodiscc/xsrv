@@ -22,7 +22,8 @@
     - setup_hostname == setup_hostname | bool
     - setup_hosts_file == setup_hosts_file | bool
     - setup_firewall == setup_firewall | bool
-    - firewalld|type_debug == "list"
+    - firewalld | type_debug == "list"
+    - firewalld_bad_ips | type_debug == "list"
     - setup_fail2ban == setup_fail2ban | bool
     - setup_msmtp == setup_msmtp | bool
     - setup_ssh == setup_ssh | bool
@@ -106,6 +107,14 @@
     - apt
     - apt-listbugs
 
+- name: check that variables are correctly defined (firewalld_bad_ips)
+  assert:
+    quiet: yes
+    that: "{{ item | ansible.utils.ipv4 }}"
+    fail_msg: "items in the firewalld_bad_ips list must be valid IPv4 addresses/networks"
+  with_items: "{{ firewalld_bad_ips }}"
+  tags: firewall
+
 - name: check that variables are correctly defined (firewalld_zone_sources)
   assert:
     quiet: yes
@@ -120,8 +129,7 @@
     - setup_firewall | bool
     - (item.delete is not defined) or (not item.delete)
   loop: "{{ firewalld_zone_sources }}"
-  tags:
-    - firewall
+  tags: firewall
 
 - name: check that variables are correctly defined (firewalld_zone_services)
   assert:
@@ -135,8 +143,7 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   when: setup_firewall | bool
   loop: "{{ firewalld_zone_services }}"
-  tags:
-    - firewall
+  tags: firewall
 
 - name: check that DNS resolvers are configured
   assert:
@@ -154,3 +161,4 @@
     fail_msg: "dns_nameservers: {{ item }} is not a valid IP address"
   when: setup_dns | bool
   loop: "{{ dns_nameservers }}"
+  tags: dns

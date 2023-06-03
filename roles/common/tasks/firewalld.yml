@@ -34,6 +34,16 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
+- name: configure firewalld ipsets
+  template:
+    src: etc_firewalld_ipsets_badips.xml.j2
+    dest: /etc/firewalld/ipsets/badips.xml
+    owner: root
+    group: root
+    mode: "0600"
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: create/delete firewall zones
   firewalld:
     zone: "{{ item.zone }}"
