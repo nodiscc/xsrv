@@ -85,6 +85,9 @@ In that case you should check the bug report details on https://bugs.debian.org/
 - set `apt_listbugs_action` to `force-yes` and re-run the playbook/common role/`apt-listbugs` tag before retrying package installation
 - add the bug number manually to `/etc/apt/listbugs/ignore_bugs` on the target host, temporarily
 
+**Remove an IP address network from the firewalld blocklist:** Remove the address from the `firewalld_blocklist` list, and deploy the role. If you locked yourself out of the server (by adding your own IP to the blocklist), access the server using an out-of-band mechanism (serial console, VM console, IP KVM...) and run `sudo firewall-cmd --ipset=blocklist --remove-entry=YOUR_IP && sudo systemctl reload firewalld`. You can check which addresses are currently in the blocklist by running `sudo firewall-cmd --ipset=blocklist --get-entries`.
+
+
 ## Tags
 
 <!--BEGIN TAGS LIST-->
