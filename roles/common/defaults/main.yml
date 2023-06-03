@@ -222,7 +222,7 @@ ssh_password_authentication: "no"
 setup_firewall: yes
 # log rejected/dropped packets (all/unicast/broadcast/multicast/off)
 firewalld_log_denied: all
-# Firewalld zones
+# firewalld zones
 # Example:
 # firewalld_zone_sources:
 #   - zone: internal # add 192.168.0.0/16 and 10.0.0.0/8 to the internal zone
@@ -252,7 +252,7 @@ firewalld_zone_sources:
       - 192.168.0.0/16
       - 172.16.0.0/12
       - 10.0.0.0/8
-# Services to allow in firewalld zones
+# services to allow in firewalld zones
 # Example:
 # firewalld_zone_services:
 #   - zone: public # firewall zone to configure
@@ -279,6 +279,14 @@ firewalld_zone_services:
     services:
       - dhcpv6-client # remove dhcpv6-client rule from the default public zone
     state: disabled
+# list of IP addresses/networks to block globally
+# Example:
+# firewalld_blocklist:
+#   - 1.2.3.4
+#   - 5.6.7.8/24
+#   - 9.10.11.12/16
+firewalld_blocklist: []
+
 # additional firewalld configuration - https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
 firewalld: []
 

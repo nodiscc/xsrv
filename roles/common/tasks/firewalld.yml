@@ -76,6 +76,35 @@
   with_items: "{{ firewalld }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+#### BLOCKLIST ####
+
+- name: configure firewalld blocklist ipset
+  template:
+    src: etc_firewalld_ipsets_blocklist.xml.j2
+    dest: /etc/firewalld/ipsets/blocklist.xml
+    owner: root
+    group: root
+    mode: "0600"
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: add blocklist ipset to firewalld drop zone
+  firewalld:
+    zone: drop
+    state: enabled
+    permanent: yes
+    immediate: no
+    source: "ipset:blocklist"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: reload firewalld
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+
 #### SERVICE #####
 
 - name: enable firewalld service
