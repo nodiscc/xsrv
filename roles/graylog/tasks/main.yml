@@ -2,6 +2,7 @@
   import_tasks: checks.yml
   tags:
     - graylog
+    - mongodb
     - checks
 
 - name: load distribution-specific variables
@@ -17,7 +18,9 @@
 - name: include mongodb configuration tasks
   import_tasks: mongodb.yml
   become: yes
-  tags: graylog
+  tags:
+    - graylog
+    - mongodb
 
 - name: include elasticsearch configuration tasks
   import_tasks: elasticsearch.yml

@@ -7,8 +7,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
-- To get rid of the deprecation warning `collections_paths option does not fit var naming standard`, rename `collections_paths` to `collections_path` in `ansible.cfg` (`xsrv edit-cfg`)
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **graylog:** if you are using the `graylog` role, add the `mongodb_admin_password` and `graylog_mongodb_password` variables to your host variables (`xsrv edit-vault`) and set their values to strong random passwords
+- To get rid of the deprecation warning `collections_paths option does not fit var naming standard`, rename `collections_paths` to `collections_path` in `ansible.cfg` (`xsrv edit-cfg`)
 - `xsrv deploy` to apply changes
 
 **Changed:**
@@ -19,8 +20,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
 **Added:**
+- graylog/mongodb: require authentication to connect to mongodb ([`mongodb_admin_password`, `graylog_mongodb_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml))
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
 - gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+
+**Fixed:**
+- monitoring_utils: fix lynis warning `MongoDB instance allows any user to access databases`
 
 [Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
 

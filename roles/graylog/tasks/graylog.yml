@@ -1,4 +1,25 @@
-### GRAYLOG ###
+##### DATABASE #####
+
+# run as the mongodb user so that python3 modules installed from pip as mongodb are not run by root
+- name: create graylog mongodb user and database
+  become: yes
+  become_user: mongodb
+  mongodb_user:
+    login_user: "admin"
+    login_password: "{{ mongodb_admin_password }}"
+    database: "graylog"
+    name: "graylog"
+    password: "{{ graylog_mongodb_password }}"
+    roles:
+      - { db: "graylog", role: "readWrite" }
+      - { db: "graylog", role: "dbAdmin" }
+  vars:
+    ansible_python_interpreter: /var/lib/mongodb/.venv/bin/python3
+  when: ansible_local.graylog.mongodb_auth_configured is not defined
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: mongodb
+
+##### GRAYLOG #####
 
 - name: download graylog-5.1-repository deb package
   get_url:
@@ -44,12 +65,14 @@
     mode: "{{ item.mode }}"
   notify: restart graylog-server
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: "{{ item.diff | default(True) }}"
   with_items:
     - src: etc_graylog_server_server.conf.j2
       dest: /etc/graylog/server/server.conf
       owner: root
       group: graylog
       mode: "0640"
+      diff: no # hide diff as it may contain mongodb password
     - src: etc_default_graylog-server.j2
       dest: /etc/default/graylog-server
       owner: root

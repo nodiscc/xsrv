@@ -8,6 +8,8 @@
     - graylog_root_username is not search("CHANGEME")
     - graylog_root_password is not search("CHANGEME")
     - graylog_secret_key is not search("CHANGEME")
+    - mongodb_admin_password is not search("CHANGEME")
+    - graylog_mongodb_password is not search("CHANGEME")
     - graylog_root_timezone is string
     - graylog_https_mode in ['selfsigned', 'letsencrypt']
     - graylog_enable_service == graylog_enable_service | bool
