@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
 - xsrv: init-vm: fix the VM XML filename printed out in the `libvirt_vms` copy-pastable snippet
+- graylog: decouple role from the apache role, skip apache configuration tasks when apache is not managed by ansible
 - nextcloud: fix mysql ansible module arguments
 
 [Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.14.0...1.15.0)
