@@ -124,3 +124,7 @@
     mode: "0644"
   notify: update ansible facts
   ignore_errors: "{{ ansible_check_mode }}"
+
+# ensure ansible facts are up to date before continuing
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
