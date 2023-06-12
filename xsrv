@@ -503,7 +503,7 @@ EOF
     echo "[xsrv] INFO: dumping VM XML definition to $dumpxml_file"
     virsh --connect qemu:///system dumpxml "$name" > "$dumpxml_file"
     echo "[xsrv] INFO: You may now start managing this VM using the nodiscc.xsrv.libvirt_role."
-    echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '$dumpxml_file'"
+    echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '{{ playbook_dir }}/data/libvirt/$(basename $dumpxml_file)'"
 }
 
 # to delete the VM: virsh destroy $TEMPLATE_VMNAME; virsh undefine $TEMPLATE_VMNAME; virsh vol-delete --pool /var/lib/libvirt/images/$TEMPLATE_VMNAME.qcow2
