@@ -432,6 +432,10 @@ init_vm() {
         dumpxml_file="$projects_dir/$name.xml"
         echo "[xsrv] INFO: --dumpxml not provided, automatically set to $projects_dir/$name.xml"
     fi
+    if [[ ! "$memory" =~ ^[0-9]*[GM] ]]; then
+        echo "[xsrv] ERROR --memory value must use the M or G suffix (e.g. 1024M or 1G)"
+        exit 1
+    fi
 
     # build /etc/network/interfaces for the target system 
     cat > ./libvirt-clone-interfaces.txt << EOF

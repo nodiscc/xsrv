@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
 - matrix: update element-web to v1.11.32 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
