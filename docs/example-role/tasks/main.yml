@@ -17,13 +17,6 @@
   tags:
     - EXAMPLE
 
-- name: include component2 configuration tasks
-  import_tasks: component2.yml
-  become: yes
-  tags:
-    - EXAMPLE
-    - mail
-
 - name: include fail2ban configuration tasks
   import_tasks: fail2ban.yml
   become: yes

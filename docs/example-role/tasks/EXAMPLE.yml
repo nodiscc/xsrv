@@ -1,0 +1,11 @@
+# installation/setup tasks for EXAMPLE component, such as:
+# - install packages
+# - download binaries/zips
+# - verify binary downloads using checksums and/or GPG keys
+# - create users/groups
+# - create configuration/data directories
+# - install binaries to $PATH
+# - copy configuration files
+# - create databases/tables
+# - create application admin/user accounts
+# - start/stop service
