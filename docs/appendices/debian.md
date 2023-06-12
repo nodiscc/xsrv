@@ -60,12 +60,11 @@ USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway
         --disk-size     size of the disk image to create, in GB (default 20)
         --network       name of the libvirt network to attach the VM to (default default)
         --preseed-file  path to the preseed/preconfiguration file (default $HOME/.local/share/xsrv/git/docs/preseed.cfg)
-
-        
-
 ```
 
 The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overridden using `--preseed /path/to/custom/preseed.cfg`.
+
+Under the hood, this uses libvirt-specific commands such as `virt-install` and `virt-sysprep`. Similar tools for other virtualization platforms/cloud providers include [Packer](https://www.packer.io/) and [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html).
 
 [![](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z.svg)](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z?speed=2&theme=monokai&autoplay=true)
 
