@@ -94,7 +94,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure additional firewalld rules
-  firewalld: "{{ item }}"
+  firewalld: "{{ item }}" # noqa args[module] # false positive
   with_items: "{{ firewalld }}"
   ignore_errors: "{{ ansible_check_mode }}"
 

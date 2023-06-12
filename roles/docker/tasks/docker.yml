@@ -99,7 +99,7 @@
 ##### SWARM #####
 
 - name: configure docker swarm
-  docker_swarm: "{{ docker_swarm }}"
+  docker_swarm: "{{ docker_swarm }}" # noqa args[module] # false positive
   ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SERVICE #####
