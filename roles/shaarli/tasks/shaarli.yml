@@ -72,7 +72,6 @@
   file:
     path: /root/shaarli-unpack
     state: absent
-  when: shaarli_action == 'upgrade'
 
 - name: create shaarli zip extraction directory
   file:
@@ -151,6 +150,7 @@
     owner: root
     group: shaarli
     mode: "0660"
+  when: shaarli_action == 'initial'
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: update ownership/mode of directories
@@ -161,6 +161,7 @@
     group: shaarli
     recurse: "{{ item.recurse | default(True) }}"
     mode: "{{ item.mode | default('u=rwX,g=rwX,o=') }}"
+  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
   ignore_errors: "{{ ansible_check_mode }}"
   with_items:
     - path: "{{ shaarli_install_dir }}"
