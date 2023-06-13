@@ -46,7 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
-- matrix: synapse: if you are getting the error `Failed to update apt cache: unknown reason`, this may be caused by the matrix/synapse APT repository signing key having expired. Deploying the `matrix` alone should solve this problem (`TAGS=matrix xsrv deploy`)
+- matrix: synapse: if you are getting the error `Failed to update apt cache: unknown reason`, this may be caused by the matrix/synapse APT repository signing key having expired. Deploying the `matrix` tag alone should solve this problem (`TAGS=matrix xsrv deploy`)
 - (optional) download and install the tab/auto-completion script:
 
 ```bash
