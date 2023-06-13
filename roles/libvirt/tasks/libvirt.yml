@@ -37,7 +37,9 @@
     owner: root
     group: root
     mode: "0644"
-  notify: reload systemd unit files
+  notify:
+    - reload systemd unit files
+    - restart libvirtd
 
 - name: enable libvirtd/libvirt-guests services
   service:

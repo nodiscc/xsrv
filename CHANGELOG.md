@@ -27,6 +27,7 @@ _Note: the automated Debian 11 -> 12 procedure was only tested for hosts managed
 - common: ssh: change the group name allowed to access the SSH server from `ssh` to `ssh-access` (`ssh` is a reserved group name used for internal purposes)
 - common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: firewalld: allow SSH connections from both the internal and public zones by default
+- apache: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `7.6 EXPOSED`)
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
 - nextcloud: disable the [Maps](https://apps.nextcloud.com/apps/maps) app by default (incompatible with Nextcloud 26)
 - nextcloud: update to v26.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)

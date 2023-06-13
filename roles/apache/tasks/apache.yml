@@ -33,7 +33,26 @@
     state: absent
   notify: restart apache
 
-# restart apache to apply mod-php removal
+- name: create directory for apache2 systemd overrides
+  file:
+    state: directory
+    path: /etc/systemd/system/apache2.service.d/
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: configure apache2 systemd unit overrides
+  template:
+    src: etc_systemd_system_apache2.service.d_override.conf.j2
+    dest: /etc/systemd/system/apache2.service.d/override.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart apache
+
+# restart apache to apply mod-php removal and systemd configuration overrides
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
