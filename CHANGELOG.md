@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache/nextcloud/openldap/shaarli/tt_rss: preliminary work to make roles compatible with PHP 8.2/Debian 12
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
 - mark all roles except `graylog` as compatible with Debian 12
-- matrix: update element-web to v1.11.32 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32)
+- matrix: update element-web to v1.11.33 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.33)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
 - xsrv: update ansible to v8.0.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - cleanup: simplify handling of conditions in shaarli installation/upgrade procedure
