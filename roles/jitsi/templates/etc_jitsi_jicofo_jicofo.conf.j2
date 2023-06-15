@@ -14,7 +14,7 @@ jicofo {
       domain: "auth.{{ jitsi_fqdn }}"
       username: "focus"
       password: "{{ jitsi_prosody_password }}"
-      client-proxy: focus.{{ jitsi_fqdn }}
+      client-proxy: "focus.{{ jitsi_fqdn }}"
     }
     trusted-domains: [ "recorder.{{ jitsi_fqdn }}" ]
   }
