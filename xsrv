@@ -317,7 +317,7 @@ upgrade_roles() {
     check_project_exists
     if [[ ! -f "$project_dir"/requirements.yml ]]; then
         echo "[xsrv] INFO: installing default collection git+$xsrv_git_url,$xsrv_upgrade_channel"
-        (cd "$project_dir" && ansible-galaxy collection install --force --collections-path "$project_dir/" git+$xsrv_git_url,$xsrv_upgrade_channel)
+        (cd "$project_dir" && ansible-galaxy collection install --force --collections-path "$project_dir/" "git+$xsrv_git_url,$xsrv_upgrade_channel")
     else
         echo "[xsrv] INFO: upgrading collections from requirements.yml"
         (cd "$project_dir" && ansible-galaxy collection install --force -r requirements.yml)
