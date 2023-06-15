@@ -14,7 +14,7 @@
       - "{{ python3_ipaddr_package }}"
       - lm-sensors
       - libmnl0
-      - netcat
+      - netcat-openbsd
       - libuv1
       - libjudydebian1
       - openssl
