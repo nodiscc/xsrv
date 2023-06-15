@@ -28,7 +28,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Fixed:**
-- monitoring_netdata: fix netdata no longer installing the web interface/python/bash plugins by default
 - common: firewalld: fix conflicting default values for `immediate` and `permanent` during `configure firewalld zone sources` (default to `permanent: yes, immediate: no`)
 - common: firewalld: allow SSH connections from both the internal and public zones by default
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages

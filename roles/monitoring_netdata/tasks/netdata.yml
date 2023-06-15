@@ -74,11 +74,7 @@
 
 - name: install netdata
   apt:
-    package:
-      - netdata
-      - netdata-web
-      - netdata-plugins-python
-      - netdata-plugins-bash
+    package: netdata
     state: present
 
 ##### SELF-SIGNED SSL CERTIFICATES #####
