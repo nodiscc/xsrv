@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
+- apache/nextcloud/openldap/shaarli/tt_rss: preliminary work to make roles compatible with PHP 8.2/Debian 12
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
 - monitoring_netdata: update netdata-apt module to v1.1.0 (warn when Debian release < 12)
 - matrix: update element-web to v1.11.32 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32)

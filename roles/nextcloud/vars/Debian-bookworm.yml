@@ -1,0 +1,2 @@
+php_fpm_version: "8.2"
+php_json_package: "php8.2-fpm"
