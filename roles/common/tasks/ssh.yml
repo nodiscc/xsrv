@@ -24,6 +24,7 @@
     append: yes
     groups: "ssh"
     name: "{{ ansible_user }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create sftponly group
   group:

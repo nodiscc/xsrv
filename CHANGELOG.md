@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils: update role compatibility info (role is only compatible with Debian 11/12)
 - cleanup: simplify handling of conditions in shaarli installation/upgrade procedure
 - tests: improve ansible-lint coverage
-- improve check mode support
+- improve check mode support, fix errors in check mode when running before first actual deployment
 - update documentation
 
 **Fixed:**
