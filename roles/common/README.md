@@ -49,7 +49,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - SFTP access: `sftp://user@my.CHANGEME.org`
   - Linux clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/), `sftp`, `rsync`, `scp`,
   - Windows clients: [WinSCP](https://winscp.net/eng/index.php)
-- Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
+- Upgrade from Debian 10 to Debian 11: `TAGS=utils-debian10to11 xsrv deploy` or `ansible-playbook --tags utils-debian10to11 playbook.yml`
 
 ## Tags
 
