@@ -11,7 +11,7 @@
     - /var/lib/jellyfin/sambashare
     - "{{ ansible_local.samba.shares_path }}/jellyfin"
 
-- name: mount jellyfin samba share to jellyfin directory
+- name: mount jellyfin samba share to jellyfin directory (always returns changed)
   mount:
     path: /var/lib/jellyfin/sambashare
     src: "{{ ansible_local.samba.shares_path }}/jellyfin"
