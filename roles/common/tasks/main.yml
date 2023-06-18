@@ -127,3 +127,10 @@
   tags:
     - never
     - utils-debian10to11
+
+- name: include debian 11->12 migration tasks
+  import_tasks: utils-debian11to12.yml
+  become: yes
+  tags:
+    - never
+    - utils-debian11to12
