@@ -71,15 +71,15 @@ Click `Finish` and start the VM from virt-manager's main window.
 
 ### Automated
 
-You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bullseye/virtinst/virt-install.1.en.html) command. The `xsrv` [init-vm and init-vm-template commands](../usage.md) automate running `virt-install` with the correct options.
+You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bookworm/virtinst/virt-install.1.en.html) command. The `xsrv` [init-vm and init-vm-template commands](../usage.md) automate running `virt-install` with the correct options.
 
 ## Cloning VMs
 
 See [Debian/Installation/From a VM template](debian.md), [`xsrv init-vm --help`](.../usage.md), and the following manpages:
-- [`virt-clone`](https://manpages.debian.org/bullseye/virtinst/virt-clone.1.en.html)
-- [`virt-sysprep`](https://manpages.debian.org/bullseye/libguestfs-tools/virt-sysprep.1.en.html)
-- [`virt-customize`](https://manpages.debian.org/bullseye/libguestfs-tools/virt-customize.1.en.html)
-- [`virt-builder`](https://manpages.debian.org/bullseye/libguestfs-tools/virt-builder.1.en.html)
+- [`virt-clone`](https://manpages.debian.org/bookworm/virtinst/virt-clone.1.en.html)
+- [`virt-sysprep`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-sysprep.1.en.html)
+- [`virt-customize`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-customize.1.en.html)
+- [`virt-builder`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-builder.1.en.html)
 
 
 ## Migrating VMs between hypervisors

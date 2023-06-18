@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- xsrv: `init-vm-template`: use Debian 12 "Bookworm" as the base OS image [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
 - apache/nextcloud/openldap/shaarli/tt_rss: preliminary work to make roles compatible with PHP 8.2/Debian 12
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)

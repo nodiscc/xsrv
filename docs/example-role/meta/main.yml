@@ -9,7 +9,7 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - "11"
+        - "12"
   galaxy_tags:
     - example
 dependencies:
