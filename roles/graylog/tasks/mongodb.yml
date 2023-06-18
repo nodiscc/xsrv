@@ -1,17 +1,5 @@
 ### MONGODB ###
 
-- name: set distribution for mongodb APT repository
-  set_fact:
-    graylog_mongodb_apt_repo_distribution: "{{ item.apt_repository }}"
-  when: ansible_facts.distribution_release == "{{ item.distribution_release }}" # noqa no-jinja-when
-  with_items:
-    - apt_repository: stretch
-      distribution_release: stretch
-    - apt_repository: buster
-      distribution_release: buster
-    - apt_repository: buster
-      distribution_release: bullseye
-
 - name: migration/1.10.0 - remove old mongodb key from APT keyring
   apt_key:
     id: "E162F504A20CDF15827F718D4B7C549A058F8B6B"
@@ -48,11 +36,23 @@
     - ansible_local.graylog.ansible_managed is defined
     - ansible_local.graylog.mongodb_upgraded_44_50 is not defined
 
+- name: migration/1.16.0 - include mongodb 5.x -> 6.x upgrade tasks
+  import_tasks: mongodb-upgrade-5x-6x.yml
+  become: yes
+  when:
+    - ansible_local.graylog.ansible_managed is defined
+    - ansible_local.graylog.mongodb_upgraded_4x_6x is not defined
+
 - name: install mongodb packages
   apt:
     package:
       - mongodb-org
-      - mongodb-database-tools
+      - mongodb-org-database
+      - mongodb-org-database-tools-extra
+      - mongodb-org-mongos
+      - mongodb-org-server
+      - mongodb-org-shell
+      - mongodb-org-tools
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 

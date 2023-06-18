@@ -98,7 +98,7 @@ apt_unattended_upgrades_origins_patterns:
   - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
   - "o=Docker,site=download.docker.com" # nodiscc.xsrv.docker
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
-  - "o=mongodb,a=buster,site=repo.mongodb.org" # nodiscc.xsrv.graylog
+  - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi

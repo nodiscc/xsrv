@@ -10,8 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 
+**Removed:**
+- drop support for Debian 10 Buster [[1]](https://www.debian.org/releases/buster/)
+
 **Changed:**
 - nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
+- graylog: make role compatible with Debian 12 (upgrade to mongodb [v6.0](https://www.mongodb.com/docs/manual/release-notes/6.0/))
 - matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
 - xsrv: update ansible to [v8.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 
