@@ -13,6 +13,7 @@ galaxy_info:
     - name: Debian
       versions:
         - "11"
+        - "12"
   galaxy_tags:
     - chat
     - matrix

@@ -18,11 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
 - apache/nextcloud/openldap/shaarli/tt_rss: preliminary work to make roles compatible with PHP 8.2/Debian 12
 - nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
-- monitoring_netdata: update netdata-apt module to v1.1.0 (warn when Debian release < 12)
+- mark all roles except `graylog` as compatible with Debian 12
 - matrix: update element-web to v1.11.32 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
 - xsrv: update ansible to v8.0.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
-- monitoring_utils: update role compatibility info (role is only compatible with Debian 11/12)
 - cleanup: simplify handling of conditions in shaarli installation/upgrade procedure
 - tests: improve ansible-lint coverage
 - improve check mode support, fix errors in check mode when running before first actual deployment
@@ -31,7 +30,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - common: firewalld: fix conflicting default values for `immediate` and `permanent` during `configure firewalld zone sources` (default to `permanent: yes, immediate: no`)
 - common: firewalld: allow SSH connections from both the internal and public zones by default
-- monitoring_netdata: make role compatible with Debian 12
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
 - xsrv: init-vm: fix the VM XML filename printed out in the `libvirt_vms` copy-pastable snippet
