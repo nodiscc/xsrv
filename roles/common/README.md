@@ -44,9 +44,9 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ## Usage
 
-- SSH access: `ssh user@example.org`
+- SSH access: `ssh user@my.CHANGEME.org` or `xsrv shell default my.CHANGEME.org`
   - Windows clients: [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)
-- SFTP access: `sftp://user@example.org`
+- SFTP access: `sftp://user@my.CHANGEME.org`
   - Linux clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/), `sftp`, `rsync`, `scp`,
   - Windows clients: [WinSCP](https://winscp.net/eng/index.php)
 - Upgrade from Debian 10 to Debian 11: `ansible-playbook --tags debian10to11 playbook.yml`
