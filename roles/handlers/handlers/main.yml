@@ -68,6 +68,7 @@
     name: rsyslog
     state: restarted
     enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### MONITORING_NETDATA ###
 
