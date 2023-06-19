@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- (optional) nextcloud: if you want to postpone upgrade your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.7` manually in your host configuration (`xsrv edit-host`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+- nextcloud: if you changed `nextcloud_apps` from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled, ad it is not compatible with Nextcloud 26 yet.
 - `xsrv deploy` to apply changes
 
 **Added:**
@@ -18,7 +20,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: `init-vm-template`: use Debian 12 "Bookworm" as the base OS image [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
 - apache/nextcloud/openldap/shaarli/tt_rss: preliminary work to make roles compatible with PHP 8.2/Debian 12
-- nextcloud: update to [v25.0.7](https://nextcloud.com/changelog/)
+- nextcloud: disable the [Maps](https://apps.nextcloud.com/apps/maps) app by default (incompatible with Nextcloud 26)
+- nextcloud: update to v26.0.2 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)
 - mark all roles except `graylog` as compatible with Debian 12
 - matrix: update element-web to v1.11.32 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
