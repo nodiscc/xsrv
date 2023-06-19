@@ -165,6 +165,17 @@ apt_listbugs_ignore_list:
   - 1035483 # https://bugs.debian.org/1035483 - minor bug leading to false positive/debsums incorrectly detecting missing file
   - 993714 # https://bugs.debian.org/993714 - minor bug leading to false positive/debsums incorrectly detecting missing file
   - 1037258 # https://bugs.debian.org/1037258 - unreproducible
+  - 1038422 # https://bugs.debian.org/1038422 - unreproducible
+  - 1033167 # https://bugs.debian.org/1033167 - packaging bug, no impact
+  - 1014503 # https://bugs.debian.org/1014503 - fixed, patch pending upload
+  - 1035820 # https://bugs.debian.org/1035820 - packaging bug, no impact
+  - 1036641 # https://bugs.debian.org/1036641 - packaging bug, no impact
+  - 1039668 # https://bugs.debian.org/1039668 - no impact unless chromium-browser is installed
+  - 1037478 # https://bugs.debian.org/1037478 - unreproducible
+  - 1038603 # https://bugs.debian.org/1038603 - unreproducible, specific to some GCC-based build processes
+  - 1030129 # https://bugs.debian.org/1030129 - unreproducible
+
+
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
