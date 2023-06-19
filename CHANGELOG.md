@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- graylog: do not upgrade hosts where the `graylog` role is deployed, as it is not compatible with Debian 12 yet
 - (optional) nextcloud: if you want to postpone upgrade your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.7` manually in your host configuration (`xsrv edit-host`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
 - (optional) nextcloud: if you upgrade your hosts from Debian 11 to Debian 12, and you changed `nextcloud_apps` from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled, and it is not compatible with Nextcloud 26 yet.
 - `xsrv deploy` to apply changes
