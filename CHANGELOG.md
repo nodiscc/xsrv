@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: disable the [Maps](https://apps.nextcloud.com/apps/maps) app by default (incompatible with Nextcloud 26)
 - nextcloud: update to v26.0.2 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)
 - mark all roles except `graylog` as compatible with Debian 12
-- matrix: update element-web to v1.11.32 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32)
+- matrix: update element-web to v1.11.33 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.33)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
 - xsrv: update ansible to v8.0.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - cleanup: simplify handling of conditions in shaarli installation/upgrade procedure
