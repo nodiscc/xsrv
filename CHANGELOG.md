@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - graylog: do not upgrade hosts where the `graylog` role is deployed, as it is not compatible with Debian 12 yet
-- (optional) nextcloud: if you want to postpone upgrade your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.7` manually in your host configuration (`xsrv edit-host`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+- (optional) nextcloud: if you want to postpone upgrade your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
 - (optional) nextcloud: if you upgrade your hosts from Debian 11 to Debian 12, and you changed `nextcloud_apps` from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled, and it is not compatible with Nextcloud 26 yet.
 - `xsrv deploy` to apply changes
 
@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
 - apache/nextcloud/openldap/shaarli/tt_rss: preliminary work to make roles compatible with PHP 8.2/Debian 12
 - nextcloud: disable the [Maps](https://apps.nextcloud.com/apps/maps) app by default (incompatible with Nextcloud 26)
-- nextcloud: update to v26.0.2 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)
+- nextcloud: update to v26.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)
 - openldap: update ldap-account-manager to [v8.4](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_4)
 - mark all roles except `graylog` as compatible with Debian 12
 - matrix: update element-web to v1.11.34 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.33) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.34)
