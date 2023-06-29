@@ -175,8 +175,6 @@ apt_listbugs_ignore_list:
   - 1038603 # https://bugs.debian.org/1038603 - unreproducible, specific to some GCC-based build processes
   - 1030129 # https://bugs.debian.org/1030129 - unreproducible
 
-
-
 ### DATE/TIME ###
 # yes/no: setup ntp time service
 setup_datetime: yes
