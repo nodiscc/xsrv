@@ -1,6 +1,8 @@
 - name: install requirements for python virtualenv
   apt:
-    package: python3-venv
+    package:
+      - python3-venv
+      - python3-pip
     state: present
 
 - name: create working directory for python-shaarli-client
