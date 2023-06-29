@@ -13,16 +13,16 @@
   with_file: "{{ ssh_authorized_keys }}"
   tags: ssh-authorized-keys
 
-- name: create ssh group
+- name: create ssh-access group
   group:
-    name: ssh
+    name: ssh-access
     state: present
 
-# SSH configuration only allows users in the ssh group
-- name: ensure the ansible user belongs to the ssh group
+# SSH configuration only allows users in the ssh-access group
+- name: ensure the ansible user belongs to the ssh-access group
   user:
     append: yes
-    groups: "ssh"
+    groups: "ssh-access"
     name: "{{ ansible_user }}"
   ignore_errors: "{{ ansible_check_mode }}"
 

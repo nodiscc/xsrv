@@ -56,7 +56,7 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
 # Example using https://gitlab.com/nodiscc/ansible-xsrv-common/
 linux_users:
    - name: "rsnapshot"
-     groups: [ "ssh", "sudo" ]
+     groups: [ "ssh-access", "sudo" ]
      comment: "limited user account for remote backups"
      ssh_authorized_keys: ['public_keys/root@backupserver.CHANGEME.org']
      sudo_nopasswd_commands: ['/usr/bin/rsync']

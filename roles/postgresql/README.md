@@ -43,7 +43,7 @@ rsnapshot_remote_backups:
 ```yaml
 # xsrv edit-host default db.CHANGEME.org
   - name: "rsnapshot"
-    groups: [ "ssh", "sudo", "postgres" ]
+    groups: [ "ssh-access", "sudo", "postgres" ]
     comment: "limited user account for remote backups"
     ssh_authorized_keys: ['data/public_keys/root@backup.CHANGEME.org.pub']
     sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]

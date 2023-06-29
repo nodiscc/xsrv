@@ -106,7 +106,7 @@ rsnapshot_remote_backups:
 ```yaml
 # xsrv edit-host default nextcloud.CHANGEME.org
   - name: "rsnapshot"
-    groups: [ "ssh", "sudo", "postgres", "nextcloud" ]
+    groups: [ "ssh-access", "sudo", "postgres", "nextcloud" ]
     comment: "limited user account for remote backups"
     ssh_authorized_keys: ['data/public_keys/root@backup.CHANGEME.org.pub']
     sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]

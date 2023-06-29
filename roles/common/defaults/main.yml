@@ -296,7 +296,7 @@ setup_users: yes
 # Example:
 # linux_users:
 #   - name: "remotebackup"
-#     groups: [ "ssh", "sudo" ]
+#     groups: [ "ssh-access", "sudo" ]
 #     comment: "limited user account for remote backups"
 #     ssh_authorized_keys: ['data/public_keys/root@backup.EXAMPLE.org.pub']
 #     home: "/home/remotebackup"
@@ -305,13 +305,13 @@ setup_users: yes
 #     home: "/var/lib/sftp/my-sftp-account"
 #     comment: "SFTP-only account"
 #     ssh_authorized_keys: [ "data/public_keys/gitlab-runner@my.EXAMPLE.org.pub", "data/public_keys/client1@EXAMPLE.org.pub" ]
-#     groups: [ 'ssh', 'sftponly' ]
+#     groups: [ 'ssh-access', 'sftponly' ]
 #   - name: "{{ ansible_user }}"
 #     groups: adm
 #     append: yes
 #     comment: "ansible user/allowed to read system logs"
 #   - name: bob
-#     groups: ['ssh', 'sudo']
+#     groups: ['ssh-access', 'sudo']
 #     password: "{{ bob_ssh_password }}"
 #     comment: "SSH account for bob, root access via sudo"
 linux_users: []
