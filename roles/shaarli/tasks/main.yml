@@ -4,6 +4,11 @@
     - shaarli
     - checks
 
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  tags: shaarli
+
 - name: include shaarli configuration tasks
   import_tasks: shaarli.yml
   become: yes
