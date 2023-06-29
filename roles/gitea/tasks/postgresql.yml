@@ -4,7 +4,6 @@
   apt:
     state: present
     package:
-      - php{{ php_fpm_version }}-pgsql
       - python3-psycopg2
 
 - name: create gitea postgresql user
