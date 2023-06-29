@@ -60,6 +60,11 @@ To restore backups, deploy the role and restore the `data/` directory:
 sudo rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/www/links.CHANGEME.org/data /var/www/links.CHANGEME.org/
 ```
 
+## Troubleshooting
+
+**`ModuleNotFoundError: No module named 'pip'`** during python-shaarli-client installation: manually delete the `/var/shaarli/.venv/` directory and retry.
+
+
 
 ## Tags
 
