@@ -1,9 +1,9 @@
-- name: stop firehol
+- name: migration/1.5.0 - stop firehol
   command: /usr/sbin/firehol stop
   args:
     removes: /usr/sbin/firehol # only run if firehol is currently installed
 
-- name: remove other firewall management tools
+- name: migration/1.5.0 - remove other firewall management tools
   apt:
     package:
       - ufw
@@ -11,7 +11,7 @@
       - firehol-tools
     state: absent
 
-- name: migration - remove other firewall management tools configuration
+- name: migration/1.5.0 - remove other firewall management tools configuration
   file:
     state: absent
     path:
