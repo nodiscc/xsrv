@@ -35,6 +35,7 @@ _Note: the automated Debian 11 -> 12 procedure was only tested for hosts managed
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
 - xsrv: update ansible to v8.1.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - apache: simplify syntax of configuration used to forbid access to `.ssh,.git,.svn,.hg` directories
+- monitoring_rsyslog: drop remaining compatibility with Debian 10 "Stretch"
 - cleanup: gitea: remove unneeded `php-pgsql` package installation
 - cleanup: shaarli: simplify handling of conditions in installation/upgrade procedure
 - tests: improve ansible-lint coverage
