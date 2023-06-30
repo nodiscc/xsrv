@@ -9,9 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - (optional) common: if you had custom `linux_users` defined with `ssh` as one of their `groups:`, change the group name from `ssh` to `ssh-access`
-- (optional) nextcloud: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
-- (optional) nextcloud: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled, and it is not compatible with Nextcloud 26 yet.
-- (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Do **not** upgrade hosts where the `graylog` role is deployed, as it is not compatible with Debian 12 yet (as a workaround, you can disable the graylog role until it is made compatible.
+- (optional) nextcloud: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+- (optional) nextcloud: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled (it is not compatible with Nextcloud 26 yet).
+- (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Do **not** upgrade hosts where the `graylog` role is deployed, as it is not compatible with Debian 12 yet (as a workaround, you can disable the graylog role until it is made compatible).
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 
@@ -19,22 +19,22 @@ _Note: the automated Debian 11 -> 12 procedure was only tested for hosts managed
 
 **Added:**
 - common: add an automated procedure to upgrade Debian 11 hosts to Debian 12 (`TAGS=utils-debian11to12 xsrv deploy`) 
-- common: ssh: change the group name allowed to access the SSH server from `ssh` to `ssh-access` (`ssh` is a reserved group name used for internal purposes)
 - graylog: allow setting the admin user account timezone ([`graylog_root_timezone`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 
 **Changed:**
-- common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- make all roles (except `graylog`) compatible with Debian 12 "Bookworm"
 - xsrv: `init-vm-template`: use Debian 12 "Bookworm" as the base OS image [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
+- common: ssh: change the group name allowed to access the SSH server from `ssh` to `ssh-access` (`ssh` is a reserved group name used for internal purposes)
+- common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: firewalld: allow SSH connections from both the internal and public zones by default
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
-- apache/nextcloud/openldap/shaarli/tt_rss: preliminary work to make roles compatible with PHP 8.2/Debian 12
 - nextcloud: disable the [Maps](https://apps.nextcloud.com/apps/maps) app by default (incompatible with Nextcloud 26)
 - nextcloud: update to v26.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)
 - openldap: update ldap-account-manager to [v8.4](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_4)
-- mark all roles except `graylog` as compatible with Debian 12
 - matrix: update element-web to v1.11.34 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.33) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.34)
 - postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
 - xsrv: update ansible to v8.1.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
-- cleanup: gitea: remove unneeded php-pgsql package installation
+- cleanup: gitea: remove unneeded `php-pgsql` package installation
 - cleanup: shaarli: simplify handling of conditions in installation/upgrade procedure
 - tests: improve ansible-lint coverage
 - improve check mode support, fix errors in check mode when running before first actual deployment
@@ -42,7 +42,6 @@ _Note: the automated Debian 11 -> 12 procedure was only tested for hosts managed
 
 **Fixed:**
 - common: firewalld: fix conflicting default values for `immediate` and `permanent` during `configure firewalld zone sources` (default to `permanent: yes, immediate: no`)
-- common: firewalld: allow SSH connections from both the internal and public zones by default
 - shaarli: fix missing package `python3-pip` required to install python-shaarli-client when `shaarli_setup_python_client: yes`
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
