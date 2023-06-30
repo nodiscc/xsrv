@@ -8,14 +8,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- (optional) common: if you had custom `linux_users` defined with `ssh` as one of their `groups:`, change the group name from `ssh` to `ssh-access`
-- (optional) nextcloud: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+- (optional) common: if you had custom `linux_users` defined with `ssh` as one of their `groups:`, change the group name from `ssh` to `ssh-access`, for example:
+
+```diff
+# host_vars/my.example.org/my.example.org.yml
+ linux_users:
+   - name: "rsnapshot"
+-    groups: [ "ssh", "sudo", "postgres", "nextcloud", "steam" ]
++    groups: [ "ssh-access", "sudo", "postgres", "nextcloud", "steam" ]
+     comment: "limited user account for remote backups"
+     ssh_authorized_keys: ['data/public_keys/root@home.example.org.pub']
+     sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]
+```
+
 - (optional) nextcloud: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled (it is not compatible with Nextcloud 26 yet).
-- (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Do **not** upgrade hosts where the `graylog` role is deployed, as it is not compatible with Debian 12 yet (as a workaround, you can disable the graylog role until it is made compatible).
+- (optional) nextcloud: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+- (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Do **not** upgrade hosts where the `graylog` role is deployed, as it is not compatible with Debian 12 yet (as a workaround, you can disable the graylog role until it is made compatible). This procedure was only tested for hosts managed by `xsrv` roles. If you have custom/third-party software installed, you should read Debian 12's [release notes](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html) and/or execute the upgrade procedure manually. It is always advisable to do a full backup/snapshot before performing a distribution upgrade.
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
-
-_Note: the automated Debian 11 -> 12 procedure was only tested for hosts managed by `xsrv` roles. If you have custom/third-party software installed, you should read Debian 12's [release notes](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html) and/or execute the upgrade procedure manually. It is always advisable to do a full backup/snapshot before performing a distribution upgrade._
 
 **Added:**
 - common: add an automated procedure to upgrade Debian 11 hosts to Debian 12 (`TAGS=utils-debian11to12 xsrv deploy`) 
