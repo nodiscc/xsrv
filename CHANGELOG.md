@@ -48,6 +48,7 @@ _Note: the automated Debian 11 -> 12 procedure was only tested for hosts managed
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
 - xsrv: init-vm: fix the VM XML filename printed out in the `libvirt_vms` copy-pastable snippet
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - graylog: decouple role from the apache role, skip apache configuration tasks when apache is not managed by ansible
 - nextcloud: fix mysql ansible module arguments
 
