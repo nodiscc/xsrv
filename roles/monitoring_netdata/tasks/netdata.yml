@@ -212,7 +212,21 @@
     mode: "0644"
   tags: netdata-downtime
 
-- name: migration - remove files from old versions of the role
+- name: add netdata to msmtp group
+  user:
+    name: netdata
+    groups: msmtp
+    append: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  when:
+    - ansible_local.msmtp.ansible_managed is defined
+    - ansible_local.msmtp.ansible_managed | bool
+  tags:
+    - mail
+    - msmtp
+
+
+- name: migration/1.13.0 - remove files from old versions of the role
   file:
     state: absent
     path: "{{ item }}"
