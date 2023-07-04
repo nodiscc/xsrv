@@ -17,6 +17,16 @@
   tags:
     - EXAMPLE
 
+- name: include apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - EXAMPLE
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
 - name: include fail2ban configuration tasks
   import_tasks: fail2ban.yml
   become: yes
