@@ -9,3 +9,13 @@
 # - create databases/tables
 # - create application admin/user accounts
 # - start/stop service
+
+##### SERVICES #####
+
+- name: enable/disable start/stop EXAMPLE service
+  systemd:
+    name: EXAMPLE
+    enabled: "{{ EXAMPLE_enable_service }}"
+    state: "{{ 'started' if EXAMPLE_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode }}"
