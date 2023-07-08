@@ -107,7 +107,7 @@
     owner: root
     group: root
   notify: restart gitea
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set gitea_root_url variable
   set_fact:
@@ -131,8 +131,8 @@
   command: "gitea migrate --config /etc/gitea/app.ini --work-path {{ gitea_user_home }}"
   when:
     - (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized)
-    - not ansible_check_mode
   changed_when: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create gitea admin user
   become: yes
@@ -146,7 +146,6 @@
   register: "gitea_create_user"
   failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
   changed_when: "'user already exists' not in gitea_create_user.stdout"
-  when: not ansible_check_mode
 
 # restart gitea immediately if configuration was changed
 - name: apply configuration (flush handlers)
