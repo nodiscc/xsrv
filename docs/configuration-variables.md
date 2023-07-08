@@ -577,6 +577,26 @@ netdata_max_running_docker_containers: 99999
 ```
 
 
+[roles/gitea_act_runner/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
+
+```yaml
+##### GITEA ACTIONS RUNNER #####
+# FQDN of the gitea instance to register the runner on
+gitea_act_runner_gitea_instance_url: "{{ gitea_fqdn | default('git.CHANGEME.org') }}" # TODO rename to _domain
+# inventory hostname of the gitea host to register the runner on (if different from the runner host)
+# gitea_act_runner_gitea_instance_hostname: "CHANGEME"
+# act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
+gitea_act_runner_version: "0.2.6"
+# start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
+gitea_act_runner_enable_service: yes
+# container engine to use (docker/podman)
+gitea_act_runner_container_engine: "podman"
+# network to which the containers managed by act-runner will connect (host/bridge/custom)
+# set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
+gitea_actions_runner_container_network: "host"
+```
+
+
 [roles/gitea/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml)
 
 ```yaml
@@ -638,6 +658,8 @@ gitea_issue_paging_num: 20
 gitea_enable_api: "true"
 # max number of items in API responses
 gitea_api_max_results: 1000
+# enable the built-in Gitea Actions CI/CD system (yes/no)
+gitea_enable_actions: no
 # The minimum password length for new Users
 gitea_min_password_length: 10
 # comma-separated list of charactacter classes required in passwords (lower,upper,digit,spec or off)

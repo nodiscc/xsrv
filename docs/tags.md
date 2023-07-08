@@ -22,6 +22,7 @@ dovecot - setup dovecot MDA/IMAP server
 element - setup element matrix web chat client
 fail2ban - setup fail2ban intrusion prevention system
 firewall - setup firewall
+gitea_act_runner - setup gitea CI/CD runner (act-runner)
 gitea-config - update gitea configuration
 gitea - setup gitea git service/software forge
 goaccess - setup goaccess web log analyzer/viewer

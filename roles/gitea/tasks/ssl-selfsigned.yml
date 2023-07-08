@@ -28,3 +28,12 @@
     provider: selfsigned
   notify: restart apache
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy self-signed certificate to system trust store
+  copy:
+    src: "/etc/ssl/certs/{{ gitea_fqdn }}.crt"
+    dest: "/usr/local/share/ca-certificates/{{ gitea_fqdn }}.crt"
+    remote_src: yes
+    mode: "0644"
+  notify: update CA certificates store
+  ignore_errors: "{{ ansible_check_mode }}"

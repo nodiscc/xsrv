@@ -1,0 +1,92 @@
+# Example configuration file, it's safe to copy this as the default config file without any modification.
+
+log:
+  # The level of logging, can be trace, debug, info, warn, error, fatal
+  level: info
+
+runner:
+  # Where to store the registration result.
+  file: /var/lib/act-runner/.runner
+  # Execute how many tasks concurrently at the same time.
+  capacity: 1
+  # Extra environment variables to run jobs.
+  envs:
+{% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_url == ansible_local.gitea.fqdn) %}
+    NODE_EXTRA_CA_CERTS: "/etc/ssl/certs/ca-certificates.crt"
+{% endif %}
+  #   A_TEST_ENV_NAME_1: a_test_env_value_1
+  #   A_TEST_ENV_NAME_2: a_test_env_value_2
+  # Extra environment variables to run jobs from a file.
+  # It will be ignored if it's empty or the file doesn't exist.
+  env_file: .env
+  # The timeout for a job to be finished.
+  # Please note that the Gitea instance also has a timeout (3h by default) for the job.
+  # So the job could be stopped by the Gitea instance if it's timeout is shorter than this.
+  timeout: 3h
+  # Whether skip verifying the TLS certificate of the Gitea instance.
+  insecure: false
+  # The timeout for fetching the job from the Gitea instance.
+  fetch_timeout: 5s
+  # The interval for fetching the job from the Gitea instance.
+  fetch_interval: 5s
+  # The labels of a runner are used to determine which jobs the runner can run, and how to run them.
+  # Like: ["macos-arm64:host", "ubuntu-latest:docker://node:16-bullseye", "ubuntu-22.04:docker://node:16-bullseye"]
+  # If it's empty when registering, it will ask for inputting labels.
+  # If it's empty when execute `deamon`, will use labels in `.runner` file.
+  labels: []
+
+cache:
+  # Enable cache server to use actions/cache.
+  enabled: true
+  # The directory to store the cache data.
+  # If it's empty, the cache data will be stored in $HOME/.cache/actcache.
+  dir: ""
+  # The host of the cache server.
+  # It's not for the address to listen, but the address to connect from job containers.
+  # So 0.0.0.0 is a bad choice, leave it empty to detect automatically.
+  host: ""
+  # The port of the cache server.
+  # 0 means to use a random available port.
+  port: 0
+
+container:
+  # Specifies the network to which the container will connect.
+  # Could be host, bridge or the name of a custom network.
+  # If it's empty, act_runner will create a network automatically.
+  network: "{{ gitea_actions_runner_container_network }}"
+  # Whether to use privileged mode or not when launching task containers (privileged mode is required for Docker-in-Docker).
+  privileged: false
+  # And other options to be used when the container is started (eg, --add-host=my.gitea.url:host-gateway).
+{% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_url == ansible_local.gitea.fqdn) %}
+  options: --add-host={{ gitea_fqdn }}:{{ 'host-gateway' if gitea_act_runner_container_engine == 'docker' else '127.0.0.1' }} --mount type=bind,source=/etc/act-runner/ca-certificates.crt,target=/etc/ssl/certs/ca-certificates.crt,readonly
+{% else %}
+  options:
+{% endif %}
+  # The parent directory of a job's working directory.
+  # If it's empty, /workspace will be used.
+  workdir_parent:
+  # Volumes (including bind mounts) can be mounted to containers. Glob syntax is supported, see https://github.com/gobwas/glob
+  # You can specify multiple volumes. If the sequence is empty, no volumes can be mounted.
+  # For example, if you only allow containers to mount the `data` volume and all the json files in `/src`, you should change the config to:
+  # valid_volumes:
+  #   - data
+  #   - /src/*.json
+  # If you want to allow any volume, please use the following configuration:
+  # valid_volumes:
+  #   - '**'
+  valid_volumes:
+    - '/etc/act-runner/ca-certificates.crt'
+  # overrides the docker client host with the specified one.
+  # If it's empty, act_runner will find an available docker host automatically.
+  # If it's "-", act_runner will find an available docker host automatically, but the docker host won't be mounted to the job containers and service containers.
+  # If it's not empty or "-", the specified docker host will be used. An error will be returned if it doesn't work.
+{% if gitea_act_runner_container_engine == 'podman' %}
+  docker_host: "unix:///var/run/podman/podman.sock"
+{% else %}
+  docker_host: ""
+{% endif %}
+
+host:
+  # The parent directory of a job's working directory.
+  # If it's empty, $HOME/.cache/act/ will be used.
+  workdir_parent:

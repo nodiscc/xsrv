@@ -12,6 +12,7 @@ This role will install the [Gitea](https://gitea.io/en-us/) self-hosted Git serv
 - Markdown rendering and code highlighting
 - Wikis
 - LDAP authentication
+- [Gitea actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system
 
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Rks90zV.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/2TGIshE.png)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/cBktctp.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/EauaJxq.png)
@@ -161,6 +162,13 @@ gitea --description "My new project" --private new myusername/myproject
 ```
 
 [tea](https://gitea.com/gitea/tea) will be the officially supported command line Gitea API client.
+
+### CI/CD
+
+To use Gitea's built-in CI/CD system ([Gitea Actions](https://docs.gitea.com/next/usage/actions/overview)), set `gitea_enable_actions: yes` in your host's configuration, and deploy the [`nodiscc.xsrv.gitea_act_runner`](../gitea_act_runner/) role alongside your gitea instance, or on a separate host.
+
+You can then enable actions in each individual repository settings, and start writing your own [workflows](../gitea_act_runner#usage).
+
 
 ### Troubleshooting
 

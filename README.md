@@ -28,6 +28,7 @@ This project provides:
 - [dnsmasq](roles/dnsmasq) - Lightweight DNS server
 - [docker](roles/docker) - Open source application containerization technology
 - [gitea](roles/gitea) - Self-hosted Git service/software forge
+- [gitea_act_runner](roles/gitea_act_runner) - CI/CD runner for Gitea Actions
 - [gotty](roles/gotty) - Share your terminal as a web application
 - [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - Simple webserver homepage/dashboard

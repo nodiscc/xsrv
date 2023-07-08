@@ -14,6 +14,7 @@
     - nodiscc.xsrv.tt_rss # news feed reader
     - nodiscc.xsrv.shaarli # bookmarking & link sharing
     - nodiscc.xsrv.gitea # git service/software forge
+    - nodiscc.xsrv.gitea_act_runner # CI/CD runner for gitea actions
     - nodiscc.xsrv.transmission # bittorrent client
     - nodiscc.xsrv.mumble # VoIP/voice chat server
     - nodiscc.xsrv.docker # application containerization

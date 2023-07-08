@@ -23,6 +23,7 @@
     - gitea_force_private in ['true', 'false']
     - gitea_fqdn is not search("CHANGEME")
     - gitea_mailer_enabled == gitea_mailer_enabled | bool
+    - gitea_enable_actions == gitea_enable_actions | bool
     - gitea_min_password_length == gitea_min_password_length|int
     - gitea_offline_mode in ['true', 'false']
     - gitea_require_signin in ['true', 'false']

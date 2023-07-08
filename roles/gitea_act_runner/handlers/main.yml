@@ -1,0 +1,8 @@
+- name: restart act-runner
+  service:
+    name: act-runner
+    state: restarted
+    enabled: yes
+  become: yes
+  when: gitea_act_runner_enable_service | bool
+  ignore_errors: "{{ ansible_check_mode }}"

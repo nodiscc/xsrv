@@ -56,6 +56,8 @@ gitea_issue_paging_num: 20
 gitea_enable_api: "true"
 # max number of items in API responses
 gitea_api_max_results: 1000
+# enable the built-in Gitea Actions CI/CD system (yes/no)
+gitea_enable_actions: no
 # The minimum password length for new Users
 gitea_min_password_length: 10
 # comma-separated list of charactacter classes required in passwords (lower,upper,digit,spec or off)
