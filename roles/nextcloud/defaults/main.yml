@@ -63,7 +63,7 @@ nextcloud_apps:
   - { state: "enable", app: "firstrunwizard" } # https://github.com/nextcloud/firstrunwizard
   - { state: "enable", app: "groupfolders" } # https://apps.nextcloud.com/apps/groupfolders
   - { state: "enable", app: "photos" } # https://github.com/nextcloud/photos
-  - { state: "enable", app: "music" } # https://apps.nextcloud.com/apps/music
+  - { state: "disable", app: "music" } # https://apps.nextcloud.com/apps/music
   - { state: "disable", app: "maps" } # https://apps.nextcloud.com/apps/maps
   - { state: "enable", app: "notifications" } # https://github.com/nextcloud/notifications
   - { state: "enable", app: "systemtags" } # https://docs.nextcloud.com/server/latest/user_manual/ca/files/access_webgui.html#tagging-files

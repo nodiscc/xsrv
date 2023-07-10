@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
      sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]
 ```
 
-- (optional) nextcloud: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled (it is not compatible with Nextcloud 26 yet).
+- (optional) nextcloud: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled (it is not compatible with Nextcloud 26 yet). You may also want to disable the [Music](https://apps.nextcloud.com/apps/music) app since it causes problems with file deletion.
 - (optional) nextcloud: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Do **not** upgrade hosts where the `graylog` role is deployed, as it is not compatible with Debian 12 yet (as a workaround, you can disable the graylog role until it is made compatible). This procedure was only tested for hosts managed by `xsrv` roles. If you have custom/third-party software installed, you should read Debian 12's [release notes](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html) and/or execute the upgrade procedure manually. It is always advisable to do a full backup/snapshot before performing a distribution upgrade.
 - (optional) `xsrv check` to simulate changes.
@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `7.6 EXPOSED`)
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
 - nextcloud: disable the [Maps](https://apps.nextcloud.com/apps/maps) app by default (incompatible with Nextcloud 26)
+- nextcloud: disable the [Music](https://apps.nextcloud.com/apps/music) app by default (makes it impossible to delete directories)
 - nextcloud: update to v26.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)
 - gitea: update to [v1.19.4](https://github.com/go-gitea/gitea/releases/tag/v1.19.4)
 - openldap: update ldap-account-manager to [v8.4](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_4)
