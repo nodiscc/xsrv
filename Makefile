@@ -85,6 +85,11 @@ test_idempotence:
 
 .PHONY: test_fetch_backups # test fetch-backups command against the host deployed with test_idempotence
 test_fetch_backups:
+	# install roles in the test project
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
+	# run rsnapshot backup
+	XSRV_PROJECTS_DIR=tests/playbooks TAGS=utils-backup-now ./xsrv deploy xsrv-test my.example.test
+	# fetch latest daily backup
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv fetch-backups xsrv-test my.example.test
 
 ##### RELEASE PROCEDURE #####

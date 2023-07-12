@@ -34,9 +34,9 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ## Usage
 
-- force running backups immediately: `ssh -t user@my.example.org sudo rsnapshot daily`
+- force running backups immediately: `TAGS=utils-backup-now xsrv deploy` or `ssh -t user@my.example.org sudo rsnapshot daily`
 - show the size of backups on the host: `ssh -t user@my.example.org sudo du --human-readable --summarize --time /var/backups/srv01/*`
-- transfer latest daily backups to local machine (this may take a while):
+- transfer latest daily backups to local machine (this may take a while): `xsrv fetch-backups PROJECT my.CHANGEME.org`, or:
 
 ```
 rsync --quiet --hard-links --archive --verbose --compress --partial --progress --delete \

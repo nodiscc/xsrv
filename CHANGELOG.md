@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - common: add an automated procedure to upgrade Debian 11 hosts to Debian 12 (`TAGS=utils-debian11to12 xsrv deploy`)
 - common: fail2ban: allow downloading the list of banned IPs to the controller (`TAGS=utils-fail2ban-get-banned xsrv deploy`)
+- backup: allow taking a snapshot immediately (`TAGS=utils-backup-now xsrv deploy`)
 - graylog: allow setting the admin user account timezone ([`graylog_root_timezone`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 
 **Changed:**
