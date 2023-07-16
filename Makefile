@@ -213,6 +213,11 @@ doc_md:
 		rm tags.tmp.md && \
 		mv README.tmp.md $$i/README.md; \
 	done
+	# generate tags list in docs/tags.md
+	sed -i 's/# -/-/g' ~/playbooks/xsrv-test/playbook.yml
+	echo -e '# Tags\n\n```' > docs/tags.md
+	./xsrv help-tags xsrv-test >> docs/tags.md
+	echo -e '\n```'>> docs/tags.md
 
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
