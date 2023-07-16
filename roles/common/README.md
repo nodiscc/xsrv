@@ -101,6 +101,8 @@ mail - setup outgoing system mail
 msmtp - setup outgoing system mail
 services - start/stop/enable/disable services
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
+utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
+utils-fail2ban-get-banned - (manual) download the list of banned IPs
 cron - configure cron task scheduler
 apt-listbugs - configure apt-listbugs bug prevention tool
 ```

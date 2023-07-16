@@ -72,6 +72,7 @@ sudo rsync -avP /var/backups/rsnapshot/daily.0/localhost/var/www/links.CHANGEME.
 ```
 shaarli - setup shaarli bookmark service
 shaarli-config - setup main shaarli configuration
+shaarli-client - setup shaarli python API client
 ```
 <!--END TAGS LIST-->
 

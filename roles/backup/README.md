@@ -70,6 +70,7 @@ linux_users:
 ```
 backup - setup rsnapshot backup utility
 rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
+utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 ```
 <!--END TAGS LIST-->
 
