@@ -104,7 +104,9 @@
 - name: include ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
-  tags: common
+  tags:
+    - common
+    - firewall
 
 - name: include base package installation/removal tasks
   import_tasks: packages.yml
@@ -125,3 +127,17 @@
   tags:
     - never
     - utils-debian10to11
+
+- name: include debian 11->12 migration tasks
+  import_tasks: utils-debian11to12.yml
+  become: yes
+  tags:
+    - never
+    - utils-debian11to12
+
+- name: include fail2ban status report tasks
+  import_tasks: utils-fail2ban-get-banned.yml
+  become: yes
+  tags:
+    - never
+    - utils-fail2ban-get-banned

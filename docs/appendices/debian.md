@@ -6,7 +6,7 @@
 
 ### Manual, from ISO image
 
-- Download a [Debian 11 netinstall image](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/)
+- Download a [Debian 12 netinstall image](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/)
 - Load the ISO image in your virtual machine's CD drive, or write the image to a 1GB+ USB drive (Linux: [`dd`](https://wiki.archlinux.org/index.php/USB_flash_installation_media#In_GNU.2FLinux), [GNOME disks](https://www.techrepublic.com/article/how-to-create-disk-images-using-gnome-disk/). Windows: [win32diskimager](http://sourceforge.net/projects/win32diskimager/))
 - Boot your server/VM from the Debian installer ISO image/USB.
 - Select `Advanced > Graphical advanced install`.
@@ -39,14 +39,14 @@
 
 `xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be [installed](../installation/controller-preparation.md) on the machine where these commands are run.
 
-The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/bullseye/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
+The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/bookworm/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
 
 ```bash
 $ xsrv init-vm-template --help
-USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $HOME/.local/share/xsrv/git/docs/preseed.cfg]
+USAGE: ./xsrv init-vm-template [--name debian12-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $HOME/.local/share/xsrv/git/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
-        --name          name of the VM/template to create (default debian11-base)
+        --name          name of the VM/template to create (default debian12-base)
         --ip            REQUIRED IP address of the VM/template
         --gateway       default network gateway (default: same as IP, last octet replaced by .1)
         --netmask       network mask of the VM (default 255.255.255.0)
@@ -60,12 +60,11 @@ USAGE: ./xsrv init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway
         --disk-size     size of the disk image to create, in GB (default 20)
         --network       name of the libvirt network to attach the VM to (default default)
         --preseed-file  path to the preseed/preconfiguration file (default $HOME/.local/share/xsrv/git/docs/preseed.cfg)
-
-        
-
 ```
 
 The default preseed file can be found [here](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/preseed.cfg) and can be overridden using `--preseed /path/to/custom/preseed.cfg`.
+
+Under the hood, this uses libvirt-specific commands such as `virt-install` and `virt-sysprep`. Similar tools for other virtualization platforms/cloud providers include [Packer](https://www.packer.io/) and [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html).
 
 [![](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z.svg)](https://asciinema.org/a/nDxQSENEt2wXfhoBzWX3cc36z?speed=2&theme=monokai&autoplay=true)
 
@@ -75,11 +74,11 @@ If you already have a [libvirt](virt-manager.md) Debian VM set up as described a
 
 ```bash
 $ ./xsrv init-vm --help
-USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip IP_ADDRESS [--netmask 24] [--gateway GATEWAY_IP] [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] [--ssh-pubkey 'ssh-rsa AAAAB...'] [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
-        EXAMPLE: ./xsrv init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.254 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /playbooks/default/data/libvirt/VM_NAME.xml]
+USAGE: ./xsrv init-vm  --name VM_NAME [--template debian12-base] --ip IP_ADDRESS [--netmask 24] [--gateway GATEWAY_IP] [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] [--ssh-pubkey 'ssh-rsa AAAAB...'] [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
+        EXAMPLE: ./xsrv init-vm --template debian12-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.254 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /playbooks/default/data/libvirt/VM_NAME.xml]
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
-        --template      name of the template to create the new VM from (default debian11-base)
+        --template      name of the template to create the new VM from (default debian12-base)
         --name          REQUIRED name of the VM to create
         --ip            REQUIRED IP address of the VM
         --gateway       default network gateway (default: same as IP, last octet replaced by .1)
@@ -98,7 +97,7 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian11-base] --ip IP_ADDRESS
 
 [![](https://asciinema.org/a/v7B0c8ulfMz14OqF5b5yRb3VE.svg)](https://asciinema.org/a/v7B0c8ulfMz14OqF5b5yRb3VE?speed=2&theme=monokai&autoplay=true)
 
-You can then use the [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role to manage VMs, the [`virsh`](https://manpages.debian.org/bullseye-backports/libvirt-clients/virsh.1.en.html) command-line tool, and/or [virt-manager](virt-manager.md) to manage the hypervisor from a remote machine.
+You can then use the [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role to manage VMs, the [`virsh`](https://manpages.debian.org/bookworm/libvirt-clients/virsh.1.en.html) command-line tool, and/or [virt-manager](virt-manager.md) to manage the hypervisor from a remote machine.
 
 
 ### From a hosting provider

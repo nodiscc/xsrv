@@ -28,7 +28,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "25.0.6"
+nextcloud_version: "26.0.3"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -63,8 +63,8 @@ nextcloud_apps:
   - { state: "enable", app: "firstrunwizard" } # https://github.com/nextcloud/firstrunwizard
   - { state: "enable", app: "groupfolders" } # https://apps.nextcloud.com/apps/groupfolders
   - { state: "enable", app: "photos" } # https://github.com/nextcloud/photos
-  - { state: "enable", app: "music" } # https://apps.nextcloud.com/apps/music
-  - { state: "enable", app: "maps" } # https://apps.nextcloud.com/apps/maps
+  - { state: "disable", app: "music" } # https://apps.nextcloud.com/apps/music
+  - { state: "disable", app: "maps" } # https://apps.nextcloud.com/apps/maps
   - { state: "enable", app: "notifications" } # https://github.com/nextcloud/notifications
   - { state: "enable", app: "systemtags" } # https://docs.nextcloud.com/server/latest/user_manual/ca/files/access_webgui.html#tagging-files
   - { state: "enable", app: "tasks" } # https://apps.nextcloud.com/apps/tasks

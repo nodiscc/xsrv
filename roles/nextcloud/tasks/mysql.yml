@@ -4,13 +4,12 @@
   apt:
     state: present
     package:
-      - php-mysql
+      - php{{ php_fpm_version }}-mysql
       - python3-pymysql
 
 - name: create nextcloud mysql database
   mysql_db:
     name: "{{ nextcloud_db_name }}"
-    host: "{{ nextcloud_db_host }}"
     state: present
     login_password: "{{ mariadb_root_password }}"
     login_host: "{{ nextcloud_db_host }}"

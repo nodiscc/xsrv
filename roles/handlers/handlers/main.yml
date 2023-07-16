@@ -26,6 +26,13 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: restart fail2ban
+  become: yes
+  service:
+    name: fail2ban
+    state: restarted
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### APACHE ###
 
@@ -61,6 +68,7 @@
     name: rsyslog
     state: restarted
     enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### MONITORING_NETDATA ###
 

@@ -21,6 +21,7 @@
     group: root
     mode: "0600"
   notify: restart rsyslog
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate syslog client openssl certificate signing request (CSR)
   openssl_csr:
@@ -30,6 +31,7 @@
     owner: root
     group: root
     mode: "0600"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl client certificate
   openssl_certificate:
@@ -42,6 +44,7 @@
     mode: "0600"
     force: no
   notify: restart rsyslog
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: upload syslog server/CA certificate
   copy:
@@ -50,3 +53,4 @@
     owner: root
     group: root
     mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"

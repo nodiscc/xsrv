@@ -1,7 +1,3 @@
-- name: load distribution-specific variables
-  include_vars:
-    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
-
 - name: enable apache2 modules
   command: a2enmod {{ item }}
   with_items:

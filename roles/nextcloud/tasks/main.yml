@@ -4,6 +4,13 @@
     - nextcloud
     - checks
 
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  tags:
+    - nextcloud
+    - apache
+
 - name: include mysql configuration tasks
   import_tasks: mysql.yml
   become: yes

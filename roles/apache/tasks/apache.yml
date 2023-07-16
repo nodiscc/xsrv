@@ -15,9 +15,9 @@
       - libapache2-mod-evasive
       - libapache2-mod-md
       - libapache2-mod-fcgid
-      - php-apcu
-      - php
-      - php-fpm
+      - php{{ php_fpm_version }}-apcu
+      - php{{ php_fpm_version }}
+      - php{{ php_fpm_version }}-fpm
   tags: ssl
 
 - name: remove mod-php (replaced with php-fpm)
@@ -28,12 +28,31 @@
       - libapache2-mod-php7.2
       - libapache2-mod-php7.3
       - libapache2-mod-php7.4
-      - libapache2-mod-php8.0
       - libapache2-mod-php8.1
+      - libapache2-mod-php8.2
     state: absent
   notify: restart apache
 
-# restart apache to apply mod-php removal
+- name: create directory for apache2 systemd overrides
+  file:
+    state: directory
+    path: /etc/systemd/system/apache2.service.d/
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: configure apache2 systemd unit overrides
+  template:
+    src: etc_systemd_system_apache2.service.d_override.conf.j2
+    dest: /etc/systemd/system/apache2.service.d/override.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart apache
+
+# restart apache to apply mod-php removal and systemd configuration overrides
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
@@ -67,6 +86,8 @@
     - 'php7.2' # conflicts with mpm_event
     - 'php7.3' # conflicts with mpm_event
     - 'php7.4' # conflicts with mpm_event
+    - 'php8.1' # conflicts with mpm_event
+    - 'php8.2' # conflicts with mpm_event
     - 'mpm_prefork' # conflicts with mpm_event
   notify: restart apache
 
@@ -97,7 +118,7 @@
     - 'logging'
     - 'ssl-common'
     - 'mod-md'
-    - 'php7.4-fpm'
+    - 'php{{ php_fpm_version }}-fpm'
   notify: reload apache
   tags: ssl
 
@@ -201,7 +222,7 @@
 
 - name: enable/disable start/stop php-fpm service
   systemd:
-    name: php7.4-fpm
+    name: php{{ php_fpm_version }}-fpm
     enabled: "{{ apache_enable_service }}"
     state: "{{ 'started' if apache_enable_service else 'stopped' }}"
     daemon_reload: yes

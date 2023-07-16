@@ -31,7 +31,10 @@
     - apache
     - ssl
     - graylog
-  when: graylog_https_mode == 'selfsigned'
+  when:
+    - graylog_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
@@ -39,6 +42,9 @@
   tags:
     - graylog
     - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include rsnapshot/backup configuration tasks
   import_tasks: backups.yml

@@ -3,13 +3,86 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.15.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.15.0) - 2023-07-16
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **common**: if you had custom `linux_users` defined with `ssh` as one of their `groups:`, change the group name from `ssh` to `ssh-access`, for example:
+
+```diff
+# xsrv edit-host
+# host_vars/my.example.org/my.example.org.yml
+ linux_users:
+   - name: "rsnapshot"
+-    groups: [ "ssh", "sudo", "postgres", "nextcloud", "steam" ]
++    groups: [ "ssh-access", "sudo", "postgres", "nextcloud", "steam" ]
+     comment: "limited user account for remote backups"
+     ssh_authorized_keys: ['data/public_keys/root@home.example.org.pub']
+     sudo_nopasswd_commands: ['/usr/bin/rsync', '/usr/bin/psql', '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ]
+```
+
+- (optional) `xsrv check` to simulate changes.
+- `xsrv deploy` to apply changes
+- (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html).
+  - **nextcloud**: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled (it is not compatible with Nextcloud 26 yet). You may also want to disable the [Music](https://apps.nextcloud.com/apps/music) app since it causes problems with file deletion.
+  - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+  - **graylog:** do **not** upgrade hosts where the `graylog` role is deployed to Debian 12, as it is not compatible with Debian 12 yet.
+
+The Debian 11 -> 12 upgrade procedure was only tested for hosts managed by `xsrv` roles. If you have custom/third-party software installed, you should read Debian 12's [release notes](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html) and/or execute the upgrade procedure manually. It is always advisable to do a full backup/snapshot before performing a distribution upgrade.
+
+**Added:**
+- common: add an automated procedure to upgrade Debian 11 hosts to Debian 12 (`TAGS=utils-debian11to12 xsrv deploy`)
+- common: fail2ban: allow downloading the list of banned IPs to the controller (`TAGS=utils-fail2ban-get-banned xsrv deploy`)
+- backup: allow taking a snapshot immediately (`TAGS=utils-backup-now xsrv deploy`)
+- graylog: allow setting the admin user account timezone ([`graylog_root_timezone`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+
+**Changed:**
+- make all roles (except `graylog`) compatible with Debian 12 "Bookworm"
+- xsrv: `init-vm-template`: use Debian 12 "Bookworm" as the base OS image [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
+- common: ssh: change the group name allowed to access the SSH server from `ssh` to `ssh-access` (`ssh` is a reserved group name used for internal purposes)
+- common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: firewalld: allow SSH connections from both the internal and public zones by default
+- apache: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `7.6 EXPOSED`)
+- xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
+- nextcloud: disable the [Maps](https://apps.nextcloud.com/apps/maps) app by default (incompatible with Nextcloud 26)
+- nextcloud: disable the [Music](https://apps.nextcloud.com/apps/music) app by default (makes it impossible to delete directories)
+- nextcloud: update to v26.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/updates-26-0-1-and-25-0-6-are-out-get-them-now/) [[3]](https://nextcloud.com/blog/hub-4-pioneers-ethical-ai-integration-for-a-more-productive-and-collaborative-future/)
+- gitea: update to [v1.19.4](https://github.com/go-gitea/gitea/releases/tag/v1.19.4)
+- openldap: update ldap-account-manager to [v8.4](https://github.com/LDAPAccountManager/lam/releases/tag/lam_8_4)
+- matrix: update element-web to v1.11.35 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.32) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.33) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.34) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.35)
+- postgresql: update pgmetrics to [v1.15.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.0)
+- xsrv: update ansible to v8.1.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
+- apache: simplify syntax of configuration used to forbid access to `.ssh,.git,.svn,.hg` directories
+- monitoring_rsyslog: drop remaining compatibility with Debian 10 "Stretch"
+- cleanup: gitea: remove unneeded `php-pgsql` package installation
+- cleanup: shaarli: simplify handling of conditions in installation/upgrade procedure
+- tests: improve ansible-lint coverage
+- improve check mode support, fix errors in check mode when running before first actual deployment
+- update documentation
+
+**Fixed:**
+- common: firewalld: fix conflicting default values for `immediate` and `permanent` during `configure firewalld zone sources` (default to `permanent: yes, immediate: no`)
+- shaarli: fix missing package `python3-pip` required to install python-shaarli-client when `shaarli_setup_python_client: yes`
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
+- xsrv: init-vm: fix help text (the value for `--memory` must have the `M` or `G` suffix)
+- xsrv: init-vm: fix the VM XML filename printed out in the `libvirt_vms` copy-pastable snippet
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
+- graylog: decouple role from the apache role, skip apache configuration tasks when apache is not managed by ansible
+- nextcloud: fix mysql ansible module arguments
+
+[Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.14.0...1.15.0)
+
+------------------
+
+
 #### [v1.14.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.14.0) - 2023-05-17
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
-- matrix: synapse: if you are getting the error `Failed to update apt cache: unknown reason`, this may be caused by the matrix/synapse APT repository signing key having expired. Deploying the `matrix` alone should solve this problem (`TAGS=matrix xsrv deploy`)
+- matrix: synapse: if you are getting the error `Failed to update apt cache: unknown reason`, this may be caused by the matrix/synapse APT repository signing key having expired. Deploying the `matrix` tag alone should solve this problem (`TAGS=matrix xsrv deploy`)
 - (optional) download and install the tab/auto-completion script:
 
 ```bash
@@ -41,6 +114,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - nextcloud: update to [v25.0.6](https://nextcloud.com/changelog/)
 - gitea: update to v1.19.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.19.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.19.3)
 - matrix: update element-web to v1.11.31 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.30) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.31)
+- openldap: update self-service-password to [v1.5.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.3)
 - xsrv: update ansible to [v7.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/7/CHANGELOG-v7.rst)
 - cleanup/internal changes: improve separation of tasks/files, clarify variable naming, remove unused/duplicate variables/tasks
 - update documentation

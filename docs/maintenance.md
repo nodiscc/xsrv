@@ -25,7 +25,7 @@ Also keep off-line, off-site backups of your `~/playbooks/` directory.
 
 ## Upgrading
 
-Security upgrades for software provided by the Linux distribution are applied [automatically, daily](roles/common). To upgrade roles to the latest [release](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md) [[1]](https://gitlab.com/nodiscc/xsrv/-/tags?format=atom) (bugfixes, new features/roles, latest releases of all applications):
+Security upgrades for software provided by official Debian packages are applied [automatically, daily](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common). To upgrade roles to the latest [release](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md) [[1]](https://gitlab.com/nodiscc/xsrv/-/tags?format=atom) (bugfixes, new features/roles, latest releases of all applications):
 
 - Ensure you have a valid [backup](#backups) of the server's data and/or do a snapshot of the machine
 - Upgrade roles in your playbook: `xsrv upgrade`
@@ -39,7 +39,7 @@ Security upgrades for software provided by the Linux distribution are applied [a
 - Check [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) reports for abnormal messages or alarms.
 - Ensure appropriate [physical access control](https://www.stigviewer.com/controls/800-53/PE-3) measures are in place for physical servers.
 
-Isolation between services/applications relies on [file permissions, ownership and groups](https://wiki.debian.org/Permissions) and [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). Compromise of a single service or account must not allow compromise of other services and accounts.
+Isolation between services/applications relies on [file permissions, ownership and groups](https://wiki.debian.org/Permissions), namespacing and reduced capabilities through `systemd`, [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). Compromise of a single service or account must not allow compromise of other services and accounts.
 
 The `ansible_user` administration account has unlimited access through SSH/[`sudo`](https://wiki.debian.org/sudo) (requires both an authorized SSH key and a password). Ensure appropriate security measures are in place on devices used to access to this account. Be careful when performing manual operations from this account. Protect your private SSH key and the `.ansible-vault-password` file.
 
@@ -49,7 +49,7 @@ The default setup enforces intermediate hardening measures inspired from various
 
 Network communications are protected using strong public-key cryptography (authenticity/integrity/confidentiality).
 
-`xsrv` roles install and manage only  [Free and Open-Source Software](https://en.wikipedia.org/wiki/Free_and_open-source_software).
+`xsrv` roles install and manage only [Free and Open-Source Software](https://en.wikipedia.org/wiki/Free_and_open-source_software).
 
 
 ```

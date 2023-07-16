@@ -40,6 +40,14 @@ $ TAGS=utils-autorestart xsrv deploy
 $ ansible-playbook playbook.yml --tags=utils-autorestart
 ```
 
+- `debsecan` will send an email summary of possible security vulnerabilities in packages installed on the host to the system administrator, every time a new vulnerability is found or an existing one is fixed. For each reported CVE, you should try to determine if it is applicable to your specific configuration/threat model, and if necessary, whitelist it in `/var/lib/debsecan/whitelist`. A more thorough example of vulnerability analysis procedure can be found [here](https://old.reddit.com/r/debian/comments/10z4im0/security_updates_with_nodsa/j83hcst/). Below is an example whitelist file:
+
+```
+VERSION 0
+CVE-2022-1897,
+CVE-2022-3099,
+```
+
 ### Integration with other roles/manual configuration
 
 To install custom `httpcheck`/`x509check`/`portcheck`/`processes` module/alarm, create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` [handler](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/handlers/main.yml) (`$module_name.conf` will be assembled from configuration fragments).
@@ -55,6 +63,7 @@ netdata-modules - setup custom netdata modules
 netdata-needrestart - setup netdata needrestart module
 netdata-logcount - setup netdata logcount module
 netdata-debsecan - setup netdata debsecan module
+netdata-apt - setup netdata apt module
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-netdata-test-notifications - send test netdata notification
 netdata-downtime - configure netdata downtime/silence schedules

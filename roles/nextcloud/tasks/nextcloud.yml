@@ -15,20 +15,20 @@
   apt:
     state: present
     package:
-      - php-gmp
-      - php-curl
-      - php-gd
-      - php-imagick
-      - php-intl
-      - php-json
-      - php-ldap
-      - php-sqlite3
-      - php-mbstring
-      - php-xml
-      - php-zip
-      - php-bz2
-      - php-imap
-      - php-apcu
+      - "php{{ php_fpm_version }}-gmp"
+      - "php{{ php_fpm_version }}-curl"
+      - "php{{ php_fpm_version }}-gd"
+      - "php{{ php_fpm_version }}-imagick"
+      - "php{{ php_fpm_version }}-intl"
+      - "{{ php_json_package }}"
+      - "php{{ php_fpm_version }}-ldap"
+      - "php{{ php_fpm_version }}-sqlite3"
+      - "php{{ php_fpm_version }}-mbstring"
+      - "php{{ php_fpm_version }}-xml"
+      - "php{{ php_fpm_version }}-zip"
+      - "php{{ php_fpm_version }}-bz2"
+      - "php{{ php_fpm_version }}-imap"
+      - "php{{ php_fpm_version }}-apcu"
       - ffmpeg
       - acl
 

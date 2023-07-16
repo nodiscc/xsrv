@@ -29,6 +29,15 @@
     - ssl
     - openldap
 
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  when: (openldap_setup_lam | bool) or openldap_setup_ssp | bool
+  tags:
+    - openldap
+    - ldap-account-manager
+    - self-service-password
+
 - name: include ldap-account-manager configuration tasks
   import_tasks: ldap-account-manager.yml
   become: yes

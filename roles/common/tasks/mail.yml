@@ -47,3 +47,24 @@
     - regex: "^default"
       line: "default: {{ msmtp_admin_email }}"
   when: setup_msmtp | bool
+
+##### FACTS #####
+
+- name: create ansible facts.d directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+    mode: "0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create msmtp fact file
+  template:
+    src: etc_ansible_facts.d_msmtp.fact.j2
+    dest: /etc/ansible/facts.d/msmtp.fact
+    mode: "0644"
+  notify: update ansible facts
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# ensure ansible facts are up to date before continuing
+- name: apply configuration (flush handlers)
+  meta: flush_handlers

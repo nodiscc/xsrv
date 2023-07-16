@@ -1,5 +1,6 @@
 # @tag backup - setup rsnapshot backup utility
 # @tag rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
+# @tag utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 
 galaxy_info:
   role_name: backup
@@ -12,6 +13,8 @@ galaxy_info:
       versions:
         - "9"
         - "10"
+        - "11"
+        - "12"
   galaxy_tags:
     - backup
     - incremental

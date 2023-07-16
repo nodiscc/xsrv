@@ -9,7 +9,8 @@ galaxy_info:
   platforms: # should work on all platforms/distributions
     - name: Debian
       versions:
-        - 11
+        - "11"
+        - "12"
   galaxy_tags:
     - readme
     - inventory

@@ -1,7 +1,7 @@
 # @tag EXAMPLE - setup EXAMPLE
 
 galaxy_info:
-  role_name: EXAMPLE
+  role_name: example
   author: "nodiscc <nodiscc@gmail.com>"
   description: "EXAMPLE role"
   license: "GPL-3.0"
@@ -9,8 +9,8 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - "11"
+        - "12"
   galaxy_tags:
-    - EXAMPLE
+    - example
 dependencies:
   - nodiscc.xsrv.handlers

@@ -52,7 +52,8 @@
     home: '{{ gitea_user_home }}'
     groups:
       - 'gitea'
-      - 'ssh'
+      - 'ssh-access'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create gitea directories
   file:

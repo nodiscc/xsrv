@@ -1,0 +1,4 @@
+- name: run rsnapshot backup
+  shell:
+    cmd: "rsnapshot daily && touch /var/log/rsnapshot_last_success"
+  changed_when: yes

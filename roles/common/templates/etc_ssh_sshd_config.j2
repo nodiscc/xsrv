@@ -130,9 +130,9 @@ X11UseLocalhost yes
 
 # Only allow login for users from authorized groups
 {% if ssh_permit_root_login in ['yes', 'without-password', 'prohibit-password', 'forced-commands-only'] %}
-AllowGroups ssh sftponly git root
+AllowGroups ssh-access sftponly git root
 {% else %}
-AllowGroups ssh sftponly git
+AllowGroups ssh-access sftponly git
 {% endif %}
 
 # Misc. configuration

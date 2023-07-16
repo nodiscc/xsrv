@@ -1,16 +1,3 @@
-#
-# Disable access to the entire file system except for the directories that
-# are explicitly allowed later.
-#
-# This currently breaks the configurations that come with some web application
-# Debian packages.
-#
-#<Directory />
-#	AllowOverride None
-#	Order Deny,Allow
-#	Deny from all
-#</Directory>
-
 <Directory /var/www/>
     # Disable directory listing/indexes
     # Allow following symlinks
@@ -32,7 +19,9 @@
 # and compiled in modules.
 # Set to one of:  Full | OS | Minimal | Minor | Major | Prod
 # where Full conveys the most information, and Prod the least.
-#
+#ServerTokens Minimal
+#ServerTokens OS
+#ServerTokens Full
 ServerTokens Prod
 
 #
@@ -42,8 +31,8 @@ ServerTokens Prod
 # documents or custom error documents).
 # Set to "EMail" to also include a mailto: link to the ServerAdmin.
 # Set to one of:  On | Off | EMail
-#
 ServerSignature Off
+#ServerSignature On
 
 #
 # Allow TRACE method
@@ -52,8 +41,8 @@ ServerSignature Off
 # diagnostic purposes).
 #
 # Set to one of:  On | Off | extended
-#
 TraceEnable Off
+#TraceEnable On
 
 #
 # Forbid access to version control directories
@@ -61,30 +50,18 @@ TraceEnable Off
 # If you use version control systems in your document root, you should
 # probably deny access to their directories.
 #
-
-<Directorymatch "^/.*/\.git/">
-    RedirectMatch 404 ".*"
-</Directorymatch>
-
-<Directorymatch "^/.*/\.svn/">
-    RedirectMatch 404 ".*"
-</Directorymatch>
-
-<Directorymatch "^/.*/\.hg/">
-    RedirectMatch 404 ".*"
-</Directorymatch>
+# Examples:
+#
+#RedirectMatch 404 /\.git
+#RedirectMatch 404 /\.svn
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.svn
+RedirectMatch 404 /\.hg
+RedirectMatch 404 /\.ssh
 
 #
-# Forbid access to .ssh/ directories
-#
-
-<Directorymatch "^/.*/\.ssh/">
-    RedirectMatch 404 ".*"
-</Directorymatch>
-
-#
-# Setting this header will prevent MSIE from interpreting files as
-# something else than declared by the content type in the HTTP headers.
+# Setting this header will prevent MSIE from interpreting files as something
+# else than declared by the content type in the HTTP headers.
 # Requires mod_headers to be enabled.
 #
 Header always set X-Content-Type-Options "nosniff"
@@ -108,7 +85,7 @@ Header always set X-XSS-Protection "1; mode=block"
 #Header always set X-Frame-Options "sameorigin"
 
 # Prevent browsers from running scripts injected form other domains
-# Disabled as each application/virtualhost should set this header according to its needs
+# Disabled as each application/virtualhost should set this header according to its particular needs
 #
 #Header always set Content-Security-Policy "script-src 'self'; frame-ancestors 'self'"
 
@@ -121,8 +98,7 @@ Header always set Referrer-Policy "same-origin"
 #
 Header always set X-Permitted-Cross-Domain-Policies "none"
 
-# Mitigate the HTTPoxy vulnerability
-# https://httpoxy.org/
+# Mitigate the HTTPoxy (https://httpoxy.org/) vulnerability
 #
 RequestHeader unset Proxy early
 

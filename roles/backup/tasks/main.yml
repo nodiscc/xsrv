@@ -39,3 +39,12 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: backup
+
+##### UTILITIES #####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include immediate backup tasks
+  import_tasks: utils-backup-now.yml
+  become: yes
+  tags:
+    - never
+    - utils-backup-now

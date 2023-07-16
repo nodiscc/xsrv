@@ -73,7 +73,7 @@ root_password_sha2 = {{ graylog_root_password_hash.stdout }}
 
 # The time zone setting of the root user. See http://www.joda.org/joda-time/timezones.html for a list of valid time zones.
 # Default is UTC
-#root_timezone = UTC
+root_timezone = {{ graylog_root_timezone }}
 
 # Set the bin directory here (relative or absolute)
 # This directory contains binaries that are used by the Graylog server.

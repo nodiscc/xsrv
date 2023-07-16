@@ -54,8 +54,8 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.14.0"
-ansible_version="7.5.0"
+version="1.15.0"
+ansible_version="8.1.0"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
@@ -72,7 +72,7 @@ ssh_args=""
 
 ########## PROJECT-LEVEL MANAGEMENT ##########
 
-function init_project() {
+init_project() {
     # initialize a new project
     if [[ -e "$project_dir" ]]; then
         echo "[xsrv] ERROR: $project_dir already exists"; exit 1
@@ -89,33 +89,33 @@ function init_project() {
     echo "[xsrv] INFO: run xsrv deploy to apply configuration now, or xsrv help for more options"
 }
 
-function legacy_init_playbook() {
+legacy_init_playbook() {
     echo "[xsrv] WARNING: init-playbook is deprecated and will be removed in a future release. Use init-project"
     init_project
 }
 
-function edit_playbook() {
+edit_playbook() {
     # edit a playbook file
     playbook_file="$projects_dir/$project_name/playbook.yml"
     echo "[xsrv] INFO: opening playbook file $playbook_file"
     $editor "$playbook_file"
 }
 
-function edit_inventory() {
+edit_inventory() {
     # edit an inventory file
     inventory_file="$projects_dir/$project_name/inventory.yml"
     echo "[xsrv] INFO: opening inventory file $inventory_file"
     $editor "$inventory_file"
 }
 
-function edit_requirements() {
+edit_requirements() {
     # edit requirements.yml file
     requirements_file="$projects_dir/$project_name/requirements.yml"
     echo "[xsrv] INFO: opening requirements file $requirements_file"
     $editor "$requirements_file"
 }
 
-function edit_ansible_cfg() {
+edit_ansible_cfg() {
     # edit ansible.cfg file
     cfg_file="$projects_dir/$project_name/ansible.cfg"
     echo "[xsrv] INFO: opening requirements file $cfg_file"
@@ -125,7 +125,7 @@ function edit_ansible_cfg() {
 
 ########## HOST/GROUP-LEVEL MANAGEMENT ##########
 
-function init_host() {
+init_host() {
     # add a new host to a project (from template files)
     check_project_exists
     until [[ -n "$host_name" ]]; do
@@ -162,14 +162,14 @@ function init_host() {
     echo "[xsrv] INFO: Host is ready for deployment. Run xsrv deploy $project_name $host_name"
 }
 
-function edit_host() {
+edit_host() {
     # edit a host's vars file
     _check_host_name
     echo "[xsrv] INFO: opening host vars file $host_vars_file"
     $editor "$host_vars_file"
 }
 
-function edit_group() {
+edit_group() {
     # edit group variables
     check_group_name
     echo "[xsrv] INFO: opening group_vars file $group_vars_file"
@@ -177,7 +177,7 @@ function edit_group() {
     $editor "$group_vars_file"
 }
 
-function edit_group_vault() {
+edit_group_vault() {
     # edit a group's vault file
     check_group_name
     echo "[xsrv] INFO: opening group vault file $group_vault_file"
@@ -190,7 +190,7 @@ function edit_group_vault() {
     EDITOR="$editor" ansible-vault edit "$group_vault_file"
 }
 
-function edit_vault() {
+edit_vault() {
     # edit a host's vault file
     _check_host_name
     echo "[xsrv] INFO: opening vault file $host_vault_file"
@@ -202,7 +202,7 @@ function edit_vault() {
 ########## DEPLOYMENT RELATED COMMANDS ##########
 
 # shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
-function check() {
+check() {
     # run ansible playbook in check mode
     check_project_exists
     if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg=""; fi
@@ -213,7 +213,7 @@ function check() {
 }
 
 # shellcheck disable=SC2086 # use arrays for variable expansion, unnecessarily complex
-function deploy() {
+deploy() {
     # run ansible playbook
     if [[ -n "$host_name" ]]; then ansible_host_arg="--limit=$host_name"; else ansible_host_arg="--limit=all"; fi
     if [[ -n "$ansible_tags" ]]; then ansible_tags_arg="--tags=$ansible_tags"; else ansible_tags_arg="--tags=all"; fi
@@ -225,7 +225,7 @@ function deploy() {
 
 ########## UTILITIES/HELPERS ##########
 
-function run_shell() {
+run_shell() {
     # open a SSH shell on a host
     _check_host_name
     ssh_user=$(_get_host_var "ansible_user")
@@ -235,7 +235,7 @@ function run_shell() {
     $ssh_command
 }
 
-function fetch_backups() {
+fetch_backups() {
     # fetch latest daily backups from the host
     check_project_exists
     _check_host_name
@@ -249,7 +249,7 @@ function fetch_backups() {
       "$projects_dir/$project_name/$local_backups_dir/daily.0.$backup_date"
 }
 
-function _xdg_open() {
+_xdg_open() {
     # open the project directory in the default file manager
     xdg-open "$projects_dir/$project_name"
 }
@@ -261,7 +261,7 @@ _validate_ip_address() {
         (echo "[xsrv] ERROR: $address is not a valid IPv4 address"; exit 1)
 }
 
-function show_defaults() {
+show_defaults() {
     # show all role defaults
     role=${2:-}
     check_project_exists
@@ -282,7 +282,7 @@ function show_defaults() {
     fi
 }
 
-function help() {
+help() {
     # show help
     echo "$usage"
     exit 1
@@ -291,7 +291,7 @@ function help() {
 
 ########## ANSIBLE INSTALLATION AND UPGRADES ##########
 
-function create_venv() {
+create_venv() {
     echo "[xsrv] INFO: creating virtualenv in $venv_dir"
     mkdir -p "$venv_dir"
     python3 -m venv "$venv_dir"
@@ -301,7 +301,7 @@ function create_venv() {
     pip3 install ansible=="$ansible_version" netaddr lxml
 }
 
-function init_venv() {
+init_venv() {
     # check if a working ansible virtualenv exists,
     # check if the installed ansible version matches the expected version,
     # otherwise create/activate the virtualenv and install ansible
@@ -313,11 +313,11 @@ function init_venv() {
     } || create_venv
 }
 
-function upgrade_roles() {
+upgrade_roles() {
     check_project_exists
     if [[ ! -f "$project_dir"/requirements.yml ]]; then
         echo "[xsrv] INFO: installing default collection git+$xsrv_git_url,$xsrv_upgrade_channel"
-        (cd "$project_dir" && ansible-galaxy collection install --force --collections-path "$project_dir/" git+$xsrv_git_url,$xsrv_upgrade_channel)
+        (cd "$project_dir" && ansible-galaxy collection install --force --collections-path "$project_dir/" "git+$xsrv_git_url,$xsrv_upgrade_channel")
     else
         echo "[xsrv] INFO: upgrading collections from requirements.yml"
         (cd "$project_dir" && ansible-galaxy collection install --force -r requirements.yml)
@@ -325,7 +325,7 @@ function upgrade_roles() {
     create_venv
 }
 
-function self_upgrade() {
+self_upgrade() {
     # upgrade the running xsrv script in-place
     script_path="$0"
     echo "[xsrv] INFO fetching latest release..."
@@ -358,12 +358,12 @@ function self_upgrade() {
 
 ########## LIBVIRT RELATED COMMANDS ##########
 
-function init_vm() {
-    INIT_VM_USAGE="$0 init-vm  --name VM_NAME [--template debian11-base] --ip IP_ADDRESS [--netmask 24] [--gateway GATEWAY_IP] [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] [--ssh-pubkey 'ssh-rsa AAAAB...'] [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1024] [--vcpus NUM_CPU]
-        EXAMPLE: $0 init-vm --template debian11-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.254 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /playbooks/default/data/libvirt/VM_NAME.xml]
+init_vm() {
+    INIT_VM_USAGE="$0 init-vm  --name VM_NAME [--template debian12-base] --ip IP_ADDRESS [--netmask 24] [--gateway GATEWAY_IP] [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] [--ssh-pubkey 'ssh-rsa AAAAB...'] [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1G] [--vcpus NUM_CPU] [--dumpxml $projects_dir/VM_NAME.xml]
+        EXAMPLE: $0 init-vm --template debian12-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.254 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /playbooks/default/data/libvirt/VM_NAME.xml]
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
-        --template      name of the template to create the new VM from (default debian11-base)
+        --template      name of the template to create the new VM from (default debian12-base)
         --name          REQUIRED name of the VM to create
         --ip            REQUIRED IP address of the VM
         --gateway       default network gateway (default: same as IP, last octet replaced by .1)
@@ -383,7 +383,7 @@ function init_vm() {
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
     # default values
-    template="debian11-base"
+    template="debian12-base"
     name=""
     ip=""
     netmask="24"
@@ -431,6 +431,10 @@ function init_vm() {
     if [[ -z "$dumpxml_file" ]]; then
         dumpxml_file="$projects_dir/$name.xml"
         echo "[xsrv] INFO: --dumpxml not provided, automatically set to $projects_dir/$name.xml"
+    fi
+    if [[ ! "$memory" =~ ^[0-9]*[GM] ]]; then
+        echo "[xsrv] ERROR --memory value must use the M or G suffix (e.g. 1024M or 1G)"
+        exit 1
     fi
 
     # build /etc/network/interfaces for the target system 
@@ -499,15 +503,15 @@ EOF
     echo "[xsrv] INFO: dumping VM XML definition to $dumpxml_file"
     virsh --connect qemu:///system dumpxml "$name" > "$dumpxml_file"
     echo "[xsrv] INFO: You may now start managing this VM using the nodiscc.xsrv.libvirt_role."
-    echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '$dumpxml_file.xml'"
+    echo -e "libvirt_vms:\\n  - name: $name\\n    xml_file: '{{ playbook_dir }}/data/libvirt/$(basename "$dumpxml_file")'"
 }
 
 # to delete the VM: virsh destroy $TEMPLATE_VMNAME; virsh undefine $TEMPLATE_VMNAME; virsh vol-delete --pool /var/lib/libvirt/images/$TEMPLATE_VMNAME.qcow2
-function init_vm_template() {
-    INIT_VM_TEMPLATE_USAGE="$0 init-vm-template [--name debian11-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
+init_vm_template() {
+    INIT_VM_TEMPLATE_USAGE="$0 init-vm-template [--name debian12-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
-        --name          name of the VM/template to create (default debian11-base)
+        --name          name of the VM/template to create (default debian12-base)
         --ip            REQUIRED IP address of the VM/template
         --gateway       default network gateway (default: same as IP, last octet replaced by .1)
         --netmask       network mask of the VM (default 255.255.255.0)
@@ -529,7 +533,7 @@ function init_vm_template() {
     GETOPT=$(getopt -o '' --longoptions "$long_opts" --name "[xsrv] ERROR" -- "$@")
     eval set -- "$GETOPT"
     # default values
-    name="debian11-base"
+    name="debian12-base"
     storage_path="/var/lib/libvirt/images"
     memory="1024"
     vcpus="2"
@@ -600,7 +604,7 @@ function init_vm_template() {
         --os-variant debian10 \
         --graphics none \
         --console pty,target_type=serial \
-        --location http://deb.debian.org/debian/dists/bullseye/main/installer-amd64 \
+        --location http://deb.debian.org/debian/dists/bookworm/main/installer-amd64 \
         --extra-args "console=ttyS0,115200n8 serial" \
         --initrd-inject="/var/lib/libvirt/preseed.cfg" \
         --network network="$network" \
@@ -615,7 +619,7 @@ function init_vm_template() {
     echo "[xsrv] INFO: password for root: $root_password"
 }
 
-function readme_gen() {
+readme_gen() {
     # generate a markdown inventory with information on ansible facts in the project's README.md
     # see https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen
     (cd "$project_dir" && (ansible --one-line --module-name setup all || true))
@@ -624,14 +628,14 @@ function readme_gen() {
 
 ########## INTERNAL HELPERS ##########
 
-function _get_host_var() {
+_get_host_var() {
     # get a host var using ansible -m debug | grep
     # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
     (cd "$project_dir" && ansible --one-line --inventory inventory.yml --module-name debug --args "msg={{ $1 }}" "$host_name" | \
     grep -oP '(?<="msg": ").*(?="})')
 }
 
-function gen_vault_password_file() {
+gen_vault_password_file() {
     # generate a 32-character random password for ansible-vault and store it in a file
     echo "[xsrv] INFO: Generating random password for ansible-vault"
     openssl rand -base64 32 > "$projects_dir/$project_name/.ansible-vault-password"
@@ -639,7 +643,7 @@ function gen_vault_password_file() {
     echo "[xsrv] INFO: Keep this file private! Keep backups of this file!"
 }
 
-function gen_random_passwords() {
+gen_random_passwords() {
     # replace CHANGEMEXX values in file $1, where XX is an integer, with random password with length = XX
     host_vault_file="$1"
     if ! command -v pwgen >/dev/null; then
@@ -658,14 +662,14 @@ function gen_random_passwords() {
     echo "$randomized_vault" > "$host_vault_file"
 }
 
-function check_project_exists() {
+check_project_exists() {
     # check that the directory for the specified playbook exists, exit with error if not
     if [[ ! -e "$project_dir" ]]; then
         echo "[xsrv] ERROR: project $project_dir does not exist"; exit 1;
     fi
 }
 
-function _check_host_name() {
+_check_host_name() {
     # check if host_vars files exist for a host, set host_vars_file and host_vault_file global variables
     check_project_exists
     if [[ -z "$host_name" ]]; then
@@ -683,7 +687,7 @@ function _check_host_name() {
     fi
 }
 
-function check_group_name() {
+check_group_name() {
     # check if group_vars files exist for a group, set group_vars_file global variable
     check_project_exists
     group_name="$host_name"
@@ -696,13 +700,13 @@ function check_group_name() {
     migrate_group_vars_file
 }
 
-function help_tags() {
+help_tags() {
     # show the list of tags and their descriptions
     check_project_exists
     cd "$projects_dir/$project_name"
     echo "[xsrv] INFO: list of tags in project $project_name"
     echo "[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy $project_name"
-    tags_doc=$(grep --no-filename '^# @tag' ansible_collections/*/*/roles/*/meta/main.yml roles/*/meta/main.yml | \
+    tags_doc=$(grep --no-filename '^# @tag' ansible_collections/*/*/roles/*/meta/main.yml | \
                cut -d " " -f 1-2 --complement | \
                sort --unique)
     echo "TAGS:"
@@ -716,10 +720,10 @@ function help_tags() {
                         sed 's/, /\n/g' | \
                         sort --unique)
     echo "OTHER TAGS:"
-    diff --changed-group-format='%<%>' --unchanged-group-format='' <(echo "$tags_doc_short") <(echo "$tags_discovered_all")
+    diff --changed-group-format='%<%>' --unchanged-group-format='' <(echo "$tags_doc_short") <(echo "$tags_discovered_all") || true
 }
 
-function migrate_group_vars_file() {
+migrate_group_vars_file() {
     # DEPRECATED migrate files from group_vars/$group_name.yml to group_vars/$group_name/$group_name.yml
     legacy_group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
     if [[ -f "$legacy_group_vars_file" ]]; then
@@ -733,7 +737,7 @@ function migrate_group_vars_file() {
     fi
 }
 
-function check_user_in_libvirt_groups() {
+check_user_in_libvirt_groups() {
     # check if the user is in the required groups to use init-vm/init-vm-template commands
     missing_groups=""
     for groupname in libvirt libvirt-qemu kvm; do
@@ -747,7 +751,7 @@ function check_user_in_libvirt_groups() {
 
 ########## MAIN ##########
 
-function _main() {
+_main() {
     # main loop and command-line wrapper
     # MAINT: when the list of commands is updated, the help text above, docs/usage.md and xsrv-completion.sh must also be updated
     echo "$ascii_banner"

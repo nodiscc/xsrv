@@ -8,6 +8,7 @@
     - docker0
     - docker_gwbridge
   notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable masquerade for outbound packets from the public zone
   ansible.posix.firewalld:

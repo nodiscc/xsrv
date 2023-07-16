@@ -17,12 +17,15 @@
   tags:
     - EXAMPLE
 
-- name: include component2 configuration tasks
-  import_tasks: component2.yml
+- name: include apache configuration tasks
+  import_tasks: apache.yml
   become: yes
   tags:
     - EXAMPLE
-    - mail
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include fail2ban configuration tasks
   import_tasks: fail2ban.yml

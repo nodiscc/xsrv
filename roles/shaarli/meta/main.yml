@@ -1,5 +1,6 @@
 # @tag shaarli - setup shaarli bookmark service
 # @tag shaarli-config - setup main shaarli configuration
+# @tag shaarli-client - setup shaarli python API client
 
 galaxy_info:
   role_name: shaarli
@@ -13,6 +14,7 @@ galaxy_info:
         - "9"
         - "10"
         - "11"
+        - "12"
   galaxy_tags:
     - server
     - bookmarks

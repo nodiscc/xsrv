@@ -1,0 +1,13 @@
+- name: get list of fail2ban banned IPs
+  become: yes
+  shell:
+    cmd: /usr/bin/fail2ban-client banned > /root/fail2ban-banned.txt
+  changed_when: yes
+
+- name: download list of fail2ban banned IPs to data/fail2ban-banned-*.txt
+  become: yes
+  fetch:
+    src: /root/fail2ban-banned.txt
+    dest: "{{ playbook_dir }}/data/fail2ban-banned-{{ inventory_hostname }}.txt"
+    flat: yes
+  ignore_errors: "{{ ansible_check_mode }}"

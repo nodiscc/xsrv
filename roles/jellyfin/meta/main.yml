@@ -12,6 +12,7 @@ galaxy_info:
       versions:
         - "10"
         - "11"
+        - "12"
   galaxy_tags:
     - media
     - server

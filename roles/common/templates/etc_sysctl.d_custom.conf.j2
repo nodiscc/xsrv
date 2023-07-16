@@ -101,6 +101,8 @@ net.ipv4.tcp_fin_timeout = 15
 net.ipv4.tcp_keepalive_time = 1800
 
 # The maximum number of "backlogged sockets".  Default is 128.
+# Increasing the default value should only be needed on high-loaded servers where new connection rate is
+# so high/bursty that having 128 not-yet-accepted connections is considered normal.
 # net.core.somaxconn = 1024
 
 # Disable TCP window scaling (disabled)

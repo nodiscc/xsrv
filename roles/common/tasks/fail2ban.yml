@@ -8,18 +8,6 @@
     - "/etc/fail2ban/jail.d"
     - "/etc/fail2ban/filter.d"
 
-- name: copy fail2ban configuration
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: "0600"
-  with_items:
-    - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
-    - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
-    - { src: 'etc_fail2ban_jail.d_sshd.conf.j2', dest: '/etc/fail2ban/jail.d/sshd.conf' }
-    - { src: 'etc_fail2ban_jail.d_pam-generic.conf.j2', dest: '/etc/fail2ban/jail.d/pam-generic.conf' }
-  notify: reload fail2ban
-
 - name: install fail2ban
   apt:
     state: present
@@ -34,6 +22,26 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
   tags: services
+
+- name: copy fail2ban global configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0600"
+  with_items:
+    - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
+    - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
+  notify: restart fail2ban
+
+- name: copy fail2ban jails configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0600"
+  with_items:
+    - { src: 'etc_fail2ban_jail.d_sshd.conf.j2', dest: '/etc/fail2ban/jail.d/sshd.conf' }
+    - { src: 'etc_fail2ban_jail.d_pam-generic.conf.j2', dest: '/etc/fail2ban/jail.d/pam-generic.conf' }
+  notify: reload fail2ban
 
 ##### CLEANUP #####
 
