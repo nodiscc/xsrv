@@ -4,6 +4,7 @@
 # @tag netdata-needrestart - setup netdata needrestart module
 # @tag netdata-logcount - setup netdata logcount module
 # @tag netdata-debsecan - setup netdata debsecan module
+# @tag netdata-apt - setup netdata apt module
 # @tag utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 # @tag utils-netdata-test-notifications - send test netdata notification
 # @tag netdata-downtime - configure netdata downtime/silence schedules

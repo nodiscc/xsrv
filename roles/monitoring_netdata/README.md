@@ -63,6 +63,7 @@ netdata-modules - setup custom netdata modules
 netdata-needrestart - setup netdata needrestart module
 netdata-logcount - setup netdata logcount module
 netdata-debsecan - setup netdata debsecan module
+netdata-apt - setup netdata apt module
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-netdata-test-notifications - send test netdata notification
 netdata-downtime - configure netdata downtime/silence schedules
