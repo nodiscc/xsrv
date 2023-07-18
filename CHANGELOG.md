@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
+- xsrv: update ansible to [v8.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 
 [Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
 
