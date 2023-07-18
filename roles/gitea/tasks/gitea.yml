@@ -118,9 +118,7 @@
 - name: create gitea database tables
   become: yes
   become_user: gitea
-  command: gitea migrate --config /etc/gitea/app.ini
-  args:
-    chdir: "{{ gitea_user_home }}"
+  command: "gitea migrate --config /etc/gitea/app.ini --work-path {{ gitea_user_home }}"
   when:
     - (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized)
     - not ansible_check_mode
@@ -130,12 +128,11 @@
   become: yes
   become_user: gitea
   command: gitea admin user create
+           --work-path "{{ gitea_user_home }}"
            --username "{{ gitea_admin_username }}"
            --password "{{ gitea_admin_password }}"
            --email "{{ gitea_admin_email }}"
            --admin --config /etc/gitea/app.ini
-  args:
-    chdir: "{{ gitea_user_home }}"
   register: "gitea_create_user"
   failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
   changed_when: "'user already exists' not in gitea_create_user.stdout"

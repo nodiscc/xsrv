@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - drop support for Debian 10 Buster [[1]](https://www.debian.org/releases/buster/)
 
 **Changed:**
+- gitea: update to [v1.20.0](https://github.com/go-gitea/gitea/releases/tag/v1.20.0)
 - nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
 - graylog: make role compatible with Debian 12 (upgrade to mongodb [v6.0](https://www.mongodb.com/docs/manual/release-notes/6.0/))
 - matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
