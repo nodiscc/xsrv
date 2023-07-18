@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- (optional) `xsrv check` to simulate changes.
+- `xsrv deploy` to apply changes
+
+**Changed:**
+- matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
+
+[Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
+
+------------------
+
 #### [v1.15.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.15.0) - 2023-07-16
 
 **Upgrade procedure:**
