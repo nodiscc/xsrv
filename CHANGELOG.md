@@ -21,6 +21,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to [v8.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - update documentation
 
+**Fixed:**
+ - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
+
 [Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
 
 ------------------

@@ -1,6 +1,8 @@
-- name: install git
+- name: install required packages
   apt:
-    package: git
+    package:
+      - git
+      - gnupg
     state: present
 
 - name: download gitea binary
