@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Changed:**
+- nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
 - matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
 - xsrv: update ansible to [v8.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 
@@ -40,7 +41,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html).
-  - **nextcloud**: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled (it is not compatible with Nextcloud 26 yet). You may also want to disable the [Music](https://apps.nextcloud.com/apps/music) app since it causes problems with file deletion.
   - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
   - **graylog:** do **not** upgrade hosts where the `graylog` role is deployed to Debian 12, as it is not compatible with Debian 12 yet.
 

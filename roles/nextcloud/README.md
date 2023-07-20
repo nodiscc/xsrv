@@ -16,6 +16,7 @@ Default installed applications include:
 - [Tasks](https://apps.nextcloud.com/apps/tasks): Task/todo-list management (supports due dates, reminders, priorities, comments, tasks sharing, sub-tasks), and synchronize them across devices (CalDAV)
 - [Photos](https://github.com/nextcloud/photos#readme): Media gallery with previews for all media types
 - [Notes](https://apps.nextcloud.com/apps/notes): Note taking app with markdown support, notes are saved as files in your Nextcloud so you can view and edit them from anywhere.
+- [Maps](https://apps.nextcloud.com/apps/maps): Map and routing service using [OpenStreetMap](https://www.openstreetmap.org/)
 - Viewers and editors for common file types (PDF, text, video...)
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).
