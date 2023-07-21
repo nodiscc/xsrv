@@ -46,16 +46,23 @@
 
 - name: create gitea user
   user:
-    name: 'gitea'
+    name: gitea
     system: yes
-    shell: '/bin/bash'
-    comment: 'Gitea git service'
-    password: '*'
-    home: '{{ gitea_user_home }}'
-    groups:
-      - 'gitea'
-      - 'ssh-access'
+    shell: /bin/bash
+    comment: "Gitea git service"
+    password: "*"
+    home: "{{ gitea_user_home }}"
+    groups: gitea
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: add gitea user to ssh-access group
+  user:
+    name: gitea
+    append: yes
+    groups: ssh-access
+  when:
+    - ansible_local.ssh.ansible_managed is defined
+    - ansible_local.ssh.ansible_managed | bool
 
 - name: create gitea directories
   file:
