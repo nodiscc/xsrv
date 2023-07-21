@@ -112,7 +112,7 @@ Stopping old cluster...
 Success. Please check that the upgraded cluster works.
 ```
 
-Verify that your applications work, then drop the postgresql 11 cluster:
+Verify that the potsgresql 13 cluster has the status `online` using `sudo pg_lsclusters`. If not, start it using `sudo pg_ctlcluster 13 main start`. Verify that your applications work, then drop the postgresql 11 cluster:
 
 ```bash
 $ sudo -u postgres pg_dropcluster 11 main
