@@ -1,12 +1,5 @@
 ##### PACKAGES #####
 
-- name: configure APT to install apache and modules from backports (Debian 10)
-  template:
-    src: etc_apt_preferences.d_99-apache2-buster-backports.j2
-    dest: /etc/apt/preferences.d/99-apache2-buster-backports
-    mode: "0644"
-  when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'buster'
-
 - name: install apache/php packages
   apt:
     state: present
