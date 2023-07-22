@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: fix role idempotence/configuration tasks always returning changed and needlessly restarting netdata
 - common: utils-debian11to12: fix upgrade procedure sometimes freezing/failing without logs
 - common: utils-debian11to12: fix error `'dict object' has no attribute 'distribution_release'` after successful upgrade
+- common/monitoring_utils: fail2ban/lynis: fix warning `fail2ban.configreader: WARNING 'allowipv6' not defined in 'Definition'` in lynis reports
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
 
