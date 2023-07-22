@@ -25,6 +25,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - netdata: fix `Oops, something unexpected happened` error on alerts tab
+- common: utils-debian11to12: fix upgrade procedure sometimes freezing/failing without logs
+- common: utils-debian11to12: fix error `'dict object' has no attribute 'distribution_release'` after successful upgrade
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
 
