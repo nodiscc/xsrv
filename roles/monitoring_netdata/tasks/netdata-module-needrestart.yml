@@ -15,7 +15,7 @@
   git:
     dest: "/root/netdata-needrestart"
     repo: "https://gitlab.com/nodiscc/netdata-needrestart"
-    version: "1.0.2"
+    version: "1.0.3"
     accept_hostkey: yes
     force: yes # discard modified files
   ignore_errors: "{{ ansible_check_mode }}"

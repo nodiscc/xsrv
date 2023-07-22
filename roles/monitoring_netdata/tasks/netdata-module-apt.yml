@@ -4,7 +4,7 @@
   git:
     dest: "/root/netdata-apt"
     repo: "https://gitlab.com/nodiscc/netdata-apt"
-    version: "1.1.0"
+    version: "1.1.1"
     accept_hostkey: yes
     force: yes # discard modified files
   ignore_errors: "{{ ansible_check_mode }}"

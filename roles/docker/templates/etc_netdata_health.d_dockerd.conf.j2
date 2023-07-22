@@ -7,6 +7,7 @@ template: docker_unhealthy_containers
     crit: $this > 0
     info: number of unhealthy containers
       to: sysadmin
+   class: Errors
 
    alarm: docker_running_containers
       on: dockerd_local.running_containers
@@ -16,4 +17,5 @@ template: docker_unhealthy_containers
     crit: ($this < {{ netdata_min_running_docker_containers }}) OR ($this > {{ netdata_max_running_docker_containers }})
     info: number of running containers
       to: sysadmin
+   class: Errors
 {% endif %}

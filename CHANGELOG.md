@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Fixed:**
+- netdata: fix `Oops, something unexpected happened` error on alerts tab
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
 
