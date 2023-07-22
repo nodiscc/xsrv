@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - drop support for Debian 10 Buster [[1]](https://www.debian.org/releases/buster/)
 
 **Changed:**
-- gitea: update to [v1.20.0](https://github.com/go-gitea/gitea/releases/tag/v1.20.0)
+- gitea: update to v1.20.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.1)
 - nextcloud: update to v26.0.4 [[1]](https://nextcloud.com/changelog/)
 - nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
 - graylog: make role compatible with Debian 12 (upgrade to mongodb [v6.0](https://www.mongodb.com/docs/manual/release-notes/6.0/))
