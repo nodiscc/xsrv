@@ -63,22 +63,22 @@ ansible-playbook playbook.yml --tags=utils-pgmetrics
 
 ### Upgrading clusters
 
-When upgrading from a Debian release to the next (e.g. Debian 10 to 11), a new version of postgresql server will be installed. However, the previous version will stay installed, and your data will be kept in the cluster managed by the old database engine version. You may want to migrate data from the cluster managed by the "old" version, to a database cluster managed by the new version. You should perform a backup before attempting this operation.
+When upgrading from a Debian release to the next (e.g. Debian 11 to 12), a new version of postgresql server will be installed. However, the previous version will stay installed, and your data will be kept in the cluster managed by the old database engine version. You may want to migrate data from the cluster managed by the "old" version, to a database cluster managed by the new version. You should perform a backup before attempting this operation. In the example below, **13** is the **old** postgresql version, and **15** is the **new** postgresql version.
 
 List running clusters:
 
 ```bash
 $ sudo pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
-11  main    5432 online postgres /var/lib/postgresql/11/main /var/log/postgresql/postgresql-11-main.log
-13  main    5433 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+13  main    5432 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+15  main    5433 online postgres /var/lib/postgresql/15/main /var/log/postgresql/postgresql-15-main.log
 ```
 
-Verify that there are no databases in the postgresql 13 cluster:
+Verify that there are no databases in the postgresql 15 cluster:
 
 ```bash
-$ sudo -u postgres psql --cluster 13/main
-psql (13.11 (Debian 13.11-0+deb11u1))
+$ sudo -u postgres psql --cluster 15/main
+psql (15.3 (Debian 15.3-0+deb12u1))
 Type "help" for help.
 
 postgres=# \l
@@ -97,43 +97,43 @@ postgres=# \q
 
 The `postgres`, `template0` and `template1` databases are default databases created on postgresql installation, so in this case, no databases that contain application data are present, and we can go forward with the migration.
 
-Drop the empty postgresql 13 cluster (**this will delete all data in the cluster**) to make room for the migration:
+Drop the empty postgresql 15 cluster (**this will delete all data in the cluster**) to make room for the migration:
 
 ```bash
-$ sudo pg_dropcluster --stop 13 main
+$ sudo pg_dropcluster --stop 15 main
 ```
 
-Then migrate data in the posgtresql 11 cluster to a cluster managed by postgresql 13:
+Then migrate data in the posgtresql 13 cluster to a cluster managed by postgresql 15:
 
 ```bash
-$ sudo -u postgres pg_upgradecluster 11 main
+$ sudo -u postgres pg_upgradecluster 13 main
 Stopping old cluster...
 [...]
 Success. Please check that the upgraded cluster works.
 ```
 
-Verify that the potsgresql 13 cluster has the status `online` using `sudo pg_lsclusters`. If not, start it using `sudo pg_ctlcluster 13 main start`. Verify that your applications work, then drop the postgresql 11 cluster:
+Verify that the postgresql 15 cluster has the status `online` using `sudo pg_lsclusters`. If not, start it using `sudo pg_ctlcluster 15 main start`. Verify that your applications work, then drop the postgresql 13 cluster:
 
 ```bash
-$ sudo -u postgres pg_dropcluster 11 main
+$ sudo -u postgres pg_dropcluster 13 main
 ```
 
-We can then stop the old postgresql 11 service and remove related packages:
+We can then stop the old postgresql 13 service and remove related packages:
 
 ```bash
-$ sudo systemctl stop postgresql@11-main.service
-$ sudo apt purge postgresql*11
+$ sudo systemctl stop postgresql@13-main.service
+$ sudo apt purge postgresql*13
 Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
-Note, selecting 'postgresql-11' for glob 'postgresql*11'
-Note, selecting 'postgresql-contrib-11' for glob 'postgresql*11'
-Note, selecting 'postgresql-client-11' for glob 'postgresql*11'
-Note, selecting 'postgresql-doc-11' for glob 'postgresql*11'
-Note, selecting 'postgresql-11' instead of 'postgresql-contrib-11'
-Package 'postgresql-doc-11' is not installed, so not removed
+Note, selecting 'postgresql-13' for glob 'postgresql*13'
+Note, selecting 'postgresql-contrib-13' for glob 'postgresql*13'
+Note, selecting 'postgresql-client-13' for glob 'postgresql*13'
+Note, selecting 'postgresql-doc-13' for glob 'postgresql*13'
+Note, selecting 'postgresql-13' instead of 'postgresql-contrib-13'
+Package 'postgresql-doc-13' is not installed, so not removed
 The following packages will be REMOVED:
-  libicu63* libllvm7* postgresql-11* postgresql-client-11*
+  libicu63* libllvm7* postgresql-13* postgresql-client-13*
 0 upgraded, 0 newly installed, 4 to remove and 0 not upgraded.
 After this operation, 145 MB disk space will be freed.
 Do you want to continue? [Y/n] Y
