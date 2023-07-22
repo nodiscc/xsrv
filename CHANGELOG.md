@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - netdata: fix `Oops, something unexpected happened` error on alerts tab
+- netdata: fix role idempotence/configuration tasks always returning changed and needlessly restarting netdata
 - common: utils-debian11to12: fix upgrade procedure sometimes freezing/failing without logs
 - common: utils-debian11to12: fix error `'dict object' has no attribute 'distribution_release'` after successful upgrade
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
