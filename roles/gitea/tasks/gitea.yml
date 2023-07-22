@@ -52,6 +52,7 @@
     comment: "Gitea git service"
     password: "*"
     home: "{{ gitea_user_home }}"
+    append: yes
     groups: gitea
   ignore_errors: "{{ ansible_check_mode }}"
 
