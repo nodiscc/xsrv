@@ -30,7 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
 
-[Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
+[Full changes since v1.15.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
 
 ------------------
 
