@@ -65,6 +65,8 @@
     - synapse
     - element
     - ssl
+    - apache
+    - synapse-admin
   when:
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
