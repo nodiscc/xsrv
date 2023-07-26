@@ -46,7 +46,8 @@
   import_tasks: backups.yml
   become: yes
   tags:
-    - gitea
+    - dovecot
+    - mail
     - backup
   when:
     - ansible_local.backup.ansible_managed is defined
