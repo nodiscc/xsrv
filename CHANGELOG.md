@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - postgresql: update pgmetrics to [v1.15.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.1)
 - xsrv: update ansible to [v8.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - common/ssh: add `ansible_local.ssh.ansible_managed` local fact which can be used to detect whether SSH server is managed by xsrv
+- improve check mode support before first actual deployment
 - update documentation
 
 **Fixed:**
@@ -36,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commerical/closed-source antivirus software)
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
+- mail_dovecot/gitea/backup: fix wrong ansible tag `gitea` on dovecot backup configuration tasks
 
 [Full changes since v1.15.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
 
