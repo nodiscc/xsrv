@@ -98,7 +98,7 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-- name: copy gitea binary
+- name: install gitea binary
   copy:
     src: "/root/gitea-{{ gitea_version }}-linux-amd64"
     dest: "/usr/local/bin/gitea"
