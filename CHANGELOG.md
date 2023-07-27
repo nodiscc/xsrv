@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 
+**Added:**
+- homepage: allow making individual custom links mare compact (half as wide, no description) ([`homepage_custom_links.*.compact: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
+
 **Removed:**
 - drop support for Debian 10 Buster [[1]](https://www.debian.org/releases/buster/)
 
