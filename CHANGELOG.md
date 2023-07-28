@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - (optional) `xsrv check` to simulate changes.
+- (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your hosts from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
 - `xsrv deploy` to apply changes
 
 **Added:**
