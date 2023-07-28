@@ -239,6 +239,7 @@
     - /usr/libexec/netdata/python.d/modtime.chart.py
     - /etc/netdata/fping.conf
     - /etc/netdata/health.d/fping.conf
+    - /etc/netdata/health.d/modtime.conf
   notify:
     - assemble netdata configuration
     - restart netdata
