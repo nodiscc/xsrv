@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commerical/closed-source antivirus software)
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages (definitive fix)
 - mail_dovecot/gitea/backup: fix wrong ansible tag `gitea` on dovecot backup configuration tasks
 
 [Full changes since v1.15.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)

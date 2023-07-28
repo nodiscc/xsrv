@@ -68,39 +68,17 @@
     mode: "0600"
     create: yes
   with_items:
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/bsondump'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/mongodump'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/mongoexport'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/mongofiles'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/mongoimport'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/mongorestore'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/mongostat'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/bin/mongotop'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/share/doc/mongodb-database-tools/LICENSE.md'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/share/doc/mongodb-database-tools/README.md'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.1/usr/share/doc/mongodb-database-tools/THIRD-PARTY-NOTICES'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/bsondump'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/mongodump'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/mongoexport'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/mongofiles'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/mongoimport'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/mongorestore'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/mongostat'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/bin/mongotop'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/share/doc/mongodb-database-tools/LICENSE.md'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/share/doc/mongodb-database-tools/README.md'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.2/usr/share/doc/mongodb-database-tools/THIRD-PARTY-NOTICES'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/bsondump'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/mongodump'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/mongoexport'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/mongofiles'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/mongoimport'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/mongorestore'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/mongostat'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/bin/mongotop'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/share/doc/mongodb-database-tools/LICENSE.md'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/share/doc/mongodb-database-tools/README.md'
-    - '/mongodb-database-tools-debian10-x86_64-100.7.3/usr/share/doc/mongodb-database-tools/THIRD-PARTY-NOTICES'
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/bsondump
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/mongodump
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/mongoexport
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/mongofiles
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/mongoimport
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/mongorestore
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/mongostat
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/bin/mongotop
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/share/doc/mongodb-database-tools/LICENSE.md
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/share/doc/mongodb-database-tools/README.md
+    - /mongodb-database-tools-debian..-x86_64-100..../usr/share/doc/mongodb-database-tools/THIRD-PARTY-NOTICES
 
 ### SERVICE ###
 
