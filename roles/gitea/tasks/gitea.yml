@@ -146,6 +146,7 @@
   register: "gitea_create_user"
   failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
   changed_when: "'user already exists' not in gitea_create_user.stdout"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # restart gitea immediately if configuration was changed
 - name: apply configuration (flush handlers)
