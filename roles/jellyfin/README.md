@@ -62,7 +62,16 @@ You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org
 
 ### Backups
 
-Automatic backups of the default media directory are disabled by default, unless [`jellyfin_enable_media_backups: yes`](defaults/main.yml). See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
+Automatic backups of the default media directory are disabled by default, unless [`jellyfin_enable_media_backups: yes`](defaults/main.yml) is set, and the [`nodiscc.xsrv.backup`](../backup) role is deployed on the host. See the included [rsnapshot configuration](templates/etc/rsnapshot.d_jellyfin.conf.j2) for information about directories to backup/restore.
+
+You can also backup specific directories, using the `nodiscc.xsrv.backup` role and [`rsnapshot_local_backups`](../backup/defaults/main.yml):
+
+```yaml
+# $ xsrv edit-host my.CHANGEME.org:
+rsnapshot_local_backups:
+  - '/var/lib/jellyfin/media/archive/'
+```
+
 
 ### LDAP authentication
 
