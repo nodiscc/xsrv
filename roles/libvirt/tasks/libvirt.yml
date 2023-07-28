@@ -63,6 +63,7 @@
     append: true
   with_items: "{{ libvirt_users }}"
   notify: reset ssh connection
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure non-root user accounts to use qemu:///system connection URI by default
   template:
