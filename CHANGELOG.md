@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commerical/closed-source antivirus software)
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
+- common/firewalld/libvirt: ensure libvirtd is restarted when firewalld is restarted/reloaded (re-apply port forwarding rules), fix looping libvirt restarts
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages (definitive fix)
 - mail_dovecot/gitea/backup: fix wrong ansible tag `gitea` on dovecot backup configuration tasks
 

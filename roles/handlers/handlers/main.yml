@@ -7,6 +7,7 @@
     state: reloaded
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart libvirtd
 
 - name: restart firewalld
   become: yes
@@ -15,6 +16,7 @@
     state: restarted
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart libvirtd
 
 ### FAIL2BAN ###
 
@@ -118,9 +120,6 @@
     name: libvirtd
     state: restarted
     enabled: yes
-  listen:
-    - restart firewalld
-    - reload firewalld
   when:
     - ansible_local.libvirt.ansible_managed is defined
     - ansible_local.libvirt.ansible_managed | bool
