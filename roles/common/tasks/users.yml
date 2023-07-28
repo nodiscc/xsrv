@@ -1,6 +1,6 @@
 ##### USER ACCOUNTS ####
 
-- name: enable root and current user account logins (local)
+- name: enable local login for root and current user account
   user:
     name: "{{ item }}"
     password_lock: no
