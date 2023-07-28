@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - libvirt: add the ansible user to the libvirt group by default (can manage libvirt VMs without sudo) ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- libvirt: configure non-root user accounts to use `qemu:///system` connection URI by default (can manage libvirt VMs without sudo/without specifying `--connect qemu:///system`)
 - gitea: update to v1.20.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.1)
 - nextcloud: update to v26.0.4 [[1]](https://nextcloud.com/changelog/)
 - nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
