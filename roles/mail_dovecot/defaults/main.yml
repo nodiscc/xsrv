@@ -1,3 +1,4 @@
+##### DOVECOT MAIL SERVER (IMAP/MDA) #####
 # domain name used to access the IMAP server
 dovecot_fqdn: "imap.CHANGEME.org"
 # URI of the LDAP server to use for authentication (use ldap:// or ldaps://)

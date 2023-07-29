@@ -1,4 +1,4 @@
-##### WIREGUARD #####
+##### WIREGUARD VPN SERVER #####
 # IP address at which the VPN server can be contacted by clients
 wireguard_server_public_ip: "CHANGEME"
 # IP address of the VPN server on the VPN network (CIDR notation)

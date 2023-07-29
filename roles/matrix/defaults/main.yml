@@ -1,3 +1,4 @@
+##### MATRIX REAL-TIME COMMUNICATION SERVER #####
 # fully qualified domain name of the matrix-synapse server instance
 matrix_synapse_fqdn: matrix.CHANGEME.org
 # username/password for the matrix admin user

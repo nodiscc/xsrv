@@ -1,4 +1,4 @@
-### RSYSLOG LOG PROCESSING SYSTEM ###
+##### RSYSLOG LOG PROCESSING SYSTEM #####
 # number of daily /var/log/syslog archives to retain
 syslog_retention_days: 186
 # yes/no: enable forwarding of syslog logs to a syslog server (over TLS/TCP)

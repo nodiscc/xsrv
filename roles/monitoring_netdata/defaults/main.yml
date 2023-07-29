@@ -1,4 +1,4 @@
-### NETDATA MONITORING SYSTEM ###
+##### NETDATA MONITORING SYSTEM #####
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
