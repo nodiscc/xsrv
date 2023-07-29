@@ -3,13 +3,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) - UNRELEASED
+#### [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) - 2023-07-29
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - (optional) `xsrv check` to simulate changes.
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your hosts from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
 - `xsrv deploy` to apply changes
+
+You must upgrade to this release and deploy it before deplying future versions (old migrations will be removed after this release.)
 
 **Added:**
 - homepage: allow making individual custom links mare compact (half as wide, no description) ([`homepage_custom_links.*.compact: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
