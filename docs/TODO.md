@@ -13,7 +13,7 @@
 - #1148 - nextcloud: update to v27.0.1 - **`1.18.0`** `enhancement,maintenance`
 - #1144 - automate roles uninstallation procedures? - **`-`** `enhancement,question`
 - #1143 - nextcloud: upload speed improvements? - **`-`** `configuration,enhancement,performance,question`
-- #1139 - WIP: allow installing/upgrading shaarli from an arbitratry zip file - **`-`** `question`
+- #1139 - WIP: allow installing/upgrading shaarli from an arbitrary zip file - **`-`** `question`
 - #1138 - gitea: allow setting up Gitea's built-in CI/CD system (Gitea Actions) - **`1.17.0`** `feature,upstream`
 - #1134 - Lemmy role? - **`-`** `feature,question`
 - #1127 - xsrv: help-tags: outputs duplicate tags when running on non-default playbook - **`-`** `bug`

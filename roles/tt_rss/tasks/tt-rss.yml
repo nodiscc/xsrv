@@ -117,7 +117,7 @@
   changed_when: "'Database schema is already at latest version.' not in tt_rss_db_upgrade.stdout"
   ignore_errors: "{{ ansible_check_mode }}"
   vars:
-    ansible_remote_tmp: /tmp # noqa var-naming[no-role-prefix] # workaroudn for https://github.com/ansible/ansible-lint/issues/3453
+    ansible_remote_tmp: /tmp # noqa var-naming[no-role-prefix] # workaround for https://github.com/ansible/ansible-lint/issues/3453
 
 - name: update tt-rss admin account in postgresql database (always returns changed)
   become_user: postgres

@@ -7,7 +7,7 @@ readme_gen_limit: "{{ groups['all'] }}"
 # readme_gen_netdata_badges:
 #   - chart: disk_space._var # netdata chart name
 #     alarm: disk_space_usage # netdata alarm name
-#     label: /var disk space usage # (optional) badge label, if unset the defautl label will be used
+#     label: /var disk space usage # (optional) badge label, if unset the default label will be used
 readme_gen_netdata_badges:
   - chart: needrestart.status
     alarm: needrestart_kernel
