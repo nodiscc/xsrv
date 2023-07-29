@@ -1,6 +1,8 @@
-- name: install git
+- name: install required packages
   apt:
-    package: git
+    package:
+      - git
+      - gnupg
     state: present
 
 - name: download gitea binary
@@ -44,16 +46,24 @@
 
 - name: create gitea user
   user:
-    name: 'gitea'
+    name: gitea
     system: yes
-    shell: '/bin/bash'
-    comment: 'Gitea git service'
-    password: '*'
-    home: '{{ gitea_user_home }}'
-    groups:
-      - 'gitea'
-      - 'ssh-access'
+    shell: /bin/bash
+    comment: "Gitea git service"
+    password: "*"
+    home: "{{ gitea_user_home }}"
+    append: yes
+    groups: gitea
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: add gitea user to ssh-access group
+  user:
+    name: gitea
+    append: yes
+    groups: ssh-access
+  when:
+    - ansible_local.ssh.ansible_managed is defined
+    - ansible_local.ssh.ansible_managed | bool
 
 - name: create gitea directories
   file:
@@ -88,7 +98,7 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-- name: copy gitea binary
+- name: install gitea binary
   copy:
     src: "/root/gitea-{{ gitea_version }}-linux-amd64"
     dest: "/usr/local/bin/gitea"
@@ -97,7 +107,7 @@
     owner: root
     group: root
   notify: restart gitea
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set gitea_root_url variable
   set_fact:
@@ -118,28 +128,25 @@
 - name: create gitea database tables
   become: yes
   become_user: gitea
-  command: gitea migrate --config /etc/gitea/app.ini
-  args:
-    chdir: "{{ gitea_user_home }}"
+  command: "gitea migrate --config /etc/gitea/app.ini --work-path {{ gitea_user_home }}"
   when:
     - (ansible_local.gitea.general.db_initialized is not defined) or (not ansible_local.gitea.general.db_initialized)
-    - not ansible_check_mode
   changed_when: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create gitea admin user
   become: yes
   become_user: gitea
   command: gitea admin user create
+           --work-path "{{ gitea_user_home }}"
            --username "{{ gitea_admin_username }}"
            --password "{{ gitea_admin_password }}"
            --email "{{ gitea_admin_email }}"
            --admin --config /etc/gitea/app.ini
-  args:
-    chdir: "{{ gitea_user_home }}"
   register: "gitea_create_user"
   failed_when: gitea_create_user.rc != 0 and 'user already exists' not in gitea_create_user.stdout
   changed_when: "'user already exists' not in gitea_create_user.stdout"
-  when: not ansible_check_mode
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # restart gitea immediately if configuration was changed
 - name: apply configuration (flush handlers)

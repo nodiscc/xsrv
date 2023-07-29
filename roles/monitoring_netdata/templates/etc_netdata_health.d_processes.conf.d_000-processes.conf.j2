@@ -7,6 +7,7 @@
  units: processes
   info: ssh running processes
     to: sysadmin
+ class: Errors
 
  alarm: time_processes
     on: apps.processes
@@ -16,6 +17,7 @@
  units: processes
   info: time running processes
     to: sysadmin
+ class: Errors
 
  alarm: fail2ban_processes
     on: apps.processes
@@ -25,6 +27,7 @@
  units: processes
   info: fail2ban running processes
     to: sysadmin
+ class: Errors
 {% endif %}
 
 {% for job in netdata_process_checks %}
@@ -37,6 +40,7 @@
  units: processes
   info: {{ job.name }} running processes
     to: sysadmin
+ class: Errors
 {% endif %}
 
 {% endfor %}

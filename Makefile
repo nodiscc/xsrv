@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.17.2 yamllint ansible==8.1.0
+	pip3 install isort ansible-lint==6.17.2 yamllint ansible==8.2.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -47,7 +47,8 @@ test_command_line:
 # usage: make test_init_vm_template NETWORK=default
 .PHONY: test_init_vm_template # test correct execution of xsrv init-vm-template
 test_init_vm_template:
-	if [[ -f /etc/libvirt/qemu/my.template.test.xml ]]; then virsh undefine --domain my.template.test --remove-all-storage; fi
+	-virsh destroy my.template.test
+	-virsh undefine my.template.test --remove-all-storage
 	./xsrv init-vm-template --name my.template.test --ip 10.0.10.240 --network=$(NETWORK)
 
 # TODO the resulting VM has no video output, access over serial console only, --graphics spice,listen=none during init-vm-template will prevent it from working, spice console must be added during init_vm
@@ -57,7 +58,8 @@ test_init_vm_template:
 test_init_vm:
 	ssh-keygen -R my.example.test
 	ssh-keygen -R 10.0.10.241
-	if [[ -f /etc/libvirt/qemu/my.example.test.xml ]]; then virsh undefine --domain my.example.test --remove-all-storage; fi
+	-virsh destroy my.example.test
+	-virsh undefine my.example.test --remove-all-storage
 	./xsrv init-vm --template my.template.test --name my.example.test \
 		--ip 10.0.10.241 \
 		--sudo-user deploy --sudo-password $(SUDO_PASSWORD) --root-password $(ROOT_PASSWORD) \
@@ -67,29 +69,21 @@ test_init_vm:
 
 .PHONY: test_check_mode # test full playbook run (--check mode) against the host created with test_init_vm
 test_check_mode:
-	# install roles in the test project
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	# test that check mode before first deployment does not fail
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv check xsrv-test my.example.test
 
 .PHONY: test_idempotence # test 2 consecutive full playbook runs against the host created with test_init_vm
 test_idempotence:
-	# install roles in the test project
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	# test initial deployment
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test my.example.test
-	# test idempotence
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test my.example.test
 	# check netdata alarms count
 	curl --insecure https://my.example.test:19999/api/v1/alarms
 
 .PHONY: test_fetch_backups # test fetch-backups command against the host deployed with test_idempotence
 test_fetch_backups:
-	# install roles in the test project
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	# run rsnapshot backup
 	XSRV_PROJECTS_DIR=tests/playbooks TAGS=utils-backup-now ./xsrv deploy xsrv-test my.example.test
-	# fetch latest daily backup
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv fetch-backups xsrv-test my.example.test
 
 ##### RELEASE PROCEDURE #####
@@ -216,7 +210,8 @@ doc_md:
 	# generate tags list in docs/tags.md
 	sed -i 's/# -/-/g' ~/playbooks/xsrv-test/playbook.yml
 	echo -e '# Tags\n\n```' > docs/tags.md
-	./xsrv help-tags xsrv-test >> docs/tags.md
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
+	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv help-tags xsrv-test >> docs/tags.md
 	echo -e '\n```'>> docs/tags.md
 
 SPHINXOPTS    ?=

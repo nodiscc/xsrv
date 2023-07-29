@@ -98,7 +98,7 @@ apt_unattended_upgrades_origins_patterns:
   - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
   - "o=Docker,site=download.docker.com" # nodiscc.xsrv.docker
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
-  - "o=mongodb,a=buster,site=repo.mongodb.org" # nodiscc.xsrv.graylog
+  - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
@@ -174,6 +174,7 @@ apt_listbugs_ignore_list:
   - 1037478 # https://bugs.debian.org/1037478 - unreproducible
   - 1038603 # https://bugs.debian.org/1038603 - unreproducible, specific to some GCC-based build processes
   - 1030129 # https://bugs.debian.org/1030129 - unreproducible
+  - 1041547 # https://bugs.debian.org/1041547 - no impact unless madin deliberately sets an empty root password
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service

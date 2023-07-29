@@ -42,6 +42,7 @@ monitoring - setup monitoring/alerting/logging system/utilities
 monitoring_utils - setup command-line/additional monitoring utilities
 msmtp - setup outgoing system mail
 mumble - setup mumble voip server
+netdata-apt - setup netdata apt module
 netdata-config - copy netdata configuration files
 netdata-debsecan - setup netdata debsecan module
 netdata-downtime - configure netdata downtime/silence schedules
@@ -63,6 +64,7 @@ samba-shares - configfure samba file shares
 samba-users - configfure samba user accounts
 self-service-password - setup LDAP self-service password
 services - start/stop/enable/disable services
+shaarli-client - setup shaarli python API client
 shaarli-config - setup main shaarli configuration
 shaarli - setup shaarli bookmark service
 ssh-authorized-keys - setup ssh authorized keys
@@ -78,7 +80,10 @@ tt_rss-postgresql - setup tt-rss postgresql database
 tt_rss - setup tt-rss feed reader
 users - setup users and groups
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
+utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
+utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
+utils-fail2ban-get-banned - (manual) download the list of banned IPs
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics

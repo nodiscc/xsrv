@@ -9,7 +9,7 @@
   git:
     dest: "/root/netdata-logcount"
     repo: "https://gitlab.com/nodiscc/netdata-logcount"
-    version: "1.0.3"
+    version: "1.0.4"
     accept_hostkey: yes
     force: yes # discard modified files
   ignore_errors: "{{ ansible_check_mode }}"

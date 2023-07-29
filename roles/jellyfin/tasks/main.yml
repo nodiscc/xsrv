@@ -37,6 +37,7 @@
     - apache
     - ssl
     - jellyfin
+    - apache
   when:
     - jellyfin_https_mode == 'selfsigned'
     - ansible_local.apache.ansible_managed is defined

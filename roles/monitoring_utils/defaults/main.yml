@@ -30,5 +30,6 @@ lynis_skip_tests:
   - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
   - "KRNL-5830" # let needrestart/netdata send alarms when reboot is required
   - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
+  - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"

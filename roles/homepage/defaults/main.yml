@@ -12,6 +12,7 @@ homepage_message: "<i>Welcome to this server managed by <a href='https://xsrv.re
 #     title: "My App" # title of the link
 #     description: "A custom application" # (optional, default empty) description of the link
 #     icon: sftp # (optional, default globe) icon file for the link, one of https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res without .png extension
+#     compact: no # (optional, yes/no, default no) make this link/tile half as wide, and hide description (pick a short title or it will overflow)
 #   - url: https://anotherapp.EXAMPLE.org
 #     title: "Another App"
 homepage_custom_links: []

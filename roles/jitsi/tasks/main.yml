@@ -58,6 +58,7 @@
   tags:
     - jitsi
     - ssl
+    - apache
 
 - name: include apache configuration tasks
   import_tasks: apache.yml

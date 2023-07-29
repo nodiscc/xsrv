@@ -1,7 +1,6 @@
 # xsrv.gitea
 
-This role will install the [Gitea](https://gitea.io/en-us/) self-hosted Git service.
-Gitea is a lightweight code hosting solution written in Go. Gitea features include:
+This role will install the [Gitea](https://gitea.io/en-us/) self-hosted Git service, a lightweight code hosting solution written in Go. Gitea features include:
 
 - [Git](https://en.wikipedia.org/wiki/Git) repository management (view, edit, log, blame, diff, merge, releases, branches...)
 - Issue management/collaboration (labels, milestones, pull requests, assignees...)

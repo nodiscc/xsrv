@@ -63,6 +63,15 @@
     append: true
   with_items: "{{ libvirt_users }}"
   notify: reset ssh connection
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure non-root user accounts to use qemu:///system connection URI by default
+  template:
+    src: etc_profile.d_libvirt.sh.j2
+    dest: /etc/profile.d/libvirt.sh
+    owner: root
+    group: root
+    mode: "0644"
 
 ##### NETWORK #####
 

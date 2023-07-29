@@ -1,0 +1,4 @@
+# workaround for https://jira.mongodb.org/browse/SERVER-77231, https://jira.mongodb.org/browse/DOCS-16138, https://jira.mongodb.org/browse/TOOLS-3302, https://www.mongodb.com/community/forums/t/mongo-6-x-on-debian-12/232593
+graylog_mongodb_apt_repo_distribution: ubuntu
+graylog_mongodb_apt_repo_distribution_codename: jammy
+graylog_mongodb_apt_repo_distribution_component: multiverse

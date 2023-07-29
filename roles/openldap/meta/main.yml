@@ -11,7 +11,6 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - "10"
         - "11"
         - "12"
   galaxy_tags:

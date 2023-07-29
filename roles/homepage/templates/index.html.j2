@@ -488,13 +488,13 @@
             </div>
 {% endif %}
 {% for item in homepage_custom_links %}
-            <div class="col-1-3 mobile-col-1-1 customlink">
+            <div class="{% if item.compact is defined and item.compact %}col-1-6 mobile-col-1-2{% else %}col-1-3 mobile-col-1-1{% endif %} customlink">
                 <a href="{{ item.url | e }}">
                     <div class="content">
                         <div class="colorblock customlink-cb"><img class="app-icon" src="res/{{ item.icon | default('globe') | e }}.png"></div>
                         <div class="app-text">
                             <p class="app-name">{{ item.title | e }}</p>
-                            <p class="app-description">{{ item.description | default ('') | e }}</p>
+                            {% if item.compact is defined and item.compact %}{% else %}<p class="app-description">{{ item.description | default ('') | e }}</p>{% endif +%}
                         </div>
                     </div>
                 </a>

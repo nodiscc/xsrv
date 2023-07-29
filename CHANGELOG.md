@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) - 2023-07-29
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- (optional) `xsrv check` to simulate changes.
+- (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your hosts from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
+- `xsrv deploy` to apply changes
+
+You must upgrade to this release and deploy it before deplying future versions (old migrations will be removed after this release.)
+
+**Added:**
+- homepage: allow making individual custom links mare compact (half as wide, no description) ([`homepage_custom_links.*.compact: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
+
+**Removed:**
+- drop support for Debian 10 Buster [[1]](https://www.debian.org/releases/buster/)
+
+**Changed:**
+- libvirt: add the ansible user to the libvirt group by default (can manage libvirt VMs without sudo) ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- libvirt: configure non-root user accounts to use `qemu:///system` connection URI by default (can manage libvirt VMs without sudo/without specifying `--connect qemu:///system`)
+- gitea: update to v1.20.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.1)
+- nextcloud: update to v26.0.4 [[1]](https://nextcloud.com/changelog/)
+- nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
+- graylog: make role compatible with Debian 12 (upgrade to mongodb [v6.0](https://www.mongodb.com/docs/manual/release-notes/6.0/))
+- matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
+- postgresql: update pgmetrics to [v1.15.1](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.1)
+- xsrv: update ansible to [v8.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
+- common/ssh: add `ansible_local.ssh.ansible_managed` local fact which can be used to detect whether SSH server is managed by xsrv
+- improve check mode support before first actual deployment
+- update documentation
+
+**Fixed:**
+- netdata: fix `Oops, something unexpected happened` error on alerts tab
+- netdata: fix role idempotence/configuration tasks always returning changed and needlessly restarting netdata
+- common: utils-debian11to12: fix upgrade procedure sometimes freezing/failing without logs
+- common: utils-debian11to12: fix error `'dict object' has no attribute 'distribution_release'` after successful upgrade
+- common/monitoring_utils: fail2ban/lynis: fix warning `fail2ban.configreader: WARNING 'allowipv6' not defined in 'Definition'` in lynis reports
+- monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commerical/closed-source antivirus software)
+- gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
+- gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
+- common/firewalld/libvirt: ensure libvirtd is restarted when firewalld is restarted/reloaded (re-apply port forwarding rules), fix looping libvirt restarts
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages (definitive fix)
+- mail_dovecot/gitea/backup: fix wrong ansible tag `gitea` on dovecot backup configuration tasks
+
+[Full changes since v1.15.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
+
+------------------
+
 #### [v1.15.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.15.0) - 2023-07-16
 
 **Upgrade procedure:**
@@ -25,7 +72,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html).
-  - **nextcloud**: if you want to upgrade your hosts from Debian 11 to Debian 12, and `nextcloud_apps` has been changed from its default value in your hosts configuration, make sure the [Maps](https://apps.nextcloud.com/apps/maps) app is disabled (it is not compatible with Nextcloud 26 yet). You may also want to disable the [Music](https://apps.nextcloud.com/apps/music) app since it causes problems with file deletion.
   - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
   - **graylog:** do **not** upgrade hosts where the `graylog` role is deployed to Debian 12, as it is not compatible with Debian 12 yet.
 

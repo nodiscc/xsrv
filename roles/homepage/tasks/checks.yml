@@ -18,5 +18,6 @@
       - item.title is string
       - (item.description is not defined) or (item.description is string)
       - (item.icon is not defined) or (item.icon is string)
+      - (item.compact is not defined) or (item.compact == item.compact | bool)
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"
   with_items: "{{ homepage_custom_links }}"

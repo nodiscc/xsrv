@@ -4,7 +4,7 @@
 # ANSIBLE_VAULT_PASSWORD (contents of .ansible-vault-password, type variable, masked)
 # GITLAB_CI_SSH_KEY (contents of private SSH key authorized on remote hosts, terminated by newline, type file)
 
-image: debian:buster-backports
+image: debian:bookworm
 
 stages:
   - staging

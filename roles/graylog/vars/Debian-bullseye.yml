@@ -1,0 +1,3 @@
+graylog_mongodb_apt_repo_distribution: debian
+graylog_mongodb_apt_repo_distribution_codename: bullseye
+graylog_mongodb_apt_repo_distribution_component: main

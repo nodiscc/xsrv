@@ -40,11 +40,6 @@
     mode: "0644"
   notify: restart nscd
 
-- name: decompress samba LDAP schema
-  shell: gunzip -c /usr/share/doc/samba/examples/LDAP/samba.ldif.gz > /usr/share/doc/samba/examples/LDAP/samba.ldif
-  changed_when: False
-  when: ansible_facts.distribution == "Debian" and ansible_facts.distribution_release == "buster"
-
 # DEBT use ldap modules
 - name: import samba schema to LDAP database
   command: ldapadd -Q -Y EXTERNAL -H ldapi:/// -f /usr/share/doc/samba/examples/LDAP/samba.ldif
