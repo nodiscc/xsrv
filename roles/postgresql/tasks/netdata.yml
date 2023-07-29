@@ -25,12 +25,3 @@
     mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart netdata
-
-- name: migration/1.13.0 - remove files from old versions of the role
-  file:
-    path: "{{ item }}"
-    state: absent
-  notify: assemble netdata configuration
-  with_items:
-    - /etc/netdata/health.d/processes.conf.d/postgresql.conf
-    - /etc/netdata/health.d/systemdunits.conf.d/postgresql.conf

@@ -6,9 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.17.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.17.0) - UNRELEASED
 
 **Upgrade procedure:**
+- upgrade to [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) and deploy it first, if not already done
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
+
+**Removed:**
+- cleanup: remove all previous migration tasks
 
 **Changed:**
 - jitsi: configure all components to listen only on loopback interfaces, disable IPv6 listening
@@ -27,7 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your hosts from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
 - `xsrv deploy` to apply changes
 
-You must upgrade to this release and deploy it before deploying future versions (old migrations will be removed after this release.)
+You must upgrade to this release and deploy it before deploying future versions (old migrations will be removed after this release).
 
 **Added:**
 - homepage: allow making individual custom links mare compact (half as wide, no description) ([`homepage_custom_links.*.compact: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
@@ -55,7 +59,7 @@ You must upgrade to this release and deploy it before deploying future versions 
 - common: utils-debian11to12: fix upgrade procedure sometimes freezing/failing without logs
 - common: utils-debian11to12: fix error `'dict object' has no attribute 'distribution_release'` after successful upgrade
 - common/monitoring_utils: fail2ban/lynis: fix warning `fail2ban.configreader: WARNING 'allowipv6' not defined in 'Definition'` in lynis reports
-- monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commercial/closed-source antivirus software)
+- monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commerical/closed-source antivirus software)
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
 - common/firewalld/libvirt: ensure libvirtd is restarted when firewalld is restarted/reloaded (re-apply port forwarding rules), fix looping libvirt restarts
@@ -186,7 +190,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - xsrv: install `lxml` python module, required for `utils-libvirt-setmem` tasks
 - gitea: fix fail2ban restart failing on first installation of gitea
 - jellyfin: fix idempotence/opensubtitles plugin installation always returning `changed`
-- decouple web application roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
+- decouple web aplication roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 
 [Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
 

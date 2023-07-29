@@ -43,14 +43,6 @@
     - { src: 'etc_fail2ban_jail.d_pam-generic.conf.j2', dest: '/etc/fail2ban/jail.d/pam-generic.conf' }
   notify: reload fail2ban
 
-##### CLEANUP #####
-
-- name: migration - remove systemd unit/override files from old versions of the role
-  file:
-    state: absent
-    dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
-  notify: reload systemd unit files
-
 ##### FACTS #####
 
 - name: create ansible facts.d directory

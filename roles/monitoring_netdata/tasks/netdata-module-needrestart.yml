@@ -74,10 +74,3 @@
     owner: root
     group: root
     mode: "0644"
-
-##### MIGRATION #####
-
-- name: migration - remove files from old versions of the role
-  file:
-    state: absent
-    path: /usr/libexec/netdata/python.d/needrestart.conf

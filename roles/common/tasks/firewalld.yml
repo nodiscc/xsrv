@@ -1,25 +1,3 @@
-- name: migration/1.5.0 - stop firehol
-  command: /usr/sbin/firehol stop
-  args:
-    removes: /usr/sbin/firehol # only run if firehol is currently installed
-
-- name: migration/1.5.0 - remove other firewall management tools
-  apt:
-    package:
-      - ufw
-      - firehol
-      - firehol-tools
-    state: absent
-
-- name: migration/1.5.0 - remove other firewall management tools configuration
-  file:
-    state: absent
-    path:
-      - /etc/firehol
-      - /etc/systemd/system/firehol.service
-      - /etc/default/firehol
-  notify: reload systemd unit files
-
 ##### FIREWALLD #####
 
 - name: install firewalld

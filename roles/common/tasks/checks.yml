@@ -105,19 +105,6 @@
     - apt
     - apt-listbugs
 
-- name: migration - check that obsolete variables have been removed
-  assert:
-    quiet: yes
-    that: "{{ item }}"
-    fail_msg: "firehol related variables have been removed in 1.5.0, but one of firehol_networks, firehol_routers, firehol_docker_swarm_compat, firehol_custom_services is still defined. Please remove these variables from your groups/host vars."
-  with_items:
-    - firehol_networks is not defined
-    - firehol_routers is not defined
-    - firehol_docker_swarm_compat is not defined
-    - firehol_custom_services is not defined
-  tags:
-    - firewall
-
 - name: check that variables are correctly defined (firewalld_zone_sources)
   assert:
     quiet: yes

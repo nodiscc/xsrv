@@ -9,9 +9,3 @@
     - assemble netdata configuration
     - restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
-
-- name: migration/1.13.0 - remove files from old versions of the role
-  file:
-    state: absent
-    path: /etc/netdata/health.d/systemdunits.conf.d/docker.conf
-  notify: assemble netdata configuration

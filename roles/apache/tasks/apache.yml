@@ -136,16 +136,6 @@
   notify: reload apache
   tags: apache-reverseproxy
 
-- name: migration - remove apache/php configuration from old versions of the role
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - /etc/apache2/sites-enabled/sites.conf
-    - /etc/apache2/sites-available/sites.conf
-    - /etc/php/7.4/apache2/conf.d/30-hide-header.ini
-  notify: reload apache
-
 - name: remove apache default sites
   file:
     path: "{{ item }}"

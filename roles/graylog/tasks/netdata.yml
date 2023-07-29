@@ -7,12 +7,3 @@
     mode: "0640"
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
-
-- name: migration/1.13.0 - remove files from old versions of the role
-  file:
-    state: absent
-    path: "{{ item }}"
-  notify: assemble netdata configuration
-  with_items:
-    - /etc/netdata/health.d/processes.conf.d/graylog.conf
-    - /etc/netdata/health.d/systemdunits.conf.d/graylog.conf

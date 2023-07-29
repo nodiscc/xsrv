@@ -122,39 +122,6 @@
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
   changed_when: yes
 
-### USER MIGRATION WWW-DATA -> NEXTCLOUD ###
-
-- name: update ownership of data directory
-  file:
-    path: "/var/nextcloud"
-    state: directory
-    owner: nextcloud
-    group: nextcloud
-    recurse: yes
-  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: update ownership of application directories
-  file:
-    path: "{{ item }}"
-    owner: nextcloud
-    group: nextcloud
-    recurse: yes
-  with_items:
-    - "{{ nextcloud_install_dir }}/apps"
-    - "{{ nextcloud_install_dir }}/config"
-    - "{{ nextcloud_install_dir }}/themes"
-  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: update ownership of occ script
-  file:
-    path: "{{ nextcloud_install_dir }}/occ"
-    owner: nextcloud
-    group: nextcloud
-  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
-  ignore_errors: "{{ ansible_check_mode }}"
-
 ##### CONFIGURATION #####
 
 - name: create nextcloud data directory
