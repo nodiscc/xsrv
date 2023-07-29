@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.17.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.17.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- (optional) `xsrv check` to simulate changes.
+- `xsrv deploy` to apply changes
+
+**Changed:**
+- gitea: update to [v1.20.2](https://github.com/go-gitea/gitea/releases/tag/v1.20.2)
+
+[Full changes since v1.16.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.16.0...1.17.0)
+
+------------------
+
 #### [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) - 2023-07-29
 
 **Upgrade procedure:**
