@@ -185,11 +185,11 @@ doc_md:
 		sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md && \
 		sed -i 's|docs/||g' docs/index.md
 	# update docs/configuration-variables.md from available roles
-	@roles_list_defaults_md=$$(for role in roles/*/; do echo "- [$$role](https://gitlab.com/nodiscc/xsrv/-/blob/master/$${role}defaults/main.yml)"; done); \
+	@roles_list_defaults_md=$$(for file in roles/*/defaults/main.yml; do echo -e "[$$file](https://gitlab.com/nodiscc/xsrv/-/blob/master/$$file)\n\n\`\`\`yaml\n$$(cat $$file)\n\`\`\`\n\n"; done); \
 		echo "$$roles_list_defaults_md" >| roles-list-defaults.tmp.md && \
 		awk ' \
 		BEGIN {p=1} \
-		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list-defaults.tmp.md | sort --version-sort");p=0} \
+		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list-defaults.tmp.md");p=0} \
 		/^<!--END ROLES LIST-->/ {p=1} \
 		p' docs/configuration-variables.md >> docs/configuration-variables.tmp.md && \
 		mv docs/configuration-variables.tmp.md docs/configuration-variables.md && \
