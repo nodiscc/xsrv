@@ -130,6 +130,16 @@
   notify: restart jitsi
 
 - name: configure jitsi-videobridge
+  template:
+    src: etc_jitsi_videobridge_jvb.conf.j2
+    dest: /etc/jitsi/videobridge/jvb.conf
+    owner: jvb
+    group: jitsi
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart jitsi
+
+- name: configure jitsi-videobridge prosody password
   lineinfile:
     path: /etc/jitsi/videobridge/sip-communicator.properties
     regexp: '^org.jitsi.videobridge.xmpp.user.shard.PASSWORD'
@@ -142,13 +152,18 @@
 
 - name: configure prosody
   template:
-    src: etc_prosody_conf.avail_jitsi_fqdn.cfg.lua.j2
-    dest: /etc/prosody/conf.avail/{{ jitsi_fqdn }}.cfg.lua
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: "0644"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart prosody
+  with_items:
+    - src: etc_prosody_conf.avail_jitsi_fqdn.cfg.lua.j2
+      dest: "/etc/prosody/conf.avail/{{ jitsi_fqdn }}.cfg.lua"
+    - src: etc_prosody_conf.d_interfaces.cfg.lua.j2
+      dest: "/etc/prosody/conf.d/interfaces.cfg.lua"
 
 # workaround https://github.com/jitsi/jitsi-meet/issues/10929
 - name: enable/disable recent rooms list on the welcome page
