@@ -2,7 +2,7 @@
 # gracefully restart (reload) apache2 when a required by mod_md after certificate generation/renewal
 # https://httpd.apache.org/docs/2.4/mod/mod_md.html#mdmessagecmd
 # - mod_md must be configured with 'MDMessageCmd /usr/local/bin/apache-mod-md-reload request'
-# - a cron job run as root must check periodically the presence of the file using '/usr/local/bin/apache-mod-md-reload reload'
+# - a cron job run as root must check periodically the presence of the file using '/usr/local/bin/apache-mod-md-reload check-reload'
 set -o errexit
 set -o nounset
 
@@ -19,7 +19,7 @@ if [[ "$command" == "request" ]]; then
         "errored") echo "$mdomain: errors were encountered during certificate renewal" ;;
         *) echo "$mdomain: $reason"
     esac
-elif [[ "$1" == "reload" ]]; then
+elif [[ "$1" == "check-reload" ]]; then
     if [[ -f /var/lib/apache2/md/mod-md-reload-required ]]; then
         echo "mod_md requested reload, gracefully restarting apache2"
         systemctl reload apache2
