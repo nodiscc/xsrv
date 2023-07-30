@@ -6,7 +6,6 @@
   ╹ ╹┗━┛╹┗╸┗┛ v1.17.0
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
 TAGS:
-apache-mod-evasive - setup apache anti-DoS module
 apache-reverseproxy - setup apache custom reverseproxies
 apache - setup the apache web server
 apt-listbugs - configure apt-listbugs bug prevention tool

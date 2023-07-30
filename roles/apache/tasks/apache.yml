@@ -5,7 +5,6 @@
     state: present
     package:
       - apache2
-      - libapache2-mod-evasive
       - libapache2-mod-md
       - libapache2-mod-fcgid
       - php{{ apache_php_fpm_version }}-apcu
@@ -122,10 +121,6 @@
   with_items:
     - 'other-vhosts-access-log'
   notify: reload apache
-
-- name: include mod-evasive configuration tasks
-  import_tasks: apache-mod-evasive.yml
-  tags: apache-mod-evasive
 
 ##### VIRTUALHOSTS #####
 

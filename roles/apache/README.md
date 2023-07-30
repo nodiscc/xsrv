@@ -5,7 +5,6 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 - [mod_md](https://httpd.apache.org/docs/2.4/mod/mod_md.html) for [Let's Encrypt](https://en.wikipedia.org/wiki/Let's_Encrypt) SSL/TLS certificate management, hardened ([A+](https://www.ssllabs.com/ssltest/)) SSL/TLS configuration
 - [php-fpm](https://php-fpm.org/) PHP interpreter
 - (optional) basic authentication login form brutefore prevention with [fail2ban](tasks/fail2ban.yml)
-- (optional) setup [`mod_evasive`](tasks/apache-mod-evasive.yml) to mitigate basic DoS attack attempts
 - (optional) aggregation of apache log files to [syslog](tasks/rsyslog.yml)
 
 
@@ -55,7 +54,6 @@ linux_users:
 ```
 apache - setup the apache web server
 ssl - setup SSL certificates and configuration
-apache-mod-evasive - setup apache anti-DoS module
 apache-reverseproxy - setup apache custom reverseproxies
 ```
 <!--END TAGS LIST-->

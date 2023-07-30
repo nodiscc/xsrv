@@ -5,8 +5,6 @@ apache_listen_http: yes
 apache_allow_robots: no
 # start/stop the apache webserver, enable/disable it on boot (yes/no)
 apache_enable_service: yes
-# yes/no: enable mod_evasive for basic DoS protection (can interfere with legitimate traffic)
-apache_enable_mod_evasive: no
 # e-mail address to register a letsencrypt.org account
 apache_letsencrypt_email: "CHANGEME"
 # enable HTTP Strict-Transport-Security for websites using letsencrypt.org certificates (yes/no)
