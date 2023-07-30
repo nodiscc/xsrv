@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
+- apache: allow enabling [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) for all applications/sites using Let's Encrypt certificates ([`apache_letsencrypt_enable_hsts: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
 - jellyfin: allow adding users to the `jellyfin` group (may read/write files inside the media directory), add the ansible user to this group by default ([`jellyfin_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default ([`transmission_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml))
 
@@ -19,12 +20,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: remove all previous migration tasks
 
 **Changed:**
+- apache: always redirect `http://` to `https://` for all applications/sites using Let's Encrypt (`*_certificate_mode: letsencrypt`) certificates
+- apache: don't redirect requests to the default HTTP virtualhost to HTTPS
 - jitsi: configure all components to listen only on loopback interfaces, disable IPv6 listening
 - graylog: cleanup list of dependencies (graylog provides its own java environment)
 - netdata: decrease apache server status collection frequency to 10s (decrease log spam caused by the collector)
 - apache: log requests from localhost to the default vhost with the `localhost:` prefix (for example `http://127.0.0.1/server-status` requests from netdata)
 - apache: log requests from other hosts to the default vhost with the `default:` prefix (for example bad bots and scanners accessing the server by IP address)
-- apache: don't redirect requests to the default HTTP virtualhost to HTTPS
 - apache: serve a `403 Forbidden` response to for requests the default virtualhost (except those from localhost)
 - gitea: update to [v1.20.2](https://github.com/go-gitea/gitea/releases/tag/v1.20.2)
 - matrix: update element-web to [v1.11.37](https://github.com/vector-im/element-web/releases/tag/v1.11.37)

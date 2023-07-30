@@ -13,6 +13,7 @@
     - apache_access_log_to_syslog == apache_access_log_to_syslog | bool
     - apache_firewalld_zones | type_debug == "list"
     - apache_reverseproxies | type_debug == "list"
+    - apache_letsencrypt_enable_hsts == apache_letsencrypt_enable_hsts | bool
 
 - name: check that variables are correctly defined (apache_reverseproxies)
   assert:
