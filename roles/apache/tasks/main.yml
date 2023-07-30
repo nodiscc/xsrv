@@ -18,6 +18,7 @@
   tags:
     - apache
     - ssl
+    - apache-reverseproxy
 
 - name: include apache configuration tasks
   import_tasks: apache.yml
