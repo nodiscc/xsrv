@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - jitsi: configure all components to listen only on loopback interfaces, disable IPv6 listening
 - gitea: update to [v1.20.2](https://github.com/go-gitea/gitea/releases/tag/v1.20.2)
+- improve check mode support before first actual deployment
 - update documentation
 
 **Fixed:**

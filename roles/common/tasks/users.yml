@@ -46,6 +46,7 @@
     password: "{{ (item.password | password_hash('sha512')) if item.password is defined else '' }}"
     update_password: "{{ item.update_password | default('on_create') }}"
   with_items: "{{ linux_users }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: authorize SSH keys for additional user accounts
   authorized_key:
