@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - apache: fix apache not loading new/updated Let's Encrypt/`mod_md` certificates automatically every minute
+- apache: fix duplicated access logs to `access.log`/`other_vhosts_access.log`, only log to `access.log`
 
 [Full changes since v1.16.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.16.0...1.17.0)
 

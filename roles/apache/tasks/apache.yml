@@ -115,6 +115,14 @@
   notify: reload apache
   tags: ssl
 
+- name: disable apache configuration snippets
+  command: a2disconf {{ item }}
+  args:
+    removes: "/etc/apache2/conf-enabled/{{ item }}.conf"
+  with_items:
+    - 'other-vhosts-access-log'
+  notify: reload apache
+
 - name: include mod-evasive configuration tasks
   import_tasks: apache-mod-evasive.yml
   tags: apache-mod-evasive
