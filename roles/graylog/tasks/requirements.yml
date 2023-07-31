@@ -4,12 +4,7 @@
   apt:
     state: present
     package:
-      - default-jre
       - apt-transport-https
       - uuid-runtime
-      - pwgen
       - dirmngr
       - gnupg
-      - wget
-      - python3-openssl
-      - ssl-cert
