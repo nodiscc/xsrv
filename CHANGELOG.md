@@ -22,6 +22,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jitsi: configure all components to listen only on loopback interfaces, disable IPv6 listening
 - graylog: cleanup list of dependencies (graylog provides its own java environment)
 - netdata: decrease apache server status collection frequency to 10s (decrease log spam caused by the collector)
+- apache: log requests from localhost to the default vhost with the `localhost:` prefix (for example `http://127.0.0.1/server-status` requests from netdata)
+- apache: log requests from other hosts to the default vhost with the `default:` prefix (for example bad bots and scanners accessing the server by IP address)
+- apache: don't redirect requests to the default HTTP virtualhost to HTTPS
+- apache: serve a `403 Forbidden` response to for requests the default virtualhost (except those from localhost)
 - gitea: update to [v1.20.2](https://github.com/go-gitea/gitea/releases/tag/v1.20.2)
 - netdata: harden/standardize permissions on postgres collector configuration file
 - improve check mode support before first actual deployment
