@@ -12,8 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
-- jellyfin: allow adding users to the `jellyfin` group (may read/write files inside the media directory), add the ansible user to this group by default [`jellyfin_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
-- transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default [`transmission_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml))
+- jellyfin: allow adding users to the `jellyfin` group (may read/write files inside the media directory), add the ansible user to this group by default ([`jellyfin_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default ([`transmission_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml))
 
 **Removed:**
 - cleanup: remove all previous migration tasks
