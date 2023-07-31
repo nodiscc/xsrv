@@ -13,6 +13,7 @@
     accept_hostkey: yes
     force: yes # discard modified files
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
 
 - name: create directory for netdata-logcount lnav script
   file:

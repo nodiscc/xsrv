@@ -14,8 +14,8 @@
   postgresql_user:
     name: synapse
     password: "{{ matrix_synapse_db_password }}"
-  no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
+  no_log: yes
 
 - name: create synapse postgresql database
   become: yes

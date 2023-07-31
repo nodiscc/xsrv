@@ -24,8 +24,8 @@
     name: "{{ nextcloud_db_user }}"
     password: "{{ nextcloud_db_password }}"
   when: nextcloud_db_password is defined
-  no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
+  no_log: yes
 
 - name: create nextcloud postgresql database
   become: yes

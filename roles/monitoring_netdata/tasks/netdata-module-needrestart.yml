@@ -19,6 +19,7 @@
     accept_hostkey: yes
     force: yes # discard modified files
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
 
 - name: generate initial needrestart report
   command: needrestart -b > /var/log/needrestart.log

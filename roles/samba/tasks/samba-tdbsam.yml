@@ -14,4 +14,4 @@
   args:
     executable: /bin/bash
   with_items: "{{ samba_users }}"
-  no_log: True
+  no_log: yes

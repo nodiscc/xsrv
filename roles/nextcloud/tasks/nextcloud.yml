@@ -130,9 +130,9 @@
     dest: "/root/nextcloud-unpack"
     remote_src: yes
     mode: u=rwX
-  no_log: True
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
 
 - name: give write/execute permissions to the nextcloud user
   file:
@@ -364,6 +364,5 @@
   file:
     path: '{{ nextcloud_install_dir }}.old'
     state: absent
-  no_log: True
-  when:
-    - nextcloud_action == 'upgrade'
+  when: nextcloud_action == 'upgrade'
+  diff: no

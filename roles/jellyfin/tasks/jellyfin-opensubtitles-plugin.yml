@@ -23,8 +23,8 @@
     owner: jellyfin
     group: jellyfin
     keep_newer: yes
-  no_log: yes
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
   notify: restart jellyfin
 
 - name: configure opensubtitles plugin
@@ -34,6 +34,6 @@
     owner: jellyfin
     group: jellyfin
     mode: "0644"
-  no_log: yes
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
   notify: restart jellyfin
