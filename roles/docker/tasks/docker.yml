@@ -81,6 +81,7 @@
     groups: docker
     append: true
   with_items: "{{ docker_users }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable/disable nightly cleanup of unused docker data
   cron:
