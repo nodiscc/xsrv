@@ -109,6 +109,7 @@ libvirt_port_forwards: []
 libvirt_service_after: []
 
 # list of users who will be added to the libvirt/libvirt-qemu/kvm groups (can manage libvirt VMS without sudo)
+# Note: setting the default connection URI only works for login shells (e.g. SSH/console), so you may need to add `export LIBVIRT_DEFAULT_URI='qemu:///system'` to your `~/.bashrc` if your terminal emulator uses non-login shells
 # Example:
 # libvirt_users:
 #   - "{{ ansible_user }}"
