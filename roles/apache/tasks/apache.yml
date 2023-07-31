@@ -154,6 +154,9 @@
     - /var/www/html/index.html
   notify: reload apache
 
+- name: apply apache configuration (flush handlers)
+  meta: flush_handlers
+
 ##### MOD_MD #####
 
 - name: create work directory for mod_md automatic reload script
