@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - jitsi: configure all components to listen only on loopback interfaces, disable IPv6 listening
 - graylog: cleanup list of dependencies (graylog provides its own java environment)
+- netdata: decrease apache server status collection frequency to 10s (decrease log spam caused by the collector)
 - gitea: update to [v1.20.2](https://github.com/go-gitea/gitea/releases/tag/v1.20.2)
 - netdata: harden/standardize permissions on postgres collector configuration file
 - improve check mode support before first actual deployment
