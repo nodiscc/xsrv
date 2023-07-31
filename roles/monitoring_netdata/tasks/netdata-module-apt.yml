@@ -8,7 +8,7 @@
     accept_hostkey: yes
     force: yes # discard modified files
   ignore_errors: "{{ ansible_check_mode }}"
-  no_log: yes
+  diff: no
 
 - name: install netdata-apt module/script/configuration
   copy:

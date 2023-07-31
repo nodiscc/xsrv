@@ -32,10 +32,10 @@
   file:
     path: /root/element-unpack
     state: absent
-  no_log: yes # very verbose
   when:
     - matrix_element_action is defined
     - matrix_element_action == 'upgrade'
+  diff: no
 
 - name: create element zip extraction directory
   file:
@@ -63,10 +63,10 @@
   file:
     path: "{{ element_install_dir }}"
     state: absent
-  no_log: yes
   when:
     - matrix_element_action is defined
     - matrix_element_action == 'upgrade'
+  diff: no
 
 - name: move element extraction directory to install directory
   command: "mv /root/element-unpack/element-v{{ matrix_element_version }} {{ element_install_dir }}"

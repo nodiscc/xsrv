@@ -86,8 +86,8 @@
   file:
     path: '{{ ldap_account_manager_install_dir }}'
     state: absent
-  no_log: yes
   when: openldap_ldap_account_manager_action == 'upgrade'
+  diff: no
 
 - name: move ldap_account_manager extraction directory to install directory
   command: mv /root/ldap-account-manager-unpack/ldap-account-manager-{{ ldap_account_manager_version }} '{{ ldap_account_manager_install_dir }}'

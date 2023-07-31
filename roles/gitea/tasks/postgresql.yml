@@ -19,9 +19,8 @@
     name: "{{ gitea_db_user }}"
     password: "{{ gitea_db_password }}"
   ignore_errors: "{{ ansible_check_mode }}"
-  when:
-    - gitea_db_password|length > 0
-  no_log: True
+  when: gitea_db_password|length > 0
+  no_log: yes
 
 - name: create gitea postgresql database
   become: yes

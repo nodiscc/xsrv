@@ -22,7 +22,7 @@
   postgresql_user:
     name: "{{ tt_rss_db_user }}"
     password: "{{ tt_rss_db_password }}"
-  no_log: True
+  no_log: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create tt-rss postgresql database

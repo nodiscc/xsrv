@@ -24,4 +24,4 @@
     priv: "{{ nextcloud_db_name }}.*:ALL"
     login_password: "{{ mariadb_root_password }}"
     login_host: "{{ nextcloud_db_host }}"
-  no_log: True
+  no_log: yes

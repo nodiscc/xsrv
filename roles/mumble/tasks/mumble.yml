@@ -15,7 +15,7 @@
     group: root
     mode: "0600"
   notify: restart mumble
-  no_log: True
+  diff: no
 
 ##### COMMAND-LINE/MISC INSTALLATION STEPS #####
 

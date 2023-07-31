@@ -67,9 +67,9 @@
     owner: root
     group: root
     mode: u=rwX,g=rwX,o=rX
-  no_log: yes
-  ignore_errors: "{{ ansible_check_mode }}"
   when: (matrix_synapse_admin_action == 'initial') or (matrix_synapse_admin_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
 
 - name: remove old synapse-admin installation
   file:

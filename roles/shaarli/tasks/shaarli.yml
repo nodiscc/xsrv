@@ -178,4 +178,4 @@
   file:
     path: '{{ shaarli_install_dir }}.old'
     state: absent
-  no_log: yes
+  diff: no
