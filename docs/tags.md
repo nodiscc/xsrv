@@ -82,6 +82,8 @@ sysctl - setup sysctl kernel configuration
 transmission - setup transmission bittorrent client
 tt_rss - setup tt-rss feed reader
 users - setup users and groups
+utils-apt-unattended-upgrade - (manual) run unattended-upgrade now
+utils-apt-upgrade - (manual) run apt upgrade now
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
