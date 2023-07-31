@@ -39,8 +39,11 @@ Fact [caching](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_
 ```ini
 fact_caching = yaml
 fact_caching_connection = data/cache/facts/
-fact_caching_timeout = 86400
+fact_caching_timeout = 1
 ```
+
+Cached facts can be cleared manually by deleting the `data/cache/facts/` directory under your playbook directory (or the directory defined by `fact_caching_connection` in your `ansible/cfg`)
+
 
 ## Usage
 
