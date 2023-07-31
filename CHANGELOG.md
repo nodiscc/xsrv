@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 
+**Added:**
+- transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default [`transmission_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml))
+
 **Removed:**
 - cleanup: remove all previous migration tasks
 
