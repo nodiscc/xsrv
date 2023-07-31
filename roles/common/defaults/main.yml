@@ -175,6 +175,8 @@ apt_listbugs_ignore_list:
   - 1038603 # https://bugs.debian.org/1038603 - unreproducible, specific to some GCC-based build processes
   - 1030129 # https://bugs.debian.org/1030129 - unreproducible
   - 1041547 # https://bugs.debian.org/1041547 - no impact unless madin deliberately sets an empty root password
+  - 1023748 # https://bugs.debian.org/1023748 - only affects java 20, debian 12 has java 17
+  - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
