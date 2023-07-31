@@ -84,11 +84,12 @@
     mode: "0770"
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: allow ansible user to read/write jellyfin data files
+- name: add users to the jellyfin group
   user:
-    name: "{{ ansible_user }}"
+    name: "{{ item }}"
     groups: jellyfin
-    append: yes
+    append: true
+  with_items: "{{ jellyfin_users }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: allow jellyfin to read/write transmission downloads directory

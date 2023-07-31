@@ -1,6 +1,9 @@
 ##### JELLYFIN MEDIA SERVER #####
 # fully qualified domain name of the jellyfin instance
 jellyfin_fqdn: "media.CHANGEME.org"
+# list of linux users to add to the jellyfin group (may read/write files inside the media directory)
+jellyfin_users:
+  - "{{ ansible_user }}"
 # HTTPS and SSL/TLS certificate mode for the jellyfin webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
