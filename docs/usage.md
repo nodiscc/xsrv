@@ -386,6 +386,7 @@ xsrv check default my.example2.org
 TAGS=nextcloud,transmission xsrv check
 ```
 
+Note: check mode may not reflect changes that will actually occur in a "real" deployment, as some conditions may change during actual deployment that will lead to other changes/actions to be triggered. Notably, running `xsrv check` before the first actual deployment of a host/role will output many errors that would not occur during an actual deployment. These errors are ignored if appropriate.
 
 _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2.org,production --tags=transmission,nextcloud --check`_
 
