@@ -10,6 +10,9 @@ needrestart_ksta=$(/usr/sbin/needrestart -b -k | grep '^NEEDRESTART-KSTA' | awk 
 if [[ "$needrestart_ksta" == "3" ]]; then
     echo "NEEDRESTART-KSTA: 3, reboot required, rebooting"
     /usr/sbin/reboot
+elif [[ "$needrestart_ksta" == "2" ]]; then
+    echo "NEEDRESTART-KSTA: 2, reboot required, rebooting"
+    /usr/sbin/reboot
 else
     echo "No reboot required."
 fi
