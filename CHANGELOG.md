@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: don't redirect requests to the default HTTP virtualhost to HTTPS
 - apache: serve a `403 Forbidden` response to for requests the default virtualhost (except those from localhost)
 - gitea: update to [v1.20.2](https://github.com/go-gitea/gitea/releases/tag/v1.20.2)
+- matrix: update element-web to [v1.11.37](https://github.com/vector-im/element-web/releases/tag/v1.11.37)
 - netdata: harden/standardize permissions on postgres collector configuration file
 - improve check mode support before first actual deployment
 - update documentation
