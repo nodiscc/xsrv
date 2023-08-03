@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: log requests from other hosts to the default vhost with the `default:` prefix (for example bad bots and scanners accessing the server by IP address)
 - apache: serve a `403 Forbidden` response to for requests the default virtualhost (except those from localhost)
 - common/fail2ban: use values provided in `fail2ban_default_maxretry` (default 5), `fail2ban_default_findtime` (10min) and `fail2ban_default_bantime` (1 year) for all jails
+- common/fail2ban: use `DROP` firewall rule instead of `REJECT` (drop connections from banned IPs instead of replying with TCP reset)
 - common/fail2ban: do not enable the `pam-generic` jail by default as no service uses it
 - common/fail2ban/all roles: only ban offenders on HTTP/HTTPS ports (not all ports) for authentication failures on web applications
 - gitea/jellyfin/fail2ban: do not disable gitea/jellyfin jails if the corresponding service is disabled
