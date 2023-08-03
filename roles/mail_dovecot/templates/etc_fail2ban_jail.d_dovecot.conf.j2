@@ -1,3 +1,7 @@
 [dovecot]
+# dovecot login failures
+# other options defined in /etc/fail2ban/jail.conf
 enabled = true
+logpath = %(dovecot_log)s
+          /var/lib/fail2ban/emptylog.log
 port    = imaps

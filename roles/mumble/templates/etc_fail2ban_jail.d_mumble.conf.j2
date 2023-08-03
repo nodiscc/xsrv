@@ -1,7 +1,7 @@
-# Fail2ban mumble jails
-
 [murmur]
-# AKA mumble-server
-enabled  = true
-port     = {{ mumble_port }}
-# actions and logpath are defined in /etc/fail2ban/jail.conf
+# mumble-server login failures
+# other options defined in /etc/fail2ban/jail.conf
+enabled = true
+logpath  = /var/log/mumble-server/mumble-server.log
+           /var/lib/fail2ban/emptylog.log
+port    = {{ mumble_port }}

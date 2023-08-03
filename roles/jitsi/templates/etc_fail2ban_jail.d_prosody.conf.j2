@@ -1,4 +1,7 @@
 [prosody]
+# prosody (jitsi) login failures
 enabled = true
 filter  = prosody-auth
 logpath = /var/log/prosody/prosody*.log
+          /var/lib/fail2ban/emptylog.log
+port    = https,http

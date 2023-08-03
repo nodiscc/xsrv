@@ -1,3 +1,10 @@
+- name: install fail2ban
+  apt:
+    state: present
+    package:
+      - fail2ban
+      - ipset
+
 - name: create fail2ban configuration directories
   file:
     path: "{{ item }}"
@@ -8,21 +15,6 @@
     - "/etc/fail2ban/jail.d"
     - "/etc/fail2ban/filter.d"
 
-- name: install fail2ban
-  apt:
-    state: present
-    package:
-      - fail2ban
-      - ipset
-
-- name: start and enable fail2ban
-  service:
-    name: "fail2ban"
-    state: started
-    enabled: yes
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: services
-
 - name: copy fail2ban global configuration
   template:
     src: "{{ item.src }}"
@@ -31,16 +23,20 @@
   with_items:
     - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
     - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
+    - { src: 'var_lib_fail2ban_emptylog.log.j2', dest: '/var/lib/fail2ban/emptylog.log' }
   notify: restart fail2ban
 
-- name: copy fail2ban jails configuration
+- name: copy fail2ban sshd jail configuration
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: etc_fail2ban_jail.d_sshd.conf.j2
+    dest: /etc/fail2ban/jail.d/sshd.conf
     mode: "0600"
-  with_items:
-    - { src: 'etc_fail2ban_jail.d_sshd.conf.j2', dest: '/etc/fail2ban/jail.d/sshd.conf' }
-    - { src: 'etc_fail2ban_jail.d_pam-generic.conf.j2', dest: '/etc/fail2ban/jail.d/pam-generic.conf' }
+  notify: reload fail2ban
+
+- name: migration/1.17.0 - remove files from old versions of the role
+  file:
+    path: /etc/fail2ban/jail.d/pam-generic.conf
+    state: absent
   notify: reload fail2ban
 
 ##### FACTS #####
@@ -62,3 +58,13 @@
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+##### SERVICES #####
+
+- name: start and enable fail2ban
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: services

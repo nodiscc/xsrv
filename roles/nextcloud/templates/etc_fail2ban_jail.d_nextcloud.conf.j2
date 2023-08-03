@@ -1,8 +1,7 @@
-# fail2ban Nextcloud jails
-
 [nextcloud-auth]
-# Nextcloud login failures
+# nextcloud login failures
 enabled  = true
 filter   = nextcloud-auth
-port     = https,http
 logpath  = /var/nextcloud/data/nextcloud.log
+           /var/lib/fail2ban/emptylog.log
+port     = https,http

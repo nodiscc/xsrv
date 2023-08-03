@@ -12,5 +12,5 @@ bantime   = {{ fail2ban_default_bantime }}
 # destination email address used for banactions 'action_m*' which trigger sending an email
 destemail = root
 # default banning action
-banaction = {{ 'firewallcmd-ipset[actiontype=<allports>]' if (ansible_local.firewalld.ansible_managed is defined and ansible_local.firewalld.ansible_managed) else 'iptables-ipset-proto6-allports' }}
-banaction_allports = {{ 'firewallcmd-ipset[actiontype=<allports>]' if (ansible_local.firewalld.ansible_managed is defined and ansible_local.firewalld.ansible_managed) else 'iptables-ipset-proto6-allports' }}
+banaction = {{ 'firewallcmd-ipset[actiontype=<multiport>]' if (ansible_local.firewalld.ansible_managed is defined and ansible_local.firewalld.ansible_managed) else 'iptables-ipset[type=multiport]' }}
+banaction_allports = {{ 'firewallcmd-ipset[actiontype=<allports>]' if (ansible_local.firewalld.ansible_managed is defined and ansible_local.firewalld.ansible_managed) else 'iptables-ipset[type=allports' }}
