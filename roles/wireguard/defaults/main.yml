@@ -14,9 +14,7 @@ wireguard_enable_service: yes
 #     state: present # optional, default present. set to absent to remove the peer
 #     public_key: Faz...4vEQ= # the public key of the peer (contents of its wireguard.pub)
 #     ip_address: "10.200.200.10/32" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
-#     routes: "1.2.3.4/32, 192.168.18.0/24" # optional, default 0.0.0.0/0 (route all traffic through the VPN), IP addresses/network to route through the VPN on the client
-#   - name: client99
-#     state: absent
+#     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/network to route through the VPN on the client
 wireguard_peers: []
 
 # firewall zones from which peers are allowed to connect to the VPN service, if nodiscc.xsrv.common/firewalld role is deployed
