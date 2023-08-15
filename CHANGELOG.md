@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea/jellyfin/fail2ban: do not disable gitea/jellyfin jails if the corresponding service is disabled
 - gitea: update to [v1.20.2](https://github.com/go-gitea/gitea/releases/tag/v1.20.2)
 - matrix: update element-web to v1.11.39 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.37) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.38) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.39)
+- xsrv: update ansible to [v8.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - netdata: harden/standardize permissions on postgres collector configuration file
 - cleanup: common/fail2ban: standardize comments/task order, do not repeat jail options that are already defined in `jail.conf`, in `jail.d/*conf`
 - improve check mode support before first actual deployment
