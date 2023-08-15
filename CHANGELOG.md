@@ -72,7 +72,7 @@ You must upgrade to this release and deploy it before deploying future versions 
 - libvirt: add the ansible user to the libvirt group by default (can manage libvirt VMs without sudo) ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - libvirt: configure non-root user accounts to use `qemu:///system` connection URI by default (can manage libvirt VMs without sudo/without specifying `--connect qemu:///system`)
 - gitea: update to v1.20.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.1)
-- nextcloud: update to v26.0.4 [[1]](https://nextcloud.com/changelog/)
+- nextcloud: update to v26.0.5 [[1]](https://nextcloud.com/changelog/) [[2]](serveo/ngrok alternative)
 - nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
 - graylog: make role compatible with Debian 12 (upgrade to mongodb [v6.0](https://www.mongodb.com/docs/manual/release-notes/6.0/))
 - matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
@@ -121,7 +121,7 @@ You must upgrade to this release and deploy it before deploying future versions 
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html).
-  - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+  - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.10` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
   - **graylog:** do **not** upgrade hosts where the `graylog` role is deployed to Debian 12, as it is not compatible with Debian 12 yet.
 
 The Debian 11 -> 12 upgrade procedure was only tested for hosts managed by `xsrv` roles. If you have custom/third-party software installed, you should read Debian 12's [release notes](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html) and/or execute the upgrade procedure manually. It is always advisable to do a full backup/snapshot before performing a distribution upgrade.
