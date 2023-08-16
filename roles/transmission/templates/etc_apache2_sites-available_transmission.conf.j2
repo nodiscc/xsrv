@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ transmission_fqdn }}
-    ServerAdmin webmaster@{{ transmission_fqdn }}
 {% if transmission_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -15,7 +14,6 @@ MDomain {{ transmission_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ transmission_fqdn }}
-  ServerAdmin webmaster@{{ transmission_fqdn }}
   SSLEngine on
 {% if transmission_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ transmission_fqdn }}.crt

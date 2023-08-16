@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ EXAMPLE_fqdn }}
-    ServerAdmin webmaster@{{ EXAMPLE_fqdn }}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
     RewriteCond %{HTTPS} off
@@ -13,7 +12,6 @@ MDomain {{ EXAMPLE_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ EXAMPLE_fqdn }}
-  ServerAdmin webmaster@{{ EXAMPLE_fqdn }}
   SSLEngine on
 {% if EXAMPLE_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ EXAMPLE_fqdn }}.crt

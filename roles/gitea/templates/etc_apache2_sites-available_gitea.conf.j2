@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ gitea_fqdn }}
-    ServerAdmin webmaster@{{ gitea_fqdn }}
 {% if gitea_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -15,7 +14,6 @@ MDomain {{ gitea_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ gitea_fqdn }}
-  ServerAdmin webmaster@{{ gitea_fqdn }}
   SSLEngine on
 {% if gitea_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ gitea_fqdn }}.crt

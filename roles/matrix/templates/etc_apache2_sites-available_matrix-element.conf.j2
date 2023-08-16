@@ -1,7 +1,6 @@
 <VirtualHost *:80>
     DocumentRoot {{ element_install_dir }}
     ServerName {{ matrix_element_fqdn }}
-    ServerAdmin webmaster@{{ matrix_element_fqdn }}
 {% if matrix_element_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -16,7 +15,6 @@ MDomain {{ matrix_element_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ matrix_element_fqdn }}
-  ServerAdmin webmaster@{{ matrix_element_fqdn }}
   SSLEngine on
 {% if matrix_element_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ matrix_element_fqdn }}.crt

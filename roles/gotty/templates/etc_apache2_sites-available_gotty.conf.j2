@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ gotty_fqdn }}
-    ServerAdmin webmaster@{{ gotty_fqdn }}
 {% if gotty_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -15,7 +14,6 @@ MDomain {{ gotty_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ gotty_fqdn }}
-  ServerAdmin webmaster@{{ gotty_fqdn }}
   SSLEngine on
 {% if gotty_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ gotty_fqdn }}.crt

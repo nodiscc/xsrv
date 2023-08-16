@@ -1,7 +1,6 @@
 <VirtualHost *:80>
     DocumentRoot {{ ldap_account_manager_install_dir }}
     ServerName {{ ldap_account_manager_fqdn }}
-    ServerAdmin webmaster@{{ ldap_account_manager_fqdn }}
 {% if ldap_account_manager_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -16,7 +15,6 @@ MDomain {{ ldap_account_manager_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ ldap_account_manager_fqdn }}
-  ServerAdmin webmaster@{{ ldap_account_manager_fqdn }}
   SSLEngine on
 {% if ldap_account_manager_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ ldap_account_manager_fqdn }}.crt
