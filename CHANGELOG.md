@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - apache: allow enabling [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) for all applications/sites using Let's Encrypt certificates ([`apache_letsencrypt_enable_hsts: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
 - apache/fail2ban: ban IP addresses doing requests on the default virtualhost
+- monitoring_netdata: allow disabling the logcount module by setting [`netdata_logcount_update_interval`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) to 0
 - jellyfin: allow adding users to the `jellyfin` group (may read/write files inside the media directory), add the ansible user to this group by default ([`jellyfin_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default ([`transmission_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml))
 

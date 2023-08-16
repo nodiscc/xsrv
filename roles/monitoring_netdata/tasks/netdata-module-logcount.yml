@@ -43,6 +43,17 @@
     mode: "0750"
   notify: restart netdata
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
+  when: 'netdata_logcount_update_interval != 0'
+
+- name: remove netdata-logcount module
+  file:
+    path: /usr/libexec/netdata/python.d/logcount.chart.py
+    state: absent
+  notify: restart netdata
+  ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
+  when: 'netdata_logcount_update_interval == 0'
 
 - name: add a cron job to refresh the logcount state file
   cron:
@@ -54,6 +65,7 @@
     job: script --return --quiet -c "/usr/bin/lnav /var/log/syslog -n -f /opt/netdata-logcount/logcount.sql" > /dev/null
     name: "logcount"
     user: root
+    disabled: "{{ True if netdata_logcount_update_interval == 0 else False }}"
 
 - name: set read permissions for netdata on /var/cache/logcount
   file:

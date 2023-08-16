@@ -165,7 +165,7 @@ needrestart_autorestart_services: yes
 needrestart_autorestart_cron: no
 # setup netdata-logcount module (yes/no)
 setup_netdata_logcount: yes
-# (minutes) interval between updates of log message counts in the logcount module
+# (minutes) interval between updates of log message counts in the logcount module. Set to 0 to disable the module and cron job
 netdata_logcount_update_interval: 1
 # maximum acceptable ERROR message in logs over the last period before raising a WARNING or CRITICAL alert
 netdata_logcount_error_threshold_warn: 10
