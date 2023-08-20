@@ -20,6 +20,7 @@ fail2ban - setup fail2ban intrusion prevention system
 firewall - setup firewall
 gitea-config - update gitea configuration
 gitea - setup gitea git service/software forge
+goaccess - setup goaccess web log analyzer/viewer
 gotty - setup gotty web terminal
 graylog - setup graylog log analyzer
 homepage - setup simple webserver homepage
@@ -84,6 +85,7 @@ utils-backup-now - (manual) transfer latest daily backups from the host to the c
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
+utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics

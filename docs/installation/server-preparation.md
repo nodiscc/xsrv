@@ -64,7 +64,7 @@ Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_
 
 Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates - private DNS records will not work (you may still use self-signed certificates).
 
-Separate domain/subdomain names are required to allow clients to access web applications. For example:
+Separate domain/subdomain names are required to allow clients to access web applications. For example assuming all roles are deployed, you would need to create the following DNS records:
 
 ```bash
 ***.CHANGEME.org # host name in the inventory/playbook
@@ -75,14 +75,15 @@ links.CHANGEME.org # shaarli
 rss.CHANGEME.org # tt-rss
 torrent.CHANGEME.org # transmission
 mumble.CHANGEME.org # mumble server
-ldap.CHANGEME.org # openldap server/LDAP account manager
-ssp.CHANGEME.org # LDAP self-service password
-chat.CHANGEME.org # matrix/element web client
-matrix.CHANGEME.org # matrix/synapse server
+ldap.CHANGEME.org # openldap (LDAP account manager)
+ssp.CHANGEME.org # openldap (self-service password)
+chat.CHANGEME.org # matrix (element web client)
+matrix.CHANGEME.org # matrix (synapse server)
 media.CHANGEME.org # jellyfin
 logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
 imap.CHANGEME.org # mail_dovecot
+goaccess.CHANGEME.org # goaccess
 ```
 
 ### External SMTP server

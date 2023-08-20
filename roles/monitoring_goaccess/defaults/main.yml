@@ -1,0 +1,19 @@
+##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
+# fully qualified domain used to access the HTML report
+goaccess_fqdn: "goaccess.CHANGEME.org"
+# HTTPS and SSL/TLS certificate mode for the goaccess webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+goaccess_https_mode: selfsigned
+# enable/disable the goaccess virtualhost (redirect users to maintenance page if disabled)
+goaccess_enable_service: yes
+# calendar expression for the periodic/scheduled update/re-generation of HTML reports
+# uses systemd's calendar events syntax https://manpages.debian.org/bookworm/systemd/systemd.time.7.en.html#CALENDAR_EVENTS
+# you can check whether an expression is valid using `systemd-analyze calendar "EXPRESSION"
+# Examples: "*:0/5:0" (every hour at minute 0, and every minute that is a multiple of 5), "21:00" (every day at 21:00), ...
+goaccess_update_calendar_expression: "*:00:00"
+# (optional) only parse log lines containing this string
+# goaccess_filter: "mysite.CHANGEME.org"
+# username/password used to access the HTML report
+goaccess_username: "CHANGEME"
+goaccess_password: "CHANGEME"

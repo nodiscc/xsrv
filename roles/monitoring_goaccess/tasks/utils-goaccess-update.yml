@@ -1,0 +1,5 @@
+- name: update/generate goaccess HTML report
+  become: yes
+  systemd:
+    name: goaccess-update.service
+    state: started

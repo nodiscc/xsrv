@@ -21,6 +21,7 @@ Then run `xsrv deploy` to apply changes.
 - [roles/mail_dovecot/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml)
 - [roles/matrix/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml)
 - [roles/monitoring/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml)
+- [roles/monitoring_goaccess/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml)
 - [roles/monitoring_netdata/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
 - [roles/monitoring_rsyslog/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)
 - [roles/monitoring_utils/](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml)

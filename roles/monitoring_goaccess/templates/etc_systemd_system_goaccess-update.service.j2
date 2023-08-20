@@ -1,0 +1,12 @@
+[Unit]
+Description=Generate goaccess HTML report
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "ls -tr /var/log/apache2/access.log* | xargs zcat -f {% if goaccess_filter is defined %}| grep '{{ goaccess_filter }}'{% endif %}| awk '$8=$1$8' | goaccess - --output /var/www/{{ goaccess_fqdn }}/index.html"
+WorkingDirectory=/var/www/{{ goaccess_fqdn }}
+SyslogIdentifier=goaccess-update
+User=goaccess
+
+[Install]
+WantedBy=multi-user.target
