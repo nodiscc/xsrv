@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - cleanup: remove all previous migration tasks
+- netdata: remove default processes checks for sshd, ntpd, fail2ban (let systemd services module handle checks for these processes)
 
 **Changed:**
 - apache: always redirect `http://` to `https://` for all applications/sites using Let's Encrypt (`*_certificate_mode: letsencrypt`) certificates
