@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: remove default processes checks for sshd, ntpd, fail2ban (let systemd services module handle checks for these processes)
 
 **Changed:**
+- nextcloud: enable the [Polls](https://apps.nextcloud.com/apps/polls) app by default
 - nextcloud: enable the [Forms](https://apps.nextcloud.com/apps/forms) app by default
 - apache: always redirect `http://` to `https://` for all applications/sites using Let's Encrypt (`*_certificate_mode: letsencrypt`) certificates
 - apache: don't redirect requests to the default HTTP virtualhost to HTTPS

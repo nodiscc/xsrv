@@ -9,14 +9,15 @@ Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... 
 - Can be extended to a full personal cloud/collaborative suite/groupware solution by more than 200 [applications](https://apps.nextcloud.com/)
 - LDAP authentication
 
-Default installed applications include:
+Default installed/enabled applications include:
 
 - [Calendar](https://apps.nextcloud.com/apps/calendar): Manage calendar events with search, alarms, invitation management, contacts integration, sharing and synchronization across devices (CalDAV/ICS)
 - [Contacts](https://apps.nextcloud.com/apps/contacts):E dit, view, share address books and synchronize them across devices (CardDav)
 - [Tasks](https://apps.nextcloud.com/apps/tasks): Task/todo-list management (supports due dates, reminders, priorities, comments, tasks sharing, sub-tasks), and synchronize them across devices (CalDAV)
 - [Photos](https://github.com/nextcloud/photos#readme): Media gallery with previews for all media types
 - [Notes](https://apps.nextcloud.com/apps/notes): Note taking app with markdown support, notes are saved as files in your Nextcloud so you can view and edit them from anywhere.
-- [Maps](https://apps.nextcloud.com/apps/maps): Map and routing service using [OpenStreetMap](https://www.openstreetmap.org/)
+- [Forms](https://apps.nextcloud.com/apps/forms): Simple surveys and questionnaires
+- [Polls](https://apps.nextcloud.com/apps/polls): Full-featured polls, similar to doodle or dudle
 - Viewers and editors for common file types (PDF, text, video...)
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).

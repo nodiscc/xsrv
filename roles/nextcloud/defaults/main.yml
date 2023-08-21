@@ -80,7 +80,7 @@ nextcloud_apps:
   - { state: "disable", app: "keeweb" } # https://apps.nextcloud.com/apps/keeweb
   - { state: "disable", app: "passman" } # https://apps.nextcloud.com/apps/passman
   - { state: "disable", app: "passwords" } # https://apps.nextcloud.com/apps/passwords
-  - { state: "disable", app: "polls" } # https://apps.nextcloud.com/apps/polls
+  - { state: "enable", app: "polls" } # https://apps.nextcloud.com/apps/polls
   - { state: "enable", app: "forms" } # https://apps.nextcloud.com/apps/forms
   - { state: "disable", app: "apporder" } # https://apps.nextcloud.com/apps/apporder
   - { state: "disable", app: "keeporsweep" } # https://apps.nextcloud.com/apps/keeporsweep
