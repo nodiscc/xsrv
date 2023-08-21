@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common/fail2ban/all roles: only ban offenders on HTTP/HTTPS ports (not all ports) for authentication failures on web applications
 - gitea/jellyfin/fail2ban: do not disable gitea/jellyfin jails if the corresponding service is disabled
 - apache: cleanup: remove `ServerAdmin` directive from all virtualhost configuration files (this information is not used, displaying admin email in error messages is disabled)
+- wireguard: write peer names as comments in the config file
 - gitea: update to v 1.20.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.3)
 - matrix: update element-web to v1.11.39 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.37) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.38) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.39)
 - xsrv: update ansible to [v8.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
