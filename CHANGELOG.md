@@ -51,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: fix duplicated access logs to `access.log`/`other_vhosts_access.log`, only log to `access.log`
 - common/fail2ban/all roles: prevent missing/not-yet-created log files from causing failban reloads/restart to fail (e.g. when a service is initially deployed with `*_enable_service: no`)
 - monitoring_netdata/needrestart: fix automatic reboot not triggered by cron job when ABI-compatible kernel upgrades are pending
+- nextcloud: fail2ban: fix `Found a match but no valid date/time` warning when a login failure is detected
 
 [Full changes since v1.16.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.16.0...1.17.0)
 
