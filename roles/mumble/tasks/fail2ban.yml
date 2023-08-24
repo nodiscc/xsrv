@@ -2,6 +2,7 @@
   template:
     src: etc_fail2ban_jail.d_mumble.conf.j2
     dest: /etc/fail2ban/jail.d/mumble.conf
-    mode: "0600"
-  tags: fail2ban
+    owner: root
+    group: root
+    mode: "0644"
   notify: reload fail2ban

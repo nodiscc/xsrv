@@ -1,12 +1,17 @@
 - name: copy apache fail2ban jail config
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: "0600"
-  tags: fail2ban
+    src: etc_fail2ban_jail.d_apache.conf.j2
+    dest: /etc/fail2ban/jail.d/apache.conf
+    owner: root
+    group: root
+    mode: "0644"
   notify: reload fail2ban
-  with_items:
-    - src: etc_fail2ban_jail.d_apache.conf.j2
-      dest: /etc/fail2ban/jail.d/apache.conf
-    - src: etc_fail2ban_filter.d_apache-default-vhost.conf.j2
-      dest: /etc/fail2ban/filter.d/apache-default-vhost.conf
+
+- name: copy fail2ban apache-default-vhost filter
+  template:
+    src: etc_fail2ban_filter.d_apache-default-vhost.conf.j2
+    dest: /etc/fail2ban/filter.d/apache-default-vhost.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload fail2ban

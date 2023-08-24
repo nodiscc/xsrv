@@ -4,6 +4,6 @@
     dest: /etc/fail2ban/jail.d/dovecot.conf
     owner: root
     group: root
-    mode: "0600"
+    mode: "0644"
   tags: fail2ban
   notify: reload fail2ban
