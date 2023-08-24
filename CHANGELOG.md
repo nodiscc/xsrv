@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: log requests from localhost to the default vhost with the `localhost:` prefix (for example `http://127.0.0.1/server-status` requests from netdata)
 - apache: log requests from other hosts to the default vhost with the `default:` prefix (for example bad bots and scanners accessing the server by IP address)
 - apache: serve a `403 Forbidden` response to for requests the default virtualhost (except those from localhost)
+- common: fail2ban: increase the max number of banned IPs per jail to 1000000
 - common/fail2ban: decrease the number of failed authentication attempts before triggering a ban from 5 to 3 (over 10 minutes)
 - common/fail2ban: use values provided in `fail2ban_default_maxretry` (default 3), `fail2ban_default_findtime` (10min) and `fail2ban_default_bantime` (1 year) for all jails
 - common/fail2ban: use `DROP` firewall rule instead of `REJECT` (drop connections from banned IPs instead of replying with TCP reset)
@@ -54,6 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: fix apache not loading new/updated Let's Encrypt/`mod_md` certificates automatically every minute
 - apache: fix duplicated access logs to `access.log`/`other_vhosts_access.log`, only log to `access.log`
 - common/fail2ban/all roles: prevent missing/not-yet-created log files from causing failban reloads/restart to fail (e.g. when a service is initially deployed with `*_enable_service: no`)
+- common: fail2ban: fix `Hash is full, cannot add more elements` error when a fail2ban jail has mor than 65536 banned IPs
 - monitoring_netdata/needrestart: fix automatic reboot not triggered by cron job when ABI-compatible kernel upgrades are pending
 - nextcloud: fail2ban: fix `Found a match but no valid date/time` warning when a login failure is detected
 

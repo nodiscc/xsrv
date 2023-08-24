@@ -22,6 +22,7 @@
     mode: "0600"
   with_items:
     - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
+    - { src: 'etc_fail2ban_action.d_firewallcmd-ipset.conf.j2', dest: '/etc/fail2ban/action.d/firewallcmd-ipset.conf' }
     - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
     - { src: 'var_lib_fail2ban_emptylog.log.j2', dest: '/var/lib/fail2ban/emptylog.log' }
   notify: restart fail2ban
