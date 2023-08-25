@@ -13,6 +13,11 @@
    page cache size = {{ netdata_dbengine_page_cache_size }}
    dbengine multihost disk space = {{ netdata_dbengine_disk_space }}
 
+{% if not netdata_enable_health_notifications %}
+[health]
+	script to execute on alarm = /bin/true
+{% endif %}
+
 [web]
    default port = 19999
    allow connections from = {{ netdata_allow_connections_from }} localhost

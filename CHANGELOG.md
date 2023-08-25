@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - add [`monitoring_goaccess`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) role - real-time web log analyzer/interactive viewer
+- netdata: allow enabling health alarms for charts received from "child" streaming nodes ([`netdata_streaming_receive_alarms: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: allow enabling/disabling alarm notifications ([`netdata_enable_health_notifications: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - apache: allow enabling [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) for all applications/sites using Let's Encrypt certificates ([`apache_letsencrypt_enable_hsts: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
 - apache/fail2ban: ban IP addresses doing requests on the default virtualhost
 - monitoring_netdata: allow disabling the logcount module by setting [`netdata_logcount_update_interval`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) to 0

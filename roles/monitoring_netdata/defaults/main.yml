@@ -39,6 +39,8 @@ netdata_disabled_plugins:
 #   - start: "01 19 * * *"
 #     end: "00 07 * * *"
 netdata_notification_downtimes: []
+# enable/disable alarm notifications (yes/no)
+netdata_enable_health_notifications: yes
 # firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 netdata_firewalld_zones:
@@ -59,7 +61,6 @@ netdata_firewalld_zones:
 #   - { name: sql, min_count: 1, interval: 20} # SQL database engine
 #   - { name: gitea, min_count: 1, interval: 20} # gitea self-hosted software forge
 #   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
-#   - { name: ezstream, min_count: 1, interval: 20} # icecast/ezstream media streaming server
 #   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
 #   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
 #   - { name: auth, min_count: 1, interval: 20} # openldap server
@@ -143,7 +144,7 @@ netdata_fping_update_every: 10
 netdata_fping_alarms_silent: no
 
 ## NETDATA STREAMING ##
-# enable/disable streaming to another netdata instance (yes/no)
+# stream charts to a "parent" netdata instance (yes/no)
 netdata_streaming_send_enabled: no
 # netdata instance to stream metrics to (protocol:hostname:port:SSL)
 netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
@@ -151,6 +152,9 @@ netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
 netdata_streaming_receive_enabled: no
 # API key (UUID) used to authenticate on the destination instance/allow from source instances
 netdata_api_key: "CHANGEME"
+# enable health alarms for charts received from "child" netdata instances (yes/no)
+# if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
+netdata_streaming_receive_alarms: no
 
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)
