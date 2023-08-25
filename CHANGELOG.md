@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: remove default processes checks for sshd, ntpd, fail2ban (let systemd services module handle checks for these processes)
 
 **Changed:**
+- jellyfin: disable auto-discovery of DLNA devices on the local network by default ([`jellyfin_enable_dlna_discovery: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - nextcloud: enable the [Polls](https://apps.nextcloud.com/apps/polls) app by default
 - nextcloud: enable the [Forms](https://apps.nextcloud.com/apps/forms) app by default
 - apache: always redirect `http://` to `https://` for all applications/sites using Let's Encrypt (`*_certificate_mode: letsencrypt`) certificates

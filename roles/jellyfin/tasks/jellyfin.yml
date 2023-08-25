@@ -49,6 +49,15 @@
 #   notify: restart jellyfin
 #   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: enable/disable jellyfin DLNA auto-discovery
+  xml:
+    path: /etc/jellyfin/network.xml
+    xpath: /NetworkConfiguration/AutoDiscovery
+    value: "{{ 'true' if jellyfin_enable_dlna_discovery else 'false' }}"
+    pretty_print: yes
+  notify: restart jellyfin
+  ignore_errors: "{{ ansible_check_mode }}"
+
 ##### MEDIA DIRECTORIES #####
 
 - name: create default media directories
