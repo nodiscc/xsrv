@@ -6,7 +6,7 @@ This role will install and configure [goaccess](https://goaccess.io/), a real-ti
 - Detailed statistics for each webserver virtualhost
 - Integration with the [`nodiscc.xsrv.apache`](../apache) role
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright.png)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright.png)
 
 
 ## Requirements/dependencies/example playbook
