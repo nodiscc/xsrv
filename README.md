@@ -55,7 +55,7 @@ This project provides:
 
 ## Screenshots
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/pG1xnig.png)](roles/monitoring_netdata)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/netdata-dashboard-thumb.png)](roles/monitoring_netdata)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](roles/nextcloud)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](roles/tt_rss)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](roles/shaarli)
