@@ -47,7 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - wireguard: write peer names as comments in the config file
 - nextcloud: update to v26.0.6 [[1]](https://nextcloud.com/changelog/)
 - gitea: update to v 1.20.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.3) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.20.4)
-- matrix: update element-web to v1.11.41 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.37) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.38) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.39) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.40) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.41)
+- matrix: update element-web to v1.11.42 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.37) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.38) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.39) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.40) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.41) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.42)
 - postgresql: update pgmetrics to [v1.15.2](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.2)
 - xsrv: update ansible to [v8.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - netdata: harden/standardize permissions on postgres collector configuration file
