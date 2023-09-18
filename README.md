@@ -92,6 +92,7 @@ This project provides:
 - [First project](docs/installation/first-project.md)
 - [Usage](docs/usage.md)
 - [List of all configuration variables](docs/configuration-variables.md)
+- [List of all tags](docs/tags.md)
 - [Maintenance](docs/maintenance.md)
 - [Contributing](docs/contributing.md)
 - [Appendices](docs/appendices.md)
