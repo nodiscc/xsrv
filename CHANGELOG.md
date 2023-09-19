@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jellyfin: disable auto-discovery of DLNA devices on the local network by default ([`jellyfin_enable_dlna_discovery: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - nextcloud: enable the [Polls](https://apps.nextcloud.com/apps/polls) app by default
 - nextcloud: enable the [Forms](https://apps.nextcloud.com/apps/forms) app by default
+- nextcloud: disable the [usage survey](https://github.com/nextcloud/survey_client) app by default
 - apache: always redirect `http://` to `https://` for all applications/sites using Let's Encrypt (`*_certificate_mode: letsencrypt`) certificates
 - apache: don't redirect requests to the default HTTP virtualhost to HTTPS
 - jitsi: configure all components to listen only on loopback interfaces, disable IPv6 listening

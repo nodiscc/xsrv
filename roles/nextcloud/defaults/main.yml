@@ -86,6 +86,7 @@ nextcloud_apps:
   - { state: "disable", app: "keeporsweep" } # https://apps.nextcloud.com/apps/keeporsweep
   - { state: "disable", app: "jitsi" } # https://apps.nextcloud.com/apps/jitsi
   - { state: "disable", app: "tables" } # https://apps.nextcloud.com/apps/tables
+  - { state: "disable", app: "survey_client" } # https://github.com/nextcloud/survey_client
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'
