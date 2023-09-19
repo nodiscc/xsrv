@@ -600,7 +600,6 @@ init_vm_template() {
         --memory "$memory" \
         --disk "$storage_path/$name.qcow2,size=$disk_size,device=disk,bus=virtio,cache=none" \
         --vcpus "$vcpus" \
-        --os-type linux \
         --os-variant debian10 \
         --graphics none \
         --console pty,target_type=serial \

@@ -55,6 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to [v8.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - netdata: harden/standardize permissions on postgres collector configuration file
 - cleanup: common/fail2ban: standardize comments/task order, do not repeat jail options that are already defined in `jail.conf`, in `jail.d/*conf`
+- cleanup: xsrv: init-vm-template: remove deprecated `--os` option to `virt-install`
 - improve check mode support before first actual deployment
 - update documentation
 
