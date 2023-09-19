@@ -49,7 +49,7 @@
 
 - name: download geoIP database tarball
   get_url:
-    url: https://download.db-ip.com/free/dbip-country-lite-2023-07.mmdb.gz
+    url: https://download.db-ip.com/free/dbip-country-lite-2023-09.mmdb.gz
     dest: "/root/dbip-country-lite-2023-07.mmdb.gz"
     owner: root
     group: root
