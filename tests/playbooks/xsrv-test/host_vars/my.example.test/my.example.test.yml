@@ -54,3 +54,5 @@ apache_reverseproxies:
   - servername: "reverseproxy.example.test"
     upstream: "https://www.example.org"
     extra_directives: ['ProxyPreserveHost Off']
+##### MONITORING_GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
+goaccess_fqdn: "goaccess.example.test"
