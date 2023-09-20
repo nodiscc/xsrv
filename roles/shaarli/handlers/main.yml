@@ -1,3 +1,11 @@
 - name: display shaarli installation completion message
   debug:
     msg: "WARNING Shaarli partially installed. Please open https://{{ host_fqdn }}/links to complete the installation"
+
+- name: restart php-fpm
+  service:
+    name: php{{ shaarli_php_fpm_version }}-fpm
+    state: restarted
+    enabled: yes
+  become: yes
+  ignore_errors: "{{ ansible_check_mode }}"
