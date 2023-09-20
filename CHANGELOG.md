@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - upgrade to [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) and deploy it first, if not already done
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- rename the variable `syslog_retention_days` to [`rsyslog_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) in your hosts/groups configuration (`xsrv edit-host/edit-group`), if you had changed it from its default value
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 
@@ -48,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea/jellyfin/fail2ban: do not disable gitea/jellyfin jails if the corresponding service is disabled
 - apache: cleanup: remove `ServerAdmin` directive from all virtualhost configuration files (this information is not used, displaying admin email in error messages is disabled)
 - wireguard: write peer names as comments in the config file
+- rsyslog: rename the variable `syslog_retention_days` to `rsyslog_retention_days`
 - nextcloud: update to v26.0.7 [[1]](https://nextcloud.com/changelog/)
 - gitea: update to v 1.20.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.3) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.20.4)
 - matrix: update element-web to v1.11.43 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.37) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.38) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.39) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.40) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.41) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.42) [[7]](https://github.com/vector-im/element-web/releases/tag/v1.11.43)

@@ -4,7 +4,7 @@
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog"
   with_items:
-    - syslog_retention_days == syslog_retention_days | int
+    - rsyslog_retention_days == rsyslog_retention_days | int
     - rsyslog_enable_forwarding == rsyslog_enable_forwarding | bool
     - rsyslog_custom_config | type_debug == "list"
 

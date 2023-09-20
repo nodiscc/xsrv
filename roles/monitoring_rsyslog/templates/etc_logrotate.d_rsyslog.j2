@@ -1,6 +1,6 @@
 /var/log/syslog
 {
-	rotate {{ syslog_retention_days }}
+	rotate {{ rsyslog_retention_days }}
 	daily
 	missingok
 	notifempty
