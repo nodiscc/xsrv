@@ -48,7 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea/jellyfin/fail2ban: do not disable gitea/jellyfin jails if the corresponding service is disabled
 - apache: cleanup: remove `ServerAdmin` directive from all virtualhost configuration files (this information is not used, displaying admin email in error messages is disabled)
 - wireguard: write peer names as comments in the config file
-- nextcloud: update to v26.0.6 [[1]](https://nextcloud.com/changelog/)
+- nextcloud: update to v26.0.7 [[1]](https://nextcloud.com/changelog/)
 - gitea: update to v 1.20.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.3) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.20.4)
 - matrix: update element-web to v1.11.43 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.37) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.38) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.39) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.40) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.41) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.42) [[7]](https://github.com/vector-im/element-web/releases/tag/v1.11.43)
 - postgresql: update pgmetrics to [v1.15.2](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.2)
@@ -140,7 +140,7 @@ You must upgrade to this release and deploy it before deploying future versions 
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html).
-  - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.11` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+  - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.12` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
   - **graylog:** do **not** upgrade hosts where the `graylog` role is deployed to Debian 12, as it is not compatible with Debian 12 yet.
 
 The Debian 11 -> 12 upgrade procedure was only tested for hosts managed by `xsrv` roles. If you have custom/third-party software installed, you should read Debian 12's [release notes](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html) and/or execute the upgrade procedure manually. It is always advisable to do a full backup/snapshot before performing a distribution upgrade.
