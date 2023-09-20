@@ -4,6 +4,13 @@
     - tt_rss
     - checks
 
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  tags:
+    - tt_rss
+    - apache
+
 - name: include postgresql configuration tasks
   import_tasks: postgresql.yml
   become: yes
