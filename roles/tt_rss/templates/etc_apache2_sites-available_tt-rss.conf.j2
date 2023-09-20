@@ -30,7 +30,7 @@ MDomain {{ tt_rss_fqdn }}
   DocumentRoot {{ tt_rss_install_dir }}
 
   <FilesMatch \.php$>
-    SetHandler "proxy:unix:/run/php/php{{ php_fpm_version }}-fpm-tt-rss.sock|fcgi://localhost"
+    SetHandler "proxy:unix:/run/php/php{{ tt_rss_php_fpm_version }}-fpm-tt-rss.sock|fcgi://localhost"
   </FilesMatch>
 
   <Directory {{ tt_rss_install_dir }}/cache>

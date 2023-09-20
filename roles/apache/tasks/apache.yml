@@ -8,9 +8,9 @@
       - libapache2-mod-evasive
       - libapache2-mod-md
       - libapache2-mod-fcgid
-      - php{{ php_fpm_version }}-apcu
-      - php{{ php_fpm_version }}
-      - php{{ php_fpm_version }}-fpm
+      - php{{ apache_php_fpm_version }}-apcu
+      - php{{ apache_php_fpm_version }}
+      - php{{ apache_php_fpm_version }}-fpm
   tags: ssl
 
 - name: remove mod-php (replaced with php-fpm)
@@ -62,8 +62,8 @@
     - { src: 'etc_apache2_conf-available_ssl-common.conf.j2', dest: '/etc/apache2/conf-available/ssl-common.conf' }
     - { src: 'etc_apache2_conf-available_mod-md.conf.j2', dest: '/etc/apache2/conf-available/mod-md.conf' }
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf' }
-    - { src: 'etc_php_PHPVERSION_fpm_pool.d_www.conf.j2', dest: '/etc/php/{{ php_fpm_version }}/fpm/pool.d/www.conf' }
-    - { src: 'etc_php_PHPVERSION_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/{{ php_fpm_version }}/cli/conf.d/20-apcu.ini' }
+    - { src: 'etc_php_PHPVERSION_fpm_pool.d_www.conf.j2', dest: '/etc/php/{{ apache_php_fpm_version }}/fpm/pool.d/www.conf' }
+    - { src: 'etc_php_PHPVERSION_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/{{ apache_php_fpm_version }}/cli/conf.d/20-apcu.ini' }
   notify:
     - reload apache
     - restart php-fpm
@@ -111,7 +111,7 @@
     - 'logging'
     - 'ssl-common'
     - 'mod-md'
-    - 'php{{ php_fpm_version }}-fpm'
+    - 'php{{ apache_php_fpm_version }}-fpm'
   notify: reload apache
   tags: ssl
 
@@ -216,7 +216,7 @@
 
 - name: enable/disable start/stop php-fpm service
   systemd:
-    name: php{{ php_fpm_version }}-fpm
+    name: php{{ apache_php_fpm_version }}-fpm
     enabled: "{{ apache_enable_service }}"
     state: "{{ 'started' if apache_enable_service else 'stopped' }}"
     daemon_reload: yes

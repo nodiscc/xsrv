@@ -56,7 +56,7 @@
 
 - name: restart php-fpm
   service:
-    name: php{{ php_fpm_version }}-fpm
+    name: php*-fpm
     state: restarted
     enabled: yes
   become: yes

@@ -14,7 +14,7 @@
 - name: copy php-fpm configuration
   template:
     src: etc_php_PHPVERSION_fpm_pool.d_tt-rss.conf.j2
-    dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/tt-rss.conf
+    dest: /etc/php/{{ tt_rss_php_fpm_version }}/fpm/pool.d/tt-rss.conf
     mode: "0644"
   notify: restart php-fpm
 

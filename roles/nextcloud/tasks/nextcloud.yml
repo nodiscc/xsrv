@@ -15,20 +15,20 @@
   apt:
     state: present
     package:
-      - "php{{ php_fpm_version }}-gmp"
-      - "php{{ php_fpm_version }}-curl"
-      - "php{{ php_fpm_version }}-gd"
-      - "php{{ php_fpm_version }}-imagick"
-      - "php{{ php_fpm_version }}-intl"
+      - "php{{ nextcloud_php_fpm_version }}-gmp"
+      - "php{{ nextcloud_php_fpm_version }}-curl"
+      - "php{{ nextcloud_php_fpm_version }}-gd"
+      - "php{{ nextcloud_php_fpm_version }}-imagick"
+      - "php{{ nextcloud_php_fpm_version }}-intl"
       - "{{ php_json_package }}"
-      - "php{{ php_fpm_version }}-ldap"
-      - "php{{ php_fpm_version }}-sqlite3"
-      - "php{{ php_fpm_version }}-mbstring"
-      - "php{{ php_fpm_version }}-xml"
-      - "php{{ php_fpm_version }}-zip"
-      - "php{{ php_fpm_version }}-bz2"
-      - "php{{ php_fpm_version }}-imap"
-      - "php{{ php_fpm_version }}-apcu"
+      - "php{{ nextcloud_php_fpm_version }}-ldap"
+      - "php{{ nextcloud_php_fpm_version }}-sqlite3"
+      - "php{{ nextcloud_php_fpm_version }}-mbstring"
+      - "php{{ nextcloud_php_fpm_version }}-xml"
+      - "php{{ nextcloud_php_fpm_version }}-zip"
+      - "php{{ nextcloud_php_fpm_version }}-bz2"
+      - "php{{ nextcloud_php_fpm_version }}-imap"
+      - "php{{ nextcloud_php_fpm_version }}-apcu"
       - ffmpeg
       - acl
 

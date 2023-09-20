@@ -33,7 +33,7 @@ MDomain {{ nextcloud_fqdn }}
   DocumentRoot {{ nextcloud_install_dir }}
 
   <FilesMatch \.php$>
-    SetHandler "proxy:unix:/run/php/php{{ php_fpm_version }}-fpm-nextcloud.sock|fcgi://localhost"
+    SetHandler "proxy:unix:/run/php/php{{ nextcloud_php_fpm_version }}-fpm-nextcloud.sock|fcgi://localhost"
   </FilesMatch>
 
   <Directory {{ nextcloud_install_dir }}>

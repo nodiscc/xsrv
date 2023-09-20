@@ -1,2 +1,2 @@
-php_fpm_version: "7.3"
+tt_rss_php_fpm_version: "7.3"
 php_json_package: "php7.3-json"

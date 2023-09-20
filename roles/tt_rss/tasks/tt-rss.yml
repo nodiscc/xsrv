@@ -15,15 +15,15 @@
     update_cache: yes
     cache_valid_time: 900
     package:
-      - "php{{ php_fpm_version }}-common"
-      - "php{{ php_fpm_version }}-xml"
+      - "php{{ tt_rss_php_fpm_version }}-common"
+      - "php{{ tt_rss_php_fpm_version }}-xml"
       - "{{ php_json_package }}"
-      - "php{{ php_fpm_version }}-intl"
-      - "php{{ php_fpm_version }}-mbstring"
-      - "php{{ php_fpm_version }}-curl"
-      - "php{{ php_fpm_version }}-gd"
-      - "php{{ php_fpm_version }}-apcu"
-      - "php{{ php_fpm_version }}-zip" # required for data_migration plugin
+      - "php{{ tt_rss_php_fpm_version }}-intl"
+      - "php{{ tt_rss_php_fpm_version }}-mbstring"
+      - "php{{ tt_rss_php_fpm_version }}-curl"
+      - "php{{ tt_rss_php_fpm_version }}-gd"
+      - "php{{ tt_rss_php_fpm_version }}-apcu"
+      - "php{{ tt_rss_php_fpm_version }}-zip" # required for data_migration plugin
 
 ##### TT-RSS INSTALLATION #####
 

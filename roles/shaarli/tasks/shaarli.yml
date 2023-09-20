@@ -13,14 +13,14 @@
   apt:
     state: present
     package:
-      - "php{{ php_fpm_version }}-gd"
-      - "php{{ php_fpm_version }}-curl"
+      - "php{{ shaarli_php_fpm_version }}-gd"
+      - "php{{ shaarli_php_fpm_version }}-curl"
       - "{{ php_json_package }}"
-      - "php{{ php_fpm_version }}-mbstring"
-      - "php{{ php_fpm_version }}-intl"
-      - "php{{ php_fpm_version }}-curl"
-      - "php{{ php_fpm_version }}-gettext"
-      - "php{{ php_fpm_version }}-ldap"
+      - "php{{ shaarli_php_fpm_version }}-mbstring"
+      - "php{{ shaarli_php_fpm_version }}-intl"
+      - "php{{ shaarli_php_fpm_version }}-curl"
+      - "php{{ shaarli_php_fpm_version }}-gettext"
+      - "php{{ shaarli_php_fpm_version }}-ldap"
 
 ### CHECK INSTALLATION STATUS ###
 
