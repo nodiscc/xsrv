@@ -120,6 +120,7 @@
     ansible_remote_tmp: /tmp # noqa var-naming[no-role-prefix] # workaround for https://github.com/ansible/ansible-lint/issues/3453
 
 - name: update tt-rss admin account in postgresql database (always returns changed)
+  become: yes
   become_user: postgres
   postgresql_query:
     db: "{{ tt_rss_db_name }}"

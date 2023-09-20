@@ -134,6 +134,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: run first setup (this can take a while)
+  become: yes
   become_user: nextcloud
   command:
     cmd: |
@@ -243,6 +244,7 @@
   tags: nextcloud-config
 
 - name: run nextcloud upgrade command
+  become: yes
   become_user: nextcloud
   command: /usr/bin/php ./occ upgrade
   args:
@@ -253,6 +255,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: update .htaccess for clean URL support (always returns changed)
+  become: yes
   become_user: nextcloud
   command: "/usr/bin/php ./occ maintenance:update:htaccess" # noqa no-changed-when
   args:
@@ -268,6 +271,7 @@
     name: "run nextcloud background tasks"
 
 - name: add missing primary keys and indices to nextcloud database
+  become: yes
   become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:{{ item }}"
   args:
@@ -280,6 +284,7 @@
     - add-missing-indices
 
 - name: convert columns to bigint in nextcloud database
+  become: yes
   become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:convert-filecache-bigint"
   args:
