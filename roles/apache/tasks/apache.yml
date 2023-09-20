@@ -66,7 +66,7 @@
     - { src: 'etc_php_PHPVERSION_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/{{ apache_php_fpm_version }}/cli/conf.d/20-apcu.ini' }
   notify:
     - reload apache
-    - restart php-fpm
+    - restart php-fpm (apache)
   tags: ssl
 
 - name: disable unnecessary apache modules

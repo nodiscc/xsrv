@@ -1,4 +1,4 @@
-- name: restart php-fpm
+- name: restart php-fpm (tt_rss)
   service:
     name: php{{ tt_rss_php_fpm_version }}-fpm
     state: restarted

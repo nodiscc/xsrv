@@ -12,7 +12,7 @@
     src: etc_php_PHPVERSION_fpm_pool.d_tt-rss.conf.j2
     dest: /etc/php/{{ tt_rss_php_fpm_version }}/fpm/pool.d/tt-rss.conf
     mode: "0644"
-  notify: restart php-fpm
+  notify: restart php-fpm (tt_rss)
 
 - name: enable tt-rss apache virtualhost configuration
   command: a2ensite tt-rss

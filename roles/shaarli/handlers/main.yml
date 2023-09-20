@@ -2,7 +2,7 @@
   debug:
     msg: "WARNING Shaarli partially installed. Please open https://{{ host_fqdn }}/links to complete the installation"
 
-- name: restart php-fpm
+- name: restart php-fpm (shaarli)
   service:
     name: php{{ shaarli_php_fpm_version }}-fpm
     state: restarted
