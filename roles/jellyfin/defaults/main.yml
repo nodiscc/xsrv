@@ -8,8 +8,6 @@ jellyfin_users:
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
 jellyfin_https_mode: selfsigned
-# enable automatic discovery of DLNA devices on the local network (no/yes)
-jellyfin_enable_dlna_discovery: no
 # start/stop the jellyfin webserver, enable/disable it on boot, redirect users to maintenance page if disabled (yes/no)
 jellyfin_enable_service: yes
 # yes/no: enable automatic backups of the default jellyfin media directory (when the nodiscc.xsrv.backup role is managed by ansible)

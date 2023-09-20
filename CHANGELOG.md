@@ -28,7 +28,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - tt_rss: remove ansible tags `tt_rss-app`, `tt_rss-permissions`, `tt_rss-postgresql`
 
 **Changed:**
-- jellyfin: disable auto-discovery of DLNA devices on the local network by default ([`jellyfin_enable_dlna_discovery: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - nextcloud: enable the [Polls](https://apps.nextcloud.com/apps/polls) app by default
 - nextcloud: enable the [Forms](https://apps.nextcloud.com/apps/forms) app by default
 - nextcloud: disable the [usage survey](https://github.com/nextcloud/survey_client) app by default
