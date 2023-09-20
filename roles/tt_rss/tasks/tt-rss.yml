@@ -79,7 +79,6 @@
       owner: "root"
       group: "tt-rss"
       mode: "0755"
-  tags: tt_rss-permissions
 
 - name: copy tt-rss configuration files
   template:

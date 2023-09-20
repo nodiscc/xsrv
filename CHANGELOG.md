@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 - cleanup: remove all previous migration tasks
 - netdata: remove default processes checks for sshd, ntpd, fail2ban (let systemd services module handle checks for these processes)
+- tt_rss: remove ansible tags `tt_rss-app`, `tt_rss-permissions`, `tt_rss-postgresql`
 
 **Changed:**
 - jellyfin: disable auto-discovery of DLNA devices on the local network by default ([`jellyfin_enable_dlna_discovery: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
