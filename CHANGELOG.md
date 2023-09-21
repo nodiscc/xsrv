@@ -8,9 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - upgrade to [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) and deploy it first, if not already done
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- rename the variable `syslog_retention_days` to [`rsyslog_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) in your hosts/groups configuration (`xsrv edit-host/edit-group`), if you had changed it from its default value
+- if you had changed it from its default value, rename the variable `syslog_retention_days` to [`rsyslog_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) in your hosts/groups configuration (`xsrv edit-host/edit-group`)
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
+- `TAGS=debian11to12 xsrv deploy && xsrv deploy` to upgrade hosts still on Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Debian 11 will no longer be supported after this release.
 
 **Added:**
 - add [`monitoring_goaccess`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) role - real-time web log analyzer/interactive viewer
