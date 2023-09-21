@@ -178,6 +178,7 @@ apt_listbugs_ignore_list:
   - 1023748 # https://bugs.debian.org/1023748 - only affects java 20, debian 12 has java 17
   - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
   - 1043415 # https://bugs.debian.org/1043415 - not applicable to upstream/packagecloud packages
+  - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
