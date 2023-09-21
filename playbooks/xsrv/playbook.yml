@@ -5,6 +5,7 @@
     - nodiscc.xsrv.monitoring # monitoring, alerting and logging
     # - nodiscc.xsrv.backup # backup service
     # - nodiscc.xsrv.apache # web server + PHP interpreter
+    # - nodiscc.xsrv.monitoring_goaccess # real-time web log analyzer/interactive viewer
     # - nodiscc.xsrv.openldap # LDAP directory server
     # - nodiscc.xsrv.postgresql # database engine
     # - nodiscc.xsrv.nextcloud # file hosting/sharing/synchronization and collaboration

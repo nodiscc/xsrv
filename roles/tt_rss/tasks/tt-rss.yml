@@ -15,15 +15,15 @@
     update_cache: yes
     cache_valid_time: 900
     package:
-      - "php{{ php_fpm_version }}-common"
-      - "php{{ php_fpm_version }}-xml"
+      - "php{{ tt_rss_php_fpm_version }}-common"
+      - "php{{ tt_rss_php_fpm_version }}-xml"
       - "{{ php_json_package }}"
-      - "php{{ php_fpm_version }}-intl"
-      - "php{{ php_fpm_version }}-mbstring"
-      - "php{{ php_fpm_version }}-curl"
-      - "php{{ php_fpm_version }}-gd"
-      - "php{{ php_fpm_version }}-apcu"
-      - "php{{ php_fpm_version }}-zip" # required for data_migration plugin
+      - "php{{ tt_rss_php_fpm_version }}-intl"
+      - "php{{ tt_rss_php_fpm_version }}-mbstring"
+      - "php{{ tt_rss_php_fpm_version }}-curl"
+      - "php{{ tt_rss_php_fpm_version }}-gd"
+      - "php{{ tt_rss_php_fpm_version }}-apcu"
+      - "php{{ tt_rss_php_fpm_version }}-zip" # required for data_migration plugin
 
 ##### TT-RSS INSTALLATION #####
 
@@ -79,7 +79,6 @@
       owner: "root"
       group: "tt-rss"
       mode: "0755"
-  tags: tt_rss-permissions
 
 - name: copy tt-rss configuration files
   template:
@@ -117,9 +116,10 @@
   changed_when: "'Database schema is already at latest version.' not in tt_rss_db_upgrade.stdout"
   ignore_errors: "{{ ansible_check_mode }}"
   vars:
-    ansible_remote_tmp: /tmp # noqa var-naming[no-role-prefix] # workaroudn for https://github.com/ansible/ansible-lint/issues/3453
+    ansible_remote_tmp: /tmp # noqa var-naming[no-role-prefix] # workaround for https://github.com/ansible/ansible-lint/issues/3453
 
 - name: update tt-rss admin account in postgresql database (always returns changed)
+  become: yes
   become_user: postgres
   postgresql_query:
     db: "{{ tt_rss_db_name }}"

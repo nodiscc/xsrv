@@ -4,19 +4,25 @@
     - tt_rss
     - checks
 
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  tags:
+    - tt_rss
+    - apache
+
 - name: include postgresql configuration tasks
   import_tasks: postgresql.yml
   become: yes
   tags:
     - tt_rss
-    - tt_rss-postgresql
+    - postgresql
 
 - name: include tt-rss configuration tasks
   import_tasks: tt-rss.yml
   become: yes
   tags:
     - tt_rss
-    - tt_rss-app
 
 - name: include self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml

@@ -1,4 +1,5 @@
+##### POSTGRESQL DATABASE SERVER #####
 # start/stop the postgresql service, enable/disable it on boot (yes/no)
 postgresql_enable_service: yes
 # pgmetrics version (https://github.com/rapidloop/pgmetrics/releases.atom, without leading v)
-postgresql_pgmetrics_version: "1.15.1"
+postgresql_pgmetrics_version: "1.15.2"

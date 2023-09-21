@@ -1,0 +1,7 @@
+- name: restart php-fpm (apache)
+  service:
+    name: php{{ apache_php_fpm_version }}-fpm
+    state: restarted
+    enabled: yes
+  become: yes
+  ignore_errors: "{{ ansible_check_mode }}"

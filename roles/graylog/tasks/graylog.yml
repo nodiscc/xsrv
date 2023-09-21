@@ -21,16 +21,6 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-# will only run if the graylog role is already deployed from a previous version
-- name: migration/1.13.0 - upgrade graylog-server from 4.0 to 5.0
-  apt:
-    package: graylog-server
-    state: latest # noqa package-latest
-  notify: restart graylog-server
-  when:
-    - ansible_local.graylog.ansible_managed is defined
-    - ansible_local.graylog.graylog_server_upgraded_4_5 is not defined
-
 - name: install graylog-server package
   apt:
     pkg: "graylog-server"

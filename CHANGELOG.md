@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.17.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.17.0) - 2023-09-21
+
+**Upgrade procedure:**
+- upgrade to [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) and deploy it first, if not already done
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- if you had changed it from its default value, rename the variable `syslog_retention_days` to [`rsyslog_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) in your hosts/groups configuration (`xsrv edit-host/edit-group`)
+- (optional) `xsrv check` to simulate changes.
+- `xsrv deploy` to apply changes
+- `TAGS=debian11to12 xsrv deploy && xsrv deploy` to upgrade hosts still on Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Debian 11 will no longer be supported after this release.
+
+**Added:**
+- add [`monitoring_goaccess`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) role - real-time web log analyzer/interactive viewer
+- netdata: allow enabling health alarms for charts received from "child" streaming nodes ([`netdata_streaming_receive_alarms: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: allow enabling/disabling alarm notifications ([`netdata_enable_health_notifications: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- apache: allow enabling [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) for all applications/sites using Let's Encrypt certificates ([`apache_letsencrypt_enable_hsts: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
+- apache/fail2ban: ban IP addresses doing requests on the default virtualhost
+- monitoring_netdata: allow disabling the logcount module by setting [`netdata_logcount_update_interval`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) to 0
+- jellyfin: allow adding users to the `jellyfin` group (may read/write files inside the media directory), add the ansible user to this group by default ([`jellyfin_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default ([`transmission_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml))
+
+**Removed:**
+- cleanup: remove all previous migration tasks
+- netdata: remove default processes checks for sshd, ntpd, fail2ban (let systemd services module handle checks for these processes)
+- tt_rss: remove ansible tags `tt_rss-app`, `tt_rss-permissions`, `tt_rss-postgresql`
+
+**Changed:**
+- nextcloud: enable the [Polls](https://apps.nextcloud.com/apps/polls) app by default
+- nextcloud: enable the [Forms](https://apps.nextcloud.com/apps/forms) app by default
+- nextcloud: disable the [usage survey](https://github.com/nextcloud/survey_client) app by default
+- apache: always redirect `http://` to `https://` for all applications/sites using Let's Encrypt (`*_certificate_mode: letsencrypt`) certificates
+- apache: don't redirect requests to the default HTTP virtualhost to HTTPS
+- jitsi: configure all components to listen only on loopback interfaces, disable IPv6 listening
+- graylog: cleanup list of dependencies (graylog provides its own java environment)
+- netdata: decrease apache server status collection frequency to 10s (decrease log spam caused by the collector)
+- apache: log requests from localhost to the default vhost with the `localhost:` prefix (for example `http://127.0.0.1/server-status` requests from netdata)
+- apache: log requests from other hosts to the default vhost with the `default:` prefix (for example bad bots and scanners accessing the server by IP address)
+- apache: serve a `403 Forbidden` response to for requests the default virtualhost (except those from localhost)
+- common/fail2ban: increase the max number of banned IPs per jail to 1000000
+- common/fail2ban: decrease the number of failed authentication attempts before triggering a ban from 5 to 3 (over 10 minutes)
+- common/fail2ban: use values provided in `fail2ban_default_maxretry` (default 3), `fail2ban_default_findtime` (10min) and `fail2ban_default_bantime` (1 year) for all jails
+- common/fail2ban: use `DROP` firewall rule instead of `REJECT` (drop connections from banned IPs instead of replying with TCP reset)
+- common/fail2ban: do not enable the `pam-generic` jail by default as no service uses it
+- common/fail2ban/all roles: only ban offenders on HTTP/HTTPS ports (not all ports) for authentication failures on web applications
+- common/fail2ban: standardize permissions on fail2ban configuration files
+- gitea/jellyfin/fail2ban: do not disable gitea/jellyfin jails if the corresponding service is disabled
+- apache: cleanup: remove `ServerAdmin` directive from all virtualhost configuration files (this information is not used, displaying admin email in error messages is disabled)
+- wireguard: write peer names as comments in the config file
+- rsyslog: rename the variable `syslog_retention_days` to `rsyslog_retention_days`
+- nextcloud: update to v26.0.6 [[1]](https://nextcloud.com/changelog/)
+- gitea: update to v 1.20.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.3) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.20.4)
+- matrix: update element-web to v1.11.43 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.37) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.38) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.39) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.40) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.41) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.42) [[7]](https://github.com/vector-im/element-web/releases/tag/v1.11.43)
+- postgresql: update pgmetrics to [v1.15.2](https://github.com/rapidloop/pgmetrics/releases/tag/v1.15.2)
+- xsrv: update ansible to [v8.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
+- netdata: harden/standardize permissions on postgres collector configuration file
+- cleanup: common/fail2ban: standardize comments/task order, do not repeat jail options that are already defined in `jail.conf`, in `jail.d/*conf`
+- cleanup: xsrv: init-vm-template: remove deprecated `--os` option to `virt-install`
+- improve check mode support before first actual deployment
+- update documentation
+
+**Fixed:**
+- apache: fix apache not loading new/updated Let's Encrypt/`mod_md` certificates automatically every minute
+- apache: fix duplicated access logs to `access.log`/`other_vhosts_access.log`, only log to `access.log`
+- common/fail2ban/all roles: prevent missing/not-yet-created log files from causing failban reloads/restart to fail (e.g. when a service is initially deployed with `*_enable_service: no`)
+- common: fail2ban: fix `Hash is full, cannot add more elements` error when a fail2ban jail has mor than 65536 banned IPs
+- monitoring_netdata/needrestart: fix automatic reboot not triggered by cron job when ABI-compatible kernel upgrades are pending
+- nextcloud: fail2ban: fix `Found a match but no valid date/time` warning when a login failure is detected
+
+[Full changes since v1.16.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.16.0...1.17.0)
+
+------------------
+
 #### [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) - 2023-07-29
 
 **Upgrade procedure:**
@@ -11,7 +82,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your hosts from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
 - `xsrv deploy` to apply changes
 
-You must upgrade to this release and deploy it before deplying future versions (old migrations will be removed after this release.)
+You must upgrade to this release and deploy it before deploying future versions (old migrations will be removed after this release).
 
 **Added:**
 - homepage: allow making individual custom links mare compact (half as wide, no description) ([`homepage_custom_links.*.compact: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
@@ -23,7 +94,7 @@ You must upgrade to this release and deploy it before deplying future versions (
 - libvirt: add the ansible user to the libvirt group by default (can manage libvirt VMs without sudo) ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - libvirt: configure non-root user accounts to use `qemu:///system` connection URI by default (can manage libvirt VMs without sudo/without specifying `--connect qemu:///system`)
 - gitea: update to v1.20.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.1)
-- nextcloud: update to v26.0.4 [[1]](https://nextcloud.com/changelog/)
+- nextcloud: update to v26.0.5 [[1]](https://nextcloud.com/changelog/)
 - nextcloud: enable the Maps app again by default (now compatible with Nextcloud 26)
 - graylog: make role compatible with Debian 12 (upgrade to mongodb [v6.0](https://www.mongodb.com/docs/manual/release-notes/6.0/))
 - matrix: update element-web to [v1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36)
@@ -72,7 +143,7 @@ You must upgrade to this release and deploy it before deplying future versions (
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 - (optional) `xsrv deploy && TAGS=debian11to12 xsrv deploy` to upgrade your host's distribution from Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html).
-  - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.8` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
+  - **nextcloud**: if you want to postpone upgrading your Debian 11 hosts to Debian 12, set `nextcloud_version: 25.0.12` manually in your host configuration (`xsrv edit-host/edit-group`), as Nextcloud 26 requires PHP 8 which is only available in Debian 12. Don't forget to remove this override after upgrading to Debian 12.
   - **graylog:** do **not** upgrade hosts where the `graylog` role is deployed to Debian 12, as it is not compatible with Debian 12 yet.
 
 The Debian 11 -> 12 upgrade procedure was only tested for hosts managed by `xsrv` roles. If you have custom/third-party software installed, you should read Debian 12's [release notes](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html) and/or execute the upgrade procedure manually. It is always advisable to do a full backup/snapshot before performing a distribution upgrade.

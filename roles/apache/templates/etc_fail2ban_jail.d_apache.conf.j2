@@ -1,5 +1,15 @@
-# fail2ban apache jails
-
 [apache-auth]
-enabled  = true
-port     = http,https
+# apache basic auth login failures
+# other options defined in /etc/fail2ban/jail.conf
+enabled = true
+logpath  = %(apache_error_log)s
+           /var/lib/fail2ban/emptylog.log
+port    = http,https
+
+[apache-default-vhost]
+# requests to the default virtualhost
+enabled = true
+filter  = apache-default-vhost
+port    = http,https
+logpath = %(apache_access_log)s
+          /var/lib/fail2ban/emptylog.log

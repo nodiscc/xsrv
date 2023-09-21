@@ -1,6 +1,11 @@
 # Tags
 
 ```
+  ╻ ╻┏━┓┏━┓╻ ╻
+░░╺╋╸┗━┓┣┳┛┃┏┛
+  ╹ ╹┗━┛╹┗╸┗┛ v1.17.0
+[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
+TAGS:
 apache-mod-evasive - setup apache anti-DoS module
 apache-reverseproxy - setup apache custom reverseproxies
 apache - setup the apache web server
@@ -20,6 +25,7 @@ fail2ban - setup fail2ban intrusion prevention system
 firewall - setup firewall
 gitea-config - update gitea configuration
 gitea - setup gitea git service/software forge
+goaccess - setup goaccess web log analyzer/viewer
 gotty - setup gotty web terminal
 graylog - setup graylog log analyzer
 homepage - setup simple webserver homepage
@@ -74,9 +80,6 @@ synapse-admin - setup synapse-admin matrix administration web interface
 synapse - setup synapse (matrix) chat server
 sysctl - setup sysctl kernel configuration
 transmission - setup transmission bittorrent client
-tt_rss-app - setup tt-rss appllication
-tt_rss-permissions - set/fix permissions/ownership on tt-rss directories
-tt_rss-postgresql - setup tt-rss postgresql database
 tt_rss - setup tt-rss feed reader
 users - setup users and groups
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
@@ -84,6 +87,7 @@ utils-backup-now - (manual) transfer latest daily backups from the host to the c
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
+utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics

@@ -1,0 +1,9 @@
+# Fail2Ban apache-default-vhost filter
+# This fail2ban filter matches all requests to the default apache virtualhost
+# apache logs are expected to be in combined format, the default vhost ServerName must be 'default'
+
+[INCLUDES]
+before = apache-common.conf
+
+[Definition]
+failregex = ^default:(80|443) <HOST>

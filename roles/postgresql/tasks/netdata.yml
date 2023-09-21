@@ -21,16 +21,7 @@
     src: etc_netdata_go.d_postgres.conf.j2
     dest: /etc/netdata/go.d/postgres.conf
     owner: root
-    group: root
-    mode: "0644"
+    group: netdata
+    mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart netdata
-
-- name: migration/1.13.0 - remove files from old versions of the role
-  file:
-    path: "{{ item }}"
-    state: absent
-  notify: assemble netdata configuration
-  with_items:
-    - /etc/netdata/health.d/processes.conf.d/postgresql.conf
-    - /etc/netdata/health.d/systemdunits.conf.d/postgresql.conf

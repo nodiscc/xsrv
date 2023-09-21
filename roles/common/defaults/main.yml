@@ -175,6 +175,10 @@ apt_listbugs_ignore_list:
   - 1038603 # https://bugs.debian.org/1038603 - unreproducible, specific to some GCC-based build processes
   - 1030129 # https://bugs.debian.org/1030129 - unreproducible
   - 1041547 # https://bugs.debian.org/1041547 - no impact unless madin deliberately sets an empty root password
+  - 1023748 # https://bugs.debian.org/1023748 - only affects java 20, debian 12 has java 17
+  - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
+  - 1043415 # https://bugs.debian.org/1043415 - not applicable to upstream/packagecloud packages
+  - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -281,7 +285,7 @@ fail2ban_default_bantime: "1year"
 # fail2ban: default interval (in seconds or time abbreviation format) before counting failures towards a ban
 fail2ban_default_findtime: "10min"
 # fail2ban default number of failures that have to occur in the last findtime to ban the IP
-fail2ban_default_maxretry: 5
+fail2ban_default_maxretry: 3
 
 ### LINUX USERS ###
 # setup user accounts/PAM configuration (yes/no)

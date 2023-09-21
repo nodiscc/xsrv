@@ -1,22 +1,28 @@
-##### DEFAULT VIRTUALHOST #####
-# Will be served for requests that do not match any known servername,
-# for example trying to access the server directly by IP address.
-# It displays and logs a 403 error.
-<VirtualHost *:80>
-    # Redirect all HTTP requests to HTTPS
-    RewriteEngine On
-    RewriteCond %{REQUEST_URI} !=/server-status
-    RewriteCond %{HTTPS} off
-    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-</VirtualHost>
-
-<VirtualHost _default_:443>
+##### DEFAULT VIRTUALHOST FOR ACCESS FROM LOCALHOST #####
+# Will be server for requests originating from localhost, and that do not match any configured ServerName,
+# for example a local monitoring service polling the /server-status endpoint
+<VirtualHost 127.0.0.1:80>
     ServerName localhost
     DocumentRoot /var/www/html
+</VirtualHost>
+
+##### DEFAULT VIRTUALHOST #####
+# Will be served for requests NOT originating from localhost, and that do not match any configured ServerName,
+# for example trying to access the server directly by IP address. It displays and logs a 403 error using the default: prefix in access.log.
+<VirtualHost *:80>
+    ServerName default
+    DocumentRoot /var/www/html/
+    RewriteEngine On
+    RewriteRule ^.*$ - [R=403,L]
+</VirtualHost>
+<VirtualHost _default_:443>
+    ServerName default
+    DocumentRoot /var/www/html
     SSLEngine On
-    # Use the default self-signed certificate for localhost
     SSLCertificateFile /etc/ssl/certs/localhost.crt
     SSLCertificateKeyFile /etc/ssl/private/localhost.key
+    RewriteEngine On
+    RewriteRule ^.*$ - [R=403,L]
 </VirtualHost>
 
 ##### REVERSE PROXIES #####

@@ -6,7 +6,6 @@ Listen 8448
 
 <VirtualHost *:443 *:8448>
   ServerName  {{ matrix_synapse_fqdn }}
-  ServerAdmin webmaster@{{ matrix_synapse_fqdn }}
   SSLEngine on
 {% if matrix_synapse_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ matrix_synapse_fqdn }}.crt

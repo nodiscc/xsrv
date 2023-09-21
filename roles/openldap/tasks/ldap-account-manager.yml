@@ -3,10 +3,10 @@
 - name: installed required php extensions
   apt:
     package:
-      - "php{{ php_fpm_version }}-gd"
-      - "php{{ php_fpm_version }}-gmp"
-      - "php{{ php_fpm_version }}-ldap"
-      - "php{{ php_fpm_version }}-zip"
+      - "php{{ openldap_php_fpm_version }}-gd"
+      - "php{{ openldap_php_fpm_version }}-gmp"
+      - "php{{ openldap_php_fpm_version }}-ldap"
+      - "php{{ openldap_php_fpm_version }}-zip"
       - php-php-gettext
 
 ### LDAP ACCOUNT MANAGER INSTALLATION ###

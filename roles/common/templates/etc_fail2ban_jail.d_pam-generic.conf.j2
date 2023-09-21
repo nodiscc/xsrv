@@ -1,8 +1,0 @@
-# Fail2ban PAM jails
-
-[pam-generic]
-# PAM authentication failures
-enabled   = true
-filter    = pam-generic
-logpath  = %(syslog_authpriv)s
-backend  = %(syslog_backend)s

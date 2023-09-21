@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ homepage_fqdn }}
-    ServerAdmin webmaster@{{ homepage_fqdn }}
 {% for alias in homepage_vhost_aliases %}
     ServerAlias {{ alias }}
 {% endfor %}
@@ -18,7 +17,6 @@ MDomain {{ homepage_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ homepage_fqdn }}
-  ServerAdmin webmaster@{{ homepage_fqdn }}
 {% for alias in homepage_vhost_aliases %}
   ServerAlias {{ alias }}
 {% endfor %}

@@ -1,17 +1,17 @@
-##### FAIL2BAN #####
-
 - name: copy tt-rss fail2ban jail config
   template:
     src: etc_fail2ban_jail.d_tt-rss.conf.j2
     dest: /etc/fail2ban/jail.d/tt-rss.conf
-    mode: "0600"
-  tags: fail2ban
+    owner: root
+    group: root
+    mode: "0644"
   notify: reload fail2ban
 
 - name: copy fail2ban tt-rss-auth filter
   template:
     src: etc_fail2ban_filter.d_tt-rss-auth.conf.j2
     dest: /etc/fail2ban/filter.d/tt-rss-auth.conf
-    mode: "0600"
-  tags: fail2ban
+    owner: root
+    group: root
+    mode: "0644"
   notify: reload fail2ban

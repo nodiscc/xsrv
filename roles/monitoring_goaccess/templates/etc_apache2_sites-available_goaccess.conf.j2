@@ -1,0 +1,38 @@
+<VirtualHost *:80>
+    ServerName {{ goaccess_fqdn }}
+    ServerAdmin webmaster@{{ goaccess_fqdn }}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+{% if goaccess_https_mode == 'letsencrypt' %}
+MDomain {{ goaccess_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ goaccess_fqdn }}
+  ServerAdmin webmaster@{{ goaccess_fqdn }}
+  SSLEngine on
+{% if goaccess_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ goaccess_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ goaccess_fqdn }}.key
+{% endif %}
+{% if not goaccess_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+  DocumentRoot /var/www/{{ goaccess_fqdn }}
+  <Location "/">
+    AuthType Basic
+    AuthName "Authorization required"
+    AuthBasicProvider file
+    AuthUserFile /etc/apache2/goaccess-passwd
+    Require valid-user
+  </Location>
+{% endif %}
+</VirtualHost>

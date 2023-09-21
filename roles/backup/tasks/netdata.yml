@@ -12,14 +12,3 @@
       dest: /etc/netdata/go.d/filecheck.conf.d/rsnapshot.conf
     - src: etc_netdata_health.d_filecheck.conf.d_rsnapshot.conf.j2
       dest: /etc/netdata/health.d/filecheck.conf.d/rsnapshot.conf
-
-- name: migration - remove files from old versions of the role
-  file:
-    state: absent
-    path: "{{ item }}"
-  with_items:
-    - /etc/netdata/python.d/modtime.conf.d/modtime.conf
-    - /etc/netdata/health.d/modtime.conf.d/modtime.conf
-    - /etc/netdata/go.d/filecheck.conf.d/filecheck.conf
-    - /etc/netdata/health.d/filecheck.conf.d/filecheck.conf
-  notify: assemble netdata configuration

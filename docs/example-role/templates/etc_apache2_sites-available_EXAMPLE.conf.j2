@@ -1,0 +1,33 @@
+<VirtualHost *:80>
+    ServerName {{ EXAMPLE_fqdn }}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+{% if EXAMPLE_https_mode == 'letsencrypt' %}
+MDomain {{ EXAMPLE_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ EXAMPLE_fqdn }}
+  SSLEngine on
+{% if EXAMPLE_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ EXAMPLE_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ EXAMPLE_fqdn }}.key
+{% endif %}
+{% if not EXAMPLE_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+  ProxyPreserveHost On
+  ProxyRequests off
+  AllowEncodedSlashes NoDecode
+  ProxyPass / http://127.0.0.1:1234/ nocanon
+  ProxyPassReverse / http://127.0.0.1:1234/
+{% endif %}
+</VirtualHost>

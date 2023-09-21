@@ -150,6 +150,12 @@
             .netdata-cb {
                 background-color: #45DC11;
             }
+            .goaccess :hover{
+                border-color: #5BC0DE;
+            }
+            .goaccess-cb {
+                background-color: #5BC0DE;
+            }
             .graylog :hover{
                 border-color: #E84139;
             }
@@ -421,6 +427,19 @@
                         <div class="app-text">
                             <p class="app-name">Netdata</p>
                             <p class="app-description">Realtime monitoring</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.goaccess.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 goaccess">
+                <a href="https://{{ goaccess_fqdn }}/">
+                    <div class="content">
+                        <div class="colorblock goaccess-cb"><img class="app-icon" src="res/goaccess.png"></div>
+                        <div class="app-text">
+                            <p class="app-name">Goaccess</p>
+                            <p class="app-description">Web log analyzer/viewer</p>
                         </div>
                     </div>
                 </a>

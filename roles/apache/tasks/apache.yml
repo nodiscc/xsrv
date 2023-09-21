@@ -8,9 +8,9 @@
       - libapache2-mod-evasive
       - libapache2-mod-md
       - libapache2-mod-fcgid
-      - php{{ php_fpm_version }}-apcu
-      - php{{ php_fpm_version }}
-      - php{{ php_fpm_version }}-fpm
+      - php{{ apache_php_fpm_version }}-apcu
+      - php{{ apache_php_fpm_version }}
+      - php{{ apache_php_fpm_version }}-fpm
   tags: ssl
 
 - name: remove mod-php (replaced with php-fpm)
@@ -62,11 +62,11 @@
     - { src: 'etc_apache2_conf-available_ssl-common.conf.j2', dest: '/etc/apache2/conf-available/ssl-common.conf' }
     - { src: 'etc_apache2_conf-available_mod-md.conf.j2', dest: '/etc/apache2/conf-available/mod-md.conf' }
     - { src: 'etc_apache2_ports.conf.j2', dest: '/etc/apache2/ports.conf' }
-    - { src: 'etc_php_PHPVERSION_fpm_pool.d_www.conf.j2', dest: '/etc/php/{{ php_fpm_version }}/fpm/pool.d/www.conf' }
-    - { src: 'etc_php_PHPVERSION_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/{{ php_fpm_version }}/cli/conf.d/20-apcu.ini' }
+    - { src: 'etc_php_PHPVERSION_fpm_pool.d_www.conf.j2', dest: '/etc/php/{{ apache_php_fpm_version }}/fpm/pool.d/www.conf' }
+    - { src: 'etc_php_PHPVERSION_cli_conf.d_20-apcu.ini.j2', dest: '/etc/php/{{ apache_php_fpm_version }}/cli/conf.d/20-apcu.ini' }
   notify:
     - reload apache
-    - restart php-fpm
+    - restart php-fpm (apache)
   tags: ssl
 
 - name: disable unnecessary apache modules
@@ -111,9 +111,17 @@
     - 'logging'
     - 'ssl-common'
     - 'mod-md'
-    - 'php{{ php_fpm_version }}-fpm'
+    - 'php{{ apache_php_fpm_version }}-fpm'
   notify: reload apache
   tags: ssl
+
+- name: disable apache configuration snippets
+  command: a2disconf {{ item }}
+  args:
+    removes: "/etc/apache2/conf-enabled/{{ item }}.conf"
+  with_items:
+    - 'other-vhosts-access-log'
+  notify: reload apache
 
 - name: include mod-evasive configuration tasks
   import_tasks: apache-mod-evasive.yml
@@ -136,16 +144,6 @@
   notify: reload apache
   tags: apache-reverseproxy
 
-- name: migration - remove apache/php configuration from old versions of the role
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - /etc/apache2/sites-enabled/sites.conf
-    - /etc/apache2/sites-available/sites.conf
-    - /etc/php/7.4/apache2/conf.d/30-hide-header.ini
-  notify: reload apache
-
 - name: remove apache default sites
   file:
     path: "{{ item }}"
@@ -155,6 +153,9 @@
     - /etc/apache2/sites-enabled/default-ssl.conf
     - /var/www/html/index.html
   notify: reload apache
+
+- name: apply apache configuration (flush handlers)
+  meta: flush_handlers
 
 ##### MOD_MD #####
 
@@ -215,7 +216,7 @@
 
 - name: enable/disable start/stop php-fpm service
   systemd:
-    name: php{{ php_fpm_version }}-fpm
+    name: php{{ apache_php_fpm_version }}-fpm
     enabled: "{{ apache_enable_service }}"
     state: "{{ 'started' if apache_enable_service else 'stopped' }}"
     daemon_reload: yes

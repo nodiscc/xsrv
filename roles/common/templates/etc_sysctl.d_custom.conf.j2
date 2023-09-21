@@ -76,7 +76,7 @@ net.ipv4.conf.default.rp_filter = 1
 # Accept/Ignore any ICMP ECHO requests (ping)
 net.ipv4.icmp_echo_ignore_all = {{ '0' if (sysctl_answer_ping | bool) else '1' }}
 
-# Ignore all ICMP ECHO and TIMESTAMP requests received vai broadcast/multicast
+# Ignore all ICMP ECHO and TIMESTAMP requests received via broadcast/multicast
 net.ipv4.icmp_echo_ignore_broadcasts = 1
 
 # Limit the amount of traffic the system uses for ICMP.

@@ -1,0 +1,10 @@
+[Unit]
+Description=Generate goaccess HTML report
+
+[Install]
+WantedBy=timers.target
+
+[Timer]
+Unit=goaccess-update.service
+Persistent=true
+OnCalendar={{ goaccess_update_calendar_expression }}

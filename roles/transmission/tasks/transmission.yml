@@ -17,11 +17,12 @@
   notify: reload transmission-daemon
   # no_log: True
 
-- name: add ansible user to debian-transmission group
+- name: add users to the debian-transmission group
   user:
-    name: "{{ ansible_user }}"
+    name: "{{ item }}"
     groups: debian-transmission
-    append: yes
+    append: true
+  with_items: "{{ transmission_users }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create symlink to download directory in main users home

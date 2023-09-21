@@ -386,6 +386,7 @@ xsrv check default my.example2.org
 TAGS=nextcloud,transmission xsrv check
 ```
 
+Note: check mode may not reflect changes that will actually occur in a "real" deployment, as some conditions may change during actual deployment that will lead to other changes/actions to be triggered. Notably, running `xsrv check` before the first actual deployment of a host/role will output many errors that would not occur during an actual deployment. These errors are ignored if appropriate.
 
 _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2.org,production --tags=transmission,nextcloud --check`_
 
@@ -543,13 +544,13 @@ You may have to restore data from last known good [backups](maintenance.md)/a sn
 
 Projects stored in git repositories can be tied to a [Continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment) system that will perform automated checks and deployments, controlled by git operations (similar to [GitOps](https://about.gitlab.com/topics/gitops/)).
 
-This example [`.gitlab-ci.yml`](.gitlab-ci.yml) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments.
+This example [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.yml) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments.
 
 <!-- TODO PIPELINE SCREENSHOT -->
 
 Pipeline execution time can be optimized by building a CI image that includes preinstalled dependencies:
-- [`.gitlab-ci.Dockerfile`](.gitlab-ci.Dockerfile)
-- [`.gitlab-ci.yml`](.gitlab-ci.docker.yml)
+- [`.gitlab-ci.Dockerfile`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.Dockerfile)
+- [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.docker.yml)
 
 
 ## External links

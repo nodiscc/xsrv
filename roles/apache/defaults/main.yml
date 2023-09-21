@@ -9,6 +9,9 @@ apache_enable_service: yes
 apache_enable_mod_evasive: no
 # e-mail address to register a letsencrypt.org account
 apache_letsencrypt_email: "CHANGEME"
+# enable HTTP Strict-Transport-Security for websites using letsencrypt.org certificates (yes/no)
+# enabling HSTS will force clients/browsers to only connect over to these sites over HTTPS with valid certificates for 6 months, don't set this to yes if you intend to use self-signed certificates in the future
+apache_letsencrypt_enable_hsts: no
 # custom apache reverse proxies (https://en.wikipedia.org/wiki/Reverse_proxy)
 # Example:
 # apache_reverseproxies:

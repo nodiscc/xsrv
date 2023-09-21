@@ -1,11 +1,7 @@
-{% if gitea_enable_service %}
-# fail2ban gitea jails
 [gitea-auth]
 # gitea login failures
-enabled  = true
-filter   = gitea-auth
-port     = https,http
-logpath  = {{ gitea_user_home }}/log/gitea.log
-maxretry = 10
-findtime = 3600
-{% endif %}
+enabled = true
+filter  = gitea-auth
+logpath = {{ gitea_user_home }}/log/gitea.log
+          /var/lib/fail2ban/emptylog.log
+port    = https,http

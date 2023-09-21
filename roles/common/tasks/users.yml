@@ -46,6 +46,7 @@
     password: "{{ (item.password | password_hash('sha512')) if item.password is defined else '' }}"
     update_password: "{{ item.update_password | default('on_create') }}"
   with_items: "{{ linux_users }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: authorize SSH keys for additional user accounts
   authorized_key:
@@ -104,11 +105,6 @@
     owner: root
     group: root
     mode: "0600"
-
-- name: migration - remove files from old versions of the role
-  file:
-    path: /etc/security/limits.d/10.hardcore.conf
-    state: absent
 
 # remove libpam-ccreds to disable password caching (prevents connections using cached LDAP credentials, when no connection to the LDAP server is not available)
 # add libpam-tmpdir to use per-user temporary directories

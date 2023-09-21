@@ -1,7 +1,6 @@
 <VirtualHost *:80>
     DocumentRoot {{ nextcloud_install_dir }}
     ServerName {{ nextcloud_fqdn }}
-    ServerAdmin webmaster@{{ nextcloud_fqdn }}
 {% if nextcloud_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -16,7 +15,6 @@ MDomain {{ nextcloud_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ nextcloud_fqdn }}
-  ServerAdmin webmaster@{{ nextcloud_fqdn }}
   SSLEngine on
 {% if nextcloud_allow_tls12 %}
   SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1
@@ -35,7 +33,7 @@ MDomain {{ nextcloud_fqdn }}
   DocumentRoot {{ nextcloud_install_dir }}
 
   <FilesMatch \.php$>
-    SetHandler "proxy:unix:/run/php/php{{ php_fpm_version }}-fpm-nextcloud.sock|fcgi://localhost"
+    SetHandler "proxy:unix:/run/php/php{{ nextcloud_php_fpm_version }}-fpm-nextcloud.sock|fcgi://localhost"
   </FilesMatch>
 
   <Directory {{ nextcloud_install_dir }}>

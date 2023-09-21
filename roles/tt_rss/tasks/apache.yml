@@ -1,7 +1,3 @@
-- name: load distribution-specific variables
-  include_vars:
-    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
-
 - name: copy tt-rss apache virtualhost configuration
   template:
     src: etc_apache2_sites-available_tt-rss.conf.j2
@@ -14,9 +10,9 @@
 - name: copy php-fpm configuration
   template:
     src: etc_php_PHPVERSION_fpm_pool.d_tt-rss.conf.j2
-    dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/tt-rss.conf
+    dest: /etc/php/{{ tt_rss_php_fpm_version }}/fpm/pool.d/tt-rss.conf
     mode: "0644"
-  notify: restart php-fpm
+  notify: restart php-fpm (tt_rss)
 
 - name: enable tt-rss apache virtualhost configuration
   command: a2ensite tt-rss

@@ -75,7 +75,7 @@ You can also create a VM from the command-line using the [virt-install](https://
 
 ## Cloning VMs
 
-See [Debian/Installation/From a VM template](debian.md), [`xsrv init-vm --help`](.../usage.md), and the following manpages:
+See [Debian/Installation/From a VM template](debian.md), [`xsrv init-vm --help`](../usage.md), and the following manpages:
 - [`virt-clone`](https://manpages.debian.org/bookworm/virtinst/virt-clone.1.en.html)
 - [`virt-sysprep`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-sysprep.1.en.html)
 - [`virt-customize`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-customize.1.en.html)

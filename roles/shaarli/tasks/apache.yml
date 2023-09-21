@@ -14,9 +14,9 @@
 - name: copy php-fpm configuration
   template:
     src: etc_php_PHPVERSION_fpm_pool.d_shaarli.conf.j2
-    dest: /etc/php/{{ php_fpm_version }}/fpm/pool.d/shaarli.conf
+    dest: /etc/php/{{ shaarli_php_fpm_version }}/fpm/pool.d/shaarli.conf
     mode: "0644"
-  notify: restart php-fpm
+  notify: restart php-fpm (shaarli)
 
 - name: copy apache2 virtualhost configuration
   template:

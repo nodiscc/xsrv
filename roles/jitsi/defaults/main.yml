@@ -1,4 +1,4 @@
-##### JITSI MEET #####
+##### JITSI MEET VIDEO CONFERENCE PLATFORM #####
 # fully qualified domain name of the jitsi meet instance
 jitsi_fqdn: "conference.CHANGEME.org"
 # random secret shared between the TURN and XMPP server

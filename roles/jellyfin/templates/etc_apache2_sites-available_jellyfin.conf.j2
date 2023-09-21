@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ jellyfin_fqdn }}
-    ServerAdmin webmaster@{{ jellyfin_fqdn }}
 {% if jellyfin_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -15,7 +14,6 @@ MDomain {{ jellyfin_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ jellyfin_fqdn }}
-  ServerAdmin webmaster@{{ jellyfin_fqdn }}
   SSLEngine on
 {% if jellyfin_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ jellyfin_fqdn }}.crt

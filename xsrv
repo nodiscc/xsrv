@@ -54,8 +54,8 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.16.0"
-ansible_version="8.2.0"
+version="1.17.0"
+ansible_version="8.4.0"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
@@ -600,7 +600,6 @@ init_vm_template() {
         --memory "$memory" \
         --disk "$storage_path/$name.qcow2,size=$disk_size,device=disk,bus=virtio,cache=none" \
         --vcpus "$vcpus" \
-        --os-type linux \
         --os-variant debian10 \
         --graphics none \
         --console pty,target_type=serial \
@@ -697,7 +696,6 @@ check_group_name() {
     fi
     group_vars_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.yml"
     group_vault_file="$projects_dir/$project_name/group_vars/$group_name/$group_name.vault.yml"
-    migrate_group_vars_file
 }
 
 help_tags() {
@@ -721,20 +719,6 @@ help_tags() {
                         sort --unique)
     echo "OTHER TAGS:"
     diff --changed-group-format='%<%>' --unchanged-group-format='' <(echo "$tags_doc_short") <(echo "$tags_discovered_all") || true
-}
-
-migrate_group_vars_file() {
-    # DEPRECATED migrate files from group_vars/$group_name.yml to group_vars/$group_name/$group_name.yml
-    legacy_group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
-    if [[ -f "$legacy_group_vars_file" ]]; then
-        echo "[xsrv] INFO: legacy $legacy_group_vars_file detected, moving it to $group_vars_file";
-        if [[ -f "$group_vars_file" ]]; then
-            echo "[xsrv] ERROR: destination file $group_vars_file already exists, aborting. Please merge files manually."
-            exit 1
-        fi
-        mkdir -p "$projects_dir/$project_name/group_vars/$group_name"
-        mv "$legacy_group_vars_file" "$group_vars_file"
-    fi
 }
 
 check_user_in_libvirt_groups() {

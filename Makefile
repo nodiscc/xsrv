@@ -12,14 +12,14 @@ tests: test_shellcheck test_ansible_lint test_command_line
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
-	shellcheck -e SC1090,SC1091 xsrv xsrv-completion.sh
+	shellcheck -e SC1090,SC1091 xsrv xsrv-completion.sh roles/monitoring_netdata/files/usr_local_bin_needrestart-autorestart
 
 .PHONY: venv # install dev tools in virtualenv
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.17.2 yamllint ansible==8.2.0
+	pip3 install isort ansible-lint==6.20.0 yamllint ansible==8.4.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -34,7 +34,7 @@ install_collection: venv build_collection
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ansible-lint -v -x fqcn[action-core],fqcn[action],name[casing],yaml[truthy],schema[meta],yaml[line-length] roles/* docs/example-role
+	ansible-lint -v -x fqcn[action-core],fqcn[action],name[casing],yaml[truthy],schema[meta],yaml[line-length],var-naming[no-role-prefix] roles/* docs/example-role
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:
@@ -185,11 +185,11 @@ doc_md:
 		sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md && \
 		sed -i 's|docs/||g' docs/index.md
 	# update docs/configuration-variables.md from available roles
-	@roles_list_defaults_md=$$(for role in roles/*/; do echo "- [$$role](https://gitlab.com/nodiscc/xsrv/-/blob/master/$${role}defaults/main.yml)"; done); \
+	@roles_list_defaults_md=$$(for file in roles/*/defaults/main.yml; do echo -e "[$$file](https://gitlab.com/nodiscc/xsrv/-/blob/master/$$file)\n\n\`\`\`yaml\n$$(cat $$file)\n\`\`\`\n\n"; done); \
 		echo "$$roles_list_defaults_md" >| roles-list-defaults.tmp.md && \
 		awk ' \
 		BEGIN {p=1} \
-		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list-defaults.tmp.md | sort --version-sort");p=0} \
+		/^<!--BEGIN ROLES LIST-->/ {print;system("cat roles-list-defaults.tmp.md");p=0} \
 		/^<!--END ROLES LIST-->/ {p=1} \
 		p' docs/configuration-variables.md >> docs/configuration-variables.tmp.md && \
 		mv docs/configuration-variables.tmp.md docs/configuration-variables.md && \

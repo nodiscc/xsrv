@@ -39,7 +39,7 @@ group = www-data
 ;                            (IPv6 and IPv4-mapped) on a specific port;
 ;   '/path/to/unix/socket' - to listen on a unix socket.
 ; Note: This value is mandatory.
-listen = /run/php/php{{ php_fpm_version }}-fpm.sock
+listen = /run/php/php{{ apache_php_fpm_version }}-fpm.sock
 
 ; Set listen(2) backlog.
 ; Default Value: 511 (-1 on Linux, FreeBSD and OpenBSD)
@@ -250,7 +250,7 @@ pm.max_spare_servers = 3
 ;   last request memory:  0
 ;
 ; Note: There is a real-time FPM status monitoring sample web page available
-;       It's available in: /usr/share/php/{{ php_fpm_version }}/fpm/status.html
+;       It's available in: /usr/share/php/{{ apache_php_fpm_version }}/fpm/status.html
 ;
 ; Note: The value must start with a leading slash (/). The value can be
 ;       anything, but it may not be a good idea to use the .php extension or it
@@ -358,7 +358,7 @@ pm.max_spare_servers = 3
 
 ; A list of request_uri values which should be filtered from the access log.
 ;
-; As a security precuation, this setting will be ignored if:
+; As a security precaution, this setting will be ignored if:
 ;     - the request method is not GET or HEAD; or
 ;     - there is a request body; or
 ;     - there are query parameters; or

@@ -1,11 +1,14 @@
 ##### TRANSMISSION BITTORRENT CLIENT #####
-# username/password for remote control web interface
+# username/password for transmission remote control web interface
 transmission_username: "CHANGEME"
 transmission_password: "CHANGEME"
 # fully qualified domain name for the transmission web interface
 transmission_fqdn: torrent.CHANGEME.org
-# Torrents download directory for
+# torrents download directory
 transmission_download_dir: '/var/lib/transmission-daemon/downloads'
+# list of users to add to the debian-transmission group (may read/write files inside the downloads directory)
+transmission_users:
+  - "{{ ansible_user }}"
 # HTTPS and SSL/TLS certificate mode for the transmission webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)

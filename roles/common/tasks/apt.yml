@@ -35,14 +35,6 @@
     job: aptitude -q -y purge ~c 2>&1 | logger -t apt-purge
     disabled: "{{ False if apt_purge_nightly else True }}"
 
-- name: migration - remove files from old versions of the role
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - /etc/apt/apt.conf.d/99-norecommends
-    - /etc/apt/apt.conf.d/99-no-overwrite-conffiles
-
 # update apt cache
 - name: apply configuration (flush handlers)
   meta: flush_handlers

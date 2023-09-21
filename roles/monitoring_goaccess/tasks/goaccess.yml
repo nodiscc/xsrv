@@ -1,0 +1,93 @@
+- name: create goaccess user
+  user:
+    name: goaccess
+    state: present
+    home: "/var/lib/goaccess"
+    create_home: no
+    groups: adm
+    append: yes
+
+- name: install goaccess
+  apt:
+    package: goaccess
+    state: present
+
+- name: copy goaccess configuration
+  template:
+    src: etc_goaccess_goaccess.conf.j2
+    dest: /etc/goaccess/goaccess.conf
+    owner: root
+    group: root
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - path: "/var/www/{{ goaccess_fqdn }}" # report/virtualhost documentroot/home directory
+      owner: goaccess
+      group: www-data
+      mode: "0750"
+    - path: /var/lib/goaccess # home directory
+      owner: goaccess
+      group: goaccess
+      mode: "0750"
+    - path: /var/lib/goaccess/db # goaccess persistent database directory
+      owner: goaccess
+      group: goaccess
+      mode: "0750"
+    - path: /usr/local/share/geoip # geoip database directory
+      owner: root
+      group: root
+      mode: "0755"
+
+- name: download geoIP database tarball
+  get_url:
+    url: https://download.db-ip.com/free/dbip-country-lite-2023-09.mmdb.gz
+    dest: "/root/dbip-country-lite-2023-07.mmdb.gz"
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: extract geoIP database tarball
+  shell:
+    cmd: "gunzip -c /root/dbip-country-lite-2023-07.mmdb.gz > /usr/local/share/geoip/dbip-country-lite-2023-07.mmdb"
+  ignore_errors: "{{ ansible_check_mode }}"
+  args:
+    creates: /usr/local/share/geoip/dbip-country-lite-2023-07.mmdb
+
+- name: configure goaccess report generation systemd service
+  template:
+    src: etc_systemd_system_goaccess-update.service.j2
+    dest: /etc/systemd/system/goaccess-update.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: configure goaccess report generation systemd timer
+  template:
+    src: etc_systemd_system_goaccess-update.timer.j2
+    dest: /etc/systemd/system/goaccess-update.timer
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart goaccess update timer
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable goaccess report generation systemd timer
+  systemd:
+    name: goaccess-update.timer
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"

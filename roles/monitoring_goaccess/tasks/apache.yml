@@ -1,0 +1,38 @@
+- name: install requirements for ansible htpasswd module
+  apt:
+    package:
+      - python3-passlib
+      - python3-bcrypt
+    state: present
+
+- name: create apache HTTP basic auth password file
+  htpasswd:
+    path: /etc/apache2/goaccess-passwd
+    name: "{{ goaccess_username }}"
+    password: '{{ goaccess_password }}'
+    owner: root
+    group: www-data
+    mode: "0640"
+  notify: reload apache
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy goaccess apache virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_goaccess.conf.j2
+    dest: /etc/apache2/sites-available/goaccess.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload apache
+
+- name: enable goaccess apache virtualhost configuration
+  command: a2ensite goaccess
+  args:
+    creates: "/etc/apache2/sites-enabled/goaccess.conf"
+  notify: reload apache
+
+- name: add a hosts file entry for the goaccess server fqdn
+  lineinfile:
+    path: /etc/hosts
+    line: '127.0.0.1	{{ goaccess_fqdn }}' # noqa no-tabs
+    state: present

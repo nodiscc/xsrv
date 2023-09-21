@@ -1,11 +1,5 @@
 ### ELASTICSEARCH ###
 
-- name: migration/1.10.0 - remove old elasticsearch key from APT keyring
-  apt_key:
-    id: "46095ACC8548582C1A2699A9D27D666CD88E42B4"
-    state: absent
-  ignore_errors: "{{ ansible_check_mode }}"
-
 - name: add elasticsearch APT signing keys
   copy:
     src: usr_share_keyrings_elasticsearch.gpg

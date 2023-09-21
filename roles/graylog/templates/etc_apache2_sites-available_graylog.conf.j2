@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ graylog_fqdn }}
-    ServerAdmin webmaster@{{ graylog_fqdn }}
 {% if graylog_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -15,7 +14,6 @@ MDomain {{ graylog_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ graylog_fqdn }}
-  ServerAdmin webmaster@{{ graylog_fqdn }}
   SSLEngine on
 {% if graylog_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ graylog_fqdn }}.crt

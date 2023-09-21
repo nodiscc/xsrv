@@ -52,6 +52,8 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Upgrade from Debian 10 to Debian 11: `TAGS=utils-debian10to11 xsrv deploy` or `ansible-playbook --tags utils-debian10to11 playbook.yml`
 - Upgrade from Debian 11 to Debian 12: `TAGS=utils-debian11to12 xsrv deploy` or `ansible-playbook --tags utils-debian10to11 playbook.yml`
 
+Upgrading from one distribution version to another can take a while, and some services may become shortly unavailable during the operation. You can follow progress by watching `apt` logs on the host (or `/var/log/syslog` if the [`monitoring_rsyslog`](../monitoring_rsyslog) role is deployed).
+
 ## Troubleshooting
 
 **Package installation blocked by apt-listbugs:** When `apt_listbugs: yes` is set, apt-listbugs will, by default, prevent installation/upgrade of packages on which grave/serious bugs have been reported in the [Debian Bug Tracking System (BTS)](https://www.debian.org/Bugs/). The output of package management tasks will show something similar to:

@@ -1,7 +1,7 @@
-{% if jellyfin_enable_service %}
 [jellyfin]
+# jellyfin login failures
 enabled = true
-filter = jellyfin-auth
-maxretry = 5
+filter  = jellyfin-auth
 logpath = /var/log/jellyfin/jellyfin*.log
-{% endif %}
+          /var/lib/fail2ban/emptylog.log
+port    = https,http

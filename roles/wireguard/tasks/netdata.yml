@@ -1,5 +1,0 @@
-- name: migration/1.13.0 - remove files from old versions of the role
-  file:
-    state: absent
-    path: /etc/netdata/health.d/systemdunits.conf.d/wireguard.conf
-  notify: assemble netdata configuration

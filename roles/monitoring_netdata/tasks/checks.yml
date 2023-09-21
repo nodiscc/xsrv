@@ -18,6 +18,7 @@
     - netdata_http_checks|type_debug == "list"
     - netdata_x509_checks|type_debug == "list"
     - netdata_notification_downtimes|type_debug == "list"
+    - netdata_enable_health_notifications == netdata_enable_health_notifications | bool
     - netdata_logcount_error_threshold_crit == netdata_logcount_error_threshold_crit | int
     - netdata_logcount_error_threshold_warn == netdata_logcount_error_threshold_warn | int
     - netdata_logcount_notification_to is string
@@ -26,6 +27,7 @@
     - netdata_monitor_systemd_units == netdata_monitor_systemd_units | bool
     - netdata_streaming_send_enabled == netdata_streaming_send_enabled | bool
     - netdata_streaming_receive_enabled == netdata_streaming_receive_enabled | bool
+    - netdata_streaming_receive_alarms == netdata_streaming_receive_alarms | bool
     - netdata_port_checks|type_debug == "list"
     - netdata_process_checks|type_debug == "list"
     - netdata_disabled_plugins|type_debug == "list"

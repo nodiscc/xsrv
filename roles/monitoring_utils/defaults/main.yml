@@ -1,4 +1,4 @@
-##### LYNIS SECURITY AUDIT #####
+##### MONITORING UTILITIES #####
 # setup lynis security audit tool (yes/no)
 setup_lynis: yes
 # list of strings to extract from lynis reports and forward by mail

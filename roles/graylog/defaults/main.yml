@@ -1,4 +1,4 @@
-##### GRAYLOG #####
+##### GRAYLOG LOG AGGREGATION/ANALYSIS PLATFORM #####
 # fully qualified domain name of the graylog instance
 graylog_fqdn: "logs.CHANGEME.org"
 # graylog admin username/password, and secret key for hashing passwords

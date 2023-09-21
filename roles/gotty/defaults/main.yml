@@ -1,4 +1,4 @@
-##### GOTTY #####
+##### GOTTY WEB TERMINAL #####
 # fully qualified domain name of the gotty instance
 gotty_fqdn: "tty.CHANGEME.org"
 # username/password for gotty HTTP basic authentication

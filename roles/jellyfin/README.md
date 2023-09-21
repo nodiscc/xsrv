@@ -58,7 +58,7 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 
 Jellyfin lets you watch your media from a web browser on your computer, apps on your Roku, Android, iOS (including AirPlay), Android TV, or Fire TV device, or via your Chromecast or existing Kodi installation. See all [clients](https://jellyfin.org/clients/). [Finamp](https://f-droid.org/packages/com.unicornsonlsd.finamp/) is an alternative Android/iOS music player for Jellyfin.
 
-You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance#Specification)-compatible media player on your local network, or use Jellyfin to play media through any DLNA Media Renderer on your network. To use DLNA you must enable incoming/outgoing `UDP multicast on port 1900` traffic in the [firewall](../common). If you don't use DLNA it is recommended to turn it off completely under `Admin Dashboard > DLNA`.
+You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance#Specification)-compatible media player on your local network, or use Jellyfin to play media through any DLNA Media Renderer on your network. To use DLNA you must enable incoming/outgoing `UDP multicast on port 1900` traffic in the [firewall](../common). You probably also want to set `jellyfin_enable_dlna_discovery: yes` to allow jellyfin to auto-discover DLNA devices on the local network. If you don't use DLNA it is recommended to turn it off completely under `Admin Dashboard > DLNA`.
 
 ### Backups
 

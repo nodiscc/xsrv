@@ -41,19 +41,6 @@
     mode: "0644"
   notify: restart systemd-journald
 
-# DEPRECATED this task will be removed in a future version of the role
-- name: migration/1.13.0 - remove rsyslog config files from old versions of the role
-  file:
-    state: absent
-    path: /etc/rsyslog.d/{{ item }}.conf
-  notify: restart rsyslog
-  with_items:
-    - services-imfile
-    - discard
-    - singlefile
-    - netdata
-    - 000-discard
-
 # rsyslog is configured to send all messages to /var/log/syslog in singlefile.conf
 # if a '*.*' filter is present in main rsyslog.conf, messages will be logged twice
 - name: configure rsyslog to avoid duplicate messages

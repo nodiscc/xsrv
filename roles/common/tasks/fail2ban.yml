@@ -1,13 +1,3 @@
-- name: create fail2ban configuration directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: "0700"
-  with_items:
-    - "/etc/fail2ban"
-    - "/etc/fail2ban/jail.d"
-    - "/etc/fail2ban/filter.d"
-
 - name: install fail2ban
   apt:
     state: present
@@ -15,41 +5,46 @@
       - fail2ban
       - ipset
 
-- name: start and enable fail2ban
-  service:
-    name: "fail2ban"
-    state: started
-    enabled: yes
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: services
+- name: create fail2ban configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  with_items:
+    - "/etc/fail2ban"
+    - "/etc/fail2ban/jail.d"
+    - "/etc/fail2ban/filter.d"
 
 - name: copy fail2ban global configuration
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: "0600"
+    owner: root
+    group: root
+    mode: "0644"
   with_items:
     - { src: 'etc_fail2ban_jail.local.j2', dest: '/etc/fail2ban/jail.local' }
+    - { src: 'etc_fail2ban_action.d_firewallcmd-ipset.conf.j2', dest: '/etc/fail2ban/action.d/firewallcmd-ipset.conf' }
     - { src: 'etc_fail2ban_fail2ban.local.j2', dest: '/etc/fail2ban/fail2ban.local' }
+    - { src: 'var_lib_fail2ban_emptylog.log.j2', dest: '/var/lib/fail2ban/emptylog.log' }
   notify: restart fail2ban
 
-- name: copy fail2ban jails configuration
+- name: copy fail2ban sshd jail configuration
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: "0600"
-  with_items:
-    - { src: 'etc_fail2ban_jail.d_sshd.conf.j2', dest: '/etc/fail2ban/jail.d/sshd.conf' }
-    - { src: 'etc_fail2ban_jail.d_pam-generic.conf.j2', dest: '/etc/fail2ban/jail.d/pam-generic.conf' }
+    src: etc_fail2ban_jail.d_sshd.conf.j2
+    dest: /etc/fail2ban/jail.d/sshd.conf
+    owner: root
+    group: root
+    mode: "0644"
   notify: reload fail2ban
 
-##### CLEANUP #####
-
-- name: migration - remove systemd unit/override files from old versions of the role
+- name: migration/1.17.0 - remove files from old versions of the role
   file:
+    path: /etc/fail2ban/jail.d/pam-generic.conf
     state: absent
-    dest: '/etc/systemd/system/fail2ban.service.d/override.conf'
-  notify: reload systemd unit files
+  notify: reload fail2ban
 
 ##### FACTS #####
 
@@ -57,6 +52,8 @@
   file:
     path: /etc/ansible/facts.d
     state: directory
+    owner: root
+    group: root
     mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -64,9 +61,21 @@
   template:
     src: etc_ansible_facts.d_fail2ban.fact.j2
     dest: /etc/ansible/facts.d/fail2ban.fact
+    owner: root
+    group: root
     mode: "0644"
   notify: update ansible facts
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+##### SERVICES #####
+
+- name: start and enable fail2ban
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: services

@@ -1,7 +1,6 @@
 <VirtualHost *:80>
     DocumentRoot {{ shaarli_install_dir }}
     ServerName {{ shaarli_fqdn }}
-    ServerAdmin webmaster@{{ shaarli_fqdn }}
 {% if shaarli_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -17,7 +16,6 @@ MDomain {{ shaarli_fqdn }}
 <VirtualHost *:443>
   DocumentRoot {{ shaarli_install_dir }}
   ServerName  {{ shaarli_fqdn }}
-  ServerAdmin webmaster@{{ shaarli_fqdn }}
   SSLEngine on
 {% if shaarli_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ shaarli_fqdn }}.crt
@@ -33,7 +31,7 @@ MDomain {{ shaarli_fqdn }}
   DocumentRoot {{ shaarli_install_dir }}
 
   <FilesMatch \.php$>
-    SetHandler "proxy:unix:/run/php/php{{ php_fpm_version }}-fpm-shaarli.sock|fcgi://localhost"
+    SetHandler "proxy:unix:/run/php/php{{ shaarli_php_fpm_version }}-fpm-shaarli.sock|fcgi://localhost"
   </FilesMatch>
 
   <Directory {{ shaarli_install_dir }}>

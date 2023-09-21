@@ -25,6 +25,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['gotty']['fqdn'] is defined %}
 - Gotty: https://{{ hostvars[item]['ansible_facts']['ansible_local']['gotty']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] is defined %}
+- Goaccess: https://{{ hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] is defined %}
 - Graylog: https://{{ hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] }}
 {% endif %}

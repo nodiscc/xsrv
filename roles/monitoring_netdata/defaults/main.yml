@@ -1,4 +1,4 @@
-### NETDATA MONITORING SYSTEM ###
+##### NETDATA MONITORING SYSTEM #####
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
@@ -6,7 +6,7 @@ netdata_update_every: 2
 netdata_dbengine_page_cache_size: 32
 # (MiB) amount of disk space dedicated to storing Netdata metric values/metadata
 netdata_dbengine_disk_space: 800
-# space-separated list of IP addresses authorized to access netdata dashboard/API (wildcards accepted)
+# space-separated list of IP addresses authorized to access netdata dashboard/API (wildcards accepted, CIDR notation NOT accepted)
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
@@ -39,6 +39,8 @@ netdata_disabled_plugins:
 #   - start: "01 19 * * *"
 #     end: "00 07 * * *"
 netdata_notification_downtimes: []
+# enable/disable alarm notifications (yes/no)
+netdata_enable_health_notifications: yes
 # firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 netdata_firewalld_zones:
@@ -59,7 +61,6 @@ netdata_firewalld_zones:
 #   - { name: sql, min_count: 1, interval: 20} # SQL database engine
 #   - { name: gitea, min_count: 1, interval: 20} # gitea self-hosted software forge
 #   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
-#   - { name: ezstream, min_count: 1, interval: 20} # icecast/ezstream media streaming server
 #   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
 #   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
 #   - { name: auth, min_count: 1, interval: 20} # openldap server
@@ -143,7 +144,7 @@ netdata_fping_update_every: 10
 netdata_fping_alarms_silent: no
 
 ## NETDATA STREAMING ##
-# enable/disable streaming to another netdata instance (yes/no)
+# stream charts to a "parent" netdata instance (yes/no)
 netdata_streaming_send_enabled: no
 # netdata instance to stream metrics to (protocol:hostname:port:SSL)
 netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
@@ -151,6 +152,9 @@ netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
 netdata_streaming_receive_enabled: no
 # API key (UUID) used to authenticate on the destination instance/allow from source instances
 netdata_api_key: "CHANGEME"
+# enable health alarms for charts received from "child" netdata instances (yes/no)
+# if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
+netdata_streaming_receive_alarms: no
 
 ## NETDATA MODULES ##
 # setup needrestart and netdata-needrestart module (yes/no)
@@ -165,7 +169,7 @@ needrestart_autorestart_services: yes
 needrestart_autorestart_cron: no
 # setup netdata-logcount module (yes/no)
 setup_netdata_logcount: yes
-# (minutes) interval between updates of log message counts in the logcount module
+# (minutes) interval between updates of log message counts in the logcount module. Set to 0 to disable the module and cron job
 netdata_logcount_update_interval: 1
 # maximum acceptable ERROR message in logs over the last period before raising a WARNING or CRITICAL alert
 netdata_logcount_error_threshold_warn: 10

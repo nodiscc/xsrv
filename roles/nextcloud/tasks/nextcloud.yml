@@ -15,20 +15,20 @@
   apt:
     state: present
     package:
-      - "php{{ php_fpm_version }}-gmp"
-      - "php{{ php_fpm_version }}-curl"
-      - "php{{ php_fpm_version }}-gd"
-      - "php{{ php_fpm_version }}-imagick"
-      - "php{{ php_fpm_version }}-intl"
+      - "php{{ nextcloud_php_fpm_version }}-gmp"
+      - "php{{ nextcloud_php_fpm_version }}-curl"
+      - "php{{ nextcloud_php_fpm_version }}-gd"
+      - "php{{ nextcloud_php_fpm_version }}-imagick"
+      - "php{{ nextcloud_php_fpm_version }}-intl"
       - "{{ php_json_package }}"
-      - "php{{ php_fpm_version }}-ldap"
-      - "php{{ php_fpm_version }}-sqlite3"
-      - "php{{ php_fpm_version }}-mbstring"
-      - "php{{ php_fpm_version }}-xml"
-      - "php{{ php_fpm_version }}-zip"
-      - "php{{ php_fpm_version }}-bz2"
-      - "php{{ php_fpm_version }}-imap"
-      - "php{{ php_fpm_version }}-apcu"
+      - "php{{ nextcloud_php_fpm_version }}-ldap"
+      - "php{{ nextcloud_php_fpm_version }}-sqlite3"
+      - "php{{ nextcloud_php_fpm_version }}-mbstring"
+      - "php{{ nextcloud_php_fpm_version }}-xml"
+      - "php{{ nextcloud_php_fpm_version }}-zip"
+      - "php{{ nextcloud_php_fpm_version }}-bz2"
+      - "php{{ nextcloud_php_fpm_version }}-imap"
+      - "php{{ nextcloud_php_fpm_version }}-apcu"
       - ffmpeg
       - acl
 
@@ -122,39 +122,6 @@
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
   changed_when: yes
 
-### USER MIGRATION WWW-DATA -> NEXTCLOUD ###
-
-- name: update ownership of data directory
-  file:
-    path: "/var/nextcloud"
-    state: directory
-    owner: nextcloud
-    group: nextcloud
-    recurse: yes
-  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: update ownership of application directories
-  file:
-    path: "{{ item }}"
-    owner: nextcloud
-    group: nextcloud
-    recurse: yes
-  with_items:
-    - "{{ nextcloud_install_dir }}/apps"
-    - "{{ nextcloud_install_dir }}/config"
-    - "{{ nextcloud_install_dir }}/themes"
-  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: update ownership of occ script
-  file:
-    path: "{{ nextcloud_install_dir }}/occ"
-    owner: nextcloud
-    group: nextcloud
-  when: (ansible_local.nextcloud.data_directory_owner_migrated is not defined) or (not ansible_local.nextcloud.data_directory_owner_migrated)
-  ignore_errors: "{{ ansible_check_mode }}"
-
 ##### CONFIGURATION #####
 
 - name: create nextcloud data directory
@@ -167,6 +134,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: run first setup (this can take a while)
+  become: yes
   become_user: nextcloud
   command:
     cmd: |
@@ -276,6 +244,7 @@
   tags: nextcloud-config
 
 - name: run nextcloud upgrade command
+  become: yes
   become_user: nextcloud
   command: /usr/bin/php ./occ upgrade
   args:
@@ -286,6 +255,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: update .htaccess for clean URL support (always returns changed)
+  become: yes
   become_user: nextcloud
   command: "/usr/bin/php ./occ maintenance:update:htaccess" # noqa no-changed-when
   args:
@@ -301,6 +271,7 @@
     name: "run nextcloud background tasks"
 
 - name: add missing primary keys and indices to nextcloud database
+  become: yes
   become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:{{ item }}"
   args:
@@ -313,6 +284,7 @@
     - add-missing-indices
 
 - name: convert columns to bigint in nextcloud database
+  become: yes
   become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:convert-filecache-bigint"
   args:

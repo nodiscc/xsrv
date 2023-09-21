@@ -1,0 +1,13 @@
+videobridge {
+    http-servers {
+        public {
+            port = 9090
+            host = "127.0.0.1"
+        }
+    }
+    websockets {
+        enabled = true
+        domain = "{{ jitsi_fqdn }}:443"
+        tls = true
+    }
+}

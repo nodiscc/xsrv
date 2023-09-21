@@ -1,6 +1,9 @@
 # Jicofo HOCON configuration. See reference.conf in /usr/share/jicofo/jicofo.jar for
 #available options, syntax, and default values.
 jicofo {
+  rest: {
+    host: "127.0.0.1"
+  }
 {% if jitsi_secure_domain %}
   authentication: {
     enabled: true

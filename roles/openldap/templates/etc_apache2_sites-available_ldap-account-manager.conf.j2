@@ -1,7 +1,6 @@
 <VirtualHost *:80>
     DocumentRoot {{ ldap_account_manager_install_dir }}
     ServerName {{ ldap_account_manager_fqdn }}
-    ServerAdmin webmaster@{{ ldap_account_manager_fqdn }}
 {% if ldap_account_manager_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -16,7 +15,6 @@ MDomain {{ ldap_account_manager_fqdn }}
 
 <VirtualHost *:443>
   ServerName  {{ ldap_account_manager_fqdn }}
-  ServerAdmin webmaster@{{ ldap_account_manager_fqdn }}
   SSLEngine on
 {% if ldap_account_manager_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ ldap_account_manager_fqdn }}.crt
@@ -32,7 +30,7 @@ MDomain {{ ldap_account_manager_fqdn }}
   DocumentRoot {{ ldap_account_manager_install_dir }}
 
   <FilesMatch \.php$>
-    SetHandler "proxy:unix:/run/php/php{{ php_fpm_version }}-fpm-ldap-account-manager.sock|fcgi://localhost"
+    SetHandler "proxy:unix:/run/php/php{{ openldap_php_fpm_version }}-fpm-ldap-account-manager.sock|fcgi://localhost"
   </FilesMatch>
 
   <Directory {{ ldap_account_manager_install_dir }}/config>

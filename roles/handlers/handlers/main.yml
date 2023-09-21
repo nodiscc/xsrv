@@ -54,14 +54,6 @@
   become: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: restart php-fpm
-  service:
-    name: php{{ php_fpm_version }}-fpm
-    state: restarted
-    enabled: yes
-  become: yes
-  ignore_errors: "{{ ansible_check_mode }}"
-
 ### MONITORING_RSYSLOG ###
 
 - name: restart rsyslog

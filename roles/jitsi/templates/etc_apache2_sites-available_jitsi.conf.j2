@@ -1,6 +1,5 @@
 <VirtualHost *:80>
     ServerName {{ jitsi_fqdn }}
-    ServerAdmin webmaster@{{ jitsi_fqdn }}
 {% if jitsi_https_mode == 'selfsigned' %}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
@@ -15,7 +14,6 @@ MDomain {{ jitsi_fqdn }}
 
 <VirtualHost *:443>
     ServerName  {{ jitsi_fqdn }}
-    ServerAdmin webmaster@{{ jitsi_fqdn }}
     SSLEngine on
 {% if jitsi_https_mode == 'selfsigned' %}
     SSLCertificateFile /etc/ssl/certs/{{ jitsi_fqdn }}.crt

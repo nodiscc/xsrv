@@ -6,3 +6,11 @@
     enabled: yes
   when: openldap_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: restart php-fpm (openldap)
+  service:
+    name: php{{ openldap_php_fpm_version }}-fpm
+    state: restarted
+    enabled: yes
+  become: yes
+  ignore_errors: "{{ ansible_check_mode }}"

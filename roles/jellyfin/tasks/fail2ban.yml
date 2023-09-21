@@ -2,14 +2,16 @@
   template:
     src: etc_fail2ban_jail.d_jellyfin.conf.j2
     dest: /etc/fail2ban/jail.d/jellyfin.conf
+    owner: root
+    group: root
     mode: "0644"
-  tags: fail2ban
   notify: reload fail2ban
 
 - name: copy fail2ban jellyfin-auth filter
   template:
     src: etc_fail2ban_filter.d_jellyfin-auth.conf.j2
     dest: /etc/fail2ban/filter.d/jellyfin-auth.conf
+    owner: root
+    group: root
     mode: "0644"
-  tags: fail2ban
   notify: reload fail2ban
