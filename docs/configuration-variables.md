@@ -300,6 +300,7 @@ apt_listbugs_ignore_list:
   - 1023748 # https://bugs.debian.org/1023748 - only affects java 20, debian 12 has java 17
   - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
   - 1043415 # https://bugs.debian.org/1043415 - not applicable to upstream/packagecloud packages
+  - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -796,8 +797,6 @@ jellyfin_users:
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
 jellyfin_https_mode: selfsigned
-# enable automatic discovery of DLNA devices on the local network (no/yes)
-jellyfin_enable_dlna_discovery: no
 # start/stop the jellyfin webserver, enable/disable it on boot, redirect users to maintenance page if disabled (yes/no)
 jellyfin_enable_service: yes
 # yes/no: enable automatic backups of the default jellyfin media directory (when the nodiscc.xsrv.backup role is managed by ansible)
@@ -1083,7 +1082,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.42"
+matrix_element_version: "1.11.43"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1495,6 +1494,7 @@ nextcloud_apps:
   - { state: "disable", app: "keeporsweep" } # https://apps.nextcloud.com/apps/keeporsweep
   - { state: "disable", app: "jitsi" } # https://apps.nextcloud.com/apps/jitsi
   - { state: "disable", app: "tables" } # https://apps.nextcloud.com/apps/tables
+  - { state: "disable", app: "survey_client" } # https://github.com/nextcloud/survey_client
 # nextcloud php-fpm pool settings (performance/resource usage)
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'

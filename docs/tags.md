@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.16.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.17.0
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
 TAGS:
 apache-mod-evasive - setup apache anti-DoS module
@@ -80,9 +80,6 @@ synapse-admin - setup synapse-admin matrix administration web interface
 synapse - setup synapse (matrix) chat server
 sysctl - setup sysctl kernel configuration
 transmission - setup transmission bittorrent client
-tt_rss-app - setup tt-rss appllication
-tt_rss-permissions - set/fix permissions/ownership on tt-rss directories
-tt_rss-postgresql - setup tt-rss postgresql database
 tt_rss - setup tt-rss feed reader
 users - setup users and groups
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending

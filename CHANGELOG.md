@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.17.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.17.0) - UNRELEASED
+#### [v1.17.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.17.0) - 2023-09-21
 
 **Upgrade procedure:**
 - upgrade to [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) and deploy it first, if not already done
