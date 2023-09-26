@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - matrix: update element-web to v1.11.44 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44)
+- common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 
 **Fixed:*
 - jitsi: fixed jitsi-videobridge sometimes failing to connect to prosody (`org.jivesoftware.smack.sasl.SASLErrorException: SASLError using SCRAM-SHA-1: not-authorized`) - force updating jvb prosody password

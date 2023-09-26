@@ -198,6 +198,8 @@ ssh_server_revoked_keys: []
 # sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
 ssh_log_level: "VERBOSE"
 ssh_sftp_loglevel: "INFO"
+# allow clients to set locale/language-related environment variables (yes/no)
+ssh_accept_locale_env: no
 # types of SSH TCP forwarding to allow (no, local, remote, all - QUOTED)
 # remote/all is required to use the host as a jumpbox
 ssh_allow_tcp_forwarding: "no"
