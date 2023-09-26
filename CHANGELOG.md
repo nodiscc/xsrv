@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.18.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.18.0) - UNRELEASED
 
+**Changed:**
 - matrix: update element-web to v1.11.44 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44)
+
+**Fixed:*
+- jitsi: fixed jitsi-videobridge sometimes failing to connect to prosody (`org.jivesoftware.smack.sasl.SASLErrorException: SASLError using SCRAM-SHA-1: not-authorized`) - force updating jvb prosody password
 
 [Full changes since v1.17.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.17.0...1.18.0)
 

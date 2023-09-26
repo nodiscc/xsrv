@@ -1,4 +1,10 @@
-- name: create jitsi user accounts
+- name: create/update jitsi jvb account
+  command:
+    cmd: "prosodyctl register jvb auth.{{ jitsi_fqdn }} {{ jitsi_jvb_prosody_password }}"
+  no_log: yes
+  changed_when: no # never return changed, instead of always
+
+- name: create/update jitsi user accounts
   command:
     cmd: "prosodyctl register {{ item.name }} {{ jitsi_fqdn }} {{ item.password }}"
     # creates: "/var/lib/prosody/{{ jitsi_fqdn | replace('.', '%2e') }}/accounts/{{ item.name }}" # this prevents passwords from being updated
