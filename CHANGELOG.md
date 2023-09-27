@@ -10,10 +10,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 
 **Changed:**
-- matrix: update element-web to v1.11.44 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44)
 - common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- matrix: update element-web to v1.11.44 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44)
+- graylog: update to v5.1 [[1]](https://graylog.org/post/announcing-graylog-v5-1/) [[2]](https://graylog.org/videos/whats-new-in-v5-1/) [[3]](https://graylog.org/post/announcing-graylog-v5-1-1/) [[4]](https://graylog.org/post/announcing-graylog-v5-1-2/) [[5]](https://graylog.org/post/announcing-graylog-v5-1-3/) [[6]](https://graylog.org/post/announcing-graylog-v5-1-4/) [[7]](https://graylog.org/post/announcing-graylog-v5-1-5/)
 
-**Fixed:*
+**Fixed:**
 - jitsi: fixed jitsi-videobridge sometimes failing to connect to prosody (`org.jivesoftware.smack.sasl.SASLErrorException: SASLError using SCRAM-SHA-1: not-authorized`) - force updating jvb prosody password
 
 [Full changes since v1.17.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.17.0...1.18.0)

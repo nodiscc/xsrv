@@ -63,7 +63,7 @@ rsyslog_forward_to_port: 5140
 
 #### Inputs
 
-Login to your graylog instance and configure a basic **[input](https://go2docs.graylog.org/5-0/getting_in_log_data/getting_in_log_data.html)** to accept syslog messages on TCP port 5140 (using TLS):
+Login to your graylog instance and configure a basic **[input](https://go2docs.graylog.org/5-1/getting_in_log_data/getting_in_log_data.html)** to accept syslog messages on TCP port 5140 (using TLS):
 
 - Title: `Syslog/TLS/TCP`
 - Port: `5140`
@@ -78,7 +78,7 @@ Login to your graylog instance and configure a basic **[input](https://go2docs.g
 
 #### Streams
 
-Create **[streams](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select whether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
+Create **[streams](https://go2docs.graylog.org/5-1/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select whether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
 
 <!-- TODO ADD EXAMPLE STREAM SETUP -->
 
@@ -86,7 +86,7 @@ Create **[streams](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data
 
 #### Search and filter
 
-Start using Graylog to [search and filter](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/writing_search_queries.html) through messages, edit table fields, create aggregations (bar/area/line/pie charts, tables...) and progressively build useful **[dashboards](https://docs.graylog.org/en/latest/pages/dashboards.html)** showing important indicators for your specific setup.
+Start using Graylog to [search and filter](https://go2docs.graylog.org/5-1/making_sense_of_your_log_data/writing_search_queries.html) through messages, edit table fields, create aggregations (bar/area/line/pie charts, tables...) and progressively build useful **[dashboards](https://docs.graylog.org/en/latest/pages/dashboards.html)** showing important indicators for your specific setup.
 
 ![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/0OCFJlx.png)
 
@@ -94,7 +94,7 @@ Start using Graylog to [search and filter](https://go2docs.graylog.org/5-0/makin
 
 #### Authentication and roles
 
-Setup [authentication and roles](https://go2docs.graylog.org/5-0/setting_up_graylog/permission_management.html) to grand read or write access to specific users/groups. LDAP is supported.
+Setup [authentication and roles](https://go2docs.graylog.org/5-1/setting_up_graylog/permission_management.html) to grand read or write access to specific users/groups. LDAP is supported.
 
 **LDAP authentication:** This example is given for [openldap](../openldap) server:
 - Open the `System > Authentication` menu (https://logs.CHANGEME.org/system/authentication/services/create)
@@ -157,7 +157,7 @@ The graylog pattern editor provides a set of premade patterns to extract common 
 
 #### Pipelines and rules
 
-[Pipelines](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-0/making_sense_of_your_log_data/rules.html) are used to extract meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages. They are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](https://archivedocs.graylog.org/en/latest/pages/extractors.html).
+[Pipelines](https://go2docs.graylog.org/5-1/making_sense_of_your_log_data/pipelines.html) and [Rules](https://go2docs.graylog.org/5-1/making_sense_of_your_log_data/rules.html) are used to extract meaningful data fields (addresses, processes, status...) from incoming, unstructured log messages. They are now the preferred way to process raw log data, as they are able to process messages in parallel and generally consume less resources than [extractors](https://archivedocs.graylog.org/en/latest/pages/extractors.html).
 
 
 ##### Nextcloud logs

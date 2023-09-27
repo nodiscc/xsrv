@@ -1,17 +1,17 @@
 ### GRAYLOG ###
 
-- name: download graylog-5.0-repository deb package
+- name: download graylog-5.1-repository deb package
   get_url:
-    url: "https://packages.graylog2.org/repo/packages/graylog-5.0-repository_latest.deb"
-    dest: "/root/graylog-5.0-repository_latest.deb"
+    url: "https://packages.graylog2.org/repo/packages/graylog-5.1-repository_latest.deb"
+    dest: "/root/graylog-5.1-repository_latest.deb"
     owner: root
     group: root
     mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}" # HEAD requests are forbidden/403
 
-- name: install graylog-5.0-repository package
+- name: install graylog-5.1-repository package
   apt:
-    deb: "/root/graylog-5.0-repository_latest.deb"
+    deb: "/root/graylog-5.1-repository_latest.deb"
     state: present
     dpkg_options: "force-all"
   notify: update apt cache
