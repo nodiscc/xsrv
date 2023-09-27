@@ -1,0 +1,8 @@
+- name: configure rsyslog to aggregate netdata logs to syslog
+  template:
+    src: etc_rsyslog.d_netdata.conf.j2
+    dest: /etc/rsyslog.d/netdata.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart rsyslog

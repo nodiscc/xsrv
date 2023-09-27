@@ -142,6 +142,8 @@ netdata_fping_ping_every: 5000
 netdata_fping_update_every: 10
 # Do not send notifications on ping check failures (yes/no)
 netdata_fping_alarms_silent: no
+# aggregate netdata error/health/collector logs to syslog (very verbose) (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+netdata_log_to_syslog: no
 
 ## NETDATA STREAMING ##
 # stream charts to a "parent" netdata instance (yes/no)
