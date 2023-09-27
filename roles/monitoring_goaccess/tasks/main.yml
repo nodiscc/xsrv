@@ -36,7 +36,6 @@
   become: yes
   tags:
     - goaccess
-    - facts
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
