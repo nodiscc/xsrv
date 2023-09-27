@@ -2,7 +2,7 @@
   import_tasks: checks.yml
   tags:
     - transmission
-        - checks
+    - checks
 
 - name: include transmission configuration tasks
   import_tasks: transmission.yml
