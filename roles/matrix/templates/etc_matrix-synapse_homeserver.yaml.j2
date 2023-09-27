@@ -134,3 +134,25 @@ enable_room_list_search: true
 #     alias: "*"
 #     room_id: "*"
 #     action: allow
+{% if matrix_synapse_ldap %}
+modules:
+ - module: "ldap_auth_provider.LdapAuthProviderModule"
+   config:
+     enabled: true
+     uri: "{{ matrix_synapse_ldap_uri }}"
+     start_tls: {{ 'true' if matrix_synapse_ldap_starttls else 'false' }}
+     base: "{{ matrix_synapse_base_dn }}"
+     attributes:
+        uid: "{{ matrix_synapse_ldap_uid_attr }}"
+        mail: "{{ matrix_synapse_ldap_mail_attr }}"
+        name: "{{ matrix_synapse_ldap_name_attr }}"
+     bind_dn: "{{ matrix_synapse_ldap_bind_dn }}"
+     bind_password: "{{ matrix_synapse_ldap_bind_password }}"
+     filter: "{{ matrix_synapse_ldap_filter }}"
+     # Additional options for TLS, can be any key from https://ldap3.readthedocs.io/en/latest/ssltls.html#the-tls-object
+     tls_options:
+       validate: {{ 'true' if matrix_synapse_ldap_validate_certs else 'false' }}
+     #  local_certificate_file: "/etc/ssl/certs/ldap.xinit.se.crt"
+     #  local_private_key_file: bar.pem
+     #  local_private_key_password: secret
+{% endif %}
