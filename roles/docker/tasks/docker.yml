@@ -75,6 +75,11 @@
       - docker-compose
     state: present
 
+- name: ensure the docker group exists
+  group:
+    name: docker
+    state: present
+
 - name: ensure docker users are added to the docker group
   user:
     name: "{{ item }}"

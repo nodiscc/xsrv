@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: allow running `unattended-upgrade` or `apt upgrade` immediately ([`TAGS=utils-apt-unattended-upgrade,utils-apt-upgrade`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/README.md#usage))
 - matrix: allow setting up LDAP authentication backend for synapse ([`matrix_synapse_ldap_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml))
 - netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker#uninstallation))
 
 **Changed:**
 - common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))

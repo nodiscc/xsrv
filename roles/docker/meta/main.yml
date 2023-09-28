@@ -1,4 +1,5 @@
 # @tag docker - setup docker engine
+# @tag utils-docker-uninstall - uninstall docker engine and remove all docker data
 
 galaxy_info:
   role_name: docker

@@ -1,0 +1,46 @@
+- name: stop/disable docker service
+  service:
+    name: docker
+    state: stopped
+    enabled: no
+
+- name: uninstall docker packages
+  apt:
+    state: absent
+    package:
+      - docker-ce
+      - docker-compose
+
+- name: remove docker configuration
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /usr/share/keyrings/docker.gpg
+    - /etc/apt/sources.list.d/docker.list
+    - /etc/docker
+    - /etc/cron.d/docker-system-prune-all
+    - /var/lib/docker
+    - /etc/ansible/facts.d/docker.fact
+    - /etc/netdata/health.d/dockerd.conf
+    - /root/.docker
+  notify:
+    - update apt cache
+    - update ansible facts
+    - assemble netdata configuration
+  diff: no
+
+- name: remove docker group
+  group:
+    name: docker
+    state: absent
+
+- name: remove docker network interfaces
+  command:
+    cmd: "ip link delete {{ item }}"
+  changed_when: '"Cannot find device" not in ip_link_delete.stderr'
+  register: ip_link_delete
+  failed_when: '(ip_link_delete.rc != 0) and ("Cannot find device" not in ip_link_delete.stderr)'
+  with_items:
+    - docker0
+    - docker_gwbridge
