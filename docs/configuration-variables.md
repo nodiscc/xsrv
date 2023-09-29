@@ -318,6 +318,8 @@ ssh_server_revoked_keys: []
 # sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
 ssh_log_level: "VERBOSE"
 ssh_sftp_loglevel: "INFO"
+# allow clients to set locale/language-related environment variables (yes/no)
+ssh_accept_locale_env: no
 # types of SSH TCP forwarding to allow (no, local, remote, all - QUOTED)
 # remote/all is required to use the host as a jumpbox
 ssh_allow_tcp_forwarding: "no"
@@ -1065,11 +1067,35 @@ matrix_firewalld_zones:
   - zone: public
     state: disabled
 
+##### LDAP AUTHENTICATION #####
+# enable/disable LDAP authentication (yes/no)
+matrix_synapse_ldap: no
+# if LDAP authentication is enabled, the following options must be set
+# LDAP server URI
+matrix_synapse_ldap_uri: "ldaps://{{ openldap_fqdn | default('ldap.CHANGEME.org') }}:636"
+# use STARTTLS to connect to the LADP server
+matrix_synapse_ldap_starttls: yes
+# base DN to look for users in the LDAP directory
+matrix_synapse_base_dn: "ou=users,dc=CHANGEME,dc=org"
+# LDAP attributes corresponding to the `uid, mail, name` matrix properties
+matrix_synapse_ldap_uid_attr: "cn"
+matrix_synapse_ldap_mail_attr: "mail"
+matrix_synapse_ldap_name_attr: "givenName"
+# bind username and password to authenticate to the LDAP server
+matrix_synapse_ldap_bind_dn: "cn=bind,ou=system,dc=CHANGEME,dc=org"
+matrix_synapse_ldap_bind_password: "{{ openldap_bind_password | default('CHANGEME') }}"
+# login filter used to lookup valid users in the LDAP directory
+matrix_synapse_ldap_filter: "(objectClass=posixAccount)"
+# verify validity of SSL/TLS certificates presented by the LDAP server
+matrix_synapse_ldap_validate_certs: yes
+
+##### SYNAPSE-ADMIN #####
 # enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
 matrix_synapse_admin_version: "0.8.7"
 
+##### ELEMENT #####
 # fully qualified domain name of the element application instance
 matrix_element_fqdn: "chat.CHANGEME.org"
 # mode for element video rooms (jitsi/element_call)
@@ -1080,7 +1106,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.43"
+matrix_element_version: "1.11.44"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1264,6 +1290,8 @@ netdata_fping_ping_every: 5000
 netdata_fping_update_every: 10
 # Do not send notifications on ping check failures (yes/no)
 netdata_fping_alarms_silent: no
+# aggregate netdata error/health/collector logs to syslog (very verbose) (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+netdata_log_to_syslog: no
 
 ## NETDATA STREAMING ##
 # stream charts to a "parent" netdata instance (yes/no)
