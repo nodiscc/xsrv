@@ -111,3 +111,4 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
   changed_when: yes
+  timeout: 10
