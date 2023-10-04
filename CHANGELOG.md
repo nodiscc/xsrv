@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.45 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.45)
 - graylog: update to v5.1 [[1]](https://graylog.org/post/announcing-graylog-v5-1/) [[2]](https://graylog.org/videos/whats-new-in-v5-1/) [[3]](https://graylog.org/post/announcing-graylog-v5-1-1/) [[4]](https://graylog.org/post/announcing-graylog-v5-1-2/) [[5]](https://graylog.org/post/announcing-graylog-v5-1-3/) [[6]](https://graylog.org/post/announcing-graylog-v5-1-4/) [[7]](https://graylog.org/post/announcing-graylog-v5-1-5/)
 - openldap: update ldap-account-manager to [v8.5](https://github.com/LDAPAccountManager/lam/releases/tag/8.5)
+- postgresql: update pgmetrics to [v1.16.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.16.0)
 
 **Fixed:**
 - jitsi: fixed jitsi-videobridge sometimes failing to connect to prosody (`org.jivesoftware.smack.sasl.SASLErrorException: SASLError using SCRAM-SHA-1: not-authorized`) - force updating jvb prosody password
