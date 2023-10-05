@@ -629,7 +629,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.20.4"
+gitea_version: "1.20.5"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1128,7 +1128,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.44"
+matrix_element_version: "1.11.45"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1607,7 +1607,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.4"
+ldap_account_manager_version: "8.5"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1680,7 +1680,7 @@ self_service_password_enable_service: yes
 # start/stop the postgresql service, enable/disable it on boot (yes/no)
 postgresql_enable_service: yes
 # pgmetrics version (https://github.com/rapidloop/pgmetrics/releases.atom, without leading v)
-postgresql_pgmetrics_version: "1.15.2"
+postgresql_pgmetrics_version: "1.16.0"
 ```
 
 
@@ -1965,7 +1965,7 @@ wireguard_enable_service: yes
 #   - name: client1 # arbitrary name for the peer
 #     state: present # optional, default present. set to absent to remove the peer
 #     public_key: Faz...4vEQ= # the public key of the peer (contents of its wireguard.pub)
-#     ip_address: "10.200.200.10/32" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
+#     ip_address: "10.200.200.10" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
 #     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/network to route through the VPN on the client
 wireguard_peers: []
 
