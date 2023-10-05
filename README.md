@@ -45,6 +45,7 @@ This project provides:
 - [mumble](roles/mumble) - Low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [openldap](roles/openldap) - LDAP directory server and web management tools
+- [podman](roles/podman) - OCI container engine and management tools
 - [postgresql](roles/postgresql) - PostgreSQL database engine
 - [readme_gen](roles/readme_gen) - add an inventory of hosts and services to the project's README.md
 - [samba](roles/samba) - Cross-platform file sharing server

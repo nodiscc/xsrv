@@ -1,0 +1,24 @@
+# @tag podman - setup podman container engine
+# @tag utils-podman-uninstall - (manual) uninstall podman container engine
+
+galaxy_info:
+  role_name: podman
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "OCI container engine and management tools"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - containers
+    - docker
+    - podman
+    - orchestration
+    - server
+    - virtualization
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common
+  # - nodiscc.xsrv.monitoring

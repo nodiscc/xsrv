@@ -18,6 +18,7 @@
     - nodiscc.xsrv.transmission # bittorrent client
     - nodiscc.xsrv.mumble # VoIP/voice chat server
     - nodiscc.xsrv.docker # application containerization
+    - nodiscc.xsrv.podman # OCI container engine
     - nodiscc.xsrv.matrix # real-time secure communication server and web client
     - nodiscc.xsrv.jellyfin # media server
     - nodiscc.xsrv.jitsi # video conferencing solution

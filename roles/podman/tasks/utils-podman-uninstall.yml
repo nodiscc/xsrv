@@ -1,0 +1,16 @@
+- name: uninstall podman packages
+  apt:
+    state: absent
+    package:
+      - podman
+      - uidmap
+      - slirp4netns
+
+- name: remove podman configuration
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /etc/sysctl.d/podman.conf
+    - /etc/containers
+  notify: apply sysctl configuration

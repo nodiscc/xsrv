@@ -1,0 +1,17 @@
+- name: include variable check tasks
+  import_tasks: checks.yml
+  tags: podman
+
+- name: include podman configuration tasks
+  import_tasks: podman.yml
+  become: yes
+  tags: podman
+
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include podman uninstallation tasks
+  import_tasks: utils-podman-uninstall.yml
+  become: yes
+  tags:
+    - never
+    - utils-podman-uninstall

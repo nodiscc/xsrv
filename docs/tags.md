@@ -61,6 +61,7 @@ nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
 openldap - setup LDAP server
 packages - additional package istallation/removal
+podman - setup podman container engine
 postgresql - setup postgresql database server
 readme_gen - add hosts information to the project's README.md
 rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
@@ -94,6 +95,7 @@ utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics
+utils-podman-uninstall - (manual) uninstall podman container engine
 utils-samba-listusers - (manual) list samba users
 wireguard - setup wireguard
 ```
