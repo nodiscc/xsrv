@@ -1,0 +1,4 @@
+sphinx
+myst-parser
+sphinx_external_toc
+sphinx_rtd_theme

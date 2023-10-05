@@ -14,7 +14,7 @@ html_show_copyright = True
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['recommonmark', 'sphinx_rtd_theme']
+extensions = ['myst_parser', 'sphinx_rtd_theme', 'sphinx_external_toc']
 
 # Only parse .md files
 source_suffix = ['.md']
@@ -65,19 +65,3 @@ html_context = {
 }
 
 exclude_patterns = []
-
-# Load the recommonmark auto TOC generator
-# It will find any section named as defined in 'auto_toc_tree_section',
-# find any bullet lists of relative markdown links
-# And use it to generate a TOC and populate the sidebar
-from recommonmark.parser import CommonMarkParser
-from recommonmark.transform import AutoStructify
-def setup(app):
-    app.add_config_value('recommonmark_config', {
-        'enable_auto_toc_tree': True,
-        'auto_toc_tree_section': 'Documentation',
-        'auto_toc_maxdepth': 1, # Defines in-place generated TOC depth, not the sidebar depth
-    }, True)
-    app.add_transform(AutoStructify)
-
-#TODO markdown tables are note rendered in sphinx

@@ -1,0 +1,24 @@
+root: index.md
+entries:
+  - file: installation.md
+    title: Installation
+  - file: installation/server-preparation.md
+    title: Server preparation
+  - file: installation/controller-preparation.md
+    title: Controller preparation
+  - file: installation/first-project.md
+    title: First project
+  - file: usage.md
+    title: Usage
+  - file: configuration-variables.md
+    title: Configuration variables
+  - file: tags.md
+    title: Tags
+  - file: maintenance.md
+    title: Maintenance
+  - file: contributing.md
+    title: Contributing
+  - file: appendices.md
+    title: Appendices
+  - url: https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md
+    title: Changelog
