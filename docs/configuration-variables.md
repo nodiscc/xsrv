@@ -215,14 +215,14 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
   - "origin=packagecloud.io/netdata/netdata,label=netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
-  - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
-  - "o=Docker,site=download.docker.com" # nodiscc.xsrv.docker
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
   - "o=matrix.org,site=packages.matrix.org" # nodiscc.xsrv.matrix
+  - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
+  - "o=Docker,site=download.docker.com" # nodiscc.toolbox.docker
 
 # yes/no: setup apt-listbugs
 apt_listbugs: no
@@ -548,32 +548,6 @@ dnsmasq_listen_addresses: []
 # yes/no: use DNSSEC to validate answers to DNS queries
 # if enabled, dig @127.0.1.1 dnssec-failed.org should return SERVFAIL
 dnsmasq_dnssec: yes
-```
-
-
-[roles/docker/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml)
-
-```yaml
-##### DOCKER CONTAINER ENGINE #####
-# Docker release channel (stable/edge)
-docker_apt_release_channel: stable
-docker_apt_arch: amd64
-# A list of users who will be added to the docker group
-docker_users: []
-# start/stop docker service, enable/disable it on boot (yes/no)
-docker_enable_service: yes
-# the log driver for the docker daemon (none/local/json-file/syslog/journaled/gelf/fluentd/awslogs/splunk/etwlogs/gcplogs/logentries)
-docker_log_driver: "syslog"
-# docker swarm settings (accepts all parameters from https://docs.ansible.com/ansible/latest/collections/community/general/docker_swarm_module.html)
-docker_swarm:
-  state: "present"
-# enable nightly prune of unused networks/images/stopped containers/build cache (yes/no)
-docker_prune_nightly: yes
-# allow docker to configure iptables rules automatically (yes/no)
-docker_iptables: no
-# Expected minimum/maximum number of running docker containers (if the host has the monitoring_netdata role)
-netdata_min_running_docker_containers: 0
-netdata_max_running_docker_containers: 99999
 ```
 
 

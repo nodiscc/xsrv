@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v1.18.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.18.0) - UNRELEASED
 
+**Upgrade procedure:**
+- **docker:** if you want to keep using the [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) is now the recommended role for container management.
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
 **Added:**
 - add [`gitea_act_runner`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) role (Gitea Actions CI/CD runner)
 - add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker))
@@ -15,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker#uninstallation))
 
 **Removed:**
+- docker: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - apache: remove remove ability to install/configure `mod-evasive` anti-DDoS module
 
 **Changed:**
