@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- graylog: don't perform mnogodb backups when the graylog/mongodb service is disabled on the host configuration ([`graylog_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - gitea: update to v 1.20.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.5)
 - matrix: update element-web to v1.11.45 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.45)
 - graylog: update to v5.1 [[1]](https://graylog.org/post/announcing-graylog-v5-1/) [[2]](https://graylog.org/videos/whats-new-in-v5-1/) [[3]](https://graylog.org/post/announcing-graylog-v5-1-1/) [[4]](https://graylog.org/post/announcing-graylog-v5-1-2/) [[5]](https://graylog.org/post/announcing-graylog-v5-1-3/) [[6]](https://graylog.org/post/announcing-graylog-v5-1-4/) [[7]](https://graylog.org/post/announcing-graylog-v5-1-5/)
