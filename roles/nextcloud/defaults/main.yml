@@ -37,6 +37,8 @@ nextcloud_defaultapp: 'dashboard,files'
 nextcloud_loglevel: 1
 # workaround for old nextcloud-desktop clients which don't support TLSv1.3
 nextcloud_allow_tls12: true
+# automatically check the filesystem/data directory for changes made outside Nextcloud (no/yes)
+nextcloud_filesystem_check_changes: no
 # Nextcloud applications to enable or disable
 #   state: enable/disable
 #   app: nextcloud app name

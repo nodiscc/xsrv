@@ -27,3 +27,4 @@
     - nextcloud_php_post_max_size|regex_search('[KMG]$')
     - nextcloud_php_upload_max_filesize|regex_search('[KMG]$')
     - nextcloud_enable_service == nextcloud_enable_service | bool
+    - nextcloud_filesystem_check_changes == nextcloud_filesystem_check_changes | bool

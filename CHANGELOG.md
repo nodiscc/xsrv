@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: allow setting up LDAP authentication backend for synapse ([`matrix_synapse_ldap_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml))
 - netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker#uninstallation))
+- nextcloud: allow automatically checking the filesystem/data directory for changes made outside Nextcloud ([`nextcloud_filesystem_check_changes: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 
 **Removed:**
 - docker: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
