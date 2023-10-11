@@ -36,6 +36,7 @@ _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui
 - openldap: update ldap-account-manager to [v8.5](https://github.com/LDAPAccountManager/lam/releases/tag/8.5)
 - postgresql: update pgmetrics to [v1.16.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.16.0)
 - netdata: update netdata-apt to v1.1.2 [[1]](https://gitlab.com/nodiscc/netdata-apt/-/commit/63e25372a4377ff5a32d91e8393275a37091c1cf)
+- xsrv: upgrade ansible to [v8.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 
 **Fixed:**
 - jitsi: fixed jitsi-videobridge sometimes failing to connect to prosody (`org.jivesoftware.smack.sasl.SASLErrorException: SASLError using SCRAM-SHA-1: not-authorized`) - force updating jvb prosody password
