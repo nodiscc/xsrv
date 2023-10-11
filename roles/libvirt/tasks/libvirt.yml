@@ -12,6 +12,7 @@
       - ksmtuned
       - qemu-system-modules-spice
       - virtiofsd
+      - libguestfs-tools
       # - ebtables
       # - virt-manager # graphical environments only
       # - virt-viewer # graphical environments only

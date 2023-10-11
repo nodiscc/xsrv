@@ -649,6 +649,21 @@ init_vm_template() {
     sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
     sudo chmod 0660 "$storage_path/$name.qcow2"
     virt-sysprep --connect qemu:///system --domain "$name"
+    echo "[xsrv] INFO: configuring video console and SPICE display..."
+    # Update GRUB to output to both video (tty0) and serial (ttyS0), enable Getty on tty0
+    sudo virt-customize --connect qemu:///system -a "$storage_path/$name.qcow2" \
+        --run-command "set -e; sed -i 's/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"console=tty0 console=ttyS0,115200n8\"/' /etc/default/grub && update-grub && systemctl enable getty@tty0.service"
+    # Video and graphics devices must be in domain XML at definition time (no live/config attach supported).
+    # Inject them into the domain XML via dumpxml + define.
+    virsh dumpxml "$name" | sed '/<devices[ >]/a\
+    <video>\
+      <model type="qxl" ram="65536" vram="65536" vgamem="16384" heads="1" primary="yes"/>\
+    </video>\
+    <graphics type="spice" autoport="yes" listen="127.0.0.1">\
+      <listen type="address" address="127.0.0.1"/>\
+      <image compression="off"/>\
+      <gl enable="no"/>\
+    </graphics>' | virsh define "$name" || exit 1
     echo "[xsrv] INFO password for $sudo_user: $sudo_password"
     echo "[xsrv] INFO: password for root: $root_password"
 }
