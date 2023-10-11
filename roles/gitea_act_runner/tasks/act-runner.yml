@@ -103,7 +103,7 @@
   changed_when: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: register the runner on the gitea instance
+- name: register the runner on the gitea instance (if this fails make sure that the actions API is enabled on the gitea instance)
   become: yes
   become_user: act-runner
   command: /usr/local/bin/act-runner --config /etc/act-runner/config.yaml register --no-interactive --instance https://{{ gitea_act_runner_gitea_instance_url }} --token {{ gitea_actions_generate_runner_token.stdout }}
