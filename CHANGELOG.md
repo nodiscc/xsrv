@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.18.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.18.0) - 2023-10-11
 
 **Upgrade procedure:**
-- **docker:** if you want to keep using the [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) is now the recommended role for container management.
+- **docker:** if you want to keep using the [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) is now the recommended role for container management.
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
