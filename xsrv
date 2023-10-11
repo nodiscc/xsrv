@@ -630,6 +630,9 @@ init_vm_template() {
     sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
     sudo chmod 0660 "$storage_path/$name.qcow2"
     virt-sysprep --connect qemu:///system --domain "$name"
+    echo "[xsrv] INFO: adding video device and spice display..."
+    virsh attach-device --config --domain "$name" <(echo "<video><model type='virtio' heads='1' primary='yes'/><address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/></video>")
+    virsh attach-device --config --domain "$name" <(echo "<graphics type='spice' autoport='yes' listen='127.0.0.1'><listen type='address' address='127.0.0.1'/><image compression='off'/><gl enable='no'/></graphics>")
     echo "[xsrv] INFO password for $sudo_user: $sudo_password"
     echo "[xsrv] INFO: password for root: $root_password"
 }
