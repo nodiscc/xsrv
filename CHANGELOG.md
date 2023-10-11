@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - apache: remove remove ability to install/configure `mod-evasive` anti-DDoS module
 
 **Changed:**
+- common: datetime: replace `ntpd` time synchronization service by `systemd-timesyncd`
 - common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - graylog: don't perform mongodb backups when the graylog/mongodb service is disabled on the host configuration ([`graylog_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - gitea: update to v 1.20.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.5)

@@ -5,16 +5,14 @@
     name: "{{ timezone }}"
   when: timezone is defined
 
-- name: install NTP time synchronization service
+- name: install systemd-timesyncd time synchronization service
   apt:
     state: present
-    package:
-      - ntp
-      - ntpdate
+    package: systemd-timesyncd
 
-- name: start NTP time synchronization service
+- name: start systemd-timesyncd time synchronization service
   service:
-    name: ntp
+    name: systemd-timesyncd
     state: started
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
