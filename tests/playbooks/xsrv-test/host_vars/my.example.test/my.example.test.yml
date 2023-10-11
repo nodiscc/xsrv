@@ -7,6 +7,7 @@
 # ansible_port: 22
 ##### GITEA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml
 gitea_fqdn: "git.example.test"
+gitea_enable_actions: yes
 ##### HOMEPAGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml
 homepage_fqdn: "www.example.test"
 ##### JELLYFIN - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml
