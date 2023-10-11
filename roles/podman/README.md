@@ -19,7 +19,7 @@ See [meta/main.yml](meta/main.yml)
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
-_Note: the `podman` role will ask you to first [uninstall the `docker` role](../docker/#uninstallation) if it is deployed to the host._
+_Note: the `podman` role will ask you to first [uninstall the `docker` role](../docker/README.md#uninstallation) if it is deployed to the host._
 
 ## Usage
 
