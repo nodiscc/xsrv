@@ -5,6 +5,9 @@
     permanent: yes
   notify: reload firewalld
 
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
 - name: add wireguard interface to wireguard firewalld zone
   firewalld:
     zone: wireguard
