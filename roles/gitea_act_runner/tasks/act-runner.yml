@@ -101,6 +101,7 @@
   register: gitea_actions_generate_runner_token
   when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
   changed_when: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: register the runner on the gitea instance
   become: yes
