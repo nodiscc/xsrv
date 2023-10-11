@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+_Note: the collection will no longer be updated on https://galaxy.ansible.com/ui/repo/published/nodiscc/xsrv/ until https://github.com/ansible/galaxy/issues/2438 is fixed, please use the git repository URL in your `requirements.yml`, as documented in https://xsrv.readthedocs.io/en/latest/usage.html#use-as-ansible-collection._
+
 **Added:**
 - add [`gitea_act_runner`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) role (Gitea Actions CI/CD runner)
 - add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker))
