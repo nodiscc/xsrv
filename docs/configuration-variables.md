@@ -1102,7 +1102,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.45"
+matrix_element_version: "1.11.46"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1467,6 +1467,8 @@ nextcloud_defaultapp: 'dashboard,files'
 nextcloud_loglevel: 1
 # workaround for old nextcloud-desktop clients which don't support TLSv1.3
 nextcloud_allow_tls12: true
+# automatically check the filesystem/data directory for changes made outside Nextcloud (no/yes)
+nextcloud_filesystem_check_changes: no
 # Nextcloud applications to enable or disable
 #   state: enable/disable
 #   app: nextcloud app name
