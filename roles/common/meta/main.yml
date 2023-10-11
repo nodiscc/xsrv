@@ -15,6 +15,8 @@
 # @tag mail - setup outgoing system mail
 # @tag msmtp - setup outgoing system mail
 # @tag services - start/stop/enable/disable services
+# @tag utils-apt-unattended-upgrade - (manual) run unattended-upgrade now
+# @tag utils-apt-upgrade - (manual) run apt upgrade now
 # @tag utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 # @tag utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 # @tag utils-fail2ban-get-banned - (manual) download the list of banned IPs

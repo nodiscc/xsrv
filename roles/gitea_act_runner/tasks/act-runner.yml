@@ -1,0 +1,115 @@
+# installation/setup tasks for EXAMPLE component, such as:
+# - install packages
+# - download binaries/zips
+# - verify binary downloads using checksums and/or GPG keys
+# - create users/groups
+# - create configuration/data directories
+# - install binaries to $PATH
+# - copy configuration files
+# - create databases/tables
+# - create application admin/user accounts
+# - start/stop service
+
+- name: create act-runner user
+  user:
+    name: act-runner
+    system: yes
+    shell: '/bin/bash'
+    comment: 'Gitea Actions runner'
+    password: '*'
+    home: '/var/lib/act-runner'
+
+- name: download act-runner binary
+  get_url:
+    url: "https://dl.gitea.com/act_runner/0.2.3/act_runner-0.2.3-linux-amd64"
+    dest: "/root/act_runner-0.2.3-linux-amd64"
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: install act-runner binary
+  copy:
+    src: "/root/act_runner-0.2.3-linux-amd64"
+    dest: "/usr/local/bin/act-runner"
+    mode: "0755"
+    remote_src: yes
+    owner: root
+    group: root
+  notify: restart act-runner
+  when: not ansible_check_mode
+
+- name: create act-runner configuration directory
+  file:
+    state: directory
+    path: /etc/act-runner
+    owner: root
+    group: act-runner
+    mode: "0770"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy act-runner configuration
+  template:
+    src: etc_act-runner_config.yaml.j2
+    dest: /etc/act-runner/config.yaml
+    owner: root
+    group: act-runner
+    mode: "0640"
+  notify: restart act-runner
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy CA certificates store file to act-runner configuration directory
+  copy:
+    remote_src: yes
+    src: /etc/ssl/certs/ca-certificates.crt
+    dest: /etc/act-runner/ca-certificates.crt
+    owner: root
+    group: act-runner
+    mode: "0640"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### SERVICES #####
+
+- name: install act-runner systemd service/unit file
+  template:
+    src: "etc_systemd_system_act-runner.service.j2"
+    dest: "/etc/systemd/system/act-runner.service"
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart act-runner
+
+# re-read systemd service configuration
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable/disable start/stop act-runner service
+  systemd:
+    name: act-runner
+    enabled: "{{ gitea_act_runner_enable_service }}"
+    state: "{{ 'started' if gitea_act_runner_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### RUNNER REGISTRATION #####
+
+- name: generate gitea actions runner token
+  become: yes
+  become_user: gitea
+  delegate_to: "{{ gitea_act_runner_gitea_instance_hostname | default(inventory_hostname) }}"
+  command:
+    cmd: gitea --config /etc/gitea/app.ini actions generate-runner-token
+  register: gitea_actions_generate_runner_token
+  when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
+  changed_when: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: register the runner on the gitea instance (if this fails make sure that the actions API is enabled on the gitea instance)
+  become: yes
+  become_user: act-runner
+  command: /usr/local/bin/act-runner --config /etc/act-runner/config.yaml register --no-interactive --instance https://{{ gitea_act_runner_gitea_instance_url }} --token {{ gitea_actions_generate_runner_token.stdout }}
+  args:
+    chdir: "/var/lib/act-runner"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
+  changed_when: yes
+  timeout: 10

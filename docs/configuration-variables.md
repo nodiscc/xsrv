@@ -15,8 +15,6 @@ apache_listen_http: yes
 apache_allow_robots: no
 # start/stop the apache webserver, enable/disable it on boot (yes/no)
 apache_enable_service: yes
-# yes/no: enable mod_evasive for basic DoS protection (can interfere with legitimate traffic)
-apache_enable_mod_evasive: no
 # e-mail address to register a letsencrypt.org account
 apache_letsencrypt_email: "CHANGEME"
 # enable HTTP Strict-Transport-Security for websites using letsencrypt.org certificates (yes/no)
@@ -217,14 +215,14 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
   - "origin=packagecloud.io/netdata/netdata,label=netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
-  - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
-  - "o=Docker,site=download.docker.com" # nodiscc.xsrv.docker
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
   - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
   - "o=matrix.org,site=packages.matrix.org" # nodiscc.xsrv.matrix
+  - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
+  - "o=Docker,site=download.docker.com" # nodiscc.toolbox.docker
 
 # yes/no: setup apt-listbugs
 apt_listbugs: no
@@ -320,6 +318,8 @@ ssh_server_revoked_keys: []
 # sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
 ssh_log_level: "VERBOSE"
 ssh_sftp_loglevel: "INFO"
+# allow clients to set locale/language-related environment variables (yes/no)
+ssh_accept_locale_env: no
 # types of SSH TCP forwarding to allow (no, local, remote, all - QUOTED)
 # remote/all is required to use the host as a jumpbox
 ssh_allow_tcp_forwarding: "no"
@@ -551,29 +551,23 @@ dnsmasq_dnssec: yes
 ```
 
 
-[roles/docker/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml)
+[roles/gitea_act_runner/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
 
 ```yaml
-##### DOCKER CONTAINER ENGINE #####
-# Docker release channel (stable/edge)
-docker_apt_release_channel: stable
-docker_apt_arch: amd64
-# A list of users who will be added to the docker group
-docker_users: []
-# start/stop docker service, enable/disable it on boot (yes/no)
-docker_enable_service: yes
-# the log driver for the docker daemon (none/local/json-file/syslog/journaled/gelf/fluentd/awslogs/splunk/etwlogs/gcplogs/logentries)
-docker_log_driver: "syslog"
-# docker swarm settings (accepts all parameters from https://docs.ansible.com/ansible/latest/collections/community/general/docker_swarm_module.html)
-docker_swarm:
-  state: "present"
-# enable nightly prune of unused networks/images/stopped containers/build cache (yes/no)
-docker_prune_nightly: yes
-# allow docker to configure iptables rules automatically (yes/no)
-docker_iptables: no
-# Expected minimum/maximum number of running docker containers (if the host has the monitoring_netdata role)
-netdata_min_running_docker_containers: 0
-netdata_max_running_docker_containers: 99999
+##### GITEA ACTIONS RUNNER #####
+# FQDN of the gitea instance to register the runner on
+gitea_act_runner_gitea_instance_url: "{{ gitea_fqdn | default('git.CHANGEME.org') }}" # TODO rename to _domain
+# inventory hostname of the gitea host to register the runner on (if different from the runner host)
+# gitea_act_runner_gitea_instance_hostname: "CHANGEME"
+# act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
+gitea_act_runner_version: "0.2.6"
+# start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
+gitea_act_runner_enable_service: yes
+# container engine to use (docker/podman)
+gitea_act_runner_container_engine: "podman"
+# network to which the containers managed by act-runner will connect (host/bridge/custom)
+# set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
+gitea_actions_runner_container_network: "host"
 ```
 
 
@@ -609,7 +603,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.20.4"
+gitea_version: "1.20.5"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -638,6 +632,8 @@ gitea_issue_paging_num: 20
 gitea_enable_api: "true"
 # max number of items in API responses
 gitea_api_max_results: 1000
+# enable the built-in Gitea Actions CI/CD system (yes/no)
+gitea_enable_actions: no
 # The minimum password length for new Users
 gitea_min_password_length: 10
 # comma-separated list of charactacter classes required in passwords (lower,upper,digit,spec or off)
@@ -1067,11 +1063,35 @@ matrix_firewalld_zones:
   - zone: public
     state: disabled
 
+##### LDAP AUTHENTICATION #####
+# enable/disable LDAP authentication (yes/no)
+matrix_synapse_ldap: no
+# if LDAP authentication is enabled, the following options must be set
+# LDAP server URI
+matrix_synapse_ldap_uri: "ldaps://{{ openldap_fqdn | default('ldap.CHANGEME.org') }}:636"
+# use STARTTLS to connect to the LADP server
+matrix_synapse_ldap_starttls: yes
+# base DN to look for users in the LDAP directory
+matrix_synapse_base_dn: "ou=users,dc=CHANGEME,dc=org"
+# LDAP attributes corresponding to the `uid, mail, name` matrix properties
+matrix_synapse_ldap_uid_attr: "cn"
+matrix_synapse_ldap_mail_attr: "mail"
+matrix_synapse_ldap_name_attr: "givenName"
+# bind username and password to authenticate to the LDAP server
+matrix_synapse_ldap_bind_dn: "cn=bind,ou=system,dc=CHANGEME,dc=org"
+matrix_synapse_ldap_bind_password: "{{ openldap_bind_password | default('CHANGEME') }}"
+# login filter used to lookup valid users in the LDAP directory
+matrix_synapse_ldap_filter: "(objectClass=posixAccount)"
+# verify validity of SSL/TLS certificates presented by the LDAP server
+matrix_synapse_ldap_validate_certs: yes
+
+##### SYNAPSE-ADMIN #####
 # enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
 matrix_synapse_admin_version: "0.8.7"
 
+##### ELEMENT #####
 # fully qualified domain name of the element application instance
 matrix_element_fqdn: "chat.CHANGEME.org"
 # mode for element video rooms (jitsi/element_call)
@@ -1082,7 +1102,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.43"
+matrix_element_version: "1.11.46"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1266,6 +1286,8 @@ netdata_fping_ping_every: 5000
 netdata_fping_update_every: 10
 # Do not send notifications on ping check failures (yes/no)
 netdata_fping_alarms_silent: no
+# aggregate netdata error/health/collector logs to syslog (very verbose) (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+netdata_log_to_syslog: no
 
 ## NETDATA STREAMING ##
 # stream charts to a "parent" netdata instance (yes/no)
@@ -1445,6 +1467,8 @@ nextcloud_defaultapp: 'dashboard,files'
 nextcloud_loglevel: 1
 # workaround for old nextcloud-desktop clients which don't support TLSv1.3
 nextcloud_allow_tls12: true
+# automatically check the filesystem/data directory for changes made outside Nextcloud (no/yes)
+nextcloud_filesystem_check_changes: no
 # Nextcloud applications to enable or disable
 #   state: enable/disable
 #   app: nextcloud app name
@@ -1559,7 +1583,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.4"
+ldap_account_manager_version: "8.5"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1632,7 +1656,7 @@ self_service_password_enable_service: yes
 # start/stop the postgresql service, enable/disable it on boot (yes/no)
 postgresql_enable_service: yes
 # pgmetrics version (https://github.com/rapidloop/pgmetrics/releases.atom, without leading v)
-postgresql_pgmetrics_version: "1.15.2"
+postgresql_pgmetrics_version: "1.16.0"
 ```
 
 
@@ -1917,7 +1941,7 @@ wireguard_enable_service: yes
 #   - name: client1 # arbitrary name for the peer
 #     state: present # optional, default present. set to absent to remove the peer
 #     public_key: Faz...4vEQ= # the public key of the peer (contents of its wireguard.pub)
-#     ip_address: "10.200.200.10/32" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
+#     ip_address: "10.200.200.10" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
 #     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/network to route through the VPN on the client
 wireguard_peers: []
 

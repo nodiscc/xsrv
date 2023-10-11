@@ -59,6 +59,17 @@
     - netdata-apt
   when: setup_netdata_apt | bool
 
+- name: include rsyslog configuration tasks
+  import_tasks: rsyslog.yml
+  become: yes
+  tags:
+    - netdata
+    - rsyslog
+    - monitoring
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed | bool
+
 - name: include firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes

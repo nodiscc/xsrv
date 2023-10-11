@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.20.0 yamllint ansible==8.4.0
+	pip3 install isort ansible-lint==6.20.3 yamllint ansible==8.5.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -222,7 +222,7 @@ BUILDDIR      = doc/html  # destination directory (html)
 doc_html: doc_md
 	python3 -m venv .venv/ && \
 	source .venv/bin/activate && \
-	pip3 install sphinx recommonmark sphinx_rtd_theme && \
+	pip3 install sphinx myst-parser sphinx_external_toc sphinx_rtd_theme && \
 	sphinx-build -c docs/ -b html docs/ docs/html
 
 ### MANUAL/UTILITY TARGETS ###

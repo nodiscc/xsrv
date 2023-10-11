@@ -1,0 +1,21 @@
+- name: run unattended-upgrades now
+  command:
+    cmd: /usr/bin/unattended-upgrade --verbose
+  register: unattended_upgrade
+  changed_when: '"No packages found that can be upgraded unattended and no pending auto-removals" not in unattended_upgrade.stdout'
+  environment:
+    LANG: C
+    LC_ALL: C
+    LANGUAGE: C
+
+- name: list and display upgradable packages
+  block:
+    - name: list upgradable packages
+      command:
+        cmd: apt list --upgradable
+      register: apt_upgradable
+      changed_when: no
+      check_mode: no
+    - name: display upgradable packages
+      debug:
+        msg: "{{ apt_upgradable.stdout }}"

@@ -1,0 +1,28 @@
+- name: include variable checks tasks
+  import_tasks: checks.yml
+  tags:
+    - gitea
+    - gitea_act_runner
+    - checks
+
+- name: include act-runner configuration tasks
+  import_tasks: act-runner.yml
+  become: yes
+  tags:
+    - gitea
+    - gitea_act_runner
+
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags:
+    - gitea
+    - gitea_act_runner
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - gitea
+    - gitea_act_runner
+    - monitoring
+    - fail2ban

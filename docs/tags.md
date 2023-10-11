@@ -6,7 +6,6 @@
   ╹ ╹┗━┛╹┗╸┗┛ v1.17.0
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
 TAGS:
-apache-mod-evasive - setup apache anti-DoS module
 apache-reverseproxy - setup apache custom reverseproxies
 apache - setup the apache web server
 apt-listbugs - configure apt-listbugs bug prevention tool
@@ -18,11 +17,11 @@ cron - configure cron task scheduler
 datetime - setup date/time configuration
 dnsmasq - setup dnsmasq DNS server
 dns - setup DNS resolution
-docker - setup docker engine
 dovecot - setup dovecot MDA/IMAP server
 element - setup element matrix web chat client
 fail2ban - setup fail2ban intrusion prevention system
 firewall - setup firewall
+gitea_act_runner - setup gitea CI/CD runner (act-runner)
 gitea-config - update gitea configuration
 gitea - setup gitea git service/software forge
 goaccess - setup goaccess web log analyzer/viewer
@@ -61,6 +60,7 @@ nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
 openldap - setup LDAP server
 packages - additional package istallation/removal
+podman - setup podman container engine
 postgresql - setup postgresql database server
 readme_gen - add hosts information to the project's README.md
 rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
@@ -82,6 +82,8 @@ sysctl - setup sysctl kernel configuration
 transmission - setup transmission bittorrent client
 tt_rss - setup tt-rss feed reader
 users - setup users and groups
+utils-apt-unattended-upgrade - (manual) run unattended-upgrade now
+utils-apt-upgrade - (manual) run apt upgrade now
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
@@ -91,6 +93,7 @@ utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics
+utils-podman-uninstall - (manual) uninstall podman container engine
 utils-samba-listusers - (manual) list samba users
 wireguard - setup wireguard
 ```

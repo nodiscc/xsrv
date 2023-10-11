@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.18.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.18.0) - 2023-10-11
+
+**Upgrade procedure:**
+- **docker:** if you want to keep using the [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) is now the recommended role for container management.
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+_Note: the collection will no longer be updated on https://galaxy.ansible.com/ui/repo/published/nodiscc/xsrv/ until https://github.com/ansible/galaxy/issues/2438 is fixed, please use the git repository URL in your `requirements.yml`, as documented in https://xsrv.readthedocs.io/en/latest/usage.html#use-as-ansible-collection._
+
+**Added:**
+- add [`gitea_act_runner`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) role (Gitea Actions CI/CD runner)
+- add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker))
+- gitea: allow enabling built-in [Gitea Actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system ([`gitea_enable_actions: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- common: allow running `unattended-upgrade` or `apt upgrade` immediately ([`TAGS=utils-apt-unattended-upgrade,utils-apt-upgrade`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/README.md#usage))
+- matrix: allow setting up LDAP authentication backend for synapse ([`matrix_synapse_ldap_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml))
+- netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker#uninstallation))
+- nextcloud: allow automatically checking the filesystem/data directory for changes made outside Nextcloud ([`nextcloud_filesystem_check_changes: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
+
+**Removed:**
+- docker: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- apache: remove remove ability to install/configure `mod-evasive` anti-DDoS module
+
+**Changed:**
+- common: datetime: replace `ntpd` time synchronization service by `systemd-timesyncd`
+- common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- graylog: don't perform mongodb backups when the graylog/mongodb service is disabled on the host configuration ([`graylog_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- gitea: update to v 1.20.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.5)
+- matrix: update element-web to v1.11.46 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.45) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.46)
+- graylog: update to v5.1 [[1]](https://graylog.org/post/announcing-graylog-v5-1/) [[2]](https://graylog.org/videos/whats-new-in-v5-1/) [[3]](https://graylog.org/post/announcing-graylog-v5-1-1/) [[4]](https://graylog.org/post/announcing-graylog-v5-1-2/) [[5]](https://graylog.org/post/announcing-graylog-v5-1-3/) [[6]](https://graylog.org/post/announcing-graylog-v5-1-4/) [[7]](https://graylog.org/post/announcing-graylog-v5-1-5/)
+- openldap: update ldap-account-manager to [v8.5](https://github.com/LDAPAccountManager/lam/releases/tag/8.5)
+- postgresql: update pgmetrics to [v1.16.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.16.0)
+- netdata: update netdata-apt to v1.1.2 [[1]](https://gitlab.com/nodiscc/netdata-apt/-/commit/63e25372a4377ff5a32d91e8393275a37091c1cf)
+- xsrv: upgrade ansible to [v8.5.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
+
+**Fixed:**
+- jitsi: fixed jitsi-videobridge sometimes failing to connect to prosody (`org.jivesoftware.smack.sasl.SASLErrorException: SASLError using SCRAM-SHA-1: not-authorized`) - force updating jvb prosody password
+
+[Full changes since v1.17.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.17.0...1.18.0)
+
+------------------
+
+
 #### [v1.17.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.17.0) - 2023-09-21
 
 **Upgrade procedure:**

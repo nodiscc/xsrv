@@ -1,6 +1,5 @@
 # @tag apache - setup the apache web server
 # @tag ssl - setup SSL certificates and configuration
-# @tag apache-mod-evasive - setup apache anti-DoS module
 # @tag apache-reverseproxy - setup apache custom reverseproxies
 
 galaxy_info:

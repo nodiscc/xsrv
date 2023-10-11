@@ -141,3 +141,17 @@
   tags:
     - never
     - utils-fail2ban-get-banned
+
+- name: include immediate unattended-upgrade tasks
+  import_tasks: utils-apt-unattended-upgrade.yml
+  become: yes
+  tags:
+    - never
+    - utils-apt-unattended-upgrade
+
+- name: include immediate apt upgrade tasks
+  import_tasks: utils-apt-upgrade.yml
+  become: yes
+  tags:
+    - never
+    - utils-apt-upgrade

@@ -6,3 +6,8 @@
   become: yes
   when: gitea_enable_service
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: update CA certificates store
+  become: yes
+  command: update-ca-certificates
+  changed_when: yes

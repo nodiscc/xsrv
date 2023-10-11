@@ -206,6 +206,7 @@
     - { key: "upgrade.disable-web", value: "true", type: "boolean" }
     - { key: "simpleSignUpLink.shown", value: "false", type: "boolean" }
     - { key: "htaccess.rewritebase", value: "/" }
+    - { key: "filesystem_check_changes", value: "{{ '1' if nextcloud_filesystem_check_changes else '0' }}", type: "integer" }
     # - { key: "appstoreenabled", value: "true", type: "boolean" }
     # - { key: "enable_previews", value: "true", type: "boolean" }
     # - { key: "preview_max_x", value: "4096", type: "integer" }
@@ -236,7 +237,6 @@
     # - { key: "mail_smtpauth", value: "true", type: "boolean" }
     # - { key: "mail_smtpname", value: "noreply" }
     # - { key: "mail_smtppassword", value: "CHANGEME" }
-    # - { key: "filesystem_check_changes", value: "0", type: "integer" }
     # - { key: "filelocking.enabled", value: "true", type: "boolean" }
     # - { key: "filelocking.ttl", value: "3600", type: "integer" }
   no_log: "{{ item.no_log | default(False) }}"

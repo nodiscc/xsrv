@@ -1,0 +1,21 @@
+# rsyslog configuration for netdata logs
+
+{% if netdata_log_to_syslog %}
+input(type="imfile"
+      File="/var/log/netdata/error.log"
+      Tag="netdata:"
+      Facility="local0"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/netdata/health.log"
+      Tag="netdata-health:"
+      Facility="local0"
+      PersistStateInterval="0")
+
+input(type="imfile"
+      File="/var/log/netdata/collector.log"
+      Tag="netdata-collector:"
+      Facility="local0"
+      PersistStateInterval="0")
+{% endif %}

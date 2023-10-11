@@ -54,8 +54,8 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.17.0"
-ansible_version="8.4.0"
+version="1.18.0"
+ansible_version="8.5.0"
 xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
@@ -360,7 +360,7 @@ self_upgrade() {
 
 init_vm() {
     INIT_VM_USAGE="$0 init-vm  --name VM_NAME [--template debian12-base] --ip IP_ADDRESS [--netmask 24] [--gateway GATEWAY_IP] [--ssh-port VM_SSH_PORT] [--sudo-user deploy] [--sudo-password VM_SUDO_PASSWORD] [--ssh-pubkey 'ssh-rsa AAAAB...'] [--root-password VM_ROOT_PASSWORD] [--disk-path /path/to/my.CHANGEME.org.qcow2] [--memory 1G] [--vcpus NUM_CPU] [--dumpxml $projects_dir/VM_NAME.xml]
-        EXAMPLE: $0 init-vm --template debian12-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.254 --sudo-user deploy --sudo-password CHANGEME --ssh-pubkey 'ssh-rsa AAAAB...' --root-password CHANGEME --memory 3G --vcpus 4 [--dumpxml /playbooks/default/data/libvirt/VM_NAME.xml]
+        EXAMPLE: $0 init-vm --template debian12-base --name my.CHANGEME.org --ip 10.0.0.223 --netmask 24 --gateway 10.0.0.254 --sudo-user deploy --sudo-password CHANGEME --root-password CHANGEME --ssh-pubkey \$(cat ~/.ssh/id_ecdsa.pub) --memory 3G --vcpus 4 --dumpxml /playbooks/default/data/libvirt/my.CHANGEME.org.xml
         Initialize a libvirt VM from a template, configure resources/users/SSH access, and start the VM.
         Requirements: openssh-client sshpass libvirt virtinst libvirt-daemon-system libguestfs-tools pwgen netcat-openbsd util-linux
         --template      name of the template to create the new VM from (default debian12-base)

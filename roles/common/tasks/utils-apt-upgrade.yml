@@ -1,0 +1,15 @@
+- name: run apt upgrade now
+  apt:
+    upgrade: safe
+
+- name: list and display upgradable packages
+  block:
+    - name: list upgradable packages
+      command:
+        cmd: apt list --upgradable
+      register: apt_upgradable
+      changed_when: no
+      check_mode: no
+    - name: display upgradable packages
+      debug:
+        msg: "{{ apt_upgradable.stdout }}"

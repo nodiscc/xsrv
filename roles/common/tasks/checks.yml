@@ -29,6 +29,7 @@
     - ssh_permit_root_login in ['yes', 'no', 'without-password', 'prohibit-password', 'forced-commands-only']
     - setup_datetime == setup_datetime | bool
     - setup_sysctl == setup_sysctl | bool
+    - ssh_accept_locale_env == ssh_accept_locale_env | bool
     - ssh_allow_tcp_forwarding in ['no', 'local', 'remote', 'all']
     - ssh_authorized_keys|type_debug == "list"
     - ssh_log_level in ['QUIET', 'FATAL', 'ERROR', 'INFO', 'VERBOSE', 'DEBUG', 'DEBUG1', 'DEBUG2', 'DEBUG3']

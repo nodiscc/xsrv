@@ -1,0 +1,20 @@
+- name: install podman packages
+  apt:
+    state: present
+    package:
+      - podman
+      - uidmap
+      - slirp4netns
+
+- name: copy sysctl configuration (enable kernel.unprivileged_userns_clone)
+  template:
+    src: 'etc_sysctl.d_podman.conf.j2'
+    dest: '/etc/sysctl.d/podman.conf'
+    owner: root
+    group: root
+    mode: "0664"
+  notify: apply sysctl configuration
+
+# apply sysctl configuration
+- name: apply configuration (flush handlers)
+  meta: flush_handlers

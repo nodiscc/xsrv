@@ -14,6 +14,7 @@
     - matrix_synapse_homeserver_logs_to_syslog == matrix_synapse_homeserver_logs_to_syslog | bool
     - matrix_synapse_https_mode in ['selfsigned', 'letsencrypt']
     - matrix_synapse_enable_service == matrix_synapse_enable_service | bool
+    - matrix_synapse_ldap == matrix_synapse_ldap | bool
     - matrix_firewalld_zones | type_debug == "list"
     - matrix_element_version is string
     - matrix_element_enable_service == matrix_element_enable_service | bool
@@ -25,3 +26,20 @@
     - matrix_element_jitsi_preferred_domain is string
     - matrix_synapse_admin_enable_service == matrix_synapse_admin_enable_service | bool
     - matrix_synapse_admin_version is string
+
+- name: check that variables are correctly defined (LDAP authentication)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix"
+    that:
+      - matrix_synapse_ldap_uri is not search('CHANGEME')
+      - matrix_synapse_ldap_starttls == matrix_synapse_ldap_starttls | bool
+      - matrix_synapse_base_dn is not search('CHANGEME')
+      - matrix_synapse_ldap_uid_attr is string
+      - matrix_synapse_ldap_mail_attr is string
+      - matrix_synapse_ldap_name_attr is string
+      - matrix_synapse_ldap_bind_dn is not search('CHANGEME')
+      - matrix_synapse_ldap_bind_password is not search('CHANGEME')
+      - matrix_synapse_ldap_filter is string
+      - matrix_synapse_ldap_validate_certs == matrix_synapse_ldap_validate_certs | bool
+  when: matrix_synapse_ldap | bool
