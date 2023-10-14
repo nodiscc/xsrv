@@ -1,4 +1,4 @@
-- name: install netdata file checks/alarms for rsnapshot
+- name: install netdata checks for rsnapshot
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"

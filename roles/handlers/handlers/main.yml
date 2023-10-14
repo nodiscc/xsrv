@@ -82,6 +82,7 @@
     - go.d/filecheck.conf
     - go.d/httpcheck.conf
     - go.d/x509check.conf
+    - go.d/phpfpm.conf
     - go.d/portcheck.conf
     - health.d/filecheck.conf
     - health.d/processes.conf

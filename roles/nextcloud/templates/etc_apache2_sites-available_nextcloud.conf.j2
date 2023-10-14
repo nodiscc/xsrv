@@ -32,6 +32,12 @@ MDomain {{ nextcloud_fqdn }}
 {% else %}
   DocumentRoot {{ nextcloud_install_dir }}
 
+  <LocationMatch "/.fpm-status">
+      Require all granted
+      Require ip 127.0.0.1
+      ProxyPass unix:/run/php/php{{ nextcloud_php_fpm_version }}-fpm-nextcloud.sock|fcgi://localhost/.fpm-status
+  </LocationMatch>
+
   <FilesMatch \.php$>
     SetHandler "proxy:unix:/run/php/php{{ nextcloud_php_fpm_version }}-fpm-nextcloud.sock|fcgi://localhost"
   </FilesMatch>
