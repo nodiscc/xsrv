@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - common: packages: automatically install [qemu-guest-agent](https://qemu-project.gitlab.io/qemu/interop/qemu-ga.html) when the host is a KVM VM
 
+**Fixed:**
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
+
 [Full changes since v1.18.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.18.0...1.19.0)
 
 ------------------
