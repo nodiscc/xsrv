@@ -32,7 +32,6 @@
     - netdata_port_checks|type_debug == "list"
     - netdata_process_checks|type_debug == "list"
     - netdata_disabled_plugins|type_debug == "list"
-    - netdata_self_monitoring_enabled == netdata_self_monitoring_enabled | bool
     - netdata_update_every == netdata_update_every|int
     - netdata_firewalld_zones|type_debug == "list"
     - needrestart_autorestart_services == needrestart_autorestart_services | bool

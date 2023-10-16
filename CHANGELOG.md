@@ -13,6 +13,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: packages: automatically install [qemu-guest-agent](https://qemu-project.gitlab.io/qemu/interop/qemu-ga.html) when the host is a KVM VM
 - netdata/shaarli/tt_rss/openldap/nextcloud: enable monitoring of PHP-FPM pools
 
+**Removed:**
+- netdata: remove variable `netdata_self_monitoring_enabled` (use [`netdata_disabled_plugins: ['netdata monitoring']`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead)
+
+**Changed:**
+- netdata: disable all netdata self-monitoring by default
+
 **Fixed:**
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 
