@@ -92,6 +92,11 @@
 
 ##### RUNNER REGISTRATION #####
 
+- name: check if runner registration file exists
+  stat:
+    path: /var/lib/act-runner/.runner
+  register: runner_registration_file
+
 - name: generate gitea actions runner token
   become: yes
   become_user: gitea
@@ -99,7 +104,7 @@
   command:
     cmd: gitea --config /etc/gitea/app.ini actions generate-runner-token
   register: gitea_actions_generate_runner_token
-  when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
+  when: not runner_registration_file.stat.exists
   changed_when: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -110,6 +115,6 @@
   args:
     chdir: "/var/lib/act-runner"
   ignore_errors: "{{ ansible_check_mode }}"
-  when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
+  when: not runner_registration_file.stat.exists
   changed_when: yes
   timeout: 10

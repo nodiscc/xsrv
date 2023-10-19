@@ -30,6 +30,7 @@ See [Gitea actions quickstart](https://docs.gitea.com/next/usage/actions/quickst
 
 Note that base images/environments in which Gitea actions are run are [different](https://docs.gitea.com/next/usage/actions/act-runner#labels) from Github actions environments. Getting Github actions workflows to run in Gitea actions may require some adjustments.
 
+To force re-registering the runner, open a shell on the host (`xsrv shell default my.example.org`) and run `sudo rm /var/lib/act-runner/.runner` before re-running the playbook/`gitea_act_runner` role/tag.
 
 ### Backups
 

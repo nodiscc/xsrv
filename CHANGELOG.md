@@ -19,7 +19,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - netdata: disable all netdata self-monitoring by default
 - gitea_act_runner: don't run the runner as root but as dedicated act-runner user
+- gitea_act_runner: force re-registering the runner when the `.runner` file is absent
 - nextcloud: upgrade to v27.1.2 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/introducing-hub-5-first-to-deliver-self-hosted-ai-powered-digital-workspace/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.0) [[4]](https://github.com/nextcloud/server/releases/tag/v27.1.1) [[5]](https://github.com/nextcloud/server/releases/tag/v27.1.2)
+- update documentation
 
 **Fixed:**
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
