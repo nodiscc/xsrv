@@ -149,3 +149,4 @@
   when: not runner_registration_file.stat.exists
   changed_when: yes
   timeout: 10
+  notify: restart act-runner

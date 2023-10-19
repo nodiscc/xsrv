@@ -1,6 +1,9 @@
 # xsrv.gitea_act_runner
 
-This role will install [act-runner](https://docs.gitea.com/next/usage/actions/act-runner), the runner for Gitea Actions, Gitea's built-in CI/CD system, and register it on a Gitea instance.
+This role will install and configure [act-runner](https://docs.gitea.com/next/usage/actions/act-runner), the runner for Gitea Actions, Gitea's built-in CI/CD system, and register it on a Gitea instance.
+
+You can configure it to run workflows in rootless [podman](../podman) containers, [docker](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/docker) containers, or directly on the host.
+
 
 ## Requirements/dependencies/example playbook
 

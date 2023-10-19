@@ -33,7 +33,7 @@ runner:
   # Like: ["macos-arm64:host", "ubuntu-latest:docker://node:16-bullseye", "ubuntu-22.04:docker://node:16-bullseye"]
   # If it's empty when registering, it will ask for inputting labels.
   # If it's empty when execute `deamon`, will use labels in `.runner` file.
-  labels: []
+  labels: {{ gitea_act_runner_labels }}
 
 cache:
   # Enable cache server to use actions/cache.

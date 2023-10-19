@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - common: packages: automatically install [qemu-guest-agent](https://qemu-project.gitlab.io/qemu/interop/qemu-ga.html) when the host is a KVM VM
+- gitea_act_runner: allow running workflows directly on the host without containerization ([`gitea_act_runner_labels`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
 - backup: allow disabling specific rsnapshot backup intervals by setting [`rsnapshot_retain_daily/weekly/monthly`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) to `0`
 - backup: allow disabling automatic/scheduled backups entirely [`rsnapshot_enable_cron: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
 - backup: allow disabling automatic creation of the backup storage directory [`rsnapshot_create_root: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
