@@ -81,7 +81,7 @@ container:
   # If it's "-", act_runner will find an available docker host automatically, but the docker host won't be mounted to the job containers and service containers.
   # If it's not empty or "-", the specified docker host will be used. An error will be returned if it doesn't work.
 {% if gitea_act_runner_container_engine == 'podman' %}
-  docker_host: "unix:///var/run/podman/podman.sock"
+  docker_host: "unix:///run/user/{{ gitea_act_runner_user.uid }}/podman/podman.sock"
 {% else %}
   docker_host: ""
 {% endif %}

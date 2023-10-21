@@ -1,14 +1,4 @@
-# installation/setup tasks for EXAMPLE component, such as:
-# - install packages
-# - download binaries/zips
-# - verify binary downloads using checksums and/or GPG keys
-# - create users/groups
-# - create configuration/data directories
-# - install binaries to $PATH
-# - copy configuration files
-# - create databases/tables
-# - create application admin/user accounts
-# - start/stop service
+##### USER #####
 
 - name: create act-runner user
   user:
@@ -18,6 +8,36 @@
     comment: 'Gitea Actions runner'
     password: '*'
     home: '/var/lib/act-runner'
+  register: gitea_act_runner_user
+
+##### PODMAN #####
+
+- name: check if systemd/logind session lingering is enabled
+  stat:
+    path: "/var/lib/systemd/linger/act-runner"
+  register: linger_file
+  when: gitea_act_runner_container_engine == "podman"
+
+- name: enable systemd/logind session lingering
+  become: yes
+  command:
+    cmd: loginctl enable-linger act-runner
+  when: (not linger_file.stat.exists) and (gitea_act_runner_container_engine == "podman")
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# use sudo systemctl --user --machine act-runner@ list-units to list another user's services
+- name: enable podman socket for the act-runner user
+  become: yes
+  become_user: act-runner
+  systemd:
+    name: podman.socket
+    scope: user
+    state: started
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: gitea_act_runner_container_engine == "podman"
+
+##### ACT-RUNNER #####
 
 - name: download act-runner binary
   get_url:
