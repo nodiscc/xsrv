@@ -20,7 +20,7 @@
 ##### INSTALLATION/CONFIGURATION #####
 
 
-- name: install rsnapshot from Debian repositories (Debian 9/10)
+- name: install rsnapshot
   apt:
     package: rsnapshot
     state: present
