@@ -7,6 +7,7 @@
     owner: root
     group: root
     mode: "0770"
+  when: rsnapshot_create_root | bool
 
 - name: create rsnapshot log file
   copy:

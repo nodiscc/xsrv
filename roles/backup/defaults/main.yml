@@ -7,6 +7,9 @@ rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6
 # enable/disable automatic/scheduled backups (yes/no)
 rsnapshot_enable_cron: yes
+# automatically create the backup storage directory (yes/no)
+# if the backup directory should be created by another process, such as USB drive automounter, you may want to set this to no
+rsnapshot_create_root: yes
 # rsnapshot verbosity level (1-5)
 rsnapshot_verbose_level: 3
 # Commands to run before starting backups (database dumps, application exports...)

@@ -13,3 +13,4 @@
     - rsnapshot_retain_weekly == rsnapshot_retain_weekly | int
     - rsnapshot_retain_monthly == rsnapshot_retain_monthly | int
     - rsnapshot_enable_cron == rsnapshot_enable_cron | bool
+    - rsnapshot_create_root  == rsnapshot_create_root | bool
