@@ -24,6 +24,7 @@
     cmd: loginctl enable-linger act-runner
   when: (not linger_file.stat.exists) and (gitea_act_runner_container_engine == "podman")
   ignore_errors: "{{ ansible_check_mode }}"
+  changed_when: yes
 
 # use sudo systemctl --user --machine act-runner@ list-units to list another user's services
 - name: enable podman socket for the act-runner user
