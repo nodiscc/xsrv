@@ -1,7 +1,7 @@
 ##### RSNAPSHOT BACKUP SERVICE #####
 # Backups storage directory (with traing slash!)
 rsnapshot_backup_dir: "/var/backups/rsnapshot"
-# Number of daily, weekly and monthly backup generations to keep
+# number of daily, weekly and monthly backup generations to keep (set to 0 to disable a specific backup interval)
 rsnapshot_retain_daily: 6
 rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6

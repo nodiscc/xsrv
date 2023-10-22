@@ -9,6 +9,6 @@
     - rsnapshot_excludes|type_debug == "list"
     - rsnapshot_local_backups|type_debug == "list"
     - rsnapshot_remote_backups|type_debug == "list"
-    - rsnapshot_retain_daily|int
-    - rsnapshot_retain_monthly|int
-    - rsnapshot_retain_weekly|int
+    - rsnapshot_retain_daily == rsnapshot_retain_daily | int
+    - rsnapshot_retain_weekly == rsnapshot_retain_weekly | int
+    - rsnapshot_retain_monthly == rsnapshot_retain_monthly | int

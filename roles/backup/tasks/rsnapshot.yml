@@ -121,6 +121,7 @@
     minute: '0'
     day: '*'
     job: 'rsnapshot daily >/dev/null && touch /var/log/rsnapshot_last_success'
+    disabled: "{{ True if rsnapshot_retain_daily == 0 else False }}"
 
 # At 00:30 every sunday
 - name: setup weekly backup cron job
@@ -132,6 +133,7 @@
     minute: '30'
     weekday: '0'
     job: 'rsnapshot weekly >/dev/null'
+    disabled: "{{ True if rsnapshot_retain_weekly == 0 else False }}"
 
 - name: setup monthly backup cron job
   cron:
@@ -142,3 +144,4 @@
     minute: '1'
     day: '1'
     job: 'rsnapshot monthly >/dev/null'
+    disabled: "{{ True if rsnapshot_retain_monthly == 0 else False }}"
