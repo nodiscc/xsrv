@@ -5,6 +5,8 @@ rsnapshot_backup_dir: "/var/backups/rsnapshot"
 rsnapshot_retain_daily: 6
 rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6
+# enable/disable automatic/scheduled backups (yes/no)
+rsnapshot_enable_cron: yes
 # rsnapshot verbosity level (1-5)
 rsnapshot_verbose_level: 3
 # Commands to run before starting backups (database dumps, application exports...)
