@@ -7,8 +7,18 @@
     shell: '/bin/bash'
     comment: 'Gitea Actions runner'
     password: '*'
-    home: '/var/lib/act-runner'
+    home: /var/lib/act-runner
   register: gitea_act_runner_user
+
+- name: update act-runner home directory ownership
+  file:
+    path: /var/lib/act-runner
+    state: directory
+    owner: act-runner
+    group: act-runner
+    recurse: yes
+  when: ansible_local.gitea_act_runner.work_directory_ownership_migrated is not defined
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### PODMAN #####
 
