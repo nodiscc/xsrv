@@ -104,6 +104,8 @@
   become: yes
   command: rsnapshot configtest
   changed_when: no
+  register: rsnapshot_configtest
+  ignore_errors: "{{ True if ('rsnapshot refuses to create snapshot_root when no_create_root is enabled' in rsnapshot_configtest.stderr) else False }}"
 
 ### LIBVIRT ###
 
