@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
+- monitoring_netdata/debsecan: fix debsecan unable to send email reports
 
 [Full changes since v1.18.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.18.0...1.19.0)
 
