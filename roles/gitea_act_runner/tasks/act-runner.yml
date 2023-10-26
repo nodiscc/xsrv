@@ -47,6 +47,10 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
   when: gitea_act_runner_container_engine == "podman"
+  register: gitea_act_runner_enable_podman_socket
+  retries: 3
+  delay: 3
+  until: gitea_act_runner_enable_podman_socket is not failed
 
 ##### ACT-RUNNER #####
 
