@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Fixed:**
+- gitea_act_runner: fix errors when enabling the systemd service manually
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - monitoring_netdata/debsecan: fix debsecan unable to send email reports
 
