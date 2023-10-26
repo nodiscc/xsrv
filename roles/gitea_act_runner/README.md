@@ -20,7 +20,7 @@ See [meta/main.yml](meta/main.yml)
 
 # required variables
 # host_vars/my.CHANGEME.org/my.CHANGEME.org.yml
-gitea_act_runner_gitea_instance_url: "git.CHANGEME.org" # required if the runner and gitea instance are on different hosts
+gitea_act_runner_gitea_instance_fqdn: "git.CHANGEME.org" # required if the runner and gitea instance are on different hosts
 gitea_act_runner_gitea_instance_hostname: "my2.CHANGEME.org" # required if the runner and gitea instance are on different hosts
 ```
 

@@ -556,7 +556,7 @@ dnsmasq_dnssec: yes
 ```yaml
 ##### GITEA ACTIONS RUNNER #####
 # FQDN of the gitea instance to register the runner on
-gitea_act_runner_gitea_instance_url: "{{ gitea_fqdn | default('git.CHANGEME.org') }}" # TODO rename to _domain
+gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org') }}"
 # inventory hostname of the gitea host to register the runner on (if different from the runner host)
 # gitea_act_runner_gitea_instance_hostname: "CHANGEME"
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)

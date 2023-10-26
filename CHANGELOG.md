@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **gitea_act_runner:** if you changed it from the default value, rename the variable `gitea_act_runner_gitea_instance_url` to [`gitea_act_runner_gitea_instance_fqdn`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
 - `xsrv deploy` to apply changes
 
 **Added:**
@@ -24,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: disable all netdata self-monitoring by default
 - gitea_act_runner: don't run the runner as root but as dedicated act-runner user
 - gitea_act_runner: force re-registering the runner when the `.runner` file is absent
+- gitea_act_runner: rename variable `gitea_act_runner_gitea_instance_url` to `gitea_act_runner_gitea_instance_fqdn`
 - nextcloud: upgrade to v27.1.2 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/introducing-hub-5-first-to-deliver-self-hosted-ai-powered-digital-workspace/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.0) [[4]](https://github.com/nextcloud/server/releases/tag/v27.1.1) [[5]](https://github.com/nextcloud/server/releases/tag/v27.1.2)
 - matrix: update element-web to v1.11.47 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.47)
 - update documentation
