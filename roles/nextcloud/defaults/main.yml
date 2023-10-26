@@ -68,7 +68,8 @@ nextcloud_apps:
   - { state: "disable", app: "music" } # https://apps.nextcloud.com/apps/music
   - { state: "enable", app: "maps" } # https://apps.nextcloud.com/apps/maps
   - { state: "enable", app: "notifications" } # https://github.com/nextcloud/notifications
-  - { state: "enable", app: "systemtags" } # https://docs.nextcloud.com/server/latest/user_manual/ca/files/access_webgui.html#tagging-files
+  - { state: "enable", app: "systemtags" } # https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webgui.html#tagging-files
+  - { state: "disable", app: "files_automatedtagging" } # https://apps.nextcloud.com/apps/files_automatedtagging
   - { state: "enable", app: "tasks" } # https://apps.nextcloud.com/apps/tasks
   - { state: "enable", app: "updatenotification" } # https://docs.nextcloud.com/server/latest/admin_manual/maintenance/update.html
   - { state: "enable", app: "user_ldap" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_user/user_auth_ldap.html
