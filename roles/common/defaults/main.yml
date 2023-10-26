@@ -328,8 +328,8 @@ ansible_user_allow_sudo_rsync_nopasswd: yes
 systemd_logind_kill_user_processes: yes
 # do not kill processes on logout for these users
 systemd_logind_kill_exclude_users: ['root']
-# time after which idle interactive login sessions are automatically closed
-systemd_logind_lock_after_idle_min: 15
+# time after which idle interactive login sessions are automatically closed (minutes, set to 0 to disable)
+systemd_logind_lock_after_idle_min: 0
 # terminate interactive bash processes after this number of seconds if no input is received (set to 0 to disable)
 bash_timeout: 900
 
