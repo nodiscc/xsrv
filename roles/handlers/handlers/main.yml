@@ -102,10 +102,14 @@
 
 - name: check rsnapshot configuration
   become: yes
-  command: rsnapshot configtest
+  command:
+    cmd: rsnapshot configtest
   changed_when: no
   register: rsnapshot_configtest
-  ignore_errors: "{{ True if (ansible_check_mode or 'rsnapshot refuses to create snapshot_root when no_create_root is enabled' in rsnapshot_configtest.stderr) else False }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  failed_when:
+    - libvirt_setmem.rc != 0
+    - not 'rsnapshot refuses to create snapshot_root when no_create_root is enabled' in rsnapshot_configtest.stderr
 
 ### LIBVIRT ###
 
