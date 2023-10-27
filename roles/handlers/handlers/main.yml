@@ -105,7 +105,7 @@
   command: rsnapshot configtest
   changed_when: no
   register: rsnapshot_configtest
-  ignore_errors: "{{ True if ('rsnapshot refuses to create snapshot_root when no_create_root is enabled' in rsnapshot_configtest.stderr) else False }}"
+  ignore_errors: "{{ True if (ansible_check_mode or 'rsnapshot refuses to create snapshot_root when no_create_root is enabled' in rsnapshot_configtest.stderr) else False }}"
 
 ### LIBVIRT ###
 
