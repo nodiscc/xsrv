@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: users/logind: don't lock auto-lock idle user sessions by default ([`systemd_logind_lock_after_idle_min: 0`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - jitsi/goaccess: only generate self-signed certificates when `jitsi/goaccess_https_mode: selfsigned`
 - transmission: only generate self-signed certificates when apache is managed by xsrv
-- nextcloud: upgrade to v27.1.2 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/introducing-hub-5-first-to-deliver-self-hosted-ai-powered-digital-workspace/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.0) [[4]](https://github.com/nextcloud/server/releases/tag/v27.1.1) [[5]](https://github.com/nextcloud/server/releases/tag/v27.1.2)
+- nextcloud: upgrade to v27.1.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/introducing-hub-5-first-to-deliver-self-hosted-ai-powered-digital-workspace/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.0) [[4]](https://github.com/nextcloud/server/releases/tag/v27.1.1) [[5]](https://github.com/nextcloud/server/releases/tag/v27.1.2) [[6]](https://github.com/nextcloud/server/releases/tag/v27.1.3)
 - matrix: update element-web to v1.11.47 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.47)
 - update documentation
 
