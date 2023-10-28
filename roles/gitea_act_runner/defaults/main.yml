@@ -16,7 +16,10 @@ gitea_actions_runner_container_network: "host"
 # If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role muyst be redeployed
 # Add "host:host" to this list to allow running workflows directly on the host, without containerization (and specify "runs-on: host" in your workflow yml file)
 # If host-based workflows are allowed, you probably want to install the nodejs package on the host so that nodejs-based actions can run
-# Example: gitea_act_runner_labels: ['host:host']
+# Example:
+# gitea_act_runner_labels:
+#   - 'host:host'
+#   - "debian-bookworm-backports:docker://debian:bookworm-backports"
 gitea_act_runner_labels:
   - "ubuntu-latest:docker://node:16-bullseye"
   - "ubuntu-22.04:docker://node:16-bullseye"
