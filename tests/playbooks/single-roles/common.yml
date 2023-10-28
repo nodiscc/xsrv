@@ -1,0 +1,7 @@
+- hosts: my.example.test
+  roles:
+    - nodiscc.xsrv.common
+
+# - hosts: my.example.test
+#   roles:
+#     - nodiscc.xsrv.graylog

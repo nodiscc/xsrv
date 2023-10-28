@@ -1,0 +1,3 @@
+- hosts: my.example.test
+  roles:
+    - nodiscc.xsrv.monitoring
