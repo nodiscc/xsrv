@@ -108,7 +108,8 @@
   register: rsnapshot_configtest
   ignore_errors: "{{ ansible_check_mode }}"
   failed_when:
-    - libvirt_setmem.rc != 0
+    - rsnapshot_configtest is defined
+    - rsnapshot_configtest.rc != 0
     - not 'rsnapshot refuses to create snapshot_root when no_create_root is enabled' in rsnapshot_configtest.stderr
 
 ### LIBVIRT ###
