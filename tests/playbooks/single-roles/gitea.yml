@@ -1,0 +1,6 @@
+- hosts: my.example.test
+  roles:
+    - nodiscc.xsrv.podman
+    - nodiscc.xsrv.postgresql
+    - nodiscc.xsrv.gitea
+    - nodiscc.xsrv.gitea_act_runner
