@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - gitea_act_runner: fix temporary error when first enabling the podman socket in act-runner systemd user session
 - gitea_act_runner: fix errors when enabling the systemd service manually
+- gitea_act_runner: always try to restart the runner systemd service in case of failure
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
 - monitoring_netdata/debsecan: fix debsecan unable to send email reports
 
