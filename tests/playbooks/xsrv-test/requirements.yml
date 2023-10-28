@@ -1,4 +1,4 @@
 collections:
-  - name: nodiscc.xsrv
-    source: git+file:///home/live/GIT/xsrv.git
+  - name: https://gitlab.com/nodiscc/xsrv.git
     type: git
+    version: test-decoupled-roles
