@@ -1,5 +1,6 @@
 # @tag lynis - setup lynis security audit tool
 # @tag monitoring_utils - setup command-line/additional monitoring utilities
+# @tag utils-monitoring-duc - run duc disk usage analyzer and download the database on the controller
 
 galaxy_info:
   role_name: monitoring_utils

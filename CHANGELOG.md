@@ -8,11 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **gitea_act_runner:** if you changed it from the default value, rename the variable `gitea_act_runner_gitea_instance_url` to [`gitea_act_runner_gitea_instance_fqdn`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- **monitoring_utils:** if your projects are under git version control, you may want to add `data/duc-*.db` to  your `.gitignore` before using the `utils-monitoring-duc` tag.
 - `xsrv deploy` to apply changes
 
 **Added:**
 - common: packages: automatically install [qemu-guest-agent](https://qemu-project.gitlab.io/qemu/interop/qemu-ga.html) when the host is a KVM VM
 - gitea_act_runner: allow running workflows directly on the host without containerization ([`gitea_act_runner_labels`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- monitoring_utils: allow analyzing disk usage by directory and visualizing it locally using [duc](https://duc.zevv.nl/) ([`TAGS=utils-monitoring-duc xsrv deploy default my.CHANGEME.org`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage))
 - backup: allow disabling specific rsnapshot backup intervals by setting [`rsnapshot_retain_daily/weekly/monthly`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) to `0`
 - backup: allow disabling automatic/scheduled backups entirely [`rsnapshot_enable_cron: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
 - backup: allow disabling automatic creation of the backup storage directory [`rsnapshot_create_root: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
