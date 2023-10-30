@@ -8,16 +8,10 @@
       - lsof # list open files
       - strace # trace system calls
       - lnav # enhanced log file viewer
-      - logwatch
-      - libdate-manip-perl
       - iputils-ping # tools to test the reachability of network hosts
       # - spectre-meltdown-checker # spectre & meltdown CPU vulnerability checker
       # - iotop # simple top-like I/O monitor
       # - iftop # displays bandwidth usage information on a network interface
       # - inxi # full featured system information script
       # - arpscan # count machines on LAN
-
-- name: remove default logwatch cron job
-  file:
-    path: /etc/cron.daily/00logwatch
-    state: absent
+      # - logwatch # log analyser with nice output written in Perl (requires libdate-manip-perl)

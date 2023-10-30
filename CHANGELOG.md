@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - netdata: remove variable `netdata_self_monitoring_enabled` (use [`netdata_disabled_plugins: ['netdata monitoring']`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead)
+- monitoring_utils: remove `logwatch` from the list of default installed packages
 
 **Changed:**
 - netdata: disable all netdata self-monitoring by default
