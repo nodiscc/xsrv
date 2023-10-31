@@ -68,6 +68,7 @@ linux_users:
 ```
 lynis - setup lynis security audit tool
 monitoring_utils - setup command-line/additional monitoring utilities
+utils-monitoring-duc - (manual) run duc disk usage analyzer and download the database on the controller
 ```
 <!--END TAGS LIST-->
 

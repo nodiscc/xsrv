@@ -89,8 +89,10 @@ utils-backup-now - (manual) transfer latest daily backups from the host to the c
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
+utils-firewalld-info - (manual) get firewall status informations
 utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
+utils-monitoring-duc - (manual) run duc disk usage analyzer and download the database on the controller
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics
 utils-podman-uninstall - (manual) uninstall podman container engine
