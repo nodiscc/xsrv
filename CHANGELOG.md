@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **gitea_act_runner:** if you changed it from the default value, rename the variable `gitea_act_runner_gitea_instance_url` to [`gitea_act_runner_gitea_instance_fqdn`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
 - **monitoring_utils:** if your projects are under git version control, you may want to add `data/duc-*.db` to  your `.gitignore` before using the `utils-monitoring-duc` tag.
+- **common:** if your projects are under git version control, you may want to add `data/firewalld-info-*.log` to  your `.gitignore` before using the `utils-firewalld-info` tag.
 - `xsrv deploy` to apply changes
 
 **Added:**
@@ -18,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - backup: allow disabling specific rsnapshot backup intervals by setting [`rsnapshot_retain_daily/weekly/monthly`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) to `0`
 - backup: allow disabling automatic/scheduled backups entirely [`rsnapshot_enable_cron: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
 - backup: allow disabling automatic creation of the backup storage directory [`rsnapshot_create_root: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
+- common: allow getting firewalld status information (`TAGS=utils-firewalld-info xsrv deploy`)
 - netdata/shaarli/tt_rss/openldap/nextcloud: enable monitoring of PHP-FPM pools
 
 **Removed:**

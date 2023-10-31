@@ -142,6 +142,13 @@
     - never
     - utils-fail2ban-get-banned
 
+- name: include firewalld status report tasks
+  import_tasks: utils-firewalld-info.yml
+  become: yes
+  tags:
+    - never
+    - utils-firewalld-info
+
 - name: include immediate unattended-upgrade tasks
   import_tasks: utils-apt-unattended-upgrade.yml
   become: yes
