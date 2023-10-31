@@ -8,7 +8,7 @@
     cmd: "duc index --check-hard-links --database=/root/.duc.db '{{ duc_index_path }}'"
   changed_when: yes
 
-- name: download duc database to the controller
+- name: download duc database to data/duc-*.db
   fetch:
     src: /root/.duc.db
     dest: "{{ playbook_dir }}/data/duc-{{ inventory_hostname }}.db"
@@ -16,4 +16,4 @@
 
 - name: show duc completion message
   debug:
-    msg: "You can now open the database with duc gui --database={{ playbook_dir }}/data/duc-{{ inventory_hostname }}.db {{ duc_index_path }}"
+    msg: "you can now open the database with duc gui --database={{ playbook_dir }}/data/duc-{{ inventory_hostname }}.db {{ duc_index_path }}"
