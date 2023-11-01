@@ -39,8 +39,8 @@ test_ansible_lint: venv
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:
 	rm -rf tests/playbooks/xsrv-init-playbook
-	XSRV_PROJECTS_DIR=tests/playbooks XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-init-playbook my.example.org
-	XSRV_PROJECTS_DIR=tests/playbooks  EDITOR=cat ./xsrv edit-group-vault xsrv-init-playbook all && grep ANSIBLE_VAULT tests/playbooks/xsrv-init-playbook/group_vars/all/all.vault.yml
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-init-playbook my.example.org
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks"  EDITOR=cat ./xsrv edit-group-vault xsrv-init-playbook all && grep ANSIBLE_VAULT tests/playbooks/xsrv-init-playbook/group_vars/all/all.vault.yml
 
 ##### MANUAL TESTS #####
 
@@ -69,22 +69,22 @@ test_init_vm:
 
 .PHONY: test_check_mode # test full playbook run (--check mode) against the host created with test_init_vm
 test_check_mode:
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv check xsrv-test my.example.test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv upgrade xsrv-test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv check xsrv-test my.example.test
 
 .PHONY: test_idempotence # test 2 consecutive full playbook runs against the host created with test_init_vm
 test_idempotence:
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test my.example.test
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test my.example.test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv upgrade xsrv-test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv deploy xsrv-test my.example.test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv deploy xsrv-test my.example.test
 	# check netdata alarms count
 	curl --insecure https://my.example.test:19999/api/v1/alarms
 
 .PHONY: test_fetch_backups # test fetch-backups command against the host deployed with test_idempotence
 test_fetch_backups:
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	XSRV_PROJECTS_DIR=tests/playbooks TAGS=utils-backup-now ./xsrv deploy xsrv-test my.example.test
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv fetch-backups xsrv-test my.example.test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv upgrade xsrv-test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" TAGS=utils-backup-now ./xsrv deploy xsrv-test my.example.test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv fetch-backups xsrv-test my.example.test
 
 ##### RELEASE PROCEDURE #####
 # - make test_init_vm_template test_init_vm test_check_mode test_idempotence test_fetch_backups SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
@@ -210,8 +210,8 @@ doc_md:
 	# generate tags list in docs/tags.md
 	sed -i 's/# -/-/g' tests/playbooks/xsrv-test/playbook.yml
 	echo -e '# Tags\n\n```' > docs/tags.md
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv help-tags xsrv-test >> docs/tags.md
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv upgrade xsrv-test
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv help-tags xsrv-test >> docs/tags.md
 	echo -e '\n```'>> docs/tags.md
 
 SPHINXOPTS    ?=
