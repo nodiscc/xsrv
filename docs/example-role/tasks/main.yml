@@ -10,6 +10,11 @@
   tags:
     - EXAMPLE
     - ssl
+    - apache
+  when:
+    - EXAMPLE_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include EXAMPLE configuration tasks
   import_tasks: EXAMPLE.yml
