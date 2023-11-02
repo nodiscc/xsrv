@@ -10,7 +10,6 @@
       - php{{ apache_php_fpm_version }}-apcu
       - php{{ apache_php_fpm_version }}
       - php{{ apache_php_fpm_version }}-fpm
-  tags: ssl
 
 - name: remove mod-php (replaced with php-fpm)
   apt:
@@ -66,7 +65,6 @@
   notify:
     - reload apache
     - restart php-fpm (apache)
-  tags: ssl
 
 - name: disable unnecessary apache modules
   command: a2dismod {{ item }}
@@ -99,7 +97,6 @@
     - 'proxy_fcgi'
     - 'http2'
   notify: restart apache
-  tags: ssl
 
 - name: enable apache configuration snippets
   command: a2enconf {{ item }}
@@ -112,7 +109,6 @@
     - 'mod-md'
     - 'php{{ apache_php_fpm_version }}-fpm'
   notify: reload apache
-  tags: ssl
 
 - name: disable apache configuration snippets
   command: a2disconf {{ item }}
