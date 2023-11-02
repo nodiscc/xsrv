@@ -36,3 +36,16 @@
     mode: "0644"
   notify: restart dovecot
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create local certificates directory on the controller
+  become: no
+  delegate_to: localhost
+  file:
+    path: "{{ playbook_dir }}/data/certificates/"
+    state: directory
+    mode: "0755"
+
+- name: download self-signed certificate to the controller
+  fetch:
+    src: /etc/ssl/certs/dovecot.crt
+    dest: "{{ playbook_dir }}/data/certificates/{{ dovecot_fqdn }}-dovecot.crt"

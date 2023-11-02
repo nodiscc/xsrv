@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - backup: allow disabling automatic creation of the backup storage directory [`rsnapshot_create_root: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
 - common: allow getting firewalld status information (`TAGS=utils-firewalld-info xsrv deploy`)
 - netdata/shaarli/tt_rss/openldap/nextcloud: enable monitoring of PHP-FPM pools
+- when generating self-signed certificates, download them to the controller in `data/certificates/` under the project directory
 
 **Removed:**
 - netdata: remove variable `netdata_self_monitoring_enabled` (use [`netdata_disabled_plugins: ['netdata monitoring']`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead)
