@@ -24,6 +24,9 @@ tt_rss_version: "master"
 tt_rss_account_limit: 10
 # Error log destination. setting this to blank uses PHP logging/webserver error log (sql, syslog, '')
 tt_rss_log_destination: ''
+# list of IP addresses allowed to access tt-rss (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+tt_rss_allowed_hosts: []
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 tt_rss_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)

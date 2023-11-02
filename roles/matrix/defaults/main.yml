@@ -57,6 +57,9 @@ matrix_synapse_ldap_validate_certs: yes
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
 matrix_synapse_admin_version: "0.8.7"
+# list of IP addresses allowed to access synapse-admin and synapse admin API endpoints (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+matrix_synapse_admin_allowed_hosts: []
 
 ##### ELEMENT #####
 # fully qualified domain name of the element application instance
@@ -78,3 +81,6 @@ element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 matrix_element_https_mode: selfsigned
 # enable/disable the element virtualhost (redirect users to maintenance page if disabled)
 matrix_element_enable_service: yes
+# list of IP addresses allowed to access element (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+matrix_element_allowed_hosts: []

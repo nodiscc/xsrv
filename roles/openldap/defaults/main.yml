@@ -49,6 +49,8 @@ ldap_account_manager_ldaps_cert: ""
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 ldap_account_manager_https_mode: "selfsigned"
+# enable/disable the ldap-account-manager php-fpm pool (redirect users to maintenance page if disabled)
+ldap_account_manager_enable_service: yes
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 ldap_account_manager_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -59,8 +61,6 @@ ldap_account_manager_php_max_input_time: 60
 ldap_account_manager_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 ldap_account_manager_php_upload_max_filesize: '2M'
-# enable/disable the ldap-account-manager php-fpm pool (redirect users to maintenance page if disabled)
-ldap_account_manager_enable_service: yes
 
 
 ##### LDAP SELF SERVICE PASSWORD #####
@@ -70,6 +70,7 @@ openldap_setup_ssp: no
 self_service_password_fqdn: "ssp.CHANGEME.org"
 # list of IP addresses/networks allowed to access self service password (CIDR notation)
 # for security reasons only private/RFC1918 addresses are allowed by default
+# set to empty list [] to allow access from any IP address
 self_service_password_allowed_hosts:
   - 10.0.0.0/8
   - 192.168.0.0/16
@@ -86,6 +87,8 @@ self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 self_service_password_https_mode: "selfsigned"
+# enable/disable the self-service-password php-fpm pool (redirect users to maintenance page if disabled)
+self_service_password_enable_service: yes
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 self_service_password_php_memory_limit: '64M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -96,5 +99,3 @@ self_service_password_php_max_input_time: 60
 self_service_password_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 self_service_password_php_upload_max_filesize: '2M'
-# enable/disable the self-service-password php-fpm pool (redirect users to maintenance page if disabled)
-self_service_password_enable_service: yes

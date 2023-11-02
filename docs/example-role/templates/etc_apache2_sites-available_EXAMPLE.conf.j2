@@ -30,4 +30,9 @@ MDomain {{ EXAMPLE_fqdn }}
   ProxyPass / http://127.0.0.1:1234/ nocanon
   ProxyPassReverse / http://127.0.0.1:1234/
 {% endif %}
+{% if EXAMPLE_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ EXAMPLE_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
 </VirtualHost>

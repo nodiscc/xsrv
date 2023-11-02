@@ -13,3 +13,12 @@
     - transmission_backup_downloads == transmission_backup_downloads | bool
     - transmission_firewalld_zones | type_debug == "list"
     - transmission_users | type_debug == "list"
+    - transmission_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (transmission_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of transmission_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ transmission_allowed_hosts }}"

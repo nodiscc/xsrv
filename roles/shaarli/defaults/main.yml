@@ -30,10 +30,13 @@ shaarli_overwrite_config: no
 shaarli_https_mode: selfsigned
 # install python-shaarli-client, dump all shaarli data to /var/shaarli/shaarli.json every hour (yes/no)
 shaarli_setup_python_client: no
-# Shaarli installation directory
+# shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
-# Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
+# shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
 shaarli_version: 'v0.12.2'
+# list of IP addresses allowed to access shaarli (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+shaarli_allowed_hosts: []
 # shaarli stack template version - https://github.com/RolandTi/shaarli-stack/releases.atom
 shaarli_stack_version: "0.3"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)

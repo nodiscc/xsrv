@@ -34,7 +34,11 @@ MDomain {{ tt_rss_fqdn }}
       Require ip 127.0.0.1
       ProxyPass unix:/run/php/php{{ tt_rss_php_fpm_version }}-fpm-tt-rss.sock|fcgi://localhost/.fpm-status
   </LocationMatch>
-
+{% if tt_rss_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ tt_rss_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
   <FilesMatch \.php$>
     SetHandler "proxy:unix:/run/php/php{{ tt_rss_php_fpm_version }}-fpm-tt-rss.sock|fcgi://localhost"
   </FilesMatch>

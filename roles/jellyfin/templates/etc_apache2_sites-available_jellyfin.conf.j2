@@ -27,10 +27,11 @@ MDomain {{ jellyfin_fqdn }}
   RewriteRule ^.*$ - [R=503,L]
 {% else %}
   <Location />
-  AllowOverride None
-  Require ip 127.0.0.1 {{ jellyfin_allowed_hosts | join(' ') }}
+    AllowOverride None
+{% if jellyfin_allowed_hosts %}
+    Require ip 127.0.0.1 {{ jellyfin_allowed_hosts | join(' ') }}
+{% endif %}
   </Location>
-
   ProxyPreserveHost On
   ProxyPass "/socket" "ws://127.0.0.1:8096/socket"
   ProxyPassReverse "/socket" "ws://127.0.0.1:8096/socket"

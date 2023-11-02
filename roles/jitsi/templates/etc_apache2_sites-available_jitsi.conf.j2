@@ -20,14 +20,18 @@ MDomain {{ jitsi_fqdn }}
     SSLCertificateKeyFile /etc/ssl/private/{{ jitsi_fqdn }}.key
 {% endif %}
 {% if not jitsi_enable_service %}
-  DocumentRoot /var/www/maintenance/
-  ErrorDocument 503 /maintenance.html
-  RewriteEngine On
-  RewriteCond %{REQUEST_URI} !=/maintenance.html
-  RewriteRule ^.*$ - [R=503,L]
+    DocumentRoot /var/www/maintenance/
+    ErrorDocument 503 /maintenance.html
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !=/maintenance.html
+    RewriteRule ^.*$ - [R=503,L]
 {% else %}
     DocumentRoot "/usr/share/jitsi-meet"
-
+{% if jitsi_allowed_hosts %}
+    <Location />
+        Require ip 127.0.0.1 {{ jitsi_allowed_hosts | join(' ') }}
+    </Location>
+{% endif %}
     <Directory "/usr/share/jitsi-meet">
         Options Indexes MultiViews Includes FollowSymLinks
         AddOutputFilter Includes html

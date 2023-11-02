@@ -18,3 +18,12 @@
     - gotty_input_timeout == gotty_input_timeout|int
     - gotty_listen_address is string
     - gotty_version is string
+    - gotty_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (gotty_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of gotty_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ gotty_allowed_hosts }}"

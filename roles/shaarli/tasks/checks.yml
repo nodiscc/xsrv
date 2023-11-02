@@ -27,3 +27,12 @@
     - shaarli_php_post_max_size|regex_search('[KMG]$')
     - shaarli_php_upload_max_filesize|regex_search('[KMG]$')
     - shaarli_enable_service == shaarli_enable_service | bool
+    - shaarli_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (shaarli_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of shaarli_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ shaarli_allowed_hosts }}"

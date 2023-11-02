@@ -37,6 +37,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 # Disabled as it has no effect https://github.com/jellyfin/jellyfin/issues/8533
+# jellyfin_allowed_hosts is enforced by apache instead
 # - name: build dictionary for jellyfin remote IP filter
 #   set_fact:
 #     jellyfin_allowed_hosts_dict: "{{ jellyfin_allowed_hosts | map('community.general.dict_kv', 'string') }}"

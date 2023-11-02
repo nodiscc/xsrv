@@ -17,3 +17,6 @@ goaccess_update_calendar_expression: "*:00:00"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"
+# list of IP addresses allowed to access goaccess (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+goaccess_allowed_hosts: []

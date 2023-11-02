@@ -91,7 +91,9 @@ nextcloud_apps:
   - { state: "disable", app: "tables" } # https://apps.nextcloud.com/apps/tables
   - { state: "disable", app: "survey_client" } # https://github.com/nextcloud/survey_client
   - { state: "disable", app: "integration_whiteboard" } # https://apps.nextcloud.com/apps/integration_whiteboard
-# nextcloud php-fpm pool settings (performance/resource usage)
+# list of IP addresses allowed to access nextcloud (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+nextcloud_allowed_hosts: []
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'
 # php_fpm: Maximum execution time of each script (seconds)
