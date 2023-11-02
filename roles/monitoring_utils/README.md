@@ -33,7 +33,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Analyze disk usage by directory: `ssh -t user@my.CHANGEME.org sudo ncdu /`
 - Show network bandwidth usage by process: `ssh -t user@my.CHANGEME.org sudo nethogs`
 - Show network connections: `ssh -t user@my.CHANGEME.org sudo watch -n 2 ss -laptu`
-- Visualize disk usage by directory: `TAGS=utils-monitoring-duc xsrv deploy default my.CHANGEME.org` and run `duc gui --database=data/duc-my.CHANGEME.org.db /` on the controller (requires [duc](https://packages.debian.org/bookworm/duc))
+- Visualize disk usage by directory: `TAGS=utils-duc xsrv deploy default my.CHANGEME.org` and run `duc gui --database=data/duc-my.CHANGEME.org.db /` on the controller (requires [duc](https://packages.debian.org/bookworm/duc))
 - Use [lnav](https://lnav.readthedocs.io/) to navigate/search/filter aggregated system logs:
 
 ```bash
@@ -68,7 +68,7 @@ linux_users:
 ```
 lynis - setup lynis security audit tool
 monitoring_utils - setup command-line/additional monitoring utilities
-utils-monitoring-duc - (manual) run duc disk usage analyzer and download the database on the controller
+utils-duc - (manual) run duc disk usage analyzer and download the database on the controller
 ```
 <!--END TAGS LIST-->
 
