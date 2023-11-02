@@ -52,3 +52,4 @@
   fetch:
     src: /etc/ssl/certs/{{ jitsi_fqdn }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ jitsi_fqdn }}.crt"
+    flat: yes

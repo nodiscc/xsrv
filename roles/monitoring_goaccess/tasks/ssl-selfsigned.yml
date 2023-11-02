@@ -41,3 +41,4 @@
   fetch:
     src: /etc/ssl/certs/{{ goaccess_fqdn }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ goaccess_fqdn }}.crt"
+    flat: yes

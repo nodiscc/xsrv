@@ -41,3 +41,4 @@
   fetch:
     src: /etc/ssl/certs/{{ ldap_account_manager_fqdn }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ ldap_account_manager_fqdn }}.crt"
+    flat: yes

@@ -73,5 +73,6 @@
   fetch:
     src: /etc/ssl/certs/{{ item.servername }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ item.servername }}.crt"
+    flat: yes
   when: (item.https_mode is not defined) or (item.https_mode == 'selfsigned')
   with_items: "{{ apache_reverseproxies }}"

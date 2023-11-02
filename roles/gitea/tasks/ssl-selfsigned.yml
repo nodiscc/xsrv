@@ -50,3 +50,4 @@
   fetch:
     src: /etc/ssl/certs/{{ gitea_fqdn }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ gitea_fqdn }}.crt"
+    flat: yes

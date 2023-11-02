@@ -41,3 +41,4 @@
   fetch:
     src: /etc/ssl/certs/{{ tt_rss_fqdn }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ tt_rss_fqdn }}.crt"
+    flat: yes

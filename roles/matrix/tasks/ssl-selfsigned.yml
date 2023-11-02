@@ -50,6 +50,7 @@
   fetch:
     src: /etc/ssl/certs/{{ item }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ item }}.crt"
+    flat: yes
   with_items:
     - "{{ matrix_synapse_fqdn }}"
     - "{{ matrix_element_fqdn }}"

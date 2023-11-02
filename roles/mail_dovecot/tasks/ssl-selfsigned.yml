@@ -49,3 +49,4 @@
   fetch:
     src: /etc/ssl/certs/dovecot.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ dovecot_fqdn }}-dovecot.crt"
+    flat: yes

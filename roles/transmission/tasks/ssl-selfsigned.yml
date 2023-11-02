@@ -41,3 +41,4 @@
   fetch:
     src: /etc/ssl/certs/{{ transmission_fqdn }}.crt
     dest: "{{ playbook_dir }}/data/certificates/{{ transmission_fqdn }}.crt"
+    flat: yes
