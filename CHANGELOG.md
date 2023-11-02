@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - netdata: disable all netdata self-monitoring by default
+- netdata: update logs/db storage configuration for newer netdata versions, store 400MB of per-minute data and 200MB of per-hour data in addition to the amount of per-second data defined by [`netdata_dbengine_disk_space`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
 - gitea_act_runner: don't run the runner as root but as dedicated act-runner user
 - gitea_act_runner: force re-registering the runner when the `.runner` file is absent
 - gitea_act_runner: rename variable `gitea_act_runner_gitea_instance_url` to `gitea_act_runner_gitea_instance_fqdn`

@@ -2,20 +2,31 @@
 # You can download the running configuration of your netdata instance, using:
 # curl http://localhost:19999/netdata.conf
 
-[global]
+[db]
    update every = {{ netdata_update_every }}
-{% if netdata_disable_debug_log %}   debug log = none
+   mode = dbengine
+   storage tiers = 3
+   page cache size MB = {{ netdata_dbengine_page_cache_size }}
+   # tier 0, per-second data
+   dbengine multihost disk space MB = {{ netdata_dbengine_disk_space }}
+   # tier 1, per-minute data
+   dbengine tier 1 multihost disk space MB = 400
+   dbengine tier 1 update every iterations = 60
+   # tier 2, per-hour data
+   dbengine tier 2 multihost disk space MB = 200
+   dbengine tier 2 update every iterations = 60
+
+[logs]
+{% if netdata_disable_debug_log %}   debug = none
 {% endif %}
-{% if netdata_disable_error_log %}   error log = none
+{% if netdata_disable_error_log %}   error = none
 {% endif %}
-{% if netdata_disable_access_log %}   access log = none
+{% if netdata_disable_access_log %}   access = none
 {% endif %}
-   page cache size = {{ netdata_dbengine_page_cache_size }}
-   dbengine multihost disk space = {{ netdata_dbengine_disk_space }}
 
 {% if not netdata_enable_health_notifications %}
 [health]
-	script to execute on alarm = /bin/true
+   script to execute on alarm = /bin/true
 {% endif %}
 
 [web]
