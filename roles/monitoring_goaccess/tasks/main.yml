@@ -12,6 +12,7 @@
     - goaccess
     - monitoring
     - ssl
+    - apache
   when:
     - goaccess_https_mode == 'selfsigned'
     - ansible_local.apache.ansible_managed is defined
