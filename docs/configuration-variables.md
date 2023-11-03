@@ -1165,9 +1165,9 @@ goaccess_password: "CHANGEME"
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
-# (MiB) amount of memory dedicated to caching metric values
+# amount of memory dedicated to caching metrics (MB)
 netdata_dbengine_page_cache_size: 32
-# (MiB) amount of disk space dedicated to storing Netdata metric values/metadata
+# amount of disk space dedicated to storing per-second metrics (MB)
 netdata_dbengine_disk_space: 800
 # space-separated list of IP addresses authorized to access netdata dashboard/API (wildcards accepted, CIDR notation NOT accepted)
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
@@ -1315,7 +1315,7 @@ netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
 # enable/disable accepting streaming from another netdata instance (yes/no)
 netdata_streaming_receive_enabled: no
 # API key (UUID) used to authenticate on the destination instance/allow from source instances
-netdata_api_key: "CHANGEME"
+netdata_streaming_api_key: "CHANGEME"
 # enable health alarms for charts received from "child" netdata instances (yes/no)
 # if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
 netdata_streaming_receive_alarms: no
@@ -1478,7 +1478,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "27.1.2"
+nextcloud_version: "27.1.3"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
