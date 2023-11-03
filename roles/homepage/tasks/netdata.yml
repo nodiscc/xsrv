@@ -1,4 +1,4 @@
-- name: install netdata http check for homepage
+- name: install netdata checks for homepage
   template:
     src: etc_netdata_go.d_httpcheck.conf.d_homepage.conf.j2
     dest: "/etc/netdata/go.d/httpcheck.conf.d/homepage.conf"

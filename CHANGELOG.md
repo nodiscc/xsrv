@@ -3,10 +3,61 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.19.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.19.0) - 2023-11-03
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **gitea_act_runner:** if you changed it from the default value, rename the variable `gitea_act_runner_gitea_instance_url` to [`gitea_act_runner_gitea_instance_fqdn`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- **monitoring_utils:** if your projects are under git version control, you may want to add `data/duc-*.db` to  your `.gitignore` before using the `utils-duc` tag.
+- **common:** if your projects are under git version control, you may want to add `data/firewalld-info-*.log` to  your `.gitignore` before using the `utils-firewalld-info` tag.
+- `xsrv deploy` to apply changes
+
+**Added:**
+- common: packages: automatically install [qemu-guest-agent](https://qemu-project.gitlab.io/qemu/interop/qemu-ga.html) when the host is a KVM VM
+- gitea_act_runner: allow running workflows directly on the host without containerization ([`gitea_act_runner_labels`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- monitoring_utils: allow analyzing disk usage by directory and visualizing it locally using [duc](https://duc.zevv.nl/) ([`TAGS=utils-duc xsrv deploy default my.CHANGEME.org`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage))
+- backup: allow disabling specific rsnapshot backup intervals by setting [`rsnapshot_retain_daily/weekly/monthly`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) to `0`
+- backup: allow disabling automatic/scheduled backups entirely [`rsnapshot_enable_cron: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
+- backup: allow disabling automatic creation of the backup storage directory [`rsnapshot_create_root: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
+- common: allow getting firewalld status information (`TAGS=utils-firewalld-info xsrv deploy`)
+- netdata/shaarli/tt_rss/openldap/nextcloud: enable monitoring of PHP-FPM pools
+- when generating self-signed certificates, download them to the controller in `data/certificates/` under the project directory
+
+**Removed:**
+- netdata: remove variable `netdata_self_monitoring_enabled` (use [`netdata_disabled_plugins: ['netdata monitoring']`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead)
+- monitoring_utils: remove `logwatch` from the list of default installed packages
+
+**Changed:**
+- netdata: disable all netdata self-monitoring by default
+- netdata: update logs/db storage configuration for newer netdata versions, store 400MB of per-minute data and 200MB of per-hour data in addition to the amount of per-second data defined by [`netdata_dbengine_disk_space`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
+- gitea_act_runner: don't run the runner as root but as dedicated act-runner user
+- gitea_act_runner: force re-registering the runner when the `.runner` file is absent
+- gitea_act_runner: rename variable `gitea_act_runner_gitea_instance_url` to `gitea_act_runner_gitea_instance_fqdn`
+- gitea_act_runner: log runner registration attempts to syslog for easier debugging
+- common: users/logind: don't lock auto-lock idle user sessions by default ([`systemd_logind_lock_after_idle_min: 0`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- jitsi/goaccess: only generate self-signed certificates when `jitsi/goaccess_https_mode: selfsigned`
+- transmission: only generate self-signed certificates when apache is managed by xsrv
+- nextcloud: upgrade to v27.1.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/introducing-hub-5-first-to-deliver-self-hosted-ai-powered-digital-workspace/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.0) [[4]](https://github.com/nextcloud/server/releases/tag/v27.1.1) [[5]](https://github.com/nextcloud/server/releases/tag/v27.1.2) [[6]](https://github.com/nextcloud/server/releases/tag/v27.1.3)
+- matrix: update element-web to v1.11.47 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.47)
+- update documentation
+
+**Fixed:**
+- netdata: fix incorrect variable name in role defaults (`netdata_api_key` -> `netdata_streaming_api_key`)
+- gitea_act_runner: fix temporary error when first enabling the podman socket in act-runner systemd user session
+- gitea_act_runner: fix errors when enabling the systemd service manually
+- gitea_act_runner: always try to restart the runner systemd service in case of failure
+- monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages
+- monitoring_netdata/debsecan: fix debsecan unable to send email reports
+- default playbook: fix role ordering (`podman` must be deployed before `gitea_act_runner`)
+
+[Full changes since v1.18.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.18.0...1.19.0)
+
+------------------
+
 #### [v1.18.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.18.0) - 2023-10-11
 
 **Upgrade procedure:**
-- **docker:** if you want to keep using the [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) is now the recommended role for container management.
+- **docker:** if you want to keep using the [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) is now the recommended role for container management.
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 

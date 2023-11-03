@@ -33,3 +33,5 @@ lynis_skip_tests:
   - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
+# base path to index with duc disk usage analyzer
+duc_index_path: "/"

@@ -2,20 +2,31 @@
 # You can download the running configuration of your netdata instance, using:
 # curl http://localhost:19999/netdata.conf
 
-[global]
+[db]
    update every = {{ netdata_update_every }}
-{% if netdata_disable_debug_log %}   debug log = none
+   mode = dbengine
+   storage tiers = 3
+   page cache size MB = {{ netdata_dbengine_page_cache_size }}
+   # tier 0, per-second data
+   dbengine multihost disk space MB = {{ netdata_dbengine_disk_space }}
+   # tier 1, per-minute data
+   dbengine tier 1 multihost disk space MB = 400
+   dbengine tier 1 update every iterations = 60
+   # tier 2, per-hour data
+   dbengine tier 2 multihost disk space MB = 200
+   dbengine tier 2 update every iterations = 60
+
+[logs]
+{% if netdata_disable_debug_log %}   debug = none
 {% endif %}
-{% if netdata_disable_error_log %}   error log = none
+{% if netdata_disable_error_log %}   error = none
 {% endif %}
-{% if netdata_disable_access_log %}   access log = none
+{% if netdata_disable_access_log %}   access = none
 {% endif %}
-   page cache size = {{ netdata_dbengine_page_cache_size }}
-   dbengine multihost disk space = {{ netdata_dbengine_disk_space }}
 
 {% if not netdata_enable_health_notifications %}
 [health]
-	script to execute on alarm = /bin/true
+   script to execute on alarm = /bin/true
 {% endif %}
 
 [web]
@@ -36,190 +47,6 @@
 {% for plugin in netdata_disabled_plugins %}
    {{ plugin }} = no
 {% endfor %}
-
-{% if not netdata_self_monitoring_enabled %}
-##### DISABLE NETDATA SELF-MONITORING CHARTS #####
-
-[netdata.statsd_metrics]
-   enabled = no
-
-[netdata.statsd_useful_metrics]
-   enabled = no
-
-[netdata.statsd_events]
-   enabled = no
-
-[netdata.statsd_reads]
-   enabled = no
-
-[netdata.statsd_bytes]
-   enabled = no
-
-[netdata.statsd_packets]
-   enabled = no
-
-[netdata.tcp_connects]
-   enabled = no
-
-[netdata.tcp_connected]
-   enabled = no
-
-[netdata.private_charts]
-   enabled = no
-
-[netdata.plugin_statsd_charting_cpu]
-   enabled = no
-
-[netdata.plugin_statsd_collector1_cpu]
-   enabled = no
-
-[netdata.plugin_cgroups_cpu]
-   enabled = no
-
-[netdata.aclk_status]
-   enabled = no
-
-[netdata.apps_cpu]
-   enabled = no
-
-[netdata.plugin_tc_cpu]
-   enabled = no
-
-[netdata.web_thread1_cpu]
-   enabled = no
-
-[netdata.plugin_diskspace]
-   enabled = no
-
-[netdata.plugin_diskspace_dt]
-   enabled = no
-
-[netdata.aclk_query_per_second]
-   enabled = no
-
-[netdata.aclk_write_q]
-   enabled = no
-
-[netdata.aclk_read_q]
-   enabled = no
-
-[netdata.aclk_cloud_req]
-   enabled = no
-
-[netdata.aclk_query_threads]
-   enabled = no
-
-[netdata.aclk_query_time]
-   enabled = no
-
-[netdata.apps_sizes]
-   enabled = no
-
-[netdata.apps_fix]
-   enabled = no
-
-[netdata.apps_children_fix]
-   enabled = no
-
-[netdata.plugin_tc_time]
-   enabled = no
-
-[netdata.plugin_proc_modules]
-   enabled = no
-
-[netdata.plugin_proc_cpu]
-   enabled = no
-
-[netdata.server_cpu]
-   enabled = no
-
-[netdata.clients]
-   enabled = no
-
-[netdata.requests]
-   enabled = no
-
-[netdata.net]
-   enabled = no
-
-[netdata.response_time]
-   enabled = no
-
-[netdata.compression_ratio]
-   enabled = no
-
-[netdata.dbengine_compression_ratio]
-   enabled = no
-
-[netdata.page_cache_hit_ratio]
-   enabled = no
-
-[netdata.page_cache_stats]
-   enabled = no
-
-[netdata.dbengine_long_term_page_stats]
-   enabled = no
-
-[netdata.dbengine_io_throughput]
-   enabled = no
-
-[netdata.dbengine_io_operations]
-   enabled = no
-
-[netdata.dbengine_global_errors]
-   enabled = no
-
-[netdata.dbengine_global_file_descriptors]
-   enabled = no
-
-[netdata.dbengine_ram]
-   enabled = no
-
-[netdata.runtime_ntpd_local]
-   enabled = no
-
-[netdata.queries]
-   enabled = no
-
-[netdata.db_points]
-   enabled = no
-
-[netdata.runtime_logcount]
-   enabled = no
-
-[netdata.runtime_needrestart]
-   enabled = no
-
-[netdata.runtime_debsecan]
-   enabled = no
-
-[netdata.runtime_apache]
-   enabled = no
-
-[netdata.execution_time_of_apache_local]
-   enabled = no
-
-[netdata.execution_time_of_systemdunits_service_units]
-   enabled = no
-
-[netdata.execution_time_of_systemdunits_socket_units]
-   enabled = no
-
-[netdata.execution_time_of_systemdunits_timer_units]
-   enabled = no
-
-[netdata.web_thread2_cpu]
-   enabled = no
-
-[netdata.web_thread3_cpu]
-   enabled = no
-
-[netdata.web_thread4_cpu]
-   enabled = no
-
-[netdata.plugin_timex]
-   enabled = no
-{% endif %}
 
 [plugin:proc:diskspace]
 	exclude space metrics on paths = /proc/* /sys/* /var/run/user/* /run/user/* /snap/* /var/lib/docker/* /dev /dev/shm

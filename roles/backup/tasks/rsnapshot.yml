@@ -7,6 +7,7 @@
     owner: root
     group: root
     mode: "0770"
+  when: rsnapshot_create_root | bool
 
 - name: create rsnapshot log file
   copy:
@@ -20,7 +21,7 @@
 ##### INSTALLATION/CONFIGURATION #####
 
 
-- name: install rsnapshot from Debian repositories (Debian 9/10)
+- name: install rsnapshot
   apt:
     package: rsnapshot
     state: present
@@ -121,6 +122,7 @@
     minute: '0'
     day: '*'
     job: 'rsnapshot daily >/dev/null && touch /var/log/rsnapshot_last_success'
+    disabled: "{{ True if (rsnapshot_retain_daily == 0 or not rsnapshot_enable_cron) else False }}"
 
 # At 00:30 every sunday
 - name: setup weekly backup cron job
@@ -132,6 +134,7 @@
     minute: '30'
     weekday: '0'
     job: 'rsnapshot weekly >/dev/null'
+    disabled: "{{ True if (rsnapshot_retain_weekly == 0 or not rsnapshot_enable_cron) else False }}"
 
 - name: setup monthly backup cron job
   cron:
@@ -142,3 +145,4 @@
     minute: '1'
     day: '1'
     job: 'rsnapshot monthly >/dev/null'
+    disabled: "{{ True if (rsnapshot_retain_monthly == 0 or not rsnapshot_enable_cron) else False }}"

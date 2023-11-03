@@ -2,16 +2,14 @@
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
-# (MiB) amount of memory dedicated to caching metric values
+# amount of memory dedicated to caching metrics (MB)
 netdata_dbengine_page_cache_size: 32
-# (MiB) amount of disk space dedicated to storing Netdata metric values/metadata
+# amount of disk space dedicated to storing per-second metrics (MB)
 netdata_dbengine_disk_space: 800
 # space-separated list of IP addresses authorized to access netdata dashboard/API (wildcards accepted, CIDR notation NOT accepted)
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# enable netdata self-monitoring charts/alarms (yes/no)
-netdata_self_monitoring_enabled: no
 # enable/disable netdata debug/error/access logs (yes/no)
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
@@ -33,6 +31,7 @@ netdata_disabled_plugins:
   - solr
   - supervisord
   - lighttpd
+  - netdata monitoring
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
@@ -153,7 +152,7 @@ netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
 # enable/disable accepting streaming from another netdata instance (yes/no)
 netdata_streaming_receive_enabled: no
 # API key (UUID) used to authenticate on the destination instance/allow from source instances
-netdata_api_key: "CHANGEME"
+netdata_streaming_api_key: "CHANGEME"
 # enable health alarms for charts received from "child" netdata instances (yes/no)
 # if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
 netdata_streaming_receive_alarms: no

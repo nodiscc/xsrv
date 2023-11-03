@@ -53,6 +53,8 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Upgrade from Debian 11 to Debian 12: `TAGS=utils-debian11to12 xsrv deploy` or `ansible-playbook --tags utils-debian11to12 playbook.yml`. Upgrading from one distribution version to another can take a while, and some services may become shortly unavailable during the operation. You can follow progress by watching `apt` logs on the host (or `/var/log/syslog` if the [`monitoring_rsyslog`](../monitoring_rsyslog) role is deployed).
 - Upgrade all packages immediately, using unattended-upgrades: `TAGS=utils-apt-unattended-upgrade`. This allows upgrading immediately, without waiting for the daily unattended-upgrades timer to run. It respects the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting.
 - Upgrade all packages immediately: `TAGS=utils-apt-upgrade`. This will upgrade all upgradable packages, regardless of unattended-upgrades configuration (in particular the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting).
+- Get information about IP addresses banned by fail2ban: `TAGS=utils-fail2ban-get-banned xsrv deploy my.CHANGEME.org`
+- Get information about firewalld status: `TAGS=utils-firewalld-info xsrv deploy my.CHANGEME.org`
 
 ## Troubleshooting
 
@@ -107,6 +109,7 @@ utils-apt-upgrade - (manual) run apt upgrade now
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
+utils-firewalld-info - (manual) get firewall status informations
 cron - configure cron task scheduler
 apt-listbugs - configure apt-listbugs bug prevention tool
 ```

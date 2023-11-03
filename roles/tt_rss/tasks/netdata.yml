@@ -1,9 +1,14 @@
-- name: install netdata http check for tt-rss
+- name: install netdata checks for tt-rss
   template:
-    src: etc_netdata_go.d_httpcheck.conf.d_tt-rss.conf.j2
-    dest: "/etc/netdata/go.d/httpcheck.conf.d/tt-rss.conf"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: netdata
     mode: "0640"
   notify: assemble netdata configuration
   ignore_errors: "{{ ansible_check_mode }}"
+  with_items:
+    - src: etc_netdata_go.d_httpcheck.conf.d_tt-rss.conf.j2
+      dest: /etc/netdata/go.d/httpcheck.conf.d/tt-rss.conf
+    - src: etc_netdata_go.d_phpfpm.conf.d_tt-rss.conf.j2
+      dest: /etc/netdata/go.d/phpfpm.conf.d/tt-rss.conf

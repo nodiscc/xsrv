@@ -90,9 +90,15 @@ cmd_logger	/usr/bin/logger
 # e.g. alpha, beta, gamma, etc.         #
 #########################################
 
+{% if rsnapshot_retain_daily != 0 %}
 retain	daily	{{ rsnapshot_retain_daily }}
+{% endif %}
+{% if rsnapshot_retain_weekly != 0 %}
 retain	weekly	{{ rsnapshot_retain_weekly }}
+{% endif %}
+{% if rsnapshot_retain_monthly != 0 %}
 retain	monthly	{{ rsnapshot_retain_monthly }}
+{% endif %}
 
 ############################################
 #              GLOBAL OPTIONS              #

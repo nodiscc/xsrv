@@ -5,10 +5,12 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup"
   with_items:
     - rsnapshot_backup_dir is string
-    - rsnapshot_backup_execs|type_debug == "list"
-    - rsnapshot_excludes|type_debug == "list"
-    - rsnapshot_local_backups|type_debug == "list"
-    - rsnapshot_remote_backups|type_debug == "list"
-    - rsnapshot_retain_daily|int
-    - rsnapshot_retain_monthly|int
-    - rsnapshot_retain_weekly|int
+    - rsnapshot_backup_execs | type_debug == "list"
+    - rsnapshot_excludes | type_debug == "list"
+    - rsnapshot_local_backups | type_debug == "list"
+    - rsnapshot_remote_backups | type_debug == "list"
+    - rsnapshot_retain_daily == rsnapshot_retain_daily | int
+    - rsnapshot_retain_weekly == rsnapshot_retain_weekly | int
+    - rsnapshot_retain_monthly == rsnapshot_retain_monthly | int
+    - rsnapshot_enable_cron == rsnapshot_enable_cron | bool
+    - rsnapshot_create_root  == rsnapshot_create_root | bool

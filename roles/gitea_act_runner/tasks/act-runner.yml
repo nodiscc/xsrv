@@ -1,14 +1,4 @@
-# installation/setup tasks for EXAMPLE component, such as:
-# - install packages
-# - download binaries/zips
-# - verify binary downloads using checksums and/or GPG keys
-# - create users/groups
-# - create configuration/data directories
-# - install binaries to $PATH
-# - copy configuration files
-# - create databases/tables
-# - create application admin/user accounts
-# - start/stop service
+##### USER #####
 
 - name: create act-runner user
   user:
@@ -17,7 +7,52 @@
     shell: '/bin/bash'
     comment: 'Gitea Actions runner'
     password: '*'
-    home: '/var/lib/act-runner'
+    home: /var/lib/act-runner
+  register: gitea_act_runner_user
+
+- name: update act-runner home directory ownership
+  file:
+    path: /var/lib/act-runner
+    state: directory
+    owner: act-runner
+    group: act-runner
+    recurse: yes
+  when: ansible_local.gitea_act_runner.work_directory_ownership_migrated is not defined
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### PODMAN #####
+
+- name: check if systemd/logind session lingering is enabled
+  stat:
+    path: "/var/lib/systemd/linger/act-runner"
+  register: linger_file
+  when: gitea_act_runner_container_engine == "podman"
+
+- name: enable systemd/logind session lingering
+  become: yes
+  command:
+    cmd: loginctl enable-linger act-runner
+  when: (not linger_file.stat.exists) and (gitea_act_runner_container_engine == "podman")
+  ignore_errors: "{{ ansible_check_mode }}"
+  changed_when: yes
+
+# use sudo systemctl --user --machine act-runner@ list-units to list another user's services
+- name: enable podman socket for the act-runner user
+  become: yes
+  become_user: act-runner
+  systemd:
+    name: podman.socket
+    scope: user
+    state: started
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: gitea_act_runner_container_engine == "podman"
+  register: gitea_act_runner_enable_podman_socket
+  retries: 3
+  delay: 3
+  until: gitea_act_runner_enable_podman_socket is not failed
+
+##### ACT-RUNNER #####
 
 - name: download act-runner binary
   get_url:
@@ -92,6 +127,11 @@
 
 ##### RUNNER REGISTRATION #####
 
+- name: check if runner registration file exists
+  stat:
+    path: /var/lib/act-runner/.runner
+  register: runner_registration_file
+
 - name: generate gitea actions runner token
   become: yes
   become_user: gitea
@@ -99,17 +139,18 @@
   command:
     cmd: gitea --config /etc/gitea/app.ini actions generate-runner-token
   register: gitea_actions_generate_runner_token
-  when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
+  when: not runner_registration_file.stat.exists
   changed_when: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: register the runner on the gitea instance (if this fails make sure that the actions API is enabled on the gitea instance)
+- name: register the runner on the gitea instance (if this fails, check host logs and ensure that the actions API is enabled on the gitea instance)
   become: yes
   become_user: act-runner
-  command: /usr/local/bin/act-runner --config /etc/act-runner/config.yaml register --no-interactive --instance https://{{ gitea_act_runner_gitea_instance_url }} --token {{ gitea_actions_generate_runner_token.stdout }}
-  args:
+  shell:
+    cmd: /usr/local/bin/act-runner --config /etc/act-runner/config.yaml register --no-interactive --instance https://{{ gitea_act_runner_gitea_instance_fqdn }} --token {{ gitea_actions_generate_runner_token.stdout }} 2>&1 | logger -t act-runner
     chdir: "/var/lib/act-runner"
   ignore_errors: "{{ ansible_check_mode }}"
-  when: (ansible_local.gitea_act_runner.registered is not defined) or (not ansible_local.gitea_act_runner.registered | bool)
+  when: not runner_registration_file.stat.exists
   changed_when: yes
   timeout: 10
+  notify: restart act-runner

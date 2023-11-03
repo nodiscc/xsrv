@@ -5,8 +5,9 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea/runner"
   with_items:
     - gitea_act_runner_version is string
-    - gitea_act_runner_gitea_instance_url is not search("CHANGEME")
+    - gitea_act_runner_gitea_instance_fqdn is not search("CHANGEME")
     - (gitea_act_runner_gitea_instance_hostname is not defined) or (gitea_act_runner_gitea_instance_hostname is string)
     - gitea_act_runner_enable_service == gitea_act_runner_enable_service | bool
     - gitea_act_runner_container_engine in ['docker', 'podman']
     - gitea_actions_runner_container_network is string
+    - gitea_act_runner_labels | type_debug == 'list'

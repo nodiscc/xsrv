@@ -12,6 +12,11 @@
     - goaccess
     - monitoring
     - ssl
+    - apache
+  when:
+    - goaccess_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include goaccess configuration tasks
   import_tasks: goaccess.yml

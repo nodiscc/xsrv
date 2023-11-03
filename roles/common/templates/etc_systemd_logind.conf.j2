@@ -41,6 +41,8 @@
 #SessionsMax=8192
 KillUserProcesses={{ 'yes' if systemd_logind_kill_user_processes else 'no' }}
 KillExcludeUsers={{ systemd_logind_kill_exclude_users|join(' ') }}
+{% if not systemd_logind_lock_after_idle_min == 0 %}
 IdleAction=lock
 IdleActionSec={{ systemd_logind_lock_after_idle_min }}min
+{% endif %}
 RemoveIPC=yes

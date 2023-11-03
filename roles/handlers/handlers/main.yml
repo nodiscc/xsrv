@@ -82,6 +82,7 @@
     - go.d/filecheck.conf
     - go.d/httpcheck.conf
     - go.d/x509check.conf
+    - go.d/phpfpm.conf
     - go.d/portcheck.conf
     - health.d/filecheck.conf
     - health.d/processes.conf
@@ -101,8 +102,15 @@
 
 - name: check rsnapshot configuration
   become: yes
-  command: rsnapshot configtest
+  command:
+    cmd: rsnapshot configtest
   changed_when: no
+  register: rsnapshot_configtest
+  ignore_errors: "{{ ansible_check_mode }}"
+  failed_when:
+    - rsnapshot_configtest is defined
+    - rsnapshot_configtest.rc != 0
+    - not 'rsnapshot refuses to create snapshot_root when no_create_root is enabled' in rsnapshot_configtest.stderr
 
 ### LIBVIRT ###
 

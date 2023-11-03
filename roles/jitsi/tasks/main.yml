@@ -59,6 +59,10 @@
     - jitsi
     - ssl
     - apache
+  when:
+    - jitsi_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
 
 - name: include apache configuration tasks
   import_tasks: apache.yml

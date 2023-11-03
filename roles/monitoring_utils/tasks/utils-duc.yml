@@ -1,0 +1,19 @@
+- name: install duc
+  apt:
+    package: duc
+    state: present
+
+- name: index filesystem with duc
+  command:
+    cmd: "duc index --check-hard-links --database=/root/.duc.db '{{ duc_index_path }}'"
+  changed_when: yes
+
+- name: download duc database to data/duc-*.db
+  fetch:
+    src: /root/.duc.db
+    dest: "{{ playbook_dir }}/data/duc-{{ inventory_hostname }}.db"
+    flat: yes
+
+- name: show duc completion message
+  debug:
+    msg: "you can now open the database with duc gui --database={{ playbook_dir }}/data/duc-{{ inventory_hostname }}.db {{ duc_index_path }}"

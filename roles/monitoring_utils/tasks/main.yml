@@ -19,3 +19,12 @@
     - monitoring
     - monitoring_utils
     - lynis
+
+##### UTILITIES #####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include duc tasks
+  import_tasks: utils-duc.yml
+  become: yes
+  tags:
+    - never
+    - utils-duc

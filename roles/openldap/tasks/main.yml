@@ -37,6 +37,7 @@
     - openldap
     - ldap-account-manager
     - self-service-password
+    - netdata
 
 - name: include ldap-account-manager configuration tasks
   import_tasks: ldap-account-manager.yml

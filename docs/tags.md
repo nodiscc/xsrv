@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.17.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.18.0
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
 TAGS:
 apache-reverseproxy - setup apache custom reverseproxies
@@ -88,7 +88,9 @@ utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
+utils-duc - (manual) run duc disk usage analyzer and download the database on the controller
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
+utils-firewalld-info - (manual) get firewall status informations
 utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 utils-netdata-test-notifications - send test netdata notification

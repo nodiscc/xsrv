@@ -30,6 +30,12 @@ MDomain {{ shaarli_fqdn }}
 {% else %}
   DocumentRoot {{ shaarli_install_dir }}
 
+  <LocationMatch "/.fpm-status">
+      Require all granted
+      Require ip 127.0.0.1
+      ProxyPass unix:/run/php/php{{ shaarli_php_fpm_version }}-fpm-shaarli.sock|fcgi://localhost/.fpm-status
+  </LocationMatch>
+
   <FilesMatch \.php$>
     SetHandler "proxy:unix:/run/php/php{{ shaarli_php_fpm_version }}-fpm-shaarli.sock|fcgi://localhost"
   </FilesMatch>

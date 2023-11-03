@@ -11,7 +11,7 @@ runner:
   capacity: 1
   # Extra environment variables to run jobs.
   envs:
-{% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_url == ansible_local.gitea.fqdn) %}
+{% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_fqdn == ansible_local.gitea.fqdn) %}
     NODE_EXTRA_CA_CERTS: "/etc/ssl/certs/ca-certificates.crt"
 {% endif %}
   #   A_TEST_ENV_NAME_1: a_test_env_value_1
@@ -33,7 +33,7 @@ runner:
   # Like: ["macos-arm64:host", "ubuntu-latest:docker://node:16-bullseye", "ubuntu-22.04:docker://node:16-bullseye"]
   # If it's empty when registering, it will ask for inputting labels.
   # If it's empty when execute `deamon`, will use labels in `.runner` file.
-  labels: []
+  labels: {{ gitea_act_runner_labels }}
 
 cache:
   # Enable cache server to use actions/cache.
@@ -57,7 +57,7 @@ container:
   # Whether to use privileged mode or not when launching task containers (privileged mode is required for Docker-in-Docker).
   privileged: false
   # And other options to be used when the container is started (eg, --add-host=my.gitea.url:host-gateway).
-{% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_url == ansible_local.gitea.fqdn) %}
+{% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_fqdn == ansible_local.gitea.fqdn) %}
   options: --add-host={{ gitea_fqdn }}:{{ 'host-gateway' if gitea_act_runner_container_engine == 'docker' else '127.0.0.1' }} --mount type=bind,source=/etc/act-runner/ca-certificates.crt,target=/etc/ssl/certs/ca-certificates.crt,readonly
 {% else %}
   options:
@@ -81,7 +81,7 @@ container:
   # If it's "-", act_runner will find an available docker host automatically, but the docker host won't be mounted to the job containers and service containers.
   # If it's not empty or "-", the specified docker host will be used. An error will be returned if it doesn't work.
 {% if gitea_act_runner_container_engine == 'podman' %}
-  docker_host: "unix:///var/run/podman/podman.sock"
+  docker_host: "unix:///run/user/{{ gitea_act_runner_user.uid }}/podman/podman.sock"
 {% else %}
   docker_host: ""
 {% endif %}

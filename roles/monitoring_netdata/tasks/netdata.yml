@@ -147,6 +147,7 @@
     - path: /etc/netdata/go.d/filecheck.conf.d
     - path: /etc/netdata/go.d/httpcheck.conf.d
     - path: /etc/netdata/go.d/x509check.conf.d
+    - path: /etc/netdata/go.d/phpfpm.conf.d
     - path: /etc/netdata/go.d/portcheck.conf.d
     - path: /etc/netdata/health.d/processes.conf.d
     - path: /etc/netdata/health.d/filecheck.conf.d
@@ -177,6 +178,7 @@
     - { src: 'etc_netdata_health.d_systemdunits.conf.d_000-systemdunits.conf.j2', dest: '/etc/netdata/health.d/systemdunits.conf.d/000-systemdunits.conf' } # file checks
     - { src: 'etc_netdata_go.d_httpcheck.conf.d_000-httpcheck.conf.j2', dest: '/etc/netdata/go.d/httpcheck.conf.d/000-httpcheck.conf' } # HTTP checks
     - { src: 'etc_netdata_go.d_x509check.conf.d_000-x509check.conf.j2', dest: '/etc/netdata/go.d/x509check.conf.d/000-x509check.conf' } # SSL certificate checks
+    - { src: 'etc_netdata_go.d_phpfpm.conf.d_000-phpfpm.conf.j2', dest: '/etc/netdata/go.d/phpfpm.conf.d/000-phpfpm.conf' } # SSL certificate checks
     - { src: 'etc_netdata_go.d_portcheck.conf.d_000-portcheck.conf.j2', dest: '/etc/netdata/go.d/portcheck.conf.d/000-portcheck.conf' } # TCP port checks
     - { src: 'etc_netdata_go.d_ping.conf.j2', dest: '/etc/netdata/go.d/ping.conf' } # ping checks
     - { src: 'etc_netdata_health.d_ping.conf.j2', dest: '/etc/netdata/health.d/ping.conf' } # fping checks

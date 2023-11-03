@@ -57,10 +57,15 @@ php_fpm_enable_default_pool: yes
 ##### RSNAPSHOT BACKUP SERVICE #####
 # Backups storage directory (with traing slash!)
 rsnapshot_backup_dir: "/var/backups/rsnapshot"
-# Number of daily, weekly and monthly backup generations to keep
+# number of daily, weekly and monthly backup generations to keep (set to 0 to disable a specific backup interval)
 rsnapshot_retain_daily: 6
 rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6
+# enable/disable automatic/scheduled backups (yes/no)
+rsnapshot_enable_cron: yes
+# automatically create the backup storage directory (yes/no)
+# if the backup directory should be created by another process, such as USB drive automounter, you may want to set this to no
+rsnapshot_create_root: yes
 # rsnapshot verbosity level (1-5)
 rsnapshot_verbose_level: 3
 # Commands to run before starting backups (database dumps, application exports...)
@@ -299,6 +304,7 @@ apt_listbugs_ignore_list:
   - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
   - 1043415 # https://bugs.debian.org/1043415 - not applicable to upstream/packagecloud packages
   - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
+  - 1030284 # https://bugs.debian.org/1030284 # only affects arm64 architecture
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -447,8 +453,8 @@ ansible_user_allow_sudo_rsync_nopasswd: yes
 systemd_logind_kill_user_processes: yes
 # do not kill processes on logout for these users
 systemd_logind_kill_exclude_users: ['root']
-# time after which idle interactive login sessions are automatically closed
-systemd_logind_lock_after_idle_min: 15
+# time after which idle interactive login sessions are automatically closed (minutes, set to 0 to disable)
+systemd_logind_lock_after_idle_min: 0
 # terminate interactive bash processes after this number of seconds if no input is received (set to 0 to disable)
 bash_timeout: 900
 
@@ -556,7 +562,7 @@ dnsmasq_dnssec: yes
 ```yaml
 ##### GITEA ACTIONS RUNNER #####
 # FQDN of the gitea instance to register the runner on
-gitea_act_runner_gitea_instance_url: "{{ gitea_fqdn | default('git.CHANGEME.org') }}" # TODO rename to _domain
+gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org') }}" # TODO rename to _domain
 # inventory hostname of the gitea host to register the runner on (if different from the runner host)
 # gitea_act_runner_gitea_instance_hostname: "CHANGEME"
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
@@ -568,6 +574,19 @@ gitea_act_runner_container_engine: "podman"
 # network to which the containers managed by act-runner will connect (host/bridge/custom)
 # set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
 gitea_actions_runner_container_network: "host"
+# list of labels to use when registering the runner (https://docs.gitea.com/usage/actions/design)
+# If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role muyst be redeployed
+# Add "host:host" to this list to allow running workflows directly on the host, without containerization (and specify "runs-on: host" in your workflow yml file)
+# If host-based workflows are allowed, you probably want to install the nodejs package on the host so that nodejs-based actions can run
+# Example:
+# gitea_act_runner_labels:
+#   - 'host:host'
+#   - "debian-bookworm-backports:docker://debian:bookworm-backports"
+gitea_act_runner_labels:
+  - "ubuntu-latest:docker://node:16-bullseye"
+  - "ubuntu-22.04:docker://node:16-bullseye"
+  - "ubuntu-20.04:docker://node:16-bullseye"
+  - "ubuntu-18.04:docker://node:16-buster"
 ```
 
 
@@ -1102,7 +1121,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.46"
+matrix_element_version: "1.11.47"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1146,16 +1165,14 @@ goaccess_password: "CHANGEME"
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
-# (MiB) amount of memory dedicated to caching metric values
+# amount of memory dedicated to caching metrics (MB)
 netdata_dbengine_page_cache_size: 32
-# (MiB) amount of disk space dedicated to storing Netdata metric values/metadata
+# amount of disk space dedicated to storing per-second metrics (MB)
 netdata_dbengine_disk_space: 800
 # space-separated list of IP addresses authorized to access netdata dashboard/API (wildcards accepted, CIDR notation NOT accepted)
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# enable netdata self-monitoring charts/alarms (yes/no)
-netdata_self_monitoring_enabled: no
 # enable/disable netdata debug/error/access logs (yes/no)
 netdata_disable_debug_log: yes
 netdata_disable_error_log: no
@@ -1177,6 +1194,7 @@ netdata_disabled_plugins:
   - solr
   - supervisord
   - lighttpd
+  - netdata monitoring
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
@@ -1297,7 +1315,7 @@ netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
 # enable/disable accepting streaming from another netdata instance (yes/no)
 netdata_streaming_receive_enabled: no
 # API key (UUID) used to authenticate on the destination instance/allow from source instances
-netdata_api_key: "CHANGEME"
+netdata_streaming_api_key: "CHANGEME"
 # enable health alarms for charts received from "child" netdata instances (yes/no)
 # if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
 netdata_streaming_receive_alarms: no
@@ -1392,6 +1410,8 @@ lynis_skip_tests:
   - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
+# base path to index with duc disk usage analyzer
+duc_index_path: "/"
 ```
 
 
@@ -1458,7 +1478,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "26.0.6"
+nextcloud_version: "27.1.3"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1498,7 +1518,8 @@ nextcloud_apps:
   - { state: "disable", app: "music" } # https://apps.nextcloud.com/apps/music
   - { state: "enable", app: "maps" } # https://apps.nextcloud.com/apps/maps
   - { state: "enable", app: "notifications" } # https://github.com/nextcloud/notifications
-  - { state: "enable", app: "systemtags" } # https://docs.nextcloud.com/server/latest/user_manual/ca/files/access_webgui.html#tagging-files
+  - { state: "enable", app: "systemtags" } # https://docs.nextcloud.com/server/latest/user_manual/en/files/access_webgui.html#tagging-files
+  - { state: "disable", app: "files_automatedtagging" } # https://apps.nextcloud.com/apps/files_automatedtagging
   - { state: "enable", app: "tasks" } # https://apps.nextcloud.com/apps/tasks
   - { state: "enable", app: "updatenotification" } # https://docs.nextcloud.com/server/latest/admin_manual/maintenance/update.html
   - { state: "enable", app: "user_ldap" } # https://docs.nextcloud.com/server/latest/admin_manual/configuration_user/user_auth_ldap.html
