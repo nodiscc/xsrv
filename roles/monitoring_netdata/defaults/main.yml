@@ -152,7 +152,7 @@ netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
 # enable/disable accepting streaming from another netdata instance (yes/no)
 netdata_streaming_receive_enabled: no
 # API key (UUID) used to authenticate on the destination instance/allow from source instances
-netdata_api_key: "CHANGEME"
+netdata_streaming_api_key: "CHANGEME"
 # enable health alarms for charts received from "child" netdata instances (yes/no)
 # if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
 netdata_streaming_receive_alarms: no

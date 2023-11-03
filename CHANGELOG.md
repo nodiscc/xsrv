@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Fixed:**
+- netdata: fix incorrect variable name in role defaults (`netdata_api_key` -> `netdata_streaming_api_key`)
 - gitea_act_runner: fix temporary error when first enabling the podman socket in act-runner systemd user session
 - gitea_act_runner: fix errors when enabling the systemd service manually
 - gitea_act_runner: always try to restart the runner systemd service in case of failure
