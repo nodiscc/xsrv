@@ -1,4 +1,4 @@
-{% if openldap_setup_lam %}
+{% if openldap_setup_lam and ldap_account_manager_enable_service %}
   - name: ldap-account-manager
     timeout: 1
     tls_skip_verify: true
@@ -6,12 +6,9 @@
     url: https://127.0.0.1
     headers:
       Host: "{{ ldap_account_manager_fqdn }}"
-{% if not ldap_account_manager_enable_service %}
-    status_accepted: [503]
 {% endif %}
 
-{% endif %}
-{% if openldap_setup_ssp %}
+{% if openldap_setup_ssp and self_service_password_enable_service %}
   - name: self-service-password
     timeout: 1
     tls_skip_verify: true
@@ -19,8 +16,4 @@
     url: https://127.0.0.1
     headers:
       Host: "{{ self_service_password_fqdn }}"
-{% if not self_service_password_enable_service %}
-    status_accepted: [503]
-{% endif %}
-
 {% endif %}

@@ -1,3 +1,4 @@
+{% if shaarli_enable_service %}
   - name: shaarli
     timeout: 1
     tls_skip_verify: true
@@ -5,6 +6,4 @@
     url: https://127.0.0.1
     headers:
       Host: "{{ shaarli_fqdn }}"
-{% if not shaarli_enable_service %}
-    status_accepted: [503]
 {% endif %}

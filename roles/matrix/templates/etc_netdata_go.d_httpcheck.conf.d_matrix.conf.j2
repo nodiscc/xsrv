@@ -1,3 +1,4 @@
+{% if matrix_synapse_enable_service %}
   - name: matrix-synapse
     timeout: 3
     tls_skip_verify: true
@@ -5,10 +6,9 @@
     url: https://127.0.0.1/_matrix/client/versions
     headers:
       Host: "{{ matrix_synapse_fqdn }}"
-{% if not matrix_synapse_enable_service %}
-    status_accepted: [503]
 {% endif %}
 
+{% if matrix_synapse_admin_enable_service %}
   - name: matrix-synapse-admin
     timeout: 3
     tls_skip_verify: true
@@ -16,10 +16,9 @@
     url: https://127.0.0.1/
     headers:
       Host: "{{ matrix_synapse_fqdn }}"
-{% if not matrix_synapse_admin_enable_service %}
-    status_accepted: [503]
 {% endif %}
 
+{% if matrix_element_enable_service %}
   - name: matrix-element
     timeout: 3
     tls_skip_verify: true
@@ -27,6 +26,4 @@
     url: https://127.0.0.1/
     headers:
       Host: "{{ matrix_element_fqdn }}"
-{% if not matrix_element_enable_service %}
-    status_accepted: [503]
 {% endif %}

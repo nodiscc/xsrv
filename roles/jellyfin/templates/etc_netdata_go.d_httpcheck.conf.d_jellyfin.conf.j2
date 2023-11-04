@@ -1,3 +1,4 @@
+{% if jellyfin_enable_service %}
   - name: jellyfin
     timeout: 1
     tls_skip_verify: true
@@ -5,6 +6,4 @@
     url: https://127.0.0.1
     headers:
       Host: "{{ jellyfin_fqdn }}"
-{% if not jellyfin_enable_service %}
-    status_accepted: [503]
 {% endif %}

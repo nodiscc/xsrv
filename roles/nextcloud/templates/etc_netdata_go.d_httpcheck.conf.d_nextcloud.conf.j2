@@ -1,3 +1,4 @@
+{% if nextcloud_enable_service %}
   - name: nextcloud
     timeout: 3
     tls_skip_verify: true
@@ -5,6 +6,4 @@
     url: https://127.0.0.1/index.php/login
     headers:
       Host: "{{ nextcloud_fqdn }}"
-{% if not nextcloud_enable_service %}
-    status_accepted: [503]
 {% endif %}
