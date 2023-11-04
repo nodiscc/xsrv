@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+**Added:**
+- shaarli: install [stack](https://github.com/RolandTi/shaarli-stack) custom theme/template (must be enabled manually)
+
 **Changed:**
 - netdata: when `*_enable_service: no`, disable HTTP checks entirely for this service (intead of accepting HTTP 503)
 - transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check

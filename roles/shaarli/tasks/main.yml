@@ -14,6 +14,11 @@
   become: yes
   tags: shaarli
 
+- name: include shaarli stack template configuration tasks
+  import_tasks: shaarli-stack.yml
+  become: yes
+  tags: shaarli
+
 - name: include ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
@@ -89,7 +94,7 @@
   tags:
     - shaarli
     - shaarli-client
-  when: shaarli_setup_python_client|bool
+  when: shaarli_setup_python_client | bool
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
