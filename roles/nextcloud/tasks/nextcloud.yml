@@ -31,6 +31,7 @@
       - "php{{ nextcloud_php_fpm_version }}-apcu"
       - ffmpeg
       - acl
+      - gnupg
 
 ### GET/SET FACTS ###
 
@@ -71,12 +72,36 @@
 
 - name: download nextcloud zip
   get_url:
-    url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
-    dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: "0640"
-  when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
+  with_items:
+    - url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip"
+      dest: "/root/nextcloud-{{ nextcloud_version }}.zip"
+    - url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip.asc"
+      dest: "/root/nextcloud-{{ nextcloud_version }}.zip.asc"
+    - url: "https://download.nextcloud.com/server/releases/nextcloud-{{ nextcloud_version }}.zip.sha256"
+      dest: "/root/nextcloud-{{ nextcloud_version }}.zip.sha256"
+
+# Key from https://nextcloud.com/nextcloud.asc
+- name: copy nextcloud GPG key
+  copy:
+    src: root_nextcloud.key
+    dest: /root/nextcloud.key
+    owner: root
+    group: root
+    mode: "0660"
+
+- name: import nextcloud GPG key
+  command: gpg --import /root/nextcloud.key
+  register: nextcloud_import_gpgkey
+  changed_when: "'unchanged: 1' not in nextcloud_import_gpgkey.stderr"
+
+- name: verify nextcloud GPG signatures
+  command: gpg --verify /root/nextcloud-{{ nextcloud_version }}.zip.asc /root/nextcloud-{{ nextcloud_version }}.zip
+  changed_when: no
 
 - name: create nextcloud zip extraction directory
   file:
