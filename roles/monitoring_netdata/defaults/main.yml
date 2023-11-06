@@ -181,8 +181,6 @@ netdata_logcount_warning_threshold_warn: 10
 netdata_logcount_notification_to: "silent"
 # setup netdata-debsecan module (yes/no)
 setup_netdata_debsecan: yes
-# monitor systemd units states
-netdata_monitor_systemd_units: yes
 # enable daily mail reports from debsecan (yes/no)
 debsecan_enable_reports: yes
 # list of vulnerabilities (CVE numbers) that will be ignored by debsecan

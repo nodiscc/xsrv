@@ -25,7 +25,6 @@
     - netdata_logcount_update_interval == netdata_logcount_update_interval | int
     - netdata_logcount_warning_threshold_warn == netdata_logcount_warning_threshold_warn | int
     - netdata_log_to_syslog == netdata_log_to_syslog | bool
-    - netdata_monitor_systemd_units == netdata_monitor_systemd_units | bool
     - netdata_streaming_send_enabled == netdata_streaming_send_enabled | bool
     - netdata_streaming_receive_enabled == netdata_streaming_receive_enabled | bool
     - netdata_streaming_receive_alarms == netdata_streaming_receive_alarms | bool
