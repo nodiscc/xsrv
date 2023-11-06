@@ -55,3 +55,7 @@ PrivateUsers=true
 #SystemCallFilter=~@setuid
 #SystemCallFilter=~@swap
 #SystemCallErrorNumber=EPERM
+
+# Workaround for internal restart function not working/only terminating the jellyfin process without restart
+Restart=always
+RestartSec=5
