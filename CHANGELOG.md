@@ -84,12 +84,12 @@ _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui
 
 **Added:**
 - add [`gitea_act_runner`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) role (Gitea Actions CI/CD runner)
-- add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker))
+- add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker))
 - gitea: allow enabling built-in [Gitea Actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system ([`gitea_enable_actions: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 - common: allow running `unattended-upgrade` or `apt upgrade` immediately ([`TAGS=utils-apt-unattended-upgrade,utils-apt-upgrade`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/README.md#usage))
 - matrix: allow setting up LDAP authentication backend for synapse ([`matrix_synapse_ldap_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml))
 - netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker#uninstallation))
+- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker#uninstallation))
 - nextcloud: allow automatically checking the filesystem/data directory for changes made outside Nextcloud ([`nextcloud_filesystem_check_changes: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 
 **Removed:**
@@ -824,7 +824,7 @@ self_service_password_allowed_hosts:
 - common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)), disable unused network/firewire modules by default
 - common: automatically remove (purge) configuration files of removed packages, nightly, enabled by default ([`apt_purge_nightly: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: attempt to automatically repair (fsck) failed filesystems on boot
-- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
+- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/1.17.0/roles/docker/defaults/main.yml))
 - docker: install requirements for logging in to private docker registries
 - openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
 - openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
