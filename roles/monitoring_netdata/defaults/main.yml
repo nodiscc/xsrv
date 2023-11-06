@@ -183,5 +183,12 @@ netdata_logcount_notification_to: "silent"
 setup_netdata_debsecan: yes
 # monitor systemd units states
 netdata_monitor_systemd_units: yes
-# setup monitoring of pending package upgrades
+# enable daily mail reports from debsecan (yes/no)
+debsecan_enable_reports: yes
+# list of vulnerabilities (CVE numbers) that will be ignored by debsecan
+# Example:
+# debsecan_whitelist:
+#   - CVE-2021-20316 # not applicable, SMBv1 disabled
+debsecan_whitelist: []
+# setup monitoring of pending package upgrades (yes/no)
 setup_netdata_apt: yes

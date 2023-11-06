@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - shaarli: install [stack](https://github.com/RolandTi/shaarli-stack) custom theme/template (must be enabled manually)
 - common: add automated procedures to reboot or shutdown hosts ([`TAGS=utils-shutdown,utils-reboot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common#usage))
+- netdata: debsecan: allow whitelisting vulnerabilities reported by debsecan by CVE number ([`debsecan_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - common: sysctl: add hardening measures against reading/writing files controlled by an attacker [`fs.protected_fifos/hardlinks/regular/symlinks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/templates/etc_sysctl.d_custom.conf.j2)
 
 **Changed:**
