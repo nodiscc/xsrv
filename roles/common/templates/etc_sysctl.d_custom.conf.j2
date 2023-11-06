@@ -239,6 +239,18 @@ dev.tty.ldisc_autoload = 0
 # expected to create a regular file.
 fs.protected_fifos = 2
 
+# prevent users from creating hardlinks if they do not already own the source file,
+# or do not have read/write access to it.
+fs.protected_hardlinks = 1
+
+# prevent writes to an attacker-controlled regular file
+fs.protected_regular = 2
+
+# prevent following symlinks to files inside sticky world-writable directories, except
+# when the uid of the symlink and follower match, or when the directory owner matches
+# the symlink's owner.
+fs.protected_symlinks = 1
+
 # This enables hardening for the BPF JIT compiler. Supported are eBPF JIT backends.
 # Enabling hardening trades off performance, but can mitigate JIT spraying. Values :
 # 0 - disable JIT hardening (default value)
