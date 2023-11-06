@@ -36,7 +36,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy debsecan configuration
-  copy:
+  template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
