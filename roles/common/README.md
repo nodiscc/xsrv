@@ -55,6 +55,8 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Upgrade all packages immediately: `TAGS=utils-apt-upgrade`. This will upgrade all upgradable packages, regardless of unattended-upgrades configuration (in particular the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting).
 - Get information about IP addresses banned by fail2ban: `TAGS=utils-fail2ban-get-banned xsrv deploy my.CHANGEME.org`
 - Get information about firewalld status: `TAGS=utils-firewalld-info xsrv deploy my.CHANGEME.org`
+- Reboot the host immediately: `TAGS=utils-reboot xsrv deploy default my.CHANGEME.org`
+- Shut down the host immediately: `TAGS=utils-shutdown xsrv deploy default my.CHANGEME.org`
 
 ## Troubleshooting
 

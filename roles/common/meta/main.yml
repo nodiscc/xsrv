@@ -21,6 +21,8 @@
 # @tag utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 # @tag utils-fail2ban-get-banned - (manual) download the list of banned IPs
 # @tag utils-firewalld-info - (manual) get firewall status informations
+# @tag utils-shutdown - (manual) shut down the host
+# @tag utils-reboot - (manual) reboot the host
 # @tag cron - configure cron task scheduler
 # @tag apt-listbugs - configure apt-listbugs bug prevention tool
 
