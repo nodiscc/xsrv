@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: debsecan: allow disabling daily debsecan mail reports ([`debsecan_enable_reports: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check
 - nextcloud: verify downloaded .zip using GPG signatures
+- jellyfin: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `5.7 MEDIUM`)
 - update documentation
 
 **Fixed:**

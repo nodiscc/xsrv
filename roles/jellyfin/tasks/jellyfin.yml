@@ -36,6 +36,22 @@
   notify: display jellyfin first run message
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: configure jellyfin systemd service
+  template:
+    src: etc_systemd_system_jellyfin.service.d_jellyfin.service.conf.j2
+    dest: /etc/systemd/system/jellyfin.service.d/jellyfin.service.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart jellyfin
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# apply jellyfin systemd service hardening configuration
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
 # Disabled as it has no effect https://github.com/jellyfin/jellyfin/issues/8533
 # jellyfin_allowed_hosts is enforced by apache instead
 # - name: build dictionary for jellyfin remote IP filter
