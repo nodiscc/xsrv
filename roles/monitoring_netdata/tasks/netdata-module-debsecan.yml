@@ -45,6 +45,8 @@
   with_items:
     - src: var_lib_debsecan_whitelist.j2
       dest: /var/lib/debsecan/whitelist
+    - src: etc_default_debsecan.j2
+      dest: /etc/default/debsecan
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate initial debsecan reports

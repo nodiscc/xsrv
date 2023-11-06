@@ -37,6 +37,7 @@
     - needrestart_autorestart_services == needrestart_autorestart_services | bool
     - setup_needrestart == setup_needrestart | bool
     - setup_netdata_debsecan == setup_netdata_debsecan | bool
+    - debsecan_enable_reports == debsecan_enable_reports | bool
     - debsecan_whitelist | type_debug == 'list'
     - setup_netdata_logcount == setup_netdata_logcount | bool
     - setup_netdata_apt == setup_netdata_apt | bool
