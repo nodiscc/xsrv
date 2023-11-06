@@ -38,6 +38,7 @@
     - ldap-account-manager
     - self-service-password
     - netdata
+    - apache
 
 - name: include ldap-account-manager configuration tasks
   import_tasks: ldap-account-manager.yml

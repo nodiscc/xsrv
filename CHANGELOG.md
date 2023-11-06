@@ -18,6 +18,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: verify downloaded .zip using GPG signatures
 - update documentation
 
+**Fixed:**
+- openldap: fix deployment of ldap-account-manager failing on `copy php-fpm configuration` when deploying the `apache` tag in isolation
+
 [Full changes since v1.19.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.19.0...1.20.0)
 
 ------------------
