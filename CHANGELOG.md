@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - netdata: when `*_enable_service: no`, disable HTTP checks entirely for this service (intead of accepting HTTP 503)
 - transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check
 - nextcloud: verify downloaded .zip using GPG signatures
+- update documentation
 
 [Full changes since v1.19.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.19.0...1.20.0)
 
