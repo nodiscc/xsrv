@@ -62,7 +62,7 @@ To restore backups:
 # copy the last dump somewhere readable by the postgres user
 sudo cp /var/backups/rsnapshot/daily.0/localhost/var/backups/postgresql/ttrss.sql /tmp/
 # create a plaintext sql dump from the custom-formatted dump
-sudo -u postgres pg_restore --clean --create /tmp/ttrss.sql > /tmp/ttrss.txt.sql
+sudo -u postgres pg_restore --clean --create /tmp/ttrss.sql -f /tmp/ttrss.txt.sql
 # restore the plaintext sql dump
 sudo -u postgres psql --echo-errors --file /tmp/ttrss.txt.sql
 # remove temporary files
