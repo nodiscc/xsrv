@@ -508,14 +508,14 @@ EOF
 
 # to delete the VM: virsh destroy $TEMPLATE_VMNAME; virsh undefine $TEMPLATE_VMNAME; virsh vol-delete --pool /var/lib/libvirt/images/$TEMPLATE_VMNAME.qcow2
 init_vm_template() {
-    INIT_VM_TEMPLATE_USAGE="$0 init-vm-template [--name debian12-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
+    INIT_VM_TEMPLATE_USAGE="$0 init-vm-template [--name debian12-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers GATEWAY_IP] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $xsrv_clone_dir/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
         --name          name of the VM/template to create (default debian12-base)
         --ip            REQUIRED IP address of the VM/template
         --gateway       default network gateway (default: same as IP, last octet replaced by .1)
         --netmask       network mask of the VM (default 255.255.255.0)
-        --nameservers   space-separated list of DNS nameservers (default cloudflare, '1.1.1.1 1.0.0.1')
+        --nameservers   space-separated list of DNS nameservers (default same as the gateway)
         --root-password root account password (default generate and display a random password)
         --sudo-user     admin (sudoer) user name (default deploy)
         --sudo-password admin (sudoer) password (default generate and display a random password)
@@ -542,7 +542,7 @@ init_vm_template() {
     ip=""
     gateway=""
     netmask="255.255.255.0"
-    nameservers="1.1.1.1 1.0.0.1"
+    nameservers=""
     preseed_file="$xsrv_clone_dir/docs/preseed.cfg"
     root_password=$(pwgen -s 21 1)
     sudo_user="deploy"
@@ -575,6 +575,10 @@ init_vm_template() {
     if [[ -z "$gateway" ]]; then
         gateway="$(echo "$ip" | cut -d'.' -f1-3).1"
         echo "[xsrv] INFO: --gateway not provided, automatically set to $gateway"
+    fi
+    if [[ -z "$nameservers" ]]; then
+        nameservers="$gateway"
+        echo "[xsrv] INFO: --nameservers not provided, automatically set to $gateway"
     fi
     for i in "$ip" "$gateway"; do _validate_ip_address "$i"; done
     if [[ ! -d "$xsrv_clone_dir/.git" ]]; then
