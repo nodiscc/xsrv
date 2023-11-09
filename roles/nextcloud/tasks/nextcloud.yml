@@ -9,6 +9,19 @@
     home: /var/nextcloud
     create_home: yes
 
+- name: add nextcloud user to msmtp group
+  user:
+    name: nextcloud
+    groups: msmtp
+    append: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  when:
+    - ansible_local.msmtp.ansible_managed is defined
+    - ansible_local.msmtp.ansible_managed | bool
+  tags:
+    - mail
+    - msmtp
+
 ### PACKAGES ###
 
 - name: install required packages
@@ -232,6 +245,16 @@
     - { key: "simpleSignUpLink.shown", value: "false", type: "boolean" }
     - { key: "htaccess.rewritebase", value: "/" }
     - { key: "filesystem_check_changes", value: "{{ '1' if nextcloud_filesystem_check_changes else '0' }}", type: "integer" }
+    - { key: "mail_domain", value: "{{ (nextcloud_smtp_from | split('@'))[1] if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '' }}" }
+    - { key: "mail_from_address", value: "{{ (nextcloud_smtp_from | split('@'))[0] if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '' }}" }
+    - { key: "mail_smtpmode", value: "{{ 'smtp' if nextcloud_smtp_mode in ['smtp', 'smtp+ssl', 'disabled'] else 'sendmail' }}" }
+    - { key: "mail_smtphost", value: "{{ nextcloud_smtp_host if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '127.0.0.1' }}" }
+    - { key: "mail_smtpport", type: "int", value: "{{ nextcloud_smtp_port if nextcloud_smtp_host if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '25' }}" }
+    - { key: "mail_smtpsecure", value: "{{ 'ssl' if nextcloud_smtp_mode == 'smtp+ssl' else '' }}" }
+    - { key: "mail_smtpauth", type: "boolean", value: "true" }
+    - { key: "mail_smtpname", value: "{{ nextcloud_smtp_user if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '' }}", no_log: True }
+    - { key: "mail_smtppassword", value: "{{ nextcloud_smtp_password if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '' }}", no_log: True }
+    - { key: "mail_sendmailmode", value: "pipe" }
     # - { key: "appstoreenabled", value: "true", type: "boolean" }
     # - { key: "enable_previews", value: "true", type: "boolean" }
     # - { key: "preview_max_x", value: "4096", type: "integer" }
@@ -254,14 +277,6 @@
     # - { key: "session_keepalive", value: "true", type: "boolean" }
     # - { key: "hide_login_form", value: "false", type: "boolean" }
     # - { key: "logo_url", value: "https://www.example.org" }
-    # - { key: "mail_domain", value: "example.com" }
-    # - { key: "mail_from_address", value: "noreply" }
-    # - { key: "mail_smtphost", value: "smtp.example.com" }
-    # - { key: "mail_smtpport", value: "587", type: "integer" }
-    # - { key: "mail_smtpsecure", value: "tls" }
-    # - { key: "mail_smtpauth", value: "true", type: "boolean" }
-    # - { key: "mail_smtpname", value: "noreply" }
-    # - { key: "mail_smtppassword", value: "CHANGEME" }
     # - { key: "filelocking.enabled", value: "true", type: "boolean" }
     # - { key: "filelocking.ttl", value: "3600", type: "integer" }
   no_log: "{{ item.no_log | default(False) }}"
