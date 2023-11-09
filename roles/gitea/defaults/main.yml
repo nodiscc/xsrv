@@ -84,7 +84,7 @@ gitea_repo_indexer_enabled: no
 gitea_repo_indexer_exclude: []
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
-# Mail settings below are required if gitea mailer is enabled
+# mail settings below are required if gitea_mailer_enabled: yes
 # Mail server protocol (smtp/smtps/smtp+starttls/smtp+unix/sendmail/dummy)
 gitea_mail_protocol: "smtp+starttls"
 # SMTP mail server address
@@ -93,7 +93,7 @@ gitea_mail_host: "{{ msmtp_host | default('smtp.CHANGEME.org') }}"
 gitea_mail_port: "{{ msmtp_port | default('CHANGEME') }}"
 # 'From' address used in mails sent by gitea
 gitea_mail_from: "{{ msmtp_admin_email | default('gitea-noreply@CHANGEME.org') }}"
-# Username and password for SMTP authentication
+# username and password for SMTP authentication
 gitea_mail_user: "{{ msmtp_username | default('CHANGEME') }}"
 gitea_mail_password: "{{ msmtp_password | default('CHANGEME') }}"
 # list of IP addresses allowed to access the gitea web interface (IP or IP/netmask format)
