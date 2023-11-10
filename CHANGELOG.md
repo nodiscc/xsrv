@@ -28,7 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: verify downloaded .zip using GPG signatures
 - jellyfin: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `5.7 MEDIUM`)
 - matrix: update element-web to v1.11.48 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.48)
-- xsrv: upgrade ansible to [v8.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
+- xsrv: upgrade ansible to [v8.6.1](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - update documentation
 
 **Fixed:**
