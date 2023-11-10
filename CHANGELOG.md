@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: allow configuring outgoing mail settings ([`nextcloud_smtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 - common: add automated procedures to reboot or shutdown hosts ([`TAGS=utils-shutdown,utils-reboot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common#usage))
 - netdata: debsecan: allow whitelisting vulnerabilities reported by debsecan by CVE number ([`debsecan_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- goaccess: allow configuring IP to Country GeoIP database version ([`goaccess_geoip_db_version`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml))
 - common: sysctl: add hardening measures against reading/writing files controlled by an attacker [`fs.protected_fifos/hardlinks/regular/symlinks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/templates/etc_sysctl.d_custom.conf.j2)
 
 **Removed:**

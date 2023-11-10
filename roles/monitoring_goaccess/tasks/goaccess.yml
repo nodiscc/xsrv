@@ -49,18 +49,18 @@
 
 - name: download geoIP database tarball
   get_url:
-    url: https://download.db-ip.com/free/dbip-country-lite-2023-11.mmdb.gz
-    dest: "/root/dbip-country-lite-2023-11.mmdb.gz"
+    url: "https://download.db-ip.com/free/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb.gz"
+    dest: "/root/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb.gz"
     owner: root
     group: root
     mode: "0640"
 
 - name: extract geoIP database tarball
   shell:
-    cmd: "gunzip -c /root/dbip-country-lite-2023-11.mmdb.gz > /usr/local/share/geoip/dbip-country-lite-2023-11.mmdb"
+    cmd: "gunzip -c /root/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb.gz > /usr/local/share/geoip/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb"
   ignore_errors: "{{ ansible_check_mode }}"
   args:
-    creates: /usr/local/share/geoip/dbip-country-lite-2023-11.mmdb
+    creates: /usr/local/share/geoip/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb
 
 - name: configure goaccess report generation systemd service
   template:
