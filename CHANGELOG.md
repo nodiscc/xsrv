@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
+- dnsmasq: allow loading custom DNS blocklists from an URL ([`dnsmasq_blocklist_url`, `dnsmasq_blocklist_mode`, `dnsmasq_blocklist_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml))
 - shaarli: install [stack](https://github.com/RolandTi/shaarli-stack) custom theme/template and enable it by default
 - shaarli: allow setting the theme/template via the ([`shaarli_theme`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)) configuration variable
 - nextcloud: allow configuring outgoing mail settings ([`nextcloud_smtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))

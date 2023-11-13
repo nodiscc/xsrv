@@ -6,3 +6,11 @@
     enabled: yes
   when: dnsmasq_enable_service | bool
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: restart dnsmasq-update-blocklist
+  become: yes
+  service:
+    name: dnsmasq-update-blocklist.service
+    state: restarted
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"

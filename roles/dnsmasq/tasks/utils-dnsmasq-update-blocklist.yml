@@ -1,0 +1,4 @@
+- name: restart dnsmasq-update-blocklist systemd service
+  systemd:
+    name: dnsmasq-update-blocklist.service
+    state: restarted

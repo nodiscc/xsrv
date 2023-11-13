@@ -1,0 +1,13 @@
+[Unit]
+Description=Update dnsmasq blocklist daily
+After=network-online.target
+After=dnsmasq.service
+
+[Install]
+WantedBy=timers.target
+
+[Timer]
+Unit=dnsmasq-update-blocklist.service
+Persistent=true
+OnUnitActiveSec=1d
+OnBootSec=1s

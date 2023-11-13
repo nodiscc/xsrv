@@ -1,0 +1,10 @@
+[Unit]
+Description=Update dnsmasq blocklist
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/dnsmasq-update-blocklist
+SyslogIdentifier=dnsmasq-update-blocklist
+
+[Install]
+WantedBy=multi-user.target

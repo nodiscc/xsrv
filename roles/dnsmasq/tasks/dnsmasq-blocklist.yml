@@ -1,0 +1,65 @@
+##### DNS BLOCKLIST #####
+
+- name: create dnsmasq-update-blocklist systemd service
+  template:
+    src: etc_systemd_system_dnsmasq-update-blocklist.service.j2
+    dest: /etc/systemd/system/dnsmasq-update-blocklist.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: create dnsmasq-update-blocklist systemd timer
+  template:
+    src: etc_systemd_system_dnsmasq-update-blocklist.timer.j2
+    dest: /etc/systemd/system/dnsmasq-update-blocklist.timer
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: copy dnsmasq-update-blocklist script
+  copy:
+    src: usr_local_bin_dnsmasq-update-blocklist
+    dest: /usr/local/bin/dnsmasq-update-blocklist
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: copy dnsmasq-update-blocklist configuration
+  template:
+    src: etc_dnsmasq-update-blocklist.conf.j2
+    dest: /etc/dnsmasq-update-blocklist.conf
+    owner: root
+    group: root
+    mode: "0755"
+  notify: restart dnsmasq-update-blocklist
+
+# load new systemd unit files
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable dnsmasq-update-blocklist systemd timer
+  systemd:
+    name: dnsmasq-update-blocklist.timer
+    state: started
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: wait for the file to be created
+  wait_for:
+    path: "/var/cache/dnsmasq-blocklist.conf"
+  when: not dnsmasq_blocklist_mode == "disabled"
+
+- name: copy dnsmasq blocklist configuration
+  template:
+    src: etc_dnsmasq.d_blocklist.j2
+    dest: /etc/dnsmasq.d/blocklist
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart dnsmasq
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: apply configuration
+  meta: flush_handlers
