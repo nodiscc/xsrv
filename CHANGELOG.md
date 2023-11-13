@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - act-runner: prune unused podman data automatically, nightly (volumes, networks, containers, images)
 - goaccess: allow configuring IP to Country GeoIP database version ([`goaccess_geoip_db_version`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml))
 - common: sysctl: add hardening measures against reading/writing files controlled by an attacker [`fs.protected_fifos/hardlinks/regular/symlinks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/templates/etc_sysctl.d_custom.conf.j2)
+- podman: add `podman-docker` wrapper (execute `docker` commands through podman)
 
 **Removed:**
 - netdata: remove `netdata_monitor_systemd_units` variable (always enable monitoring of system unit states)
