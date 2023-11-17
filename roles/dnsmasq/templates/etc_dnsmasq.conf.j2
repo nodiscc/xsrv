@@ -684,7 +684,11 @@ no-hosts
 
 # For debugging purposes, log each DNS query as it passes through
 # dnsmasq.
+{% if dnsmasq_log_queries %}
+log-queries
+{% else %}
 #log-queries
+{% endif %}
 
 # Log lots of extra information about DHCP transactions.
 #log-dhcp

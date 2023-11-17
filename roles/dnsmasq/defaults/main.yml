@@ -1,6 +1,6 @@
 ##### DNSMASQ DNS SERVER #####
-# List of recursive DNS servers to forward DNS requests to
-# Either your own/private recursive DNS resolver, your ISP/hosting provider's resolver, or a public DNS server (https://en.wikipedia.org/wiki/Public_recursive_name_server)
+# list of recursive DNS servers to forward DNS requests to (IP addresses)
+# either your own/private recursive DNS resolver, your ISP/hosting provider's resolver, or a public DNS server (https://en.wikipedia.org/wiki/Public_recursive_name_server)
 # 2 entries are recommended in case the primary one fails
 # Example:
 # dnsmasq_upstream_servers:
@@ -13,33 +13,37 @@
 dnsmasq_upstream_servers:
   - CHANGEME
   - CHANGEME
-# List of DNS A records
+# List of DNS A records (name, ip)
 # Example:
 # dnsmasq_records:
 #   - name: my.example.org # the record name
 #     ip: 1.2.3.4 # IP address to return for this name
 dnsmasq_records: []
-# firewall zones for the DNS service, if nodiscc.xsrv.common/firewalld role is deployed
+# firewall zones for the DNS service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 dnsmasq_firewalld_zones:
   - zone: internal
     state: enabled
 # start/stop the dnsmasq service, enable/disable it on boot (yes/no)
 dnsmasq_enable_service: yes
-# list of network interfaces dnsmasq should listen on. Leave empty to listen on all interfaces
+# list of network interfaces dnsmasq should listen on
+# leave the list empty [] to listen on all interfaces
 # Example:
 # dnsmasq_listen_interfaces:
 #   - eth0
 #   - eth1
 dnsmasq_listen_interfaces: []
-# list of Ip addresses dnsmasq should listen on. Leave empty to listen on all addresses
+# list of IP addresses dnsmasq should listen on
+# leave the list empty [] to listen on all addresses
 # Example:
 # dnsmasq_listen_addresses:
 #   - 127.0.0.1
 dnsmasq_listen_addresses: []
-# yes/no: use DNSSEC to validate answers to DNS queries
+# use DNSSEC to validate answers to DNS queries (yes/no)
 # if enabled, dig @127.0.1.1 dnssec-failed.org should return SERVFAIL
 dnsmasq_dnssec: yes
+# log DNS queries prcessed by dnsmasq (VERY verbose) (no/yes)
+dnsmasq_log_queries: no
 # URL of a DNS blocklist to download and load into dnsmasq
 # Examples:
 #   https://raw.githubusercontent.com/hagezi/dns-blocklists/main/dnsmasq/pro.txt (dnsmasq format)

@@ -11,6 +11,7 @@
     - dnsmasq_listen_interfaces|type_debug == "list"
     - dnsmasq_listen_addresses|type_debug == "list"
     - dnsmasq_dnssec == dnsmasq_dnssec | bool
+    - dnsmasq_log_queries == dnsmasq_log_queries | bool
     - dnsmasq_blocklist_url is string
     - dnsmasq_blocklist_mode in ['disabled', 'hosts', 'dnsmasq']
     - dnsmasq_blocklist_whitelist | type_debug == "list"

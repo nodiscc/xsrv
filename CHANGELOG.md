@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - dnsmasq: allow loading custom DNS blocklists from an URL ([`dnsmasq_blocklist_url`, `dnsmasq_blocklist_mode`, `dnsmasq_blocklist_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml))
 - shaarli: install [stack](https://github.com/RolandTi/shaarli-stack) custom theme/template and enable it by default
 - shaarli: allow setting the theme/template via the ([`shaarli_theme`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)) configuration variable
+- dnsmasq: allow logging DNS queries processed by dnsmasq ([`dnsmasq_log_queries: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml)
 - nextcloud: allow configuring outgoing mail settings ([`nextcloud_smtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 - common: add automated procedures to reboot or shutdown hosts ([`TAGS=utils-shutdown,utils-reboot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common#usage))
 - netdata: debsecan: allow whitelisting vulnerabilities reported by debsecan by CVE number ([`debsecan_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
