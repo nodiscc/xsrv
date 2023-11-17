@@ -36,6 +36,31 @@
   ignore_errors: "{{ ansible_check_mode }}"
   changed_when: yes
 
+- name: set subuid/subgid mappings for act-runner user
+  lineinfile:
+    path: "{{ item }}"
+    regexp: '^act-runner'
+    line: 'act-runner:1000000:65536'
+    owner: root
+    group: root
+    mode: "0644"
+  when: gitea_act_runner_container_engine == "podman"
+  with_items:
+    - /etc/subuid
+    - /etc/subgid
+
+# this must be run once after subuid/subgid mappings are created
+- name: run podman system migrate
+  become: yes
+  become_user: act-runner
+  command:
+    cmd: podman system migrate
+  ignore_errors: "{{ ansible_check_mode }}"
+  changed_when: yes
+  when:
+    - gitea_act_runner_container_engine == "podman"
+    - ansible_local.gitea_act_runner.podman_system_migrated is not defined
+
 # use sudo systemctl --user --machine act-runner@ list-units to list another user's services
 - name: enable podman socket for the act-runner user
   become: yes
