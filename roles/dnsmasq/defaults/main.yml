@@ -1,9 +1,15 @@
 ##### DNSMASQ DNS SERVER #####
 # List of recursive DNS servers to forward DNS requests to
+# Either your own/private recursive DNS resolver, your ISP/hosting provider's resolver, or a public DNS server (https://en.wikipedia.org/wiki/Public_recursive_name_server)
+# 2 entries are recommended in case the primary one fails
 # Example:
 # dnsmasq_upstream_servers:
-#   - 1.1.1.1
-#   - 1.0.0.1
+#   - 1.1.1.1 # https://en.wikipedia.org/wiki/1.1.1.1
+#   - 1.0.0.1 # https://en.wikipedia.org/wiki/1.1.1.1
+#   - 8.8.8.8 # https://en.wikipedia.org/wiki/Google_Public_DNS
+#   - 8.8.4.4 # https://en.wikipedia.org/wiki/Google_Public_DNS
+#   - 80.67.169.12 # https://www.fdn.fr/actions/dns/
+#   - 80.67.169.40 # https://www.fdn.fr/actions/dns/
 dnsmasq_upstream_servers:
   - CHANGEME
   - CHANGEME
