@@ -26,6 +26,8 @@ gitea_act_runner_gitea_instance_hostname: "my2.CHANGEME.org" # required if the r
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
+The gitea instance you want to register the runner on, must be managed by the same ansible playbook/project - at least, the hostname must be present in the inventory, and its `become` credentials in the corresponding host_vars/vault file, as they are used for automatically creating the runner token and register it on the instance.
+
 
 ## Usage
 
