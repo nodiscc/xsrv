@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check
 - nextcloud: verify downloaded .zip using GPG signatures
 - jellyfin: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `5.7 MEDIUM`)
-- matrix: update element-web to v1.11.49 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.48) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.49)
+- matrix: update element-web to v1.11.50 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.48) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.49) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.50)
 - xsrv: upgrade ansible to [v8.6.1](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - goaccess: update IP to Country GeoIP database to v2023-11
 - update documentation
