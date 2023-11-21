@@ -473,10 +473,10 @@ Include the collection and roles in your playbooks:
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
 Other collections:
-- [`nodiscc.toolbox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
-- [`devsec.hardening`](https://github.com/dev-sec/ansible-collection-hardening)
-- [`debops.debops`](https://galaxy.ansible.com/debops/debops)
-- [Ansible Galaxy](https://galaxy.ansible.com/)
+- [`nodiscc.toolbox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) - less-maintained, experimental or project-specific roles (`awesome_selfhosted_html`, `docker`, `homepage_extra_icons`, `icecast`, `mariadb`, `nfs_server`, `planarally`, `proxmox`, `pulseaudio`, `reverse_ssh_tunnel`, `rocketchat`, `rss_bridge`, `valheim_server`, `znc`)
+- [`devsec.hardening`](https://github.com/dev-sec/ansible-collection-hardening) - battle tested hardening for Linux, SSH, nginx, MySQL
+- [`debops.debops`](https://galaxy.ansible.com/debops/debops) - general-purpose Ansible roles that can be used to manage Debian or Ubuntu hosts
+- [Ansible Galaxy](https://galaxy.ansible.com/) - help other Ansible users by sharing the awesome roles and collections you create
 
 Directory structure for a project:
 
