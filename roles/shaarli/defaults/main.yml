@@ -38,7 +38,7 @@ shaarli_version: 'v0.12.2'
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
 # shaarli stack template version - https://github.com/RolandTi/shaarli-stack/releases.atom
-shaarli_stack_version: "0.3"
+shaarli_stack_version: "0.4.1"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)
