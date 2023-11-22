@@ -77,6 +77,17 @@
   delay: 3
   until: gitea_act_runner_enable_podman_socket is not failed
 
+- name: configure nightly cleanup of unused podman data
+  cron:
+    user: act-runner
+    cron_file: act-runner-podman-system-prune
+    name: "cleanup unused podman data"
+    minute: "30"
+    hour: "03"
+    day: "*"
+    job: podman system prune --all --force | logger -t act-runner-podman-system-prune
+    disabled: "{{ False if gitea_act_runner_container_engine == 'podman' else True }}"
+
 ##### ACT-RUNNER #####
 
 - name: download act-runner binary
