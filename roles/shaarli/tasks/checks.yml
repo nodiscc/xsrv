@@ -18,6 +18,7 @@
     - shaarli_header_link is string
     - shaarli_hide_timestamps == shaarli_hide_timestamps | bool
     - shaarli_formatter in ['default', 'markdown', 'markdownExtra']
+    - shaarli_theme is string
     - shaarli_username is not search("CHANGEME")
     - shaarli_version is string
     - shaarli_stack_version is string
