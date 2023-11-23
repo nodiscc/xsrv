@@ -1,6 +1,6 @@
 - name: download shaarli-stack tarball
   get_url:
-    url: "https://github.com/RolandTi/shaarli-stack/releases/download/{{ shaarli_stack_release }}/stack.{{ shaarli_stack_version }}.tar.gz"
+    url: "https://github.com/RolandTi/shaarli-stack/releases/download/{{ shaarli_stack_version }}/stack.{{ shaarli_stack_version }}.tar.gz"
     dest: "/root/shaarli-stack-{{ shaarli_stack_version }}.tar.gz"
     owner: root
     group: root

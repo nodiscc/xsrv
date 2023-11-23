@@ -22,7 +22,6 @@
     - shaarli_username is not search("CHANGEME")
     - shaarli_version is string
     - shaarli_stack_version is string
-    - shaarli_stack_release is string
     - shaarli_php_memory_limit|regex_search('[KMG]$')
     - shaarli_php_max_execution_time == shaarli_php_max_execution_time|int
     - shaarli_php_max_input_time == shaarli_php_max_input_time|int
