@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: fix deployment of ldap-account-manager failing on `copy php-fpm configuration` when deploying the `apache` tag in isolation
 - jellyfin: fix internal `Restart server` function only terminating the server process without restarting
 - gitea_act_runner: fix `potentially insufficient UIDs or GIDs available in user namespace` error when using podman backend
+- shaarli: make `remove shaarli zip extraction directory` task idempotent
 
 [Full changes since v1.19.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.19.0...1.20.0)
 
