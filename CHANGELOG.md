@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: update to [v0.13.0](https://github.com/shaarli/Shaarli/releases/tag/v0.13.0)
 - gitea: update to v1.21.0 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.0)
 - nextcloud: upgrade to v27.1.4 [[1]](https://nextcloud.com/changelog/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.4)
+- openldap: update self-service-password to [v1.5.4](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.4)
 - matrix: update element-web to v1.11.50 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.48) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.49) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.50)
 - xsrv: upgrade ansible to [v8.6.1](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - goaccess: update IP to Country GeoIP database to v2023-11
