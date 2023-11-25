@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.21.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.21.0) - UNRELEASED
 
 **Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- To get rid of the deprecation warning `collections_paths option does not fit var naming standard`, rename `collections_paths` to `collections_path` in `ansible.cfg` (`xsrv edit-cfg`)
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
 **Changed:**
+- python >=3.9 is now required on the controller (ansible 9.1.0)
 - cleanup: postgresql: standardize/simplify pgmetrics report generation
 - gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
+- xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
 **Added:**
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)

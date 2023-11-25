@@ -2,7 +2,7 @@
 
 The controller machine will be used for deployment and remote administration. The controller stores all procedures (`playbook`/`roles`) and configuration values (`vars`) for your specific setup, and deploys it to remote [hosts](server-preparation.md) over SSH.
 
-Any PC, dedicated server, VM or container where a SSH client, Python and Bash are available can be used as a controller. 
+Any PC, dedicated server, VM or container where a SSH client, Python >=3.9 and Bash are available can be used as a controller.
 
 Roles can be used from the `xsrv` command-line tool, or as a [collection](usage.md) in your own ansible playbooks.
 
