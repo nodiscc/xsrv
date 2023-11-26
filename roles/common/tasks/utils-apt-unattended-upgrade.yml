@@ -15,7 +15,7 @@
         cmd: apt list --upgradable
       register: apt_upgradable
       changed_when: no
-      check_mode: no
+      check_mode: no # run even in check mode so that following tasks don't fail, doesn't change anything
     - name: display upgradable packages
       debug:
         msg: "{{ apt_upgradable.stdout }}"

@@ -122,7 +122,7 @@
     state: directory
     mode: "0750"
   when: nextcloud_action == 'initial' or nextcloud_action == 'upgrade'
-  check_mode: no # create even in check mode so that following tasks don't fail
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: extract nextcloud zip
   unarchive:
@@ -192,8 +192,8 @@
     chdir: "{{ nextcloud_install_dir }}"
   failed_when: (nextcloud_first_setup.rc != 0) and ('Command "maintenance:install" is not defined.' not in nextcloud_first_setup.stderr) # noqa 204
   changed_when: nextcloud_first_setup.rc == 0
-  ignore_errors: "{{ ansible_check_mode }}"
   when: nextcloud_action == 'initial'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy config.php from old installation
   copy:

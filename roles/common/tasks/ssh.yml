@@ -55,7 +55,7 @@
   shell: awk '$5 < 2048' /etc/ssh/moduli
   register: common_sshd_register_moduli
   changed_when: false
-  check_mode: no
+  check_mode: no # run even in check mode, doesn't change anything
 
 - name: remove all small primes
   shell:

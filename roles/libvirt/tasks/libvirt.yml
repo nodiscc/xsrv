@@ -193,7 +193,7 @@
   community.libvirt.virt:
     command: list_vms
   register: libvirt_listed_vms
-  check_mode: no # always run
+  check_mode: no # run even in check mode as it doesn't change anything
   ignore_errors: "{{ ansible_check_mode }}"
   tags: libvirt-vms
 
