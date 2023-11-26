@@ -41,7 +41,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.50 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.48) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.49) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.50)
 - xsrv: upgrade ansible to [v8.6.1](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
 - goaccess: update IP to Country GeoIP database to v2023-11
-- update documentation
+- update documentation, add example usage through Gitea Actions/Github Actions
+
 
 **Fixed:**
 - openldap: fix deployment of ldap-account-manager failing on `copy php-fpm configuration` when deploying the `apache` tag in isolation
