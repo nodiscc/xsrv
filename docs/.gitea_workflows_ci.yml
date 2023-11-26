@@ -3,7 +3,7 @@
 # - SSH server keys of all hosts obtained with ssh-keyscan $HOST must be added to the .gitea/known_hosts file (or you can set env: ANSIBLE_HOST_KEY_CHECKING: "False" - less secure)
 # - an SSH key pair must be created with ssh-keygen -b 4096 -f id_rsa_gitea (without password)
 # - contents of the private key file id_rsa_gitea must be added to the SSH_PRIVATE_KEY gitea secret
-# - the public key id_rsa_gitea.pub must be allowed to access the ansible_user account on the target hosts beforehand (e.g. using linux_users[*].ssh_authorized_keys from the common role, or ssh-copy-id
+# - the public key id_rsa_gitea.pub must be allowed to access the ansible_user account on the target hosts beforehand (e.g. using linux_users[*].ssh_authorized_keys from the common role, or ssh-copy-id)
 name: CI
 on:
   push:
@@ -18,9 +18,9 @@ env:
   ANSIBLE_TAGS_MASTER: "all" # only check/deploy these ansible tags
   # on push on other branches
   ANSIBLE_CHECK_MODE_PR: true # run playbook in check mode (true/false)
-  ANSIBLE_CHECK_MODE_PR_LIMIT: "demo1.xinit.se" # only run check mode against these hosts
+  ANSIBLE_CHECK_MODE_PR_LIMIT: "dev" # only run check mode against these hosts
   ANSIBLE_DEPLOY_PR: true # deploy changes automatically (true/false)
-  ANSIBLE_DEPLOY_PR_LIMIT: "demo1.xinit.se" # only deploy changes to these hosts
+  ANSIBLE_DEPLOY_PR_LIMIT: "dev" # only deploy changes to these hosts
   ANSIBLE_TAGS_PR: "all" # only check/deploy these ansible tags
 jobs:
   check-and-deploy:
