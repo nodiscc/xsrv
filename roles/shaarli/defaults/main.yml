@@ -9,7 +9,7 @@ shaarli_password_salt: "CHANGEME"
 # 12 character REST API secret
 shaarli_api_secret: "CHANGEME"
 # shaarli timezone (see https://www.php.net/manual/en/timezones.php)
-shaarli_timezone: "Europe\\/Paris"
+shaarli_timezone: "Europe/Paris"
 # location of the shaarli "home" link
 shaarli_header_link: "?"
 # hide timestamps (yes/no)
