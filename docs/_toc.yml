@@ -20,5 +20,10 @@ entries:
     title: Contributing
   - file: appendices.md
     title: Appendices
+    entries:
+      - file: appendices/debian.md
+        title: Debian
+      - file: appendices/virt-manager.md
+        title: Libvirt/virt-manager
   - url: https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md
     title: Changelog
