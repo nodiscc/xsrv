@@ -54,6 +54,8 @@ dns_nameservers:
 <!--BEGIN TAGS LIST-->
 ```
 dnsmasq - setup dnsmasq DNS server
+dnsmasq-blocklist - setup dnsmasq DNS blocklists
+utils-dnsmasq-update-blocklist - update dnsmasq DNS blocklist immediately
 ```
 <!--END TAGS LIST-->
 

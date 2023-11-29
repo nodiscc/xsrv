@@ -15,6 +15,7 @@ checks - check that variables are correctly defined
 common - setup base system
 cron - configure cron task scheduler
 datetime - setup date/time configuration
+dnsmasq-blocklist - setup dnsmasq DNS blocklists
 dnsmasq - setup dnsmasq DNS server
 dns - setup DNS resolution
 dovecot - setup dovecot MDA/IMAP server
@@ -88,6 +89,7 @@ utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
+utils-dnsmasq-update-blocklist - update dnsmasq DNS blocklist immediately
 utils-duc - (manual) run duc disk usage analyzer and download the database on the controller
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
 utils-firewalld-info - (manual) get firewall status informations
@@ -96,6 +98,8 @@ utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immed
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics
 utils-podman-uninstall - (manual) uninstall podman container engine
+utils-reboot - (manual) reboot the host
 utils-samba-listusers - (manual) list samba users
+utils-shutdown - (manual) shut down the host
 wireguard - setup wireguard
 ```
