@@ -424,6 +424,8 @@ Open a shell directly on the target host using SSH. This is equivalent to `ssh -
 
 ```bash
 $ xsrv shell my.example.org
+# or
+$ xsrv ssh my.example.org
 ```
 
 An alternative is to use the [`readme-gen`](#xsrv-readme-gen) command to generate a SSH client configuration file which will allow contacting the host with `ssh $HOST` without specifying the port/user.
