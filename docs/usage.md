@@ -390,7 +390,8 @@ Note: check mode may not reflect changes that will actually occur in a "real" de
 
 _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2.org,production --tags=transmission,nextcloud --check`_
 
------------------------------------------
+
+----------------------------
 
 ## Provision hosts
 
@@ -402,7 +403,7 @@ _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2
 VMs created using this method can then be added to your project using [`xsrv init-host`](#xsrv-init-host) or equivalent, at which point you can start deploying your configuration/services to them.
 
 
------------------------------------------
+----------------------------
 
 ## Upgrading
 
@@ -412,7 +413,29 @@ VMs created using this method can then be added to your project using [`xsrv ini
 
 **Upgrade the xsrv script**: run `xsrv self-upgrade` to upgrade the `xsrv` command-line utility to the latest stable release.
 
-------------------------------
+
+----------------------------
+
+## Other commands
+
+### xsrv shell
+
+Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the host name - the port and user name will be detected automatically from the host's configuration variable.
+
+```bash
+$ xsrv shell my.example.org
+```
+
+An alternative is to use the [`readme-gen`](#xsrv-readme-gen) command to generate a SSH client configuration file which will allow contacting the host with `ssh $HOST` without specifying the port/user.
+
+
+### xsrv readme-gen
+
+Adds a summary of basic information about your hosts (groups, IP addresses, OS/virtualization, CPU, memory, storage, quick access links to services deployed on the host, monitoring badges, custom comment...) in README.md at the root of your project, using Markdown. Running this command multiple times will update the summary with the latest information gathered from your hosts.
+
+See the detailed [documentation](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen).
+
+----------------------------
 
 ## Advanced
 
