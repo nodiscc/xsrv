@@ -5,7 +5,6 @@ This role will install and configure various [monitoring](../monitoring) and aud
 - [htop](https://hisham.hm/htop/) system monitor/process manager
 - [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor
 - [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer
-- [logwatch](https://sourceforge.net/projects/logwatch/) log analyzer
 - [lnav](https://lnav.org/) log viewer
 - (optional) [duc](https://duc.zevv.nl/) disk usage analyzer
 
