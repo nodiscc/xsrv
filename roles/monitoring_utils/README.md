@@ -6,6 +6,7 @@ This role will install and configure various [monitoring](../monitoring) and aud
 - [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor
 - [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer
 - [logwatch](https://sourceforge.net/projects/logwatch/) log analyzer
+- [lnav](https://lnav.org/) log viewer
 - (optional) [duc](https://duc.zevv.nl/) disk usage analyzer
 
 [![](https://screenshots.debian.net/shrine/screenshot/14778/simage/small-452873bef369d0f5e75810ae017f68a8.png)](https://screenshots.debian.net/package/htop)
@@ -34,7 +35,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Show network bandwidth usage by process: `ssh -t user@my.CHANGEME.org sudo nethogs`
 - Show network connections: `ssh -t user@my.CHANGEME.org sudo watch -n 2 ss -laptu`
 - Visualize disk usage by directory: `TAGS=utils-duc xsrv deploy default my.CHANGEME.org` and run `duc gui --database=data/duc-my.CHANGEME.org.db /` on the controller (requires [duc](https://packages.debian.org/bookworm/duc))
-- Use [lnav](https://lnav.readthedocs.io/) to navigate/search/filter aggregated system logs:
+- Use `lnav` to navigate/search/filter aggregated system logs:
 
 ```bash
 # using https://xsrv.readthedocs.io/en/latest/
@@ -61,6 +62,7 @@ linux_users:
      comment: "ansible user/allowed to read system logs"
 ```
 
+See [lnav documentation](https://docs.lnav.org/) for more information.
 
 ## Tags
 
