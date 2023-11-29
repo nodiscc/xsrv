@@ -88,7 +88,7 @@ xsrv deploy default srv*
 Each project contains:
 - an [inventory](#manage-hosts) of managed servers (_hosts_)
 - a list of [roles](#manage-roles) assigned to each host/group (_playbook_)
-- [configuration](#manage-hosts-configuration) values for host/group (*host_vars/group_vars*)
+- [configuration](#manage-configuration) values for host/group (*host_vars/group_vars*)
 - deployment logic/tasks used in your project ([collections](#use-as-ansible-collection)/roles)
 - an independent/isolated ansible installation (_virtualenv_) and its configuration
 
@@ -117,9 +117,9 @@ Edit the project's [`requirements.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/m
 
 ## Manage hosts
 
-- All servers [(hosts)](installation/server-preparation.md) must be listed in the inventory file.
-- Their [roles](#manage-roles) must be listed in the playbook file.
-- Hosts [configuration](#manage-hosts-configuration) must be set in [host or group](#manage-hosts-configuration) configuration files.
+- All servers [(hosts)](installation/server-preparation.md) must be listed in the [inventory](#xsrv-edit-inventory) file.
+- Their [roles](#manage-roles) must be listed in the [playbook](#xsrv-edit-playbook) file.
+- Hosts configuration variables must be set in [host or group](#manage-configuration) configuration files.
 
 
 ### xsrv init-host
@@ -133,7 +133,7 @@ xsrv init-host
 <!-- TODO full output -->
 
 - An editor will let you set the list of [roles](#manage-roles) for the host
-- An editor will let you set required [configuration variables](#manage-hosts-configuration).
+- An editor will let you set required [configuration variables](#manage-configuration).
 
 
 ### xsrv edit-inventory
@@ -396,8 +396,8 @@ _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2
 
 `xsrv` allows automated creation/provisioning of minimal Debian VMs using these commands:
 
-- [`xsrv init-vm-template`](appendices/debian.md)
-- [`xsrv init-vm`](appendices/debian.md)
+- [`xsrv init-vm-template`](appendices/debian.md#automated-from-preseed-file)
+- [`xsrv init-vm`](appendices/debian.md#automated-from-a-vm-template)
 
 VMs created using this method can then be added to your project using [`xsrv init-host`](#xsrv-init-host) or equivalent, at which point you can start deploying your configuration/services to them.
 
@@ -421,7 +421,7 @@ VMs created using this method can then be added to your project using [`xsrv ini
 Using the server/host as its own controller is not recommended, but can help with single-server setups where no separate administration machine is available. By not using a separate controller, you lose the ability to easily redeploy a new system from scratch in case of emergency/distaster, and centralized management of multiple hosts will become more difficult. Your host will also have access to configuration of other hosts in your project.
 
 - [Install](installation/controller-preparation.md) the `xsrv` main script directly on the host
-- During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
+- During [initialization](#manage-projects) or by [editing configuration](#manage-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
 
 ```yaml
 ##### CONNECTION
@@ -521,7 +521,7 @@ source .venv/bin/activate
 ```
 
 ```bash
-# run ansible commands directory
+# run ansible commands directly
 ansible-playbook playbook.yml --list-tasks
 ansible-playbook playbook.yml --start-at-task 'run nextcloud upgrade command' --limit my.example.org,my2.example.org
 ansible-inventory --list --yaml

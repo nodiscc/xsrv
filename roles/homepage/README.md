@@ -42,7 +42,7 @@ You can add custom links using the [`homepage_custom_links`](defaults/main.yml) 
 $ xsrv edit-host default my.example.org
 homepage_custom_links:
   - url: https://dev.example.org
-    title: demo1.xinit.se
+    title: dev.example.org
     description: "Development server 1"
   - url: https://cloud2.example.org
     title: Cloud2
@@ -60,7 +60,7 @@ homepage_custom_links:
     icon: github
 ```
 
-You can use any of the [icons provided by this role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res) as value for the `icon:` key. If you wish to upload custom icons, you can create a custom role as a supplement to this one. See the [`nodiscc.toolbox.homepage_extra_icons`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/homepage-extra-icons) role for an example.
+You can use any of the [icons provided by this role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res) as value for the `icon:` key. If you wish to upload custom icons, you can create a custom role as a supplement to this one. See the [`nodiscc.toolbox.homepage_extra_icons`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/homepage_extra_icons) role for an example.
 
 Icons must have a `.png` extension, and should have dimensions of 16x16px for a consistent appearance.
 

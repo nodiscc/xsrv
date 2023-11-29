@@ -2,7 +2,7 @@
 
 This is a list of all available configuration variables, and their default values.
 Copy any of these variables to `xsrv edit-host` (`host_vars` file) or `xsrv edit-vault`, and edit its value there.
-Then run `xsrv deploy` to apply changes.
+Then run `xsrv deploy` to apply changes. See [Manage configuration](usage.md#manage-configuration)
 
 <!--BEGIN ROLES LIST-->
 [roles/apache/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)

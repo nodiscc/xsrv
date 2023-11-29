@@ -1,8 +1,6 @@
 # libvirt / virt-manager
 
-[virt-manager](https://en.wikipedia.org/wiki/Virtual_Machine_Manager) is a graphical interface for [libvirt](https://en.wikipedia.org/wiki/Libvirt), a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more.
-
-libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical (`virt-manager`) and command-line (`virsh`) interfaces.
+[libvirt](https://en.wikipedia.org/wiki/Libvirt) is a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more. libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical ([`virt-manager`](https://en.wikipedia.org/wiki/Virtual_Machine_Manager)) and command-line ([`virsh`](https://manpages.debian.org/bookworm/libvirt-clients/virsh.1.en.html)) interfaces.
 
 Advantages of virtualization include:
 
@@ -32,9 +30,10 @@ sudo apt install virt-manager virt-viewer
 (Optional) add your normal/unprivileged user account to the `libvirt` group to allow it to manage virtual machines without using `sudo`/entering your password for common operations:
 
 ```bash
-sudo usermod -G $USER libvirt,kvm,libvirt-qemu
+sudo usermod --appent --groups $USER libvirt,kvm,libvirt-qemu
 ```
 
+Libvirt can also be installed and managed from xsrv, using the [libvirt role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt).
 
 ## VM creation
 
@@ -71,7 +70,8 @@ Click `Finish` and start the VM from virt-manager's main window.
 
 ### Automated
 
-You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bookworm/virtinst/virt-install.1.en.html) command. The `xsrv` [init-vm and init-vm-template commands](../usage.md) automate running `virt-install` with the correct options.
+You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bookworm/virtinst/virt-install.1.en.html) command. The [`xsrv init-vm`](debian.md##automated-from-a-vm-template) and [`xsrv init-vm-template`](debian.md#automated-from-preseed-file) [commands](../usage.md) automate running `virt-install` with the correct options.
+
 
 ## Cloning VMs
 

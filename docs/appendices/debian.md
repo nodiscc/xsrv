@@ -37,7 +37,7 @@
 
 ### Automated, from preseed file
 
-`xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be [installed](../installation/controller-preparation.md) on the machine where these commands are run.
+`xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be installed on the machine where these commands are run.
 
 The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/bookworm/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
 
