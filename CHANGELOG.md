@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - netdata: remove `netdata_monitor_systemd_units` variable (always enable monitoring of system unit states)
+- common: remove residual support for Debian 11 in firewalld configuration
 
 **Changed:**
 - xsrv: init-vm-template: use the gateway IP address as DNS server ([`--nameservers`÷](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file)) by default instead of Cloudflare public DNS
