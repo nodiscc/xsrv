@@ -59,3 +59,11 @@
     - self_service_password_php_upload_max_filesize|regex_search('[KMG]$')
     - self_service_password_allowed_hosts | type_debug == "list"
     - self_service_password_enable_service == self_service_password_enable_service | bool
+
+- name: check that variables are correctly defined (self_service_password_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of self_service_password_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ self_service_password_allowed_hosts }}"

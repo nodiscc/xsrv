@@ -71,6 +71,7 @@
   file:
     path: /root/shaarli-unpack
     state: absent
+  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
 
 - name: create shaarli zip extraction directory
   file:

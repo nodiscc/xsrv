@@ -1,4 +1,6 @@
 # @tag dnsmasq - setup dnsmasq DNS server
+# @tag dnsmasq-blocklist - setup dnsmasq DNS blocklists
+# @tag utils-dnsmasq-update-blocklist - update dnsmasq DNS blocklist immediately
 
 galaxy_info:
   role_name: dnsmasq
@@ -14,6 +16,7 @@ galaxy_info:
   galaxy_tags:
     - dns
     - server
+    - adblock
 dependencies:
   - nodiscc.xsrv.handlers
   # - nodiscc.xsrv.common # optional

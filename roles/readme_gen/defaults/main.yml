@@ -24,7 +24,7 @@ readme_gen_netdata_badges:
     label: 5min load average
   - chart: system.ram
     alarm: ram_in_use
-  - chart: system.swap
+  - chart: mem.swap
     alarm: used_swap
   - chart: apt.upgradable
     alarm: apt_upgradable

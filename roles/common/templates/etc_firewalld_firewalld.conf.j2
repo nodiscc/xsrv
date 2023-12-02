@@ -7,9 +7,16 @@ DefaultZone=public
 
 # Clean up on exit
 # If set to no or false the firewall configuration will not get cleaned up
-# on exit or stop of firewalld
+# on exit or stop of firewalld.
 # Default: yes
 CleanupOnExit=yes
+
+# Clean up kernel modules on exit
+# If set to yes or true the firewall related kernel modules will be
+# unloaded on exit or stop of firewalld. This might attempt to unload
+# modules not originally loaded by firewalld.
+# Default: no
+CleanupModulesOnExit=no
 
 # Lockdown
 # If set to enabled, firewall changes with the D-Bus interface will be limited
@@ -20,9 +27,11 @@ Lockdown=no
 
 # IPv6_rpfilter
 # Performs a reverse path filter test on a packet for IPv6. If a reply to the
-# packet would be sent via the same interface that the packet arrived on, the 
+# packet would be sent via the same interface that the packet arrived on, the
 # packet will match and be accepted, otherwise dropped.
 # The rp_filter for IPv4 is controlled using sysctl.
+# Note: This feature has a performance impact. See man page FIREWALLD.CONF(5)
+# for details.
 # Default: yes
 IPv6_rpfilter=yes
 
@@ -45,9 +54,10 @@ LogDenied={{ firewalld_log_denied }}
 # Choices are:
 #	- nftables (default)
 #	- iptables (iptables, ip6tables, ebtables and ipset)
+# Note: The iptables backend is deprecated. It will be removed in a future
+# release.
 FirewallBackend=iptables
 
-{% if ansible_facts.distribution == 'Debian' and ansible_facts.distribution_release == 'bullseye' or ansible_facts.distribution_release == 'bookworm' %}
 # FlushAllOnReload
 # Flush all runtime rules on a reload. In previous releases some runtime
 # configuration was retained during a reload, namely; interface to zone
@@ -62,16 +72,3 @@ FlushAllOnReload=yes
 # internet.
 # Defaults to "yes".
 RFC3964_IPv4=yes
-
-# AllowZoneDrifting
-# Older versions of firewalld had undocumented behavior known as "zone
-# drifting". This allowed packets to ingress multiple zones - this is a
-# violation of zone based firewalls. However, some users rely on this behavior
-# to have a "catch-all" zone, e.g. the default zone. You can enable this if you
-# desire such behavior. It's disabled by default for security reasons.
-# Note: If "yes" packets will only drift from source based zones to interface
-# based zones (including the default zone). Packets never drift from interface
-# based zones to other interfaces based zones (including the default zone).
-# Possible values; "yes", "no". Defaults to "no".
-AllowZoneDrifting=no
-{% endif %}

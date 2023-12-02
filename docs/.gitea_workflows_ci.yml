@@ -1,0 +1,53 @@
+# requirements:
+# - the ansible-vault password must be added to the ANSIBLE_VAULT_PASSWORD secret at REPO/settings/actions/secrets
+# - SSH server keys of all hosts obtained with ssh-keyscan $HOST must be added to the .gitea/known_hosts file (or you can set env: ANSIBLE_HOST_KEY_CHECKING: "False" - less secure)
+# - an SSH key pair must be created with ssh-keygen -b 4096 -f id_rsa_gitea (without password)
+# - contents of the private key file id_rsa_gitea must be added to the SSH_PRIVATE_KEY gitea secret
+# - the public key id_rsa_gitea.pub must be allowed to access the ansible_user account on the target hosts beforehand (e.g. using linux_users[*].ssh_authorized_keys from the common role, or ssh-copy-id)
+name: CI
+on:
+  push:
+
+env:
+  ANSIBLE_FORCE_COLOR: "True"
+  # on push on master branch only
+  ANSIBLE_CHECK_MODE_MASTER: false # run playbook in check mode (true/false)
+  ANSIBLE_CHECK_MODE_MASTER_LIMIT: "prod" # only run check mode against these hosts
+  ANSIBLE_DEPLOY_MASTER: true # deploy changes automatically (true/false)
+  ANSIBLE_DEPLOY_MASTER_LIMIT: "prod" # only deploy changes to these hosts
+  ANSIBLE_TAGS_MASTER: "all" # only check/deploy these ansible tags
+  # on push on other branches
+  ANSIBLE_CHECK_MODE_PR: true # run playbook in check mode (true/false)
+  ANSIBLE_CHECK_MODE_PR_LIMIT: "dev" # only run check mode against these hosts
+  ANSIBLE_DEPLOY_PR: true # deploy changes automatically (true/false)
+  ANSIBLE_DEPLOY_PR_LIMIT: "dev" # only deploy changes to these hosts
+  ANSIBLE_TAGS_PR: "all" # only check/deploy these ansible tags
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ gitea.ref }}
+      cancel-in-progress: ${{ gitea.ref_name == 'master' && true || false }}
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: install xsrv
+        run: wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv && chmod a+x /usr/local/bin/xsrv
+      - name: install requirements
+        run: echo 'Apt::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-norecommends && apt update && apt -y install git bash python3-pip python3-venv
+      - name: link project to default projects directory
+        run: mkdir ~/playbooks && ln -s $PWD ~/playbooks/default
+      - name: create .ansible-vault-password
+        run: echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .ansible-vault-password
+      - name: create ~/.ssh/known_hosts and private SSH key
+        run: mkdir -p ~/.ssh/ && cp -v .gitea/known_hosts ~/.ssh/known_hosts && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa
+      - name: run playbook in check mode
+        if: ${{ gitea.ref_name == 'master' && env.ANSIBLE_CHECK_MODE_MASTER == 'true' || gitea.ref_name != 'master' && env.ANSIBLE_CHECK_MODE_PR == 'true' }}
+        run: xsrv check default ${{ gitea.ref_name == 'master' && env.ANSIBLE_CHECK_MODE_MASTER_LIMIT || env.ANSIBLE_CHECK_MODE_PR_LIMIT }}
+        env:
+          TAGS: ${{ gitea.ref_name == 'master' && env.ANSIBLE_TAGS_MASTER || env.ANSIBLE_TAGS_PR }}
+      - name: run playbook
+        if: ${{ gitea.ref_name == 'master' && env.ANSIBLE_DEPLOY_MASTER == 'true' || gitea.ref_name != 'master' &&  env.ANSIBLE_DEPLOY_PR == 'true' }}
+        run: xsrv deploy default ${{ gitea.ref_name == 'master' && env.ANSIBLE_DEPLOY_MASTER_LIMIT || env.ANSIBLE_DEPLOY_PR_LIMIT }}
+        env:
+          TAGS: ${{ gitea.ref_name == 'master' && env.ANSIBLE_TAGS_MASTER || env.ANSIBLE_TAGS_PR }}

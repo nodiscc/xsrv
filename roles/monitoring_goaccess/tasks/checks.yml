@@ -11,3 +11,12 @@
     - goaccess_username is not search('CHANGEME')
     - goaccess_password is not search('CHANGEME')
     - (goaccess_filter is not defined) or (goaccess_filter is string)
+    - goaccess_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (goaccess_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of goaccess_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/goaccess"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ goaccess_allowed_hosts }}"

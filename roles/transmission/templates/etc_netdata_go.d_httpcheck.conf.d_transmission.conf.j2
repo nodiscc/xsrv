@@ -1,3 +1,4 @@
+{% if transmission_enable_service %}
   - name: transmission
     timeout: 1
     tls_skip_verify: true
@@ -7,7 +8,4 @@
       Host: "{{ transmission_fqdn }}"
     status_accepted:
       - 401
-      - 200
-{% if not transmission_enable_service %}
-    status_accepted: [503]
 {% endif %}

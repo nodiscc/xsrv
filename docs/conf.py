@@ -5,8 +5,8 @@
 
 project = 'xsrv'
 author = 'nodiscc@gmail.com'
-version = '1.19.0'
-release = '1.19.0'
+version = '1.20.0'
+release = '1.20.0'
 html_show_copyright = True
 
 # -- General configuration ---------------------------------------------------
@@ -25,7 +25,9 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = [
+    'example-role/**'
+]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -63,5 +65,3 @@ html_context = {
     "gitlab_version": "master", # Version
     "conf_py_path": "/docs/" # Path in the checkout to the docs root
 }
-
-exclude_patterns = []

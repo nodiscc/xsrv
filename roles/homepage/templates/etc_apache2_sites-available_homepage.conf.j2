@@ -34,4 +34,9 @@ MDomain {{ homepage_fqdn }}
 {% else %}
   DocumentRoot /var/www/{{ homepage_fqdn }}
 {% endif %}
+{% if homepage_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ homepage_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
 </VirtualHost>

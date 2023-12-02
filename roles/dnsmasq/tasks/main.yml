@@ -9,6 +9,13 @@
   become: yes
   tags: dnsmasq
 
+- name: include dnsmasq blocklist configuration tasks
+  import_tasks: dnsmasq-blocklist.yml
+  become: yes
+  tags:
+    - dnsmasq
+    - dnsmasq-blocklist
+
 - name: include firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes
@@ -27,3 +34,12 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: dnsmasq
+
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include immediate blocklist update tasks
+  import_tasks: utils-dnsmasq-update-blocklist.yml
+  become: yes
+  tags:
+    - never
+    - utils-dnsmasq-update-blocklist

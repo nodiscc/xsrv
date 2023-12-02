@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.20.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.20.0) - 2023-12-02
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Added:**
+- dnsmasq: allow loading custom DNS blocklists from an URL ([`dnsmasq_blocklist_url`, `dnsmasq_blocklist_mode`, `dnsmasq_blocklist_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml))
+- shaarli: install [stack](https://github.com/RolandTi/shaarli-stack) custom theme/template and enable it by default
+- shaarli: allow setting the theme/template via the ([`shaarli_theme`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)) configuration variable
+- dnsmasq: allow logging DNS queries processed by dnsmasq ([`dnsmasq_log_queries: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml)
+- nextcloud: allow configuring outgoing mail settings ([`nextcloud_smtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
+- common: add automated procedures to reboot or shutdown hosts ([`TAGS=utils-shutdown,utils-reboot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common#usage))
+- netdata: debsecan: allow whitelisting vulnerabilities reported by debsecan by CVE number ([`debsecan_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- act-runner: prune unused podman data automatically, nightly (volumes, networks, containers, images)
+- goaccess: allow configuring IP to Country GeoIP database version ([`goaccess_geoip_db_version`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml))
+- common: sysctl: add hardening measures against reading/writing files controlled by an attacker [`fs.protected_fifos/hardlinks/regular/symlinks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/templates/etc_sysctl.d_custom.conf.j2)
+- podman: add `podman-docker` wrapper (execute `docker` commands through podman)
+
+**Removed:**
+- netdata: remove `netdata_monitor_systemd_units` variable (always enable monitoring of system unit states)
+- common: remove residual support for Debian 11 in firewalld configuration
+
+**Changed:**
+- xsrv: init-vm-template: use the gateway IP address as DNS server ([`--nameservers`÷](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file)) by default instead of Cloudflare public DNS
+- apache: allow restricting access to individual web applications by IP address/network ([`shaarli_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml), [`matrix_synapse/element_admin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml), [`goaccess_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/goaccess/defaults/main.yml), [`ldap_account_manager/self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml), [`nextcloud_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml), [`transmission_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml), [`tt_rss_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml), [`jitsi_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml), [`homepage_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml), [`graylog_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml), [`gotty_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml), [`gitea_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- jellyfin: allow disabling the allowed IP list entirely (allow access from any IP) by setting an empty [`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml) list
+- netdata: when `*_enable_service: no`, disable HTTP checks entirely for this service (intead of accepting HTTP 503)
+- netdata: debsecan: allow disabling daily debsecan mail reports ([`debsecan_enable_reports: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check
+- nextcloud: verify downloaded .zip using GPG signatures
+- jellyfin: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `5.7 MEDIUM`)
+- shaarli: update to [v0.13.0](https://github.com/shaarli/Shaarli/releases/tag/v0.13.0)
+- gitea: update to v1.21.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.1)
+- nextcloud: upgrade to v27.1.4 [[1]](https://nextcloud.com/changelog/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.4)
+- openldap: update self-service-password to [v1.5.4](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.4)
+- matrix: update element-web to v1.11.50 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.48) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.49) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.50)
+- xsrv: upgrade ansible to [v8.6.1](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)
+- goaccess: update IP to Country GeoIP database to v2023-11
+- cleanup: limit use of `check_mode: no` to tasks that do not change anything
+- update documentation, add example usage through Gitea Actions/Github Actions
+
+**Fixed:**
+- openldap: fix deployment of ldap-account-manager failing on `copy php-fpm configuration` when deploying the `apache` tag in isolation
+- jellyfin: fix internal `Restart server` function only terminating the server process without restarting
+- gitea_act_runner: fix `potentially insufficient UIDs or GIDs available in user namespace` error when using podman backend
+- readme_gen: fix netdata alarm badge URL for used swap alarm
+- shaarli: make `remove shaarli zip extraction directory` task idempotent
+
+[Full changes since v1.19.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.19.0...1.20.0)
+
+------------------
+
 #### [v1.19.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.19.0) - 2023-11-03
 
 **Upgrade procedure:**
@@ -65,12 +118,12 @@ _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui
 
 **Added:**
 - add [`gitea_act_runner`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) role (Gitea Actions CI/CD runner)
-- add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker))
+- add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker))
 - gitea: allow enabling built-in [Gitea Actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system ([`gitea_enable_actions: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
 - common: allow running `unattended-upgrade` or `apt upgrade` immediately ([`TAGS=utils-apt-unattended-upgrade,utils-apt-upgrade`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/README.md#usage))
 - matrix: allow setting up LDAP authentication backend for synapse ([`matrix_synapse_ldap_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml))
 - netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/docker#uninstallation))
+- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker#uninstallation))
 - nextcloud: allow automatically checking the filesystem/data directory for changes made outside Nextcloud ([`nextcloud_filesystem_check_changes: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 
 **Removed:**
@@ -805,7 +858,7 @@ self_service_password_allowed_hosts:
 - common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)), disable unused network/firewire modules by default
 - common: automatically remove (purge) configuration files of removed packages, nightly, enabled by default ([`apt_purge_nightly: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: attempt to automatically repair (fsck) failed filesystems on boot
-- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/docker/defaults/main.yml))
+- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/1.17.0/roles/docker/defaults/main.yml))
 - docker: install requirements for logging in to private docker registries
 - openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
 - openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))

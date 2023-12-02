@@ -28,3 +28,26 @@
     - nextcloud_php_upload_max_filesize|regex_search('[KMG]$')
     - nextcloud_enable_service == nextcloud_enable_service | bool
     - nextcloud_filesystem_check_changes == nextcloud_filesystem_check_changes | bool
+    - nextcloud_allowed_hosts | type_debug == "list"
+    - nextcloud_smtp_mode in ['disabled', 'smtp', 'smtp+ssl', 'sendmail']
+
+- name: check that variables are correctly defined (nextcloud_smtp_*)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud"
+    that: "{{ item }}"
+  when: nextcloud_smtp_mode in ['smtp', 'smtp+ssl']
+  with_items:
+    - nextcloud_smtp_host is not search('CHANGEME')
+    - nextcloud_smtp_port | int
+    - nextcloud_smtp_from is not search('CHANGEME')
+    - nextcloud_smtp_user is not search('CHANGEME')
+    - nextcloud_smtp_password is not search('CHANGEME')
+
+- name: check that variables are correctly defined (nextcloud_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of nextcloud_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ nextcloud_allowed_hosts }}"

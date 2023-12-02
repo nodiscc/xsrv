@@ -9,7 +9,7 @@ shaarli_password_salt: "CHANGEME"
 # 12 character REST API secret
 shaarli_api_secret: "CHANGEME"
 # shaarli timezone (see https://www.php.net/manual/en/timezones.php)
-shaarli_timezone: "Europe\\/Paris"
+shaarli_timezone: "Europe/Paris"
 # location of the shaarli "home" link
 shaarli_header_link: "?"
 # hide timestamps (yes/no)
@@ -19,9 +19,11 @@ shaarli_debug: no
 # shaarli description formatter (default/markdown/markdownExtra)
 shaarli_formatter: "markdown"
 # enable thumbnails for all hosts, or only common media hosts, or none (all/common/none)
-shaarli_thumbnails_mode: 'common'
+shaarli_thumbnails_mode: common
 # default number of links per page
 shaarli_links_per_page: 30
+# theme/template to use (default/vintage/stack/...)
+shaarli_theme: stack
 # overwrite shaarli configuration if it already exists (yes/no - yes will overwrite any changes made from Shaarli tools menu)
 shaarli_overwrite_config: no
 # Mode for SSL/TLS certificates for the shaarli webserver virtualhost
@@ -30,10 +32,15 @@ shaarli_overwrite_config: no
 shaarli_https_mode: selfsigned
 # install python-shaarli-client, dump all shaarli data to /var/shaarli/shaarli.json every hour (yes/no)
 shaarli_setup_python_client: no
-# Shaarli installation directory
+# shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
-# Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.12.2'
+# shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
+shaarli_version: 'v0.13.0'
+# list of IP addresses allowed to access shaarli (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+shaarli_allowed_hosts: []
+# shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
+shaarli_stack_version: "0.5"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)

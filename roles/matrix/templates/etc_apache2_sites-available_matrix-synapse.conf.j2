@@ -27,7 +27,14 @@ Listen 8448
   ProxyPass /_synapse/client http://127.0.0.1:8008/_synapse/client nocanon
   ProxyPassReverse /_synapse/client http://127.0.0.1:8008/_synapse/client
 {% if matrix_synapse_admin_enable_service %}
-
+{% if matrix_synapse_admin_allowed_hosts %}
+  <Directory /var/www/{{ matrix_synapse_fqdn }}>
+    Require ip 127.0.0.1 {{ matrix_synapse_admin_allowed_hosts | join(' ') }}
+  </Directory>
+  <Location /_synapse/admin>
+    Require ip 127.0.0.1 {{ matrix_synapse_admin_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
   ProxyPass /_synapse/admin http://127.0.0.1:8008/_synapse/admin nocanon
   ProxyPassReverse /_synapse/admin http://127.0.0.1:8008/_synapse/admin
   DocumentRoot /var/www/{{ matrix_synapse_fqdn }}

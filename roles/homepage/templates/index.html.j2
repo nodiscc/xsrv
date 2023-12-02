@@ -186,6 +186,12 @@
             .gotty-cb {
                 background-color: #313131;
             }
+            .planarally :hover{
+                border-color: #781d3a;
+            }
+            .planarally-cb {
+                background-color: #f2e9d5;
+            }
             .customlink :hover{
                 border-color: #FAFAFA;
             }
@@ -414,6 +420,19 @@
                         <div class="app-text">
                             <p class="app-name">Matrix (synapse-admin)</p>
                             <p class="app-description">Matrix user/room administration interface</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.planarally.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 planarally">
+                <a href="https://{{ ansible_local.planarally.fqdn }}">
+                    <div class="content">
+                        <div class="colorblock planarally-cb"><img class="app-icon" src="res/planarally.png"></div>
+                        <div class="app-text">
+                            <p class="app-name">PlanarAlly</p>
+                            <p class="app-description">Virtual TableTop (VTT)</p>
                         </div>
                     </div>
                 </a>

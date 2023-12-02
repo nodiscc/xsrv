@@ -23,3 +23,12 @@
     - tt_rss_php_post_max_size|regex_search('[KMG]$')
     - tt_rss_php_upload_max_filesize|regex_search('[KMG]$')
     - tt_rss_enable_service == tt_rss_enable_service | bool
+    - tt_rss_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (tt_rss_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of tt_rss_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ tt_rss_allowed_hosts }}"

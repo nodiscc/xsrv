@@ -1,0 +1,75 @@
+#!/bin/bash
+# Description: update and load dnsmasq blocklist configured in /etc/default/dnsmasq BLOCKLIST_URL=
+# License: GPL-3.0
+set -o errexit
+set -o pipefail
+set -o nounset
+
+blocklist_file=/var/cache/dnsmasq-blocklist.conf
+
+
+function clear_blacklist_and_exit() {
+    echo "[ERROR] Failed validating dnsmasq config, clearing blacklist"
+    echo '' > "$blocklist_file"
+    exit 1
+}
+
+echo "[INFO] loading configuration file /etc/dnsmasq-update-blocklist.conf"
+source /etc/dnsmasq-update-blocklist.conf
+if [[ "$BLOCKLIST_MODE" == "disabled" ]]; then
+    echo "[INFO] BLOCKLIST_MODE is set to disabled, not downloading anything"
+    exit 0
+elif [[ "$BLOCKLIST_MODE" == "hosts" ]]; then
+    downloaded_blocklist_file=/var/cache/dnsmasq-blocklist.hosts.tmp
+elif [[ "$BLOCKLIST_MODE" == "dnsmasq" ]]; then
+    downloaded_blocklist_file=/var/cache/dnsmasq-blocklist.dnsmasq.tmp
+else
+    echo "[ERROR] unsupported value $BLOCKLIST_MODE for BLOCKLIST_MODE"
+    exit 1
+fi
+
+echo "[INFO] downloading blocklist from $BLOCKLIST_URL to $downloaded_blocklist_file"
+wget --no-verbose --output-document="$downloaded_blocklist_file" "$BLOCKLIST_URL"
+
+md5sum_before=0
+if [[ -f "$blocklist_file" ]]; then
+    md5sum_before=$(md5sum "$blocklist_file")
+else
+    md5sum_before=0
+fi
+
+if [[ "$BLOCKLIST_MODE" == "hosts" ]]; then
+    echo "[INFO] converting hosts-formatted blocklist to dnsmasq-formatted blocklist"
+    awk '/^[^#]/ { print "address=/"$2"/"$1"" }' "$downloaded_blocklist_file" > "$blocklist_file"
+elif [[ "$BLOCKLIST_MODE" == "dnsmasq" ]]; then
+    cp "$downloaded_blocklist_file" "$blocklist_file"
+fi
+
+echo "[INFO] converting records for /0.0.0.0 to /# format"
+sed -i -e "s|/0\.0\.0\.0$|/#|g" "$blocklist_file"
+echo "[INFO] only keeping records for /# (null address)"
+sed -i -e "/^.*\/#$/!d" "$blocklist_file"
+
+echo "[INFO] removing whitelisted domains from blocklist"
+for domain in $WHITELIST_DOMAINS; do
+    sed -i -e "s|^address=/$domain/#||g" "$blocklist_file"
+done
+echo "[INFO] removing empty lines"
+sed -i -r '/^\s*$/d' "$blocklist_file"
+
+blocklist_length=$(wc -l < "$blocklist_file")
+if [[ "$blocklist_length" == 0 ]]; then
+    echo "[WARNING] $blocklist_file is now $blocklist_length lines long. Invalid blocklist URL or format mismatch?"
+else
+    echo "[INFO] $blocklist_file is now $(wc -l < "$blocklist_file") lines long"
+fi
+
+md5sum_after=$(md5sum "$blocklist_file")
+if [[ "$md5sum_before" != "$md5sum_after" ]]; then
+    echo "[INFO] blocklist changed, checking dnsmasq configuration"
+    dnsmasq --test || clear_blacklist_and_exit
+    echo "[INFO] blocklist changed, restarting dnsmasq"
+    systemctl restart dnsmasq
+else
+    echo "[INFO] blocklist unchanged"
+fi

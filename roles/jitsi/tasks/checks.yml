@@ -14,6 +14,7 @@
     - jitsi_enable_service == jitsi_enable_service | bool
     - jitsi_secure_domain == jitsi_secure_domain | bool
     - jitsi_enable_recent_list == jitsi_enable_recent_list | bool
+    - jitsi_allowed_hosts | type_debug == "list"
 
 - name: check that variables are correctly defined (jitsi_users)
   assert:
@@ -26,3 +27,11 @@
   when: jitsi_secure_domain | bool
   no_log: yes
   with_items: "{{ jitsi_users }}"
+
+- name: check that variables are correctly defined (jitsi_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of jitsi_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ jitsi_allowed_hosts }}"

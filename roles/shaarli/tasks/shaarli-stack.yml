@@ -1,0 +1,37 @@
+- name: download shaarli-stack tarball
+  get_url:
+    url: "https://github.com/RolandTi/shaarli-stack/releases/download/{{ shaarli_stack_version }}/stack.{{ shaarli_stack_version }}.tar.gz"
+    dest: "/root/shaarli-stack-{{ shaarli_stack_version }}.tar.gz"
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: create shaarli-stack tarball extraction directory
+  file:
+    path: /root/shaarli-stack-unpack
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: extract shaarli-stack tarball zip
+  unarchive:
+    src: "/root/shaarli-stack-{{ shaarli_stack_version }}.tar.gz"
+    dest: "/root/shaarli-stack-unpack"
+    remote_src: yes
+    owner: root
+    group: root
+    mode: "u=rwX,g=rwX,o=rX"
+  diff: no # very verbose in diff mode
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy shaarli stack template to templates directory
+  copy:
+    remote_src: yes
+    src: /root/shaarli-stack-unpack/stack/
+    dest: "{{ shaarli_install_dir }}/tpl/stack"
+    owner: root
+    group: root
+    mode: "u=rwX,g=rX,o=rX"
+  diff: no # very verbose in diff mode
+  ignore_errors: "{{ ansible_check_mode }}"

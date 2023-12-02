@@ -29,6 +29,9 @@ jitsi_enable_recent_list: no
 jitsi_https_mode: selfsigned
 # start/stop the jitsi service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 jitsi_enable_service: yes
+# list of IP addresses allowed to access the jitsi web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+jitsi_allowed_hosts: []
 # firewall zones for the jitsi server, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 jitsi_firewalld_zones:

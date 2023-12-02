@@ -42,3 +42,12 @@
     - gitea_webhook_allowed_hosts | type_debug == "list"
     - gitea_repo_indexer_enabled == gitea_repo_indexer_enabled | bool
     - gitea_repo_indexer_exclude | type_debug == "list"
+    - gitea_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (gitea_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of gitea_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ gitea_allowed_hosts }}"

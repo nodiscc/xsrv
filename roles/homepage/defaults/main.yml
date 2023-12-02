@@ -26,5 +26,8 @@ homepage_https_mode: selfsigned
 #   - CHANGEME.org
 #   - 192.168.8.0
 homepage_vhost_aliases: []
+# list of IP addresses allowed to access the homepage (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+homepage_allowed_hosts: []
 # enable/disable the homepage virtualhost (yes/no) (redirect users to maintenance page if disabled)
 homepage_enable_service: yes

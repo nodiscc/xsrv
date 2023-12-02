@@ -15,3 +15,12 @@
     - graylog_heap_size|regex_search('[mg]$')
     - (elasticsearch_timeout_start_sec == 'auto') or (elasticsearch_timeout_start_sec == elasticsearch_timeout_start_sec|int)
     - graylog_tcp_firewalld_zones|type_debug == "list"
+    - graylog_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (graylog_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of graylog_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ graylog_allowed_hosts }}"

@@ -26,12 +26,17 @@ MDomain {{ transmission_fqdn }}
   RewriteCond %{REQUEST_URI} !=/maintenance.html
   RewriteRule ^.*$ - [R=503,L]
 {% else %}
-  <Location "/">
+  <Location />
     AuthType Basic
     AuthName "Authorization required"
     AuthBasicProvider file
     AuthUserFile /etc/apache2/transmission-passwd
-    Require valid-user
+    <RequireAll>
+{% if transmission_allowed_hosts %}
+      Require ip 127.0.0.1 {{ transmission_allowed_hosts | join(' ') }}
+{% endif %}
+      Require valid-user
+    </RequireAll>
   </Location>
 
   SetEnv proxy-chain-auth

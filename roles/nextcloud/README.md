@@ -130,7 +130,7 @@ xsrv shell default nextcloud.CHANGEME.org
 # fix permissions on restored files
 deploy@nextcloud:~$ sudo chown -R nextcloud:nextcloud /var/nextcloud/ /var/www/cloud.CHANGEME.org/config/config.php 
 # create a plaintext sql dump from the custom-formatted dump
-deploy@nextcloud:~$ sudo -u postgres pg_restore --file - --clean --create /tmp/nextcloud.sql > /tmp/nextcloud.txt.sql
+deploy@nextcloud:~$ sudo -u postgres pg_restore --clean --create /tmp/nextcloud.sql -f /tmp/nextcloud.txt.sql
 # restore the plaintext sql dump
 deploy@nextcloud:~$ sudo -u postgres psql --echo-errors --file /tmp/nextcloud.txt.sql 
 # rescan files

@@ -18,11 +18,22 @@
     - shaarli_header_link is string
     - shaarli_hide_timestamps == shaarli_hide_timestamps | bool
     - shaarli_formatter in ['default', 'markdown', 'markdownExtra']
+    - shaarli_theme is string
     - shaarli_username is not search("CHANGEME")
     - shaarli_version is string
+    - shaarli_stack_version is string
     - shaarli_php_memory_limit|regex_search('[KMG]$')
     - shaarli_php_max_execution_time == shaarli_php_max_execution_time|int
     - shaarli_php_max_input_time == shaarli_php_max_input_time|int
     - shaarli_php_post_max_size|regex_search('[KMG]$')
     - shaarli_php_upload_max_filesize|regex_search('[KMG]$')
     - shaarli_enable_service == shaarli_enable_service | bool
+    - shaarli_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (shaarli_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of shaarli_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ shaarli_allowed_hosts }}"

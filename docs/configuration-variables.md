@@ -2,9 +2,11 @@
 
 This is a list of all available configuration variables, and their default values.
 Copy any of these variables to `xsrv edit-host` (`host_vars` file) or `xsrv edit-vault`, and edit its value there.
-Then run `xsrv deploy` to apply changes.
+Then run `xsrv deploy` to apply changes. See [Manage configuration](usage.md#manage-configuration)
 
 <!--BEGIN ROLES LIST-->
+## apache
+
 [roles/apache/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
 
 ```yaml
@@ -51,11 +53,13 @@ php_fpm_enable_default_pool: yes
 ```
 
 
+## backup
+
 [roles/backup/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
 
 ```yaml
 ##### RSNAPSHOT BACKUP SERVICE #####
-# Backups storage directory (with traing slash!)
+# backups storage directory (without trailing slash!)
 rsnapshot_backup_dir: "/var/backups/rsnapshot"
 # number of daily, weekly and monthly backup generations to keep (set to 0 to disable a specific backup interval)
 rsnapshot_retain_daily: 6
@@ -68,10 +72,10 @@ rsnapshot_enable_cron: yes
 rsnapshot_create_root: yes
 # rsnapshot verbosity level (1-5)
 rsnapshot_verbose_level: 3
-# Commands to run before starting backups (database dumps, application exports...)
-# Return codes different from 0 will cause the backup process to abort with an error
-# These commands run as the 'rsnapshot' user locally.
-# Use 'ssh user@host /path/to/script' to run scripts on remote hosts.
+# commands to run before starting backups (database dumps, application exports...)
+# return codes different from 0 will cause the backup process to abort with an error
+# these commands run as the 'rsnapshot' user locally.
+# use 'ssh user@host /path/to/script' to run scripts on remote hosts.
 # - For local scripts, 'rsnapshot' user must have appropriate permissions to run the script
 # - For remote backups, 'rsnapshot' user's SSH key must be authorized on the remote host, the remote user must have appropriate permissions to run the script
 # Example:
@@ -81,8 +85,8 @@ rsnapshot_verbose_level: 3
 #   - 'ssh -oStrictHostKeyChecking=no rsnapshot@srv03.example.org /opt/xsrv/openldap-dump.sh'
 #   - /opt/xsrv/nextcloud-mysql-dump.sh
 rsnapshot_backup_execs: []
-# Local files/directories to backup
-# The 'rsnapshot' user must have read access to these directories
+# local files/directories to backup
+# the 'rsnapshot' user must have read access to these directories
 # Example:
 # rsnapshot_local_backups:
 #   - '/var/backup/mysql/nextcloud/'
@@ -94,7 +98,7 @@ rsnapshot_backup_execs: []
 #   - '/etc/letsencrypt/'
 #   - '/etc/ssl/private/'
 rsnapshot_local_backups: []
-# Remote files/directories to fetch. Parameters:
+# remote files/directories to fetch. Parameters:
 #    user: SSH username to connect with (must have read access to backup paths)
 #    host: host address
 #    path: file/directory path to backup
@@ -108,7 +112,7 @@ rsnapshot_local_backups: []
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/letsencrypt/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/ssl/private/' }
 rsnapshot_remote_backups: []
-# File name patterns to exclude from backups, globally
+# file name patterns to exclude from backups, globally
 # Example:
 # rsnapshot_excludes:
 #   - '/var/nextcloud/data/updater-*/'
@@ -119,6 +123,8 @@ rsnapshot_remote_backups: []
 rsnapshot_excludes: []
 ```
 
+
+## common
 
 [roles/common/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
 
@@ -515,47 +521,79 @@ packages_remove:
 ```
 
 
+## dnsmasq
+
 [roles/dnsmasq/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml)
 
 ```yaml
 ##### DNSMASQ DNS SERVER #####
-# List of recursive DNS servers to forward DNS requests to
+# list of recursive DNS servers to forward DNS requests to (IP addresses)
+# either your own/private recursive DNS resolver, your ISP/hosting provider's resolver, or a public DNS server (https://en.wikipedia.org/wiki/Public_recursive_name_server)
+# 2 entries are recommended in case the primary one fails
 # Example:
 # dnsmasq_upstream_servers:
-#   - 1.1.1.1
-#   - 1.0.0.1
+#   - 1.1.1.1 # https://en.wikipedia.org/wiki/1.1.1.1
+#   - 1.0.0.1 # https://en.wikipedia.org/wiki/1.1.1.1
+#   - 8.8.8.8 # https://en.wikipedia.org/wiki/Google_Public_DNS
+#   - 8.8.4.4 # https://en.wikipedia.org/wiki/Google_Public_DNS
+#   - 80.67.169.12 # https://www.fdn.fr/actions/dns/
+#   - 80.67.169.40 # https://www.fdn.fr/actions/dns/
 dnsmasq_upstream_servers:
   - CHANGEME
   - CHANGEME
-# List of DNS A records
+# List of DNS A records (name, ip)
 # Example:
 # dnsmasq_records:
 #   - name: my.example.org # the record name
 #     ip: 1.2.3.4 # IP address to return for this name
 dnsmasq_records: []
-# firewall zones for the DNS service, if nodiscc.xsrv.common/firewalld role is deployed
+# firewall zones for the DNS service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 dnsmasq_firewalld_zones:
   - zone: internal
     state: enabled
-# start/stop the dsnmasq service, enable/disable it on boot (yes/no)
+# start/stop the dnsmasq service, enable/disable it on boot (yes/no)
 dnsmasq_enable_service: yes
-# list of network interfaces dnsmasq should listen on. Leave empty to listen on all interfaces
+# list of network interfaces dnsmasq should listen on
+# leave the list empty [] to listen on all interfaces
 # Example:
 # dnsmasq_listen_interfaces:
 #   - eth0
 #   - eth1
 dnsmasq_listen_interfaces: []
-# list of Ip addresses dnsmasq should listen on. Leave empty to listen on all addresses
+# list of IP addresses dnsmasq should listen on
+# leave the list empty [] to listen on all addresses
 # Example:
 # dnsmasq_listen_addresses:
 #   - 127.0.0.1
 dnsmasq_listen_addresses: []
-# yes/no: use DNSSEC to validate answers to DNS queries
+# use DNSSEC to validate answers to DNS queries (yes/no)
 # if enabled, dig @127.0.1.1 dnssec-failed.org should return SERVFAIL
 dnsmasq_dnssec: yes
+# log DNS queries prcessed by dnsmasq (VERY verbose) (no/yes)
+dnsmasq_log_queries: no
+# URL of a DNS blocklist to download and load into dnsmasq
+# Examples:
+#   https://raw.githubusercontent.com/hagezi/dns-blocklists/main/dnsmasq/pro.txt (dnsmasq format)
+#   https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt (hosts format)
+#   https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts (hosts format)
+#   see also https://github.com/hagezi/dns-blocklists/, https://github.com/StevenBlack/hosts, https://firebog.net/
+dnsmasq_blocklist_url: "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/dnsmasq/pro.txt" # dnsmasq format
+# blocklist mode (hosts/dnsmasq/disabled)
+# hosts: parse the blocklist as standard linux hosts file (the file must be formatted as a valid hosts file)
+# dnsmasq: parse the blocklist as dnsmasq configuration file (the file must be formatted as a valid dnsmasq configuration file)
+# disabled: don't download or parse any blocklist
+dnsmasq_blocklist_mode: disabled
+# list of domain names to remove from the blocklist before loading it (aka. excepyions or whitelist)
+# Example:
+# dnsmasq_blocklist_whitelist
+#   - example.org
+#   - requiredforwork.example.com
+dnsmasq_blocklist_whitelist: []
 ```
 
+
+## gitea_act_runner
 
 [roles/gitea_act_runner/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
 
@@ -590,6 +628,8 @@ gitea_act_runner_labels:
 ```
 
 
+## gitea
+
 [roles/gitea/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml)
 
 ```yaml
@@ -622,7 +662,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.20.5"
+gitea_version: "1.21.1"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -679,7 +719,7 @@ gitea_repo_indexer_enabled: no
 gitea_repo_indexer_exclude: []
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
-# Mail settings below are required if gitea mailer is enabled
+# mail settings below are required if gitea_mailer_enabled: yes
 # Mail server protocol (smtp/smtps/smtp+starttls/smtp+unix/sendmail/dummy)
 gitea_mail_protocol: "smtp+starttls"
 # SMTP mail server address
@@ -688,11 +728,16 @@ gitea_mail_host: "{{ msmtp_host | default('smtp.CHANGEME.org') }}"
 gitea_mail_port: "{{ msmtp_port | default('CHANGEME') }}"
 # 'From' address used in mails sent by gitea
 gitea_mail_from: "{{ msmtp_admin_email | default('gitea-noreply@CHANGEME.org') }}"
-# Username and password for SMTP authentication
+# username and password for SMTP authentication
 gitea_mail_user: "{{ msmtp_username | default('CHANGEME') }}"
 gitea_mail_password: "{{ msmtp_password | default('CHANGEME') }}"
+# list of IP addresses allowed to access the gitea web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+gitea_allowed_hosts: []
 ```
 
+
+## gotty
 
 [roles/gotty/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml)
 
@@ -727,8 +772,13 @@ gotty_input_timeout: 0
 gotty_listen_address: "0.0.0.0"
 # gotty release/version number (https://github.com/sorenisanerd/gotty/releases, without leading v)
 gotty_version: "1.5.0"
+# list of IP addresses allowed to access gotty (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+gotty_allowed_hosts: []
 ```
 
+
+## graylog
 
 [roles/graylog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml)
 
@@ -755,6 +805,9 @@ elasticsearch_heap_size: "auto"
 # (auto/seconds) timeout for elasticsearch systemd service startup
 # set a longer value if the elasticsearch systemd service fails to start/times out
 elasticsearch_timeout_start_sec: auto
+# list of IP addresses allowed to access the graylog web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+graylog_allowed_hosts: []
 # firewall zones for graylog TCP inputs, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 graylog_tcp_firewalld_zones:
@@ -762,6 +815,8 @@ graylog_tcp_firewalld_zones:
     state: enabled
 ```
 
+
+## homepage
 
 [roles/homepage/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
 
@@ -794,10 +849,15 @@ homepage_https_mode: selfsigned
 #   - CHANGEME.org
 #   - 192.168.8.0
 homepage_vhost_aliases: []
+# list of IP addresses allowed to access the homepage (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+homepage_allowed_hosts: []
 # enable/disable the homepage virtualhost (yes/no) (redirect users to maintenance page if disabled)
 homepage_enable_service: yes
 ```
 
+
+## jellyfin
 
 [roles/jellyfin/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml)
 
@@ -833,12 +893,15 @@ jellyfin_samba_share_allow_write_users: []
 jellyfin_samba_share_allow_read_users: []
 # list of IP addresses allowed to access jellyfin (IP or IP/netmask format)
 # for security reasons only private/RFC1918 addresses are allowed by default
+# set to empty list [] to allow access from any IP address
 jellyfin_allowed_hosts:
   - '192.168.0.0/16'
   - '172.16.0.0/12'
   - '10.0.0.0/8'
 ```
 
+
+## jitsi
 
 [roles/jitsi/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml)
 
@@ -874,6 +937,9 @@ jitsi_enable_recent_list: no
 jitsi_https_mode: selfsigned
 # start/stop the jitsi service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 jitsi_enable_service: yes
+# list of IP addresses allowed to access the jitsi web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+jitsi_allowed_hosts: []
 # firewall zones for the jitsi server, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 jitsi_firewalld_zones:
@@ -883,6 +949,8 @@ jitsi_firewalld_zones:
     state: enabled
 ```
 
+
+## libvirt
 
 [roles/libvirt/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml)
 
@@ -1009,6 +1077,8 @@ libvirt_users:
 ```
 
 
+## mail_dovecot
+
 [roles/mail_dovecot/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml)
 
 ```yaml
@@ -1046,6 +1116,8 @@ dovecot_firewalld_zones:
     state: enabled
 ```
 
+
+## matrix
 
 [roles/matrix/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml)
 
@@ -1109,6 +1181,9 @@ matrix_synapse_ldap_validate_certs: yes
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
 matrix_synapse_admin_version: "0.8.7"
+# list of IP addresses allowed to access synapse-admin and synapse admin API endpoints (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+matrix_synapse_admin_allowed_hosts: []
 
 ##### ELEMENT #####
 # fully qualified domain name of the element application instance
@@ -1121,7 +1196,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.47"
+matrix_element_version: "1.11.50"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1130,8 +1205,13 @@ element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 matrix_element_https_mode: selfsigned
 # enable/disable the element virtualhost (redirect users to maintenance page if disabled)
 matrix_element_enable_service: yes
+# list of IP addresses allowed to access element (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+matrix_element_allowed_hosts: []
 ```
 
+
+## monitoring_goaccess
 
 [roles/monitoring_goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml)
 
@@ -1152,11 +1232,18 @@ goaccess_enable_service: yes
 goaccess_update_calendar_expression: "*:00:00"
 # (optional) only parse log lines containing this string
 # goaccess_filter: "mysite.CHANGEME.org"
+# IP to Country GeoIP database version
+goaccess_geoip_db_version: "2023-11"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"
+# list of IP addresses allowed to access goaccess (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+goaccess_allowed_hosts: []
 ```
 
+
+## monitoring_netdata
 
 [roles/monitoring_netdata/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
 
@@ -1344,12 +1431,19 @@ netdata_logcount_warning_threshold_warn: 10
 netdata_logcount_notification_to: "silent"
 # setup netdata-debsecan module (yes/no)
 setup_netdata_debsecan: yes
-# monitor systemd units states
-netdata_monitor_systemd_units: yes
-# setup monitoring of pending package upgrades
+# enable daily mail reports from debsecan (yes/no)
+debsecan_enable_reports: yes
+# list of vulnerabilities (CVE numbers) that will be ignored by debsecan
+# Example:
+# debsecan_whitelist:
+#   - CVE-2021-20316 # not applicable, SMBv1 disabled
+debsecan_whitelist: []
+# setup monitoring of pending package upgrades (yes/no)
 setup_netdata_apt: yes
 ```
 
+
+## monitoring_rsyslog
 
 [roles/monitoring_rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)
 
@@ -1371,6 +1465,8 @@ rsyslog_forward_to_port: 5140
 rsyslog_custom_config: []
 ```
 
+
+## monitoring_utils
 
 [roles/monitoring_utils/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml)
 
@@ -1415,6 +1511,8 @@ duc_index_path: "/"
 ```
 
 
+## mumble
+
 [roles/mumble/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mumble/defaults/main.yml)
 
 ```yaml
@@ -1444,6 +1542,8 @@ mumble_firewalld_zones:
     state: enabled
 ```
 
+
+## nextcloud
 
 [roles/nextcloud/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)
 
@@ -1478,7 +1578,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "27.1.3"
+nextcloud_version: "27.1.4"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1540,7 +1640,22 @@ nextcloud_apps:
   - { state: "disable", app: "jitsi" } # https://apps.nextcloud.com/apps/jitsi
   - { state: "disable", app: "tables" } # https://apps.nextcloud.com/apps/tables
   - { state: "disable", app: "survey_client" } # https://github.com/nextcloud/survey_client
-# nextcloud php-fpm pool settings (performance/resource usage)
+  - { state: "disable", app: "integration_whiteboard" } # https://apps.nextcloud.com/apps/integration_whiteboard
+# mode for outgoing mail (disabled/smtp/smtp+ssl/sendmail)
+nextcloud_smtp_mode: disabled
+# outgoing mail settings below are required if nextcloud_smtp_mode: smtp/smtp+ssl
+# 'From' address used in mails sent by nextcloud
+nextcloud_smtp_from: "{{ msmtp_admin_email | default('nextcloud-noreply@CHANGEME.org') }}"
+# SMTP mail server address
+nextcloud_smtp_host: "{{ msmtp_host | default('smtp.CHANGEME.org') }}"
+# SMTP mail server port (e.g. 25/465/587)
+nextcloud_smtp_port: "{{ msmtp_port | default('CHANGEME') }}"
+# username and password for SMTP authentication
+nextcloud_smtp_user: "{{ msmtp_username | default('CHANGEME') }}"
+nextcloud_smtp_password: "{{ msmtp_password | default('CHANGEME') }}"
+# list of IP addresses allowed to access nextcloud (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+nextcloud_allowed_hosts: []
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 nextcloud_php_memory_limit: '512M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -1563,6 +1678,8 @@ nextcloud_php_pm_max_max_spare_servers: 4
 nextcloud_enable_service: yes
 ```
 
+
+## openldap
 
 [roles/openldap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml)
 
@@ -1618,6 +1735,8 @@ ldap_account_manager_ldaps_cert: ""
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 ldap_account_manager_https_mode: "selfsigned"
+# enable/disable the ldap-account-manager php-fpm pool (redirect users to maintenance page if disabled)
+ldap_account_manager_enable_service: yes
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 ldap_account_manager_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -1628,8 +1747,6 @@ ldap_account_manager_php_max_input_time: 60
 ldap_account_manager_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 ldap_account_manager_php_upload_max_filesize: '2M'
-# enable/disable the ldap-account-manager php-fpm pool (redirect users to maintenance page if disabled)
-ldap_account_manager_enable_service: yes
 
 
 ##### LDAP SELF SERVICE PASSWORD #####
@@ -1639,6 +1756,7 @@ openldap_setup_ssp: no
 self_service_password_fqdn: "ssp.CHANGEME.org"
 # list of IP addresses/networks allowed to access self service password (CIDR notation)
 # for security reasons only private/RFC1918 addresses are allowed by default
+# set to empty list [] to allow access from any IP address
 self_service_password_allowed_hosts:
   - 10.0.0.0/8
   - 192.168.0.0/16
@@ -1648,13 +1766,15 @@ self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.5.3"
+self_service_password_version: "1.5.4"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
 self_service_password_https_mode: "selfsigned"
+# enable/disable the self-service-password php-fpm pool (redirect users to maintenance page if disabled)
+self_service_password_enable_service: yes
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 self_service_password_php_memory_limit: '64M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -1665,10 +1785,10 @@ self_service_password_php_max_input_time: 60
 self_service_password_php_post_max_size: '8M'
 # php-fpm: Maximum allowed size for uploaded files (K, M, G)
 self_service_password_php_upload_max_filesize: '2M'
-# enable/disable the self-service-password php-fpm pool (redirect users to maintenance page if disabled)
-self_service_password_enable_service: yes
 ```
 
+
+## postgresql
 
 [roles/postgresql/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/postgresql/defaults/main.yml)
 
@@ -1680,6 +1800,8 @@ postgresql_enable_service: yes
 postgresql_pgmetrics_version: "1.16.0"
 ```
 
+
+## readme_gen
 
 [roles/readme_gen/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml)
 
@@ -1710,7 +1832,7 @@ readme_gen_netdata_badges:
     label: 5min load average
   - chart: system.ram
     alarm: ram_in_use
-  - chart: system.swap
+  - chart: mem.swap
     alarm: used_swap
   - chart: apt.upgradable
     alarm: apt_upgradable
@@ -1721,6 +1843,8 @@ readme_gen_gtk_bookmarks: no
 readme_gen_template: "readme_gen.md.j2"
 ```
 
+
+## samba
 
 [roles/samba/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml)
 
@@ -1815,6 +1939,8 @@ samba_nscd_cache_time_to_live: 60
 ```
 
 
+## shaarli
+
 [roles/shaarli/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)
 
 ```yaml
@@ -1829,7 +1955,7 @@ shaarli_password_salt: "CHANGEME"
 # 12 character REST API secret
 shaarli_api_secret: "CHANGEME"
 # shaarli timezone (see https://www.php.net/manual/en/timezones.php)
-shaarli_timezone: "Europe\/Paris"
+shaarli_timezone: "Europe/Paris"
 # location of the shaarli "home" link
 shaarli_header_link: "?"
 # hide timestamps (yes/no)
@@ -1839,9 +1965,11 @@ shaarli_debug: no
 # shaarli description formatter (default/markdown/markdownExtra)
 shaarli_formatter: "markdown"
 # enable thumbnails for all hosts, or only common media hosts, or none (all/common/none)
-shaarli_thumbnails_mode: 'common'
+shaarli_thumbnails_mode: common
 # default number of links per page
 shaarli_links_per_page: 30
+# theme/template to use (default/vintage/stack/...)
+shaarli_theme: stack
 # overwrite shaarli configuration if it already exists (yes/no - yes will overwrite any changes made from Shaarli tools menu)
 shaarli_overwrite_config: no
 # Mode for SSL/TLS certificates for the shaarli webserver virtualhost
@@ -1850,10 +1978,15 @@ shaarli_overwrite_config: no
 shaarli_https_mode: selfsigned
 # install python-shaarli-client, dump all shaarli data to /var/shaarli/shaarli.json every hour (yes/no)
 shaarli_setup_python_client: no
-# Shaarli installation directory
+# shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
-# Shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.12.2'
+# shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
+shaarli_version: 'v0.13.0'
+# list of IP addresses allowed to access shaarli (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+shaarli_allowed_hosts: []
+# shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
+shaarli_stack_version: "0.5"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -1868,6 +2001,8 @@ shaarli_php_upload_max_filesize: '2M'
 shaarli_enable_service: yes
 ```
 
+
+## transmission
 
 [roles/transmission/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml)
 
@@ -1892,6 +2027,9 @@ transmission_enable_service: yes
 # backup transmission downloads automatically, if the nodiscc.xsrv.backup role is enabled (yes/no)
 # disabled by default as it can consume a lot of disk space
 transmission_backup_downloads: no
+# list of IP addresses allowed to access transmission web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+transmission_allowed_hosts: []
 # firewall zones for the transmission bittorrent service (peer communication), if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 transmission_firewalld_zones:
@@ -1899,6 +2037,8 @@ transmission_firewalld_zones:
     state: enabled
 ```
 
+
+## tt_rss
 
 [roles/tt_rss/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml)
 
@@ -1929,6 +2069,9 @@ tt_rss_version: "master"
 tt_rss_account_limit: 10
 # Error log destination. setting this to blank uses PHP logging/webserver error log (sql, syslog, '')
 tt_rss_log_destination: ''
+# list of IP addresses allowed to access tt-rss (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+tt_rss_allowed_hosts: []
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 tt_rss_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -1943,6 +2086,8 @@ tt_rss_php_upload_max_filesize: '2M'
 tt_rss_enable_service: yes
 ```
 
+
+## wireguard
 
 [roles/wireguard/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml)
 

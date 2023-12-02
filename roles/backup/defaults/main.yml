@@ -1,5 +1,5 @@
 ##### RSNAPSHOT BACKUP SERVICE #####
-# Backups storage directory (with traing slash!)
+# backups storage directory (without trailing slash!)
 rsnapshot_backup_dir: "/var/backups/rsnapshot"
 # number of daily, weekly and monthly backup generations to keep (set to 0 to disable a specific backup interval)
 rsnapshot_retain_daily: 6
@@ -12,10 +12,10 @@ rsnapshot_enable_cron: yes
 rsnapshot_create_root: yes
 # rsnapshot verbosity level (1-5)
 rsnapshot_verbose_level: 3
-# Commands to run before starting backups (database dumps, application exports...)
-# Return codes different from 0 will cause the backup process to abort with an error
-# These commands run as the 'rsnapshot' user locally.
-# Use 'ssh user@host /path/to/script' to run scripts on remote hosts.
+# commands to run before starting backups (database dumps, application exports...)
+# return codes different from 0 will cause the backup process to abort with an error
+# these commands run as the 'rsnapshot' user locally.
+# use 'ssh user@host /path/to/script' to run scripts on remote hosts.
 # - For local scripts, 'rsnapshot' user must have appropriate permissions to run the script
 # - For remote backups, 'rsnapshot' user's SSH key must be authorized on the remote host, the remote user must have appropriate permissions to run the script
 # Example:
@@ -25,8 +25,8 @@ rsnapshot_verbose_level: 3
 #   - 'ssh -oStrictHostKeyChecking=no rsnapshot@srv03.example.org /opt/xsrv/openldap-dump.sh'
 #   - /opt/xsrv/nextcloud-mysql-dump.sh
 rsnapshot_backup_execs: []
-# Local files/directories to backup
-# The 'rsnapshot' user must have read access to these directories
+# local files/directories to backup
+# the 'rsnapshot' user must have read access to these directories
 # Example:
 # rsnapshot_local_backups:
 #   - '/var/backup/mysql/nextcloud/'
@@ -38,7 +38,7 @@ rsnapshot_backup_execs: []
 #   - '/etc/letsencrypt/'
 #   - '/etc/ssl/private/'
 rsnapshot_local_backups: []
-# Remote files/directories to fetch. Parameters:
+# remote files/directories to fetch. Parameters:
 #    user: SSH username to connect with (must have read access to backup paths)
 #    host: host address
 #    path: file/directory path to backup
@@ -52,7 +52,7 @@ rsnapshot_local_backups: []
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/letsencrypt/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/ssl/private/' }
 rsnapshot_remote_backups: []
-# File name patterns to exclude from backups, globally
+# file name patterns to exclude from backups, globally
 # Example:
 # rsnapshot_excludes:
 #   - '/var/nextcloud/data/updater-*/'

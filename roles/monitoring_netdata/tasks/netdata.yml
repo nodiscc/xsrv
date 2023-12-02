@@ -197,7 +197,7 @@
     mode: "0644"
   tags: netdata-downtime
 
-- name: add netdata to msmtp group
+- name: add netdata user to msmtp group
   user:
     name: netdata
     groups: msmtp

@@ -9,6 +9,7 @@
     - homepage_https_mode in ['selfsigned', 'letsencrypt']
     - homepage_enable_service == homepage_enable_service | bool
     - homepage_custom_links | type_debug == "list"
+    - homepage_allowed_hosts | type_debug == "list"
 
 - name: check that variables are correctly defined (homepage_custom_links)
   assert:
@@ -21,3 +22,11 @@
       - (item.compact is not defined) or (item.compact == item.compact | bool)
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"
   with_items: "{{ homepage_custom_links }}"
+
+- name: check that variables are correctly defined (homepage_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of homepage_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"
+    that:
+      - item | ansible.utils.ipv4
+  with_items: "{{ homepage_allowed_hosts }}"

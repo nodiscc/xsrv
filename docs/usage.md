@@ -88,7 +88,7 @@ xsrv deploy default srv*
 Each project contains:
 - an [inventory](#manage-hosts) of managed servers (_hosts_)
 - a list of [roles](#manage-roles) assigned to each host/group (_playbook_)
-- [configuration](#manage-hosts-configuration) values for host/group (*host_vars/group_vars*)
+- [configuration](#manage-configuration) values for host/group (*host_vars/group_vars*)
 - deployment logic/tasks used in your project ([collections](#use-as-ansible-collection)/roles)
 - an independent/isolated ansible installation (_virtualenv_) and its configuration
 
@@ -117,9 +117,9 @@ Edit the project's [`requirements.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/m
 
 ## Manage hosts
 
-- All servers [(hosts)](installation/server-preparation.md) must be listed in the inventory file.
-- Their [roles](#manage-roles) must be listed in the playbook file.
-- Hosts [configuration](#manage-hosts-configuration) must be set in [host or group](#manage-hosts-configuration) configuration files.
+- All servers [(hosts)](installation/server-preparation.md) must be listed in the [inventory](#xsrv-edit-inventory) file.
+- Their [roles](#manage-roles) must be listed in the [playbook](#xsrv-edit-playbook) file.
+- Hosts configuration variables must be set in [host or group](#manage-configuration) configuration files.
 
 
 ### xsrv init-host
@@ -133,7 +133,7 @@ xsrv init-host
 <!-- TODO full output -->
 
 - An editor will let you set the list of [roles](#manage-roles) for the host
-- An editor will let you set required [configuration variables](#manage-hosts-configuration).
+- An editor will let you set required [configuration variables](#manage-configuration).
 
 
 ### xsrv edit-inventory
@@ -284,7 +284,7 @@ You may also use [special variables](https://docs.ansible.com/ansible/latest/ref
 ```yaml
 # user account used for deployment
 ansible_user: "deploy"
-# SSH port used to contact the host if different from 22
+# SSH port used to contact the host (if different from 22)
 ansible_ssh_port: 123
 # IP/hostname used to contact the host if its inventory name is different/not resolvable
 ansible_host: 1.2.3.4
@@ -293,7 +293,7 @@ ansible_host: 1.2.3.4
 
 ### xsrv edit-vault
 
-Edit encrypted configuration variables/secrets.
+Edit encrypted configuration variables/secrets for a host.
 
 Sensitive variables such as usernames/password/credentials should not be stored as plain text in [`host_vars`](#xsrv-edit-host). Instead, store them in an encrypted file:
 
@@ -308,19 +308,17 @@ nextcloud_admin_email: "admin@example.org"
 nextcloud_db_password: "ucB77fNLX4qOoj2GhLBy"
 ```
 
-Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. 
+By default, Vault files are encrypted/decrypted by [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html) using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. 
 
 ```bash
 # cat ~/playbooks/default/.ansible-vault-password
 Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY
 ```
-**Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, full-disk encryption on underlying storage).
+**Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, full-disk encryption on underlying storage). By default this file is excluded from [Git version control](#version-control) if the project was created with [`xsrv init-project`](#xsrv-init-project).
 
 You may also place a custom script in `.ansible-vault-password`, that will fetch the master password from a secret storage/keyring of your choice (in this case the file must be made executable - `chmod +x .ansible-vault-password`).
 
-To disable reading the master password from a file/script: in the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting.
-
-See [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html).
+To disable reading the master password from a file/script: edit the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting. You will be asked for the `sudo` password before deployment. You may also specify a diffrent path to the password file.
 
 
 ### xsrv edit-group
@@ -337,12 +335,12 @@ setup_msmtp: yes
 setup_msmtp: no
 ```
 
-Group variables have higher precedence than [default](#xsrv-show-defaults) values, but lower than [host](#xsrv-edit-host) variables.
+Group variables take priority over [default](#xsrv-show-defaults) values, but are overridden by [host](#xsrv-edit-host) variables.
 
 
 ### xsrv edit-group-vault
 
-Edit encrypted [group](#manage-hosts) configuration - similar to [`xsrv edit-vault`](#xsrv-edit-vault) but for groups.
+Edit encrypted [group](#manage-hosts) configuration - similar to [`xsrv edit-vault`](#xsrv-edit-vault), but for groups.
 
 ```yaml
 # $ xsrv edit-group-vault all
@@ -390,19 +388,20 @@ Note: check mode may not reflect changes that will actually occur in a "real" de
 
 _Equivalent ansible commands: `ansible-playbook playbook.yml --limit=my.example2.org,production --tags=transmission,nextcloud --check`_
 
------------------------------------------
+
+----------------------------
 
 ## Provision hosts
 
 `xsrv` allows automated creation/provisioning of minimal Debian VMs using these commands:
 
-- [`xsrv init-vm-template`](appendices/debian.md)
-- [`xsrv init-vm`](appendices/debian.md)
+- [`xsrv init-vm-template`](appendices/debian.md#automated-from-preseed-file)
+- [`xsrv init-vm`](appendices/debian.md#automated-from-a-vm-template)
 
 VMs created using this method can then be added to your project using [`xsrv init-host`](#xsrv-init-host) or equivalent, at which point you can start deploying your configuration/services to them.
 
 
------------------------------------------
+----------------------------
 
 ## Upgrading
 
@@ -412,7 +411,44 @@ VMs created using this method can then be added to your project using [`xsrv ini
 
 **Upgrade the xsrv script**: run `xsrv self-upgrade` to upgrade the `xsrv` command-line utility to the latest stable release.
 
-------------------------------
+
+----------------------------
+
+## Other commands
+
+### xsrv shell
+
+Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the host name - the port and user name will be detected automatically from the host's [configuration variables](#manage-configuration).
+
+```bash
+$ xsrv shell my.example.org
+# or
+$ xsrv ssh my.example.org
+```
+
+An alternative is to use the [`readme-gen`](#xsrv-readme-gen) command to generate a SSH client configuration file which will allow contacting the host with `ssh $HOST` without specifying the port/user.
+
+
+### xsrv readme-gen
+
+Adds a summary of basic information about your hosts (groups, IP addresses, OS/virtualization, CPU, memory, storage, quick access links to services deployed on the host, monitoring badges, custom comment...) in README.md at the root of your project, using Markdown. Running this command multiple times will update the summary with the latest information gathered from your hosts.
+
+See the detailed [documentation](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen).
+
+
+### xsrv logs
+
+Open the current `syslog` log with the [lnav](https://lnav.org/) log viewer on the remote host.
+
+```bash
+$ xsrv logs my.example.org
+```
+
+If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog)/[monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils)/[monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be foudn [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage)
+
+
+
+----------------------------
 
 ## Advanced
 
@@ -421,7 +457,7 @@ VMs created using this method can then be added to your project using [`xsrv ini
 Using the server/host as its own controller is not recommended, but can help with single-server setups where no separate administration machine is available. By not using a separate controller, you lose the ability to easily redeploy a new system from scratch in case of emergency/distaster, and centralized management of multiple hosts will become more difficult. Your host will also have access to configuration of other hosts in your project.
 
 - [Install](installation/controller-preparation.md) the `xsrv` main script directly on the host
-- During [initialization](#manage-projects) or by [editing configuration](#manage-hosts-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
+- During [initialization](#manage-projects) or by [editing configuration](#manage-configuration) set `ansible_connection: local` in the host's configuration variables (`xsrv edit-host`):
 
 ```yaml
 ##### CONNECTION
@@ -473,10 +509,10 @@ Include the collection and roles in your playbooks:
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
 Other collections:
-- [`nodiscc.toolbox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION)
-- [`devsec.hardening`](https://github.com/dev-sec/ansible-collection-hardening)
-- [`debops.debops`](https://galaxy.ansible.com/debops/debops)
-- [Ansible Galaxy](https://galaxy.ansible.com/)
+- [nodiscc.toolbox](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) - less-maintained, experimental or project-specific roles (`awesome_selfhosted_html`, `docker`, `homepage_extra_icons`, `icecast`, `mariadb`, `nfs_server`, `planarally`, `proxmox`, `pulseaudio`, `reverse_ssh_tunnel`, `rocketchat`, `rss_bridge`, `valheim_server`, `znc`, `k8s`)
+- [devsec.hardening](https://github.com/dev-sec/ansible-collection-hardening) - battle tested hardening for Linux, SSH, nginx, MySQL
+- [debops.debops](https://galaxy.ansible.com/debops/debops) - general-purpose Ansible roles that can be used to manage Debian or Ubuntu hosts
+- [Ansible Galaxy](https://galaxy.ansible.com/) - help other Ansible users by sharing the awesome roles and collections you create
 
 Directory structure for a project:
 
@@ -507,6 +543,26 @@ Directory structure for a project:
 └── ansible_collections # downloaded collections
     └── nodiscc
         └── xsrv
+```
+
+### Using ansible command-line tools
+
+Ansible [command-line tools](https://docs.ansible.com/ansible/latest/command_guide/command_line_tools.html) can be used directly in projects managed by xsrv. The project's virtualenv must be activated manually:
+
+```bash
+# enter the project directory
+cd ~/playbooks/default
+# activate the virtualenv
+source .venv/bin/activate
+```
+
+```bash
+# run ansible commands directly
+ansible-playbook playbook.yml --list-tasks
+ansible-playbook playbook.yml --start-at-task 'run nextcloud upgrade command' --limit my.example.org,my2.example.org
+ansible-inventory --list --yaml
+ansible-vault encrypt_string 'very complex password'
+ansible --become --module-name file --args 'state=absent path=/var/log/syslog.8.gz' my.example.org
 ```
 
 ### Version control
@@ -542,15 +598,11 @@ You may have to restore data from last known good [backups](maintenance.md)/a sn
 
 ### Continuous deployment
 
-Projects stored in git repositories can be tied to a [Continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment) system that will perform automated checks and deployments, controlled by git operations (similar to [GitOps](https://about.gitlab.com/topics/gitops/)).
+Projects stored in [git](#version-control) repositories can be tied to a [Continuous deployment](https://en.wikipedia.org/wiki/Continuous_deployment) (CI/CD) system that will perform automated checks and deployments, controlled by git operations (similar to [GitOps](https://about.gitlab.com/topics/gitops/)).
 
-This example [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.yml) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments.
+This example [`.gitea/workflows/ci.yml`](.gitea_workflows_ci.yml) for [Gitea Actions](https://docs.gitea.com/next/usage/actions/overview) will deploy your project against specific environments/hosts/groups (optionally running the playbook in `check` mode beforehand) automatically when changes are pushed. It should also work from [Github Actions](https://docs.github.com/en/actions) since the syntax is the same. Different target hosts/groups can be specified for master and non-master branches.
 
-<!-- TODO PIPELINE SCREENSHOT -->
-
-Pipeline execution time can be optimized by building a CI image that includes preinstalled dependencies:
-- [`.gitlab-ci.Dockerfile`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.Dockerfile)
-- [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.docker.yml)
+This example [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.yml) for [Gitlab CI](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments. Pipeline execution time can be optimized by building a CI image that includes preinstalled dependencies: [`.gitlab-ci.Dockerfile`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.Dockerfile), [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.docker.yml).
 
 
 ## External links

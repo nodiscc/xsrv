@@ -6,7 +6,6 @@
     package:
       - debconf-utils
       - python3-ldap
-  check_mode: no
 
 ### DEBCONF ###
 
@@ -20,6 +19,7 @@
   with_items:
     - { question: "slapd/domain", value: "{{ openldap_domain }}" }
     - { question: "shared/organization", value: "{{ openldap_organization }}" }
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### PACKAGES ###
 

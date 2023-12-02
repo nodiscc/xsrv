@@ -27,12 +27,17 @@ MDomain {{ goaccess_fqdn }}
   RewriteRule ^.*$ - [R=503,L]
 {% else %}
   DocumentRoot /var/www/{{ goaccess_fqdn }}
-  <Location "/">
+  <Location />
     AuthType Basic
     AuthName "Authorization required"
     AuthBasicProvider file
     AuthUserFile /etc/apache2/goaccess-passwd
-    Require valid-user
+    <RequireAll>
+{% if goaccess_allowed_hosts %}
+      Require ip 127.0.0.1 {{ goaccess_allowed_hosts | join(' ') }}
+{% endif %}
+      Require valid-user
+    </RequireAll>
   </Location>
 {% endif %}
 </VirtualHost>

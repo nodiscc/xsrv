@@ -162,3 +162,17 @@
   tags:
     - never
     - utils-apt-upgrade
+
+- name: include shutdown tasks
+  import_tasks: utils-shutdown.yml
+  become: yes
+  tags:
+    - never
+    - utils-shutdown
+
+- name: include reboot tasks
+  import_tasks: utils-reboot.yml
+  become: yes
+  tags:
+    - never
+    - utils-reboot

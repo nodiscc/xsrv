@@ -1,0 +1,8 @@
+# URL of the DNS blocklist to be downloaded by /usr/local/bin/dnsmasq-update-blocklist
+BLOCKLIST_URL="{{ dnsmasq_blocklist_url }}"
+
+# blocklist mode (hosts/dnsmasq/disabled)
+BLOCKLIST_MODE={{ dnsmasq_blocklist_mode }}
+
+# space-separated list of domains to whitelist/remove from the blacklist before loading it
+WHITELIST_DOMAINS="{{ dnsmasq_blocklist_whitelist | join(' ') }}"

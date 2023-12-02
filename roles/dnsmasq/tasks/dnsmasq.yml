@@ -12,6 +12,8 @@
     mode: "0644"
   notify: restart dnsmasq
 
+##### SERVICE #####
+
 - name: enable/disable start/stop dnsmasq service
   systemd:
     name: dnsmasq
@@ -19,3 +21,6 @@
     state: "{{ 'started' if dnsmasq_enable_service else 'stopped' }}"
     daemon_reload: yes
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: apply configuration
+  meta: flush_handlers

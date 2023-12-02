@@ -27,7 +27,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.20.5"
+gitea_version: "1.21.1"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -84,7 +84,7 @@ gitea_repo_indexer_enabled: no
 gitea_repo_indexer_exclude: []
 # enable outgoing mail (yes/no)
 gitea_mailer_enabled: no
-# Mail settings below are required if gitea mailer is enabled
+# mail settings below are required if gitea_mailer_enabled: yes
 # Mail server protocol (smtp/smtps/smtp+starttls/smtp+unix/sendmail/dummy)
 gitea_mail_protocol: "smtp+starttls"
 # SMTP mail server address
@@ -93,6 +93,9 @@ gitea_mail_host: "{{ msmtp_host | default('smtp.CHANGEME.org') }}"
 gitea_mail_port: "{{ msmtp_port | default('CHANGEME') }}"
 # 'From' address used in mails sent by gitea
 gitea_mail_from: "{{ msmtp_admin_email | default('gitea-noreply@CHANGEME.org') }}"
-# Username and password for SMTP authentication
+# username and password for SMTP authentication
 gitea_mail_user: "{{ msmtp_username | default('CHANGEME') }}"
 gitea_mail_password: "{{ msmtp_password | default('CHANGEME') }}"
+# list of IP addresses allowed to access the gitea web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+gitea_allowed_hosts: []

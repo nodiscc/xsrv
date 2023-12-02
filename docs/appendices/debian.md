@@ -37,20 +37,20 @@
 
 ### Automated, from preseed file
 
-`xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be [installed](../installation/controller-preparation.md) on the machine where these commands are run.
+`xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be installed on the machine where these commands are run.
 
 The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/bookworm/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
 
 ```bash
 $ xsrv init-vm-template --help
-USAGE: ./xsrv init-vm-template [--name debian12-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers '1.1.1.1 1.0.0.1'] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $HOME/.local/share/xsrv/git/docs/preseed.cfg]
+USAGE: ./xsrv init-vm-template [--name debian12-base] --ip IP_ADDRESS [--gateway GATEWAY_IP] [--netmask 255.255.255.0] [--nameservers GATEWAY_IP] [--root-password TEMPLATE_ROOT_PASSWORD] [--sudo-user deploy] [--sudo-password SUDO_PASSWORD] [--storage-path /var/lib/libvirt/images] [--memory 1024] [--vcpus 2] [--disk-size 20] [--network default] [--preseed-file $HOME/.local/share/xsrv/git/docs/preseed.cfg]
         Initialize a libvirt VM template from official Debian netinstall image and a preseed file. This template can be reused as --template from xsrv init-vm.
         Requirements: libvirt, current user in the libvirt group
         --name          name of the VM/template to create (default debian12-base)
         --ip            REQUIRED IP address of the VM/template
         --gateway       default network gateway (default: same as IP, last octet replaced by .1)
         --netmask       network mask of the VM (default 255.255.255.0)
-        --nameservers   space-separated list of DNS nameservers (default cloudflare, '1.1.1.1 1.0.0.1')
+        --nameservers   space-separated list of DNS nameservers (default same as the gateway)
         --root-password root account password (default generate and display a random password)
         --sudo-user     admin (sudoer) user name (default deploy)
         --sudo-password admin (sudoer) password (default generate and display a random password)
