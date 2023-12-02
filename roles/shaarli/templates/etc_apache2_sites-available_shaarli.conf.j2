@@ -14,7 +14,6 @@ MDomain {{ shaarli_fqdn }}
 {% endif %}
 
 <VirtualHost *:443>
-  DocumentRoot {{ shaarli_install_dir }}
   ServerName  {{ shaarli_fqdn }}
   SSLEngine on
 {% if shaarli_https_mode == 'selfsigned' %}
