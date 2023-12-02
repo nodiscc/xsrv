@@ -64,7 +64,19 @@ RedirectMatch 404 /\.ssh
 # else than declared by the content type in the HTTP headers.
 # Requires mod_headers to be enabled.
 #
-Header always set X-Content-Type-Options "nosniff"
+#Header set X-Content-Type-Options: "nosniff"
+
+#
+# Setting this header will prevent other sites from embedding pages from this
+# site as frames. This defends against clickjacking attacks.
+# Requires mod_headers to be enabled.
+#
+#Header set Content-Security-Policy "frame-ancestors 'self';"
+
+# In addition, prevent browsers from running scripts injected form other domains
+# Disabled as each application/virtualhost should set this header according to its particular needs
+#
+#Header always set Content-Security-Policy "script-src 'self'; frame-ancestors 'self'"
 
 #
 # Some browsers have a built-in XSS filter that will detect some cross site
@@ -75,19 +87,6 @@ Header always set X-Content-Type-Options "nosniff"
 # Requires mod_headers to be enabled.
 #
 Header always set X-XSS-Protection "1; mode=block"
-
-#
-# Setting this header will prevent other sites from embedding pages
-# from this site as frames. This defends against clickjacking attacks.
-# Requires mod_headers to be enabled.
-# This is made obsolete by Content-Security-Policy frame-ancestors directive
-#
-#Header always set X-Frame-Options "sameorigin"
-
-# Prevent browsers from running scripts injected form other domains
-# Disabled as each application/virtualhost should set this header according to its particular needs
-#
-#Header always set Content-Security-Policy "script-src 'self'; frame-ancestors 'self'"
 
 #
 # Do not send HTTP referrers when following a link to a third-party domain
