@@ -284,7 +284,7 @@ You may also use [special variables](https://docs.ansible.com/ansible/latest/ref
 ```yaml
 # user account used for deployment
 ansible_user: "deploy"
-# SSH port used to contact the host if different from 22
+# SSH port used to contact the host (if different from 22)
 ansible_ssh_port: 123
 # IP/hostname used to contact the host if its inventory name is different/not resolvable
 ansible_host: 1.2.3.4
@@ -293,7 +293,7 @@ ansible_host: 1.2.3.4
 
 ### xsrv edit-vault
 
-Edit encrypted configuration variables/secrets.
+Edit encrypted configuration variables/secrets for a host.
 
 Sensitive variables such as usernames/password/credentials should not be stored as plain text in [`host_vars`](#xsrv-edit-host). Instead, store them in an encrypted file:
 
@@ -308,19 +308,17 @@ nextcloud_admin_email: "admin@example.org"
 nextcloud_db_password: "ucB77fNLX4qOoj2GhLBy"
 ```
 
-Vault files are encrypted/decrypted using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. 
+By default, Vault files are encrypted/decrypted by [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html) using the master password stored in plain text in `.ansible-vault-password`. A random strong master password is generated automatically during initial [project](#manage-projects) creation. 
 
 ```bash
 # cat ~/playbooks/default/.ansible-vault-password
 Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY
 ```
-**Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, full-disk encryption on underlying storage).
+**Keep backups of this file** and protect it appropriately (`chmod 0600 .ansible-vault-password`, full-disk encryption on underlying storage). By default this file is excluded from [Git version control](#version-control) if the project was created with [`xsrv init-project`](#xsrv-init-project).
 
 You may also place a custom script in `.ansible-vault-password`, that will fetch the master password from a secret storage/keyring of your choice (in this case the file must be made executable - `chmod +x .ansible-vault-password`).
 
-To disable reading the master password from a file/script: in the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting.
-
-See [ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html).
+To disable reading the master password from a file/script: edit the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting. You will be asked for the `sudo` password before deployment. You may also specify a diffrent path to the password file.
 
 
 ### xsrv edit-group
@@ -337,12 +335,12 @@ setup_msmtp: yes
 setup_msmtp: no
 ```
 
-Group variables have higher precedence than [default](#xsrv-show-defaults) values, but lower than [host](#xsrv-edit-host) variables.
+Group variables take priority over [default](#xsrv-show-defaults) values, but are overridden by [host](#xsrv-edit-host) variables.
 
 
 ### xsrv edit-group-vault
 
-Edit encrypted [group](#manage-hosts) configuration - similar to [`xsrv edit-vault`](#xsrv-edit-vault) but for groups.
+Edit encrypted [group](#manage-hosts) configuration - similar to [`xsrv edit-vault`](#xsrv-edit-vault), but for groups.
 
 ```yaml
 # $ xsrv edit-group-vault all
@@ -420,7 +418,7 @@ VMs created using this method can then be added to your project using [`xsrv ini
 
 ### xsrv shell
 
-Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the host name - the port and user name will be detected automatically from the host's configuration variable.
+Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the host name - the port and user name will be detected automatically from the host's [configuration variables](#manage-configuration).
 
 ```bash
 $ xsrv shell my.example.org
