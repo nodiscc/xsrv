@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+**Changed:**
+- cleanup: postgresql: standardize/simplify pgmetrics report generation
+
 **Added:**
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
 

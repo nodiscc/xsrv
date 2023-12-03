@@ -36,16 +36,19 @@
   become: yes
   become_user: postgres
   command:
-    cmd: /usr/local/bin/pgmetrics --no-password --output=/var/log/postgresql/pgmetrics.log
+    cmd: /usr/local/bin/pgmetrics --no-password
   changed_when: yes
+  register: pgmetrics_output
 
-- name: harden read permissions on pgmetrics report
-  file:
-    path: /var/log/postgresql/pgmetrics.log
-    owner: postgres
-    group: adm
+- name: write pgmetrics output to file
+  template:
+    src: var_log_postgresql_pgmetrics.log.j2
+    dest: /var/log/postgresql/pgmetrics.log
+    owner: root
+    group: root
     mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
 
 - name: download pgmetrics report to data/pgmetrics-*.log
   fetch:
