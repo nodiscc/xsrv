@@ -107,6 +107,8 @@ VM XML definitions follow the [libvirt domain XML format](https://libvirt.org/fo
 
 Note: changing VM resources (RAM/CPU) in the XML definition, and applying the role will not affect **running** VMs until they are stopped and restarted. To force the current memory values defined in XML definitions to be applied immediately, without stopping/restarting VMs, use the tag `utils-libvirt-setmem` (or SSH to the hypervisor and use [`virsh setmem --live`](https://manpages.debian.org/bookworm/libvirt-clients/virsh.1.en.html#setmem) directly). The maximum memory allocation for the VM (`<memory>` XML tag ) must already be greater than the requested/current memory (`<currentMemory>` XML tag).
 
+This role will not implement wrappers for all features of libvirt - notably, you should use [`virsh`](https://manpages.debian.org/bookworm/libvirt-clients/virsh.1.en.html) directly to edit VM XML definitions to add/remove hardware, change boot options, etc. See also The page about [libvirt/virt-manager](https://xsrv.readthedocs.io/en/latest/appendices/virt-manager.html).
+
 
 ## Tags
 
