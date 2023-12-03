@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
+- gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
 
 [Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
 
