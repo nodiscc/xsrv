@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.21.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.21.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Added:**
+- jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
+
+[Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
+
+------------------
+
 #### [v1.20.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.20.0) - 2023-12-02
 
 **Upgrade procedure:**
