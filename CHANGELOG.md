@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - cleanup: postgresql: standardize/simplify pgmetrics report generation
+- gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
 
 **Added:**
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)

@@ -21,7 +21,8 @@ gitea_actions_runner_container_network: "host"
 #   - 'host:host'
 #   - "debian-bookworm-backports:docker://debian:bookworm-backports"
 gitea_act_runner_labels:
-  - "ubuntu-latest:docker://node:16-bullseye"
+  - "debian-latest:docker://node:21-bookworm"
+  - "ubuntu-latest:docker://node:21-bookworm"
   - "ubuntu-22.04:docker://node:16-bullseye"
   - "ubuntu-20.04:docker://node:16-bullseye"
   - "ubuntu-18.04:docker://node:16-buster"
