@@ -1,7 +1,7 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
   with_items:
     - jellyfin_fqdn is not search("CHANGEME")
@@ -26,7 +26,7 @@
 - name: check that mandatory variables are correctly defined (opensubtitles plugin)
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "OpenSubtitles plugin installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
   when: jellyfin_setup_opensubtitles_plugin | bool
   with_items:

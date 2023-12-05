@@ -1,7 +1,7 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   with_items:
     - netdata_allow_connections_from is string
@@ -55,7 +55,7 @@
 - name: check that variables are correctly defined (netdata streaming API key)
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   when: (netdata_streaming_send_enabled | bool) or (netdata_streaming_receive_enabled | bool)
   with_items:
@@ -64,7 +64,7 @@
 - name: check that variables are correctly defined (netdata streaming destination)
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   when: netdata_streaming_send_enabled | bool
   with_items:

@@ -1,7 +1,7 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess"
   with_items:
     - goaccess_fqdn is not search('CHANGEME')

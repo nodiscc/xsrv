@@ -1,7 +1,7 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq"
   with_items:
     - (dnsmasq_upstream_servers|type_debug == "list") and (dnsmasq_upstream_servers|length > 0)

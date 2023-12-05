@@ -1,7 +1,7 @@
 - name: check that required variables/roles are correctly defined/enabled
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission"
   with_items:
     - transmission_download_dir is string

@@ -1,7 +1,7 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   with_items:
     - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd | bool
@@ -52,7 +52,7 @@
 - name: check that mandatory variables are correctly defined (msmtp)
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   when: setup_msmtp | bool
   with_items:
@@ -71,7 +71,7 @@
 - name: check that mandatory variables are correctly defined (msmtp authentication)
   assert:
     quiet: yes
-    that: "{{ item }}"
+    that: item
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   when:
     - setup_msmtp | bool
