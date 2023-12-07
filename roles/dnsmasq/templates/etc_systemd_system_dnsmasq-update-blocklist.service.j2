@@ -5,6 +5,7 @@ Description=Update dnsmasq blocklist
 Type=simple
 ExecStart=/usr/local/bin/dnsmasq-update-blocklist
 SyslogIdentifier=dnsmasq-update-blocklist
+After=network-online.target dnsmasq.service
 
 [Install]
 WantedBy=multi-user.target
