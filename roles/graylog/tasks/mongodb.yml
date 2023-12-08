@@ -33,6 +33,7 @@
       - mongodb-org-shell
       - mongodb-org-tools
       - python3-pymongo # required to use ansible mongodb modules
+      - python3-venv # required to install pymongo in a virtualenv
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 
