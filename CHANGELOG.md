@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - python >=3.9 is now required on the controller (ansible 9.1.0)
 - cleanup: postgresql: standardize/simplify pgmetrics report generation
 - gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
+- postgresql: explicitely install postgresql version 15
 - matrix: update element-web to v1.11.51 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
@@ -23,6 +24,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - graylog/mongodb: require authentication to connect to mongodb ([`mongodb_admin_password`, `graylog_mongodb_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml))
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
 - gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- postgresql: aggregate postgresql logs to syslog (when the `monitoring_rsyslog` role is deployed)
+
+**Removed:**
+- postgresql: drop compatibility with Debian <12
 
 **Fixed:**
 - monitoring_utils: fix lynis warning `MongoDB instance allows any user to access databases`

@@ -1,3 +1,8 @@
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  tags: postgresql
+
 - name: include postgresql configuration tasks
   import_tasks: postgresql.yml
   become: yes
@@ -9,6 +14,18 @@
   tags:
     - postgresql
     - backup
+
+- name: include rsyslog configuration tasks
+  import_tasks: rsyslog.yml
+  become: yes
+  tags:
+    - postgresql
+    - monitoring
+    - rsyslog
+  when:
+    - ansible_local.rsyslog.ansible_managed is defined
+    - ansible_local.rsyslog.ansible_managed | bool
+
 
 - name: include netdata configuration tasks
   import_tasks: netdata.yml

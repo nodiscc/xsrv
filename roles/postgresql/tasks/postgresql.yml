@@ -2,8 +2,8 @@
   apt:
     state: present
     package:
-      - postgresql
-      - postgresql-client
+      - postgresql-{{ postgresql_version }}
+      - postgresql-client-{{ postgresql_version }}
       - python3-psycopg2
 
 - name: enable/disable start/stop postgresql service
