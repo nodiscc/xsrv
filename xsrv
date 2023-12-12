@@ -596,21 +596,27 @@ init_vm_template() {
     if [[ ! -d "$xsrv_clone_dir/.git" ]]; then
         git clone -b "$xsrv_upgrade_channel" "$xsrv_git_url" "$xsrv_clone_dir"
     fi
+    echo "[xsrv] setting values in the preseed file"
+    tmp_preseed_file=$(mktemp --tmpdir preseed.XXXXX.tmp)
+    cp "$preseed_file" "$tmp_preseed_file"
+    sed -i "s/%%HOSTNAME%%/${name}/g" "$tmp_preseed_file"
+    sed -i "s/%%SUDO_USER%%/${sudo_user}/g" "$tmp_preseed_file"
+    sed -i "s/%%SUDO_PASSWORD%%/${sudo_password}/g" "$tmp_preseed_file"
+    sed -i "s/%%ROOT_PASSWORD%%/${root_password}/g" "$tmp_preseed_file"
+    sed -i "s/%%IP_ADDRESS%%/${ip}/g" "$tmp_preseed_file"
+    sed -i "s/%%GATEWAY%%/${gateway}/g" "$tmp_preseed_file"
+    sed -i "s/%%NETMASK%%/${netmask}/g" "$tmp_preseed_file"
+    sed -i "s/%%NAMESERVERS%%/${nameservers}/g" "$tmp_preseed_file"
+
     echo "[xsrv] making the preseed file available to libvirt-qemu"
-    sudo cp "$preseed_file" /var/lib/libvirt/preseed.cfg
-    sudo chmod 0660 /var/lib/libvirt/preseed.cfg # don't make it world-readable
-    sudo chown libvirt-qemu:libvirt-qemu /var/lib/libvirt/preseed.cfg
-    echo "[xsrv] setting values the preseed file"
-    sudo sed -i "s/%%HOSTNAME%%/${name}/g" /var/lib/libvirt/preseed.cfg
-    sudo sed -i "s/%%SUDO_USER%%/${sudo_user}/g" /var/lib/libvirt/preseed.cfg
-    sudo sed -i "s/%%SUDO_PASSWORD%%/${sudo_password}/g" /var/lib/libvirt/preseed.cfg
-    sudo sed -i "s/%%ROOT_PASSWORD%%/${root_password}/g" /var/lib/libvirt/preseed.cfg
-    sudo sed -i "s/%%IP_ADDRESS%%/${ip}/g" /var/lib/libvirt/preseed.cfg
-    sudo sed -i "s/%%GATEWAY%%/${gateway}/g" /var/lib/libvirt/preseed.cfg
-    sudo sed -i "s/%%NETMASK%%/${netmask}/g" /var/lib/libvirt/preseed.cfg
-    sudo sed -i "s/%%NAMESERVERS%%/${nameservers}/g" /var/lib/libvirt/preseed.cfg
+    mv "$tmp_preseed_file" /var/lib/libvirt/images/preseed.cfg
+    chmod u=rw,g=rw,o= /var/lib/libvirt/images/preseed.cfg
+    # sudo cp "$tmp_preseed_file" /var/lib/libvirt/preseed.cfg
+    # sudo chmod 0660 /var/lib/libvirt/preseed.cfg # don't make it world-readable
+    # sudo chown libvirt-qemu:libvirt-qemu /var/lib/libvirt/preseed.cfg
+
     echo "[xsrv] INFO: installing operating system using preseed to VM $name..."
-    sudo virt-install \
+    virt-install \
         --connect qemu:///system \
         --name "$name" \
         --memory "$memory" \
@@ -621,14 +627,14 @@ init_vm_template() {
         --console pty,target_type=serial \
         --location http://deb.debian.org/debian/dists/bookworm/main/installer-amd64 \
         --extra-args "console=ttyS0,115200n8 serial" \
-        --initrd-inject="/var/lib/libvirt/preseed.cfg" \
+        --initrd-inject="/var/lib/libvirt/images/preseed.cfg" \
         --network network="$network" \
         --noreboot
     reset
     echo "[xsrv] INFO: cleaning up $name..."
-    sudo rm /var/lib/libvirt/preseed.cfg
-    sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
-    sudo chmod 0660 "$storage_path/$name.qcow2"
+    rm /var/lib/libvirt/images/preseed.cfg
+    # sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
+    # sudo chmod 0660 "$storage_path/$name.qcow2"
     virt-sysprep --connect qemu:///system --domain "$name"
     echo "[xsrv] INFO password for $sudo_user: $sudo_password"
     echo "[xsrv] INFO: password for root: $root_password"
@@ -761,7 +767,7 @@ check_user_in_libvirt_groups() {
         id --name --groups --zero | grep -qzxF "$groupname" || missing_groups="$missing_groups $groupname"
     done
     if [[ "$(whoami)" != "root" && -n "$missing_groups" ]]; then
-        echo "[xsrv] ERROR: the current user is not a member of groups:$missing_groups. Please add your user to appropriate groups: sudo usermod $(whoami) -aG libvirt libvirt-qemu kvm. Logging out and in again might be needed to apply group membership changes."
+        echo "[xsrv] ERROR: the current user is not a member of groups:$missing_groups. Please add your user to appropriate groups: usermod $(whoami) -aG libvirt libvirt-qemu kvm. Logging out and in again might be needed to apply group membership changes."
         exit 1
     fi
 }
