@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: postgresql: standardize/simplify pgmetrics report generation
 - gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
 - monitoring_netdata: debsecan: whitelist a few minor issues in debsecan reports by default
+- gitea: update to v1.21.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2)
 - postgresql: explicitely install postgresql version 15
 - matrix: update element-web to v1.11.51 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
