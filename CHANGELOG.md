@@ -12,16 +12,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - To get rid of the deprecation warning `collections_paths option does not fit var naming standard`, rename `collections_paths` to `collections_path` in `ansible.cfg` (`xsrv edit-cfg`)
 - `xsrv deploy` to apply changes
 
-**Changed:**
-- python >=3.9 is now required on the controller (ansible 9.1.0)
-- cleanup: postgresql: standardize/simplify pgmetrics report generation
-- gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
-- monitoring_netdata: debsecan: whitelist a few minor issues in debsecan reports by default
-- gitea: update to v1.21.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2)
-- postgresql: explicitely install postgresql version 15
-- matrix: update element-web to v1.11.51 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51)
-- xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
-
 **Added:**
 - graylog/mongodb: require authentication to connect to mongodb ([`mongodb_admin_password`, `graylog_mongodb_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml))
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
@@ -31,6 +21,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - postgresql: drop compatibility with Debian <12
+
+**Changed:**
+- python >=3.9 is now required on the controller (ansible 9.1.0)
+- cleanup: postgresql: standardize/simplify pgmetrics report generation
+- gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
+- monitoring_netdata: debsecan: whitelist a few minor issues in debsecan reports by default
+- gitea: update to v1.21.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2)
+- postgresql: explicitely install postgresql version 15
+- matrix: update element-web to v1.11.51 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51)
+- xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
 **Fixed:**
 - monitoring_utils: fix lynis warning `MongoDB instance allows any user to access databases`
