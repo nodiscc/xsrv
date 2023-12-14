@@ -35,7 +35,7 @@
     accept_hostkey: yes
     force: yes
     umask: '022'
-  no_log: true # very verbose in diff mode
+  diff: no
   environment:
     GIT_HTTP_USER_AGENT: "Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
 # (spoof git user agent to workaround buggy rate limiting on tt-rss.org)
