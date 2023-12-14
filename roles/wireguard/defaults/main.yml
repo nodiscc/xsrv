@@ -24,3 +24,17 @@ wireguard_firewalld_zones:
     state: enabled
   - zone: internal
     state: enabled
+
+# allow wireguard clients to connect to these firewalld services/ports on the host
+# Example:
+# wireguard_firewalld_services:
+#   - name: ssh # service name
+#     state: enabled # enabled/disabled (default enabled)
+#   - name: dns
+#     state: enabled
+#   - name: http
+#   - name: https
+#   - name: netdata
+#   - name: imaps
+#     state: disabled
+wireguard_firewalld_services: []

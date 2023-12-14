@@ -8,6 +8,7 @@
     - wireguard_enable_service == wireguard_enable_service | bool
     - wireguard_peers|type_debug == 'list'
     - wireguard_firewalld_zones|type_debug == "list"
+    - +wireguard_firewalld_services|type_debug == "list"
 
 - name: check that variables are correctly defined (wireguard_peers)
   assert:
@@ -19,3 +20,13 @@
       - item.public_key | length == 44
       - item.ip_address | ansible.utils.ipaddr
   with_items: "{{ wireguard_peers }}"
+
+- name: check that variables are correctly defined (wireguard_firewalld_services)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard"
+    that:
+      - item.name is string
+      - (item.state is not defined) or (item.state in ['enabled','disabled'])
+  with_items: "{{ wireguard_firewalld_services }}"
+  tags: firewall

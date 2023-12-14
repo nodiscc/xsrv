@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
 - gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
 - postgresql: aggregate postgresql logs to syslog (when the `monitoring_rsyslog` role is deployed)
+- wireguard/firewalld: allow configuring services to which wireguard clients can connect on the host ([`wireguard_firewalld_services`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml))
 
 **Removed:**
 - postgresql: drop compatibility with Debian <12

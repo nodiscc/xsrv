@@ -45,7 +45,7 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-- name: setup firewalld rules for wireguard
+- name: setup firewalld rules for incoming wireguard connections
   ansible.posix.firewalld:
     zone: "{{ item.zone }}"
     service: wireguard
@@ -53,3 +53,13 @@
     permanent: yes
     immediate: yes
   with_items: "{{ wireguard_firewalld_zones }}"
+
+- name: setup firewalld rules for wireguard zone
+  firewalld:
+    zone: wireguard
+    state: "{{ item.state | default('enabled') }}"
+    permanent: yes
+    service: "{{ item.name }}"
+  with_items: "{{ wireguard_firewalld_services }}"
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
