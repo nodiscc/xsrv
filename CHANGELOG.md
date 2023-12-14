@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - monitoring_utils: fix lynis warning `MongoDB instance allows any user to access databases`
 - tt_rss: fix tt-rss installation failing when `git` was not previously installed
+- tt_rss: fix error on first tt-rss installation `Unsupported parameters for (postgresql_query) module: as_single_query, path_to_script.`
 
 [Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
 
