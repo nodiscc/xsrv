@@ -15,6 +15,7 @@
     update_cache: yes
     cache_valid_time: 900
     package:
+      - git
       - "php{{ tt_rss_php_fpm_version }}-common"
       - "php{{ tt_rss_php_fpm_version }}-xml"
       - "{{ php_json_package }}"
