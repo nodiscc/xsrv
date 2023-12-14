@@ -13,6 +13,7 @@
   apt:
     state: present
     package:
+      - unzip
       - "{{ php_json_package }}"
       - "php{{ shaarli_php_fpm_version }}-mbstring"
       - "php{{ shaarli_php_fpm_version }}-intl"
