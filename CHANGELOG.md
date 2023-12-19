@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_netdata: debsecan: whitelist a few minor issues in debsecan reports by default
 - gitea: update to v1.21.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2)
 - postgresql: explicitely install postgresql version 15
+- openldap: update ldap-account-manager to [v8.6](https://github.com/LDAPAccountManager/lam/releases/tag/8.6)
 - matrix: update element-web to v1.11.51 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
