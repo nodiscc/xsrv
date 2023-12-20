@@ -630,8 +630,6 @@ init_vm_template() {
     reset
     echo "[xsrv] INFO: cleaning up $name..."
     rm /var/lib/libvirt/images/preseed.cfg
-    # sudo chown root:libvirt-qemu "$storage_path/$name.qcow2"
-    # sudo chmod 0660 "$storage_path/$name.qcow2"
     virt-sysprep --connect qemu:///system --domain "$name"
     echo "[xsrv] INFO password for $sudo_user: $sudo_password"
     echo "[xsrv] INFO: password for root: $root_password"
