@@ -609,11 +609,8 @@ init_vm_template() {
     sed -i "s/%%NAMESERVERS%%/${nameservers}/g" "$tmp_preseed_file"
 
     echo "[xsrv] making the preseed file available to libvirt-qemu"
+    chmod u=rw,g=rw,o= "$tmp_preseed_file"
     mv "$tmp_preseed_file" /var/lib/libvirt/images/preseed.cfg
-    chmod u=rw,g=rw,o= /var/lib/libvirt/images/preseed.cfg
-    # sudo cp "$tmp_preseed_file" /var/lib/libvirt/preseed.cfg
-    # sudo chmod 0660 /var/lib/libvirt/preseed.cfg # don't make it world-readable
-    # sudo chown libvirt-qemu:libvirt-qemu /var/lib/libvirt/preseed.cfg
 
     echo "[xsrv] INFO: installing operating system using preseed to VM $name..."
     virt-install \
