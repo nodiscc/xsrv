@@ -73,6 +73,7 @@
 - name: create directory for client configuration files on the controller
   delegate_to: localhost
   become: no
+  changed_when: no # never return changed, git doesn't store permissions - this task will return changed every time as permissions are changed from 0755 to 0700
   file:
     state: directory
     path: "{{ playbook_dir }}/data/wireguard"
@@ -81,6 +82,7 @@
 - name: generate client configuration files on the controller
   delegate_to: localhost
   become: no
+  changed_when: no # never report as changed, these files are under .gitignore and are not shared between different controllers, this will return changed every time
   template:
     src: wireguard-client.conf.j2
     dest: "{{ playbook_dir }}/data/wireguard/wg0-{{ item.name }}.conf"

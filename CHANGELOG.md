@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - cleanup: postgresql: standardize/simplify pgmetrics report generation
 - gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
 - monitoring_netdata: debsecan: whitelist a few minor issues in debsecan reports by default
+- wireguard: never return `changed` for wireguard client configuration file generation tasks
 - gitea: update to v1.21.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2)
 - postgresql: explicitely install postgresql version 15
 - openldap: update ldap-account-manager to [v8.6](https://github.com/LDAPAccountManager/lam/releases/tag/8.6)
