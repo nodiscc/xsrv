@@ -1,9 +1,9 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: item
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli"
-  with_items:
+  loop:
     - shaarli_api_secret|length >= 12
     - shaarli_fqdn is not search("CHANGEME")
     - shaarli_https_mode in ["selfsigned", "letsencrypt"]
@@ -36,4 +36,4 @@
     fail_msg: "One or more of shaarli_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ shaarli_allowed_hosts }}"
+  loop: "{{ shaarli_allowed_hosts }}"

@@ -1,9 +1,9 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: item
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi"
-  with_items:
+  loop:
     - jitsi_fqdn is not search('CHANGEME')
     - jitsi_turn_secret is not search('CHANGEME')
     - jitsi_prosody_password is not search('CHANGEME')
@@ -26,7 +26,7 @@
     fail_msg: "One or more jitsi users are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi"
   when: jitsi_secure_domain | bool
   no_log: yes
-  with_items: "{{ jitsi_users }}"
+  loop: "{{ jitsi_users }}"
 
 - name: check that variables are correctly defined (jitsi_allowed_hosts)
   assert:
@@ -34,4 +34,4 @@
     fail_msg: "One or more of jitsi_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ jitsi_allowed_hosts }}"
+  loop: "{{ jitsi_allowed_hosts }}"

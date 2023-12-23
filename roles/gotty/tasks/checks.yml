@@ -1,9 +1,9 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: item
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty"
-  with_items:
+  loop:
     - gotty_fqdn is not search("CHANGEME")
     - gotty_auth_username is not search("CHANGEME")
     - gotty_auth_password is not search("CHANGEME")
@@ -26,4 +26,4 @@
     fail_msg: "One or more of gotty_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ gotty_allowed_hosts }}"
+  loop: "{{ gotty_allowed_hosts }}"

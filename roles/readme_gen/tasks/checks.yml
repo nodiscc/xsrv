@@ -1,9 +1,9 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: item
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble"
-  with_items:
+  loop:
     - readme_gen_netdata_badges | type_debug == "list"
     - readme_gen_gtk_bookmarks == readme_gen_gtk_bookmarks | bool
 
@@ -15,4 +15,4 @@
       - item.alarm is string
       - (item.label is not defined) or (item.label is string)
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
-  with_items: "{{ readme_gen_netdata_badges }}"
+  loop: "{{ readme_gen_netdata_badges }}"

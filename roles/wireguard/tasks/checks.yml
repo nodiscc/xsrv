@@ -1,9 +1,9 @@
 - name: check that mandatory variables are correctly defined
   assert:
     quiet: yes
-    that: item
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard"
-  with_items:
+  loop:
     - wireguard_server_public_ip == wireguard_server_public_ip | ansible.utils.ipaddr('address')
     - wireguard_enable_service == wireguard_enable_service | bool
     - wireguard_peers|type_debug == 'list'
@@ -19,7 +19,7 @@
       - item.public_key | b64decode
       - item.public_key | length == 44
       - item.ip_address | ansible.utils.ipaddr
-  with_items: "{{ wireguard_peers }}"
+  loop: "{{ wireguard_peers }}"
 
 - name: check that variables are correctly defined (wireguard_firewalld_services)
   assert:
@@ -28,5 +28,5 @@
     that:
       - item.name is string
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
-  with_items: "{{ wireguard_firewalld_services }}"
+  loop: "{{ wireguard_firewalld_services }}"
   tags: firewall

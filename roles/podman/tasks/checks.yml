@@ -1,7 +1,7 @@
 - name: check that docker role is not deployed
   assert:
     quiet: yes
-    that: item
+    that: "{{ item }}"
     fail_msg: "Docker must be removed before installing podman. Please check https:/gitlab.com/nodiscc/xsrv/-/tree/1.17.0r/roles/docker#uninstallation"
-  with_items:
+  loop:
     - ansible_local.docker.ansible_managed is not defined

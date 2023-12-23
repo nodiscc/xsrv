@@ -1,9 +1,9 @@
 - name: check that required variables/roles are correctly defined/enabled
   assert:
     quiet: yes
-    that: item
+    that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission"
-  with_items:
+  loop:
     - transmission_download_dir is string
     - transmission_enable_service == transmission_enable_service | bool
     - transmission_fqdn is not search("CHANGEME")
@@ -21,4 +21,4 @@
     fail_msg: "One or more of transmission_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ transmission_allowed_hosts }}"
+  loop: "{{ transmission_allowed_hosts }}"
