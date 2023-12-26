@@ -67,7 +67,7 @@
   import_tasks: rsyslog.yml
   become: yes
   tags:
-    - gotty
+    - gitea
     - monitoring
     - rsyslog
   when:
@@ -78,7 +78,7 @@
   import_tasks: netdata.yml
   become: yes
   tags:
-    - gotty
+    - gitea
     - monitoring
     - netdata
   when:
