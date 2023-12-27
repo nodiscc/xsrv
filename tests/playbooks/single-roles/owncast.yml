@@ -1,0 +1,4 @@
+- hosts: my.example.test
+  roles:
+    - nodiscc.xsrv.podman
+    - nodiscc.xsrv.owncast
