@@ -7,12 +7,18 @@
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </VirtualHost>
 
+{% if owncast_https_mode == 'letsencrypt' %}
+MDomain {{ owncast_fqdn }}
+{% endif %}
+
 <VirtualHost *:443>
   DocumentRoot /var/www/html
   ServerName  {{ owncast_fqdn }}
   SSLEngine on
+{% if owncast_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ owncast_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ owncast_fqdn }}.key
+{% endif %}
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
   ProxyPass        / http://127.0.0.1:10081/

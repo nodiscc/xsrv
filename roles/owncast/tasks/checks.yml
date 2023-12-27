@@ -9,3 +9,4 @@
     - owncast_firewalld_zones | type_debug == "list"
     - owncast_enable_service == owncast_enable_service | bool
     - owncast_image is string
+    - owncast_https_mode in ['selfsigned', 'letsencrypt']
