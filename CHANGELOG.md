@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
+- add [`owncast`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast) role role (live video streaming and chat server)
 - graylog/mongodb: require authentication to connect to mongodb ([`mongodb_admin_password`, `graylog_mongodb_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml))
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
 - gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))

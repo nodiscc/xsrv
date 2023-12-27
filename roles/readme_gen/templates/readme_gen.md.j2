@@ -40,6 +40,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['jellyfin']['fqdn'] is defined %}
 - Jellyfin: https://{{ hostvars[item]['ansible_facts']['ansible_local']['jellyfin']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['owncast']['fqdn'] is defined %}
+- Owncast: https://{{ hostvars[item]['ansible_facts']['ansible_local']['owncast']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] is defined %}
 - LDAP Account Manager: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] }}
 {% endif %}

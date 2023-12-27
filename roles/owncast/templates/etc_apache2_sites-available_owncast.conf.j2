@@ -1,0 +1,24 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    ServerName {{ owncast_fqdn }}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+<VirtualHost *:443>
+  DocumentRoot /var/www/html
+  ServerName  {{ owncast_fqdn }}
+  SSLEngine on
+  SSLCertificateFile /etc/ssl/certs/{{ owncast_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ owncast_fqdn }}.key
+  RequestHeader set X-Forwarded-Proto "https"
+  ProxyPreserveHost On
+  ProxyPass        / http://127.0.0.1:10081/
+  ProxyPassReverse / http://127.0.0.1:10081/
+  RewriteEngine On
+  RewriteCond %{HTTP:UPGRADE} ^WebSocket$           [NC,OR]
+  RewriteCond %{HTTP:CONNECTION} ^Upgrade$          [NC]
+  RewriteRule .* ws://127.0.0.1:8080%{REQUEST_URI}  [P,QSA,L]
+</VirtualHost>

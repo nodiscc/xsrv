@@ -87,3 +87,6 @@ matrix_synapse_macaroon_secret_key: "CHANGEME25"
 
 #### GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
 goaccess_fqdn: "goaccess.CHANGEME.org"
+
+#### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
+owncast_admin_password: "{{ xsrv_admin_password }}"

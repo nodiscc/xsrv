@@ -1,0 +1,11 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast"
+  loop:
+    - owncast_fqdn is not search('CHANGEME')
+    - owncast_admin_password is not search('CHANGEME')
+    - owncast_firewalld_zones | type_debug == "list"
+    - owncast_enable_service == owncast_enable_service | bool
+    - owncast_image is string

@@ -1788,6 +1788,29 @@ self_service_password_php_upload_max_filesize: '2M'
 ```
 
 
+## owncast
+
+[roles/owncast/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml)
+
+```yaml
+# Fully Qualified Domain Name for the owncast instance
+owncast_fqdn: "owncast.CHANGEME.org"
+# the owncast OCI image to pull
+owncast_image: "docker.io/owncast/owncast:latest"
+# password to access the admin interfaces at /admin (username admin)
+owncast_admin_password: "CHANGEME"
+# start/stop the gitea service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+owncast_enable_service: yes
+# firewall zones for the owncast RTMP stream ingestion service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+owncast_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: enabled
+```
+
+
 ## postgresql
 
 [roles/postgresql/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/postgresql/defaults/main.yml)

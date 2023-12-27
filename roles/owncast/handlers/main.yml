@@ -1,0 +1,15 @@
+- name: reload systemd unit files (owncast)
+  become: yes
+  become_user: owncast
+  systemd:
+    daemon_reload: yes
+    scope: user
+
+- name: restart owncast service
+  become: yes
+  become_user: owncast
+  systemd:
+    name: container-owncast.service
+    scope: user
+    state: restarted
+  when: owncast_enable_service | bool

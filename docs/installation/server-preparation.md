@@ -46,6 +46,7 @@ Graylog TCP input:               TCP 5140
 Dovecot IMAP server:             TCP 993
 Wireguard VPN server:            UDP 51820
 Jitsi videoconferencing server:  UDP 10000
+Owncast RTMP stream ingestion:   TCP 1935
 ```
 
 
@@ -84,6 +85,7 @@ logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
 imap.CHANGEME.org # mail_dovecot
 goaccess.CHANGEME.org # goaccess
+livestream.CHANGEME.org # owncast
 ```
 
 ### External SMTP server
