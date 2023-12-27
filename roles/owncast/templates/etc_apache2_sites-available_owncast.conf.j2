@@ -19,6 +19,13 @@ MDomain {{ owncast_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ owncast_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ owncast_fqdn }}.key
 {% endif %}
+{% if not owncast_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
   ProxyPass        / http://127.0.0.1:10081/
@@ -27,4 +34,5 @@ MDomain {{ owncast_fqdn }}
   RewriteCond %{HTTP:UPGRADE} ^WebSocket$           [NC,OR]
   RewriteCond %{HTTP:CONNECTION} ^Upgrade$          [NC]
   RewriteRule .* ws://127.0.0.1:8080%{REQUEST_URI}  [P,QSA,L]
+{% endif %}
 </VirtualHost>
