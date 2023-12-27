@@ -1,3 +1,14 @@
 - hosts: my.example.test
+  tasks:
+    - name: create base /var/www directory
+      become: yes
+      file:
+        path: /var/www
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+- hosts: my.example.test
   roles:
     - nodiscc.xsrv.shaarli
