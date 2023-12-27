@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
 **Fixed:**
+- default playbook: fix `goaccess_username/password/fqdn` variables not being added to the correct file (username/password belong to encrypted variables)
 - monitoring_utils: fix lynis warning `MongoDB instance allows any user to access databases`
 - tt_rss: fix tt-rss installation failing when `git` was not previously installed
 - tt_rss: fix error on first tt-rss installation `Unsupported parameters for (postgresql_query) module: as_single_query, path_to_script.`

@@ -70,8 +70,7 @@ matrix_synapse_fqdn: "matrix.CHANGEME.org"
 matrix_element_fqdn: "chat.CHANGEME.org"
 
 #### GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
-goaccess_username: "CHANGEME"
-goaccess_password: "CHANGEME"
+goaccess_fqdn: "goaccess.CHANGEME.org"
 
 #### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
 owncast_fqdn: "livestream.CHANGEME.org"
