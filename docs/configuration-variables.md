@@ -1807,6 +1807,10 @@ owncast_fqdn: "owncast.CHANGEME.org"
 owncast_image: "docker.io/owncast/owncast:latest"
 # password to access the admin interfaces at /admin (username admin)
 owncast_admin_password: "CHANGEME"
+# HTTPS and SSL/TLS certificate mode for the owncast webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+owncast_https_mode: "selfsigned"
 # start/stop the gitea service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 owncast_enable_service: yes
 # firewall zones for the owncast RTMP stream ingestion service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
@@ -1816,6 +1820,9 @@ owncast_firewalld_zones:
     state: enabled
   - zone: public
     state: enabled
+# list of IP addresses allowed to access the owncast web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+owncast_allowed_hosts: []
 ```
 
 
