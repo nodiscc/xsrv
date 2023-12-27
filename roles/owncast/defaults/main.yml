@@ -17,3 +17,6 @@ owncast_firewalld_zones:
     state: enabled
   - zone: public
     state: enabled
+# list of IP addresses allowed to access the owncast web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+owncast_allowed_hosts: []

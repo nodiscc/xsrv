@@ -35,4 +35,9 @@ MDomain {{ owncast_fqdn }}
   RewriteCond %{HTTP:CONNECTION} ^Upgrade$          [NC]
   RewriteRule .* ws://127.0.0.1:8080%{REQUEST_URI}  [P,QSA,L]
 {% endif %}
+{% if owncast_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ owncast_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
 </VirtualHost>

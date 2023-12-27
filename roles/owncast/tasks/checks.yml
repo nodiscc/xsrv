@@ -10,3 +10,12 @@
     - owncast_enable_service == owncast_enable_service | bool
     - owncast_image is string
     - owncast_https_mode in ['selfsigned', 'letsencrypt']
+    - owncast_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (owncast_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of owncast_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast"
+    that:
+      - item | ansible.utils.ipv4
+  loop: "{{ owncast_allowed_hosts }}"
