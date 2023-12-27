@@ -603,10 +603,8 @@ dnsmasq_blocklist_whitelist: []
 gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org') }}" # TODO rename to _domain
 # inventory hostname of the gitea host to register the runner on (if different from the runner host)
 # gitea_act_runner_gitea_instance_hostname: "CHANGEME"
-# act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
-gitea_act_runner_version: "0.2.6"
-# start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
-gitea_act_runner_enable_service: yes
+# how many tasks the runner can execute concurrently at the same time (integer)
+gitea_act_runner_capacity: 1
 # container engine to use (docker/podman)
 gitea_act_runner_container_engine: "podman"
 # network to which the containers managed by act-runner will connect (host/bridge/custom)
@@ -621,10 +619,15 @@ gitea_actions_runner_container_network: "host"
 #   - 'host:host'
 #   - "debian-bookworm-backports:docker://debian:bookworm-backports"
 gitea_act_runner_labels:
-  - "ubuntu-latest:docker://node:16-bullseye"
+  - "debian-latest:docker://node:21-bookworm"
+  - "ubuntu-latest:docker://node:21-bookworm"
   - "ubuntu-22.04:docker://node:16-bullseye"
   - "ubuntu-20.04:docker://node:16-bullseye"
   - "ubuntu-18.04:docker://node:16-buster"
+# act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
+gitea_act_runner_version: "0.2.6"
+# start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
+gitea_act_runner_enable_service: yes
 ```
 
 
@@ -662,7 +665,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.21.1"
+gitea_version: "1.21.3"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -790,6 +793,10 @@ graylog_fqdn: "logs.CHANGEME.org"
 graylog_root_username: "CHANGEME"
 graylog_root_password: "CHANGEME20"
 graylog_secret_key: "CHANGEME96"
+# password for the mongodb admin user
+mongodb_admin_password: "CHANGEME20"
+# password for the mongodb graylog user
+graylog_mongodb_password: "CHANGEME20"
 # timezone of the graylog admin user, from https://www.joda.org/joda-time/timezones.html
 graylog_root_timezone: "UTC"
 # HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
@@ -1196,7 +1203,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.50"
+matrix_element_version: "1.11.52"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1437,7 +1444,8 @@ debsecan_enable_reports: yes
 # Example:
 # debsecan_whitelist:
 #   - CVE-2021-20316 # not applicable, SMBv1 disabled
-debsecan_whitelist: []
+debsecan_whitelist:
+  - CVE-2023-28450 # minor issue https://security-tracker.debian.org/tracker/CVE-2023-28450
 # setup monitoring of pending package upgrades (yes/no)
 setup_netdata_apt: yes
 ```
@@ -1578,7 +1586,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "27.1.4"
+nextcloud_version: "28.0.1"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1721,7 +1729,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.5"
+ldap_account_manager_version: "8.6"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -2141,5 +2149,19 @@ wireguard_firewalld_zones:
     state: enabled
   - zone: internal
     state: enabled
+
+# allow wireguard clients to connect to these firewalld services/ports on the host
+# Example:
+# wireguard_firewalld_services:
+#   - name: ssh # service name
+#     state: enabled # enabled/disabled (default enabled)
+#   - name: dns
+#     state: enabled
+#   - name: http
+#   - name: https
+#   - name: netdata
+#   - name: imaps
+#     state: disabled
+wireguard_firewalld_services: []
 ```
 <!--END ROLES LIST-->

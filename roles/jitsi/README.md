@@ -70,6 +70,7 @@ There is no data worth backing up.
 ```
 jitsi - setup jitsi videoconferencing server
 jitsi-users - setup jitsi registered users
+utils-jitsi-listusers - (manual) list jitsi (prosody) registered users
 ```
 <!--END TAGS LIST-->
 

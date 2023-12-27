@@ -303,6 +303,7 @@ sudo systemctl restart rsyslog
 <!--BEGIN TAGS LIST-->
 ```
 graylog - setup graylog log analyzer
+mongodb - setup mongodb database
 ```
 <!--END TAGS LIST-->
 
