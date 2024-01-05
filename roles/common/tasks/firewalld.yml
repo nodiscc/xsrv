@@ -34,16 +34,6 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-- name: configure firewalld ipsets
-  template:
-    src: etc_firewalld_ipsets_badips.xml.j2
-    dest: /etc/firewalld/ipsets/badips.xml
-    owner: root
-    group: root
-    mode: "0600"
-  notify: reload firewalld
-  ignore_errors: "{{ ansible_check_mode }}"
-
 - name: create/delete firewall zones
   firewalld:
     zone: "{{ item.zone }}"
@@ -85,6 +75,48 @@
   firewalld: "{{ item }}" # noqa args[module] # false positive
   with_items: "{{ firewalld }}"
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+#### BLOCKLIST ####
+
+- name: create firewalld blocklist zone
+  firewalld:
+    zone: blocklist
+    state: present
+    target: DROP
+    permanent: yes
+    immediate: no
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: reload firewalld
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: configure firewalld blocklist
+  template:
+    src: etc_firewalld_ipsets_blocklist.xml.j2
+    dest: /etc/firewalld/ipsets/blocklist.xml
+    owner: root
+    group: root
+    mode: "0600"
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure firewalld blocklist zone
+  firewalld:
+    zone: blocklist
+    state: enabled
+    permanent: yes
+    immediate:  no
+    ipset: blocklist
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: reload firewalld
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
 
 #### SERVICE #####
 
