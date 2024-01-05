@@ -278,8 +278,10 @@ firewalld_zone_services:
     services:
       - dhcpv6-client # remove dhcpv6-client rule from the default public zone
     state: disabled
-
-firewalld_bad_ips:
+# list of IP addresses/networks to block globally
+# this is equivalent to adding addresses to the 'sources' list of the 'drop' zone, but may be faster since it uses ipsets
+# be careful not to add your own address to this list as it will lock you out
+firewalld_blocklist:
   - 222.168.30.19
   - 176.111.173.193
   - 83.97.73.83

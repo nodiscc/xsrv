@@ -23,7 +23,7 @@
     - setup_hosts_file == setup_hosts_file | bool
     - setup_firewall == setup_firewall | bool
     - firewalld | type_debug == "list"
-    - firewalld_bad_ips | type_debug == "list"
+    - firewalld_blocklist | type_debug == "list"
     - setup_fail2ban == setup_fail2ban | bool
     - setup_msmtp == setup_msmtp | bool
     - setup_ssh == setup_ssh | bool
@@ -107,12 +107,12 @@
     - apt
     - apt-listbugs
 
-- name: check that variables are correctly defined (firewalld_bad_ips)
+- name: check that variables are correctly defined (firewalld_blocklist)
   assert:
     quiet: yes
-    that: "{{ item | ansible.utils.ipv4 }}"
-    fail_msg: "items in the firewalld_bad_ips list must be valid IPv4 addresses/networks"
-  with_items: "{{ firewalld_bad_ips }}"
+    that: item | ansible.utils.ipv4
+    fail_msg: "items in the firewalld_blocklist list must be valid IPv4 addresses/networks"
+  with_items: "{{ firewalld_blocklist }}"
   tags: firewall
 
 - name: check that variables are correctly defined (firewalld_zone_sources)
