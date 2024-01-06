@@ -1,0 +1,75 @@
+#!/bin/bash
+# Description: generate wireguard wg0.conf
+set -o errexit
+set -o nounset
+
+##### WG0.CONF GENERATION #####
+
+wg0_conf_md5sum_before=0
+if [[ -f /etc/wireguard/wg0.conf ]]; then
+    wg0_conf_md5sum_before=$(md5sum /etc/wireguard/wg0.conf)
+fi
+
+echo "[Interface]
+Address = {{ wireguard_server_ip }}
+PrivateKey = {{ wireguard_server_private_key.content | b64decode }}
+ListenPort = 51820
+" > /etc/wireguard/wg0.conf.tmp
+
+{% for peer in wireguard_peers %}
+{% if peer.state is not defined or peer.state == "present" %}
+echo "[Peer]
+# Peer: {{ peer.name }}
+{% if peer.public_key is defined %}
+PublicKey = {{ peer.public_key }}
+{% else %}
+PublicKey = $(cat /etc/wireguard/peers/{{ peer.name }}.pub)
+{% endif %}
+AllowedIPs = {{ peer.ip_address }}
+" >> /etc/wireguard/wg0.conf.tmp
+{% endif %}
+{% endfor %}
+
+mv -f /etc/wireguard/wg0.conf.tmp /etc/wireguard/wg0.conf
+wg0_conf_md5sum_after=$(md5sum /etc/wireguard/wg0.conf)
+if [[ "$wg0_conf_md5sum_before" == "$wg0_conf_md5sum_after" ]]; then
+    echo "wg0.conf unchanged"
+else
+    echo "wg0.conf changed"
+fi
+
+
+# TODO create client configuration files from this script, remove etc_wireguard_peers_client.conf.j2
+
+##### CLIENT CONFIG FILES GENERATION #####
+
+{% for peer in wireguard_peers %}
+client_config_path="/etc/wireguard/peers/{{ peer.name }}.conf"
+{% if peer.state is not defined or peer.state == "present" %}
+echo "
+# Wireguard VPN client configuration file
+# To setup your wireguard client:
+{% if peer.public_key is defined %}
+#   - Edit this file and set PrivateKey to the contents of wireguard.key
+{% endif %}
+#   - Using network-manager (Linux): save the file as wg0.conf; run `nmcli connection import type wireguard file wg0.conf`
+#   - OR manually (Linux): run `sudo mkdir -p /etc/wireguard && sudo cp wg0-{{ peer.name }}.conf /etc/wireguard/wg0.conf && sudo wg-quick up wg0`
+#   - Verify that the traffic is correctly routed through the VPN by visiting https://ifconfig.me/ or running ip route get DESTINATION_IP
+[Interface]
+# Peer: {{ peer.name }}
+Address = {{ peer.ip_address }}
+{% if peer.public_key is defined %}
+PrivateKey = CHANGEME
+{% else %}
+PrivateKey = $(cat /etc/wireguard/peers/private/{{ peer.name }}.key)
+{% endif %}
+DNS = {{ wireguard_server_ip | ansible.utils.ipaddr('address') }}
+
+[Peer]
+PublicKey = {{ wireguard_server_public_key.content | b64decode }}
+Endpoint = {{ wireguard_server_public_ip }}:51820
+AllowedIPs = {{ peer.routes | default('0.0.0.0/0') }}
+PersistentKeepalive = 45
+" >> "$client_config_path"
+{% endif %}
+{% endfor %}
