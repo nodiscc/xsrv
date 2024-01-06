@@ -48,27 +48,45 @@
 #     msg: "{{ wireguard_server_private_key.content | b64decode }}"
 #   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: generate wireguard peers private keys
-  shell: "wg genkey > /etc/wireguard/peers/private/{{ item.name }}.key"
+- name: generate wireguard peers keys
+  shell: "set -o pipefail && wg genkey | (umask 0077 && tee /etc/wireguard/peers/private/{{ item.name }}.key) | wg pubkey > /etc/wireguard/peers/{{ item.name }}.pub"
   args:
     creates: "/etc/wireguard/peers/private/{{ item.name }}.key"
-  with_items: "{{ wireguard_peers }}"
-  when: (item.state is not defined) or (item.state == 'present')
-
-- name: generate wireguard peers public keys
-  shell: "set -o pipefail && cat /etc/wireguard/peers/private/{{ item.name }}.key | wg pubkey > /etc/wireguard/peers/{{ item.name }}.pub"
-  args:
-    creates: "/etc/wireguard/peers/{{ item.name }}.pub"
     executable: /bin/bash
   with_items: "{{ wireguard_peers }}"
-  when: (item.state is not defined) or (item.state == 'present')
+  when: (item.public_key is not defined) and (item.state is not defined or item.state == "present")
 
-- name: delete wireguard peers keys
+- name: delete wireguard peers keys/configuration files
   file:
     state: absent
-    path: /etc/wireguard/peers/{{ item.name }}.pub
-  with_items: "{{ wireguard_peers }}"
-  when: (item.state is defined) and (item.state == 'absent')
+    path: "{{ item[1] }}"
+  when: (item[0].state is defined) and (item[0].state == "absent")
+  with_nested:
+    - "{{ wireguard_peers }}"
+    - ['/etc/wireguard/peers/{{ item.name }}.pub', '/etc/wireguard/peers/private/{{ item.name }}.key', '/etc/wireguard/peers/{{ item.name }}.conf']
+
+### CONFIGURATION ###
+
+- name: copy wireguard server config generation script
+  template:
+    src: usr_local_bin_wireguard-update-config.j2
+    dest: /usr/local/bin/wireguard-update-config # TODO load config from file in /etc
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: run wireguard server config generation script
+  command:
+    cmd: /usr/local/bin/wireguard-update-config
+  register: wireguard_config
+  changed_when: '"wg0.conf changed" in wireguard_config.stdout'
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: reload wireguard configuration
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+### CLIENT CONFIGURATION FILES ###
 
 - name: create directory for client configuration files on the controller
   delegate_to: localhost
@@ -79,32 +97,22 @@
     path: "{{ playbook_dir }}/data/wireguard"
     mode: "0700"
 
-- name: generate client configuration files on the controller
-  delegate_to: localhost
-  become: no
-  changed_when: no # never report as changed, these files are under .gitignore and are not shared between different controllers, this will return changed every time
-  template:
-    src: wireguard-client.conf.j2
-    dest: "{{ playbook_dir }}/data/wireguard/wg0-{{ item.name }}.conf"
+- name: download generated client configuration files
+  fetch:
+    src: "/etc/wireguard/peers/{{ item.name }}.conf"
+    dest: "{{ playbook_dir }}/data/wireguard/{{ inventory_hostname }}-wireguard-{{ item.name }}.conf"
+    flat: yes
     mode: "0600"
   with_items: "{{ wireguard_peers }}"
-  when: (item.state is not defined) or (item.state == 'present')
+  diff: no # don't show diffs, files contain sensitive private key
+  when: (item.public_key is not defined) and (item.state is not defined or item.state == "present")
+  ignore_errors: "{{ ansible_check_mode }}"
+  changed_when: no # never report as changed, these files are under .gitignore and are not shared between different controllers, this will return changed every time
 
 - name: show information about sending configuration files to clients
   debug:
-    msg: "Please provide VPN clients with their client configuration file which was generated in {{ playbook_dir }}/data/wireguard/"
+    msg: "Please provide VPN clients with their client configuration files which were generated in {{ playbook_dir }}/data/wireguard/"
 
-### CONFIGURATION ###
-
-- name: copy wireguard server configuration
-  template:
-    src: etc_wireguard_wg0.conf.j2
-    dest: /etc/wireguard/wg0.conf
-    owner: root
-    group: root
-    mode: "0600"
-  ignore_errors: "{{ ansible_check_mode }}"
-  notify: reload wireguard configuration
 
 ### SERVICE ###
 
