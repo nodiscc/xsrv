@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: update ldap-account-manager to [v8.6](https://github.com/LDAPAccountManager/lam/releases/tag/8.6)
 - matrix: update element-web to v1.11.52 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+- monitoring_goaccess: update [IP to Country](https://db-ip.com/db/download/ip-to-country-lite) database to v2024-01
 
 **Fixed:**
 - default playbook: fix `goaccess_username/password/fqdn` variables not being added to the correct file (username/password belong to encrypted variables)
