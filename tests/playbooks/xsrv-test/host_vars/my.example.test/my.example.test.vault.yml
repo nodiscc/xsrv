@@ -50,6 +50,7 @@ openldap_bind_password: "R2FPSgjrG8YEL77lUtwlZaJvBZ5WD5"
 graylog_root_username: "{{ xsrv_admin_username }}"
 graylog_root_password: "{{ xsrv_admin_password }}"
 graylog_secret_key: "vuVCF8pxoX2NYX9V37MVsMAaLS32UrlQluDwm3FfPl8NBEXNysbf2MviDIX7xm1tna9Y4mdAFy8mX2q5lpEc7jv4e8WI4roI"
+mongodb_admin_password: "X7Hv5r5bc99HV5bUeTZQ"
 #### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_auth_username: "ROLyT4HAUjyLejZSkmnV"
 gotty_auth_password: "OvbvaXDvQ2KUzNb7qSS6"
