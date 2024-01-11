@@ -506,6 +506,8 @@ Include the collection and roles in your playbooks:
    - ...
 ```
 
+Note that `xsrv` roles may require a minimum ansible versino, specified in [`meta/runtime.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/meta/runtime.yml)
+
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
 Other collections:
