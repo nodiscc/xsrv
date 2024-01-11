@@ -27,6 +27,7 @@ shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 o|open [project]                    open the project directory in the default file manager
 readme-gen [project]                generate a markdown inventory in the project's README.md
+nmap [project]                      run a nmap scan against hosts in the project
 show-defaults [project] [role]      show all variables and their default values
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
@@ -629,6 +630,12 @@ readme_gen() {
     (cd "$project_dir" && ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --extra-vars="xsrv_project_name=$project_name" --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost)
 }
 
+nmap() {
+    # run nmap against hosts in the project and generate a HTML report
+    # see https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap
+    (cd "$project_dir" && ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --ask-become-pass --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.nmap" localhost)
+}
+
 ########## INTERNAL HELPERS ##########
 
 _get_host_var() {
@@ -765,6 +772,7 @@ _main() {
         "fetch-backups") init_venv; shift; fetch_backups ;;
         "upgrade") init_venv; shift; upgrade_roles ;;
         "readme-gen") init_venv; shift; readme_gen "$@";;
+        "nmap") init_venv; shift; nmap "$@";;
         "show-defaults") shift; show_defaults "$@";;
         "self-upgrade") self_upgrade;;
         "init-vm") init_vm "$@";;

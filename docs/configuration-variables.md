@@ -1687,6 +1687,18 @@ nextcloud_enable_service: yes
 ```
 
 
+## nmap
+
+[roles/nmap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nmap/defaults/main.yml)
+
+```yaml
+##### NMAP NETWORK SCANNER #####
+# the set of hosts to scan
+# Example: nmap_limit: ['host1.CHANGEME.org', 'host2.CHANGEME.org']
+nmap_limit: "{{ groups['all'] }}"
+```
+
+
 ## openldap
 
 [roles/openldap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml)

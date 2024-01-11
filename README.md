@@ -43,6 +43,7 @@ This project provides:
 - [monitoring_utils](roles/monitoring_utils) - Various monitoring and audit utilities
 - [mumble](roles/mumble) - Low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
+- [nmap](roles/nmap) - run nmap network scanner against hosts in the inventory
 - [openldap](roles/openldap) - LDAP directory server and web management tools
 - [owncast](roles/owncast) - Decentralized, single user live video streaming and chat server
 - [podman](roles/podman) - OCI container engine and management tools
@@ -74,6 +75,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](roles/monitoring_goaccess)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](roles/owncast)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](roles/nmap)
 
 
 ## Source code

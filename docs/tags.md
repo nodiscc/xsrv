@@ -60,6 +60,7 @@ netdata - setup netdata monitoring system
 nextcloud-applications - setup nextcloud applications
 nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
+nmap - run nmap network scanner against managed hosts
 openldap - setup LDAP server
 owncast - setup owncast live streaming server
 packages - additional package istallation/removal

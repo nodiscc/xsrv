@@ -1,0 +1,19 @@
+# @tag nmap - run nmap network scanner against managed hosts
+
+galaxy_info:
+  role_name: nmap
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "run nmap network scanner against hosts in the inventory"
+  license: "GPL-3.0"
+  min_ansible_version: 2.12
+  platforms: # should work on all platforms/distributions
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - nmap
+    - scanner
+    - network
+    - pentest
+    - audit
+dependencies: []

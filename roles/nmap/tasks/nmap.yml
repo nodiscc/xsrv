@@ -1,0 +1,9 @@
+- name: install nmap
+  apt:
+    package: nmap
+    state: present
+
+- name: run nmap against all hosts
+  command:
+    cmd: "nmap -v -sS -T4 -A -sC -p1-65535 -oX {{ playbook_dir }}/data/nmap.xml --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl {{ nmap_limit | join(' ') }}"
+  changed_when: yes
