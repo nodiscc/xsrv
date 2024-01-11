@@ -82,6 +82,7 @@
     name: pymongo>4.0,<5.0
     virtualenv: /var/lib/mongodb/.venv
     virtualenv_command: "python3 -m venv"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # run as the mongodb user so that python3 modules installed from pip as mongodb are not run by root
 - name: create mongodb admin user

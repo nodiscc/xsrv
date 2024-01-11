@@ -36,6 +36,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.52 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 - monitoring_goaccess: update [IP to Country](https://db-ip.com/db/download/ip-to-country-lite) database to v2024-01
+- improve check mode support before first actual deployment
+- update documentation
 
 **Fixed:**
 - default playbook: fix `goaccess_username/password/fqdn` variables not being added to the correct file (username/password belong to encrypted variables)
