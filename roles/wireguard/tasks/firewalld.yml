@@ -23,6 +23,7 @@
     source: "{{ wireguard_server_ip }}"
     state: enabled
     permanent: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable masquerade on firewalld public zone
   firewalld:
@@ -30,6 +31,7 @@
     state: enabled
     permanent: yes
     zone: public
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy wireguard firewalld service definition
   template:
