@@ -73,3 +73,5 @@ matrix_synapse_admin_password: "{{ xsrv_admin_password }}"
 ##### MONITORING_GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
 goaccess_username: "{{ xsrv_admin_username }}"
 goaccess_password: "{{ xsrv_admin_password }}"
+##### ONWCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
+owncast_admin_password: "{{ xsrv_admin_password }}"
