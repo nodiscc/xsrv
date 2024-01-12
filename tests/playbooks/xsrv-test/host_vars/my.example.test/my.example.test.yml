@@ -58,3 +58,5 @@ apache_reverseproxies:
     extra_directives: ['ProxyPreserveHost Off']
 ##### MONITORING_GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
 goaccess_fqdn: "goaccess.example.test"
+##### ONWCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
+owncast_fqdn: "livestream.example.test"
