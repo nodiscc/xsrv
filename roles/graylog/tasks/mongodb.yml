@@ -89,14 +89,17 @@
   become: yes
   become_user: mongodb
   mongodb_user:
+    login_user: admin
+    login_password: "{{ mongodb_admin_password }}"
     login_port: "27017"
     database: "admin"
     name: "admin"
     password: "{{ mongodb_admin_password }}"
+    update_password: on_create
     roles:
       - { db: "admin", role: "userAdminAnyDatabase" }
       - { db: "admin", role: "readWriteAnyDatabase" }
-  when: ansible_local.graylog.mongodb_auth_configured is not defined
+      - { db: "admin", role: "backup" }
   ignore_errors: "{{ ansible_check_mode }}"
   vars:
     ansible_python_interpreter: /var/lib/mongodb/.venv/bin/python3
@@ -109,3 +112,6 @@
     group: root
     mode: "0644"
   notify: restart mongodb
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers

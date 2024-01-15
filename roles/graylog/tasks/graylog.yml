@@ -10,12 +10,12 @@
     database: "graylog"
     name: "graylog"
     password: "{{ graylog_mongodb_password }}"
+    update_password: on_create
     roles:
       - { db: "graylog", role: "readWrite" }
       - { db: "graylog", role: "dbAdmin" }
   vars:
     ansible_python_interpreter: /var/lib/mongodb/.venv/bin/python3
-  when: ansible_local.graylog.mongodb_auth_configured is not defined
   ignore_errors: "{{ ansible_check_mode }}"
   tags: mongodb
 

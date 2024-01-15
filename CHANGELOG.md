@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Fixed:**
+- graylog: mongodb: fix mongodb backups failing (authentication required)
 - default playbook: fix `goaccess_username/password/fqdn` variables not being added to the correct file (username/password belong to encrypted variables)
 - monitoring_utils: fix lynis warning `MongoDB instance allows any user to access databases`
 - tt_rss: fix tt-rss installation failing when `git` was not previously installed
