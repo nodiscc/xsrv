@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - tt_rss: fix error on first tt-rss installation `Unsupported parameters for (postgresql_query) module: as_single_query, path_to_script.`
 - shaarli: fix shaarli zip extraction failing when the `unzip` package is not installed
 - nextcloud: fix Nextcloud upgrades sometimes failing with `Nextcloud is not installed - only a limited number of commands are available`
+- graylog: don't fail with `'graylog_mongodb_apt_repo_distribution' is undefined` when running the `mongodb` tag alone
 
 **Fixed:**
 - dnsmasq: only attempt to update blocklists after network is online and dnsmasq has started

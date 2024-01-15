@@ -8,7 +8,9 @@
 - name: load distribution-specific variables
   include_vars:
     file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
-  tags: graylog
+  tags:
+    - graylog
+    - mongodb
 
 - name: include graylog requirements configuration tasks
   import_tasks: requirements.yml
