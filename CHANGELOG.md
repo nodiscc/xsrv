@@ -48,8 +48,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: fix shaarli zip extraction failing when the `unzip` package is not installed
 - nextcloud: fix Nextcloud upgrades sometimes failing with `Nextcloud is not installed - only a limited number of commands are available`
 - graylog: don't fail with `'graylog_mongodb_apt_repo_distribution' is undefined` when running the `mongodb` tag alone
-
-**Fixed:**
 - dnsmasq: only attempt to update blocklists after network is online and dnsmasq has started
 
 [Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
