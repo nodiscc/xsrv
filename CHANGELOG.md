@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Changed:**
+- graylog: support initial deployment of the role with graylog/mongodb/elasticsearch disabled
+
+[Full changes since v1.21.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.21.0...1.22.0)
+
+------------------
+
 #### [v1.21.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.21.0) - 2024-01-17
 
 **Upgrade procedure:**
