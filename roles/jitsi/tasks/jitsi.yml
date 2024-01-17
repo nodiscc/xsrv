@@ -35,8 +35,7 @@
   meta: flush_handlers
 
 # since we don't install the jitsi-meet metapackage these options must be set manually before installation
-# always returns changed, ansible bug https://github.com/ansible/ansible/issues/47676
-- name: set debconf values for jitsi meet (always returns changed)
+- name: set debconf values for jitsi meet
   debconf: "{{ item }}" # noqa args[module] # false positive
   no_log: yes
   loop:

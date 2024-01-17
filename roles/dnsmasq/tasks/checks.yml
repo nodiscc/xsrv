@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq"
-  with_items:
+  loop:
     - (dnsmasq_upstream_servers|type_debug == "list") and (dnsmasq_upstream_servers|length > 0)
     - dnsmasq_records|type_debug == "list"
     - dnsmasq_firewalld_zones|type_debug == "list"
@@ -19,15 +19,15 @@
 - name: check that mandatory variables are correctly defined (dnsmasq_upstream_servers)
   assert:
     quiet: yes
-    that: item | ansible.utils.ipv4
+    that: "{{ item is ansible.utils.ipv4_address }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq"
-  with_items: "{{ dnsmasq_upstream_servers }}"
+  loop: "{{ dnsmasq_upstream_servers }}"
 
 - name: check that mandatory variables are correctly defined (dnsmasq_records)
   assert:
     quiet: yes
     that:
       - item.name is string
-      - item.ip | ansible.utils.ipv4
+      - item.ip is ansible.utils.ipv4_address
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq"
-  with_items: "{{ dnsmasq_records }}"
+  loop: "{{ dnsmasq_records }}"

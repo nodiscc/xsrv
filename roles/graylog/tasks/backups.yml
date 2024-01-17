@@ -13,3 +13,12 @@
     mode: "0600"
   notify: check rsnapshot configuration
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy mongodump configuration
+  template:
+    src: etc_mongodump.conf.j2
+    dest: /etc/mongodump.conf
+    owner: root
+    group: root
+    mode: "0644"
+  diff: no

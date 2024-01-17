@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
-  with_items:
+  loop:
     - openldap_fqdn is not search("CHANGEME")
     - openldap_domain is not search("CHANGEME")
     - openldap_organization is not search("CHANGEME")
@@ -23,7 +23,7 @@
     that: "{{ item }}"
     fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
   when: openldap_setup_lam | bool
-  with_items:
+  loop:
     - ldap_account_manager_allowed_hosts is not search(" ")
     - ldap_account_manager_fqdn is not search("CHANGEME")
     - ldap_account_manager_ldap_url is string
@@ -46,7 +46,7 @@
     that: "{{ item }}"
     fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
   when: openldap_setup_ssp | bool
-  with_items:
+  loop:
     - self_service_password_fqdn is not search("CHANGEME")
     - self_service_password_install_dir is not search("CHANGEME")
     - self_service_password_version is defined
@@ -66,4 +66,4 @@
     fail_msg: "One or more of self_service_password_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ self_service_password_allowed_hosts }}"
+  loop: "{{ self_service_password_allowed_hosts }}"

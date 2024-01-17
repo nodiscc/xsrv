@@ -1,0 +1,25 @@
+# @tag owncast - setup owncast live streaming server
+
+galaxy_info:
+  role_name: owncast
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Decentralized, single user live video streaming and chat server"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - podman
+    - video
+    - streaming
+    - twitch
+    - live
+    - livestream
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.backup # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration

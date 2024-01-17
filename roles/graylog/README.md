@@ -42,6 +42,8 @@ graylog_fqdn: "logs.CHANGEME.org"
 graylog_root_username: "CHANGEME"
 graylog_root_password: "CHANGEME20"
 graylog_secret_key: "CHANGEME96"
+mongodb_admin_password: "CHANGEME20"
+graylog_mongodb_password: "CHANGEME20"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
@@ -301,6 +303,7 @@ sudo systemctl restart rsyslog
 <!--BEGIN TAGS LIST-->
 ```
 graylog - setup graylog log analyzer
+mongodb - setup mongodb database
 ```
 <!--END TAGS LIST-->
 

@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"
-  with_items:
+  loop:
     - homepage_fqdn is not search("CHANGEME")
     - homepage_title is not search("CHANGEME")
     - homepage_https_mode in ['selfsigned', 'letsencrypt']
@@ -21,7 +21,7 @@
       - (item.icon is not defined) or (item.icon is string)
       - (item.compact is not defined) or (item.compact == item.compact | bool)
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"
-  with_items: "{{ homepage_custom_links }}"
+  loop: "{{ homepage_custom_links }}"
 
 - name: check that variables are correctly defined (homepage_allowed_hosts)
   assert:
@@ -29,4 +29,4 @@
     fail_msg: "One or more of homepage_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ homepage_allowed_hosts }}"
+  loop: "{{ homepage_allowed_hosts }}"

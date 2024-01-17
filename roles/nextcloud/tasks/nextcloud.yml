@@ -214,8 +214,19 @@
     mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: run nextcloud upgrade command
+  become: yes
+  become_user: nextcloud
+  command: /usr/bin/php ./occ upgrade
+  args:
+    chdir: "{{ nextcloud_install_dir }}"
+  register: nextcloud_upgrade
+  changed_when: not 'Nextcloud is already at the latest version' in nextcloud_upgrade.stdout
+  when: (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
+  ignore_errors: "{{ ansible_check_mode }}"
+
 # occ doesn't report changed status, not idempotent, always returns changed
-# Note: if this fails the install will be left in a broken state, the working copy is still at {{ nextcloud_fqdn }}.old
+# Note: if this fails the install will be left in a broken state, the working copy is still at /var/www/{{ nextcloud_fqdn }}.old/config/config.php
 # Some possible additional settings are documented here. See https://github.com/nextcloud/server/blob/master/config/config.sample.php for all available configuration settings
 - name: set nextcloud config.php values (always returns changed)
   become: yes
@@ -282,17 +293,6 @@
   no_log: "{{ item.no_log | default(False) }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config
-
-- name: run nextcloud upgrade command
-  become: yes
-  become_user: nextcloud
-  command: /usr/bin/php ./occ upgrade
-  args:
-    chdir: "{{ nextcloud_install_dir }}"
-  register: nextcloud_upgrade
-  changed_when: not 'Nextcloud is already at the latest version' in nextcloud_upgrade.stdout
-  when: (nextcloud_action == 'initial') or (nextcloud_action == 'upgrade')
-  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: update .htaccess for clean URL support (always returns changed)
   become: yes

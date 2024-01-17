@@ -1,0 +1,7 @@
+# rsyslog configuration for postgresql logs
+
+input(type="imfile"
+      File="/var/log/postgresql/postgresql-{{ postgresql_version }}-main.log"
+      Tag="mongodb:"
+      Facility="daemon"
+      PersistStateInterval="0")

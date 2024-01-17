@@ -32,6 +32,8 @@
       - mongodb-org-server
       - mongodb-org-shell
       - mongodb-org-tools
+      - python3-pymongo # required to use ansible mongodb modules
+      - python3-venv # required to install pymongo in a virtualenv
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -68,3 +70,65 @@
     state: "{{ 'started' if graylog_enable_service else 'stopped' }}"
     daemon_reload: yes
   ignore_errors: "{{ ansible_check_mode }}"
+
+##### AUTHENTICATION #####
+
+# python3-pymongo from Debian packages is v3.x, but v4.x is required to use ansible mongodb modules
+# so we install it in a virtualenv
+- name: install pymongo 4 in virtualenv
+  become: yes
+  become_user: mongodb
+  pip:
+    name: pymongo>4.0,<5.0
+    virtualenv: /var/lib/mongodb/.venv
+    virtualenv_command: "python3 -m venv"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# run as the mongodb user so that python3 modules installed from pip as mongodb are not run by root
+- name: create mongodb admin user
+  become: yes
+  become_user: mongodb
+  mongodb_user:
+    login_user: "{{ 'admin' if ansible_local.graylog.mongodb_auth_configured is defined else omit }}"
+    login_password: "{{ mongodb_admin_password if ansible_local.graylog.mongodb_auth_configured is defined else omit }}"
+    login_port: "27017"
+    database: "admin"
+    name: "admin"
+    password: "{{ mongodb_admin_password }}"
+    update_password: on_create
+    roles:
+      - { db: "admin", role: "userAdminAnyDatabase" }
+      - { db: "admin", role: "readWriteAnyDatabase" }
+      - { db: "admin", role: "backup" }
+  ignore_errors: "{{ ansible_check_mode }}"
+  vars:
+    ansible_python_interpreter: /var/lib/mongodb/.venv/bin/python3
+
+- name: create graylog mongodb user and database
+  become: yes
+  become_user: mongodb
+  mongodb_user:
+    login_user: "{{ 'admin' if ansible_local.graylog.mongodb_auth_configured is defined else omit }}"
+    login_password: "{{ mongodb_admin_password if ansible_local.graylog.mongodb_auth_configured is defined else omit }}"
+    database: "graylog"
+    name: "graylog"
+    password: "{{ graylog_mongodb_password }}"
+    update_password: on_create
+    roles:
+      - { db: "graylog", role: "readWrite" }
+      - { db: "graylog", role: "dbAdmin" }
+  ignore_errors: "{{ ansible_check_mode }}"
+  vars:
+    ansible_python_interpreter: /var/lib/mongodb/.venv/bin/python3
+
+- name: configure mongodb (enable authentication)
+  template:
+    src: etc_mongod.conf.j2
+    dest: /etc/mongod.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart mongodb
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers

@@ -1,0 +1,6 @@
+- name: copy rsnapshot configuration for owncast backups
+  template:
+    src: etc_rsnapshot.d_owncast.conf.j2
+    dest: /etc/rsnapshot.d/owncast.conf
+    mode: "0600"
+  notify: check rsnapshot configuration

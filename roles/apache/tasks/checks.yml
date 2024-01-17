@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache"
-  with_items:
+  loop:
     - apache_enable_service == apache_enable_service | bool
     - apache_letsencrypt_email is not search("CHANGEME")
     - apache_listen_http == apache_listen_http | bool
@@ -25,5 +25,5 @@
       - (item.redirect_https is not defined) or (item.redirect_https == item.redirect_https | bool)
       - (item.extra_directives is not defined) or (item.extra_directives | type_debug == "list")
       - (item.monitor_http is not defined) or (item.monitor_http == item.monitor_http | bool)
-  with_items: "{{ apache_reverseproxies }}"
+  loop: "{{ apache_reverseproxies }}"
   tags: apache-reverseproxy

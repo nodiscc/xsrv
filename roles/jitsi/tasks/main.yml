@@ -91,3 +91,12 @@
     - jitsi
     - monitoring
     - fail2ban
+
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include prosody mod_listusers tasks
+  import_tasks: utils-jitsi-listusers.yml
+  become: yes
+  tags:
+    - never
+    - utils-jitsi-listusers

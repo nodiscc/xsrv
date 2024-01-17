@@ -1,4 +1,5 @@
 # @tag graylog - setup graylog log analyzer
+# @tag mongodb - setup mongodb database
 
 galaxy_info:
   role_name: graylog

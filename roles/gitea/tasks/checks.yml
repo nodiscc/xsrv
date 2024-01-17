@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea"
-  with_items:
+  loop:
     - gitea_admin_email is not search("CHANGEME")
     - gitea_admin_password is not search("CHANGEME")
     - gitea_admin_username is not search("CHANGEME")
@@ -50,4 +50,4 @@
     fail_msg: "One or more of gitea_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ gitea_allowed_hosts }}"
+  loop: "{{ gitea_allowed_hosts }}"

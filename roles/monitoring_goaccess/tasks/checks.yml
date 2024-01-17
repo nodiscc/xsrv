@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess"
-  with_items:
+  loop:
     - goaccess_fqdn is not search('CHANGEME')
     - goaccess_https_mode in ['selfsigned', 'letsencrypt']
     - goaccess_enable_service == goaccess_enable_service | bool
@@ -19,4 +19,4 @@
     fail_msg: "One or more of goaccess_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/goaccess"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ goaccess_allowed_hosts }}"
+  loop: "{{ goaccess_allowed_hosts }}"

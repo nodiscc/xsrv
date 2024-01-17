@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba"
-  with_items:
+  loop:
     - samba_log_level is string
     - samba_max_log_size_kb == samba_max_log_size_kb|int
     - samba_netbios_name is string

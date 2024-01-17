@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
-  with_items:
+  loop:
     - libvirt_port_forwards | type_debug == 'list'
     - libvirt_service_after | type_debug == 'list'
     - libvirt_users | type_debug == 'list'
@@ -19,7 +19,7 @@
       - (item.dnat is defined) or (item.forward is defined)
       - (item.dnat is not defined) or (item.dnat | type_debug == 'list' and item.dnat)
       - (item.forward is not defined) or (item.forward | type_debug == 'list' and item.forward)
-  with_items: "{{ libvirt_port_forwards }}"
+  loop: "{{ libvirt_port_forwards }}"
 
 - name: check that variables are correctly defined (libvirt_port_forwards.*.dnat)
   assert:
@@ -62,4 +62,4 @@
       - (item.state is not defined) or (item.state in ['present', 'running', 'destroyed', 'shutdown', 'absent'])
       - (item.xml_file is string) or (item.state == "absent")
       - (item.autostart is not defined) or (item.autostart == item.autostart | bool) or (item.state == "absent")
-  with_items: "{{ libvirt_vms }}"
+  loop: "{{ libvirt_vms }}"

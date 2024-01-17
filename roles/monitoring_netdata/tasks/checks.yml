@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
-  with_items:
+  loop:
     - netdata_allow_connections_from is string
     - netdata_cloud_enabled == netdata_cloud_enabled | bool
     - netdata_dbengine_disk_space == netdata_dbengine_disk_space | int
@@ -50,7 +50,7 @@
     that:
       - item.start is string
       - item.end is string
-  with_items: "{{ netdata_notification_downtimes }}"
+  loop: "{{ netdata_notification_downtimes }}"
 
 - name: check that variables are correctly defined (netdata streaming API key)
   assert:
@@ -58,7 +58,7 @@
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   when: (netdata_streaming_send_enabled | bool) or (netdata_streaming_receive_enabled | bool)
-  with_items:
+  loop:
     - netdata_streaming_api_key is not search("CHANGEME")
 
 - name: check that variables are correctly defined (netdata streaming destination)
@@ -67,5 +67,5 @@
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   when: netdata_streaming_send_enabled | bool
-  with_items:
+  loop:
     - netdata_streaming_destination is not search("CHANGEME")

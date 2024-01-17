@@ -1,0 +1,34 @@
+- name: download mod_listusers for prosody
+  get_url:
+    url: https://hg.prosody.im/prosody-modules/raw-file/tip/mod_listusers/mod_listusers.lua
+    dest: /usr/lib/prosody/modules/mod_listusers.lua
+    owner: root
+    group: root
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: get list of jitsi (prosody) users
+  become: yes
+  become_user: prosody
+  command:
+    cmd: prosodyctl mod_listusers
+  register: prosody_users
+  changed_when: no
+
+- name: write list of jitsi users to file
+  template:
+    src: var_log_prosody-users.log.j2
+    dest: /var/log/prosody-users.log
+    owner: root
+    group: root
+    mode: "0640"
+  ignore_errors: "{{ ansible_check_mode }}"
+  diff: no
+
+- name: download list of jitsi users to data/jitsi-users-*.log
+  fetch:
+    src: /var/log/prosody-users.log
+    dest: "{{ playbook_dir }}/data/jitsi-users-{{ inventory_hostname }}.log"
+    flat: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  diff: no

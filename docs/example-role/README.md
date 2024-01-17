@@ -40,7 +40,7 @@ Notes about using the deployed service.
 
 ### Backups
 
-Notes about backing up data generated/used by the service. See the included [rsnapshot configuration](templates/etc/rsnapshot.d_EXAMPLE.conf.j2) for information about directories to backup/restore.
+Notes about backing up data generated/used by the service. See the included [rsnapshot configuration](templates/etc_rsnapshot.d_EXAMPLE.conf.j2) for information about directories to backup/restore.
 
 ## Tags
 

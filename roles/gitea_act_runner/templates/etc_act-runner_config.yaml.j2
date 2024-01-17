@@ -8,7 +8,7 @@ runner:
   # Where to store the registration result.
   file: /var/lib/act-runner/.runner
   # Execute how many tasks concurrently at the same time.
-  capacity: 1
+  capacity: {{ gitea_act_runner_capacity }}
   # Extra environment variables to run jobs.
   envs:
 {% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_fqdn == ansible_local.gitea.fqdn) %}

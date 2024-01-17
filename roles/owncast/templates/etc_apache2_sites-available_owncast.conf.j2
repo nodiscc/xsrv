@@ -1,0 +1,43 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    ServerName {{ owncast_fqdn }}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+{% if owncast_https_mode == 'letsencrypt' %}
+MDomain {{ owncast_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  DocumentRoot /var/www/html
+  ServerName  {{ owncast_fqdn }}
+  SSLEngine on
+{% if owncast_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ owncast_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ owncast_fqdn }}.key
+{% endif %}
+{% if not owncast_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+  RequestHeader set X-Forwarded-Proto "https"
+  ProxyPreserveHost On
+  ProxyPass        / http://127.0.0.1:10081/
+  ProxyPassReverse / http://127.0.0.1:10081/
+  RewriteEngine On
+  RewriteCond %{HTTP:UPGRADE} ^WebSocket$           [NC,OR]
+  RewriteCond %{HTTP:CONNECTION} ^Upgrade$          [NC]
+  RewriteRule .* ws://127.0.0.1:8080%{REQUEST_URI}  [P,QSA,L]
+{% endif %}
+{% if owncast_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ owncast_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
+</VirtualHost>

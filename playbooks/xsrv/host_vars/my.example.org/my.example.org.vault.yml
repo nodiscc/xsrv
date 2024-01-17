@@ -60,6 +60,8 @@ openldap_bind_password: "CHANGEME30"
 graylog_root_username: "{{ xsrv_admin_username }}"
 graylog_root_password: "{{ xsrv_admin_password }}"
 graylog_secret_key: "CHANGEME96"
+mongodb_admin_password: "CHANGEME20"
+graylog_mongodb_password: "CHANGEME20"
 
 #### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_auth_username: "CHANGEME"
@@ -84,4 +86,8 @@ matrix_synapse_registration_shared_secret: "CHANGEME25"
 matrix_synapse_macaroon_secret_key: "CHANGEME25"
 
 #### GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
-goaccess_fqdn: "goaccess.CHANGEME.org"
+goaccess_username: "{{ xsrv_admin_username }}"
+goaccess_password: "{{ xsrv_admin_password }}"
+
+#### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
+owncast_admin_password: "{{ xsrv_admin_password }}"

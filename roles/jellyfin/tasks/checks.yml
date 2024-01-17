@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
-  with_items:
+  loop:
     - jellyfin_fqdn is not search("CHANGEME")
     - jellyfin_https_mode in ['selfsigned', 'letsencrypt']
     - jellyfin_enable_service == jellyfin_enable_service | bool
@@ -21,7 +21,7 @@
     fail_msg: "One or more of jellyfin_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ jellyfin_allowed_hosts }}"
+  loop: "{{ jellyfin_allowed_hosts }}"
 
 - name: check that mandatory variables are correctly defined (opensubtitles plugin)
   assert:
@@ -29,7 +29,7 @@
     that: "{{ item }}"
     fail_msg: "OpenSubtitles plugin installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
   when: jellyfin_setup_opensubtitles_plugin | bool
-  with_items:
+  loop:
     - jellyfin_opensubtitles_plugin_username is not search("CHANGEME")
     - jellyfin_opensubtitles_plugin_password is not search("CHANGEME")
     - jellyfin_opensubtitles_plugin_apikey is not search("CHANGEME")

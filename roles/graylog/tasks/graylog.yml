@@ -1,4 +1,4 @@
-### GRAYLOG ###
+##### GRAYLOG #####
 
 - name: download graylog-5.1-repository deb package
   get_url:
@@ -44,12 +44,14 @@
     mode: "{{ item.mode }}"
   notify: restart graylog-server
   ignore_errors: "{{ ansible_check_mode }}"
+  diff: "{{ item.diff | default(True) }}"
   with_items:
     - src: etc_graylog_server_server.conf.j2
       dest: /etc/graylog/server/server.conf
       owner: root
       group: graylog
       mode: "0640"
+      diff: no # hide diff as it may contain mongodb password
     - src: etc_default_graylog-server.j2
       dest: /etc/default/graylog-server
       owner: root

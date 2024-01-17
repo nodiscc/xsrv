@@ -187,6 +187,7 @@ debsecan_enable_reports: yes
 # Example:
 # debsecan_whitelist:
 #   - CVE-2021-20316 # not applicable, SMBv1 disabled
-debsecan_whitelist: []
+debsecan_whitelist:
+  - CVE-2023-28450 # minor issue https://security-tracker.debian.org/tracker/CVE-2023-28450
 # setup monitoring of pending package upgrades (yes/no)
 setup_netdata_apt: yes

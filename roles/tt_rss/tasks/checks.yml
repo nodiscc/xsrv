@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
-  with_items:
+  loop:
     - tt_rss_account_limit == tt_rss_account_limit|int
     - tt_rss_db_name is string
     - tt_rss_db_password is not search("CHANGEME")
@@ -31,4 +31,4 @@
     fail_msg: "One or more of tt_rss_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ tt_rss_allowed_hosts }}"
+  loop: "{{ tt_rss_allowed_hosts }}"

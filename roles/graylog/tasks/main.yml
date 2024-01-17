@@ -2,12 +2,15 @@
   import_tasks: checks.yml
   tags:
     - graylog
+    - mongodb
     - checks
 
 - name: load distribution-specific variables
   include_vars:
     file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
-  tags: graylog
+  tags:
+    - graylog
+    - mongodb
 
 - name: include graylog requirements configuration tasks
   import_tasks: requirements.yml
@@ -17,7 +20,9 @@
 - name: include mongodb configuration tasks
   import_tasks: mongodb.yml
   become: yes
-  tags: graylog
+  tags:
+    - graylog
+    - mongodb
 
 - name: include elasticsearch configuration tasks
   import_tasks: elasticsearch.yml

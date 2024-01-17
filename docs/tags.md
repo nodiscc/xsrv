@@ -44,6 +44,7 @@ libvirt-vms - setup libvirt virtual machines
 lynis - setup lynis security audit tool
 mail - setup outgoing system mail
 matrix - setup matrix chat server and web client
+mongodb - setup mongodb database
 monitoring - setup monitoring/alerting/logging system/utilities
 monitoring_utils - setup command-line/additional monitoring utilities
 msmtp - setup outgoing system mail
@@ -60,6 +61,7 @@ nextcloud-applications - setup nextcloud applications
 nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
 openldap - setup LDAP server
+owncast - setup owncast live streaming server
 packages - additional package istallation/removal
 podman - setup podman container engine
 postgresql - setup postgresql database server
@@ -94,6 +96,7 @@ utils-duc - (manual) run duc disk usage analyzer and download the database on th
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
 utils-firewalld-info - (manual) get firewall status informations
 utils-goaccess-update - (manual) update/regenerate goacess report immediately
+utils-jitsi-listusers - (manual) list jitsi (prosody) registered users
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
 utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics

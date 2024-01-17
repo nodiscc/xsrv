@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.21.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.21.0) - 2024-01-17
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **graylog:** if you are using the `graylog` role, add the `mongodb_admin_password` and `graylog_mongodb_password` variables to your host variables (`xsrv edit-vault`) and set their values to strong random passwords
+- To get rid of the deprecation warning `collections_paths option does not fit var naming standard`, rename `collections_paths` to `collections_path` in `ansible.cfg` (`xsrv edit-cfg`)
+- `xsrv deploy` to apply changes
+
+**Added:**
+- add [`owncast`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast) role role (live video streaming and chat server)
+- graylog/mongodb: require authentication to connect to mongodb ([`mongodb_admin_password`, `graylog_mongodb_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml))
+- jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
+- gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- postgresql: aggregate postgresql logs to syslog (when the `monitoring_rsyslog` role is deployed)
+- wireguard/firewalld: allow configuring services to which wireguard clients can connect on the host ([`wireguard_firewalld_services`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml))
+
+**Removed:**
+- postgresql: drop compatibility with Debian <12
+
+**Changed:**
+- python >=3.9 is now required on the controller (ansible 9.1.0)
+- cleanup: postgresql: standardize/simplify pgmetrics report generation
+- gitea_act_runner: update default image labels (use the `node:21-bookworm` when `uses: ubuntu-latest` is specified in the CI configuration file), add equivalent `debian-latest` label
+- monitoring_netdata: debsecan: whitelist a few minor issues in debsecan reports by default
+- wireguard: never return `changed` for wireguard client configuration file generation tasks
+- tt_rss: hide `changed` status of `set permissions on tt-rss files` task
+- gitea: update to v1.21.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.3)
+- postgresql: explicitely install postgresql version 15
+- openldap: update ldap-account-manager to [v8.6](https://github.com/LDAPAccountManager/lam/releases/tag/8.6)
+- matrix: update element-web to v1.11.52 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52)
+- xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+- monitoring_goaccess: update [IP to Country](https://db-ip.com/db/download/ip-to-country-lite) database to v2024-01
+- improve check mode support before first actual deployment
+- update documentation
+
+**Fixed:**
+- graylog: mongodb: fix mongodb backups failing (authentication required)
+- default playbook: fix `goaccess_username/password/fqdn` variables not being added to the correct file (username/password belong to encrypted variables)
+- monitoring_utils: fix lynis warning `MongoDB instance allows any user to access databases`
+- tt_rss: fix tt-rss installation failing when `git` was not previously installed
+- tt_rss: fix error on first tt-rss installation `Unsupported parameters for (postgresql_query) module: as_single_query, path_to_script.`
+- shaarli: fix shaarli zip extraction failing when the `unzip` package is not installed
+- nextcloud: fix Nextcloud upgrades sometimes failing with `Nextcloud is not installed - only a limited number of commands are available`
+- graylog: don't fail with `'graylog_mongodb_apt_repo_distribution' is undefined` when running the `mongodb` tag alone
+
+**Fixed:**
+- dnsmasq: only attempt to update blocklists after network is online and dnsmasq has started
+
+[Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
+
+------------------
+
 #### [v1.20.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.20.0) - 2023-12-02
 
 **Upgrade procedure:**
@@ -13,11 +66,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - dnsmasq: allow loading custom DNS blocklists from an URL ([`dnsmasq_blocklist_url`, `dnsmasq_blocklist_mode`, `dnsmasq_blocklist_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml))
 - shaarli: install [stack](https://github.com/RolandTi/shaarli-stack) custom theme/template and enable it by default
 - shaarli: allow setting the theme/template via the ([`shaarli_theme`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)) configuration variable
-- dnsmasq: allow logging DNS queries processed by dnsmasq ([`dnsmasq_log_queries: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml)
+- dnsmasq: allow logging DNS queries processed by dnsmasq ([`dnsmasq_log_queries: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml))
 - nextcloud: allow configuring outgoing mail settings ([`nextcloud_smtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
 - common: add automated procedures to reboot or shutdown hosts ([`TAGS=utils-shutdown,utils-reboot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common#usage))
 - netdata: debsecan: allow whitelisting vulnerabilities reported by debsecan by CVE number ([`debsecan_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - act-runner: prune unused podman data automatically, nightly (volumes, networks, containers, images)
+- apache: allow restricting access to individual web applications by IP address/network ([`shaarli_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml), [`matrix_synapse/element_admin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml), [`goaccess_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/goaccess/defaults/main.yml), [`ldap_account_manager/self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml), [`nextcloud_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml), [`transmission_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml), [`tt_rss_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml), [`jitsi_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml), [`homepage_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml), [`graylog_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml), [`gotty_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml), [`gitea_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- jellyfin: allow disabling the allowed IP list entirely (allow access from any IP) by setting an empty [`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml) list
 - goaccess: allow configuring IP to Country GeoIP database version ([`goaccess_geoip_db_version`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml))
 - common: sysctl: add hardening measures against reading/writing files controlled by an attacker [`fs.protected_fifos/hardlinks/regular/symlinks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/templates/etc_sysctl.d_custom.conf.j2)
 - podman: add `podman-docker` wrapper (execute `docker` commands through podman)
@@ -27,9 +82,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: remove residual support for Debian 11 in firewalld configuration
 
 **Changed:**
-- xsrv: init-vm-template: use the gateway IP address as DNS server ([`--nameservers`÷](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file)) by default instead of Cloudflare public DNS
-- apache: allow restricting access to individual web applications by IP address/network ([`shaarli_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml), [`matrix_synapse/element_admin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml), [`goaccess_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/goaccess/defaults/main.yml), [`ldap_account_manager/self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml), [`nextcloud_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml), [`transmission_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml), [`tt_rss_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml), [`jitsi_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml), [`homepage_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml), [`graylog_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml), [`gotty_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml), [`gitea_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
-- jellyfin: allow disabling the allowed IP list entirely (allow access from any IP) by setting an empty [`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml) list
+- xsrv: init-vm-template: use the gateway IP address as DNS server ([`--nameservers`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file)) by default instead of Cloudflare public DNS
 - netdata: when `*_enable_service: no`, disable HTTP checks entirely for this service (intead of accepting HTTP 503)
 - netdata: debsecan: allow disabling daily debsecan mail reports ([`debsecan_enable_reports: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check
@@ -37,7 +90,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jellyfin: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `5.7 MEDIUM`)
 - shaarli: update to [v0.13.0](https://github.com/shaarli/Shaarli/releases/tag/v0.13.0)
 - gitea: update to v1.21.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.1)
-- nextcloud: upgrade to v27.1.4 [[1]](https://nextcloud.com/changelog/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.4)
+- nextcloud: upgrade to v28.0.1 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v27.1.4) [[3]](https://github.com/nextcloud/server/releases/tag/v28.0.0) [[4]](https://github.com/nextcloud/server/releases/tag/v28.0.1) [[5]](https://nextcloud.com/blog/nextcloud-hub-7-advanced-search-and-global-out-of-office-features/)
 - openldap: update self-service-password to [v1.5.4](https://github.com/ltb-project/self-service-password/releases/tag/v1.5.4)
 - matrix: update element-web to v1.11.50 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.48) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.49) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.50)
 - xsrv: upgrade ansible to [v8.6.1](https://github.com/ansible-community/ansible-build-data/blob/main/8/CHANGELOG-v8.rst)

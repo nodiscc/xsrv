@@ -1,5 +1,6 @@
 # @tag jitsi - setup jitsi videoconferencing server
 # @tag jitsi-users - setup jitsi registered users
+# @tag utils-jitsi-listusers - (manual) list jitsi (prosody) registered users
 
 galaxy_info:
   role_name: jitsi

@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix_synapse"
-  with_items:
+  loop:
     - matrix_synapse_fqdn is not search("CHANGEME")
     - matrix_synapse_db_password is not search("CHANGEME")
     - matrix_synapse_macaroon_secret_key is not search("CHANGEME")
@@ -52,7 +52,7 @@
     fail_msg: "One or more of matrix_synapse_admin_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ matrix_synapse_admin_allowed_hosts }}"
+  loop: "{{ matrix_synapse_admin_allowed_hosts }}"
 
 - name: check that variables are correctly defined (matrix_element_allowed_hosts)
   assert:
@@ -60,4 +60,4 @@
     fail_msg: "One or more of matrix_element_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ matrix_element_allowed_hosts }}"
+  loop: "{{ matrix_element_allowed_hosts }}"

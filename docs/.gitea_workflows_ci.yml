@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ gitea.ref }}
-      cancel-in-progress: ${{ gitea.ref_name == 'master' && true || false }}
+      cancel-in-progress: ${{ gitea.ref_name == 'master' && false || true }}
     steps:
       - name: checkout repo
         uses: actions/checkout@v2

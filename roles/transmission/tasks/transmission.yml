@@ -15,7 +15,7 @@
     group: debian-transmission
     mode: "0600"
   notify: reload transmission-daemon
-  # no_log: True
+  diff: no # file contains password
 
 - name: add users to the debian-transmission group
   user:

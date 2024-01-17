@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
-  with_items:
+  loop:
     - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd | bool
     - dns_nameservers|type_debug == "list"
     - setup_users == setup_users | bool
@@ -55,7 +55,7 @@
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   when: setup_msmtp | bool
-  with_items:
+  loop:
     - msmtp_host is not search("CHANGEME")
     - msmtp_port == msmtp_port|int
     - msmtp_auth_enabled == msmtp_auth_enabled | bool
@@ -76,7 +76,7 @@
   when:
     - setup_msmtp | bool
     - msmtp_auth_enabled | bool
-  with_items:
+  loop:
     - msmtp_username is not search("CHANGEME")
     - msmtp_password is not search("CHANGEME")
   tags:
@@ -91,7 +91,7 @@
       - item.ip_address | ansible.utils.ipaddr
       - (item.state is not defined) or (item.state in ['present', 'absent'])
   when: setup_hosts_file | bool
-  with_items: "{{ hosts_file_entries }}"
+  loop: "{{ hosts_file_entries }}"
   tags: hosts
 
 - name: check that variables are correctly defined (apt-listbugs)
@@ -119,7 +119,7 @@
   when:
     - setup_firewall | bool
     - (item.delete is not defined) or (not item.delete)
-  with_items: "{{ firewalld_zone_sources }}"
+  loop: "{{ firewalld_zone_sources }}"
   tags:
     - firewall
 
@@ -134,7 +134,7 @@
       - (item.immediate is not defined) or (item.immediate == item.permanent | bool)
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
   when: setup_firewall | bool
-  with_items: "{{ firewalld_zone_services }}"
+  loop: "{{ firewalld_zone_services }}"
   tags:
     - firewall
 
@@ -150,7 +150,7 @@
 - name: check that variables are correctly defined (dns_nameservers)
   assert:
     quiet: yes
-    that: item == item | ansible.utils.ipaddr('address')
+    that: "{{ item == item | ansible.utils.ipaddr('address') }}"
     fail_msg: "dns_nameservers: {{ item }} is not a valid IP address"
   when: setup_dns | bool
-  with_items: "{{ dns_nameservers }}"
+  loop: "{{ dns_nameservers }}"

@@ -3,7 +3,7 @@
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud"
-  with_items:
+  loop:
     - nextcloud_admin_email is not search("CHANGEME")
     - nextcloud_apps|type_debug == "list"
     - nextcloud_data_dir is string
@@ -37,7 +37,7 @@
     fail_msg: "One or more of variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud"
     that: "{{ item }}"
   when: nextcloud_smtp_mode in ['smtp', 'smtp+ssl']
-  with_items:
+  loop:
     - nextcloud_smtp_host is not search('CHANGEME')
     - nextcloud_smtp_port | int
     - nextcloud_smtp_from is not search('CHANGEME')
@@ -50,4 +50,4 @@
     fail_msg: "One or more of nextcloud_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud"
     that:
       - item | ansible.utils.ipv4
-  with_items: "{{ nextcloud_allowed_hosts }}"
+  loop: "{{ nextcloud_allowed_hosts }}"

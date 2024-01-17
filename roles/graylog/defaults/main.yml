@@ -5,6 +5,10 @@ graylog_fqdn: "logs.CHANGEME.org"
 graylog_root_username: "CHANGEME"
 graylog_root_password: "CHANGEME20"
 graylog_secret_key: "CHANGEME96"
+# password for the mongodb admin user
+mongodb_admin_password: "CHANGEME20"
+# password for the mongodb graylog user
+graylog_mongodb_password: "CHANGEME20"
 # timezone of the graylog admin user, from https://www.joda.org/joda-time/timezones.html
 graylog_root_timezone: "UTC"
 # HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
