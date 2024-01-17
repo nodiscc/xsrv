@@ -2,7 +2,6 @@
 
 ### xsrv/xsrv
 
-- #1265 - graylog: task `create mongodb admin user` fails - **`1.21.0`** `bug`
 - #1264 - WIP: mumble: allow uninstalling mumble server using the `utils-mumble-uninstall` ansible tag - **`1.22.0`** `enhancement`
 - #1260 - WIP: add xsrv nmap subcommand/role - **`1.22.0`** `feature,security`
 - #1259 - WIP:  wireguard: when peer.public_key is not defined, auto-generate a public/private key pair for this peer - **`1.21.0`** `easy,enhancement`
