@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - graylog: support initial deployment of the role with graylog/mongodb/elasticsearch disabled
+- gitea: update to v1.21.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.4)
+
 
 [Full changes since v1.21.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.21.0...1.22.0)
 
