@@ -49,8 +49,8 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
 **Local backups** are inherently not secure, because the device being backed up is able to delete/compromise its own backup. Prefer remote _pull_ backups from another machine.
 
 **backup data from remote machines:**
- - configure the list of hosts, SSH users, ports, paths... in  `rsnapshot_remote_backups` in configuration variables
- - setup a user account on the remote machine, authorize the backup server's `root` SSH key (the key is displayed during setup), and allow it to run `sudo rsync` without password.
+ - configure the list of hosts, SSH users, ports, paths... in the [`rsnapshot_remote_backups`](backup/defaults/main.yml#L41) configuration variable and deploy the role to the backup server.
+ - setup a user account on the machine to backup, authorize the backup server's `root` public SSH key to connect to it (the key is displayed when the `backup` role is deployed, and a copy is downloaded to `"{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"` on the controller), and allow it to run `sudo rsync` without password.
 
 ```yaml
 # Example using https://gitlab.com/nodiscc/ansible-xsrv-common/
@@ -62,7 +62,7 @@ linux_users:
      sudo_nopasswd_commands: ['/usr/bin/rsync']
 ```
 
-**Removing old backups:** if a backup job is added at some point, than later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
+**Removing old backups:** if a backup job is added at some point, then later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
 
 ## Tags
 
