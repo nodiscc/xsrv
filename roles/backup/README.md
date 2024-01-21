@@ -36,19 +36,22 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 - force running backups immediately: `TAGS=utils-backup-now xsrv deploy` or `ssh -t user@my.example.org sudo rsnapshot daily`
 - show the size of backups on the host: `ssh -t user@my.example.org sudo du --human-readable --summarize --time /var/backups/srv01/*`
-- transfer latest daily backups to local machine (this may take a while): `xsrv fetch-backups PROJECT my.CHANGEME.org`, or:
+- transfer latest daily backups form the host to the controller (this may take a while): `xsrv fetch-backups PROJECT my.CHANGEME.org`
 
-```
+**Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep renaming/editing large files.
+
+**Local backups** are inherently not secure, because the device being backed up is able to delete/compromise its own backup. Prefer remote _pull_ backups from another machine (i.e. setup the backup role on a dedicated machine, and configure it to pull backups from other hosts, see [backup data from remote machines](#backup-data-from-remote-machines)). In addition, you should perform periodic copies of the latest backup generation to an offline/offiste storage, using the `xsrv fetch-backups` command or manually:
+
+<details><summary>Example Using shell commands:</summary>
+
+```bash
 rsync --quiet --hard-links --archive --verbose --compress --partial --progress --delete \
 --rsh "ssh -p $ansible_ssh_port"
 "user@my.example.org:/var/backups/srv01/daily.0" "/path/to/offsite-backups/${inventory_hostname}-daily.0.$(date +%Y-%m-%d)"
 ```
+</details>
 
-**Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep renaming/editing large files.
-
-**Local backups** are inherently not secure, because the device being backed up is able to delete/compromise its own backup. Prefer remote _pull_ backups from another machine.
-
-**backup data from remote machines:**
+**Backup data from remote machines:**
  - configure the list of hosts, SSH users, ports, paths... in the [`rsnapshot_remote_backups`](backup/defaults/main.yml#L41) configuration variable and deploy the role to the backup server.
  - setup a user account on the machine to backup, authorize the backup server's `root` public SSH key to connect to it (the key is displayed when the `backup` role is deployed, and a copy is downloaded to `"{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"` on the controller), and allow it to run `sudo rsync` without password.
 
@@ -62,7 +65,7 @@ linux_users:
      sudo_nopasswd_commands: ['/usr/bin/rsync']
 ```
 
-<details><summary>example using shell commands</summary>
+<details><summary>Example using shell commands:</summary>
 
 ```bash
 # upload the backup server's public SSH key to the remote host
