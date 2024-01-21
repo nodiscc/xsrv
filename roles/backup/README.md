@@ -53,14 +53,31 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
  - setup a user account on the machine to backup, authorize the backup server's `root` public SSH key to connect to it (the key is displayed when the `backup` role is deployed, and a copy is downloaded to `"{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"` on the controller), and allow it to run `sudo rsync` without password.
 
 ```yaml
-# Example using https://gitlab.com/nodiscc/ansible-xsrv-common/
+# example using https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common
 linux_users:
    - name: "rsnapshot"
      groups: [ "ssh-access", "sudo" ]
      comment: "limited user account for remote backups"
-     ssh_authorized_keys: ['public_keys/root@backupserver.CHANGEME.org']
+     ssh_authorized_keys: ['public_keys/root@backupserver.CHANGEME.org.pub']
      sudo_nopasswd_commands: ['/usr/bin/rsync']
 ```
+
+<details><summary>example using shell commands</summary>
+
+```bash
+# upload the backup server's public SSH key to the remote host
+user@controller:~ $ rsync -avP public_keys/root@backupserver.CHANGEME.org.pub:
+# login to the remote host using SSH
+user@controller:~ $ ssh remotehost.CHANGEME.org
+# create a limited user account to which the backup server will connect
+user@remotehost:~ $ sudo useradd --groups ssh-access,sudo --comment "limited user account for remote backups" rsnapshot
+# authorize the backup server's SSH key on the rsnapshot user account
+user@remotehost:~ $ sudo mkdir /home/rsnapshot/.ssh && cat root@backupserver.CHANGEME.org.pub | sudo tee -a /home/rsnapshot/.ssh/authorized_keys && sudo chown -R g-rwx /home/rsnapshot/.ssh/
+# allow the rsnapshot user to run sudo rsync without password
+user@remotehost:~ $ echo 'rsnapshot ALL=(ALL) NOPASSWD: /usr/bin/rsync' | sudo tee -a /etc/sudoers.d/nopasswd && sudo chmod 0660 /etc/sudoers.d/nopasswd
+```
+</details>
+
 
 **Removing old backups:** if a backup job is added at some point, then later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
 
