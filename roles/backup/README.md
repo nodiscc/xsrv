@@ -38,9 +38,9 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - show the size of backups on the host: `ssh -t user@my.example.org sudo du --human-readable --summarize --time /var/backups/srv01/*`
 - transfer latest daily backups form the host to the controller (this may take a while): `xsrv fetch-backups PROJECT my.CHANGEME.org`
 
-**Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep renaming/editing large files.
+**Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep adding/removing/renaming/editing large files. If you want to free up disk space, and you are **certain** you will not need to recover files from old backups, you can start by deleting the oldest generations (e.g. `xsrv shell` then `sudo rm -r /var/backups/rsnapshot/monthly.5`). You can visualize disk space consumed by each backup generatino using tools such as `ncdu` or `duc` provided by the [monitoring_utils](../monitoring_utils/) role.
 
-**Local backups** are inherently not secure, because the device being backed up is able to delete/compromise its own backup. Prefer remote _pull_ backups from another machine (i.e. setup the backup role on a dedicated machine, and configure it to pull backups from other hosts, see [backup data from remote machines](#backup-data-from-remote-machines)). In addition, you should perform periodic copies of the latest backup generation to an offline/offiste storage, using the `xsrv fetch-backups` command or manually:
+**Local backups** are inherently not secure, because the device being backed up is able to delete/compromise its own backups, and backups are stored in the same location as the live data. Local backups still offer a recovery solution for accidental deletion of a specific piece of data, or application bugs. For disaster recovery, prefer remote _pull_ backups from another machine (i.e. setup the backup role on a dedicated machine, and configure it to pull backups from other hosts, see [backup data from remote machines](#backup-data-from-remote-machines)). In addition, you should perform periodic copies of the latest backup generation to an offline/offiste storage, using the `xsrv fetch-backups` command, or manually:
 
 <details><summary>Example Using shell commands:</summary>
 
@@ -82,7 +82,8 @@ user@remotehost:~ $ echo 'rsnapshot ALL=(ALL) NOPASSWD: /usr/bin/rsync' | sudo t
 </details>
 
 
-**Removing old backups:** if a backup job is added at some point, then later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
+**Removing old backup jobs:** if a backup job is added at some point, then later removed (for example, removed backup jobs for a decomissionned server), the corresponding files **will be kept** in later backup generations. To clean up files produced by removed backup jobs, delete the corresponding directory in `/var/backups/rsnapshot/*/`.
+
 
 ## Tags
 
