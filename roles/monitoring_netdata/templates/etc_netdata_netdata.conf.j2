@@ -43,6 +43,11 @@
    enabled = yes
    registry to announce = https://{{ inventory_hostname }}:{{ netdata_public_port | default('19999') }}
 
+{% if netdata_streaming_send_enabled %}
+[ml]
+    enabled = no
+{% endif %}
+
 [plugins]
 {% for plugin in netdata_disabled_plugins %}
    {{ plugin }} = no
