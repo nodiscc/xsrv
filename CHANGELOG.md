@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - graylog: support initial deployment of the role with graylog/mongodb/elasticsearch disabled
-- gitea: update to v1.21.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.4)
+- gitea: update to v1.21.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.5)
 - matrix: update element-web to v1.11.57 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.56) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.57)
 - update documentation
 
