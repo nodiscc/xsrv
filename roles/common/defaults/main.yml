@@ -179,7 +179,8 @@ apt_listbugs_ignore_list:
   - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
   - 1043415 # https://bugs.debian.org/1043415 - not applicable to upstream/packagecloud packages
   - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
-  - 1030284 # https://bugs.debian.org/1030284 # only affects arm64 architecture
+  - 1030284 # https://bugs.debian.org/1030284 - only affects arm64 architecture
+  - 1057715 # https://bugs.debian.org/1057715 - only affects i386 architecture
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service

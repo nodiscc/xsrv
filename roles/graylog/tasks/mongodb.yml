@@ -101,6 +101,7 @@
       - { db: "admin", role: "readWriteAnyDatabase" }
       - { db: "admin", role: "backup" }
   ignore_errors: "{{ ansible_check_mode }}"
+  when: graylog_enable_service | bool
   vars:
     ansible_python_interpreter: /var/lib/mongodb/.venv/bin/python3
 
@@ -118,6 +119,7 @@
       - { db: "graylog", role: "readWrite" }
       - { db: "graylog", role: "dbAdmin" }
   ignore_errors: "{{ ansible_check_mode }}"
+  when: graylog_enable_service | bool
   vars:
     ansible_python_interpreter: /var/lib/mongodb/.venv/bin/python3
 

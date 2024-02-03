@@ -1,6 +1,6 @@
 # xsrv.owncast
 
-This role will install [owncast](https://example.org/), an open source, self-hosted, decentralized, single user live video streaming and chat server for running your own live streams similar in style to the large mainstream options. It offers complete ownership over your content, interface, moderation and audience.
+This role will install [owncast](https://owncast.online/), an open source, self-hosted, decentralized, single user live video streaming and chat server for running your own live streams similar in style to the large mainstream options. It offers complete ownership over your content, interface, moderation and audience.
 
 [![](https://owncast.online/images/owncast-splash.png)](https://owncast.online/images/owncast-splash.png)
 

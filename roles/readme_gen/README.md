@@ -23,24 +23,18 @@ xsrv readme-gen myproject
 cd ~/playbooks/default
 # generate markdown inventory for all hosts
 ansible --module-name setup all
-ansible --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost
+ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost
 # generate markdown inventory for a group only
 ansible --module-name setup prod
-ansible --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" --extra-vars "readme_gen_limit={{ groups['prod'] }}" localhost
+ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" --extra-vars "readme_gen_limit={{ groups['prod'] }}" localhost
 # generate markdown inventory for listed hosts only
 ansible --module-name setup dev1.example.org,prod2.example.org
-ansible --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" --extra-vars "readme_gen_limit={{ ['dev1.example.org', 'prod2.example.org'] }}" localhost
+ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" --extra-vars "readme_gen_limit={{ ['dev1.example.org', 'prod2.example.org'] }}" localhost
 ```
 
 You should run the role **after** other hosts/roles have been fully deployed, as it uses Ansible [facts](https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html) installed by other roles and generates README.md content from these.
 
-Fact [caching](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html#caching-facts) must be enabled in your ansible configuration file (`xsrv edit-cfg`/`ansible.cfg`):
-
-```ini
-fact_caching = yaml
-fact_caching_connection = data/cache/facts/
-fact_caching_timeout = 1
-```
+Fact [caching](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html#caching-facts) must be enabled through `fact_caching = yaml` in your [ansible configuration file](../../playbooks/xsrv/ansible.cfg) (`xsrv edit-cfg`/`ansible.cfg`).
 
 Cached facts can be cleared manually by deleting the `data/cache/facts/` directory under your playbook directory (or the directory defined by `fact_caching_connection` in your `ansible/cfg`)
 

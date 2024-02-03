@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.22.1 yamllint ansible==9.0.1
+	pip3 install isort ansible-lint==6.22.2 yamllint ansible==9.2.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -91,7 +91,7 @@ test_fetch_backups:
 # - check test environment logs for warning/errors: ssh -t deploy@my.example.test sudo lnav /var/log/syslog
 # - make clean
 # - make bump_versions update_todo new_tag=$new_tag
-# - update release date in CHANGELOG.md, add and commit version bumps/changelog updates
+# - update release date in CHANGELOG.md, add and commit version bumps/changelog updates with message "release v$new_tag"
 # - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
 # - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag

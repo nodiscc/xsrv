@@ -1,0 +1,4 @@
+##### NMAP NETWORK SCANNER #####
+# the set of hosts to scan
+# Example: nmap_limit: ['host1.CHANGEME.org', 'host2.CHANGEME.org']
+nmap_limit: "{{ groups['all'] }}"

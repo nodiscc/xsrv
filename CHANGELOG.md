@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Added:**
+- add [`nmap`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap) command and role - run nmap network scanner against hosts from the inventory
+
+**Changed:**
+- graylog: support initial deployment of the role with graylog/mongodb/elasticsearch disabled
+- gitea: update to v1.21.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.5)
+- nextcloud: upgrade to v28.0.2 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.2)
+- matrix: update element-web to v1.11.57 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.56) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.57)
+- xsrv: update ansible to [v9.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+- update documentation
+
+[Full changes since v1.21.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.21.0...1.22.0)
+
+------------------
+
 #### [v1.21.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.21.0) - 2024-01-17
 
 **Upgrade procedure:**
@@ -33,7 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: update to v1.21.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.3)
 - postgresql: explicitely install postgresql version 15
 - openldap: update ldap-account-manager to [v8.6](https://github.com/LDAPAccountManager/lam/releases/tag/8.6)
-- matrix: update element-web to v1.11.52 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52)
+- matrix: update element-web to v1.11.55 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.53) [[24]](https://github.com/vector-im/element-web/releases/tag/v1.11.54) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.55)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 - monitoring_goaccess: update [IP to Country](https://db-ip.com/db/download/ip-to-country-lite) database to v2024-01
 - improve check mode support before first actual deployment
@@ -48,8 +70,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: fix shaarli zip extraction failing when the `unzip` package is not installed
 - nextcloud: fix Nextcloud upgrades sometimes failing with `Nextcloud is not installed - only a limited number of commands are available`
 - graylog: don't fail with `'graylog_mongodb_apt_repo_distribution' is undefined` when running the `mongodb` tag alone
-
-**Fixed:**
 - dnsmasq: only attempt to update blocklists after network is online and dnsmasq has started
 
 [Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
