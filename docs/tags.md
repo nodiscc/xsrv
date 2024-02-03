@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.20.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.22.0
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
 TAGS:
 apache-reverseproxy - setup apache custom reverseproxies

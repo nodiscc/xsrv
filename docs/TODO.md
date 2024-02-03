@@ -2,18 +2,22 @@
 
 ### xsrv/xsrv
 
-- #1264 - WIP: mumble: allow uninstalling mumble server using the `utils-mumble-uninstall` ansible tag - **`1.22.0`** `enhancement`
-- #1260 - WIP: add xsrv nmap subcommand/role - **`1.22.0`** `feature,security`
-- #1259 - WIP:  wireguard: when peer.public_key is not defined, auto-generate a public/private key pair for this peer - **`1.21.0`** `easy,enhancement`
-- #1257 - graylog: upgrade to v5.2.x - **`1.22.0`** `maintenance`
+- #1270 - WIP: netdata: disable ML fuctionality when streaming to a parent node is enabled - **`1.23.0`** `easy,enhancement,performance`
+- #1269 - document getting ansible-vault-password from keepassxc - **`2.0.0`** `documentation,enhancement,security,upstream`
+- #1268 - backup: allow automatic discovery of paths to backup/commands to run for each host - **`2.0.0`** `backups,enhancement`
+- #1267 - xsrv self-upgrade: update the bash completion script as well - **`-`** `enhancement`
+- #1266 - homepage: allow displaying arbitrary netdata badges in the footer - **`-`** `easy,enhancement`
+- #1264 - WIP: mumble: allow uninstalling mumble server using the `utils-mumble-uninstall` ansible tag - **`1.23.0`** `enhancement`
+- #1259 - WIP:  wireguard: when peer.public_key is not defined, auto-generate a public/private key pair for this peer - **`1.23.0`** `enhancement`
+- #1257 - graylog: upgrade to v5.2.x - **`1.23.0`** `maintenance`
 - #1256 - wireguard: web interface? - **`-`** `enhancement,question`
 - #1253 - wireguard: add QR code to auto-generated client config files - **`-`** `enhancement`
 - #1251 - WIP: xsrv: don't require sudo during xsrv init-vm-template - **`-`** `difficult,enhancement`
-- #1245 - gitea: use unix socket instead of HTTP socket? - **`1.22.0`** `enhancement,question,security`
+- #1245 - gitea: use unix socket instead of HTTP socket? - **`1.23.0`** `enhancement,question,security`
 - #1235 - gitea_act_runner: do not log job output to syslog by default - **`-`** `enhancement,monitoring,upstream`
-- #1230 - podman: add docker-compose? - **`1.22.0`** `enhancement,question`
-- #1226 - postgresql: allow enabling pg_stat_statements extension - **`1.22.0`** `easy,enhancement,monitoring,performance`
-- #1215 - WIP: tests: add tests for deploying individual roles to a host - **`-`** `tools`
+- #1230 - podman: add docker-compose? - **`1.23.0`** `enhancement,question`
+- #1226 - postgresql: allow enabling pg_stat_statements extension - **`1.23.0`** `easy,enhancement,monitoring,performance`
+- #1215 - WIP: tests: add tests for deploying individual roles to a host - **`1.23.0`** `tools`
 - #1214 - nextcloud: enable machine learning (AI) related features? - **`-`** `feature,question`
 - #1212 - nextcloud: allow enabling/disabling file locking? - **`-`** `enhancement,question`
 - #1211 - nextcloud: warning about opcache incorrect configuration - **`-`** `enhancement,performance`
@@ -27,7 +31,7 @@
 - #1134 - Lemmy role? - **`-`** `feature,question`
 - #1127 - xsrv: help-tags: outputs duplicate tags when running on non-default playbook - **`-`** `bug`
 - #1122 - nextcloud: install memories app? - **`-`** `feature,question`
-- #1119 - WIP: common/firewalld: allow defining a manual IP address/network blacklist (firewalld_bad_ips) - **`-`** `enhancement,security`
+- #1119 - WIP: common/firewalld: allow defining a manual IP address/network blacklist (firewalld_bad_ips) - **`1.23.0`** `enhancement,security`
 - #1108 - matrix/element: Cross-Origin Request Blocked: .well-known/matrix/client - **`-`** `question`
 - #1103 - xsrv: bash completion: auto-complete init-vm/init-vm-template options? - **`-`** `enhancement,question`
 - #1099 - graylog: document backup restoration procedure - **`-`** `backups,documentation`
@@ -97,7 +101,6 @@
 - #517 - allow configuration of a custom MOTD? - **`-`** `feature,question`
 - #497 - nextcloud: allow enabling 2-factor authentication? - **`-`** `configuration,enhancement,question,security`
 - #475 - ACME certificate authority role? - **`-`** `feature,question,security`
-- #459 - add xsrv nmap subcommand (nmap scan all hosts or a specific host, output to html)? - **`-`** `feature,monitoring,question,security`
 - #451 - Document management system? - **`-`** `feature,question`
 - #445 - bookstack role? - **`2.0.0`** `feature,question`
 - #441 - openldap: allow restricting application access to groups/setup MemberOf overlay - **`-`** `enhancement,security`
@@ -108,7 +111,7 @@
 - #344 - nextcloud: replace onlyoffice integration with collabora/nextcloud office? - **`-`** `feature,question`
 - #323 - prometheus role? - **`-`** `feature,monitoring,question`
 - #322 - Frontail role? - **`-`** `feature,monitoring,question`
-- #317 - monitoring_utils: lynis: suggestion[]=BOOT-5264|Consider hardening system services - **`1.22.0`** `enhancement,security`
+- #317 - monitoring_utils: lynis: suggestion[]=BOOT-5264|Consider hardening system services - **`1.23.0`** `enhancement,security`
 - #310 - samba: ability to whitelist/blacklist files by extension? - **`-`** `enhancement,question,security`
 - #309 - apply postgresqltuner recommended settings? - **`-`** `enhancement,performance,question`
 - #280 - Samba Directory Controller or other Identity Management solution? - **`-`** `feature,question`
@@ -139,9 +142,9 @@
 - #96 - grafana role? - **`-`** `feature,monitoring,question`
 - #93 - VNC/other remote desktop server role? - **`-`** `feature,question`
 - #86 - Peertube role? - **`-`** `feature,question`
-- #78 - Adminer role - **`1.22.0`** `feature`
+- #78 - Adminer role - **`1.23.0`** `feature`
 - #70 - common: ssh: allow setting up endlessh? - **`-`** `feature,question,security`
-- #69 - IDS/IPS role? - **`1.22.0`** `question,security`
+- #69 - IDS/IPS role? - **`1.23.0`** `question,security`
 - #64 - RAID role? - **`-`** `feature,question`
 - #63 - pfSense role? - **`-`** `feature,question,wontfix`
 - #61 - GDPR compliance? - **`-`** `feature,question`
@@ -156,12 +159,12 @@
 - #43 - OSM routing service role? - **`-`** `feature,question`
 - #42 - OpenStreetMap/maps tileserver role? - **`-`** `feature,question`
 - #41 - network scanner (SANE) server role? - **`-`** `feature,question`
-- #40 - SearxNG role - **`1.22.0`** `feature`
+- #40 - SearxNG role - **`1.23.0`** `feature`
 - #39 - wallabag role? - **`-`** `feature,question`
 - #37 - Replace `ntp` with `chrony`? - **`2.0.0`** `question`
 - #35 - simple git server role? - **`-`** `feature,question,wontfix`
 - #34 - CentOS compatibility? - **`-`** `feature,question,wontfix`
-- #33 - Minecraft server role? - **`1.22.0`** `feature,question`
+- #33 - Minecraft server role? - **`1.23.0`** `feature,question`
 - #30 - Gitlab role? - **`-`** `feature,question`
 - #26 - dynamic DNS updater role? - **`2.0.0`** `feature`
 - #24 - DHCP/TFTP/PXE server role? - **`-`** `feature,question`

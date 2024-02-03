@@ -310,7 +310,8 @@ apt_listbugs_ignore_list:
   - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
   - 1043415 # https://bugs.debian.org/1043415 - not applicable to upstream/packagecloud packages
   - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
-  - 1030284 # https://bugs.debian.org/1030284 # only affects arm64 architecture
+  - 1030284 # https://bugs.debian.org/1030284 - only affects arm64 architecture
+  - 1057715 # https://bugs.debian.org/1057715 - only affects i386 architecture
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -665,7 +666,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.21.3"
+gitea_version: "1.21.5"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1203,7 +1204,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.52"
+matrix_element_version: "1.11.57"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1586,7 +1587,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "28.0.1"
+nextcloud_version: "28.0.2"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
