@@ -253,3 +253,8 @@ backup	{{ remote_backup.user }}@{{ remote_backup.host }}:{{ remote_backup.path }
 
 # load additional config from /etc/rsnapshot.d/*.conf
 include_conf	`/usr/bin/find /etc/rsnapshot.d/ -type f -name "*.conf" -exec cat "{}" \;`
+
+{% if rsnapshot_trust_hosts %}
+backup_exec	/usr/local/bin/rsnapshot-get-remote-backup-commands required
+include_conf	/etc/rsnapshot.d/remote-hosts
+{% endif %}

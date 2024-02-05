@@ -1,0 +1,14 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+
+remote_rsnapshot_config=""
+{% for host in rsnapshot_trust_hosts %}
+remote_host_config=$(ssh -t -oStrictHostKeyChecking=no {{ host.user }}@{{ host.name }} sudo grep --no-filename -r -E "^backup" /etc/rsnapshot.d/)
+echo "$remote_host_config" | \
+    sed -e 's|^backup	+/|backup	{{ host.user }}@{{ host.name }}:/|g' | \
+    sed -e 's|^backup_exec	+|backup_exec	ssh -oStrictHostKeyChecking=no {{ host.user }}@{{ host.name }} |g' | \
+    sed -e 's|localhost/$||' > /etc/rsnapshot.d/remote-hosts.tmp
+{% endfor %}
+
+mv -f /etc/rsnapshot.d/remote-hosts.tmp /etc/rsnapshot.d/remote-hosts
