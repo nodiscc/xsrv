@@ -24,6 +24,8 @@ gitea_act_runner_labels:
   - "ubuntu-22.04:docker://node:16-bullseye"
   - "ubuntu-20.04:docker://node:16-bullseye"
   - "ubuntu-18.04:docker://node:16-buster"
+# prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
+gitea_act_runner_daily_podman_prune: no
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
 gitea_act_runner_version: "0.2.6"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
