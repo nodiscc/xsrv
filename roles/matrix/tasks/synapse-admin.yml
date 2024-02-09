@@ -37,7 +37,7 @@
 
 - name: download synapse-admin zip
   get_url:
-    url: "https://github.com/Awesome-Technologies/synapse-admin/releases/download/{{ matrix_synapse_admin_version }}/synapse-admin-{{ matrix_synapse_admin_version }}-dirty.tar.gz"
+    url: "https://github.com/Awesome-Technologies/synapse-admin/releases/download/{{ matrix_synapse_admin_version }}/synapse-admin-{{ matrix_synapse_admin_version }}.tar.gz"
     dest: "/root/synapse-admin-{{ matrix_synapse_admin_version }}-dirty.tar.gz"
     owner: root
     group: root
