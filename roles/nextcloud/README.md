@@ -21,6 +21,7 @@ Default installed/enabled applications include:
 - Viewers and editors for common file types (PDF, text, video...)
 - Federation between Nextcloud instances (seamless access to other instances files/shares)
 - Remote file storage access (FTP, SFTP, Samba/CIFS, local directory/drive...).
+- and [more](defaults/main.yml#L42)
 
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/PPVIb6V.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/1YaT357.png)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/URs7XH5.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/V6CR3we.png)
