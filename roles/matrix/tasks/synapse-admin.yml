@@ -38,7 +38,7 @@
 - name: download synapse-admin zip
   get_url:
     url: "https://github.com/Awesome-Technologies/synapse-admin/releases/download/{{ matrix_synapse_admin_version }}/synapse-admin-{{ matrix_synapse_admin_version }}.tar.gz"
-    dest: "/root/synapse-admin-{{ matrix_synapse_admin_version }}-dirty.tar.gz"
+    dest: "/root/synapse-admin-{{ matrix_synapse_admin_version }}.tar.gz"
     owner: root
     group: root
     mode: "0640"
@@ -61,7 +61,7 @@
 
 - name: extract synapse-admin zip
   unarchive:
-    src: "/root/synapse-admin-{{ matrix_synapse_admin_version }}-dirty.tar.gz"
+    src: "/root/synapse-admin-{{ matrix_synapse_admin_version }}.tar.gz"
     dest: "/root/synapse-admin-unpack"
     remote_src: yes
     owner: root
@@ -78,6 +78,6 @@
   when: matrix_synapse_admin_action == 'upgrade'
 
 - name: move synapse-admin extraction directory to install directory
-  command: "mv /root/synapse-admin-unpack/synapse-admin-{{ matrix_synapse_admin_version }}-dirty /var/www/{{ matrix_synapse_fqdn }}"
+  command: "mv /root/synapse-admin-unpack/synapse-admin-{{ matrix_synapse_admin_version }} /var/www/{{ matrix_synapse_fqdn }}"
   changed_when: yes
   when: (matrix_synapse_admin_action == 'initial') or (matrix_synapse_admin_action == 'upgrade')
