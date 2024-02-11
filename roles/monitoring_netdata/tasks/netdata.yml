@@ -210,6 +210,30 @@
     - mail
     - msmtp
 
+- name: create directory for netdata systemd overrides
+  file:
+    state: directory
+    path: /etc/systemd/system/netdata.service.d/
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: configure netdata systemd unit overrides
+  template:
+    src: etc_systemd_system_netdata.service.d_override.conf.j2
+    dest: /etc/systemd/system/netdata.service.d/override.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart netdata
+
+# apply netdata systemd overrides
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+
 - name: start and enable netdata
   service:
     name: netdata

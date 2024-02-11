@@ -16,6 +16,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: update stack template to [v0.6](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6)
 - matrix: update synapse-admin to [v0.9.1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
 
+**Fixed:**
+- monitoring_netdata/rsyslog: fix netdata logs no longer being appended to syslog
+
 #### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
 
 **Upgrade procedure:**
