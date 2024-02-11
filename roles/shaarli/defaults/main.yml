@@ -39,6 +39,8 @@ shaarli_version: 'v0.13.0'
 # list of IP addresses allowed to access shaarli (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
+# default view mode when using the stack template (small/medium/large)
+shaarli_stack_default_ui: "small"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
 shaarli_stack_version: "0.6"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)

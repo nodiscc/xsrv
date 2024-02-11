@@ -29,6 +29,7 @@
     - shaarli_php_upload_max_filesize|regex_search('[KMG]$')
     - shaarli_enable_service == shaarli_enable_service | bool
     - shaarli_allowed_hosts | type_debug == "list"
+    - shaarli_stack_default_ui in ['small', 'medium', 'large']
 
 - name: check that variables are correctly defined (shaarli_allowed_hosts)
   assert:

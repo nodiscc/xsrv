@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - gitea_act_runner: disable automatic nightly prune of podman images/containers by default [`gitea_act_runner_daily_podman_prune: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
 - monitoring_netdata: disable machine learning/anomaly detection functionality when streaming to a parent node ([`netdata_streaming_send_enabled`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) is enabled
+- shaarli: allow setting the default view mode when using the `stack` template ([`shaarli_stack_default_ui: small/medium/large`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml))
 - shaarli: update stack template to [v0.6](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6)
 - matrix: update synapse-admin to [v0.9.1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
 
