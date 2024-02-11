@@ -7,10 +7,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **monitoring_netdata:** `netdata_log_to_syslog`, `netdata_disable_debug_log`, `netdata_disable_error_log`, `netdata_disable_access_log` variables are no longer used and can be removed from your configuration, if you changed them from the defaults (`xsrv edit-host/edit-group`)
 - `xsrv deploy` to apply changes
+
 
 **Changed:**
 - gitea_act_runner: disable automatic nightly prune of podman images/containers by default [`gitea_act_runner_daily_podman_prune: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
+- monitoring_netdata: send all logs to systemd-journald, except access log. Remove configuration variables `netdata_log_to_syslog`, `netdata_disable_debug_log`, `netdata_disable_error_log`, `netdata_disable_access_log`
 - monitoring_netdata: disable machine learning/anomaly detection functionality when streaming to a parent node ([`netdata_streaming_send_enabled`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) is enabled
 - shaarli: allow setting the default view mode when using the `stack` template ([`shaarli_stack_default_ui: small/medium/large`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml))
 - shaarli: update stack template to [v0.6](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6)
