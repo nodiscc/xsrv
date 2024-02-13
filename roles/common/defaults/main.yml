@@ -79,7 +79,7 @@ kernel_modules_blacklist:
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
 setup_apt: yes
-# yes/no: enable 'contrib' and 'non-free' software sections in debian APT repositories
+# yes/no: enable contrib non-free and non-free-firmware software sections in debian APT repositories
 apt_enable_nonfree: no
 # clean downloaded package archives (apt clean) every n-days (0=disable)
 apt_clean_days: 7
