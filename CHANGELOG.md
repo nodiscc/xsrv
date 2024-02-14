@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: apt: enable non-free-firmware section when [`apt_enable_nonfree: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) [[1]](https://wiki.debian.org/Firmware)
 - shaarli: update stack template to [v0.6](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6)
 - matrix: update synapse-admin to [v0.9.1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
+- matrix: update element-web to v1.11.58 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.58)
+
 
 **Fixed:**
 - monitoring_netdata/rsyslog: fix netdata logs no longer being appended to syslog
