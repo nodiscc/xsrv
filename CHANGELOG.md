@@ -20,9 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update synapse-admin to [v0.9.1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
 - matrix: update element-web to v1.11.58 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.58)
 
-
 **Fixed:**
 - monitoring_netdata/rsyslog: fix netdata logs no longer being appended to syslog
+- shaarli: fix stack theme favicon not being displayed
 
 #### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
 
