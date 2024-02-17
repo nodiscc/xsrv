@@ -1,25 +1,25 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - monitoring
     - netdata
     - checks
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
     - monitoring
     - netdata
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags:
     - monitoring
     - netdata
 
-- name: include netdata-netdata-module-needrestart configuration tasks
+- name: import netdata-netdata-module-needrestart configuration tasks
   import_tasks: netdata-module-needrestart.yml
   become: yes
   tags:
@@ -29,7 +29,7 @@
     - netdata-needrestart
   when: setup_needrestart | bool
 
-- name: include netdata-module-logcount configuration tasks
+- name: import netdata-module-logcount configuration tasks
   import_tasks: netdata-module-logcount.yml
   become: yes
   tags:
@@ -39,7 +39,7 @@
     - netdata-logcount
   when: setup_netdata_logcount | bool
 
-- name: include netdata-module-debsecan configuration tasks
+- name: import netdata-module-debsecan configuration tasks
   import_tasks: netdata-module-debsecan.yml
   become: yes
   tags:
@@ -49,7 +49,7 @@
     - netdata-debsecan
   when: setup_netdata_debsecan | bool
 
-- name: include netdata-module-apt configuration tasks
+- name: import netdata-module-apt configuration tasks
   import_tasks: netdata-module-apt.yml
   become: yes
   tags:
@@ -59,7 +59,7 @@
     - netdata-apt
   when: setup_netdata_apt | bool
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
@@ -70,7 +70,7 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: include firewalld configuration tasks
+- name: import firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes
   tags:
@@ -90,13 +90,13 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: include netdata notification testing tasks
+- name: import netdata notification testing tasks
   import_tasks: utils-netdata-test-notifications.yml
   tags:
     - never
     - utils-netdata-test-notifications
 
-- name: include automatic reboot/restart tasks
+- name: import automatic reboot/restart tasks
   import_tasks: utils-autorestart.yml
   become: yes
   tags:

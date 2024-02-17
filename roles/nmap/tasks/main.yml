@@ -1,4 +1,4 @@
-- name: include nmap configuration tasks
+- name: import nmap configuration tasks
   import_tasks: nmap.yml
   become: yes
   tags: nmap

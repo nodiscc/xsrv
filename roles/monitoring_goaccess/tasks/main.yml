@@ -1,11 +1,11 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - goaccess
     - monitoring
     - checks
 
-- name: include self-signed certificates configuration tasks
+- name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
@@ -18,14 +18,14 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include goaccess configuration tasks
+- name: import goaccess configuration tasks
   import_tasks: goaccess.yml
   become: yes
   tags:
     - goaccess
     - monitoring
 
-- name: include apache configuration tasks
+- name: import apache configuration tasks
   import_tasks: apache.yml
   become: yes
   tags:
@@ -36,7 +36,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags:
@@ -50,7 +50,7 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: include forced goaccess HTML report geneartion tasks
+- name: import forced goaccess HTML report geneartion tasks
   import_tasks: utils-goaccess-update.yml
   tags:
     - never

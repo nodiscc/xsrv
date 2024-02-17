@@ -1,4 +1,4 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - tt_rss
@@ -11,20 +11,20 @@
     - tt_rss
     - apache
 
-- name: include postgresql configuration tasks
+- name: import postgresql configuration tasks
   import_tasks: postgresql.yml
   become: yes
   tags:
     - tt_rss
     - postgresql
 
-- name: include tt-rss configuration tasks
+- name: import tt-rss configuration tasks
   import_tasks: tt-rss.yml
   become: yes
   tags:
     - tt_rss
 
-- name: include self-signed certificates configuration tasks
+- name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
@@ -36,7 +36,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include apache configuration tasks
+- name: import apache configuration tasks
   import_tasks: apache.yml
   become: yes
   tags:
@@ -46,7 +46,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include fail2ban configuration tasks
+- name: import fail2ban configuration tasks
   import_tasks: fail2ban.yml
   become: yes
   tags:
@@ -56,7 +56,7 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -67,7 +67,7 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: tt_rss

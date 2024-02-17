@@ -1,18 +1,18 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - gitea
     - gitea_act_runner
     - checks
 
-- name: include act-runner configuration tasks
+- name: import act-runner configuration tasks
   import_tasks: act-runner.yml
   become: yes
   tags:
     - gitea
     - gitea_act_runner
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags:

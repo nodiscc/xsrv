@@ -1,4 +1,4 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - graylog
@@ -12,29 +12,29 @@
     - graylog
     - mongodb
 
-- name: include graylog requirements configuration tasks
+- name: import graylog requirements configuration tasks
   import_tasks: requirements.yml
   become: yes
   tags: graylog
 
-- name: include mongodb configuration tasks
+- name: import mongodb configuration tasks
   import_tasks: mongodb.yml
   become: yes
   tags:
     - graylog
     - mongodb
 
-- name: include elasticsearch configuration tasks
+- name: import elasticsearch configuration tasks
   import_tasks: elasticsearch.yml
   become: yes
   tags: graylog
 
-- name: include graylog configuration tasks
+- name: import graylog configuration tasks
   import_tasks: graylog.yml
   become: yes
   tags: graylog
 
-- name: include self-signed certificates configuration tasks
+- name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
@@ -46,7 +46,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include apache configuration tasks
+- name: import apache configuration tasks
   import_tasks: apache.yml
   become: yes
   tags:
@@ -56,7 +56,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include rsnapshot/backup configuration tasks
+- name: import rsnapshot/backup configuration tasks
   import_tasks: backups.yml
   become: yes
   tags:
@@ -66,7 +66,7 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
@@ -77,7 +77,7 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -88,12 +88,12 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: graylog
 
-- name: include firewalld configuration tasks
+- name: import firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes
   tags:

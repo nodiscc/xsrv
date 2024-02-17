@@ -1,9 +1,9 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - readme_gen
     - checks
 
-- name: include readme generation tasks
+- name: import readme generation tasks
   import_tasks: readme_gen.yml
   tags: readme_gen

@@ -1,11 +1,11 @@
-- name: include monitoring-utils configuration tasks
+- name: import monitoring-utils configuration tasks
   import_tasks: monitoring-utils.yml
   become: yes
   tags:
     - monitoring
     - monitoring_utils
 
-- name: include lynis configuration tasks
+- name: import lynis configuration tasks
   import_tasks: lynis.yml
   become: yes
   tags:
@@ -22,7 +22,7 @@
 
 ##### UTILITIES #####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: include duc tasks
+- name: import duc tasks
   import_tasks: utils-duc.yml
   become: yes
   tags:

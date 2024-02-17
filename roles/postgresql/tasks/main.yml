@@ -3,19 +3,19 @@
     file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
   tags: postgresql
 
-- name: include postgresql configuration tasks
+- name: import postgresql configuration tasks
   import_tasks: postgresql.yml
   become: yes
   tags: postgresql
 
-- name: include rsnapshot/backup configuration tasks
+- name: import rsnapshot/backup configuration tasks
   import_tasks: backups.yml
   become: yes
   tags:
     - postgresql
     - backup
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
@@ -27,7 +27,7 @@
     - ansible_local.rsyslog.ansible_managed | bool
 
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -38,7 +38,7 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- name: include ansible-facts configuration tasks
+- name: import ansible-facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: postgresql
@@ -49,7 +49,7 @@
 
 ##### UTILITIES #####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: include pgmetrics tasks
+- name: import pgmetrics tasks
   import_tasks: utils-pgmetrics.yml
   become: yes
   tags:
