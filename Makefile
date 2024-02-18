@@ -236,7 +236,11 @@ codespell: venv
 
 .PHONY: test_install_test_deps # manual - install requirements for test suite
 test_install_test_deps:
-	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq
+	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq cloc
+
+.PHONY: test_cloc # count SLOC with cloc
+test_cloc: clean
+	cloc --exclude-dir=tests --force-lang='Jinja Template',j2 --force-lang=XML,conf --force-lang=XML,cfg .
 
 # can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginning of the role
 .PHONY: list_default_variables # manual - list all variables names from role defaults
