@@ -319,7 +319,7 @@ Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY
 
 You may also place a custom script in `.ansible-vault-password`, that will fetch the master password from a secret storage/keyring of your choice (in this case the file must be made executable - `chmod +x .ansible-vault-password`).
 
-To disable reading the master password from a file/script: edit the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting. You will be asked for the `sudo` password before deployment. You may also specify a diffrent path to the password file.
+To disable reading the master password from a file/script: edit the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting. You will be asked for the `sudo` password before deployment. You may also specify a different path to the password file.
 
 
 ### xsrv edit-group
@@ -445,7 +445,7 @@ Open the current `syslog` log with the [lnav](https://lnav.org/) log viewer on t
 $ xsrv logs my.example.org
 ```
 
-If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog)/[monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils)/[monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be foudn [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage)
+If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog)/[monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils)/[monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be found [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage)
 
 
 
@@ -507,7 +507,7 @@ Include the collection and roles in your playbooks:
    - ...
 ```
 
-Note that `xsrv` roles may require a minimum ansible versino, specified in [`meta/runtime.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/meta/runtime.yml)
+Note that `xsrv` roles may require a minimum ansible version, specified in [`meta/runtime.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/meta/runtime.yml)
 
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 

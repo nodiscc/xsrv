@@ -2,7 +2,7 @@
 
 ### xsrv/xsrv
 
-- #1270 - WIP: netdata: disable ML fuctionality when streaming to a parent node is enabled - **`1.23.0`** `easy,enhancement,performance`
+- #1270 - WIP: netdata: disable ML functionality when streaming to a parent node is enabled - **`1.23.0`** `easy,enhancement,performance`
 - #1269 - document getting ansible-vault-password from keepassxc - **`2.0.0`** `documentation,enhancement,security,upstream`
 - #1268 - backup: allow automatic discovery of paths to backup/commands to run for each host - **`2.0.0`** `backups,enhancement`
 - #1267 - xsrv self-upgrade: update the bash completion script as well - **`-`** `enhancement`

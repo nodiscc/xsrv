@@ -50,7 +50,7 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: import forced goaccess HTML report geneartion tasks
+- name: import forced goaccess HTML report generation tasks
   import_tasks: utils-goaccess-update.yml
   tags:
     - never

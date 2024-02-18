@@ -32,7 +32,7 @@ runner:
   # The labels of a runner are used to determine which jobs the runner can run, and how to run them.
   # Like: ["macos-arm64:host", "ubuntu-latest:docker://node:16-bullseye", "ubuntu-22.04:docker://node:16-bullseye"]
   # If it's empty when registering, it will ask for inputting labels.
-  # If it's empty when execute `deamon`, will use labels in `.runner` file.
+  # If it's empty when execute `daemon`, will use labels in `.runner` file.
   labels: {{ gitea_act_runner_labels }}
 
 cache:

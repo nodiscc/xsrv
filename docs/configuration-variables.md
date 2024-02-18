@@ -612,7 +612,7 @@ gitea_act_runner_container_engine: "podman"
 # set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
 gitea_actions_runner_container_network: "host"
 # list of labels to use when registering the runner (https://docs.gitea.com/usage/actions/design)
-# If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role muyst be redeployed
+# If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role must be redeployed
 # Add "host:host" to this list to allow running workflows directly on the host, without containerization (and specify "runs-on: host" in your workflow yml file)
 # If host-based workflows are allowed, you probably want to install the nodejs package on the host so that nodejs-based actions can run
 # Example:

@@ -63,7 +63,7 @@ nextcloud - setup nextcloud file sharing/collaboration platform
 nmap - run nmap network scanner against managed hosts
 openldap - setup LDAP server
 owncast - setup owncast live streaming server
-packages - additional package istallation/removal
+packages - additional package installation/removal
 podman - setup podman container engine
 postgresql - setup postgresql database server
 readme_gen - add hosts information to the project's README.md
