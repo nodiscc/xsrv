@@ -69,10 +69,11 @@ Login to your graylog instance and configure a basic **[input](https://go2docs.g
 
 - Title: `Syslog/TLS/TCP`
 - Port: `5140`
-- TLS cert file: `/etc/graylog/ssl/graylog-ca.crt` (the default, self-signed cert)
-- TLS private key: `/etc/graylog/ssl/graylog-ca.key` (the default, self-signed cert)
+- TLS cert file: `/etc/ssl/graylog/ca.crt` (the default, self-signed cert)
+- TLS private key: `/etc/ssl/graylog/ca.key` (the default, self-signed cert)
+- [x] Enable TLS
 - TLS client authentication: `disabled` (not implemented yet)
-- TLS client auth trusted certs: `/etc/graylog/ssl/graylog-ca.crt`
+- TLS client auth trusted certs: `/etc/ssl/graylog/ca.crt`
 - [x] Allow overriding date?
 - Save
 

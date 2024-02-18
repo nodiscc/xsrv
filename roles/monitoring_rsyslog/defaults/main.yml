@@ -1,11 +1,23 @@
 ##### RSYSLOG LOG PROCESSING SYSTEM #####
 # number of daily /var/log/syslog archives to retain
 rsyslog_retention_days: 186
-# yes/no: enable forwarding of syslog logs to a syslog server (over TLS/TCP)
+# enable forwarding of syslog logs to a syslog server over TLS/TCP (no/yes)
 rsyslog_enable_forwarding: no
-# if forwarding is enabled, hostname/port to forward logs to (e.g. host with the nodiscc.xsrv.graylog role)
+# if forwarding is enabled, hostname/port to forward logs to
 rsyslog_forward_to_hostname: "logs.CHANGEME.org"
 rsyslog_forward_to_port: 5140
+# if forwarding is enabled, inventory hostname of the host to forward logs to
+rsyslog_forward_to_inventory_hostname: "my.CHANGEME.org"
+# enable receiving logs from other hosts over TLS/TCP port 514 (no/yes)
+# log collectors must be deployed before clients in the playbook execution order
+rsyslog_enable_receive: no
+# if rsyslog_enable_receive is enabled, DNS name of this syslog server/collector
+rsyslog_fqdn: "logs.CHANGEME.org"
+# if rsyslog_enable_receive is enabled, path to the directory to write remote hosts logs to
+rsyslog_remote_logs_path: /var/log/rsyslog/hosts
+# when rsyslog_enable_forwarding or rsyslog_enable_receive is enabled, start and end validity dates for TLS certificates (YYYYMMDDHHMMSSZ)
+rsyslog_cert_not_before: "20240219000000Z"
+rsyslog_cert_not_after: "20340219000000Z"
 # custom rsyslog configuration directives, applied before forwarding/single-file aggregation (list)
 # Example:
 # rsyslog_custom_config:
@@ -13,3 +25,10 @@ rsyslog_forward_to_port: 5140
 #   - 'if $programname == "apache" and re_match($msg, ".* 127.0.0.1 - - .* \"GET /server-status\\?auto HTTP/1.1\" 200") then stop' # discard messages matching this program name and regular expression
 #   - 'if $programname == "CRON" and re_match($msg, "cron:session): session (opened|closed) for user .*") then stop'
 rsyslog_custom_config: []
+# firewall zones from which to allow incoming logs (zone, state), if rsyslog_enable_receive: yes and nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+rsyslog_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: enabled
