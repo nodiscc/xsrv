@@ -240,7 +240,7 @@ test_install_test_deps:
 
 .PHONY: test_cloc # count SLOC with cloc
 test_cloc:
-	cloc --exclude-dir=tests --exclude-dir=pip-cache --exclude-dir=.venv --force-lang='Jinja Template',j2 --force-lang=XML,conf --force-lang=XML,cfg .
+	cloc --exclude-dir=tests --exclude-dir=pip-cache --exclude-dir=.venv --force-lang='Jinja Template',j2 --force-lang='Jinja Template',conf --force-lang='Jinja Template',cfg .
 
 # can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginning of the role
 .PHONY: list_default_variables # manual - list all variables names from role defaults
