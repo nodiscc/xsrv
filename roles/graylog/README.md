@@ -82,8 +82,6 @@ Login to your graylog instance and configure a basic **[input](https://go2docs.g
 
 Create **[streams](https://go2docs.graylog.org/5-1/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select whether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
 
-<!-- TODO ADD EXAMPLE STREAM SETUP -->
-
 ---------------
 
 #### Search and filter
@@ -279,8 +277,6 @@ See the included [rsnapshot configuration](templates/etc_rsnapshot.d_graylog.con
 Currently, only graylog configuration is backed up, log data stored in Elasticsearch is not backed up.
 
 You may use [`bsondump`](https://www.mongodb.com/docs/database-tools/bsondump/) to read and manipulate mongodb backups.
-
-<!-- TODO backup restoration procedure -->
 
 ---------------
 

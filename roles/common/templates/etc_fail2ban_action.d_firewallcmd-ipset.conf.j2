@@ -49,7 +49,6 @@ actionunban = ipset -exist del <ipmset> <ip>
 
 actionstart = firewall-cmd --direct --new-ipset=<ipmset> --type=hash:ip --option=timeout=<default-ipsettime> --option=maxelem=<maxelem> <firewalld_familyopt>
 
-# TODO: there doesn't seem to be an explicit way to invoke the ipset flush function using firewall-cmd
 actionflush = 
 
 actionstop = firewall-cmd --direct --delete-ipset=<ipmset>

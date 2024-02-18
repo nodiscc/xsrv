@@ -27,7 +27,7 @@
   failed_when:
     - 'mumble_update_superuser.rc not in [0, 1]'
     - '"Superuser password set on server" not in mumble_update_superuser.stdout'
-  changed_when: no # never return changed, murmurd always returns 'Superuser password set' regardless of if password was changed or not # TODO report issue
+  changed_when: no # never return changed, murmurd always returns 'Superuser password set' regardless of if password was changed or not # https://github.com/mumble-voip/mumble/issues/3226
   ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SERVICE #####
