@@ -1,7 +1,9 @@
 - name: load distribution-specific variables
   include_vars:
     file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
-  tags: postgresql
+  tags:
+    - postgresql
+    - rsyslog
 
 - name: import postgresql configuration tasks
   import_tasks: postgresql.yml

@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - monitoring_netdata/rsyslog: fix netdata logs no longer being appended to syslog
 - shaarli: fix stack theme favicon not being displayed
+- postgresql: fix role execution when called with `rsyslog` ansible tag 
 
 #### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
 
