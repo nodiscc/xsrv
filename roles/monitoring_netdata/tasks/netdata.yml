@@ -94,7 +94,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
-  openssl_certificate:
+  community.crypto.x509_certificate:
     path: "/etc/ssl/netdata/netdata-cert.pem"
     privatekey_path: "/etc/ssl/netdata/netdata-key.pem"
     csr_path: "/etc/ssl/netdata/netdata-csr.pem"

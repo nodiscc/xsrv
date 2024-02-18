@@ -27,7 +27,7 @@
     - "{{ matrix_element_fqdn }}"
 
 - name: generate self-signed openssl certificate
-  openssl_certificate:
+  community.crypto.x509_certificate:
     path: "/etc/ssl/certs/{{ item }}.crt"
     privatekey_path: "/etc/ssl/private/{{ item }}.key"
     csr_path: "/etc/ssl/private/{{ item }}.csr"
