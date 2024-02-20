@@ -1,4 +1,4 @@
-- name: copy transmission firewalld service definition
+- name: copy owncast firewalld service definition
   template:
     src: etc_firewalld_services_owncast.xml.j2
     dest: /etc/firewalld/services/owncast.xml
