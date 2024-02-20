@@ -71,6 +71,3 @@
     dest: "{{ playbook_dir }}/data/certificates/syslog-{{ rsyslog_fqdn }}.crt"
     flat: yes
   ignore_errors: "{{ ansible_check_mode }}"
-
-# TODO firewall port 514/tcp
-# TODO use common name based authentication
