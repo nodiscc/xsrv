@@ -184,6 +184,7 @@ apt_listbugs_ignore_list:
   - 1061776 # https://bugs.debian.org/1061776 - only affects ssh jail on systems without rsyslog
   - 1037437 # https://bugs.debian.org/1037437 - only affects ssh jail on systems without rsyslog
   - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
+  - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
