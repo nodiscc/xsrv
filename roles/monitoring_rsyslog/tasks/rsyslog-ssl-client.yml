@@ -90,10 +90,6 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: rsyslog_enable_forwarding | bool
 
-# apply rsyslog configuration, if changed
-- name: apply configuration
-  meta: flush_handlers
-
 - name: migration/1.23.0 - remove files from old versions of the role
   file:
     state: absent
