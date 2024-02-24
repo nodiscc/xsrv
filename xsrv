@@ -787,7 +787,7 @@ _main() {
         "upgrade") init_venv; shift; upgrade_roles ;;
         "readme-gen") init_venv; shift; readme_gen "$@";;
         "nmap") init_venv; shift; nmap "$@";;
-        "scan") init_venv; shift; scan_secrets "$@";;
+        "scan") scan_secrets "$@";;
         "show-defaults") shift; show_defaults "$@";;
         "self-upgrade") self_upgrade;;
         "init-vm") init_vm "$@";;
