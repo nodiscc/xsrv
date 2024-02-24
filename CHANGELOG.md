@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
+- xsrv: add `scan` command (scan a project directory for cleartext secrets/passwords using [trivy](https://github.com/aquasecurity/trivy))
 - monitoring_rsyslog: allow receiving logs from syslog clients over the network on port `514/tcp` ([`rsyslog_enable_receive: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
 
 **Removed:**

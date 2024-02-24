@@ -32,6 +32,7 @@ edit-group-vault [project] [group]  edit encrypted (vault) group configuration (
 check [project] [host|group]        simulate deployment, report what would be changed
 deploy [project] [host|group]       deploy the main playbook (apply configuration/roles)
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
+scan [project]                      scan a project directory for cleartext passwords/secrets
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 o|open [project]                    open the project directory in the default file manager
