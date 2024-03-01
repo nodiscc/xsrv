@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: update stack template to v0.7 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6) [[2]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.7)
 - matrix: update synapse-admin to [v0.9.1](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
 - matrix: update element-web to v1.11.59 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.58) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.59)
+- xsrv: update ansible to [v9.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 - cleanup: standardize task names, remove files from old versions of the roles, use `community.crypto.x509_certificate` instead of deprecated `openssl_certificate` modules
 - update documentation, add Gitea/Github Actions example for secret scanning
 - improve automatic tests
