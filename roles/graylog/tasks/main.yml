@@ -12,13 +12,6 @@
     - graylog
     - mongodb
 
-- name: import syslog certificates configuration tasks
-  import_tasks: graylog-ssl.yml
-  become: yes
-  tags:
-    - ssl
-    - graylog
-
 - name: import graylog requirements configuration tasks
   import_tasks: requirements.yml
   become: yes
@@ -40,6 +33,13 @@
   import_tasks: graylog.yml
   become: yes
   tags: graylog
+
+- name: import syslog certificates configuration tasks
+  import_tasks: graylog-ssl.yml
+  become: yes
+  tags:
+    - ssl
+    - graylog
 
 - name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
