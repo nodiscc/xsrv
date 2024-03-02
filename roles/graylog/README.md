@@ -279,6 +279,37 @@ Currently, only graylog configuration is backed up, log data stored in Elasticse
 
 You may use [`bsondump`](https://www.mongodb.com/docs/database-tools/bsondump/) to read and manipulate mongodb backups.
 
+**Restoring backups:**
+
+Place a copy of your mongodb backups in `~/mongodb/` on the host on which the data will be restored. The directory structure should look like this:
+
+```
+~/mongodb/
+├── admin
+│   ├── system.version.bson
+│   └── system.version.metadata.json
+└── graylog
+    ├── access_tokens.bson
+    ├── access_tokens.metadata.json
+    ├── alarmcallbackconfigurations.bson
+    ├── alarmcallbackconfigurations.metadata.json
+    ...
+```
+
+```bash
+# deploy the graylog role on the host on which the data will be restored
+TAGS=graylog xsrv deploy default graylog.EXAMPLE.org
+# access the host over SSH
+xsrv shell graylog.EXAMPLE.org
+# stop the graylog service
+sudo systemctl stop graylog-server
+# restore the mongodb database
+# MONGODB_ADMIN_PASSWORD is the value of mongodb_admin_password in the host configuration (xsrv edit-vault)
+mongorestore --drop --uri mongodb://admin:MONGODB_ADMIN_PASSWORD@127.0.0.1:27017/ ~/mongodb
+# start graylog
+sudo systemctl start graylog
+```
+
 ---------------
 
 ## Uninstallation
