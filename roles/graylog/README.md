@@ -310,6 +310,8 @@ mongorestore --drop --uri mongodb://admin:MONGODB_ADMIN_PASSWORD@127.0.0.1:27017
 sudo systemctl start graylog
 ```
 
+If you get an error message `No such index` in graylog queries after restoring a dump, you may need to access `System > Indices > Default Index Set > Maintenance > Recalculate index ranges`
+
 ---------------
 
 ## Uninstallation
@@ -317,8 +319,8 @@ sudo systemctl start graylog
 ```bash
 sudo systemctl stop elasticsearch graylog-server mongod
 sudo apt purge elasticsearch graylog-4.0-repository  graylog-server mongodb-org
-sudo rm -rf /etc/apache2/sites-available/graylog.conf /etc/apache2/sites-enabled/graylog.conf /usr/share/keyrings/elasticsearch.gpg /etc/apt/sources.list.d/elasticsearch.list /etc/systemd/system/elasticsearch.service.d/ /etc/elasticsearch /etc/ansible/facts.d/graylog.fact /etc/firewalld/services/graylog-tcp.xml /etc/graylog/ /usr/share/keyrings/mongodb.gpg /etc/apt/sources.list.d/mongodb.list /etc/netdata/go.d/httpcheck.conf.d/graylog.conf /etc/netdata/health.d/processes.conf.d/graylog.conf /etc/rsyslog.d/graylog.conf /var/log/mongodb/ /var/log/elasticsearch/ /var/log/graylog-server/ /var/lib/elasticsearch
 sudo firewall-cmd --remove-service=graylog-tcp --zone internal --permanent
+sudo rm -rf /etc/apache2/sites-available/graylog.conf /etc/apache2/sites-enabled/graylog.conf /usr/share/keyrings/elasticsearch.gpg /etc/apt/sources.list.d/elasticsearch.list /etc/systemd/system/elasticsearch.service.d/ /etc/elasticsearch /etc/ansible/facts.d/graylog.fact /etc/firewalld/services/graylog-tcp.xml /etc/graylog/ /usr/share/keyrings/mongodb.gpg /etc/apt/sources.list.d/mongodb.list /etc/netdata/go.d/httpcheck.conf.d/graylog.conf /etc/netdata/health.d/processes.conf.d/graylog.conf /etc/rsyslog.d/graylog.conf /var/log/mongodb/ /var/log/elasticsearch/ /var/log/graylog-server/ /var/lib/elasticsearch /etc/rsnapshot.d/graylog.conf
 sudo systemctl daemon-reload
 sudo systemctl reload apache2 firewalld
 sudo systemctl restart rsyslog
