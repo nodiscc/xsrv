@@ -40,7 +40,8 @@ test_ansible_lint: venv
 test_command_line:
 	rm -rf tests/playbooks/xsrv-init-playbook
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-init-playbook my.example.org
-	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks"  EDITOR=cat ./xsrv edit-group-vault xsrv-init-playbook all && grep ANSIBLE_VAULT tests/playbooks/xsrv-init-playbook/group_vars/all/all.vault.yml
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" EDITOR=cat ./xsrv edit-group-vault xsrv-init-playbook all && grep ANSIBLE_VAULT tests/playbooks/xsrv-init-playbook/group_vars/all/all.vault.yml
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv show-groups xsrv-init-playbook my.example.org
 
 ##### MANUAL TESTS #####
 

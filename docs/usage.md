@@ -13,7 +13,7 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.21.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.22.0
 
 USAGE: xsrv COMMAND [project] [host]
 
@@ -39,6 +39,7 @@ o|open [project]                    open the project directory in the default fi
 readme-gen [project]                generate a markdown inventory in the project's README.md
 nmap [project]                      run a nmap scan against hosts in the project
 show-defaults [project] [role]      show all variables and their default values
+show-groups [project] [host]        list all groups a host is a member of
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
 self-upgrade                        check for new releases/upgrade the xsrv script in-place

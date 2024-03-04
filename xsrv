@@ -30,6 +30,7 @@ o|open [project]                    open the project directory in the default fi
 readme-gen [project]                generate a markdown inventory in the project's README.md
 nmap [project]                      run a nmap scan against hosts in the project
 show-defaults [project] [role]      show all variables and their default values
+show-groups [project] [host]        list all groups a host is a member of
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
 self-upgrade                        check for new releases/upgrade the xsrv script in-place
@@ -284,6 +285,13 @@ show_defaults() {
         done)
         echo -e "$defaults_header""$defaults_list" | $pager 2>/dev/null
     fi
+}
+show_groups() {
+    # list all groups a host is a member of
+    _check_host_name
+    cd "$projects_dir/$project_name"
+    echo "[xsrv] INFO: showing all groups for $host_name"
+    ansible -m debug -a 'msg={{ group_names }}' "$host_name"
 }
 
 help() {
@@ -789,6 +797,7 @@ _main() {
         "nmap") init_venv; shift; nmap "$@";;
         "scan") scan_secrets "$@";;
         "show-defaults") shift; show_defaults "$@";;
+        "show-groups") init_venv; shift; show_groups "$@";;
         "self-upgrade") self_upgrade;;
         "init-vm") init_vm "$@";;
         "init-vm-template") init_vm_template "$@";;

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.23.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.23.0) - UNRELEASED
 
 **Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **monitoring_netdata:** `netdata_log_to_syslog`, `netdata_disable_debug_log`, `netdata_disable_error_log`, `netdata_disable_access_log` variables are no longer used and can be removed from your configuration, if you changed them from the defaults (`xsrv edit-host/edit-group`)
 - **monitoring_rsyslog:** if `rsyslog_enable_forwarding` is set to `yes` in your host/group variables (`xsrv edit-host/edit-group`), set `rsyslog_forward_to_inventory_hostname` to the inventory hostname of the syslog/graylog server receiving the logs
@@ -14,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - xsrv: add `scan` command (scan a project directory for cleartext secrets/passwords using [trivy](https://github.com/aquasecurity/trivy))
+- xsrv: add `show-groups` command (list all groups a host is a member of)
 - monitoring_rsyslog: allow receiving logs from syslog clients over the network on port `514/tcp` ([`rsyslog_enable_receive: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
 
 **Removed:**
