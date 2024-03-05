@@ -465,6 +465,14 @@ my.example.org | SUCCESS => {
 }
 ```
 
+### xsrv scan
+
+Scans a project directory for passwords/secrets stored in cleartext in host/group variables. Sensitive values such as password and encryption keys should be stored in encrypted (_vaulted_) variable files - see [`edit-vault`](#xsrv-edit-vault) and [`edit-group-vault`](#xsrv-edit-group-vault) commands.
+
+This command uses [trivy](https://github.com/aquasecurity/trivy) and a [built-in configuration file](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/trivy-secrets.yml?ref_type=heads). Note that it doesn't scan other files such as custom roles or files insidethe `data/` directory of the project. It is your responsibility to ensure that any secrets in these files are properly encrypted.
+
+`xsrv scan` can be used in your [continuous integration](#continuous-deployment) jobs to detect secrets that have been pushed accidentally to your p'oject's git repository (although at this point it is too late, and the secret should be considered as compromised and rotated).
+
 
 ----------------------------
 
