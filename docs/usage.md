@@ -421,12 +421,12 @@ VMs created using this method can then be added to your project using [`xsrv ini
 
 ### xsrv shell
 
-Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the host name - the port and user name will be detected automatically from the host's [configuration variables](#manage-configuration).
+Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the porject and host name - the port and user name will be detected automatically from the host's [configuration variables](#manage-configuration).
 
 ```bash
-$ xsrv shell my.example.org
+$ xsrv shell default my.example.org
 # or
-$ xsrv ssh my.example.org
+$ xsrv ssh default my.example.org
 ```
 
 An alternative is to use the [`readme-gen`](#xsrv-readme-gen) command to generate a SSH client configuration file which will allow contacting the host with `ssh $HOST` without specifying the port/user.
