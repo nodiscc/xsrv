@@ -474,6 +474,14 @@ This command uses [trivy](https://github.com/aquasecurity/trivy) and a [built-in
 `xsrv scan` can be used in your [continuous integration](#continuous-deployment) jobs to detect secrets that have been pushed accidentally to your p'oject's git repository (although at this point it is too late, and the secret should be considered as compromised and rotated).
 
 
+### More utilities
+
+Many "one-shot" tasks are available using `utils*` [tags](tags.md). These tasks will not run during normal execution of the playbook. Instead, you must call them explicitely by passing the relevant tag on the command-line:
+
+```bash
+TAGS=utils-backup-now xsrv deploy default my.example.org
+```
+
 ----------------------------
 
 ## Advanced
