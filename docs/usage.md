@@ -450,6 +450,21 @@ $ xsrv logs my.example.org
 If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog)/[monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils)/[monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be found [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage)
 
 
+### xsrv show-groups
+
+Displays the list of groups that contain a specific host. Useful if your inventory structure starts to get complex, with many nested groups/subgroups.
+
+```bash
+$ xsrv show-groups default my.example.org
+[xsrv] INFO: showing all groups for my.example.org
+my.example.org | SUCCESS => {
+    "msg": [
+        "database",
+        "prod"
+    ]
+}
+```
+
 
 ----------------------------
 

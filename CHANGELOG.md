@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - xsrv: add `scan` command (scan a project directory for cleartext secrets/passwords using [trivy](https://github.com/aquasecurity/trivy))
-- xsrv: add `show-groups` command (list all groups a host is a member of)
+- xsrv: add [`show-groups`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-show-groups) command (list all groups a host is a member of)
 - monitoring_rsyslog: allow receiving logs from syslog clients over the network on port `514/tcp` ([`rsyslog_enable_receive: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
 
 **Removed:**
