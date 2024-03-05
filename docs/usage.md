@@ -473,6 +473,23 @@ This command uses [trivy](https://github.com/aquasecurity/trivy) and a [built-in
 
 `xsrv scan` can be used in your [continuous integration](#continuous-deployment) jobs to detect secrets that have been pushed accidentally to your p'oject's git repository (although at this point it is too late, and the secret should be considered as compromised and rotated).
 
+```bash
+$ xsrv scan default
+my.example.org/my.example.org.yml (secrets)
+
+Total: 1 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 1, CRITICAL: 0)
+
+HIGH: general (ansible-passwords)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Passwords
+────────────────────────────────────────────────────────────────────────────────────────────────────
+ my.example.org/my.example.org.yml:29
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  27       state: active
+  28
+  29 [ some_password: ******************
+  30
+```
 
 ### More utilities
 
