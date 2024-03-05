@@ -496,7 +496,10 @@ Passwords
 Many "one-shot" tasks are available using `utils*` [tags](tags.md). These tasks will not run during normal execution of the playbook. Instead, you must call them explicitely by passing the relevant tag on the command-line:
 
 ```bash
+# run backup immediately
 TAGS=utils-backup-now xsrv deploy default my.example.org
+# show all utility tags
+xsrv help-tags | grep utils
 ```
 
 ----------------------------
