@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **monitoring_netdata:** `netdata_log_to_syslog`, `netdata_disable_debug_log`, `netdata_disable_error_log`, `netdata_disable_access_log` variables are no longer used and can be removed from your configuration, if you changed them from the defaults (`xsrv edit-host/edit-group`)
 - **monitoring_rsyslog:** if `rsyslog_enable_forwarding` is set to `yes` in your host/group variables (`xsrv edit-host/edit-group`), set `rsyslog_forward_to_inventory_hostname` to the inventory hostname of the syslog/graylog server receiving the logs
-- **graylog:** under `Inputs`, edit all syslog/TLS inputs to use the new paths for graylog CA/server certificate/private key.TLS cert file: `/etc/ssl/syslog/ca.crt`, TLS private key: `/etc/ssl/syslog/ca.key`, TLS client auth trusted certs: `/etc/ssl/syslog/ca.crt`. You may also delete `data/certificates/*-graylog-ca.crt` files in your project directory since they are no longer used.
+- **graylog:** under `Inputs`, edit all `syslog/TLS` inputs to use the new paths for TLS cert file: `/etc/ssl/syslog/ca.crt`, TLS private key: `/etc/ssl/syslog/ca.key`, TLS client auth trusted certs: `/etc/ssl/syslog/ca.crt`. You may also delete `data/certificates/*-graylog-ca.crt` files in your project directory since they are no longer used.
 - `xsrv deploy` to apply changes
 
 **Added:**
