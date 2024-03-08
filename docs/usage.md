@@ -603,22 +603,17 @@ Directory structure for a project:
 
 ### Using ansible command-line tools
 
-Ansible [command-line tools](https://docs.ansible.com/ansible/latest/command_guide/command_line_tools.html) can be used directly in projects managed by xsrv. The project's virtualenv must be activated manually:
+Ansible [command-line tools](https://docs.ansible.com/ansible/latest/command_guide/command_line_tools.html) can be used directly in projects managed by xsrv.
 
 ```bash
 # enter the project directory
 cd ~/playbooks/default
-# activate the virtualenv
-source .venv/bin/activate
-```
-
-```bash
 # run ansible commands directly
-ansible-playbook playbook.yml --list-tasks
-ansible-playbook playbook.yml --start-at-task 'run nextcloud upgrade command' --limit my.example.org,my2.example.org
-ansible-inventory --list --yaml
-ansible-vault encrypt_string 'very complex password'
-ansible --become --module-name file --args 'state=absent path=/var/log/syslog.8.gz' my.example.org
+.venv/bin/ansible-playbook playbook.yml --list-tasks
+.venv/bin/ansible-playbook playbook.yml --start-at-task 'run nextcloud upgrade command' --limit my.example.org,my2.example.org
+.venv/bin/ansible-inventory --list --yaml
+.venv/bin/ansible-vault encrypt_string 'very complex password'
+.venv/bin/ansible --become --module-name file --args 'state=absent path=/var/log/syslog.8.gz' my.example.org
 ```
 
 ### Version control
