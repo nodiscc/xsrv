@@ -7,6 +7,9 @@
     - rsyslog_retention_days == rsyslog_retention_days | int
     - rsyslog_enable_forwarding == rsyslog_enable_forwarding | bool
     - rsyslog_custom_config | type_debug == "list"
+    - rsyslog_enable_receive == rsyslog_enable_receive | bool
+    - rsyslog_remote_logs_path is string
+    - rsyslog_firewalld_zones | type_debug == "list"
 
 - name: check that mandatory variables are correctly defined (syslog forwarding)
   assert:
@@ -16,4 +19,18 @@
   when: rsyslog_enable_forwarding
   loop:
     - rsyslog_forward_to_hostname is not search('CHANGEME')
+    - rsyslog_forward_to_inventory_hostname is not search('CHANGEME')
     - rsyslog_forward_to_port == rsyslog_forward_to_port | int
+    - rsyslog_cert_not_after | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
+    - rsyslog_cert_not_before | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
+
+- name: check that mandatory variables are correctly defined (syslog receiving)
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog"
+  when: rsyslog_enable_receive
+  loop:
+    - rsyslog_fqdn is not search('CHANGEME')
+    - rsyslog_cert_not_after | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
+    - rsyslog_cert_not_before | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")

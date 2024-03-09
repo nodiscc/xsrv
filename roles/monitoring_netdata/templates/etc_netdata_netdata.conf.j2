@@ -17,12 +17,14 @@
    dbengine tier 2 update every iterations = 60
 
 [logs]
-{% if netdata_disable_debug_log %}   debug = none
-{% endif %}
-{% if netdata_disable_error_log %}   error = none
-{% endif %}
-{% if netdata_disable_access_log %}   access = none
-{% endif %}
+[logs]
+   logs to trigger flood protection = 1000
+   logs flood protection period = 60
+   level = info
+   daemon = journal
+   collector = journal
+   access = /var/log/netdata/access.log
+   health = journal
 
 {% if not netdata_enable_health_notifications %}
 [health]
@@ -42,6 +44,11 @@
 [registry]
    enabled = yes
    registry to announce = https://{{ inventory_hostname }}:{{ netdata_public_port | default('19999') }}
+
+{% if netdata_streaming_send_enabled %}
+[ml]
+    enabled = no
+{% endif %}
 
 [plugins]
 {% for plugin in netdata_disabled_plugins %}

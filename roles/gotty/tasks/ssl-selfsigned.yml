@@ -21,7 +21,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
-  openssl_certificate:
+  community.crypto.x509_certificate:
     path: "/etc/ssl/certs/{{ gotty_fqdn }}.crt"
     privatekey_path: "/etc/ssl/private/{{ gotty_fqdn }}.key"
     csr_path: "/etc/ssl/private/{{ gotty_fqdn }}.csr"

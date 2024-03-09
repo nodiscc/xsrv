@@ -98,7 +98,7 @@ fail2ban - setup fail2ban intrusion prevention system
 firewall - setup firewall
 hostname - setup hostname
 hosts - setup /etc/hosts entries
-packages - additional package istallation/removal
+packages - additional package installation/removal
 sysctl - setup sysctl kernel configuration
 users - setup users and groups
 ssh - setup SSH server

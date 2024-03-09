@@ -19,7 +19,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.22.2 yamllint ansible==9.2.0
+	pip3 install isort ansible-lint==6.22.1 yamllint ansible==9.3.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -40,7 +40,8 @@ test_ansible_lint: venv
 test_command_line:
 	rm -rf tests/playbooks/xsrv-init-playbook
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" XSRV_UPGRADE_CHANNEL=master EDITOR=cat ./xsrv init-project xsrv-init-playbook my.example.org
-	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks"  EDITOR=cat ./xsrv edit-group-vault xsrv-init-playbook all && grep ANSIBLE_VAULT tests/playbooks/xsrv-init-playbook/group_vars/all/all.vault.yml
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" EDITOR=cat ./xsrv edit-group-vault xsrv-init-playbook all && grep ANSIBLE_VAULT tests/playbooks/xsrv-init-playbook/group_vars/all/all.vault.yml
+	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv show-groups xsrv-init-playbook my.example.org
 
 ##### MANUAL TESTS #####
 
@@ -236,7 +237,11 @@ codespell: venv
 
 .PHONY: test_install_test_deps # manual - install requirements for test suite
 test_install_test_deps:
-	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq
+	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq cloc
+
+.PHONY: test_cloc # count SLOC with cloc
+test_cloc:
+	cloc --exclude-dir=tests --exclude-dir=pip-cache --exclude-dir=.venv --force-lang='Jinja Template',j2 --force-lang='Jinja Template',conf --force-lang='Jinja Template',cfg .
 
 # can be used to establish a list of variables that need to be checked via 'assert' tasks at the beginning of the role
 .PHONY: list_default_variables # manual - list all variables names from role defaults

@@ -12,3 +12,4 @@
     - gitea_actions_runner_container_network is string
     - gitea_act_runner_labels | type_debug == 'list'
     - gitea_act_runner_capacity == gitea_act_runner_capacity | int
+    - gitea_act_runner_daily_podman_prune == gitea_act_runner_daily_podman_prune | bool

@@ -10,10 +10,6 @@ netdata_dbengine_disk_space: 800
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# enable/disable netdata debug/error/access logs (yes/no)
-netdata_disable_debug_log: yes
-netdata_disable_error_log: no
-netdata_disable_access_log: yes
 # public port (i.e. outside NAT) used to access netdata, used for links in mail notifications, and the xsrv.homepage role
 netdata_public_port: 19999
 # netdata plugins to disable
@@ -141,8 +137,6 @@ netdata_fping_ping_every: 5000
 netdata_fping_update_every: 10
 # Do not send notifications on ping check failures (yes/no)
 netdata_fping_alarms_silent: no
-# aggregate netdata error/health/collector logs to syslog (very verbose) (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
-netdata_log_to_syslog: no
 
 ## NETDATA STREAMING ##
 # stream charts to a "parent" netdata instance (yes/no)

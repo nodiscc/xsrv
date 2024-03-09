@@ -7,7 +7,7 @@
 # @tag firewall - setup firewall
 # @tag hostname - setup hostname
 # @tag hosts - setup /etc/hosts entries
-# @tag packages - additional package istallation/removal
+# @tag packages - additional package installation/removal
 # @tag sysctl - setup sysctl kernel configuration
 # @tag users - setup users and groups
 # @tag ssh - setup SSH server

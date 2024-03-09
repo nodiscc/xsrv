@@ -1,28 +1,28 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - openldap
     - checks
 
-- name: include openldap configuration tasks
+- name: import openldap configuration tasks
   import_tasks: openldap.yml
   become: yes
   tags: openldap
 
-- name: include LDAP database population tasks
+- name: import LDAP database population tasks
   import_tasks: populate.yml
   become: yes
   tags: openldap
   when: openldap_enable_service | bool
 
-- name: include rsnapshot/backup configuration tasks
+- name: import rsnapshot/backup configuration tasks
   import_tasks: backups.yml
   become: yes
   tags:
     - openldap
     - backup
 
-- name: include self-signed certificates configuration tasks
+- name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
@@ -40,7 +40,7 @@
     - netdata
     - apache
 
-- name: include ldap-account-manager configuration tasks
+- name: import ldap-account-manager configuration tasks
   import_tasks: ldap-account-manager.yml
   become: yes
   tags:
@@ -48,7 +48,7 @@
     - ldap-account-manager
   when: openldap_setup_lam | bool
 
-- name: include self-service password configuration tasks
+- name: import self-service password configuration tasks
   import_tasks: self-service-password.yml
   become: yes
   tags:
@@ -56,7 +56,7 @@
     - self-service-password
   when: openldap_setup_ssp | bool
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -69,7 +69,7 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- name: include firewalld configuration tasks
+- name: import firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes
   tags:
@@ -79,7 +79,7 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: openldap

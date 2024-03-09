@@ -210,7 +210,7 @@ kernel_modules_blacklist:
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
 setup_apt: yes
-# yes/no: enable 'contrib' and 'non-free' software sections in debian APT repositories
+# yes/no: enable contrib non-free and non-free-firmware software sections in debian APT repositories
 apt_enable_nonfree: no
 # clean downloaded package archives (apt clean) every n-days (0=disable)
 apt_clean_days: 7
@@ -312,6 +312,11 @@ apt_listbugs_ignore_list:
   - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
   - 1030284 # https://bugs.debian.org/1030284 - only affects arm64 architecture
   - 1057715 # https://bugs.debian.org/1057715 - only affects i386 architecture
+  - 1061776 # https://bugs.debian.org/1061776 - only affects ssh jail on systems without rsyslog
+  - 1037437 # https://bugs.debian.org/1037437 - only affects ssh jail on systems without rsyslog
+  - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
+  - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
+  - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -601,7 +606,7 @@ dnsmasq_blocklist_whitelist: []
 ```yaml
 ##### GITEA ACTIONS RUNNER #####
 # FQDN of the gitea instance to register the runner on
-gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org') }}" # TODO rename to _domain
+gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org') }}"
 # inventory hostname of the gitea host to register the runner on (if different from the runner host)
 # gitea_act_runner_gitea_instance_hostname: "CHANGEME"
 # how many tasks the runner can execute concurrently at the same time (integer)
@@ -612,7 +617,7 @@ gitea_act_runner_container_engine: "podman"
 # set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
 gitea_actions_runner_container_network: "host"
 # list of labels to use when registering the runner (https://docs.gitea.com/usage/actions/design)
-# If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role muyst be redeployed
+# If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role must be redeployed
 # Add "host:host" to this list to allow running workflows directly on the host, without containerization (and specify "runs-on: host" in your workflow yml file)
 # If host-based workflows are allowed, you probably want to install the nodejs package on the host so that nodejs-based actions can run
 # Example:
@@ -625,6 +630,8 @@ gitea_act_runner_labels:
   - "ubuntu-22.04:docker://node:16-bullseye"
   - "ubuntu-20.04:docker://node:16-bullseye"
   - "ubuntu-18.04:docker://node:16-buster"
+# prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
+gitea_act_runner_daily_podman_prune: no
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
 gitea_act_runner_version: "0.2.6"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
@@ -666,7 +673,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.21.5"
+gitea_version: "1.21.7"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1188,7 +1195,7 @@ matrix_synapse_ldap_validate_certs: yes
 # enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
-matrix_synapse_admin_version: "0.8.7"
+matrix_synapse_admin_version: "0.9.1"
 # list of IP addresses allowed to access synapse-admin and synapse admin API endpoints (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 matrix_synapse_admin_allowed_hosts: []
@@ -1204,7 +1211,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.57"
+matrix_element_version: "1.11.59"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1268,10 +1275,6 @@ netdata_dbengine_disk_space: 800
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# enable/disable netdata debug/error/access logs (yes/no)
-netdata_disable_debug_log: yes
-netdata_disable_error_log: no
-netdata_disable_access_log: yes
 # public port (i.e. outside NAT) used to access netdata, used for links in mail notifications, and the xsrv.homepage role
 netdata_public_port: 19999
 # netdata plugins to disable
@@ -1399,8 +1402,6 @@ netdata_fping_ping_every: 5000
 netdata_fping_update_every: 10
 # Do not send notifications on ping check failures (yes/no)
 netdata_fping_alarms_silent: no
-# aggregate netdata error/health/collector logs to syslog (very verbose) (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
-netdata_log_to_syslog: no
 
 ## NETDATA STREAMING ##
 # stream charts to a "parent" netdata instance (yes/no)
@@ -1460,11 +1461,23 @@ setup_netdata_apt: yes
 ##### RSYSLOG LOG PROCESSING SYSTEM #####
 # number of daily /var/log/syslog archives to retain
 rsyslog_retention_days: 186
-# yes/no: enable forwarding of syslog logs to a syslog server (over TLS/TCP)
+# enable forwarding of syslog logs to a syslog server over TLS/TCP (no/yes)
 rsyslog_enable_forwarding: no
-# if forwarding is enabled, hostname/port to forward logs to (e.g. host with the nodiscc.xsrv.graylog role)
+# if forwarding is enabled, hostname/port to forward logs to
 rsyslog_forward_to_hostname: "logs.CHANGEME.org"
 rsyslog_forward_to_port: 5140
+# if forwarding is enabled, inventory hostname of the host to forward logs to
+rsyslog_forward_to_inventory_hostname: "my.CHANGEME.org"
+# enable receiving logs from other hosts over TLS/TCP port 514 (no/yes)
+# log collectors must be deployed before clients in the playbook execution order
+rsyslog_enable_receive: no
+# if rsyslog_enable_receive is enabled, DNS name of this syslog server/collector
+rsyslog_fqdn: "logs.CHANGEME.org"
+# if rsyslog_enable_receive is enabled, path to the directory to write remote hosts logs to
+rsyslog_remote_logs_path: /var/log/rsyslog/hosts
+# when rsyslog_enable_forwarding or rsyslog_enable_receive is enabled, start and end validity dates for TLS certificates (YYYYMMDDHHMMSSZ)
+rsyslog_cert_not_before: "20240219000000Z"
+rsyslog_cert_not_after: "20340219000000Z"
 # custom rsyslog configuration directives, applied before forwarding/single-file aggregation (list)
 # Example:
 # rsyslog_custom_config:
@@ -1472,6 +1485,13 @@ rsyslog_forward_to_port: 5140
 #   - 'if $programname == "apache" and re_match($msg, ".* 127.0.0.1 - - .* \"GET /server-status\?auto HTTP/1.1\" 200") then stop' # discard messages matching this program name and regular expression
 #   - 'if $programname == "CRON" and re_match($msg, "cron:session): session (opened|closed) for user .*") then stop'
 rsyslog_custom_config: []
+# firewall zones from which to allow incoming logs (zone, state), if rsyslog_enable_receive: yes and nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+rsyslog_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: enabled
 ```
 
 
@@ -1587,7 +1607,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "28.0.2"
+nextcloud_version: "28.0.3"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -2036,8 +2056,10 @@ shaarli_version: 'v0.13.0'
 # list of IP addresses allowed to access shaarli (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
+# default view mode when using the stack template (small/medium/large)
+shaarli_stack_default_ui: "medium"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
-shaarli_stack_version: "0.5"
+shaarli_stack_version: "0.7"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)

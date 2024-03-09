@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.23.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.23.0) - 2024-04-09
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- **monitoring_netdata:** `netdata_log_to_syslog`, `netdata_disable_debug_log`, `netdata_disable_error_log`, `netdata_disable_access_log` variables are no longer used and can be removed from your configuration, if you changed them from the defaults (`xsrv edit-host/edit-group`)
+- **monitoring_rsyslog:** if `rsyslog_enable_forwarding` is set to `yes` in your host/group variables (`xsrv edit-host/edit-group`), set `rsyslog_forward_to_inventory_hostname` to the inventory hostname of the syslog/graylog server receiving the logs
+- **graylog:** under `Inputs`, edit all `syslog/TLS` inputs to use the new paths for TLS cert file: `/etc/ssl/syslog/ca.crt`, TLS private key: `/etc/ssl/syslog/ca.key`, TLS client auth trusted certs: `/etc/ssl/syslog/ca.crt`. You may also delete `data/certificates/*-graylog-ca.crt` files in your project directory since they are no longer used.
+- `xsrv deploy` to apply changes
+
+**Added:**
+- xsrv: add [`scan`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-scan) command (scan a project directory for cleartext secrets/passwords using [trivy](https://github.com/aquasecurity/trivy))
+- xsrv: add [`show-groups`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-show-groups) command (list all groups a host is a member of)
+- monitoring_rsyslog: allow receiving logs from syslog clients over the network on port `514/tcp` ([`rsyslog_enable_receive: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
+
+**Removed:**
+- monitoring_netdata: remove configuration variables `netdata_log_to_syslog`, `netdata_disable_debug_log`, `netdata_disable_error_log`, `netdata_disable_access_log`
+
+**Changed:**
+- gitea_act_runner: disable automatic nightly prune of podman images/containers by default [`gitea_act_runner_daily_podman_prune: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
+- monitoring_netdata: send all logs to systemd-journald, except access log
+- monitoring_netdata: disable machine learning/anomaly detection functionality when streaming to a parent node (when [`netdata_streaming_send_enabled`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) is enabled)
+- shaarli: allow setting the default view mode when using the `stack` template ([`shaarli_stack_default_ui: small/medium/large`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)), change the default to `medium`
+- monitoring_rsyslog/graylog: setup mutual TLS authentication between syslog clients and server, sign server and client certificates with server CA certificate - [`rsyslog_forward_to_inventory_hostname`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) is now required on rsyslog clients
+- common: apt: enable non-free-firmware section when [`apt_enable_nonfree: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) [[1]](https://wiki.debian.org/Firmware)
+- gitea: update to v1.21.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.7)
+- nextcloud: upgrade to v28.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.3)
+- shaarli: update stack template to v0.7 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6) [[2]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.7)
+- matrix: update synapse-admin to [v0.9.1](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
+- matrix: update element-web to v1.11.59 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.58) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.59)
+- xsrv: update ansible to [v9.3.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+- cleanup: standardize task names, remove files from old versions of the roles, use `community.crypto.x509_certificate` instead of deprecated `openssl_certificate` modules
+- update documentation, add Gitea/Github Actions example for secret scanning, add graylog backup restoration procedure
+- improve automatic tests
+
+**Fixed:**
+- monitoring_netdata/rsyslog: fix netdata logs no longer being appended to syslog
+- shaarli: fix stack theme favicon not being displayed
+- postgresql: fix role execution when called with `rsyslog` ansible tag 
+
 #### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
 
 **Upgrade procedure:**
@@ -53,7 +93,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - wireguard: never return `changed` for wireguard client configuration file generation tasks
 - tt_rss: hide `changed` status of `set permissions on tt-rss files` task
 - gitea: update to v1.21.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.3)
-- postgresql: explicitely install postgresql version 15
+- postgresql: explicitly install postgresql version 15
 - openldap: update ldap-account-manager to [v8.6](https://github.com/LDAPAccountManager/lam/releases/tag/8.6)
 - matrix: update element-web to v1.11.55 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.53) [[24]](https://github.com/vector-im/element-web/releases/tag/v1.11.54) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.55)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
@@ -103,7 +143,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - xsrv: init-vm-template: use the gateway IP address as DNS server ([`--nameservers`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file)) by default instead of Cloudflare public DNS
-- netdata: when `*_enable_service: no`, disable HTTP checks entirely for this service (intead of accepting HTTP 503)
+- netdata: when `*_enable_service: no`, disable HTTP checks entirely for this service (instead of accepting HTTP 503)
 - netdata: debsecan: allow disabling daily debsecan mail reports ([`debsecan_enable_reports: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
 - transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check
 - nextcloud: verify downloaded .zip using GPG signatures
@@ -286,7 +326,7 @@ _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui
 - apache: fix apache not loading new/updated Let's Encrypt/`mod_md` certificates automatically every minute
 - apache: fix duplicated access logs to `access.log`/`other_vhosts_access.log`, only log to `access.log`
 - common/fail2ban/all roles: prevent missing/not-yet-created log files from causing failban reloads/restart to fail (e.g. when a service is initially deployed with `*_enable_service: no`)
-- common: fail2ban: fix `Hash is full, cannot add more elements` error when a fail2ban jail has mor than 65536 banned IPs
+- common: fail2ban: fix `Hash is full, cannot add more elements` error when a fail2ban jail has more than 65536 banned IPs
 - monitoring_netdata/needrestart: fix automatic reboot not triggered by cron job when ABI-compatible kernel upgrades are pending
 - nextcloud: fail2ban: fix `Found a match but no valid date/time` warning when a login failure is detected
 
@@ -330,7 +370,7 @@ You must upgrade to this release and deploy it before deploying future versions 
 - common: utils-debian11to12: fix upgrade procedure sometimes freezing/failing without logs
 - common: utils-debian11to12: fix error `'dict object' has no attribute 'distribution_release'` after successful upgrade
 - common/monitoring_utils: fail2ban/lynis: fix warning `fail2ban.configreader: WARNING 'allowipv6' not defined in 'Definition'` in lynis reports
-- monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commerical/closed-source antivirus software)
+- monitoring_utils: lynis: fix `pgrep: pattern that searches for process name longer than 15 characters will result in zero matches` message in reports (disable detection/suggestion of commercial/closed-source antivirus software)
 - gitea: fix task `verify gitea GPG signatures` failing on hosts where gnupg is not installed
 - gitea: fix role failing to deploy on hosts where the `common` role is not deployed (`Group ssh-access does not exist`)
 - common/firewalld/libvirt: ensure libvirtd is restarted when firewalld is restarted/reloaded (re-apply port forwarding rules), fix looping libvirt restarts
@@ -461,7 +501,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - xsrv: install `lxml` python module, required for `utils-libvirt-setmem` tasks
 - gitea: fix fail2ban restart failing on first installation of gitea
 - jellyfin: fix idempotence/opensubtitles plugin installation always returning `changed`
-- decouple web aplication roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
+- decouple web application roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 
 [Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
 
@@ -1240,7 +1280,7 @@ self_service_password_allowed_hosts:
 - default playbook: .gitignore data/ and cache/ directories
 - doc: update/refactor documentation and roles metadata
 - tools: improve automatic documentation generation
-- refactor: refactor integration between roles (use ansible_local facts, fix intergation when roles are not part of the same play)
+- refactor: refactor integration between roles (use ansible_local facts, fix integration when roles are not part of the same play)
 
 **Removed:**
 - nextcloud: disable [deck](https://apps.nextcloud.com/apps/deck) app by default
@@ -1562,7 +1602,7 @@ This releases improves usability, portability, standards compliance, separation 
 - rsyslog: monitor samba, gitea, mumble-server, openldap, nextcloud, unattended-upgrades and rsnapshot log files with imfile module (when corresponding roles are enabled)
 - rsyslog: make aggregation of apache access logs to syslog optional, disable by default
 - rsyslog: disable aggregation of netdata logs to syslog by default (very noisy, many false-positive ERROR messages)
-- rsyslog: discard apache access logs caused by netdata apche monitoring
+- rsyslog: discard apache access logs caused by netdata apache monitoring
 - needrestart: don't auto-restart services by default
 - extend list of command-line monitoring tools (lsof/strace)
 - various fixes, reorder, cleanup, update documentation, fix role/certificate generation idempotence, make more components optional

@@ -79,7 +79,7 @@ kernel_modules_blacklist:
 ### PACKAGE MANAGEMENT ###
 # yes/no: setup APT sources (security, backports) and automatic security upgrades
 setup_apt: yes
-# yes/no: enable 'contrib' and 'non-free' software sections in debian APT repositories
+# yes/no: enable contrib non-free and non-free-firmware software sections in debian APT repositories
 apt_enable_nonfree: no
 # clean downloaded package archives (apt clean) every n-days (0=disable)
 apt_clean_days: 7
@@ -181,6 +181,11 @@ apt_listbugs_ignore_list:
   - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
   - 1030284 # https://bugs.debian.org/1030284 - only affects arm64 architecture
   - 1057715 # https://bugs.debian.org/1057715 - only affects i386 architecture
+  - 1061776 # https://bugs.debian.org/1061776 - only affects ssh jail on systems without rsyslog
+  - 1037437 # https://bugs.debian.org/1037437 - only affects ssh jail on systems without rsyslog
+  - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
+  - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
+  - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service

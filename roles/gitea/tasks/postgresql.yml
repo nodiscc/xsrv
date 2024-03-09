@@ -1,5 +1,3 @@
-##### GITEA DATABASE (postgresql) #####
-
 - name: install packages for postgresql support
   apt:
     state: present

@@ -31,6 +31,7 @@ test:
     LANG: "C.UTF-8"
   script:
     - make tests
+    - make test_cloc
   interruptible: true
   # do not run tests on these branches
   # rules:

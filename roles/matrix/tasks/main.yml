@@ -1,4 +1,4 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - matrix
@@ -7,35 +7,35 @@
     - checks
     - synapse-admin
 
-- name: include postgresql configuration tasks
+- name: import postgresql configuration tasks
   import_tasks: postgresql.yml
   become: yes
   tags:
     - matrix
     - synapse
 
-- name: include synapse configuration tasks
+- name: import synapse configuration tasks
   import_tasks: synapse.yml
   become: yes
   tags:
     - matrix
     - synapse
 
-- name: include element configuration tasks
+- name: import element configuration tasks
   import_tasks: element.yml
   become: yes
   tags:
     - matrix
     - element
 
-- name: include synapse-admin setup tasks
+- name: import synapse-admin setup tasks
   import_tasks: synapse-admin.yml
   become: yes
   tags:
     - matrix
     - synapse-admin
 
-# - name: include fail2ban configuration tasks
+# - name: import fail2ban configuration tasks
 #   import_tasks: fail2ban.yml
 #   become: yes
 #   tags:
@@ -46,7 +46,7 @@
 #     - ansible_local.fail2ban.ansible_managed is defined
 #     - ansible_local.fail2ban.ansible_managed | bool
 
-- name: include firewalld configuration tasks
+- name: import firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes
   tags:
@@ -57,7 +57,7 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- name: include self-signed certificates configuration tasks
+- name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
@@ -71,7 +71,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include apache configuration tasks
+- name: import apache configuration tasks
   import_tasks: apache.yml
   become: yes
   tags:
@@ -84,7 +84,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include rsnapshot/backups configuration tasks
+- name: import rsnapshot/backups configuration tasks
   import_tasks: backups.yml
   become: yes
   tags:
@@ -95,7 +95,7 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
@@ -107,7 +107,7 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -120,7 +120,7 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags:

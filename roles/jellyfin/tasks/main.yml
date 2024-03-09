@@ -1,4 +1,4 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   become: yes
   tags:
@@ -6,12 +6,12 @@
     - checks
     - jellyfin-opensubtitles-plugin
 
-- name: include jellyfin configuration tasks
+- name: import jellyfin configuration tasks
   import_tasks: jellyfin.yml
   become: yes
   tags: jellyfin
 
-- name: include jellyfin opensubtitles plugin configuration tasks
+- name: import jellyfin opensubtitles plugin configuration tasks
   import_tasks: jellyfin-opensubtitles-plugin.yml
   become: yes
   tags:
@@ -19,7 +19,7 @@
     - jellyfin-opensubtitles-plugin
   when: jellyfin_setup_opensubtitles_plugin | bool
 
-- name: include jellyfin samba share configuration tasks
+- name: import jellyfin samba share configuration tasks
   import_tasks: samba.yml
   become: yes
   tags:
@@ -30,7 +30,7 @@
     - ansible_local.samba.ansible_managed is defined
     - ansible_local.samba.ansible_managed | bool
 
-- name: include self-signed certificates configuration tasks
+- name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
@@ -43,7 +43,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include apache configuration tasks
+- name: import apache configuration tasks
   import_tasks: apache.yml
   become: yes
   tags:
@@ -53,7 +53,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include fail2ban configuration tasks
+- name: import fail2ban configuration tasks
   import_tasks: fail2ban.yml
   become: yes
   tags:
@@ -63,7 +63,7 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- name: include rsnapshot/backup configuration tasks
+- name: import rsnapshot/backup configuration tasks
   import_tasks: backups.yml
   become: yes
   tags:
@@ -73,7 +73,7 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -84,7 +84,7 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: jellyfin

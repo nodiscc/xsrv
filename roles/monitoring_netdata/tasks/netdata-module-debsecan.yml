@@ -67,7 +67,7 @@
 
 # debsecan comes with a default cron job at /etc/cron.d/debsecan which runs daily as the 'daemon'
 # user, and sends an e-mail report to root. daemon must be added to the msmtp group to be able to
-# read msmtp confiuguration and send the mail
+# read msmtp configuration and send the mail
 - name: add the daemon user to the msmtp group
   user:
     name: daemon

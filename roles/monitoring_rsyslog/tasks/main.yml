@@ -1,18 +1,47 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - monitoring
     - rsyslog
     - checks
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog server/CA certificates configuration tasks
+  import_tasks: rsyslog-ssl-server.yml
+  become: yes
+  tags:
+    - monitoring
+    - rsyslog
+    - ssl
+  when: rsyslog_enable_receive | bool
+
+- name: import rsyslog client certificates configuration tasks
+  import_tasks: rsyslog-ssl-client.yml
+  become: yes
+  tags:
+    - monitoring
+    - rsyslog
+    - ssl
+  when: rsyslog_enable_forwarding | bool
+
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
     - monitoring
     - rsyslog
 
-- name: include ansibel facts configuration tasks
+- name: import firewalld configuration tasks
+  import_tasks: firewalld.yml
+  become: yes
+  tags:
+    - monitoring
+    - rsyslog
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed | bool
+
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags:

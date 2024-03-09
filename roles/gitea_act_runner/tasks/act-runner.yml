@@ -86,7 +86,7 @@
     hour: "03"
     day: "*"
     job: podman system prune --all --force | logger -t act-runner-podman-system-prune
-    disabled: "{{ False if gitea_act_runner_container_engine == 'podman' else True }}"
+    disabled: "{{ True if not gitea_act_runner_container_engine == 'podman' or not gitea_act_runner_daily_podman_prune else False }}"
 
 ##### ACT-RUNNER #####
 

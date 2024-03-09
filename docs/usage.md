@@ -13,7 +13,7 @@ Use the `xsrv` command-line to manage your projects, or [include xsrv roles in y
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.21.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.22.0
 
 USAGE: xsrv COMMAND [project] [host]
 
@@ -32,12 +32,14 @@ edit-group-vault [project] [group]  edit encrypted (vault) group configuration (
 check [project] [host|group]        simulate deployment, report what would be changed
 deploy [project] [host|group]       deploy the main playbook (apply configuration/roles)
 fetch-backups [project] [host]      fetch backups from a host to the local backups directory
+scan [project]                      scan a project directory for cleartext passwords/secrets
 shell|ssh [project] [host]          open interactive SSH shell on a host
 logs [project] [host]               view system logs on a host
 o|open [project]                    open the project directory in the default file manager
 readme-gen [project]                generate a markdown inventory in the project's README.md
 nmap [project]                      run a nmap scan against hosts in the project
 show-defaults [project] [role]      show all variables and their default values
+show-groups [project] [host]        list all groups a host is a member of
 help                                show this message
 help-tags [project]                 show the list of ansible tags and their descriptions
 self-upgrade                        check for new releases/upgrade the xsrv script in-place
@@ -319,7 +321,7 @@ Kh5uysMgG5f9X£5ap_O_AS(n)XS1fuuY
 
 You may also place a custom script in `.ansible-vault-password`, that will fetch the master password from a secret storage/keyring of your choice (in this case the file must be made executable - `chmod +x .ansible-vault-password`).
 
-To disable reading the master password from a file/script: edit the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting. You will be asked for the `sudo` password before deployment. You may also specify a diffrent path to the password file.
+To disable reading the master password from a file/script: edit the `ansible.cfg` file in the project directory (`xsrv edit-cfg`), comment out the `vault_password_file` setting, and uncomment the `ask_vault_pass = True` setting. You will be asked for the `sudo` password before deployment. You may also specify a different path to the password file.
 
 
 ### xsrv edit-group
@@ -419,12 +421,12 @@ VMs created using this method can then be added to your project using [`xsrv ini
 
 ### xsrv shell
 
-Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the host name - the port and user name will be detected automatically from the host's [configuration variables](#manage-configuration).
+Open a shell directly on the target host using SSH. This is equivalent to `ssh -p $SSH_PORT $USER@$HOST` but you only need to pass the porject and host name - the port and user name will be detected automatically from the host's [configuration variables](#manage-configuration).
 
 ```bash
-$ xsrv shell my.example.org
+$ xsrv shell default my.example.org
 # or
-$ xsrv ssh my.example.org
+$ xsrv ssh default my.example.org
 ```
 
 An alternative is to use the [`readme-gen`](#xsrv-readme-gen) command to generate a SSH client configuration file which will allow contacting the host with `ssh $HOST` without specifying the port/user.
@@ -439,15 +441,66 @@ See the detailed [documentation](https://gitlab.com/nodiscc/xsrv/-/tree/master/r
 
 ### xsrv logs
 
-Open the current `syslog` log with the [lnav](https://lnav.org/) log viewer on the remote host.
+Open the current `/var/log/syslog` log with the [lnav](https://lnav.org/) log viewer on the remote host.
 
 ```bash
-$ xsrv logs my.example.org
+$ xsrv logs default my.example.org
 ```
 
-If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog)/[monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils)/[monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be foudn [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage)
+If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog)/[monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils)/[monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be found [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage)
 
 
+### xsrv show-groups
+
+Displays the list of groups that contain a specific host. Useful if your inventory structure starts to get complex, with many nested groups/subgroups.
+
+```bash
+$ xsrv show-groups default my.example.org
+[xsrv] INFO: showing all groups for my.example.org
+my.example.org | SUCCESS => {
+    "msg": [
+        "database",
+        "prod"
+    ]
+}
+```
+
+### xsrv scan
+
+Scans a project directory for passwords/secrets stored in cleartext in host/group variables. Sensitive values such as password and encryption keys should be stored in encrypted (_vaulted_) variable files - see [`edit-vault`](#xsrv-edit-vault) and [`edit-group-vault`](#xsrv-edit-group-vault) commands.
+
+This command uses [trivy](https://github.com/aquasecurity/trivy) and a [built-in configuration file](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/trivy-secrets.yml?ref_type=heads). Note that it doesn't scan other files such as custom roles or files insidethe `data/` directory of the project. It is your responsibility to ensure that any secrets in these files are properly encrypted.
+
+`xsrv scan` can be used in your [continuous integration](#continuous-deployment) jobs to detect secrets that have been pushed accidentally to your p'oject's git repository (although at this point it is too late, and the secret should be considered as compromised and rotated).
+
+```bash
+$ xsrv scan default
+my.example.org/my.example.org.yml (secrets)
+
+Total: 1 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 1, CRITICAL: 0)
+
+HIGH: general (ansible-passwords)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Passwords
+────────────────────────────────────────────────────────────────────────────────────────────────────
+ my.example.org/my.example.org.yml:29
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  27       state: active
+  28
+  29 [ some_password: ******************
+  30
+```
+
+### More utilities
+
+Many "one-shot" tasks are available using `utils*` [tags](tags.md). These tasks will not run during normal execution of the playbook. Instead, you must call them explicitely by passing the relevant tag on the command-line:
+
+```bash
+# run backup immediately
+TAGS=utils-backup-now xsrv deploy default my.example.org
+# show all utility tags
+xsrv help-tags | grep utils
+```
 
 ----------------------------
 
@@ -507,12 +560,12 @@ Include the collection and roles in your playbooks:
    - ...
 ```
 
-Note that `xsrv` roles may require a minimum ansible versino, specified in [`meta/runtime.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/meta/runtime.yml)
+Note that `xsrv` roles may require a minimum ansible version, specified in [`meta/runtime.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/meta/runtime.yml)
 
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
 Other collections:
-- [nodiscc.toolbox](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) - less-maintained, experimental or project-specific roles (`awesome_selfhosted_html`, `docker`, `homepage_extra_icons`, `icecast`, `k8s`, `mariadb`, `nfs_server`, `planarally`, `proxmox`, `pulseaudio`, `reverse_ssh_tunnel`, `rocketchat`, `rss_bridge`, `rss2email`, `valheim_server`, `vscodium`, `znc`)
+- [nodiscc.toolbox](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) - less-maintained, experimental or project-specific roles (`awesome_selfhosted_html`, `bitmagnet`, `docker`, `grafana`, `homepage_extra_icons`, `icecast`, `k8s`, `mariadb`, `nfs_server`, `planarally`, `prometheus`, `proxmox`, `pulseaudio`, `reverse_ssh_tunnel`, `rocketchat`, `rss2email`, `rss_bridge`, `valheim_server`, `vscodium`, `znc`)
 - [devsec.hardening](https://github.com/dev-sec/ansible-collection-hardening) - battle tested hardening for Linux, SSH, nginx, MySQL
 - [debops.debops](https://galaxy.ansible.com/debops/debops) - general-purpose Ansible roles that can be used to manage Debian or Ubuntu hosts
 - [Ansible Galaxy](https://galaxy.ansible.com/) - help other Ansible users by sharing the awesome roles and collections you create
@@ -550,22 +603,17 @@ Directory structure for a project:
 
 ### Using ansible command-line tools
 
-Ansible [command-line tools](https://docs.ansible.com/ansible/latest/command_guide/command_line_tools.html) can be used directly in projects managed by xsrv. The project's virtualenv must be activated manually:
+Ansible [command-line tools](https://docs.ansible.com/ansible/latest/command_guide/command_line_tools.html) can be used directly in projects managed by xsrv.
 
 ```bash
 # enter the project directory
 cd ~/playbooks/default
-# activate the virtualenv
-source .venv/bin/activate
-```
-
-```bash
 # run ansible commands directly
-ansible-playbook playbook.yml --list-tasks
-ansible-playbook playbook.yml --start-at-task 'run nextcloud upgrade command' --limit my.example.org,my2.example.org
-ansible-inventory --list --yaml
-ansible-vault encrypt_string 'very complex password'
-ansible --become --module-name file --args 'state=absent path=/var/log/syslog.8.gz' my.example.org
+.venv/bin/ansible-playbook playbook.yml --list-tasks
+.venv/bin/ansible-playbook playbook.yml --start-at-task 'run nextcloud upgrade command' --limit my.example.org,my2.example.org
+.venv/bin/ansible-inventory --list --yaml
+.venv/bin/ansible-vault encrypt_string 'very complex password'
+.venv/bin/ansible --become --module-name file --args 'state=absent path=/var/log/syslog.8.gz' my.example.org
 ```
 
 ### Version control

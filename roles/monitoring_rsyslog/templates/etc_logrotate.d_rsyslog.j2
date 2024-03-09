@@ -35,3 +35,18 @@
 		/usr/lib/rsyslog/rsyslog-rotate
 	endscript
 }
+{% if rsyslog_enable_receive %}
+{{ rsyslog_remote_logs_path }}/*.log
+{
+        rotate {{ rsyslog_retention_days }}
+        daily
+        dateext
+        missingok
+        notifempty
+        delaycompress
+        compress
+        postrotate
+                /usr/lib/rsyslog/rsyslog-rotate
+        endscript
+}
+{% endif %}

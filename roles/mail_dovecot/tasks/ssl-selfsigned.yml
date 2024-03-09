@@ -26,7 +26,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed openssl certificate
-  openssl_certificate:
+  community.crypto.x509_certificate:
     path: "/etc/ssl/certs/dovecot.crt"
     privatekey_path: "/etc/ssl/private/dovecot.key"
     csr_path: "/etc/ssl/private/dovecot.csr"

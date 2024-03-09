@@ -50,7 +50,7 @@ MDomain {{ shaarli_fqdn }}
       Header always set Content-Security-Policy "script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com; frame-ancestors 'none'"
   </Directory>
 
-  <FilesMatch ".*\.(?!(ico|css|js|gif|jpe?g|png|ttf|oet|woff2?)$)[^\.]*$">
+  <FilesMatch ".*\.(?!(ico|css|js|gif|jpe?g|png|svg|ttf|oet|woff2|svg?)$)[^\.]*$">
     Require all denied
   </FilesMatch>
 
@@ -67,7 +67,7 @@ MDomain {{ shaarli_fqdn }}
     </FilesMatch>
   </Directory>
 
-  <FilesMatch "\.(?:ico|css|js|gif|jpe?g|png|ttf|oet|woff2)$">
+  <FilesMatch "\.(?:ico|css|js|gif|jpe?g|png|svg|ttf|oet|woff2)$">
       # allow client-side caching of static files
       Header set Cache-Control "max-age=2628000, public, must-revalidate, proxy-revalidate"
   </FilesMatch>

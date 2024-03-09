@@ -1,15 +1,15 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - backup
     - checks
 
-- name: include rsnapshot configuration tasks
+- name: import rsnapshot configuration tasks
   import_tasks: rsnapshot.yml
   become: yes
   tags: backup
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
@@ -20,7 +20,7 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -31,7 +31,7 @@
     - ansible_local.netdata.ansible_managed is defined
     - ansible_local.netdata.ansible_managed | bool
 
-- name: include ansibel facts configuration tasks
+- name: import ansibel facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: backup
@@ -42,7 +42,7 @@
 
 ##### UTILITIES #####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: include immediate backup tasks
+- name: import immediate backup tasks
   import_tasks: utils-backup-now.yml
   become: yes
   tags:

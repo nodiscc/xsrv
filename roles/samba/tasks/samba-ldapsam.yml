@@ -88,16 +88,16 @@
     bind_pw: "{{ openldap_admin_password }}"
   with_items:
     - sambaAlgorithmicRidBase: '1000'
-    - sambaNextUserRid: '1000' # TODO don't reinitialize this
-    - sambaNextGroupRid: '1000' # TODO don't reinitialize this
-    - sambaMinPwdLength: '5' # TODO description? make this configurable?
-    - sambaPwdHistoryLength: '0' # TODO description? make this configurable?
-    - sambaLogonToChgPwd: '0' # TODO description? make this configurable?
+    - sambaNextUserRid: '1000'
+    - sambaNextGroupRid: '1000'
+    - sambaMinPwdLength: '5'
+    - sambaPwdHistoryLength: '0'
+    - sambaLogonToChgPwd: '0'
     - sambaMaxPwdAge: '-1'
     - sambaMinPwdAge: '0'
-    - sambaLockoutDuration: '60' # TODO description? make this configurable?
-    - sambaLockoutObservationWindow: '10' # TODO description? make this configurable?
-    - sambaLockoutThreshold: '5' # TODO description? make this configurable?
-    - sambaForceLogoff: '-1'  # TODO description? make this configurable?
-    - sambaRefuseMachinePwdChange: '0' # TODO description? make this configurable?
+    - sambaLockoutDuration: '60'
+    - sambaLockoutObservationWindow: '10'
+    - sambaLockoutThreshold: '5'
+    - sambaForceLogoff: '-1'
+    - sambaRefuseMachinePwdChange: '0'
   ignore_errors: "{{ ansible_check_mode }}"

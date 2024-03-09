@@ -1,15 +1,15 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - samba
     - checks
 
-- name: include samba configuration tasks
+- name: import samba configuration tasks
   import_tasks: samba.yml
   become: yes
   tags: samba
 
-- name: include samba ldapsam backend configuration tasks
+- name: import samba ldapsam backend configuration tasks
   import_tasks: samba-ldapsam.yml
   become: yes
   tags:
@@ -17,7 +17,7 @@
     - samba-users
   when: samba_passdb_backend == 'ldapsam'
 
-- name: include samba tdbsam backend configuration tasks
+- name: import samba tdbsam backend configuration tasks
   import_tasks: samba-tdbsam.yml
   become: yes
   tags:
@@ -25,7 +25,7 @@
     - samba-users
   when: samba_passdb_backend == 'tdbsam'
 
-- name: include rsnapshot/backup configuration tasks
+- name: import rsnapshot/backup configuration tasks
   import_tasks: backups.yml
   become: yes
   tags:
@@ -35,7 +35,7 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
@@ -46,7 +46,7 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: include firewalld configuration tasks
+- name: import firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes
   tags:
@@ -56,7 +56,7 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: samba
@@ -67,7 +67,7 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: include samba users listing tasks
+- name: import samba users listing tasks
   import_tasks: utils-samba-listusers.yml
   become: yes
   tags:

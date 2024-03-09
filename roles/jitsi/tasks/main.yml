@@ -1,22 +1,22 @@
-- name: include variable checks tasks
+- name: import variable checks tasks
   import_tasks: checks.yml
   tags:
     - jitsi
     - checks
 
-- name: include jitsi configuration tasks
+- name: import jitsi configuration tasks
   import_tasks: jitsi.yml
   become: yes
   tags: jitsi
 
-- name: include jitsi users configuration tasks
+- name: import jitsi users configuration tasks
   import_tasks: jitsi-users.yml
   become: yes
   tags:
     - jitsi
     - jitsi-users
 
-- name: include fail2ban configuration tasks
+- name: import fail2ban configuration tasks
   import_tasks: fail2ban.yml
   become: yes
   tags:
@@ -26,7 +26,7 @@
     - ansible_local.fail2ban.ansible_managed is defined
     - ansible_local.fail2ban.ansible_managed | bool
 
-- name: include rsyslog configuration tasks
+- name: import rsyslog configuration tasks
   import_tasks: rsyslog.yml
   become: yes
   tags:
@@ -37,12 +37,12 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: include ansible facts configuration tasks
+- name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags: jitsi
 
-- name: include firewalld configuration tasks
+- name: import firewalld configuration tasks
   import_tasks: firewalld.yml
   become: yes
   tags:
@@ -52,7 +52,7 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
-- name: include self-signed certificates configuration tasks
+- name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
   become: yes
   tags:
@@ -64,7 +64,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include apache configuration tasks
+- name: import apache configuration tasks
   import_tasks: apache.yml
   become: yes
   tags:
@@ -74,7 +74,7 @@
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
 
-- name: include netdata configuration tasks
+- name: import netdata configuration tasks
   import_tasks: netdata.yml
   become: yes
   tags:
@@ -94,7 +94,7 @@
 
 ##### UTILITIES ####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
-- name: include prosody mod_listusers tasks
+- name: import prosody mod_listusers tasks
   import_tasks: utils-jitsi-listusers.yml
   become: yes
   tags:

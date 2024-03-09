@@ -23,6 +23,17 @@ env:
   ANSIBLE_DEPLOY_PR_LIMIT: "dev" # only deploy changes to these hosts
   ANSIBLE_TAGS_PR: "all" # only check/deploy these ansible tags
 jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: install xsrv
+        run: wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/master/xsrv && chmod a+x /usr/local/bin/xsrv
+      - name: link project to default projects directory
+        run: mkdir ~/playbooks && ln -s $PWD ~/playbooks/default
+      - name: run xsrv scan
+        run: xsrv scan default
   check-and-deploy:
     runs-on: ubuntu-latest
     concurrency:

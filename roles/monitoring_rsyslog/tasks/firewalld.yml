@@ -1,0 +1,22 @@
+- name: copy syslog-tcp-ssl firewalld service definition
+  template:
+    src: etc_firewalld_services_syslog-tcp-ssl.xml.j2
+    dest: /etc/firewalld/services/syslog-tcp-ssl.xml
+    owner: root
+    group: adm
+    mode: "0640"
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# reload firewalld service definitions
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: setup firewalld rules for rsyslog
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: syslog-tcp-ssl
+    state: "{{ item.state if rsyslog_enable_receive else 'disabled' }}"
+    permanent: yes
+    immediate: yes
+  with_items: "{{ rsyslog_firewalld_zones }}"

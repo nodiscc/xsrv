@@ -11,8 +11,6 @@
     - { url: "https://github.com/sorenisanerd/gotty/releases/download/v{{ gotty_version }}/SHA256SUMS",
         dest: "/root/gotty-SHA256SUMS" }
 
-# TODO CHECK SHA256SUMS
-
 - name: create gotty zip extraction directory
   file:
     path: /root/gotty-unpack

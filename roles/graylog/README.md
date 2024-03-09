@@ -69,10 +69,11 @@ Login to your graylog instance and configure a basic **[input](https://go2docs.g
 
 - Title: `Syslog/TLS/TCP`
 - Port: `5140`
-- TLS cert file: `/etc/graylog/ssl/graylog-ca.crt` (the default, self-signed cert)
-- TLS private key: `/etc/graylog/ssl/graylog-ca.key` (the default, self-signed cert)
+- TLS cert file: `/etc/ssl/graylog/ca.crt` (the default, self-signed cert)
+- TLS private key: `/etc/ssl/graylog/ca.key` (the default, self-signed cert)
+- [x] Enable TLS
 - TLS client authentication: `disabled` (not implemented yet)
-- TLS client auth trusted certs: `/etc/graylog/ssl/graylog-ca.crt`
+- TLS client auth trusted certs: `/etc/ssl/graylog/ca.crt`
 - [x] Allow overriding date?
 - Save
 
@@ -81,8 +82,6 @@ Login to your graylog instance and configure a basic **[input](https://go2docs.g
 #### Streams
 
 Create **[streams](https://go2docs.graylog.org/5-1/making_sense_of_your_log_data/streams.html)** to route messages into categories in realtime while they are processed, based on conditions (message contents, source input...). Select whether to cut or copy messages from the `All messages` default stream. Queries in a smaller, pre-filtered stream will run faster than queries in a large unfiltered `All messages` stream.
-
-<!-- TODO ADD EXAMPLE STREAM SETUP -->
 
 ---------------
 
@@ -280,7 +279,38 @@ Currently, only graylog configuration is backed up, log data stored in Elasticse
 
 You may use [`bsondump`](https://www.mongodb.com/docs/database-tools/bsondump/) to read and manipulate mongodb backups.
 
-<!-- TODO backup restoration procedure -->
+**Restoring backups:**
+
+Place a copy of your mongodb backups in `~/mongodb/` on the host on which the data will be restored. The directory structure should look like this:
+
+```
+~/mongodb/
+├── admin
+│   ├── system.version.bson
+│   └── system.version.metadata.json
+└── graylog
+    ├── access_tokens.bson
+    ├── access_tokens.metadata.json
+    ├── alarmcallbackconfigurations.bson
+    ├── alarmcallbackconfigurations.metadata.json
+    ...
+```
+
+```bash
+# deploy the graylog role on the host on which the data will be restored
+TAGS=graylog xsrv deploy default graylog.EXAMPLE.org
+# access the host over SSH
+xsrv shell graylog.EXAMPLE.org
+# stop the graylog service
+sudo systemctl stop graylog-server
+# restore the mongodb database
+# MONGODB_ADMIN_PASSWORD is the value of mongodb_admin_password in the host configuration (xsrv edit-vault)
+mongorestore --drop --uri mongodb://admin:MONGODB_ADMIN_PASSWORD@127.0.0.1:27017/ ~/mongodb
+# start graylog
+sudo systemctl start graylog
+```
+
+If you get an error message `No such index` in graylog queries after restoring a dump, you may need to access `System > Indices > Default Index Set > Maintenance > Recalculate index ranges`
 
 ---------------
 
@@ -289,8 +319,8 @@ You may use [`bsondump`](https://www.mongodb.com/docs/database-tools/bsondump/) 
 ```bash
 sudo systemctl stop elasticsearch graylog-server mongod
 sudo apt purge elasticsearch graylog-4.0-repository  graylog-server mongodb-org
-sudo rm -rf /etc/apache2/sites-available/graylog.conf /etc/apache2/sites-enabled/graylog.conf /usr/share/keyrings/elasticsearch.gpg /etc/apt/sources.list.d/elasticsearch.list /etc/systemd/system/elasticsearch.service.d/ /etc/elasticsearch /etc/ansible/facts.d/graylog.fact /etc/firewalld/services/graylog-tcp.xml /etc/graylog/ /usr/share/keyrings/mongodb.gpg /etc/apt/sources.list.d/mongodb.list /etc/netdata/go.d/httpcheck.conf.d/graylog.conf /etc/netdata/health.d/processes.conf.d/graylog.conf /etc/rsyslog.d/graylog.conf /var/log/mongodb/ /var/log/elasticsearch/ /var/log/graylog-server/ /var/lib/elasticsearch
 sudo firewall-cmd --remove-service=graylog-tcp --zone internal --permanent
+sudo rm -rf /etc/apache2/sites-available/graylog.conf /etc/apache2/sites-enabled/graylog.conf /usr/share/keyrings/elasticsearch.gpg /etc/apt/sources.list.d/elasticsearch.list /etc/systemd/system/elasticsearch.service.d/ /etc/elasticsearch /etc/ansible/facts.d/graylog.fact /etc/firewalld/services/graylog-tcp.xml /etc/graylog/ /usr/share/keyrings/mongodb.gpg /etc/apt/sources.list.d/mongodb.list /etc/netdata/go.d/httpcheck.conf.d/graylog.conf /etc/netdata/health.d/processes.conf.d/graylog.conf /etc/rsyslog.d/graylog.conf /var/log/mongodb/ /var/log/elasticsearch/ /var/log/graylog-server/ /var/lib/elasticsearch /etc/rsnapshot.d/graylog.conf
 sudo systemctl daemon-reload
 sudo systemctl reload apache2 firewalld
 sudo systemctl restart rsyslog

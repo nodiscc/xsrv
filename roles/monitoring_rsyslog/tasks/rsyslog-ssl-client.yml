@@ -1,0 +1,98 @@
+##### REQUIREMENTS ###
+
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
+- name: create directory for syslog certificates/keys/CSRs
+  file:
+    state: directory
+    path: /etc/ssl/syslog
+    owner: root
+    group: root
+    mode: "0755"
+
+##### CLIENT CERTIFICATE GENERATION #####
+
+- name: generate syslog client private key
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/syslog/client.key
+    owner: root
+    group: root
+    mode: "0640"
+  notify: restart rsyslog
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# use openssl_csr_pipe to generate a CSR but don't save it to file
+# instead, we store the CSR in a variable and pass it to the syslog collector/server to sign it with it's server/CA certificate
+- name: generate CSR for the syslog client certificate
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: /etc/ssl/syslog/client.key
+    common_name: "{{ rsyslog_fqdn | default(inventory_hostname) }}"
+    basicConstraints: "CA:TRUE"
+    # key_usage: "keyCertSign"
+    # use_common_name_for_san: false
+    # basic_constraints_critical: true
+    # key_usage_critical: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: syslog_csr
+  when: rsyslog_enable_forwarding | bool
+  changed_when: no # does not change anything
+
+- name: check whether client certificate exists
+  stat:
+    path: /etc/ssl/syslog/client.crt
+  register: syslog_cert_exists
+
+- name: read client certificate if it exists
+  slurp:
+    src: /etc/ssl/syslog/client.crt
+  when: syslog_cert_exists.stat.exists
+  register: syslog_cert
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: sign syslog client certificate with the CA cert of the syslog server
+  delegate_to: "{{ rsyslog_forward_to_inventory_hostname }}"
+  community.crypto.x509_certificate_pipe:
+    content: "{{ (syslog_cert.content | b64decode) if syslog_cert_exists.stat.exists else omit }}"
+    csr_content: "{{ syslog_csr.csr }}"
+    provider: ownca
+    ownca_path: /etc/ssl/syslog/server.crt
+    ownca_privatekey_path: /etc/ssl/syslog/server.key
+    ownca_not_after: "{{ rsyslog_cert_not_after }}"
+    ownca_not_before: "{{ rsyslog_cert_not_before }}"
+  register: syslog_cert
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: install signed certificate
+  copy:
+    dest: /etc/ssl/syslog/client.crt
+    content: "{{ syslog_cert.certificate }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart rsyslog
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: syslog_cert is changed # noqa no-handler
+
+# update the CA/server certificate of the syslog server to the client, will be used in DefaultNetstreamDriverCAFile
+- name: upload syslog CA certificate
+  copy:
+    src: "{{ playbook_dir }}/data/certificates/syslog-{{ rsyslog_forward_to_hostname }}.crt"
+    dest: /etc/ssl/syslog/{{ rsyslog_forward_to_hostname }}-ca.crt
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart rsyslog
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: rsyslog_enable_forwarding | bool
+
+- name: migration/1.23.0 - remove files from old versions of the role
+  file:
+    state: absent
+    path: /etc/ssl/rsyslog/
+
+# TODO upgrade procedure: monitoring_rsyslog: if forwarding logs to anoher host (rsyslog_enable_forwarding: yes), you must set rsyslog_forward_to_inventory_hostname to the inventory hostname of the log collector in the host/group configuration (xsrv edit-host/edit-group). This is required for the log collector to sign syslog client certificates.

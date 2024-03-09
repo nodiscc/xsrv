@@ -22,9 +22,9 @@ $ActionQueueTimeoutEnqueue 0
 # Default to openssl driver
 $DefaultNetstreamDriver gtls
 # Paths to SSL/TLS certificates and keys
-$DefaultNetstreamDriverCAFile /etc/ssl/rsyslog/{{ rsyslog_forward_to_hostname }}-graylog-ca.crt
-$DefaultNetstreamDriverCertFile /etc/ssl/rsyslog/rsyslog.crt
-$DefaultNetstreamDriverKeyFile /etc/ssl/rsyslog/rsyslog.key
+$DefaultNetstreamDriverCAFile /etc/ssl/syslog/{{ rsyslog_forward_to_hostname }}-ca.crt
+$DefaultNetstreamDriverCertFile /etc/ssl/syslog/client.crt
+$DefaultNetstreamDriverKeyFile /etc/ssl/syslog/client.key
 
 # Authentication mode: certificate validation/subject name authentication as described in https://tools.ietf.org/html/draft-ietf-syslog-transport-tls-12
 $ActionSendStreamDriverAuthMode x509/name
@@ -35,4 +35,34 @@ $ActionSendStreamDriverMode 1
 
 # Forward everything to remote server over TCP
 *.* @@{{ rsyslog_forward_to_hostname }}:{{ rsyslog_forward_to_port }};RSYSLOG_SyslogProtocol23Format
+{% endif %}
+{% if rsyslog_enable_receive %}
+# Message forwarding over TLS/TCP
+# Default to openssl driver
+$DefaultNetstreamDriver gtls
+# Paths to SSL/TLS certificates and keys
+$DefaultNetstreamDriverCAFile /etc/ssl/syslog/server.crt
+$DefaultNetstreamDriverCertFile /etc/ssl/syslog/server.crt
+$DefaultNetstreamDriverKeyFile /etc/ssl/syslog/server.key
+
+# load the TCP input module in TLS mode
+# allow logs on port 514/tcp from all peers with valid certificates
+# log every host in its own log file under /var/log/rsyslog
+module(
+    load="imtcp"
+    StreamDriver.Name="gtls"
+    StreamDriver.Mode="1"
+    StreamDriver.Authmode="x509/certvalid"
+    )
+ruleset(name="remotelogs") {
+    $template RemoteLogs,"{{ rsyslog_remote_logs_path }}/%HOSTNAME%.log"
+    *.* ?RemoteLogs
+    stop
+}
+# listen on port 514/tcp
+input(
+    type="imtcp"
+    port="514"
+    ruleset="remotelogs"
+)
 {% endif %}

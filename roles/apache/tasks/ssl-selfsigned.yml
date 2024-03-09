@@ -21,7 +21,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: generate self-signed certificate for default virtualhost
-  openssl_certificate:
+  community.crypto.x509_certificate:
     path: "/etc/ssl/certs/localhost.crt"
     privatekey_path: "/etc/ssl/private/localhost.key"
     csr_path: "/etc/ssl/private/localhost.csr"
@@ -51,7 +51,7 @@
   with_items: "{{ apache_reverseproxies }}"
 
 - name: generate self-signed certificate for self-signed certificates
-  openssl_certificate:
+  community.crypto.x509_certificate:
     path: "/etc/ssl/certs/{{ item.servername }}.crt"
     privatekey_path: "/etc/ssl/private/{{ item.servername }}.key"
     csr_path: "/etc/ssl/private/{{ item.servername }}.csr"
