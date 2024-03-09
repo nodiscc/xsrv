@@ -43,6 +43,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: fix stack theme favicon not being displayed
 - postgresql: fix role execution when called with `rsyslog` ansible tag 
 
+[Full changes since v1.22.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.22.0...1.23.0)
+
+
 #### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
 
 **Upgrade procedure:**
