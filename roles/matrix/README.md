@@ -32,8 +32,8 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.xsrv.monitoring # (optional) system/server monitoriong and health checks
     - nodiscc.xsrv.openldap # (optional) LDAP directory server
     - nodiscc.xsrv.backup # (optional) automatic backups of uploaded media files
-    - nodiscc.xsrv.postgresql # (required in the standard configuration) database engine
     - nodiscc.xsrv.apache # (required in the standard configuration) webserver/reverse proxy, SSL certificates
+    - nodiscc.xsrv.postgresql # (required) database engine
     - nodiscc.xsrv.matrix
 
 # required variables
