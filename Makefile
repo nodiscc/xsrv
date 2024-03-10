@@ -103,7 +103,7 @@ test_fetch_backups:
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv fetch-backups xsrv-test my.example.test
 
 ##### RELEASE PROCEDURE #####
-# - make test_init_vm_template test_init_vm test_check_mode test_idempotence test_fetch_backups SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
+# - make test_init_vm_template test_init_vm test_check_mode test_idempotence test_fetch_backups test_single_roles SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
 # - check test environment logs for warning/errors: ssh -t deploy@my.example.test sudo lnav /var/log/syslog
 # - make clean
 # - make bump_versions update_todo new_tag=$new_tag
