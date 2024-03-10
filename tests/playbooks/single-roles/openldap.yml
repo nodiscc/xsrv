@@ -1,3 +1,4 @@
 - hosts: my.example.test
   roles:
+    - nodiscc.xsrv.apache
     - nodiscc.xsrv.openldap
