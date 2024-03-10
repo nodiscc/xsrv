@@ -1,4 +1,5 @@
 - hosts: my.example.test
   roles:
     - nodiscc.xsrv.postgresql
+    - nodiscc.xsrv.apache
     - nodiscc.xsrv.matrix
