@@ -84,17 +84,18 @@ test_idempotence:
 	# check netdata alarms count
 	curl --insecure https://my.example.test:19999/api/v1/alarms
 
+SINGLE_ROLE_NAME="*"
 # usage: make test_init_vm_template test_single_roles NETWORK=default
+# optional: SINGLE_ROLE_NAME=somerole
 .PHONY: test_single_roles # test independent deployment of each role
 test_single_roles:
 	XSRV_PROJECTS_DIR=tests/playbooks ./xsrv upgrade xsrv-test
-	for playbook in $$(find tests/playbooks/single-roles/ -maxdepth 1 -mindepth 1) ; do \
+	for playbook in $$(find tests/playbooks/single-roles/ -maxdepth 1 -mindepth 1 -name $(ROLE_PATTERN).yml) ; do \
 		set -o errexit && \
 		cp "$$playbook" tests/playbooks/xsrv-test/playbook.yml && \
 		make test_init_vm SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG && \
 		XSRV_PROJECTS_DIR=tests/playbooks ./xsrv deploy xsrv-test my.example.test; \
 	done
-
 
 .PHONY: test_fetch_backups # test fetch-backups command against the host deployed with test_idempotence
 test_fetch_backups:
