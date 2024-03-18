@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.24.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.24.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+** Changed:**
+- matrix: update element-web to v1.11.61 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.61)
+
+[Full changes since v1.23.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.23.0...1.24.0)
+
+
 #### [v1.23.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.23.0) - 2024-04-09
 
 **Upgrade procedure:**
@@ -42,6 +54,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_netdata/rsyslog: fix netdata logs no longer being appended to syslog
 - shaarli: fix stack theme favicon not being displayed
 - postgresql: fix role execution when called with `rsyslog` ansible tag 
+
+[Full changes since v1.22.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.22.0...1.23.0)
+
 
 #### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
 
