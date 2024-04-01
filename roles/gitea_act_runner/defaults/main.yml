@@ -27,6 +27,6 @@ gitea_act_runner_labels:
 # prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
 gitea_act_runner_daily_podman_prune: no
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
-gitea_act_runner_version: "0.2.6"
+gitea_act_runner_version: "0.2.8"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
 gitea_act_runner_enable_service: yes
