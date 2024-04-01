@@ -74,3 +74,6 @@ goaccess_fqdn: "goaccess.CHANGEME.org"
 
 #### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
 owncast_fqdn: "livestream.CHANGEME.org"
+
+#### OLLAMA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
+olllama_ui_fqdn: "llm.CHANGEME.org"

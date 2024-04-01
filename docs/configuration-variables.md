@@ -673,7 +673,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.21.7"
+gitea_version: "1.21.10"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1211,7 +1211,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.59"
+matrix_element_version: "1.11.62"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1247,8 +1247,8 @@ goaccess_enable_service: yes
 goaccess_update_calendar_expression: "*:00:00"
 # (optional) only parse log lines containing this string
 # goaccess_filter: "mysite.CHANGEME.org"
-# IP to Country GeoIP database version
-goaccess_geoip_db_version: "2024-01"
+# IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
+goaccess_geoip_db_version: "2024-03"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"
@@ -1720,6 +1720,35 @@ nmap_limit: "{{ groups['all'] }}"
 ```
 
 
+## ollama
+
+[roles/ollama/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml)
+
+```yaml
+##### EXAMPLE APPLICATION/SERVICE #####
+# list of models to pull by default, see https://github.com/ollama/ollama?tab=readme-ov-file#model-library
+# you can still pull/run any model by running ollama pull/run MODEL_NAME manually
+ollama_models:
+  - orca-mini
+# fully qualified domain name of the ollama-ui web interface
+ollama_ui_fqdn: "llm.CHANGEME.org"
+# username/password for access to the ollama web interface/API
+ollama_username: "CHANGEME"
+ollama_password: "CHANGEME"
+# HTTPS and SSL/TLS certificate mode for the ollama-ui webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+ollama_ui_https_mode: selfsigned
+# enable automatic backups of downloaded models (if the nodiscc.xsrv.backup role is deployed) (no/yes)
+ollama_backup_models: no
+# start/stop the ollama service and web UI, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+ollama_enable_service: yes
+# list of IP addresses allowed to access the ollama web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+ollama_ui_allowed_hosts: []
+```
+
+
 ## openldap
 
 [roles/openldap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml)
@@ -1762,7 +1791,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.6"
+ldap_account_manager_version: "8.7"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"

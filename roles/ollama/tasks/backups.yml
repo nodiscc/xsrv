@@ -1,0 +1,6 @@
+- name: copy rsnapshot configuration for ollama backups
+  template:
+    src: etc_rsnapshot.d_ollama.conf.j2
+    dest: /etc/rsnapshot.d/ollama.conf
+    mode: "0600"
+  notify: check rsnapshot configuration

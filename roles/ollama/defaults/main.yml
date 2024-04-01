@@ -1,0 +1,21 @@
+##### EXAMPLE APPLICATION/SERVICE #####
+# list of models to pull by default, see https://github.com/ollama/ollama?tab=readme-ov-file#model-library
+# you can still pull/run any model by running ollama pull/run MODEL_NAME manually
+ollama_models:
+  - orca-mini
+# fully qualified domain name of the ollama-ui web interface
+ollama_ui_fqdn: "llm.CHANGEME.org"
+# username/password for access to the ollama web interface/API
+ollama_username: "CHANGEME"
+ollama_password: "CHANGEME"
+# HTTPS and SSL/TLS certificate mode for the ollama-ui webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+ollama_ui_https_mode: selfsigned
+# enable automatic backups of downloaded models (if the nodiscc.xsrv.backup role is deployed) (no/yes)
+ollama_backup_models: no
+# start/stop the ollama service and web UI, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+ollama_enable_service: yes
+# list of IP addresses allowed to access the ollama web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+ollama_ui_allowed_hosts: []

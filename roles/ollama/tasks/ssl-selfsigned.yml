@@ -1,0 +1,44 @@
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/ssl/private/{{ ollama_ui_fqdn }}.key"
+  notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/ssl/private/{{ ollama_ui_fqdn }}.csr"
+    privatekey_path: "/etc/ssl/private/{{ ollama_ui_fqdn }}.key"
+    common_name: "{{ ollama_ui_fqdn }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: generate self-signed openssl certificate
+  community.crypto.x509_certificate:
+    path: "/etc/ssl/certs/{{ ollama_ui_fqdn }}.crt"
+    privatekey_path: "/etc/ssl/private/{{ ollama_ui_fqdn }}.key"
+    csr_path: "/etc/ssl/private/{{ ollama_ui_fqdn }}.csr"
+    provider: selfsigned
+  notify: restart apache
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create local certificates directory on the controller
+  become: no
+  delegate_to: localhost
+  file:
+    path: "{{ playbook_dir }}/data/certificates/"
+    state: directory
+    mode: "0755"
+
+- name: download self-signed certificate to the controller
+  fetch:
+    src: /etc/ssl/certs/{{ ollama_ui_fqdn }}.crt
+    dest: "{{ playbook_dir }}/data/certificates/{{ ollama_ui_fqdn }}.crt"
+    flat: yes

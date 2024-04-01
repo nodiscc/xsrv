@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.22.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.23.0
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
 TAGS:
 apache-reverseproxy - setup apache custom reverseproxies
@@ -61,6 +61,8 @@ nextcloud-applications - setup nextcloud applications
 nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
 nmap - run nmap network scanner against managed hosts
+ollama - setup ollama Large Language Model server
+ollama-ui - setup ollama-ui web interface for ollama
 openldap - setup LDAP server
 owncast - setup owncast live streaming server
 packages - additional package installation/removal

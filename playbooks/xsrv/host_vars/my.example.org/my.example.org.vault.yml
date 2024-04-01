@@ -91,3 +91,7 @@ goaccess_password: "{{ xsrv_admin_password }}"
 
 #### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
 owncast_admin_password: "{{ xsrv_admin_password }}"
+
+#### OLLAMA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
+ollama_username: "{{ xsrv_admin_username }}"
+ollama_password: "{{ xsrv_admin_password }}"
