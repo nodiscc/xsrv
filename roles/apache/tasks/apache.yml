@@ -82,8 +82,8 @@
   notify: restart apache
 
 - name: enable apache modules
-  command: a2enmod {{ item }}
-  args:
+  command:
+    cmd: "a2enmod {{ item }}"
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   with_items:
     - 'auth_basic'
@@ -99,8 +99,8 @@
   notify: restart apache
 
 - name: enable apache configuration snippets
-  command: a2enconf {{ item }}
-  args:
+  command:
+    cmd: "a2enconf {{ item }}"
     creates: "/etc/apache2/conf-enabled/{{ item }}.conf"
   with_items:
     - 'security'
@@ -129,8 +129,8 @@
   tags: apache-reverseproxy
 
 - name: enable apache sites configuration
-  command: a2ensite 000-sites
-  args:
+  command:
+    cmd: a2ensite 000-sites
     creates: /etc/apache2/sites-enabled/000-sites.conf
   notify: reload apache
   tags: apache-reverseproxy

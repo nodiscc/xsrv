@@ -1,11 +1,12 @@
 - name: enable required apache modules
-  command: a2enmod {{ item }}
+  command:
+    cmd: "a2enmod {{ item }}"
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+  notify: restart apache
   with_items:
     - headers
     - proxy
     - proxy_http
-  args:
-    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
 
 - name: copy apache virtualhosts configuration
   template:
@@ -22,8 +23,8 @@
       dest: /etc/apache2/sites-available/matrix-element.conf
 
 - name: enable apache virtualhosts configuration
-  command: "a2ensite {{ item }}"
-  args:
+  command:
+    cmd: "a2ensite {{ item }}"
     creates: "/etc/apache2/sites-enabled/{{ item }}.conf"
   notify: reload apache
   with_items:
