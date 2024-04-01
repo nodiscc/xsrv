@@ -4,7 +4,7 @@
 galaxy_info:
   role_name: ollama
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "local Large Language Model (LLM) with web interface"
+  description: "Large Language Model (LLM) server and web interface"
   license: "GPL-3.0"
   min_ansible_version: "2.12"
   platforms:

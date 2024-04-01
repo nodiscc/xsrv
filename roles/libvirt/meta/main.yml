@@ -8,7 +8,7 @@
 galaxy_info:
   role_name: libvirt
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "libvirt virtualization toolkit"
+  description: "virtualization toolkit"
   license: "GPL-3.0"
   min_ansible_version: "2.12"
   platforms:

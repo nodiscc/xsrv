@@ -22,38 +22,38 @@ This project provides:
 
 ## Roles
 <!--BEGIN ROLES LIST-->
-- [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) - Apache web server/reverse proxy + PHP-FPM interpreter
-- [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) - Remote/local backup service (rsnapshot)
-- [common](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) - Base setup for Debian servers
-- [dnsmasq](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq) - Lightweight DNS server
-- [gitea](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea) - Self-hosted Git service/software forge
+- [apache](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache) - web server/reverse proxy + PHP-FPM interpreter
+- [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) - remote/local backup service (rsnapshot)
+- [common](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common) - base setup for Debian-based servers
+- [dnsmasq](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq) - lightweight DNS server
+- [gitea](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea) - git version control service/software forge
 - [gitea_act_runner](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) - CI/CD runner for Gitea Actions
-- [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) - Share your terminal as a web application
-- [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) - Log capture, storage, real-time search and analysis tool
-- [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - Simple webserver homepage/dashboard
-- [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - Media solution that puts you in control of your media
-- [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) - Video conferencing solution
-- [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) - libvirt virtualization toolkit
+- [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) - web-based terminal emulator
+- [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) - log aggregation, storage, real-time search and analysis tool
+- [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - simple webserver homepage/dashboard
+- [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - media server
+- [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) - video conferencing solution
+- [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) - virtualization toolkit
 - [mail_dovecot](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) - IMAP mailbox server
-- [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - Real-time secure communication server and web client
-- [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - Monitoring, alerting, audit and logging system
+- [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - secure instant messaging service
+- [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - monitoring, alerting, audit and logging system
 - [monitoring_goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
-- [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog) - Log aggregation, processing and forwarding system
-- [monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils) - Various monitoring and audit utilities
-- [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - Low-latency VoIP/voice chat server
+- [monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) - lightweight, real-time monitoring and alerting system
+- [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
+- [monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils) - monitoring and audit utilities
+- [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
-- [nmap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap) - run nmap network scanner against hosts in the inventory
-- [ollama](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) - local Large Language Model (LLM) with web interface
+- [nmap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap) - automated network scanning for ansible-based projects
+- [ollama](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) - Large Language Model (LLM) server and web interface
 - [openldap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap) - LDAP directory server and web management tools
-- [owncast](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast) - Decentralized, single user live video streaming and chat server
+- [owncast](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast) - live video streaming and chat server
 - [podman](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) - OCI container engine and management tools
-- [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) - PostgreSQL database engine
-- [readme_gen](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) - add an inventory of hosts and services to the project's README.md
-- [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - Cross-platform file sharing server
-- [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli) - Bookmarking & link sharing web application
-- [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - Transmission Bittorrent client/web interface
-- [tt_rss](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss) - Tiny Tiny RSS web-based news feed reader
+- [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) - database engine
+- [readme_gen](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) - automatic README.md generator for ansible-based projects
+- [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - cross-platform file sharing server
+- [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli) - bookmarking & link sharing web application
+- [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - bittorrent client/web interface
+- [tt_rss](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss) - web-based news feed reader
 - [wireguard](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard) - fast and modern VPN server
 <!--END ROLES LIST-->
 

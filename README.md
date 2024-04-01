@@ -22,38 +22,38 @@ This project provides:
 
 ## Roles
 <!--BEGIN ROLES LIST-->
-- [apache](roles/apache) - Apache web server/reverse proxy + PHP-FPM interpreter
-- [backup](roles/backup) - Remote/local backup service (rsnapshot)
-- [common](roles/common) - Base setup for Debian servers
-- [dnsmasq](roles/dnsmasq) - Lightweight DNS server
-- [gitea](roles/gitea) - Self-hosted Git service/software forge
+- [apache](roles/apache) - web server/reverse proxy + PHP-FPM interpreter
+- [backup](roles/backup) - remote/local backup service (rsnapshot)
+- [common](roles/common) - base setup for Debian-based servers
+- [dnsmasq](roles/dnsmasq) - lightweight DNS server
+- [gitea](roles/gitea) - git version control service/software forge
 - [gitea_act_runner](roles/gitea_act_runner) - CI/CD runner for Gitea Actions
-- [gotty](roles/gotty) - Share your terminal as a web application
-- [graylog](roles/graylog) - Log capture, storage, real-time search and analysis tool
-- [homepage](roles/homepage) - Simple webserver homepage/dashboard
-- [jellyfin](roles/jellyfin) - Media solution that puts you in control of your media
-- [jitsi](roles/jitsi) - Video conferencing solution
-- [libvirt](roles/libvirt) - libvirt virtualization toolkit
+- [gotty](roles/gotty) - web-based terminal emulator
+- [graylog](roles/graylog) - log aggregation, storage, real-time search and analysis tool
+- [homepage](roles/homepage) - simple webserver homepage/dashboard
+- [jellyfin](roles/jellyfin) - media server
+- [jitsi](roles/jitsi) - video conferencing solution
+- [libvirt](roles/libvirt) - virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
-- [matrix](roles/matrix) - Real-time secure communication server and web client
-- [monitoring](roles/monitoring) - Monitoring, alerting, audit and logging system
+- [matrix](roles/matrix) - secure instant messaging service
+- [monitoring](roles/monitoring) - monitoring, alerting, audit and logging system
 - [monitoring_goaccess](roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring_netdata](roles/monitoring_netdata) - Lightweight real-time monitoring and alerting system
-- [monitoring_rsyslog](roles/monitoring_rsyslog) - Log aggregation, processing and forwarding system
-- [monitoring_utils](roles/monitoring_utils) - Various monitoring and audit utilities
-- [mumble](roles/mumble) - Low-latency VoIP/voice chat server
+- [monitoring_netdata](roles/monitoring_netdata) - lightweight, real-time monitoring and alerting system
+- [monitoring_rsyslog](roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
+- [monitoring_utils](roles/monitoring_utils) - monitoring and audit utilities
+- [mumble](roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
-- [nmap](roles/nmap) - run nmap network scanner against hosts in the inventory
-- [ollama](roles/ollama) - local Large Language Model (LLM) with web interface
+- [nmap](roles/nmap) - automated network scanning for ansible-based projects
+- [ollama](roles/ollama) - Large Language Model (LLM) server and web interface
 - [openldap](roles/openldap) - LDAP directory server and web management tools
-- [owncast](roles/owncast) - Decentralized, single user live video streaming and chat server
+- [owncast](roles/owncast) - live video streaming and chat server
 - [podman](roles/podman) - OCI container engine and management tools
-- [postgresql](roles/postgresql) - PostgreSQL database engine
-- [readme_gen](roles/readme_gen) - add an inventory of hosts and services to the project's README.md
-- [samba](roles/samba) - Cross-platform file sharing server
-- [shaarli](roles/shaarli) - Bookmarking & link sharing web application
-- [transmission](roles/transmission) - Transmission Bittorrent client/web interface
-- [tt_rss](roles/tt_rss) - Tiny Tiny RSS web-based news feed reader
+- [postgresql](roles/postgresql) - database engine
+- [readme_gen](roles/readme_gen) - automatic README.md generator for ansible-based projects
+- [samba](roles/samba) - cross-platform file sharing server
+- [shaarli](roles/shaarli) - bookmarking & link sharing web application
+- [transmission](roles/transmission) - bittorrent client/web interface
+- [tt_rss](roles/tt_rss) - web-based news feed reader
 - [wireguard](roles/wireguard) - fast and modern VPN server
 <!--END ROLES LIST-->
 

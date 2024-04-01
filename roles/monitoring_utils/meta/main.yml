@@ -5,7 +5,7 @@
 galaxy_info:
   role_name: monitoring_utils
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Various monitoring and audit utilities"
+  description: "monitoring and audit utilities"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

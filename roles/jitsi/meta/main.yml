@@ -5,7 +5,7 @@
 galaxy_info:
   role_name: jitsi
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Video conferencing solution"
+  description: "video conferencing solution"
   license: "GPL-3.0"
   min_ansible_version: "2.12"
   platforms:

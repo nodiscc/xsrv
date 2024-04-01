@@ -5,7 +5,7 @@
 galaxy_info:
   role_name: dnsmasq
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Lightweight DNS server"
+  description: "lightweight DNS server"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

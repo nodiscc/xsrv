@@ -29,7 +29,7 @@
 galaxy_info:
   role_name: common
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Base setup for Debian servers"
+  description: "base setup for Debian-based servers"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

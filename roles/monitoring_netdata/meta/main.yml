@@ -12,7 +12,7 @@
 galaxy_info:
   role_name: monitoring_netdata
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Lightweight real-time monitoring and alerting system"
+  description: "lightweight, real-time monitoring and alerting system"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

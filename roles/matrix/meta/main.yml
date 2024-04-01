@@ -6,7 +6,7 @@
 galaxy_info:
   role_name: matrix
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Real-time secure communication server and web client"
+  description: "secure instant messaging service"
   license: "GPL-3.0"
   min_ansible_version: "2.12"
   platforms:

@@ -3,7 +3,7 @@
 galaxy_info:
   role_name: mumble
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Low-latency VoIP/voice chat server"
+  description: "low-latency VoIP/voice chat server"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:
