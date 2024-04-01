@@ -4,7 +4,7 @@
 
 - name: enable apache2 modules
   command:
-    cmd: "a2enmod {{ item }}""
+    cmd: "a2enmod {{ item }}"
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   notify: restart apache
   with_items:
