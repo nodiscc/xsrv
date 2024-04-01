@@ -49,7 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_rsyslog/graylog: setup mutual TLS authentication between syslog clients and server, sign server and client certificates with server CA certificate - [`rsyslog_forward_to_inventory_hostname`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) is now required on rsyslog clients
 - common: apt: enable non-free-firmware section when [`apt_enable_nonfree: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) [[1]](https://wiki.debian.org/Firmware)
 - gitea: update to v1.21.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.7)
-- nextcloud: upgrade to v28.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.3)
+- nextcloud: upgrade to v28.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.3) [[3]](https://github.com/nextcloud/server/releases/tag/v28.0.4)
 - shaarli: update stack template to v0.7 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6) [[2]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.7)
 - matrix: update synapse-admin to [v0.9.1](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
 - matrix: update element-web to v1.11.60 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.58) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.59) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.60)
