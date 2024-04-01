@@ -1,6 +1,6 @@
 - name: download ollama binary
   get_url:
-    url: https://github.com/ollama/ollama/releases/download/v0.1.29/ollama-linux-amd64
+    url: "https://github.com/ollama/ollama/releases/download/{{ ollama_version }}/ollama-linux-amd64"
     dest: /root/ollama-linux-amd64
     owner: root
     group: root

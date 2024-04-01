@@ -12,3 +12,4 @@
     - ollama_backup_models == ollama_backup_models | bool
     - ollama_username is not search('CHANGEME')
     - ollama_password is not search('CHANGEME')
+    - ollama_version is string
