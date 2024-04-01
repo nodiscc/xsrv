@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - gitea: update to v1.21.10 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.8) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.9) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.21.10)
 - openldap: update ldap-account-manager to [v8.7](https://github.com/LDAPAccountManager/lam/releases/tag/8.7)
-- matrix: update element-web to v1.11.62 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.61) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.62)
+- matrix: update element-web to v1.11.63 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.61) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.62) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.63)
 
 **Fixed:**
 - all roles/apache: ensure apache is restarted (not just reloaded) when new modules are loaded
