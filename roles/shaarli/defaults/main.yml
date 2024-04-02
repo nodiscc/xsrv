@@ -42,7 +42,7 @@ shaarli_allowed_hosts: []
 # default view mode when using the stack template (small/medium/large)
 shaarli_stack_default_ui: "medium"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
-shaarli_stack_version: "0.7"
+shaarli_stack_version: "0.8"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)

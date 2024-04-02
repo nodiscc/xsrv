@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea_act_runner: update act-runner to v0.2.8 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.7) [[2]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.8)
 - openldap: update ldap-account-manager to [v8.7](https://github.com/LDAPAccountManager/lam/releases/tag/8.7)
 - matrix: update element-web to v1.11.63 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.61) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.62) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.63)
+- shaarli: update stack template to v0.8 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.8)
 
 **Fixed:**
 - all roles/apache: ensure apache is restarted (not just reloaded) when new modules are loaded
