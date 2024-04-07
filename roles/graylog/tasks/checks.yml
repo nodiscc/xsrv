@@ -18,6 +18,8 @@
     - (elasticsearch_timeout_start_sec == 'auto') or (elasticsearch_timeout_start_sec == elasticsearch_timeout_start_sec|int)
     - graylog_tcp_firewalld_zones|type_debug == "list"
     - graylog_allowed_hosts | type_debug == "list"
+    - graylog_cert_not_after | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
+    - graylog_cert_not_before | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
 
 - name: check that variables are correctly defined (graylog_allowed_hosts)
   assert:
