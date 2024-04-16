@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role role (local Large Language Model (LLM) server and web interface)
 
 **Changed:**
-- gitea: update to v1.21.10 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.8) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.9) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.21.10)
+- gitea: update to v1.21.11 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.8) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.9) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.21.10) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.21.11)
 - gitea_act_runner: update act-runner to v0.2.10 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.7) [[2]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.8) [[3]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.9) [[4]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.10)
 - openldap: update ldap-account-manager to [v8.7](https://github.com/LDAPAccountManager/lam/releases/tag/8.7)
 - matrix: update element-web to v1.11.64 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.61) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.62) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.63) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.64)
