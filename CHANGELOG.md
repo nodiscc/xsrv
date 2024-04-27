@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.65 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.61) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.62) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.63) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.64) [[5]](https://github.com/element-hq/element-web/releases/tag/v1.11.65)
 - shaarli: update stack template to v0.8 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.8)
 - matrix: update synapse-admin to v0.10.1 [[1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.9.1...0.10.1)
+- xsrv: update ansible to [v9.5.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
 **Fixed:**
 - all roles/apache: ensure apache is restarted (not just reloaded) when new modules are loaded
