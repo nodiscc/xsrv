@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role role (local Large Language Model (LLM) server and web interface)
 
 **Changed:**
+- nextcloud: upgrade to v28.0.5 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.5)
 - gitea: update to v1.21.11 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.8) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.9) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.21.10) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.21.11)
 - gitea_act_runner: update act-runner to v0.2.10 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.7) [[2]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.8) [[3]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.9) [[4]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.10)
 - openldap: update ldap-account-manager to [v8.7](https://github.com/LDAPAccountManager/lam/releases/tag/8.7)
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: update stack template to v0.8 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.8)
 - matrix: update synapse-admin to v0.10.1 [[1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.9.1...0.10.1)
 - xsrv: update ansible to [v9.5.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+
 
 **Fixed:**
 - all roles/apache: ensure apache is restarted (not just reloaded) when new modules are loaded
@@ -54,7 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - monitoring_rsyslog/graylog: setup mutual TLS authentication between syslog clients and server, sign server and client certificates with server CA certificate - [`rsyslog_forward_to_inventory_hostname`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) is now required on rsyslog clients
 - common: apt: enable non-free-firmware section when [`apt_enable_nonfree: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) [[1]](https://wiki.debian.org/Firmware)
 - gitea: update to v1.21.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.7)
-- nextcloud: upgrade to v28.0.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.3) [[3]](https://github.com/nextcloud/server/releases/tag/v28.0.4)
+- nextcloud: upgrade to v28.0.4 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.3) [[3]](https://github.com/nextcloud/server/releases/tag/v28.0.4)
 - shaarli: update stack template to v0.7 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6) [[2]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.7)
 - matrix: update synapse-admin to [v0.9.1](https://github.com/Awesome-Technologies/synapse-admin/compare/0.8.7...0.9.1)
 - matrix: update element-web to v1.11.60 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.58) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.59) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.60)
