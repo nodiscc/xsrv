@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - all roles/apache: ensure apache is restarted (not just reloaded) when new modules are loaded
 - graylog: make syslog certificate generation idempotent (add [`graylog_cert_not_before/after`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml) variables)
+- matrix: fix broken version number comparison leading to error `'matrix_synapse_admin_action' is undefined.`
 
 [Full changes since v1.23.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.23.0...1.24.0)
 
