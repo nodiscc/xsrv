@@ -37,6 +37,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Show network bandwidth usage by process: `ssh -t user@my.CHANGEME.org sudo nethogs`
 - Show network connections: `ssh -t user@my.CHANGEME.org sudo watch -n 2 ss -laptu`
 - Visualize disk usage by directory: `TAGS=utils-duc xsrv deploy default my.CHANGEME.org` and run `duc gui --database=data/duc-my.CHANGEME.org.db /` on the controller (requires [duc](https://packages.debian.org/bookworm/duc))
+- Run disk read/write speed benchmarks: `TAGS=utils-bonnie xsrv deploy default my.CHANGEME.org` and open `data/bonnie++-my.CHANGEME.org.html` on the controller. You can compare reports from multiple hosts using `cat data/bonnie++*.csv | bon_csv2html > bonnie++.html`.
 - Use [lnav](https://docs.lnav.org/) to navigate/search/filter aggregated system logs:
 
 ```bash
@@ -64,7 +65,7 @@ linux_users:
      comment: "ansible user/allowed to read system logs"
 ```
 
-**Disk benchmarking:** Note that `bonnie++` is configured to run the benchmark with test files of 1024MB, and will allocate a set amount of memory of 512MB. Edit `/usr/local/bin/bonnie++-wrapper` if you need to change these defaults. You can compare reports from multiple hosts using `cat data/bonnie++*.csv | bon_csv2html > bonnie++.html`
+**Disk benchmarking:** `bonnie++` is configured to run the benchmark with test files of 1024MB, and will allocate a set amount of memory of 512MB.
 
 
 ## Tags
