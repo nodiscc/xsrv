@@ -633,7 +633,7 @@ gitea_act_runner_labels:
 # prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
 gitea_act_runner_daily_podman_prune: no
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
-gitea_act_runner_version: "0.2.6"
+gitea_act_runner_version: "0.2.10"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
 gitea_act_runner_enable_service: yes
 ```
@@ -673,7 +673,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.21.10"
+gitea_version: "1.21.11"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -807,6 +807,9 @@ mongodb_admin_password: "CHANGEME20"
 graylog_mongodb_password: "CHANGEME20"
 # timezone of the graylog admin user, from https://www.joda.org/joda-time/timezones.html
 graylog_root_timezone: "UTC"
+# start and end validity dates for TLS certificates for syslog inputs (YYYYMMDDHHMMSSZ)
+graylog_cert_not_before: "20240219000000Z"
+graylog_cert_not_after: "20340219000000Z"
 # HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1195,7 +1198,7 @@ matrix_synapse_ldap_validate_certs: yes
 # enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
-matrix_synapse_admin_version: "0.9.1"
+matrix_synapse_admin_version: "0.10.1"
 # list of IP addresses allowed to access synapse-admin and synapse admin API endpoints (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 matrix_synapse_admin_allowed_hosts: []
@@ -1211,7 +1214,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.62"
+matrix_element_version: "1.11.66"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1537,6 +1540,9 @@ lynis_skip_tests:
 debsums_cron_check: "daily"
 # base path to index with duc disk usage analyzer
 duc_index_path: "/"
+# list of directories/mountpoints on which to perform bonnie++ disk benchmarks
+bonnie_benchmark_paths:
+  - /var
 ```
 
 
@@ -1607,7 +1613,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "28.0.3"
+nextcloud_version: "28.0.5"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1735,6 +1741,8 @@ ollama_ui_fqdn: "llm.CHANGEME.org"
 # username/password for access to the ollama web interface/API
 ollama_username: "CHANGEME"
 ollama_password: "CHANGEME"
+# ollama version (https://github.com/ollama/ollama/releases/tag/v0.1.30.atom)
+ollama_version: "v0.1.33"
 # HTTPS and SSL/TLS certificate mode for the ollama-ui webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1836,7 +1844,7 @@ self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.5.4"
+self_service_password_version: "1.6.0"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
@@ -2088,7 +2096,7 @@ shaarli_allowed_hosts: []
 # default view mode when using the stack template (small/medium/large)
 shaarli_stack_default_ui: "medium"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
-shaarli_stack_version: "0.7"
+shaarli_stack_version: "0.8"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '128M'
 # php_fpm: Maximum execution time of each script (seconds)

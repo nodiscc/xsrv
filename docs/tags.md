@@ -92,10 +92,11 @@ utils-apt-unattended-upgrade - (manual) run unattended-upgrade now
 utils-apt-upgrade - (manual) run apt upgrade now
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-backup-now - (manual) transfer latest daily backups from the host to the controller
+utils-bonnie - (manual) run duc disk benchmarking tool and download the report on the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 utils-dnsmasq-update-blocklist - update dnsmasq DNS blocklist immediately
-utils-duc - (manual) run duc disk usage analyzer and download the database on the controller
+utils-duc - (manual) run duc disk usage analyzer and download the report on the controller
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
 utils-firewalld-info - (manual) get firewall status informations
 utils-goaccess-update - (manual) update/regenerate goacess report immediately
