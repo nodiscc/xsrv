@@ -13,7 +13,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role role (local Large Language Model (LLM) server and web interface)
 - monitoring_utils: add [bonnie++](https://doc.coker.com.au/projects/bonnie/) disk benchmarking tool and automated report script (`TAGS=utils-bonnie xsrv deploy`)
 
-
 **Changed:**
 - nextcloud: upgrade to v28.0.5 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.5)
 - gitea: update to v1.21.11 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.8) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.9) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.21.10) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.21.11)
@@ -25,8 +24,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update synapse-admin to v0.10.1 [[1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.9.1...0.10.1)
 - xsrv: update ansible to [v9.5.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
-
 **Fixed:**
+- handlers: fix recursion loop in `handlers/meta/main.yml`
 - all roles/apache: ensure apache is restarted (not just reloaded) when new modules are loaded
 - graylog: make syslog certificate generation idempotent (add [`graylog_cert_not_before/after`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml) variables)
 - matrix: fix broken version number comparison leading to error `'matrix_synapse_admin_action' is undefined.`
