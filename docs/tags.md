@@ -4,7 +4,8 @@
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
   ╹ ╹┗━┛╹┗╸┗┛ v1.23.0
-[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
+[xsrv] INFO: list of tags in project xsrv-test
+[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
 apache-reverseproxy - setup apache custom reverseproxies
 apache - setup the apache web server
@@ -109,4 +110,9 @@ utils-reboot - (manual) reboot the host
 utils-samba-listusers - (manual) list samba users
 utils-shutdown - (manual) shut down the host
 wireguard - setup wireguard
+OTHER TAGS:
+never
+nmap
+readme_gen
+
 ```

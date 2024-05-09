@@ -2,31 +2,32 @@
 
 ### xsrv/xsrv
 
+- #1301 - ollama: replace ollama-ui with text-generation-webui/open-webui? - **`-`** `enhancement,question`
+- #1298 - IRC web client + bouncer - **`1.24.0`** `feature`
+- #1297 - shaarli: backup/restore thumbnails cache during upgrades (or store data outside webroot) - **`1.24.0`** `enhancement`
 - #1292 - netdata grafana source - **`1.25.0`** `feature,monitoring,upstream`
-- #1291 - debsecan: per-host dashboard - **`1.24.0`** `enhancement,monitoring,security`
+- #1291 - debsecan: per-host dashboard? - **`-`** `enhancement,monitoring,question,security`
 - #1290 - monitoring_rsyslog: use common name based authentication to authenticate peers - **`1.25.0`** `enhancement,security`
-- #1289 - graylog: enable TLS client authentication - **`1.24.0`** `documentation,enhancement,security`
+- #1289 - graylog: enable TLS client authentication - **`2.0.0`** `documentation,enhancement,security`
 - #1288 - samba: ldapsam: better documentation of samba LDAP attributes - **`-`** `documentation`
 - #1286 - doc: graylog: add example stream setup - **`-`** `documentation`
 - #1285 - gotty: check sha256sums after download - **`-`** `enhancement,security`
 - #1282 - xsrv nmpa: allow output to SVG graph - **`-`** `feature`
-- #1279 - local LLM (Large Language Model) + web interface - **`1.24.0`** `feature`
 - #1276 - WIP: common: split role into sub-roles, make the common role a 'meta' role depending on all sub roles - **`1.25.0`** `maintenance`
 - #1275 - WIP: rsnapshot: allow automatic discovery of paths to backup from/commands to run on remote hosts - **`1.25.0`** `backups,enhancement`
 - #1269 - document getting ansible-vault-password from keepassxc - **`2.0.0`** `documentation,enhancement,security,upstream`
 - #1268 - backup: allow automatic discovery of paths to backup/commands to run for each host - **`1.24.0`** `backups,enhancement`
 - #1267 - xsrv self-upgrade: update the bash completion script as well - **`-`** `enhancement`
 - #1266 - homepage: allow displaying arbitrary netdata badges in the footer - **`-`** `easy,enhancement`
-- #1264 - WIP: mumble: allow uninstalling mumble server using the `utils-mumble-uninstall` ansible tag - **`1.24.0`** `enhancement`
 - #1259 - WIP:  wireguard: when peer.public_key is not defined, auto-generate a public/private key pair for this peer - **`1.24.0`** `enhancement`
-- #1257 - graylog: upgrade to v5.2.x - **`1.24.0`** `maintenance`
+- #1257 - graylog: upgrade to v5.2.x - **`1.25.0`** `maintenance`
 - #1256 - wireguard: web interface? - **`-`** `enhancement,question`
 - #1253 - wireguard: add QR code to auto-generated client config files - **`1.24.0`** `enhancement`
 - #1251 - WIP: xsrv: don't require sudo during xsrv init-vm-template - **`-`** `difficult,enhancement`
-- #1245 - gitea: use unix socket instead of HTTP socket? - **`1.24.0`** `enhancement,question,security`
+- #1245 - gitea: use unix socket instead of HTTP socket? - **`-`** `enhancement,question,security`
 - #1235 - gitea_act_runner: do not log job output to syslog by default - **`-`** `enhancement,monitoring,upstream`
 - #1230 - podman: add docker-compose? - **`1.24.0`** `enhancement,question`
-- #1226 - postgresql: allow enabling pg_stat_statements extension - **`1.24.0`** `easy,enhancement,monitoring,performance`
+- #1226 - postgresql: allow enabling pg_stat_statements extension - **`-`** `enhancement,monitoring,performance`
 - #1215 - WIP: tests: add tests for deploying individual roles to a host - **`1.24.0`** `tools`
 - #1214 - nextcloud: enable machine learning (AI) related features? - **`-`** `feature,question`
 - #1212 - nextcloud: allow enabling/disabling file locking? - **`-`** `enhancement,question`
@@ -35,7 +36,6 @@
 - #1202 - kexec? - **`-`** `enhancement,question`
 - #1201 - WIP: xsrv: init-vm-template: add a video output and spice display device to newly created VM templates - **`2.0.0`** `difficult,enhancement`
 - #1172 - WIP: use `diff: no` instead of `no_log: yes` to mask sensitive info/silence excessively verbose diffs when using diff mode - **`2.0.0`** `enhancement,maintenance,upstream`
-- #1155 - gamevault role? - **`-`** `question`
 - #1144 - automate roles uninstallation procedures? - **`-`** `enhancement,question`
 - #1143 - nextcloud: upload speed improvements? - **`-`** `configuration,enhancement,performance,question`
 - #1134 - Lemmy role? - **`-`** `feature,question`
@@ -153,7 +153,7 @@
 - #96 - grafana role? - **`-`** `feature,monitoring,question`
 - #93 - VNC/other remote desktop server role? - **`-`** `feature,question`
 - #86 - Peertube role? - **`-`** `feature,question`
-- #78 - Adminer role - **`1.24.0`** `feature`
+- #78 - Adminer role - **`1.25.0`** `feature`
 - #70 - common: ssh: allow setting up endlessh? - **`-`** `feature,question,security`
 - #69 - IDS/IPS role? - **`1.25.0`** `question,security`
 - #64 - RAID role? - **`-`** `feature,question`
@@ -170,7 +170,7 @@
 - #43 - OSM routing service role? - **`-`** `feature,question`
 - #42 - OpenStreetMap/maps tileserver role? - **`-`** `feature,question`
 - #41 - network scanner (SANE) server role? - **`-`** `feature,question`
-- #40 - SearxNG role - **`1.24.0`** `feature`
+- #40 - SearxNG role - **`1.25.0`** `feature`
 - #39 - wallabag role? - **`-`** `feature,question`
 - #37 - Replace `ntp` with `chrony`? - **`2.0.0`** `question`
 - #35 - simple git server role? - **`-`** `feature,question,wontfix`
