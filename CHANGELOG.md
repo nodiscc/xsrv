@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 [Full changes since v1.23.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.23.0...1.24.0)
 
+------------------
 
 #### [v1.23.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.23.0) - 2024-04-09
 
@@ -75,6 +76,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 [Full changes since v1.22.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.22.0...1.23.0)
 
+------------------
 
 #### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
 
