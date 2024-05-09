@@ -63,7 +63,7 @@ The controller must be able to resolve the server's name from the [inventory](..
 
 Prefer using [Fully Qualified Domain Names](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). Accessing the host directly by IP address is discouraged, use DNS records.
 
-Public DNS records are required to obtain Let's Encrypt SSL/TLS (HTTPS) certificates - private DNS records will not work (you may still use self-signed certificates).
+If you need to obtain Let's Encrypt SSL/TLS (HTTPS) certificates, public DNS records are required - private DNS records will not work (you may still use self-signed certificates).
 
 Separate domain/subdomain names are required to allow clients to access web applications. For example assuming all roles are deployed, you would need to create the following DNS records:
 
@@ -86,6 +86,7 @@ tty.CHANGEME.org # gotty
 imap.CHANGEME.org # mail_dovecot
 goaccess.CHANGEME.org # goaccess
 livestream.CHANGEME.org # owncast
+llm.CHANGEME.org # ollama
 ```
 
 ### External SMTP server

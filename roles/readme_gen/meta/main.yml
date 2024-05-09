@@ -3,7 +3,7 @@
 galaxy_info:
   role_name: readme_gen
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "add an inventory of hosts and services to the project's README.md"
+  description: "automatic README.md generator for ansible-based projects"
   license: "GPL-3.0"
   min_ansible_version: 2.12
   platforms: # should work on all platforms/distributions

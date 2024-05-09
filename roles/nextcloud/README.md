@@ -209,6 +209,18 @@ Under `Settings > Administration > External storage`, add a new storage:
 - External storage: `Local`
 - Configuration/location: `/var/lib/jellyfin/media/`
 
+#### Troubleshooting
+
+**Nextcloud upgrade fails with `Nextcloud is not installed - only a limited number of commands are available`:** This error is under investigation, it is probably caused by `cron.php` running concurrently with the upgrade process. It is usually sufficient to restore the old nextcloud installation directory, and run the upgrdae process again:
+
+```bash
+# on the server
+sudo rm -r /var/www/cloud.example.org
+sudo mv /var/www/cloud.example.org.old /var/www/cloud.example.org
+# on the controller
+TAGS=nextcloud xsrv deploy
+```
+
 
 #### Uninstallation
 

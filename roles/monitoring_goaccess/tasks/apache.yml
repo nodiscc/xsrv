@@ -1,9 +1,9 @@
 - name: install requirements for ansible htpasswd module
   apt:
+    state: present
     package:
       - python3-passlib
       - python3-bcrypt
-    state: present
 
 - name: create apache HTTP basic auth password file
   htpasswd:
@@ -26,8 +26,8 @@
   notify: reload apache
 
 - name: enable goaccess apache virtualhost configuration
-  command: a2ensite goaccess
-  args:
+  command:
+    cmd: a2ensite goaccess
     creates: "/etc/apache2/sites-enabled/goaccess.conf"
   notify: reload apache
 

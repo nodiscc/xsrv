@@ -23,7 +23,7 @@
     matrix_synapse_admin_action: upgrade
   when:
     - ansible_local.matrix.synapse_admin.installed.version is defined
-    - ansible_local.matrix.synapse_admin.installed.version < matrix_synapse_admin_version
+    - ansible_local.matrix.synapse_admin.installed.version is version(matrix_synapse_admin_version, '<')
     - matrix_synapse_admin_dir.stat.exists
 
 - name: check if no upgrade or initial installation should be performed

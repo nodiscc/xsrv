@@ -5,7 +5,7 @@
 galaxy_info:
   role_name: backup
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Remote/local backup service (rsnapshot)"
+  description: "remote/local backup service (rsnapshot)"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

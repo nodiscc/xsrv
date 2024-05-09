@@ -1,8 +1,6 @@
-##### TRANSMISSION - APACHE CONFIGURATION #####
-
 - name: enable required apache modules
-  command: a2enmod {{ item }}
-  args:
+  command:
+    cmd: "a2enmod {{ item }}"
     creates: /etc/apache2/mods-enabled/{{ item }}.load
   notify: restart apache
   with_items:
@@ -11,16 +9,16 @@
 
 - name: install requirements for ansible htpasswd module
   apt:
+    state: present
     package:
       - python3-passlib
       - python3-bcrypt
-    state: present
 
 - name: create apache HTTP basic auth password file
   htpasswd:
     path: /etc/apache2/transmission-passwd
     name: "{{ transmission_username }}"
-    password: '{{ transmission_password }}'
+    password: "{{ transmission_password }}"
     owner: root
     group: www-data
     mode: "0640"
@@ -35,7 +33,7 @@
   notify: reload apache
 
 - name: enable apache2 virtualhost
-  command: a2ensite transmission
-  args:
+  command:
+    cmd: a2ensite transmission
     creates: "/etc/apache2/sites-enabled/transmission.conf"
   notify: reload apache

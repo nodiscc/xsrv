@@ -3,7 +3,7 @@
 galaxy_info:
   role_name: gotty
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Share your terminal as a web application"
+  description: "web-based terminal emulator"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

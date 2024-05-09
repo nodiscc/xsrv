@@ -15,7 +15,7 @@
   notify: restart php-fpm (tt_rss)
 
 - name: enable tt-rss apache virtualhost configuration
-  command: a2ensite tt-rss
-  args:
+  command:
+    cmd: a2ensite tt-rss
     creates: "/etc/apache2/sites-enabled/tt-rss.conf"
   notify: reload apache

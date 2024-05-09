@@ -8,7 +8,7 @@
   notify: reload apache
 
 - name: enable homepage apache virtualhost configuration
-  command: a2ensite homepage
-  args:
+  command:
+    cmd: a2ensite homepage
     creates: "/etc/apache2/sites-enabled/homepage.conf"
   notify: reload apache

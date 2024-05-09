@@ -1,11 +1,11 @@
 - name: enable apache2 modules
-  command: a2enmod {{ item }}
+  command:
+    cmd: "a2enmod {{ item }}"
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+  notify: restart apache
   with_items:
     - ssl
     - rewrite
-  args:
-    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
-  notify: reload apache
 
 - name: copy apache2 virtualhost configuration
   template:
@@ -15,8 +15,8 @@
   notify: reload apache
 
 - name: enable apache2 virtualhost
-  command: a2ensite owncast
-  args:
+  command:
+    cmd: a2ensite owncast
     creates: "/etc/apache2/sites-enabled/owncast.conf"
   notify: reload apache
 

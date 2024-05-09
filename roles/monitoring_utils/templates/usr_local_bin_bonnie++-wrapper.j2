@@ -1,0 +1,11 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+benchmark_dirs="{{ bonnie_benchmark_paths | join(' ') }}"
+
+rm -f /var/log/bonnie++.csv /var/log/bonnie++.html
+for dir in $benchmark_dirs; do
+    /usr/sbin/bonnie++ -q -u root -d "$dir" -m "$HOSTNAME-$dir" -s 1024 -r 512 >> /var/log/bonnie++.csv
+done
+
+(bon_csv2html /var/log/bonnie++.txt || true) > /var/log/bonnie++.html

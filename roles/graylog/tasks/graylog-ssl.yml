@@ -10,15 +10,15 @@
 - name: create directory for syslog certificates/keys/CSRs
   file:
     state: directory
-    path: /etc/ssl/syslog/
+    path: /etc/ssl/syslog
     owner: root
     group: graylog
     mode: "0755"
 
-##### SYSLOG SERVER #####
+##### SERVER CERTIFICATE GENERATION #####
 
-- name: generate graylog CA private key
-  openssl_privatekey:
+- name: generate graylog server/CA private key
+  community.crypto.openssl_privatekey:
     path: /etc/ssl/syslog/server.key
     owner: root
     group: graylog
@@ -26,8 +26,8 @@
   notify: restart graylog-server
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: generate CSR for the syslog CA certificate
-  openssl_csr:
+- name: generate CSR for the graylog server/CA certificate
+  community.crypto.openssl_csr:
     path: /etc/ssl/syslog/server.csr
     privatekey_path: /etc/ssl/syslog/server.key
     common_name: "{{ graylog_fqdn }}"
@@ -41,12 +41,14 @@
     mode: "0640"
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: generate self-signed syslog certificate
+- name: generate self-signed graylog server/CA certificate
   community.crypto.x509_certificate:
     path: /etc/ssl/syslog/server.crt
     privatekey_path: /etc/ssl/syslog/server.key
     csr_path: /etc/ssl/syslog/server.csr
     provider: selfsigned
+    selfsigned_not_after: "{{ graylog_cert_not_after }}"
+    selfsigned_not_before: "{{ graylog_cert_not_before }}"
     owner: root
     group: graylog
     mode: "0640"

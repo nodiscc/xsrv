@@ -5,7 +5,7 @@
 galaxy_info:
   role_name: shaarli
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Bookmarking & link sharing web application"
+  description: "bookmarking & link sharing web application"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

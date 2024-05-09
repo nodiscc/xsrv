@@ -1,0 +1,32 @@
+- name: install bonnie++
+  apt:
+    state: present
+    package: bonnie++
+
+- name: install bonnie++ wrapper script
+  template:
+    src: usr_local_bin_bonnie++-wrapper.j2
+    dest: /usr/local/bin/bonnie++-wrapper
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: run bonnie++
+  command:
+    cmd: /usr/local/bin/bonnie++-wrapper
+  changed_when: yes # always returns changed, not meant to be idempotent
+
+- name: download bonnie++ reports to data/bonnie++-*.csv,html
+  fetch:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    flat: yes
+  loop:
+    - src: /var/log/bonnie++.html
+      dest: "{{ playbook_dir }}/data/bonnie++-{{ inventory_hostname }}.html"
+    - src: /var/log/bonnie++.csv
+      dest: "{{ playbook_dir }}/data/bonnie++-{{ inventory_hostname }}.csv"
+
+- name: show bonnie++ completion message
+  debug:
+    msg: "The CSV and HTML reports have been downloaded to  {{ playbook_dir }}/data/bonnie++-{{ inventory_hostname }}.{csv,html}"

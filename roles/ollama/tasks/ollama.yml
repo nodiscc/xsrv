@@ -1,0 +1,56 @@
+- name: download ollama binary
+  get_url:
+    url: "https://github.com/ollama/ollama/releases/download/{{ ollama_version }}/ollama-linux-amd64"
+    dest: /root/ollama-linux-amd64
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: copy ollama binary to installation directory
+  copy:
+    remote_src: yes
+    src: /root/ollama-linux-amd64
+    dest: /usr/local/bin/ollama
+    owner: root
+    group: root
+    mode: "0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create ollama user
+  user:
+    name: ollama
+    shell: /bin/bash
+    comment: "Ollama local LLM service"
+    password: "*"
+    home: "/var/lib/ollama"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: install ollama systemd service/unit file
+  template:
+    src: "etc_systemd_system_ollama.service.j2"
+    dest: "/etc/systemd/system/ollama.service"
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart ollama
+
+# load systemd unit file if changed
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable/disable start/stop ollama service
+  systemd:
+    name: ollama
+    enabled: "{{ ollama_enable_service }}"
+    state: "{{ 'started' if ollama_enable_service else 'stopped' }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: pull ollama models (this can take a while) (always returns changed)
+  become: yes
+  become_user: ollama
+  command:
+    cmd: ollama pull "{{ item }}"
+  loop: "{{ ollama_models }}"
+  when: ollama_enable_service | bool
+  changed_when: yes # always pulls the latest version
+  ignore_errors: "{{ ansible_check_mode }}"

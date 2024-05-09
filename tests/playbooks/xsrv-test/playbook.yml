@@ -29,4 +29,5 @@
     - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
     - nodiscc.xsrv.graylog # log management, capture and analysis platform
     - nodiscc.xsrv.owncast # live video streaming and chat server
+    - nodiscc.xsrv.ollama # large language model (LLM) server
     - nodiscc.xsrv.homepage # simple webserver homepage

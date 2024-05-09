@@ -1,0 +1,7 @@
+# rsnapshot configuration for ollama backups
+{% if ollama_backup_models %}
+# backup ollama downloaded models
+backup          /var/lib/ollama/.ollama/models   localhost/
+{% else %}
+# automatic backups of downloaded models are disbaled in the configuration
+{% endif %}

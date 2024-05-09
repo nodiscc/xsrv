@@ -1,0 +1,75 @@
+- name: include variable checks tasks
+  import_tasks: checks.yml
+  tags:
+    - ollama
+    - checks
+
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - ollama
+    - ssl
+    - apache
+  when:
+    - ollama_ui_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include ollama configuration tasks
+  import_tasks: ollama.yml
+  become: yes
+  tags: ollama
+
+- name: include ollama-ui configuration tasks
+  import_tasks: ollama-ui.yml
+  become: yes
+  tags:
+    - ollama
+    - ollama-ui
+
+- name: include apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - ollama
+    - ollama-ui
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: import rsnapshot/backup configuration tasks
+  import_tasks: backups.yml
+  become: yes
+  tags:
+    - ollama
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed | bool
+
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
+  become: yes
+  tags:
+    - ollama
+    - ollama-ui
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed | bool
+
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: ollama
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - ollama
+    - ollama-ui
+    - monitoring
+    - fail2ban

@@ -12,14 +12,14 @@ tests: test_shellcheck test_ansible_lint test_command_line
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
-	shellcheck -e SC1090,SC1091 xsrv xsrv-completion.sh roles/monitoring_netdata/files/usr_local_bin_needrestart-autorestart
+	shellcheck -e SC1090,SC1091 xsrv xsrv-completion.sh roles/monitoring_netdata/files/usr_local_bin_needrestart-autorestart roles/monitoring_utils/templates/usr_local_bin_bonnie++-wrapper.j2
 
 .PHONY: venv # install dev tools in virtualenv
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==6.22.1 yamllint ansible==9.3.0
+	pip3 install isort ansible-lint==24.2.3 yamllint ansible==9.5.1
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv

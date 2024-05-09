@@ -11,6 +11,9 @@ mongodb_admin_password: "CHANGEME20"
 graylog_mongodb_password: "CHANGEME20"
 # timezone of the graylog admin user, from https://www.joda.org/joda-time/timezones.html
 graylog_root_timezone: "UTC"
+# start and end validity dates for TLS certificates for syslog inputs (YYYYMMDDHHMMSSZ)
+graylog_cert_not_before: "20240219000000Z"
+graylog_cert_not_after: "20340219000000Z"
 # HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate

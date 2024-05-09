@@ -35,3 +35,6 @@ lynis_skip_tests:
 debsums_cron_check: "daily"
 # base path to index with duc disk usage analyzer
 duc_index_path: "/"
+# list of directories/mountpoints on which to perform bonnie++ disk benchmarks
+bonnie_benchmark_paths:
+  - /var

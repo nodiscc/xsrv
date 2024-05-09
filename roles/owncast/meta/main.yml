@@ -3,7 +3,7 @@
 galaxy_info:
   role_name: owncast
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "Decentralized, single user live video streaming and chat server"
+  description: "live video streaming and chat server"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

@@ -3,8 +3,9 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.22.0
-[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy
+  ╹ ╹┗━┛╹┗╸┗┛ v1.23.0
+[xsrv] INFO: list of tags in project xsrv-test
+[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
 apache-reverseproxy - setup apache custom reverseproxies
 apache - setup the apache web server
@@ -61,6 +62,8 @@ nextcloud-applications - setup nextcloud applications
 nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
 nmap - run nmap network scanner against managed hosts
+ollama - setup ollama Large Language Model server
+ollama-ui - setup ollama-ui web interface for ollama
 openldap - setup LDAP server
 owncast - setup owncast live streaming server
 packages - additional package installation/removal
@@ -90,10 +93,11 @@ utils-apt-unattended-upgrade - (manual) run unattended-upgrade now
 utils-apt-upgrade - (manual) run apt upgrade now
 utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-backup-now - (manual) transfer latest daily backups from the host to the controller
+utils-bonnie - (manual) run duc disk benchmarking tool and download the report on the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
 utils-dnsmasq-update-blocklist - update dnsmasq DNS blocklist immediately
-utils-duc - (manual) run duc disk usage analyzer and download the database on the controller
+utils-duc - (manual) run duc disk usage analyzer and download the report on the controller
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
 utils-firewalld-info - (manual) get firewall status informations
 utils-goaccess-update - (manual) update/regenerate goacess report immediately
@@ -106,4 +110,9 @@ utils-reboot - (manual) reboot the host
 utils-samba-listusers - (manual) list samba users
 utils-shutdown - (manual) shut down the host
 wireguard - setup wireguard
+OTHER TAGS:
+never
+nmap
+readme_gen
+
 ```

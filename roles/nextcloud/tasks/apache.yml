@@ -1,14 +1,14 @@
 - name: enable apache2 modules
-  command: a2enmod {{ item }}
-  with_items:
-    - 'rewrite'
-    - 'headers'
-    - 'env'
-    - 'dir'
-    - 'mime'
-  args:
+  command:
+    cmd: "a2enmod {{ item }}"
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
-  notify: reload apache
+  notify: restart apache
+  with_items:
+    - rewrite
+    - headers
+    - env
+    - dir
+    - mime
 
 - name: copy php-fpm configuration
   template:
@@ -25,7 +25,7 @@
   notify: reload apache
 
 - name: enable apache2 virtualhost
-  command: a2ensite nextcloud
-  args:
+  command:
+    cmd: a2ensite nextcloud
     creates: "/etc/apache2/sites-enabled/nextcloud.conf"
   notify: restart apache

@@ -8,3 +8,4 @@
     - lynis_skip_tests|type_debug == "list"
     - debsums_cron_check in ['daily', 'weekly', 'monthly']
     - duc_index_path is string
+    - bonnie_benchmark_paths | type_debug == "list"

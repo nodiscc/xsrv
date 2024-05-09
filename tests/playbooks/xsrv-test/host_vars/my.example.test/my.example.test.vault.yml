@@ -73,5 +73,8 @@ matrix_synapse_admin_password: "{{ xsrv_admin_password }}"
 ##### MONITORING_GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
 goaccess_username: "{{ xsrv_admin_username }}"
 goaccess_password: "{{ xsrv_admin_password }}"
-##### ONWCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
+##### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
 owncast_admin_password: "{{ xsrv_admin_password }}"
+##### OLLAMA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
+ollama_username: "{{ xsrv_admin_username }}"
+ollama_password: "{{ xsrv_admin_password }}"

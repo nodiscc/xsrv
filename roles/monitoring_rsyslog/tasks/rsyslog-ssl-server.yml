@@ -26,8 +26,6 @@
   notify: restart rsyslog
   ignore_errors: "{{ ansible_check_mode }}"
 
-# generate a CSR, save it to file
-# and use the server key/certificate to sign itself
 - name: generate CSR for the syslog server/CA certificate
   community.crypto.openssl_csr:
     path: /etc/ssl/syslog/server.csr
