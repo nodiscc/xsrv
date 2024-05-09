@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role role (local Large Language Model (LLM) server and web interface)
+- monitoring_utils: add [bonnie++](https://doc.coker.com.au/projects/bonnie/) disk benchmarking tool and automated report script (`TAGS=utils-bonnie xsrv deploy`)
+
 
 **Changed:**
 - nextcloud: upgrade to v28.0.5 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.5)
