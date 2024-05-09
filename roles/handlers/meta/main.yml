@@ -10,5 +10,4 @@ galaxy_info:
         - "12"
   galaxy_tags:
     - handlers
-dependencies:
-  - nodiscc.xsrv.handlers
+dependencies: []
