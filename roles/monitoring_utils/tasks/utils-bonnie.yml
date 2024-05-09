@@ -14,6 +14,7 @@
 - name: run bonnie++
   command:
     cmd: /usr/local/bin/bonnie++-wrapper
+  changed_when: yes # always returns changed, not meant to be idempotent
 
 - name: download bonnie++ reports to data/bonnie++-*.csv,html
   fetch:
