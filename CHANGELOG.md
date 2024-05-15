@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Changed:**
+- ollama: upgrade to v0.1.37 [[1]](https://github.com/ollama/ollama/releases/tag/v0.1.34) [[2]](https://github.com/ollama/ollama/releases/tag/v0.1.35) [[3]](https://github.com/ollama/ollama/releases/tag/v0.1.36) [[4]](https://github.com/ollama/ollama/releases/tag/v0.1.37)
+
+[Full changes since v1.24.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.24.0...1.25.0)
+
+------------------
+
 #### [v1.24.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.24.0) - 2024-05-09
 
 **Upgrade procedure:**
