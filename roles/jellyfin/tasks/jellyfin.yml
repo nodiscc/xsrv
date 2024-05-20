@@ -32,7 +32,9 @@
 - name: install jellyfin
   apt:
     state: present
-    package: jellyfin
+    package:
+      - jellyfin
+      - jellyfin-ffmpeg6
   notify: display jellyfin first run message
   ignore_errors: "{{ ansible_check_mode }}"
 
