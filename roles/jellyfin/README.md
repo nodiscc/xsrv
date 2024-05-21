@@ -46,6 +46,7 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
   - Jellyfin samba share (if the [samba](../samba) role is enabled): `/var/lib/jellyfin/sambashare/{movies,books,mixedcontent,shows,music,musicvideos,shows,photos}`
   - Transmission downloads directory (if the [transmission](../transmission) role is enabled): `/var/lib/transmission-daemon/downloads/{movies,books,mixedcontent,shows,music,musicvideos,shows,photos}`
 
+
 ### Uploading media
 
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
@@ -59,6 +60,7 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 Jellyfin lets you watch your media from a web browser on your computer, apps on your Roku, Android, iOS (including AirPlay), Android TV, or Fire TV device, or via your Chromecast or existing Kodi installation. See all [clients](https://jellyfin.org/clients/). [Finamp](https://f-droid.org/packages/com.unicornsonlsd.finamp/) is an alternative Android/iOS music player for Jellyfin.
 
 You can also browse play Jellyfin media from any [DLNA](https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance#Specification)-compatible media player on your local network, or use Jellyfin to play media through any DLNA Media Renderer on your network. To use DLNA you must enable incoming/outgoing `UDP multicast on port 1900` traffic in the [firewall](../common). You probably also want to set `jellyfin_enable_dlna_discovery: yes` to allow jellyfin to auto-discover DLNA devices on the local network. If you don't use DLNA it is recommended to turn it off completely under `Admin Dashboard > DLNA`.
+
 
 ### Backups
 
@@ -99,12 +101,14 @@ To allow logins to Jellyfin using LDAP user accounts (for example from [openldap
   - Click `Save`
 - Restart the jellyfin server from the `Server > Dashboard` settings page
 
+
 ### Performance
 
 When using Jellyfin from a web browser, media will be converted/transcoded on-the-fly to a format supported by the browser. You can also force transcoding to a lower quality directly from the `Settings > Quality` menu directly from the player. Transcoding will consume a noticeable amount of system (CPU/RAM) resources. On resource-constrained systems this may lead to playback issues or freezes and the server becoming unresponsive. To fix this several options exist:
 - Disable `Allow playback of media that requires transcoding` for each user under `Admin > Dashboard > Users`. Currently there is [no global setting](https://github.com/jellyfin/jellyfin/issues/645) to disable transcoding globally for all users.
 - Use a [native client](https://jellyfin.org/clients/) which does not require server-side transcoding
 - Manually setup [hardware acceleration](https://jellyfin.org/docs/general/administration/hardware-acceleration.html)
+
 
 ### Subtitles
 
@@ -134,9 +138,14 @@ You will then be able to use right-click > `Edit subtitles` on any video from yo
 
 The [Youtube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) can be used to automatically set metadata for videos downloaded using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
-### Chapter thumbnails on seek bar
+### Thumbnails on seek bar
 
-Go `Administration > Dashboard > Libraries > Your Library` and `Enable chapter image extraction` to display thumbnails for each chapter while hovering the seek bar.
+Go to `Administration > Dashboard > Libraries > Your Library` > `Manage Library`:
+- Check `Enable chapter image extraction` to display thumbnails for each chapter while hovering the seek bar.
+- Check `Enable trickplay image extraction` to display thumbnails for every keyframe while hovering the seek bar.
+
+Thumbnails/chapter/trickplay image extraction is a CPU-intensive operation. This can negatively affect performance, and take a long time on low-power servers aith large libraries. Trickplay image extraction runs nightly from a scheduled task (`Administration > Dashboard`) which can also be triggered manually, or at library scan if you checked the relevant box `Extract trickplay images during the library scan` in the library options.
+
 
 ### Security
 
