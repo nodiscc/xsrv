@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - ollama: upgrade to v0.1.37 [[1]](https://github.com/ollama/ollama/releases/tag/v0.1.34) [[2]](https://github.com/ollama/ollama/releases/tag/v0.1.35) [[3]](https://github.com/ollama/ollama/releases/tag/v0.1.36) [[4]](https://github.com/ollama/ollama/releases/tag/v0.1.37)
 - ollama: upgrade ollama-ui to the latest version [[1]](https://github.com/ollama-ui/ollama-ui/compare/d43171206aa3ea38b4c9f17e50044000c03fc175...ada8d50707fd704528ead13e87d1ec05fdd97492)
+- matrix: update element-web to v1.11.67 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.67)
 
 **Fixed:**
 - jellyfin: fix jellyfin not upgrading automtically from 10.8.13 to 10.9.2
