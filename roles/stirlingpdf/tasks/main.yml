@@ -1,0 +1,35 @@
+- name: import variable check tasks
+  import_tasks: checks.yml
+  tags:
+    - checks
+    - stirlingpdf
+
+- name: include stirlingpdf configuration tasks
+  import_tasks: stirlingpdf.yml
+  tags: stirlingpdf
+
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - apache
+    - ssl
+    - stirlingpdf
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - stirlingpdf
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: stirlingpdf

@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+**Added:**
+- add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirling) role (PDF manipulation tools)
+
 **Changed:**
 - nextcloud: upgrade to v28.0.6 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.6)
 - ollama: upgrade to v0.1.38 [[1]](https://github.com/ollama/ollama/releases/tag/v0.1.34) [[2]](https://github.com/ollama/ollama/releases/tag/v0.1.35) [[3]](https://github.com/ollama/ollama/releases/tag/v0.1.36) [[4]](https://github.com/ollama/ollama/releases/tag/v0.1.37) [[4]](https://github.com/ollama/ollama/releases/tag/v0.1.38)
@@ -31,7 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role role (local Large Language Model (LLM) server and web interface)
+- add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role (local Large Language Model (LLM) server and web interface)
 - monitoring_utils: add [bonnie++](https://doc.coker.com.au/projects/bonnie/) disk benchmarking tool and automated report script (`TAGS=utils-bonnie xsrv deploy`)
 
 **Changed:**

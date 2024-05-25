@@ -2112,6 +2112,18 @@ shaarli_enable_service: yes
 ```
 
 
+## stirlingpdf
+
+[roles/stirlingpdf/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/stirlingpdf/defaults/main.yml)
+
+```yaml
+# Fully Qualified Domain Name for the stirlingpdf instance
+stirlingpdf_fqdn: "pdf.CHANGEME.org"
+# the stirlingpdf OCI image to pull
+stirlingpdf_image: "docker.io/frooodle/s-pdf:latest"
+```
+
+
 ## transmission
 
 [roles/transmission/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml)

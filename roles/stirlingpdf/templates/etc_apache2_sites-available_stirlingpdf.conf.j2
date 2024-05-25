@@ -1,0 +1,20 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    ServerName {{ stirlingpdf_fqdn }}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+<VirtualHost *:443>
+  DocumentRoot /var/www/html
+  ServerName  {{ stirlingpdf_fqdn }}
+  SSLEngine on
+  SSLCertificateFile /etc/ssl/certs/{{ stirlingpdf_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ stirlingpdf_fqdn }}.key
+  RequestHeader set X-Forwarded-Proto "https"
+  ProxyPreserveHost On
+  ProxyPass        / http://127.0.0.1:8087/
+  ProxyPassReverse / http://127.0.0.1:8087/
+</VirtualHost>

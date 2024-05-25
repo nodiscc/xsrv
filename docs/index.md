@@ -52,6 +52,7 @@ This project provides:
 - [readme_gen](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) - automatic README.md generator for ansible-based projects
 - [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - cross-platform file sharing server
 - [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli) - bookmarking & link sharing web application
+- [stirlingpdf](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) - PDF manipulation tools
 - [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - bittorrent client/web interface
 - [tt_rss](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss) - web-based news feed reader
 - [wireguard](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard) - fast and modern VPN server
@@ -78,6 +79,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ollama-ui-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf)
 
 
 ## Source code

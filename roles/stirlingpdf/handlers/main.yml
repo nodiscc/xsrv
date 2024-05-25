@@ -1,0 +1,14 @@
+- name: reload systemd unit files (stirlingpdf)
+  become: yes
+  become_user: stirlingpdf
+  systemd:
+    daemon_reload: yes
+    scope: user
+
+- name: restart stirlingpdf service
+  become: yes
+  become_user: stirlingpdf
+  systemd:
+    name: container-stirlingpdf.service
+    scope: user
+    state: restarted

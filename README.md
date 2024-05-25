@@ -52,6 +52,7 @@ This project provides:
 - [readme_gen](roles/readme_gen) - automatic README.md generator for ansible-based projects
 - [samba](roles/samba) - cross-platform file sharing server
 - [shaarli](roles/shaarli) - bookmarking & link sharing web application
+- [stirlingpdf](roles/stirlingpdf) - PDF manipulation tools
 - [transmission](roles/transmission) - bittorrent client/web interface
 - [tt_rss](roles/tt_rss) - web-based news feed reader
 - [wireguard](roles/wireguard) - fast and modern VPN server
@@ -78,6 +79,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](roles/owncast)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ollama-ui-thumb.png)](roles/owncast)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](roles/nmap)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](roles/stirlingpdf)
 
 
 ## Source code
