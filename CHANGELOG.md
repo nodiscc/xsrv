@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) role (PDF manipulation tools)
 - libvirt: enable [KSM](https://packages.debian.org/bookworm/ksmtuned) (VM memory deduplication)
+- netdata: [`netdata_notification_downtimes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml): allow disabling alerts completely instead of just silencing notifications
 
 **Changed:**
 - shaarli: increase default max memory size for php-fpm pool to 256MB
