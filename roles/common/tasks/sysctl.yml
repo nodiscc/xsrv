@@ -23,7 +23,7 @@
     group: root
     mode: "0644"
 
-- name: mount /proc
+- name: harden /proc mount options
   mount:
     name: /proc
     src: none
