@@ -8,6 +8,7 @@
 - name: restart stirlingpdf service
   become: yes
   become_user: stirlingpdf
+  retries: 3
   systemd:
     name: container-stirlingpdf.service
     scope: user
