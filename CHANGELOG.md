@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirling) role (PDF manipulation tools)
+- add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) role (PDF manipulation tools)
 
 **Changed:**
 - nextcloud: upgrade to v28.0.6 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.6)
