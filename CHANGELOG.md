@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - jellyfin: fix jellyfin not upgrading automtically from 10.8.13 to 10.9.2
+- wireguard: really delete peers from the configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
+- wireguard: fix variable checks for [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) with `state: absent` and no `public_key` defined
 
 [Full changes since v1.24.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.24.0...1.25.0)
 
