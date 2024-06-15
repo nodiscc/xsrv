@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.68 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.67) [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.68)
 - goaccess: update IP to Country GeoIP database to v2024-05
 - xsrv: update ansible to [v9.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+- improve test tools
 
 **Fixed:**
 - jellyfin: fix jellyfin not upgrading automtically from 10.8.13 to 10.9.2

@@ -46,6 +46,13 @@ dovecot_ldap_base: "ou=users,dc=example,dc=test"
 dovecot_ldap_bind_dn: "cn=bind,ou=system,dc=example,dc=test"
 ##### WIREGUARD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml
 wireguard_server_public_ip: "1.2.3.4"
+wireguard_peers:
+  - name: client1
+    public_key: "/s4v5fsncMYyvLwfPihTBsrqJm7nDn1SCiCKqqmrZGg="
+    ip_address: 10.200.200.55
+    routes: "10.200.200.1/32, 10.0.10.101/32"
+  - name: test
+    state: absent
 ##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
 jitsi_fqdn: "conference.example.test"
 ##### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
