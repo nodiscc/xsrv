@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - nextcloud: upgrade to v28.0.6 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.6)
 - ollama: upgrade to v0.1.44 [[1]](https://github.com/ollama/ollama/releases/tag/v0.1.34) [[2]](https://github.com/ollama/ollama/releases/tag/v0.1.35) [[3]](https://github.com/ollama/ollama/releases/tag/v0.1.36) [[4]](https://github.com/ollama/ollama/releases/tag/v0.1.37) [[5]](https://github.com/ollama/ollama/releases/tag/v0.1.38) [[6]](https://github.com/ollama/ollama/releases/tag/v0.1.39) [[7]](https://github.com/ollama/ollama/releases/tag/v0.1.40) [[8]](https://github.com/ollama/ollama/releases/tag/v0.1.41) [[9]](https://github.com/ollama/ollama/releases/tag/v0.1.42) [[10]](https://github.com/ollama/ollama/releases/tag/v0.1.43) [[11]](https://github.com/ollama/ollama/releases/tag/v0.1.44)
 - ollama: upgrade ollama-ui to the latest version [[1]](https://github.com/ollama-ui/ollama-ui/compare/d43171206aa3ea38b4c9f17e50044000c03fc175...ada8d50707fd704528ead13e87d1ec05fdd97492)
-- matrix: update element-web to v1.11.68 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.67) [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.68)
+- matrix: update element-web to v1.11.69 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.67) [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.68) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.69)
 - goaccess: update IP to Country GeoIP database to v2024-05
 - xsrv: update ansible to [v9.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 - improve test tools
