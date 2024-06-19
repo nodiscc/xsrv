@@ -44,7 +44,7 @@ shaarli_stack_default_ui: "medium"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
 shaarli_stack_version: "0.8"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
-shaarli_php_memory_limit: '128M'
+shaarli_php_memory_limit: '256M'
 # php_fpm: Maximum execution time of each script (seconds)
 shaarli_php_max_execution_time: 30
 # php-fpm: Maximum amount of time each script may spend parsing request data (seconds)
