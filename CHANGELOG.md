@@ -20,9 +20,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.69 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.67) [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.68) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.69)
 - goaccess: update IP to Country GeoIP database to v2024-05
 - xsrv: update ansible to [v9.6.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+- netdata: install/upgrade netdata from new self-hosted repositories [[1]](https://learn.netdata.cloud/docs/netdata-agent/installation/linux/native-linux-distribution-packages)
 - improve test tools
 
 **Fixed:**
+- netdata: fix netdata not upgrading automatically from 1.45.6 to later versions
 - jellyfin: fix jellyfin not upgrading automtically from 10.8.13 to 10.9.2
 - wireguard: really delete peers from the configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
 - wireguard: fix variable checks for [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) with `state: absent` and no `public_key` defined
