@@ -9,7 +9,7 @@ ollama_ui_fqdn: "llm.CHANGEME.org"
 ollama_username: "CHANGEME"
 ollama_password: "CHANGEME"
 # ollama version (https://github.com/ollama/ollama/releases.atom)
-ollama_version: "v0.1.44"
+ollama_version: "v0.1.45"
 # HTTPS and SSL/TLS certificate mode for the ollama-ui webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
