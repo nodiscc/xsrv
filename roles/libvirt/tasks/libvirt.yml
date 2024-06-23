@@ -1,4 +1,4 @@
-- name: install libvirt tools
+- name: install libvirt packages
   apt:
     state: present
     package:
@@ -9,6 +9,7 @@
       - qemu-utils
       - netcat-openbsd
       - python3-lxml
+      - ksmtuned
       # - ebtables
       # - virt-manager # graphical environments only
       # - virt-viewer # graphical environments only
@@ -41,7 +42,7 @@
     - reload systemd unit files
     - restart libvirtd
 
-- name: enable libvirtd/libvirt-guests services
+- name: enable libvirtd/libvirt-guests/ksmtuned services
   service:
     name: "{{ item }}"
     state: started
@@ -49,6 +50,7 @@
   with_items:
     - libvirtd
     - libvirt-guests
+    - ksmtuned
   ignore_errors: "{{ ansible_check_mode }}"
 
 ##### USERS #####
