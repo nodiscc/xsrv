@@ -70,6 +70,6 @@ PublicKey = {{ wireguard_server_public_key.content | b64decode }}
 Endpoint = {{ wireguard_server_public_ip }}:51820
 AllowedIPs = {{ peer.routes | default('0.0.0.0/0') }}
 PersistentKeepalive = 45
-" >> "$client_config_path"
+" > "$client_config_path"
 {% endif %}
 {% endfor %}
