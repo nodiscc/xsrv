@@ -28,6 +28,10 @@ MDomain {{ stirlingpdf_fqdn }}
   RewriteCond %{REQUEST_URI} !=/maintenance.html
   RewriteRule ^.*$ - [R=503,L]
 {% else %}
+{% if stirlingpdf_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ stirlingpdf_allowed_hosts | join(' ') }}
+  </Location>
 {% endif %}
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
