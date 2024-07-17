@@ -67,6 +67,7 @@
       - "/var/lib/stirlingpdf/config:/config"
       - "/var/lib/stirlingpdf/logs:/logs"
   ignore_errors: "{{ ansible_check_mode }}"
+  when: stirlingpdf_enable_service | bool
 
 - name: generate systemd unit file for stirlingpdf container
   become: yes
@@ -80,6 +81,7 @@
     - reload systemd unit files (stirlingpdf)
     - restart stirlingpdf service
   ignore_errors: "{{ ansible_check_mode }}"
+  when: stirlingpdf_enable_service | bool
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
@@ -91,6 +93,6 @@
   systemd:
     name: container-stirlingpdf.service
     scope: user
-    state: started
-    enabled: yes
+    state: "{{ 'started' if stirlingpdf_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if stirlingpdf_enable_service else 'no' }}"
   ignore_errors: "{{ ansible_check_mode }}"

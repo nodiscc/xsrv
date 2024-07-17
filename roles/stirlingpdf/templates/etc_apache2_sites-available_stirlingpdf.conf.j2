@@ -21,8 +21,17 @@ MDomain {{ stirlingpdf_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ stirlingpdf_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ stirlingpdf_fqdn }}.key
 {% endif %}
+{% if not stirlingpdf_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+{% endif %}
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
   ProxyPass        / http://127.0.0.1:8087/
   ProxyPassReverse / http://127.0.0.1:8087/
+{% endif %}
 </VirtualHost>

@@ -6,3 +6,4 @@
   loop:
     - stirlingpdf_fqdn is not search('CHANGEME')
     - stirlingpdf_https_mode in ['selfsigned', 'letsencrypt']
+    - stirlingpdf_enable_service == stirlingpdf_enable_service | bool
