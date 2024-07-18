@@ -8,6 +8,6 @@ stirlingpdf_image: "docker.io/frooodle/s-pdf:latest"
 stirlingpdf_https_mode: selfsigned
 # start/stop the stirlingpdf service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 stirlingpdf_enable_service: yes
-IP addresses allowed to access the stirlingpdf web interface (IP or IP/netmask format)
+# IP addresses allowed to access the stirlingpdf web interface (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 stirlingpdf_allowed_hosts: []
