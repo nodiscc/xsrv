@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - ollama: upgrade ollama-ui to the latest version [[1]](https://github.com/ollama-ui/ollama-ui/compare/d43171206aa3ea38b4c9f17e50044000c03fc175...ada8d50707fd704528ead13e87d1ec05fdd97492)
 - matrix: update element-web to v1.11.71 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.67) [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.68) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.69) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.70) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.71)
 - openldap: update ldap-account-manager to [v8.8](https://github.com/LDAPAccountManager/lam/releases/tag/8.8)
+- postgresql: update pgmetrics to [v1.17.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.0)
 - goaccess: update IP to Country GeoIP database to v2024-07
 - xsrv: update ansible to v10.1.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/10/CHANGELOG-v10.rst)
 - netdata: install/upgrade netdata from new self-hosted repositories [[1]](https://learn.netdata.cloud/docs/netdata-agent/installation/linux/native-linux-distribution-packages)
