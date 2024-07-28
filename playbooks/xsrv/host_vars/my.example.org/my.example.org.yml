@@ -80,3 +80,6 @@ olllama_ui_fqdn: "llm.CHANGEME.org"
 
 ##### STIRLING PDF - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/stirlingpdf/defaults/main.yml
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
+
+##### MOODIST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml
+moodist_fqdn: "moodist.CHANGEME.org"

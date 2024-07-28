@@ -31,4 +31,5 @@
     - nodiscc.xsrv.owncast # live video streaming and chat server
     - nodiscc.xsrv.ollama # large language model (LLM) server
     - nodiscc.xsrv.stirlingpdf # PDM manipulation tools
+    - nodiscc.xsrv.moodist # ambient sound mixer
     - nodiscc.xsrv.homepage # simple webserver homepage

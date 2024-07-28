@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) role (PDF manipulation tools)
+- add [`moodist`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist) role (ambient sound mixer)
 - libvirt: enable [KSM](https://packages.debian.org/bookworm/ksmtuned) (VM memory deduplication)
 
 **Changed:**

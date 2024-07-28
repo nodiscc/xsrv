@@ -1,0 +1,35 @@
+- name: import variable check tasks
+  import_tasks: checks.yml
+  tags:
+    - checks
+    - moodist
+
+- name: include moodist configuration tasks
+  import_tasks: moodist.yml
+  tags: moodist
+
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - apache
+    - ssl
+    - moodist
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - moodist
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: moodist
