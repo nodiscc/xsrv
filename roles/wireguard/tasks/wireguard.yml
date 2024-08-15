@@ -1,9 +1,11 @@
 ### INSTALLATION ###
 
-- name: install wireguard-tools
+- name: install wireguard tools
   apt:
     state: present
-    package: wireguard-tools
+    package:
+      - wireguard-tools
+      - qrencode
 
 - name: enable wireguard kernel module
   modprobe:
@@ -21,9 +23,12 @@
     - /etc/wireguard
     - /etc/wireguard/private
     - /etc/wireguard/peers
+    - /etc/wireguard/peers/public
     - /etc/wireguard/peers/private
+    - /etc/wireguard/peers/config
+    - /etc/wireguard/peers/client-config
 
-### KEYS ###
+### SERVER KEY/CONFIG GENERATION ###
 
 - name: generate wireguard server keys
   shell: "set -o pipefail && wg genkey | (umask 0077 && tee /etc/wireguard/private/server.key) | wg pubkey > /etc/wireguard/private/server.pub"
@@ -48,64 +53,113 @@
 #     msg: "{{ wireguard_server_private_key.content | b64decode }}"
 #   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: generate wireguard peers private keys
-  shell: "wg genkey > /etc/wireguard/peers/private/{{ item.name }}.key"
-  args:
-    creates: "/etc/wireguard/peers/private/{{ item.name }}.key"
-  with_items: "{{ wireguard_peers }}"
-  when: (item.state is not defined) or (item.state == 'present')
-
-- name: generate wireguard peers public keys
-  shell: "set -o pipefail && cat /etc/wireguard/peers/private/{{ item.name }}.key | wg pubkey > /etc/wireguard/peers/{{ item.name }}.pub"
-  args:
-    creates: "/etc/wireguard/peers/{{ item.name }}.pub"
-    executable: /bin/bash
-  with_items: "{{ wireguard_peers }}"
-  when: (item.state is not defined) or (item.state == 'present')
-
-- name: delete wireguard peers keys
-  file:
-    state: absent
-    path: /etc/wireguard/peers/{{ item.name }}.pub
-  with_items: "{{ wireguard_peers }}"
-  when: (item.state is defined) and (item.state == 'absent')
-
-- name: create directory for client configuration files on the controller
-  delegate_to: localhost
-  become: no
-  changed_when: no # never return changed, git doesn't store permissions - this task will return changed every time as permissions are changed from 0755 to 0700
-  file:
-    state: directory
-    path: "{{ playbook_dir }}/data/wireguard"
-    mode: "0700"
-
-- name: generate client configuration files on the controller
-  delegate_to: localhost
-  become: no
-  changed_when: no # never report as changed, these files are under .gitignore and are not shared between different controllers, this will return changed every time
-  template:
-    src: wireguard-client.conf.j2
-    dest: "{{ playbook_dir }}/data/wireguard/wg0-{{ item.name }}.conf"
-    mode: "0600"
-  with_items: "{{ wireguard_peers }}"
-  when: (item.state is not defined) or (item.state == 'present')
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: show information about sending configuration files to clients
-  debug:
-    msg: "Please provide VPN clients with their client configuration file which was generated in {{ playbook_dir }}/data/wireguard/"
-
-### CONFIGURATION ###
+# TODO delete old config files directly under /etc/wireguard/peers/*.pub,conf
 
 - name: copy wireguard server configuration
   template:
-    src: etc_wireguard_wg0.conf.j2
-    dest: /etc/wireguard/wg0.conf
+    src: etc_wireguard_peers_config_000-wg0.conf.j2
+    dest: /etc/wireguard/peers/config/000-wg0.conf
     owner: root
     group: root
     mode: "0600"
   ignore_errors: "{{ ansible_check_mode }}"
+
+##### PEER KEY/CONFIG GENERATION #####
+
+- name: generate wireguard peers private keys
+  shell: "wg genkey > /etc/wireguard/peers/private/{{ item.name }}.key"
+  args:
+    creates: "/etc/wireguard/peers/private/{{ item.name }}.key"
+  loop: "{{ wireguard_peers }}"
+  when:
+    - (item.state is not defined) or (item.state == 'present')
+    - item.public_key is not defined
+
+- name: generate wireguard peers public keys
+  shell: "set -o pipefail && cat /etc/wireguard/peers/private/{{ item.name }}.key | wg pubkey > /etc/wireguard/peers/public/{{ item.name }}.pub"
+  args:
+    creates: "/etc/wireguard/peers/public/{{ item.name }}.pub"
+    executable: /bin/bash
+  loop: "{{ wireguard_peers }}"
+  when:
+    - (item.state is not defined) or (item.state == 'present')
+    - item.public_key is not defined
+
+- name: copy wireguard peer config generation script
+  copy:
+    src: usr_local_bin_wireguard-gen-peer-config
+    dest: /usr/local/bin/wireguard-gen-peer-config
+    owner: root
+    group: root
+    mode: "0755"
+
+# positional arguments: PEER_NAME PUBLIC_KEY PEER_IP_ADDRESS SERVER_PUBLIC_ADDRESS SERVER_PRIVATE_ADDRESS ROUTES
+- name: generate wireguard peers configs
+  command: >
+    /usr/local/bin/wireguard-gen-peer-config
+    {{ item.name }}
+    {{ item.public_key | default('auto') }}
+    {{ item.ip_address }}
+    {{ wireguard_server_public_ip }}
+    {{ wireguard_server_ip | ansible.utils.ipaddr('address') }}
+    {{ item.routes | default('0.0.0.0/0') }}
+  when: (item.state is not defined) or (item.state == 'present')
+  loop: "{{ wireguard_peers }}"
+  register: wg_gen_config
+  changed_when: "'configuration has changed' in wg_gen_config.stdout"
+
+##### PEER KEY/CONFIG DELETION #####
+
+- name: delete wireguard peers private keys
+  file:
+    state: absent
+    path: "/etc/wireguard/peers/private/{{ item.name }}.key"
+  loop: "{{ wireguard_peers }}"
+  when: (item.state is defined) and (item.state == 'absent')
+
+- name: delete wireguard peers public keys
+  file:
+    state: absent
+    path: "/etc/wireguard/peers/public/{{ item.name }}.pub"
+  loop: "{{ wireguard_peers }}"
+  when: (item.state is defined) and (item.state == 'absent')
+
+- name: delete wireguard peers configs
+  file:
+    state: absent
+    path: "/etc/wireguard/peers/config/{{ item.name }}.conf"
+  loop: "{{ wireguard_peers }}"
+  when: (item.state is defined) and (item.state == 'absent')
+
+- name: delete wireguard peers client configs
+  file:
+    state: absent
+    path: "/etc/wireguard/peers/client-config/{{ item.name }}.conf"
+  loop: "{{ wireguard_peers }}"
+  when: (item.state is defined) and (item.state == 'absent')
+
+- name: show information about sending configuration files to clients
+  debug:
+    msg: "Please provide VPN clients with their client configuration files which were generated in /etc/wireguard/peers/client-config/ on the server"
+
+- name: apply configuration (flush handler)
+  meta: flush_handlers
+
+### ASSSEMBLE CONFIGURATION ###
+
+# assemble all files from /etc/wireguard/peers/config/*.conf to /etc/wireguard/wg0.conf
+- name: assemble wireguard configuration
+  become: yes
+  assemble:
+    src: /etc/wireguard/peers/config/
+    dest: /etc/wireguard/wg0.conf
+    owner: root
+    group: root
+    mode: "0640"
+    delimiter: ''
   notify: reload wireguard configuration
+  ignore_errors: "{{ ansible_check_mode }}"
+
 
 ### SERVICE ###
 

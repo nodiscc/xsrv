@@ -12,7 +12,7 @@ wireguard_enable_service: yes
 # wireguard_peers:
 #   - name: client1 # arbitrary name for the peer
 #     state: present # (optional, present/absent, default present) set to absent to remove the peer and its keys)
-#     public_key: Faz...4vEQ= # the public key of the peer (contents of its wireguard.pub)
+#     public_key: Faz...4vEQ= # (optional) public key of the peer (contents of its wireguard.pub) - if not specified a private/public key pair will be generated on the server
 #     ip_address: "10.200.200.10" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
 #     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/networks to route through the VPN on the client
 #   - name: client2
@@ -27,8 +27,10 @@ wireguard_firewalld_zones:
   - zone: internal
     state: enabled
 
+# allow forwarding wireguard peers traffic to other zones (e.g. internet) (yes/no)
+wireguard_allow_forwarding: yes
+
 # allow wireguard clients to connect to these firewalld services/ports on the host
-# in addition, the clients must have a route to the server IP in wireguard_peers.*.routes, see anotherclient example above
 # Example:
 # wireguard_firewalld_services:
 #   - name: ssh # service name
@@ -40,4 +42,7 @@ wireguard_firewalld_zones:
 #   - name: netdata
 #   - name: imaps
 #     state: disabled
-wireguard_firewalld_services: []
+wireguard_firewalld_services:
+  - name: dns
+    state: enabled
+

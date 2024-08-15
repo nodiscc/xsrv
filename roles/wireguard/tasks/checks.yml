@@ -9,6 +9,7 @@
     - wireguard_peers | type_debug == 'list'
     - wireguard_firewalld_zones | type_debug == "list"
     - wireguard_firewalld_services | type_debug == "list"
+    - wireguard_allow_forwarding == wireguard_allow_forwarding | bool
 
 - name: check that variables are correctly defined (wireguard_peers)
   assert:
@@ -16,9 +17,9 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard"
     that:
       - item.name is string
-      - ((item.state is not defined or item.state == "present") and (item.ip_address | ansible.utils.ipaddr)) or (item.state == "absent")
-      - ((item.state is not defined or item.state == "present") and (item.public_key | b64decode and item.public_key | length == 44)) or (item.state == "absent")
-
+      - item.name is not search('/')
+      - ((item.state | default('present') == "present") and (item.ip_address | ansible.utils.ipaddr)) or (item.state == "absent")
+      - (item.public_key is not defined) or (item.public_key | b64decode and item.public_key | length == 44)
   loop: "{{ wireguard_peers }}"
 
 - name: check that variables are correctly defined (wireguard_firewalld_services)

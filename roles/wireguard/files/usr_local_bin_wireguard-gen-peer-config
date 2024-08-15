@@ -1,0 +1,72 @@
+#!/bin/bash
+# Description: generates wireguard server configurration fragments + client configuration files
+#              config fragments will be placed at /etc/wireguard/peers/config/PEER_NAME.conf and must be assembled to /etc/wireguard/wg0.conf
+#              client config files will be placed at /etc/wireguard/peers/client-config/PEER_NAME.conf and should be sent to clients of this wireguard server
+# Usage: wireguard-gen-peer-config PEER_NAME PUBLIC_KEY PEER_IP_ADDRESS SERVER_PUBLIC_ADDRESS SERVER_PRIVATE_ADDRESS ROUTES
+#        if PUBLIC_KEY is set to auto, the key will be read from /etc/wireguard/peers/public/$peer_name.pub
+#        PEER_IP_ADDRESS is the IP address for this peer in the VPN
+#        SERVER_PUBLIC_ADDRESS is the public IP address of the wireguard server, as seen from the client
+# Example: wireguard-gen-peer-config mypeer auto 10.1.8.101 1.2.3.4 10.200.200.1 0.0.0.0
+#          wireguard-gen-peer-config mypeer Xd8SLVSwUoeYIqcTO0+2VdDEpBCgUOow+cjkWScJRSc= 10.1.8.102 1.2.3.4 10.200.200.1 "10.200.200.1/32, 10.0.10.101/32"
+set -o errexit
+set -o nounset
+
+peer_name="$1"
+public_key="$2"
+peer_ip_address="$3"
+server_public_ip="$4"
+server_private_ip="$5"
+allowed_ips="$6"
+private_key="CHANGEME"
+peer_config_file="/etc/wireguard/peers/config/$peer_name.conf"
+private_key_file="/etc/wireguard/peers/private/$peer_name.key"
+server_public_key=$(cat /etc/wireguard/private/server.pub)
+peer_config_hash_before=0
+
+if [[ "$public_key" == "auto" ]]; then
+    public_key=$(cat "/etc/wireguard/peers/public/$peer_name.pub")
+    private_key=$(cat "$private_key_file")
+fi
+
+##### PEER CONFIG GENERATION #####
+
+if [[ -f "$peer_config_file" ]]; then
+    peer_config_hash_before=$(md5sum "$peer_config_file")
+fi
+
+peer_config="
+[Peer]
+# Peer: $peer_name
+PublicKey = $public_key
+AllowedIPs = $peer_ip_address
+"
+
+echo "$peer_config" > "$peer_config_file"
+peer_config_hash_after=$(md5sum "$peer_config_file")
+if [[ ! "$peer_config_hash_before" == "$peer_config_hash_after" ]]; then
+  echo "INFO: $peer_name: configuration has changed"
+fi
+
+##### CLIENT CONFIG GENERATION ####
+
+client_config="
+# Wireguard VPN client configuration file
+# To setup your wireguard client:
+#   - Edit this file and set PrivateKey to the contents of wireguard.key
+#   - Using network-manager: save the file as wg0.conf; run nmcli connection import type wireguard file wg0.conf
+#   - OR manually: run sudo mkdir -p /etc/wireguard && sudo cp PEER_NAME.conf /etc/wireguard/wg0.conf && sudo wg-quick up wg0
+#   - Verify that the traffic is correctly routed through the VPN by visiting https://ifconfig.me/ or running ip route get DESTINATION_IP
+[Interface]
+Address = $peer_ip_address
+PrivateKey = $private_key
+DNS = $server_private_ip
+
+[Peer]
+PublicKey = $server_public_key
+Endpoint = $server_public_ip:51820
+AllowedIPs = $allowed_ips
+PersistentKeepalive = 45
+"
+
+echo "$client_config" > "/etc/wireguard/peers/client-config/$peer_name.conf"
+echo "$client_config" | egrep -v '^#' | qrencode -t ansiutf8 > "/etc/wireguard/peers/client-config/$peer_name.qrcode"

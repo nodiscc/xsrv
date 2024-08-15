@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
+- you can remove the `data/wireguard/` directory from your project directory since it is no longer used
 - **ollama:** if you want to keep using the [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/ollama) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.ollama`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 
 **Added:**
@@ -15,8 +16,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))
 - moodist/owncast/searxng/stirlingpdf: automatically remove unused podman images/containers, nightly (conserve disk space)
+- wireguard: generate a QR code for each wireguard_peer containing the configuration (can be scanned with mobile apps such as WG Tunnel)
 
 **Changed:**
+- wireguard: allow specifying [`wireguard_peers`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
+- wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
+- wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
+- wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
 - nextcloud: update to v29.0.16 [[1]](https://nextcloud.com/changelog/#latest29)
 - gitea: update to v1.23.8 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.5) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.6) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.7) [[4]((https://github.com/go-gitea/gitea/releases/tag/v1.23.8)
@@ -32,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - goaccess: update IP to Country GeoIP database to v2025-02
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
+- update documentation
 
 **Removed:**
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository. It might be re-introduced later. The role was hard to test and maintain properly since it requires significant hardware resources.
@@ -39,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - matrix: update APT repository signing key (the previous key has expired)
+- wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
 
 [Full changes since v1.27.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.27.0...1.28.0)
 

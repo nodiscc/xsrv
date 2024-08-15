@@ -65,3 +65,13 @@
   with_items: "{{ wireguard_firewalld_services }}"
   notify: reload firewalld
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set forwarding policy for wireguard traffic
+  template:
+    src: etc_firewalld_policies_wireguardtoinet.xml.j2
+    dest: /etc/firewalld/policies/wireguardtoinet.xml
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
