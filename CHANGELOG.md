@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
+- you can remove the `data/wireguard/` directory from your project directory since it is no longer used
 
 **Added:**
 - add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) role (PDF manipulation tools)
 - add [`moodist`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist) role (ambient sound mixer)
+- wireguard: allow not specifying a `public_key` for `wireguard_peers`, in which case a private/public key pair will be generated automatically on the server 
 - libvirt: enable [KSM](https://packages.debian.org/bookworm/ksmtuned) (VM memory deduplication)
 
 **Changed:**
@@ -33,7 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 - netdata: fix netdata not upgrading automatically from 1.45.6 to later versions
 - jellyfin: fix jellyfin not upgrading automtically from 10.8.13 to 10.9.2
-- wireguard: really delete peers from the configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
+- wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
 - wireguard: fix variable checks for [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) with `state: absent` and no `public_key` defined
 - postgresql: rsyslog: fix postgresql log messages incorrectly tagged as `mongodb` in syslog
 - openldap: fix ldap-account-manager download failing with `urlopen error timed out`

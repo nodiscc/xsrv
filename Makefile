@@ -12,7 +12,12 @@ tests: test_shellcheck test_ansible_lint test_command_line
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
-	shellcheck -e SC1090,SC1091 xsrv xsrv-completion.sh roles/monitoring_netdata/files/usr_local_bin_needrestart-autorestart roles/monitoring_utils/templates/usr_local_bin_bonnie++-wrapper.j2
+	shellcheck -e SC1090,SC1091 \
+		xsrv \
+		xsrv-completion.sh \
+		roles/monitoring_netdata/files/usr_local_bin_needrestart-autorestart \
+		roles/monitoring_utils/templates/usr_local_bin_bonnie++-wrapper.j2 \
+		roles/wireguard/files/usr_local_bin_wireguard-gen-peer-config
 
 .PHONY: venv # install dev tools in virtualenv
 venv:
