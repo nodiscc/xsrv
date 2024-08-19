@@ -40,6 +40,7 @@
     publish:
       - "8089:8080"
   ignore_errors: "{{ ansible_check_mode }}"
+  when: moodist_enable_service | bool
 
 ##### SERVICE #####
 
@@ -55,6 +56,7 @@
     - reload systemd unit files (moodist)
     - restart moodist service
   ignore_errors: "{{ ansible_check_mode }}"
+  when: moodist_enable_service | bool
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
@@ -66,6 +68,6 @@
   systemd:
     name: container-moodist.service
     scope: user
-    state: started
-    enabled: yes
+    state: "{{ 'started' if moodist_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if moodist_enable_service else 'no' }}"
   ignore_errors: "{{ ansible_check_mode }}"

@@ -13,8 +13,16 @@
   SSLEngine on
   SSLCertificateFile /etc/ssl/certs/{{ moodist_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ moodist_fqdn }}.key
+{% if not moodist_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
   ProxyPass        / http://127.0.0.1:8089/
   ProxyPassReverse / http://127.0.0.1:8089/
+{% endif %}
 </VirtualHost>

@@ -13,3 +13,4 @@
     name: container-moodist.service
     scope: user
     state: restarted
+  when: moodist_enable_service | bool
