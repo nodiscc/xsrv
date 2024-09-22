@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: update ldap-account-manager to [v8.8](https://github.com/LDAPAccountManager/lam/releases/tag/8.8)
 - matrix: update synapse-admin to v0.10.3 [[1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.10.1...0.10.3)
 - postgresql: update pgmetrics to [v1.17.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.0)
-- goaccess: update IP to Country GeoIP database to v2024-07
+- goaccess: update IP to Country GeoIP database to v2024-09
 - xsrv: update ansible to v10.4.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/10/CHANGELOG-v10.rst)
 - netdata: install/upgrade netdata from new self-hosted repositories [[1]](https://learn.netdata.cloud/docs/netdata-agent/installation/linux/native-linux-distribution-packages)
 - improve test tools
