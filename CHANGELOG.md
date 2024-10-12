@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - UNRELEASED
 
 **Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
