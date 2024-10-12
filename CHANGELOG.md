@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - wireguard: fix variable checks for [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) with `state: absent` and no `public_key` defined
 - postgresql: rsyslog: fix postgresql log messages incorrectly tagged as `mongodb` in syslog
 - openldap: fix ldap-account-manager download failing with `urlopen error timed out`
+- gitea_act_runner: fix runner failing to register with `[E] Deprecated config option [oauth2].ENABLE is present, please use [oauth2].ENABLED instead`
 
 [Full changes since v1.24.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.24.0...1.25.0)
 
