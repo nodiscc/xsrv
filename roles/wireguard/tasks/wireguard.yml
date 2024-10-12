@@ -89,6 +89,7 @@
     mode: "0600"
   with_items: "{{ wireguard_peers }}"
   when: (item.state is not defined) or (item.state == 'present')
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: show information about sending configuration files to clients
   debug:
