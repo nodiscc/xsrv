@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.24.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.25.0
 [xsrv] INFO: list of tags in project xsrv-test
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
