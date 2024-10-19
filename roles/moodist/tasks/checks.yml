@@ -7,3 +7,4 @@
     - moodist_fqdn is not search('CHANGEME')
     - moodist_image is string
     - moodist_enable_service == moodist_enable_service | bool
+    - moodist_https_mode in ['selfsigned', 'letsencrypt']
