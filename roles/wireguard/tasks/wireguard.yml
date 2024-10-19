@@ -25,7 +25,7 @@
 
 ### KEYS ###
 
-- name: generate wireguard server private key
+- name: generate wireguard server keys
   shell: "set -o pipefail && wg genkey | (umask 0077 && tee /etc/wireguard/private/server.key) | wg pubkey > /etc/wireguard/private/server.pub"
   args:
     creates: /etc/wireguard/private/server.key
@@ -88,6 +88,8 @@
     dest: "{{ playbook_dir }}/data/wireguard/wg0-{{ item.name }}.conf"
     mode: "0600"
   with_items: "{{ wireguard_peers }}"
+  when: (item.state is not defined) or (item.state == 'present')
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: show information about sending configuration files to clients
   debug:

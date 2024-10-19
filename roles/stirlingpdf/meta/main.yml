@@ -1,0 +1,22 @@
+# @tag stirlingpdf - setup Stirling PDF PDF manipulation tools
+
+galaxy_info:
+  role_name: stirlingpdf
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "PDF manipulation tools"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - podman
+    - pdf
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.backup # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration
+  # - nodiscc.xsrv.podman # required

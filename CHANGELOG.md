@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - 2024-10-19
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Added:**
+- add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) role (PDF manipulation tools)
+- add [`moodist`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist) role (ambient sound mixer)
+- libvirt: enable [KSM](https://packages.debian.org/bookworm/ksmtuned) (VM memory deduplication)
+
+**Changed:**
+- shaarli: increase default max memory size for php-fpm pool to 256MB
+- nextcloud: upgrade to v28.0.11 [[1]](https://nextcloud.com/changelog/)
+- gitea: upgrade to v1.22.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.22.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.22.1) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.22.2) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.22.3)
+- ollama: upgrade to v0.3.5 [[1]](https://github.com/ollama/ollama/releases/tag/v0.1.34) [[2]](https://github.com/ollama/ollama/releases/tag/v0.1.35) [[3]](https://github.com/ollama/ollama/releases/tag/v0.1.36) [[4]](https://github.com/ollama/ollama/releases/tag/v0.1.37) [[5]](https://github.com/ollama/ollama/releases/tag/v0.1.38) [[6]](https://github.com/ollama/ollama/releases/tag/v0.1.39) [[7]](https://github.com/ollama/ollama/releases/tag/v0.1.40) [[8]](https://github.com/ollama/ollama/releases/tag/v0.1.41) [[9]](https://github.com/ollama/ollama/releases/tag/v0.1.42) [[10]](https://github.com/ollama/ollama/releases/tag/v0.1.43) [[11]](https://github.com/ollama/ollama/releases/tag/v0.1.44) [[12]](https://github.com/ollama/ollama/releases/tag/v0.1.45) [[13]](https://github.com/ollama/ollama/releases/tag/v0.1.46) [[14]](https://github.com/ollama/ollama/releases/tag/v0.1.47) [[15]](https://github.com/ollama/ollama/releases/tag/v0.1.48) [[16]](https://github.com/ollama/ollama/releases/tag/v0.1.49) [[17]](https://github.com/ollama/ollama/releases/tag/v0.2.0) [[18]](https://github.com/ollama/ollama/releases/tag/v0.2.2) [[19]](https://github.com/ollama/ollama/releases/tag/v0.2.3) [[20]](https://github.com/ollama/ollama/releases/tag/v0.2.4) [[21]](https://github.com/ollama/ollama/releases/tag/v0.2.5) [[22]](https://github.com/ollama/ollama/releases/tag/v0.2.6) [[23]](https://github.com/ollama/ollama/releases/tag/v0.2.7) [[24]](https://github.com/ollama/ollama/releases/tag/v0.2.8) [[25]](https://github.com/ollama/ollama/releases/tag/v0.3.0) [[26]](https://github.com/ollama/ollama/releases/tag/v0.3.1) [[27]](https://github.com/ollama/ollama/releases/tag/v0.3.2) [[28]](https://github.com/ollama/ollama/releases/tag/v0.3.3) [[29]](https://github.com/ollama/ollama/releases/tag/v0.3.4) [[30]](https://github.com/ollama/ollama/releases/tag/v0.3.5) [[31]](https://github.com/ollama/ollama/releases/tag/v0.3.6)
+- ollama: upgrade ollama-ui to the latest version [[1]](https://github.com/ollama-ui/ollama-ui/compare/d43171206aa3ea38b4c9f17e50044000c03fc175...ada8d50707fd704528ead13e87d1ec05fdd97492)
+- matrix: update element-web to v1.11.77 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.67) [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.68) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.69) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.70) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.71) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.72) [[7]](https://github.com/vector-im/element-web/releases/tag/v1.11.73) [[8]](https://github.com/vector-im/element-web/releases/tag/v1.11.74) [[9]](https://github.com/element-hq/element-web/releases/tag/v1.11.75) [[10]](https://github.com/element-hq/element-web/releases/tag/v1.11.76) [[11]](https://github.com/element-hq/element-web/releases/tag/v1.11.77)
+- openldap: update ldap-account-manager to [v8.8](https://github.com/LDAPAccountManager/lam/releases/tag/8.8)
+- matrix: update synapse-admin to v0.10.3 [[1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.10.1...0.10.3)
+- postgresql: update pgmetrics to [v1.17.0](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.0)
+- goaccess: update IP to Country GeoIP database to v2024-09
+- xsrv: update ansible to v10.5.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/10/CHANGELOG-v10.rst)
+- netdata: install/upgrade netdata from new self-hosted repositories [[1]](https://learn.netdata.cloud/docs/netdata-agent/installation/linux/native-linux-distribution-packages)
+- netdata: make role compatible with Ubuntu 22.04
+- improve test tools
+
+**Fixed:**
+- netdata: fix netdata not upgrading automatically from 1.45.6 to later versions
+- jellyfin: fix jellyfin not upgrading automtically from 10.8.13 to 10.9.2
+- wireguard: really delete peers from the configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
+- wireguard: fix variable checks for [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) with `state: absent` and no `public_key` defined
+- postgresql: rsyslog: fix postgresql log messages incorrectly tagged as `mongodb` in syslog
+- openldap: fix ldap-account-manager download failing with `urlopen error timed out`
+- gitea_act_runner: fix runner failing to register with `[E] Deprecated config option [oauth2].ENABLE is present, please use [oauth2].ENABLED instead`
+
+[Full changes since v1.24.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.24.0...1.25.0)
+
+------------------
+
 #### [v1.24.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.24.0) - 2024-05-09
 
 **Upgrade procedure:**
@@ -10,7 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role role (local Large Language Model (LLM) server and web interface)
+- add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role (local Large Language Model (LLM) server and web interface)
 - monitoring_utils: add [bonnie++](https://doc.coker.com.au/projects/bonnie/) disk benchmarking tool and automated report script (`TAGS=utils-bonnie xsrv deploy`)
 
 **Changed:**
@@ -18,7 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: update to v1.21.11 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.8) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.9) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.21.10) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.21.11)
 - gitea_act_runner: update act-runner to v0.2.10 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.7) [[2]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.8) [[3]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.9) [[4]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.10)
 - openldap: update ldap-account-manager to [v8.7](https://github.com/LDAPAccountManager/lam/releases/tag/8.7)
-- openldap: update self-service-password to [v1.6.0](https://github.com/ltb-project/self-service-password/releases/tag/v1.6.0)
+- openldap: update self-service-password to v1.6.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.6.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.6.1)
 - matrix: update element-web to v1.11.66 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.61) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.62) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.63) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.64) [[5]](https://github.com/element-hq/element-web/releases/tag/v1.11.65) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.66)
 - shaarli: update stack template to v0.8 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.8)
 - matrix: update synapse-admin to v0.10.1 [[1]](https://github.com/Awesome-Technologies/synapse-admin/compare/0.9.1...0.10.1)

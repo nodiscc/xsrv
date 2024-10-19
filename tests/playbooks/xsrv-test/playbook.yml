@@ -27,7 +27,9 @@
     - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
     - nodiscc.xsrv.gotty # access server terminal as a web application
     - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
-    - nodiscc.xsrv.graylog # log management, capture and analysis platform
+    #- nodiscc.xsrv.graylog # log management, capture and analysis platform
     - nodiscc.xsrv.owncast # live video streaming and chat server
     - nodiscc.xsrv.ollama # large language model (LLM) server
+    - nodiscc.xsrv.stirlingpdf # PDM manipulation tools
+    - nodiscc.xsrv.moodist # ambient sound mixer
     - nodiscc.xsrv.homepage # simple webserver homepage

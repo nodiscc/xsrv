@@ -1,0 +1,18 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf"
+  loop:
+    - stirlingpdf_fqdn is not search('CHANGEME')
+    - stirlingpdf_https_mode in ['selfsigned', 'letsencrypt']
+    - stirlingpdf_enable_service == stirlingpdf_enable_service | bool
+    - stirlingpdf_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (stirlingpdf_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of stirlingpdf_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf"
+    that:
+      - item | ansible.utils.ipv4
+  loop: "{{ stirlingpdf_allowed_hosts }}"

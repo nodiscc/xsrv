@@ -13,7 +13,7 @@
   git:
     repo: https://github.com/ollama-ui/ollama-ui
     dest: /var/lib/ollama-ui/web
-    version: d43171206aa3ea38b4c9f17e50044000c03fc175
+    version: ada8d50707fd704528ead13e87d1ec05fdd97492
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: create systemd unit file

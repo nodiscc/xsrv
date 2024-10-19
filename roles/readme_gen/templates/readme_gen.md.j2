@@ -44,7 +44,13 @@
 - Owncast: https://{{ hostvars[item]['ansible_facts']['ansible_local']['owncast']['fqdn'] }}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['ollama']['fqdn'] is defined %}
-- Owncast: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ollama']['fqdn'] }}
+- Ollama: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ollama']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['stirlingpdf']['fqdn'] is defined %}
+- Stirling PDF: https://{{ hostvars[item]['ansible_facts']['ansible_local']['stirlingpdf']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['moodist']['fqdn'] is defined %}
+- Moodist: https://{{ hostvars[item]['ansible_facts']['ansible_local']['moodist']['fqdn'] }}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] is defined %}
 - LDAP Account Manager: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] }}

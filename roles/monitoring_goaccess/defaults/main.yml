@@ -15,7 +15,7 @@ goaccess_update_calendar_expression: "*:00:00"
 # (optional) only parse log lines containing this string
 # goaccess_filter: "mysite.CHANGEME.org"
 # IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
-goaccess_geoip_db_version: "2024-03"
+goaccess_geoip_db_version: "2024-09"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"

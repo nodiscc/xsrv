@@ -1,0 +1,10 @@
+# Fully Qualified Domain Name for the moodist instance
+moodist_fqdn: "pdf.CHANGEME.org"
+# the moodist OCI image to pull
+moodist_image: "ghcr.io/remvze/moodist:latest"
+# HTTPS and SSL/TLS certificate mode for the moodist webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+moodist_https_mode: "selfsigned"
+# start/stop the moodist service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+moodist_enable_service: yes

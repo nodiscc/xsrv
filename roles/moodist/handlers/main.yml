@@ -1,0 +1,16 @@
+- name: reload systemd unit files (moodist)
+  become: yes
+  become_user: moodist
+  systemd:
+    daemon_reload: yes
+    scope: user
+
+- name: restart moodist service
+  become: yes
+  become_user: moodist
+  retries: 3
+  systemd:
+    name: container-moodist.service
+    scope: user
+    state: restarted
+  when: moodist_enable_service | bool

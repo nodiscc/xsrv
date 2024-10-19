@@ -56,7 +56,7 @@ Dovecot does not send or receive e-mail by itself, it only allows you to access/
 
 ### Backups
 
-See the included [rsnapshot configuration](templates/etc/rsnapshot.d_dovecot.conf.j2) for information about directories to backup/restore.
+See the included [rsnapshot configuration](templates/etc_rsnapshot.d_dovecot.conf.j2) for information about directories to backup/restore.
 
 ### Uninstall
 

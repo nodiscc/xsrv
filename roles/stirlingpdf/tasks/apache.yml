@@ -1,0 +1,27 @@
+- name: enable apache2 modules
+  command: a2enmod {{ item }}
+  with_items:
+    - ssl
+    - rewrite
+  args:
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+  notify: reload apache
+
+- name: copy apache2 virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_stirlingpdf.conf.j2
+    dest: /etc/apache2/sites-available/stirlingpdf.conf
+    mode: "0644"
+  notify: reload apache
+
+- name: enable apache2 virtualhost
+  command: a2ensite stirlingpdf
+  args:
+    creates: "/etc/apache2/sites-enabled/stirlingpdf.conf"
+  notify: reload apache
+
+- name: add stirlingpdf instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ stirlingpdf_fqdn }}" # noqa no-tabs

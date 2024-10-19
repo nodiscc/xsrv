@@ -224,7 +224,7 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
   - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
-  - "origin=packagecloud.io/netdata/netdata,label=netdata" # nodiscc.xsrv.monitoring_netdata
+  - "origin=Netdata,label=Netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
@@ -673,7 +673,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.21.11"
+gitea_version: "1.22.3"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1198,7 +1198,7 @@ matrix_synapse_ldap_validate_certs: yes
 # enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
-matrix_synapse_admin_version: "0.10.1"
+matrix_synapse_admin_version: "0.10.3"
 # list of IP addresses allowed to access synapse-admin and synapse admin API endpoints (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 matrix_synapse_admin_allowed_hosts: []
@@ -1214,7 +1214,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.66"
+matrix_element_version: "1.11.77"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1251,7 +1251,7 @@ goaccess_update_calendar_expression: "*:00:00"
 # (optional) only parse log lines containing this string
 # goaccess_filter: "mysite.CHANGEME.org"
 # IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
-goaccess_geoip_db_version: "2024-03"
+goaccess_geoip_db_version: "2024-09"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"
@@ -1546,6 +1546,24 @@ bonnie_benchmark_paths:
 ```
 
 
+## moodist
+
+[roles/moodist/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml)
+
+```yaml
+# Fully Qualified Domain Name for the moodist instance
+moodist_fqdn: "pdf.CHANGEME.org"
+# the moodist OCI image to pull
+moodist_image: "ghcr.io/remvze/moodist:latest"
+# HTTPS and SSL/TLS certificate mode for the moodist webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+moodist_https_mode: "selfsigned"
+# start/stop the moodist service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+moodist_enable_service: yes
+```
+
+
 ## mumble
 
 [roles/mumble/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mumble/defaults/main.yml)
@@ -1613,7 +1631,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "28.0.5"
+nextcloud_version: "28.0.11"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1741,8 +1759,8 @@ ollama_ui_fqdn: "llm.CHANGEME.org"
 # username/password for access to the ollama web interface/API
 ollama_username: "CHANGEME"
 ollama_password: "CHANGEME"
-# ollama version (https://github.com/ollama/ollama/releases/tag/v0.1.30.atom)
-ollama_version: "v0.1.33"
+# ollama version (https://github.com/ollama/ollama/releases.atom)
+ollama_version: "v0.3.6"
 # HTTPS and SSL/TLS certificate mode for the ollama-ui webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1799,7 +1817,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.7"
+ldap_account_manager_version: "8.8"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1844,7 +1862,7 @@ self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.6.0"
+self_service_password_version: "1.6.1"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
@@ -1905,7 +1923,7 @@ owncast_allowed_hosts: []
 # start/stop the postgresql service, enable/disable it on boot (yes/no)
 postgresql_enable_service: yes
 # pgmetrics version (https://github.com/rapidloop/pgmetrics/releases.atom, without leading v)
-postgresql_pgmetrics_version: "1.16.0"
+postgresql_pgmetrics_version: "1.17.0"
 ```
 
 
@@ -2098,7 +2116,7 @@ shaarli_stack_default_ui: "medium"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
 shaarli_stack_version: "0.8"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
-shaarli_php_memory_limit: '128M'
+shaarli_php_memory_limit: '256M'
 # php_fpm: Maximum execution time of each script (seconds)
 shaarli_php_max_execution_time: 30
 # php-fpm: Maximum amount of time each script may spend parsing request data (seconds)
@@ -2109,6 +2127,27 @@ shaarli_php_post_max_size: '8M'
 shaarli_php_upload_max_filesize: '2M'
 # enable/disable the shaarli php-fpm pool (redirect users to maintenance page if disabled)
 shaarli_enable_service: yes
+```
+
+
+## stirlingpdf
+
+[roles/stirlingpdf/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/stirlingpdf/defaults/main.yml)
+
+```yaml
+# Fully Qualified Domain Name for the stirlingpdf instance
+stirlingpdf_fqdn: "pdf.CHANGEME.org"
+# the stirlingpdf OCI image to pull
+stirlingpdf_image: "docker.io/frooodle/s-pdf:latest"
+# HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+stirlingpdf_https_mode: selfsigned
+# start/stop the stirlingpdf service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+stirlingpdf_enable_service: yes
+# IP addresses allowed to access the stirlingpdf web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+stirlingpdf_allowed_hosts: []
 ```
 
 
@@ -2215,10 +2254,12 @@ wireguard_enable_service: yes
 # clients can generate a private/public key pair by running: wg genkey | (umask 0077 && tee wireguard.key) | wg pubkey > wireguard.pub
 # wireguard_peers:
 #   - name: client1 # arbitrary name for the peer
-#     state: present # optional, default present. set to absent to remove the peer
+#     state: present # (optional, present/absent, default present) set to absent to remove the peer and its keys)
 #     public_key: Faz...4vEQ= # the public key of the peer (contents of its wireguard.pub)
 #     ip_address: "10.200.200.10" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
-#     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/network to route through the VPN on the client
+#     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/networks to route through the VPN on the client
+#   - name: client2
+#     state: absent
 wireguard_peers: []
 
 # firewall zones from which peers are allowed to connect to the VPN service, if nodiscc.xsrv.common/firewalld role is deployed
@@ -2230,6 +2271,7 @@ wireguard_firewalld_zones:
     state: enabled
 
 # allow wireguard clients to connect to these firewalld services/ports on the host
+# in addition, the clients must have a route to the server IP in wireguard_peers.*.routes, see anotherclient example above
 # Example:
 # wireguard_firewalld_services:
 #   - name: ssh # service name

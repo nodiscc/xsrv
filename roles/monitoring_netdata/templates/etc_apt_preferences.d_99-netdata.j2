@@ -1,0 +1,9 @@
+# Only allow installation of netdata related packages from netdata repository
+# Prevent installation for packages not named netdata*
+Package: *
+Origin: Netdata
+Pin-Priority: -1
+
+Package: netdata*
+Origin: Netdata
+Pin-Priority: 500

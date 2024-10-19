@@ -1,0 +1,34 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    ServerName {{ moodist_fqdn }}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+{% if owncast_https_mode == 'letsencrypt' %}
+MDomain {{ owncast_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  DocumentRoot /var/www/html
+  ServerName  {{ moodist_fqdn }}
+  SSLEngine on
+{% if owncast_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ moodist_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ moodist_fqdn }}.key
+{% endif %}
+{% if not moodist_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+  RequestHeader set X-Forwarded-Proto "https"
+  ProxyPreserveHost On
+  ProxyPass        / http://127.0.0.1:8089/
+  ProxyPassReverse / http://127.0.0.1:8089/
+{% endif %}
+</VirtualHost>

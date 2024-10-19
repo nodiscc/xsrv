@@ -1,0 +1,98 @@
+##### USER #####
+
+- name: create stirlingpdf user
+  become: yes
+  user:
+    name: stirlingpdf
+    state: present
+    home: /var/lib/stirlingpdf
+    create_home: no
+
+- name: create stirlingpdf directories
+  become: yes
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: stirlingpdf
+    group: stirlingpdf
+    mode: "{{ item.mode }}"
+  with_items:
+    - path: /var/lib/stirlingpdf
+      mode: "0775"
+    - path: /var/lib/stirlingpdf/tesseract
+      mode: "0770"
+    - path: /var/lib/stirlingpdf/config
+      mode: "0770"
+    - path: /var/lib/stirlingpdf/logs
+      mode: "0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: check if systemd/logind session lingering is enabled
+  stat:
+    path: "/var/lib/systemd/linger/stirlingpdf"
+  register: linger_file
+
+- name: enable systemd/logind session lingering
+  become: yes
+  command:
+    cmd: loginctl enable-linger stirlingpdf
+  changed_when: yes
+  when: not linger_file.stat.exists
+
+##### PODMAN ####
+
+- name: pull stirlingpdf image
+  become: yes
+  become_user: stirlingpdf
+  containers.podman.podman_image:
+    name: "{{ stirlingpdf_image }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart stirlingpdf service
+
+# to access the instance from another host, the firewall must allow incoming connections on port 8000/tcp (sudo firewall-cmd --add-port=8000/tcp --zone=internal)
+- name: run stirlingpdf container
+  become: yes
+  become_user: stirlingpdf
+  containers.podman.podman_container:
+    name: stirlingpdf
+    image: "{{ stirlingpdf_image }}"
+    publish:
+      - "8087:8080"
+    env:
+      DOCKER_ENABLE_SECURITY: 'false'
+      INSTALL_BOOK_AND_ADVANCED_HTML_OPS: 'false'
+      LANGS: 'en_GB'
+    volumes:
+      - "/var/lib/stirlingpdf/tesseract:/usr/share/tessdata"
+      - "/var/lib/stirlingpdf/config:/config"
+      - "/var/lib/stirlingpdf/logs:/logs"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: stirlingpdf_enable_service | bool
+
+- name: generate systemd unit file for stirlingpdf container
+  become: yes
+  become_user: stirlingpdf
+  containers.podman.podman_generate_systemd:
+    name: stirlingpdf
+    use_names: yes
+    dest: ~/.config/systemd/user
+    no_header: yes
+  notify:
+    - reload systemd unit files (stirlingpdf)
+    - restart stirlingpdf service
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: stirlingpdf_enable_service | bool
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+# use sudo systemctl --user --machine stirlingpdf@ list-units to list another user's services
+- name: enable stirlingpdf service
+  become: yes
+  become_user: stirlingpdf
+  systemd:
+    name: container-stirlingpdf.service
+    scope: user
+    state: "{{ 'started' if stirlingpdf_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if stirlingpdf_enable_service else 'no' }}"
+  ignore_errors: "{{ ansible_check_mode }}"

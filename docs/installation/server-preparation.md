@@ -87,6 +87,8 @@ imap.CHANGEME.org # mail_dovecot
 goaccess.CHANGEME.org # goaccess
 livestream.CHANGEME.org # owncast
 llm.CHANGEME.org # ollama
+pdf.CHANGEME.org # stirlingpdf
+moodist.CHANGEME.org # moodist
 ```
 
 ### External SMTP server

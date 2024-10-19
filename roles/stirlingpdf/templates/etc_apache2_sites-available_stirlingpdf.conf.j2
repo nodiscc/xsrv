@@ -1,0 +1,41 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    ServerName {{ stirlingpdf_fqdn }}
+{% if stirlingpdf_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if stirlingpdf_https_mode == 'letsencrypt' %}
+MDomain {{ stirlingpdf_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  DocumentRoot /var/www/html
+  ServerName  {{ stirlingpdf_fqdn }}
+  SSLEngine on
+{% if stirlingpdf_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ stirlingpdf_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ stirlingpdf_fqdn }}.key
+{% endif %}
+{% if not stirlingpdf_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+{% if stirlingpdf_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ stirlingpdf_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
+  RequestHeader set X-Forwarded-Proto "https"
+  ProxyPreserveHost On
+  ProxyPass        / http://127.0.0.1:8087/
+  ProxyPassReverse / http://127.0.0.1:8087/
+{% endif %}
+</VirtualHost>

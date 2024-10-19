@@ -41,7 +41,7 @@
 
 - name: download ldap-account-manager tar.bz2
   get_url:
-    url: https://netix.dl.sourceforge.net/project/lam/LAM/{{ ldap_account_manager_version }}/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
+    url: https://master.dl.sourceforge.net/project/lam/LAM/{{ ldap_account_manager_version }}/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
     dest: /root/ldap-account-manager-{{ ldap_account_manager_version }}.tar.bz2
     owner: root
     group: root
