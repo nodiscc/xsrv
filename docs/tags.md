@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.23.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.24.0
 [xsrv] INFO: list of tags in project xsrv-test
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
@@ -48,6 +48,7 @@ matrix - setup matrix chat server and web client
 mongodb - setup mongodb database
 monitoring - setup monitoring/alerting/logging system/utilities
 monitoring_utils - setup command-line/additional monitoring utilities
+moodist - setup Moodist ambient sound mixer
 msmtp - setup outgoing system mail
 mumble - setup mumble voip server
 netdata-apt - setup netdata apt module
@@ -83,6 +84,7 @@ shaarli - setup shaarli bookmark service
 ssh-authorized-keys - setup ssh authorized keys
 ssh - setup SSH server
 ssl - setup SSL certificates and configuration
+stirlingpdf - setup Stirling PDF PDF manipulation tools
 synapse-admin - setup synapse-admin matrix administration web interface
 synapse - setup synapse (matrix) chat server
 sysctl - setup sysctl kernel configuration
@@ -111,9 +113,10 @@ utils-samba-listusers - (manual) list samba users
 utils-shutdown - (manual) shut down the host
 wireguard - setup wireguard
 OTHER TAGS:
+graylog
+mongodb
 never
 nmap
 readme_gen
-stirlingpdf
 
 ```

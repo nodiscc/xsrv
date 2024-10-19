@@ -8,7 +8,7 @@
 
 [![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.24.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.25.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -41,6 +41,7 @@ This project provides:
 - [monitoring_netdata](roles/monitoring_netdata) - lightweight, real-time monitoring and alerting system
 - [monitoring_rsyslog](roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
 - [monitoring_utils](roles/monitoring_utils) - monitoring and audit utilities
+- [moodist](roles/moodist) - Ambient sound mixer
 - [mumble](roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [nmap](roles/nmap) - automated network scanning for ansible-based projects
