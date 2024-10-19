@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.25.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.1) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Fixed:**
+- moodist: fix variable name ([`moodist_https_mode`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml))
+
+[Full changes since v1.25.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.0...1.25.1)
+
+
 #### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - 2024-10-19
 
 **Upgrade procedure:**

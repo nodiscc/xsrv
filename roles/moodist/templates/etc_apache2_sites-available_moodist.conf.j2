@@ -7,15 +7,15 @@
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </VirtualHost>
 
-{% if owncast_https_mode == 'letsencrypt' %}
-MDomain {{ owncast_fqdn }}
+{% if moodist_https_mode == 'letsencrypt' %}
+MDomain {{ moodist_fqdn }}
 {% endif %}
 
 <VirtualHost *:443>
   DocumentRoot /var/www/html
   ServerName  {{ moodist_fqdn }}
   SSLEngine on
-{% if owncast_https_mode == 'selfsigned' %}
+{% if moodist_https_mode == 'selfsigned' %}
   SSLCertificateFile /etc/ssl/certs/{{ moodist_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ moodist_fqdn }}.key
 {% endif %}
