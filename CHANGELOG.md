@@ -13,6 +13,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: update self-service-password to v1.7.0 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.0)
 - openldap: update ldap-account-manager to [v8.9](https://github.com/LDAPAccountManager/lam/releases/tag/8.9)
 - matrix: update element-web to v1.11.80 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.78) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.79) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.80)
+- update documentation
+
+[Full changes since v1.25.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.1...1.26.0)
+
 
 #### [v1.25.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.1) - 2024-10-19
 
