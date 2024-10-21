@@ -1,0 +1,24 @@
+# @tag searxng - setup SearXNG metasearch engine
+
+galaxy_info:
+  role_name: searxng
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "metasearch engine"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - podman
+    - web
+    - search
+    - engine
+    - metasearch
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration
+  # - nodiscc.xsrv.podman # required

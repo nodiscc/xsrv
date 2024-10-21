@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
+**Added:**
+- add [`searxng`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng) role (metasearch engine)
+
 **Changed:**
 - stirlingpdf: pin version to [v0.30.1](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 - owncast: pin version to [v0.1.3](https://github.com/owncast/owncast/releases)
