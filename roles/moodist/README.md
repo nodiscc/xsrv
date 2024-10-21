@@ -1,4 +1,4 @@
-# xsrv.moodisc
+# xsrv.moodist
 
 This role will setup [Moodist](https://moodist.app/), an ambient sound mixer for focus and calm.
 
