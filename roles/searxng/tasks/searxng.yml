@@ -24,14 +24,16 @@
   become: yes
   file:
     state: directory
-    path: "{{ item }}"
+    path: "{{ item.path }}"
     owner: searxng
     group: searxng
-    mode: "0770"
+    mode: "{{ item.mode }}"
   ignore_errors: "{{ ansible_check_mode }}"
   loop:
-    - /var/lib/searxng
-    - /var/lib/searxng/config
+    - path: /var/lib/searxng
+      mode: "0770"
+    - path: /var/lib/searxng/config
+      mode: "0775"
 
 - name: copy searxng configuration
   become: yes
