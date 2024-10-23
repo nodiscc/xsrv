@@ -93,7 +93,7 @@ server:
 
   secret_key: "{{ searxng_secret }}"  # Is overwritten by ${SEARXNG_SECRET}
   # Proxy image results through SearXNG. Is overwritten by ${SEARXNG_IMAGE_PROXY}
-  image_proxy: false
+  image_proxy: {{ 'true' if searxng_image_proxy else 'false' }}
   # 1.0 and 1.1 are supported
   http_protocol_version: "1.0"
   # POST queries are more secure as they don't show up in history but may cause

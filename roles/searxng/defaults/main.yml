@@ -2,6 +2,8 @@
 searxng_fqdn: "searxng.CHANGEME.org"
 # (required) 64 charecter random secret used for cryptography purposes
 searxng_secret: "CHANGEME64"
+# proxy image search results through the searx instance by default (yes/no)
+searxng_image_proxy: yes
 # the searxng OCI image to pull
 searxng_image: "docker.io/searxng/searxng:latest"
 # HTTPS and SSL/TLS certificate mode for the searxng webserver virtualhost

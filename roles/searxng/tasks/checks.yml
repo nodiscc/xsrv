@@ -8,3 +8,4 @@
     - searxng_secret is not search('CHANGEME')
     - searxng_enable_service == searxng_enable_service | bool
     - searxng_https_mode in ['selfsigned', 'letsencrypt']
+    - searxng_image_proxy == searxng_image_proxy | bool
