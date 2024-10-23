@@ -70,6 +70,8 @@
     env:
       BASE_URL: "https://{{ searxng_fqdn }}/"
       INSTANCE_NAME: searxng
+    labels:
+      io.containers.autoupdate: registry
   ignore_errors: "{{ ansible_check_mode }}"
   when: searxng_enable_service | bool
 
