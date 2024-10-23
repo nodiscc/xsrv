@@ -1,4 +1,4 @@
-# xsrv.moodisc
+# xsrv.searxng
 
 This role will setup [SearXNG](https://docs.searxng.org/), a free internet metasearch engine which aggregates results from more than 70 search services.
 
