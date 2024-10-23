@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.80 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.78) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.79) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.80)
 - update documentation
 
+**Fixed:**
+- podman: fix inability to restart systemd user services using `systemctl`
+
 [Full changes since v1.25.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.1...1.26.0)
 
 

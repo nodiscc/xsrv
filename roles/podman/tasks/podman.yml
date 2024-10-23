@@ -6,6 +6,7 @@
       - uidmap
       - slirp4netns
       - podman-docker
+      - dbus-user-session
 
 - name: copy sysctl configuration (enable kernel.unprivileged_userns_clone)
   template:
