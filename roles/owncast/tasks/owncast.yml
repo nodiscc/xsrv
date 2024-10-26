@@ -42,6 +42,7 @@
   become_user: owncast
   containers.podman.podman_image:
     name: "{{ owncast_image }}"
+    force: yes
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart owncast service
 

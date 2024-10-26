@@ -27,6 +27,7 @@
   become_user: moodist
   containers.podman.podman_image:
     name: "{{ moodist_image }}"
+    force: yes
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart moodist service
 

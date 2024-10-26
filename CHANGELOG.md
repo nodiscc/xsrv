@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 - podman: fix inability to restart systemd user services using `systemctl`
+- moodist, owncast, stirlingpdf: fix OCI image not updated to latest version on re-deployment
 
 [Full changes since v1.25.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.1...1.26.0)
 
