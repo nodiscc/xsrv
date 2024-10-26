@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 
 **Changed:**
+- stirlingpdf: pin version to [v0.30.1](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 - openldap: update self-service-password to v1.7.0 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.0)
 - openldap: update ldap-account-manager to [v8.9](https://github.com/LDAPAccountManager/lam/releases/tag/8.9)
 - matrix: update element-web to v1.11.82 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.78) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.79) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.80) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.81) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.82)
