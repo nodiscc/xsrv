@@ -67,9 +67,8 @@
   containers.podman.podman_generate_systemd:
     name: owncast
     use_names: yes
-    new: yes
-    force: yes
     dest: ~/.config/systemd/user
+    no_header: yes
   notify:
     - reload systemd unit files (owncast)
     - restart owncast service
