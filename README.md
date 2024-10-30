@@ -52,6 +52,7 @@ This project provides:
 - [postgresql](roles/postgresql) - database engine
 - [readme_gen](roles/readme_gen) - automatic README.md generator for ansible-based projects
 - [samba](roles/samba) - cross-platform file sharing server
+- [searxng](roles/searxng) - metasearch engine
 - [shaarli](roles/shaarli) - bookmarking & link sharing web application
 - [stirlingpdf](roles/stirlingpdf) - PDF manipulation tools
 - [transmission](roles/transmission) - bittorrent client/web interface

@@ -52,6 +52,7 @@ This project provides:
 - [postgresql](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/postgresql) - database engine
 - [readme_gen](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) - automatic README.md generator for ansible-based projects
 - [samba](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/samba) - cross-platform file sharing server
+- [searxng](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng) - metasearch engine
 - [shaarli](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli) - bookmarking & link sharing web application
 - [stirlingpdf](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) - PDF manipulation tools
 - [transmission](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/transmission) - bittorrent client/web interface
@@ -78,6 +79,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ollama-ui-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf)

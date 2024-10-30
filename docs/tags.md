@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.25.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.25.1
 [xsrv] INFO: list of tags in project xsrv-test
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
@@ -76,6 +76,7 @@ rsyslog - setup system log processing
 samba - setup samba file server
 samba-shares - configfure samba file shares
 samba-users - configfure samba user accounts
+searxng - setup SearXNG metasearch engine
 self-service-password - setup LDAP self-service password
 services - start/stop/enable/disable services
 shaarli-client - setup shaarli python API client

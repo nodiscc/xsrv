@@ -41,6 +41,7 @@ Due to the "rolling release" development model of SearXNG, tha `latest` OCI imag
 
 <!--BEGIN TAGS LIST-->
 ```
+searxng - setup SearXNG metasearch engine
 ```
 <!--END TAGS LIST-->
 

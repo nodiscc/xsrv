@@ -1214,7 +1214,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.77"
+matrix_element_version: "1.11.82"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1552,7 +1552,7 @@ bonnie_benchmark_paths:
 
 ```yaml
 # Fully Qualified Domain Name for the moodist instance
-moodist_fqdn: "pdf.CHANGEME.org"
+moodist_fqdn: "moodist.CHANGEME.org"
 # the moodist OCI image to pull
 moodist_image: "ghcr.io/remvze/moodist:latest"
 # HTTPS and SSL/TLS certificate mode for the moodist webserver virtualhost
@@ -1817,7 +1817,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.8"
+ldap_account_manager_version: "8.9"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1862,7 +1862,7 @@ self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.6.1"
+self_service_password_version: "1.7.1"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
@@ -1891,8 +1891,8 @@ self_service_password_php_upload_max_filesize: '2M'
 ```yaml
 # Fully Qualified Domain Name for the owncast instance
 owncast_fqdn: "owncast.CHANGEME.org"
-# the owncast OCI image to pull
-owncast_image: "docker.io/owncast/owncast:latest"
+# the owncast OCI image to pull (https://github.com/owncast/owncast/releases.atom)
+owncast_image: "docker.io/owncast/owncast:0.1.3"
 # password to access the admin interfaces at /admin (username admin)
 owncast_admin_password: "CHANGEME"
 # HTTPS and SSL/TLS certificate mode for the owncast webserver virtualhost
@@ -2065,6 +2065,28 @@ samba_nscd_cache_time_to_live: 60
 ```
 
 
+## searxng
+
+[roles/searxng/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml)
+
+```yaml
+# Fully Qualified Domain Name for the searxng instance
+searxng_fqdn: "search.CHANGEME.org"
+# (required) 64 charecter random secret used for cryptography purposes
+searxng_secret: "CHANGEME64"
+# proxy image search results through the searx instance by default (yes/no)
+searxng_image_proxy: yes
+# the searxng OCI image to pull
+searxng_image: "docker.io/searxng/searxng:latest"
+# HTTPS and SSL/TLS certificate mode for the searxng webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+searxng_https_mode: "selfsigned"
+# start/stop the searxng service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+searxng_enable_service: yes
+```
+
+
 ## shaarli
 
 [roles/shaarli/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)
@@ -2137,8 +2159,8 @@ shaarli_enable_service: yes
 ```yaml
 # Fully Qualified Domain Name for the stirlingpdf instance
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
-# the stirlingpdf OCI image to pull
-stirlingpdf_image: "docker.io/frooodle/s-pdf:latest"
+# the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
+stirlingpdf_image: "docker.io/frooodle/s-pdf:0.30.1"
 # HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
