@@ -8,6 +8,7 @@
 - name: restart owncast service
   become: yes
   become_user: owncast
+  retries: 3
   systemd:
     name: container-owncast.service
     scope: user

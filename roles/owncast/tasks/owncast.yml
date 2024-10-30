@@ -56,7 +56,6 @@
     publish:
       - "10081:8080"
       - "1935:1935"
-    rm: yes
     volumes:
       - "/var/lib/owncast/data:/app/data"
   ignore_errors: "{{ ansible_check_mode }}"
