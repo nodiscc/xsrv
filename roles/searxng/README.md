@@ -48,9 +48,3 @@ searxng - setup SearXNG metasearch engine
 ## License
 
 [GNU GPLv3](../../LICENSE)
-
-
-## New role checklist
-
-- [ ] `make doc_md`
-- [ ] Update `CHANGELOG.md`
