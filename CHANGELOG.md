@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - add [`searxng`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng) role (metasearch engine)
 
 **Changed:**
-- stirlingpdf: pin version to [v0.30.1](https://github.com/Stirling-Tools/Stirling-PDF/releases)
+- stirlingpdf: pin version and upgrade to v0.31.03 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.30.1) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.31.0)
 - owncast: pin version to [v0.1.3](https://github.com/owncast/owncast/releases)
 - openldap: update self-service-password to v1.7.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.1)
 - openldap: update ldap-account-manager to [v8.9](https://github.com/LDAPAccountManager/lam/releases/tag/8.9)
