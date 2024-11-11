@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: update self-service-password to v1.7.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.1)
 - openldap: update ldap-account-manager to [v8.9](https://github.com/LDAPAccountManager/lam/releases/tag/8.9)
 - matrix: update element-web to v1.11.82 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.78) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.79) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.80) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.81) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.82) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.83) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.84)
+- shaarli: update stack template to v0.9 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.9)
 - xsrv: update ansible to v10.6.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 - homepage: minor style tweaks
 - update documentation
