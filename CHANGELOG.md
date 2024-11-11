@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Fixed:**
+- jellyfin: fix jellyfin not upgrading automatically from v10.9 to v10.10
 - podman: fix inability to restart systemd user services using `systemctl`
 - owncast: fix deployment always restaring the service/always returning `changed` on `generate systemd unit file for owncast container`
 - moodist, owncast, stirlingpdf: fix OCI image not updated to latest version on re-deployment
