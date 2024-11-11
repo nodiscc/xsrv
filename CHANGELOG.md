@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - gitea: make router logs less verbose (warnings only)
+- nextcloud: upgrade to v28.0.12 [[1]](https://nextcloud.com/changelog/)
 - stirlingpdf: pin version and upgrade to v0.31.1 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.30.1) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.31.0) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.31.1)
 - owncast: pin version to [v0.1.3](https://github.com/owncast/owncast/releases)
 - openldap: update self-service-password to v1.7.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.1)
