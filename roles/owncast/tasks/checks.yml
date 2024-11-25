@@ -11,6 +11,7 @@
     - owncast_image is string
     - owncast_https_mode in ['selfsigned', 'letsencrypt']
     - owncast_allowed_hosts | type_debug == "list"
+    - owncast_auth_enabled == owncast_auth_enabled | bool
 
 - name: check that variables are correctly defined (owncast_allowed_hosts)
   assert:
@@ -19,3 +20,12 @@
     that:
       - item | ansible.utils.ipv4
   loop: "{{ owncast_allowed_hosts }}"
+
+- name: check that variables are correctly defined (owncast_auth_username/password)
+  assert:
+    quiet: yes
+    fail_msg: "owncast_auth_enabled is set, but credentials are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast"
+    that:
+      - owncast_auth_username is not search('CHANGEME')
+      - owncast_auth_password is not search('CHANGEME')
+  when: owncast_auth_enabled | bool

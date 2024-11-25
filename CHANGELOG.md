@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.27.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.27.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Added:**
+- owncast: allow protecting the web interface behind HTTP Basic authentication ([`owncast_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml))
+
+
+[Full changes since v1.26.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.26.0...1.27.0)
+
+------------------
+
 #### [v1.26.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.26.0) - 2025-01-06
 
 **Upgrade procedure:**
@@ -42,6 +57,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 [Full changes since v1.25.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.1...1.26.0)
 
+------------------
 
 #### [v1.25.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.1) - 2024-10-19
 
@@ -54,6 +70,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 [Full changes since v1.25.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.0...1.25.1)
 
+------------------
 
 #### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - 2024-10-19
 

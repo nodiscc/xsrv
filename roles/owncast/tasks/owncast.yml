@@ -77,7 +77,7 @@
   meta: flush_handlers
 
 # use sudo systemctl --user --machine owncast@ list-units to list another user's services
-- name: enable owncast service
+- name: enable/disable/start/stop owncast service
   become: yes
   become_user: owncast
   systemd:
@@ -86,3 +86,5 @@
     state: "{{ 'started' if owncast_enable_service else 'stopped' }}"
     enabled: "{{ 'yes' if owncast_enable_service else 'no' }}"
   ignore_errors: "{{ ansible_check_mode }}"
+  retries: 5
+  delay: 10

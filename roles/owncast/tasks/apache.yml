@@ -7,6 +7,29 @@
     - ssl
     - rewrite
 
+- name: install requirements for ansible htpasswd module
+  apt:
+    state: present
+    package:
+      - python3-passlib
+      - python3-bcrypt
+
+- name: create apache HTTP basic auth password file
+  htpasswd:
+    path: /etc/apache2/owncast-passwd
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    owner: root
+    group: www-data
+    mode: "0640"
+  notify: reload apache
+  ignore_errors: "{{ ansible_check_mode }}"
+  loop:
+    - name: "{{ owncast_auth_username }}"
+      password: "{{ owncast_auth_password }}"
+    - name: admin
+      password: "{{ owncast_admin_password }}"
+
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_owncast.conf.j2

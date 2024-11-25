@@ -26,6 +26,24 @@ MDomain {{ owncast_fqdn }}
   RewriteCond %{REQUEST_URI} !=/maintenance.html
   RewriteRule ^.*$ - [R=503,L]
 {% else %}
+  <Location />
+{% if owncast_auth_enabled %}
+    AuthType Basic
+    AuthName "Authorization required"
+    AuthBasicProvider file
+    AuthUserFile /etc/apache2/owncast-passwd
+    <RequireAll>
+{% if owncast_allowed_hosts %}
+      Require ip 127.0.0.1 {{ owncast_allowed_hosts | join(' ') }}
+{% endif %}
+      Require valid-user
+    </RequireAll>
+{% else %}
+{% if owncast_allowed_hosts %}
+    Require ip 127.0.0.1 {{ owncast_allowed_hosts | join(' ') }}
+{% endif %}
+{% endif %}
+  </Location>
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
   ProxyPass        / http://127.0.0.1:10081/
@@ -34,10 +52,5 @@ MDomain {{ owncast_fqdn }}
   RewriteCond %{HTTP:UPGRADE} ^WebSocket$           [NC,OR]
   RewriteCond %{HTTP:CONNECTION} ^Upgrade$          [NC]
   RewriteRule .* ws://127.0.0.1:8080%{REQUEST_URI}  [P,QSA,L]
-{% endif %}
-{% if owncast_allowed_hosts %}
-  <Location />
-    Require ip 127.0.0.1 {{ owncast_allowed_hosts | join(' ') }}
-  </Location>
 {% endif %}
 </VirtualHost>

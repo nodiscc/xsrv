@@ -20,3 +20,8 @@ owncast_firewalld_zones:
 # list of IP addresses allowed to access the owncast web interface (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 owncast_allowed_hosts: []
+# enable HTTP basic authentication to access the web interface (yes/no)
+owncast_auth_enabled: no
+# if HTTP basic authentication is enabled, username and password for viewers
+owncast_auth_username: CHANGEME
+owncast_auth_password: CHANGEME
