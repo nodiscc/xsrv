@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.86 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.78) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.79) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.80) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.81) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.82) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.83) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.84) [[7]](https://github.com/vector-im/element-web/releases/tag/v1.11.85) [[8]](https://github.com/element-hq/element-web/releases/tag/v1.11.86)
 - shaarli: update stack template to v0.9 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.9)
 - goaccess: update IP to Country GeoIP database to v2024-11
-- xsrv: update ansible to v10.6.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
+- xsrv: update ansible to v11.0.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/10/CHANGELOG-v10.rst) [[3]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - xsrv: update trivy security scanner to [v0.58.0](https://github.com/aquasecurity/trivy/releases)
 - homepage: minor style tweaks
 - update documentation
