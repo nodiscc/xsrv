@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - shaarli: update stack template to v0.9 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.9)
 - goaccess: update IP to Country GeoIP database to v2024-11
 - xsrv: update ansible to v10.6.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
-- xsrv: update trivy security scanner to [v0.57.1](https://github.com/aquasecurity/trivy/releases)
+- xsrv: update trivy security scanner to [v0.58.0](https://github.com/aquasecurity/trivy/releases)
 - homepage: minor style tweaks
 - update documentation
 
