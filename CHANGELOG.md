@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: make router logs less verbose (warnings only)
 - gitea: upgrade to v1.22.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.22.4)
 - nextcloud: upgrade to v28.0.12 [[1]](https://nextcloud.com/changelog/)
+- shaarli: upgrade to [v0.14.0](https://github.com/shaarli/Shaarli/releases/tag/v0.14.0)
 - stirlingpdf: pin version and upgrade to v0.35.1 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.30.1) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.31.0) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.31.1) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.32.0) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.33.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.33.1) [[7]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.34.0) [[8]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.35.0) [[9]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.35.1)
 - owncast: pin version to [v0.1.3](https://github.com/owncast/owncast/releases)
 - openldap: update self-service-password to v1.7.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.1)
