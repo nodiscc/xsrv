@@ -4,6 +4,7 @@
   systemd:
     daemon_reload: yes
     scope: user
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart searxng service
   become: yes
@@ -14,3 +15,4 @@
     scope: user
     state: restarted
   when: searxng_enable_service | bool
+  ignore_errors: "{{ ansible_check_mode }}"
