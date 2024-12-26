@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - postgresql: update pgmetrics to v1.17.1 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1)
 - stirlingpdf: update to v0.44.2 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.2)
 - matrix: update element-web to v1.11.95 [[1]](https://github.com/element-hq/element-web/releases/tag/v1.11.95)
+- openldap: update ldap-account-manager to v9.0 [[1]](https://github.com/LDAPAccountManager/lam/releases/tag/9.0)
 - xsrv: update trivy security scanner to v0.60.0 [[1]](https://github.com/aquasecurity/trivy/releases/tag/v0.60.0)
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 
