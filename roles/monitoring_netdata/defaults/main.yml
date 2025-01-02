@@ -69,8 +69,7 @@ netdata_firewalld_zones:
 netdata_process_checks: []
 # HTTP checks
 # uses the same syntax and parameters as netdata httpcheck module
-# https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/httpcheck/
-# https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf
+# https://learn.netdata.cloud/docs/collecting-metrics/synthetic-checks/http-endpoints
 # Example:
 # netdata_http_checks:
 #   - name: example.com
@@ -85,11 +84,10 @@ netdata_http_checks: []
 # X509/SSL/TLS certificate checks (time to expiration, revocation status)
 # uses the same syntax and parameters as netdata x509check module
 # Port is mandatory for all non-file schemes
-# https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/x509check/
-# https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509heck.conf
+# https://learn.netdata.cloud/docs/collecting-metrics/synthetic-checks/x.509-certificate
 # Example:
 # netdata_x509_checks:
-#   - name example-org
+#   - name: example-org
 #     source: https://example.org:443
 #     days_until_expiration_critical: 15
 #     timeout: 3
