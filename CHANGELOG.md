@@ -8,12 +8,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- monitoring_netdata: if you had changed the default value of `netdata_dbengine_disk_space` in your host/group configuration, remove this variable and configure [`netdata_dbengine_tier0/1/2_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead
 - `xsrv deploy` to apply changes
 
 **Added:**
 - add [`searxng`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng) role (metasearch engine)
 
 **Changed:**
+- monitoring_netdata: define maximum metrics retention in days (`netdata_dbengine_tier0/1/2_retention_days`) instead of MB (default to 7 days of per-second data, 30 days of per-minute data, 730 days of per-hour data)
 - gitea: make router logs less verbose (warnings only)
 - gitea: upgrade to v1.22.6 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.22.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.22.5) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.22.6)
 - nextcloud: upgrade to v28.0.14 [[1]](https://nextcloud.com/changelog/)

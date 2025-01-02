@@ -2,11 +2,16 @@
 # default interval between netdata updates (in seconds)
 # each plugin/module can override this setting (but only to set a longer interval)
 netdata_update_every: 2
-# amount of memory dedicated to caching metrics (MB)
+# amount of memory dedicated to caching recent (tier 0) metrics (MB)
 netdata_dbengine_page_cache_size: 32
-# amount of disk space dedicated to storing per-second metrics (MB)
-netdata_dbengine_disk_space: 800
-# space-separated list of IP addresses authorized to access netdata dashboard/API (wildcards accepted, CIDR notation NOT accepted)
+# number of days for which to keep recent (tier 0/per-second) metrics
+netdata_dbengine_tier0_retention_days: 7
+# number of days for which to keep downsampled (tier 1/per-minute) metrics
+netdata_dbengine_tier1_retention_days: 30
+# number of days for which to keep recent (tier 2/per-hour) metrics
+netdata_dbengine_tier2_retention_days: 730
+# space-separated list of IP addresses authorized to access netdata dashboard/API/badges/streaming (wildcards accepted, CIDR notation NOT accepted)
+# this is a global setting with higher priority to any of the ones below.
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
