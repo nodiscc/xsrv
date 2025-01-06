@@ -1,6 +1,6 @@
 namespace: nodiscc
 name: xsrv
-version: 1.25.1
+version: 1.26.0
 readme: README.md
 authors:
   - nodiscc <nodiscc@gmail.com>
