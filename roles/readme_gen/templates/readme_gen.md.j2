@@ -79,6 +79,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['rss_bridge']['fqdn'] is defined %}
 - RSS-Bridge: https://{{ hostvars[item]['ansible_facts']['ansible_local']['rss_bridge']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['searxng']['fqdn'] is defined %}
+- SearXNG: https://{{ hostvars[item]['ansible_facts']['ansible_local']['searxng']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['shaarli']['fqdn'] is defined %}
 - Shaarli: https://{{ hostvars[item]['ansible_facts']['ansible_local']['shaarli']['fqdn'] }}
 {% endif %}

@@ -1,0 +1,14 @@
+# Fully Qualified Domain Name for the searxng instance
+searxng_fqdn: "search.CHANGEME.org"
+# (required) 64 charecter random secret used for cryptography purposes
+searxng_secret: "CHANGEME64"
+# proxy image search results through the searx instance by default (yes/no)
+searxng_image_proxy: yes
+# the searxng OCI image to pull
+searxng_image: "docker.io/searxng/searxng:latest"
+# HTTPS and SSL/TLS certificate mode for the searxng webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+searxng_https_mode: "selfsigned"
+# start/stop the searxng service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+searxng_enable_service: yes

@@ -1,25 +1,25 @@
 <VirtualHost *:80>
     DocumentRoot /var/www/html
-    ServerName {{ moodist_fqdn }}
+    ServerName {{ searxng_fqdn }}
     # Redirect all HTTP requests to HTTPS
     RewriteEngine On
     RewriteCond %{HTTPS} off
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 </VirtualHost>
 
-{% if moodist_https_mode == 'letsencrypt' %}
-MDomain {{ moodist_fqdn }}
+{% if searxng_https_mode == 'letsencrypt' %}
+MDomain {{ searxng_fqdn }}
 {% endif %}
 
 <VirtualHost *:443>
   DocumentRoot /var/www/html
-  ServerName  {{ moodist_fqdn }}
+  ServerName  {{ searxng_fqdn }}
   SSLEngine on
-{% if moodist_https_mode == 'selfsigned' %}
-  SSLCertificateFile /etc/ssl/certs/{{ moodist_fqdn }}.crt
-  SSLCertificateKeyFile /etc/ssl/private/{{ moodist_fqdn }}.key
+{% if searxng_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ searxng_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ searxng_fqdn }}.key
 {% endif %}
-{% if not moodist_enable_service %}
+{% if not searxng_enable_service %}
   DocumentRoot /var/www/maintenance/
   ErrorDocument 503 /maintenance.html
   RewriteEngine On
@@ -28,7 +28,7 @@ MDomain {{ moodist_fqdn }}
 {% else %}
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
-  ProxyPass        / http://127.0.0.1:8089/
-  ProxyPassReverse / http://127.0.0.1:8089/
+  ProxyPass        / http://127.0.0.1:8091/
+  ProxyPassReverse / http://127.0.0.1:8091/
 {% endif %}
 </VirtualHost>

@@ -20,6 +20,7 @@
       - openssl
       - liblz4-1
       - gnupg
+      - jq # podman container name parsing
       - smartmontools # smart log monitoring
       - git # required to clone additional modules
       - acl # required to use "become" as a non-root user

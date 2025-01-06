@@ -115,10 +115,10 @@
                 background-color: #A091C8;
             }
             .owncast :hover{
-                border-color: #5a6aee;
+                border-color: #78538c;
             }
             .owncast-cb {
-                background-color: #5a6aee;
+                background-color: #78538c;
             }
             .ollama :hover{
                 border-color: #eeeeee;
@@ -215,6 +215,12 @@
             }
             .planarally-cb {
                 background-color: #f2e9d5;
+            }
+            .searxng :hover{
+                border-color: #3050FF;
+            }
+            .searxng-cb {
+                background-color: #3050FF;
             }
             .customlink :hover{
                 border-color: #FAFAFA;
@@ -405,6 +411,19 @@
                         <div class="app-text">
                             <p class="app-name">Ollama</p>
                             <p class="app-description">Large Language Model (LLM) server</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+{% endif %}
+{% if ansible_local.searxng.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 searxng">
+                <a href="https://{{ ansible_local.searxng.fqdn }}">
+                    <div class="content">
+                        <div class="colorblock searxng-cb"><img class="app-icon" src="res/searxng.png"></div>
+                        <div class="app-text">
+                            <p class="app-name">SearXNG</p>
+                            <p class="app-description">Metasearch engine</p>
                         </div>
                     </div>
                 </a>

@@ -1,5 +1,5 @@
 # Fully Qualified Domain Name for the moodist instance
-moodist_fqdn: "pdf.CHANGEME.org"
+moodist_fqdn: "moodist.CHANGEME.org"
 # the moodist OCI image to pull
 moodist_image: "ghcr.io/remvze/moodist:latest"
 # HTTPS and SSL/TLS certificate mode for the moodist webserver virtualhost

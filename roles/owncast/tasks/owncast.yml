@@ -42,6 +42,7 @@
   become_user: owncast
   containers.podman.podman_image:
     name: "{{ owncast_image }}"
+    force: yes
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart owncast service
 
@@ -55,7 +56,6 @@
     publish:
       - "10081:8080"
       - "1935:1935"
-    rm: yes
     volumes:
       - "/var/lib/owncast/data:/app/data"
   ignore_errors: "{{ ansible_check_mode }}"
@@ -66,9 +66,8 @@
   containers.podman.podman_generate_systemd:
     name: owncast
     use_names: yes
-    new: yes
-    force: yes
     dest: ~/.config/systemd/user
+    no_header: yes
   notify:
     - reload systemd unit files (owncast)
     - restart owncast service

@@ -75,6 +75,9 @@ goaccess_fqdn: "goaccess.CHANGEME.org"
 #### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
 owncast_fqdn: "livestream.CHANGEME.org"
 
+##### SEARXNG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml
+searxng_fqdn: "search.CHANGEME.org"
+
 #### OLLAMA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
 olllama_ui_fqdn: "llm.CHANGEME.org"
 

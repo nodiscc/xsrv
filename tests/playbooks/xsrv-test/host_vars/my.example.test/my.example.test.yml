@@ -73,3 +73,5 @@ ollama_ui_fqdn: "llm.example.test"
 stirlingpdf_fqdn: "pdf.example.test"
 ##### MOODIST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml
 moodist_fqdn: "moodist.example.test"
+##### SEARXNG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml
+searxng_fqdn: "search.example.test"

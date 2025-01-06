@@ -1,0 +1,105 @@
+##### USER #####
+
+- name: create searxng user
+  become: yes
+  user:
+    name: searxng
+    state: present
+    home: /var/lib/searxng
+    create_home: yes
+
+- name: check if systemd/logind session lingering is enabled
+  stat:
+    path: "/var/lib/systemd/linger/searxng"
+  register: linger_file
+
+- name: enable systemd/logind session lingering
+  become: yes
+  command:
+    cmd: loginctl enable-linger searxng
+  changed_when: yes
+  when: not linger_file.stat.exists
+
+- name: create searxng config directory
+  become: yes
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    owner: searxng
+    group: searxng
+    mode: "{{ item.mode }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  loop:
+    - path: /var/lib/searxng
+      mode: "0770"
+    - path: /var/lib/searxng/config
+      mode: "0775"
+
+- name: copy searxng configuration
+  become: yes
+  template:
+    src: var_lib_searxng_config_settings.yml.j2
+    dest: /var/lib/searxng/config/settings.yml
+    owner: searxng
+    group: searxng
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart searxng service
+
+##### PODMAN ####
+
+- name: pull searxng image
+  become: yes
+  become_user: searxng
+  containers.podman.podman_image:
+    name: "{{ searxng_image }}"
+    force: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart searxng service
+
+# to access the instance from another host, the firewall must allow incoming connections on port 8000/tcp (sudo firewall-cmd --add-port=8000/tcp --zone=internal)
+- name: run searxng container
+  become: yes
+  become_user: searxng
+  containers.podman.podman_container:
+    name: searxng
+    image: "{{ searxng_image }}"
+    publish:
+      - "8091:8080"
+    volumes:
+      - "/var/lib/searxng/config:/etc/searxng"
+    env:
+      BASE_URL: "https://{{ searxng_fqdn }}/"
+      INSTANCE_NAME: searxng
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: searxng_enable_service | bool
+
+##### SERVICE #####
+
+- name: generate systemd unit file for searxng container
+  become: yes
+  become_user: searxng
+  containers.podman.podman_generate_systemd:
+    name: searxng
+    use_names: yes
+    dest: ~/.config/systemd/user
+    no_header: yes
+  notify:
+    - reload systemd unit files (searxng)
+    - restart searxng service
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: searxng_enable_service | bool
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+# use sudo systemctl --user --machine searxng@ list-units to list another user's services
+- name: enable searxng service
+  become: yes
+  become_user: searxng
+  systemd:
+    name: container-searxng.service
+    scope: user
+    state: "{{ 'started' if searxng_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if searxng_enable_service else 'no' }}"
+  ignore_errors: "{{ ansible_check_mode }}"

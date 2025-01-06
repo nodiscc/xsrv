@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.26.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.26.0) - 2025-01-06
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- monitoring_netdata: if you had changed the default value of `netdata_dbengine_disk_space` in your host/group configuration, remove this variable and configure [`netdata_dbengine_tier0/1/2_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead
+- `xsrv deploy` to apply changes
+
+**Added:**
+- add [`searxng`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng) role (metasearch engine)
+
+**Changed:**
+- monitoring_netdata: define maximum metrics retention in days (`netdata_dbengine_tier0/1/2_retention_days`) instead of MB (default to 7 days of per-second data, 30 days of per-minute data, 730 days of per-hour data)
+- gitea: make router logs less verbose (warnings only)
+- gitea: upgrade to v1.22.6 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.22.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.22.5) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.22.6)
+- nextcloud: upgrade to v28.0.14 [[1]](https://nextcloud.com/changelog/)
+- shaarli: upgrade to [v0.14.0](https://github.com/shaarli/Shaarli/releases/tag/v0.14.0)
+- stirlingpdf: pin version and upgrade to v0.36.6 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.30.1) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.31.0) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.31.1) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.32.0) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.33.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.33.1) [[7]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.34.0) [[8]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.35.0) [[9]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.35.1) [[10]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.36.0) [[11]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.36.1) [[12]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.36.2) [[13]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.36.3) [[14]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.36.4) [[15]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.36.5) [[16]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.36.6)
+- owncast: pin version to [v0.1.3](https://github.com/owncast/owncast/releases)
+- openldap: update self-service-password to v1.7.1 [[1]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.0) [[2]](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.1)
+- openldap: update ldap-account-manager to [v8.9](https://github.com/LDAPAccountManager/lam/releases/tag/8.9)
+- matrix: update element-web to v1.11.89 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.78) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.79) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.80) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.81) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.82) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.83) [[6]](https://github.com/vector-im/element-web/releases/tag/v1.11.84) [[7]](https://github.com/vector-im/element-web/releases/tag/v1.11.85) [[8]](https://github.com/element-hq/element-web/releases/tag/v1.11.86) [[9]](https://github.com/element-hq/element-web/releases/tag/v1.11.87) [[10](https://github.com/element-hq/element-web/releases/tag/v1.11.88) [[11]](https://github.com/element-hq/element-web/releases/tag/v1.11.89)
+- shaarli: update stack template to v0.10 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.9) [[2]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.10)
+- goaccess: update IP to Country GeoIP database to v2024-11
+- xsrv: update ansible to v11.1.0 [[1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst) [[2]](https://github.com/ansible-community/ansible-build-data/blob/main/10/CHANGELOG-v10.rst) [[3]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
+- xsrv: update trivy security scanner to [v0.58.0](https://github.com/aquasecurity/trivy/releases)
+- homepage: minor style tweaks
+- update documentation
+
+**Fixed:**
+- jellyfin: fix jellyfin not upgrading automatically from v10.9 to v10.10
+- podman: fix inability to restart systemd user services using `systemctl`
+- owncast: fix deployment always restaring the service/always returning `changed` on `generate systemd unit file for owncast container`
+- moodist, owncast, stirlingpdf: fix OCI image not updated to latest version on re-deployment
+- owncast: fix container/service not restarting after upgrades
+- netdata: fix netdata unable to determine podman container names
+
+[Full changes since v1.25.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.1...1.26.0)
+
+
+#### [v1.25.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.1) - 2024-10-19
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Fixed:**
+- moodist: fix variable name ([`moodist_https_mode`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml))
+
+[Full changes since v1.25.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.0...1.25.1)
+
+
 #### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - 2024-10-19
 
 **Upgrade procedure:**

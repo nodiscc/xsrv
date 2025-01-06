@@ -46,6 +46,7 @@
   become_user: stirlingpdf
   containers.podman.podman_image:
     name: "{{ stirlingpdf_image }}"
+    force: yes
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart stirlingpdf service
 
