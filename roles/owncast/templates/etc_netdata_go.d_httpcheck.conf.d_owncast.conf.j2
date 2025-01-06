@@ -6,4 +6,8 @@
     url: https://127.0.0.1
     headers:
       Host: "{{ owncast_fqdn }}"
+{% if owncast_auth_enabled %}
+    status_accepted:
+      - 401
+{% endif %}
 {% endif %}
