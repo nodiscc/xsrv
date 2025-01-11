@@ -13,6 +13,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 - owncast: allow protecting the web interface behind HTTP Basic authentication ([`owncast_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml))
 
+**Changed:**
+- gitea: upgrade to v1.23.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.1)
+
+
 **Fixed:**
 - owncast: fix occasional `Job for container-owncast.service failed because the service did not take the steps required by its unit configuration.` error during service restart
 
