@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - gitea: upgrade to v1.23.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.1)
-
+- openldap: upgrade self-service-password to [v1.7.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.2)
 
 **Fixed:**
 - owncast: fix occasional `Job for container-owncast.service failed because the service did not take the steps required by its unit configuration.` error during service restart
