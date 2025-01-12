@@ -37,6 +37,8 @@ netdata_disabled_plugins:
   - supervisord
   - lighttpd
   - netdata monitoring
+  - systemd-journal
+
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
