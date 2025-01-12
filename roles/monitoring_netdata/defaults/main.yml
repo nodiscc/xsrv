@@ -19,8 +19,8 @@ netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.1
 #netdata_allow_streaming_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# public port (i.e. outside NAT) used to access netdata, used for links in mail notifications, and the xsrv.homepage role
-netdata_public_port: 19999
+# public URL and port (i.e. outside NAT) used to access netdata, used for links in mail notifications
+netdata_public_url: "https://{{ inventory_hostname }}:19999"
 # netdata plugins to disable
 netdata_disabled_plugins:
   - ebpf

@@ -52,7 +52,7 @@
 
 [registry]
    enabled = yes
-   registry to announce = https://{{ inventory_hostname }}:{{ netdata_public_port | default('19999') }}
+   registry to announce = {{ netdata_public_url }}
 
 {% if netdata_streaming_send_enabled %}
 [ml]
