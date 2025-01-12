@@ -5,6 +5,8 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   loop:
     - netdata_allow_connections_from is string
+    - (netdata_allow_dashboard_from is not defined) or (netdata_allow_dashboard_from is string)
+    - (netdata_allow_streaming_from is not defined) or (netdata_allow_streaming_from is string)
     - netdata_cloud_enabled == netdata_cloud_enabled | bool
     - netdata_dbengine_tier0_retention_days == netdata_dbengine_tier0_retention_days | int
     - netdata_dbengine_tier1_retention_days == netdata_dbengine_tier1_retention_days | int
