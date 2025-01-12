@@ -39,13 +39,14 @@ netdata_disabled_plugins:
   - netdata monitoring
   - systemd-journal
 
+##### HEALTH NOTIFICATIONS #####
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
 #   - start: "01 19 * * *"
 #     end: "00 07 * * *"
 netdata_notification_downtimes: []
-# enable/disable alarm notifications (yes/no)
+# enable/disable health notifications (yes/no)
 netdata_enable_health_notifications: yes
 # firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)

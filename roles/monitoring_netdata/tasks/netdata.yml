@@ -203,6 +203,8 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: netdata-config
 
+##### UTILITIES #####
+
 - name: install netdata downtime cron jobs
   template:
     src: etc_cron.d_netdata-downtime.j2
@@ -224,6 +226,8 @@
   tags:
     - mail
     - msmtp
+
+##### SERVICE #####
 
 - name: create directory for netdata systemd overrides
   file:
@@ -247,7 +251,6 @@
 # apply netdata systemd overrides
 - name: apply configuration (flush handlers)
   meta: flush_handlers
-
 
 - name: start and enable netdata
   service:
