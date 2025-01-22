@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - gitea: upgrade to v1.23.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.1)
 - openldap: upgrade self-service-password to [v1.7.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.2)
+- homepage/readme_gen: link directly to the netdata v3 dashboard, skip 'welcome'/sign-in page
+- netdata: send all alerts to the 'sysadmin' recipent by default (root)
+- netdata: disable systemd-journal log collection module by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: allow defining different access control lists from dashboard access and streaming ([`netdata_allow_dashboard_from/netdata_allow_streaming_from`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 
 **Fixed:**
 - owncast: fix occasional `Job for container-owncast.service failed because the service did not take the steps required by its unit configuration.` error during service restart
