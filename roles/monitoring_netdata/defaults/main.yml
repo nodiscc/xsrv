@@ -14,9 +14,9 @@ netdata_dbengine_tier2_retention_days: 730
 # this is a global setting with higher priority to any of the ones below.
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # space-separated list of IP addresses authorized to access netdata dashboard/API/badges (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
-#netdata_allow_dashboard_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-# space-saperated list of IP addresses authorized to stream metrics to this netdata instance (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
-#netdata_allow_streaming_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
+# netdata_allow_dashboard_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
+# space-separated list of IP addresses authorized to stream metrics to this netdata instance (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
+# netdata_allow_streaming_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
 # public URL and port (i.e. outside NAT) used to access netdata, used for links in mail notifications
