@@ -84,6 +84,7 @@
       - netdata-plugin-slabinfo=2.1.1
       - netdata=2.1.1
     state: present
+    allow_downgrade: yes
 
 ##### SELF-SIGNED SSL CERTIFICATES #####
 
