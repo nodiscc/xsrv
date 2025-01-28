@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: upgrade self-service-password to [v1.7.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.2)
 - homepage/readme_gen: link directly to the netdata v3 dashboard, skip 'welcome'/sign-in page
 - stirlingpdf: upgrade to v0.39.0 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.38.0) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.39.0)
+- netdata: pin version to v2.1.1, further versions artifically limit the number of nodes that can be accessed from the web dashboard [[1]](https://community.netdata.cloud/t/suddenly-local-dashboard-is-limited-to-5-nodes/)
 - netdata: send all alerts to the 'sysadmin' recipent by default (root)
 - netdata: disable systemd-journal log collection module by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - netdata: allow defining different access control lists from dashboard access and streaming ([`netdata_allow_dashboard_from/netdata_allow_streaming_from`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
