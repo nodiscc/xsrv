@@ -27,6 +27,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - netdata: send all alerts to the 'sysadmin' recipent by default (root)
 - netdata: disable systemd-journal log collection module by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - netdata: allow defining different access control lists from dashboard access and streaming ([`netdata_allow_dashboard_from/netdata_allow_streaming_from`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- xsrv: update trivy security scanner to [v0.59.0](https://github.com/aquasecurity/trivy/releases)
 
 **Fixed:**
 - owncast: fix occasional `Job for container-owncast.service failed because the service did not take the steps required by its unit configuration.` error during service restart
