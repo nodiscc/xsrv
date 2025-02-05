@@ -19,7 +19,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - owncast: allow protecting the web interface behind HTTP Basic authentication ([`owncast_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml))
 
 **Changed:**
-- gitea: upgrade to v1.23.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.1)
+- gitea: upgrade to v1.23.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.1) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.2)
 - openldap: upgrade self-service-password to [v1.7.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.2)
 - homepage/readme_gen: link directly to the netdata v3 dashboard, skip 'welcome'/sign-in page
 - stirlingpdf: upgrade to v0.40.0 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.38.0) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.39.0) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.1)
