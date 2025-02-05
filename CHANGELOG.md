@@ -31,6 +31,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - xsrv: update ansible to v11.2.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - matrix: update element-web to v1.11.91 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.90) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.91)
 - owncast: update to v0.2.1 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.1) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.0)
+- goaccess: update IP to Country GeoIP database to v2025-02
 
 **Fixed:**
 - owncast: fix occasional `Job for container-owncast.service failed because the service did not take the steps required by its unit configuration.` error during service restart
