@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
-- If you run into the error `No available installation candidate` during netdata packages installation/downgrade, please SSH to your server (`xsrv ssh`) and downgrade packages manually:
+- netdata: if you run into the error `No available installation candidate` during netdata packages installation/downgrade, please SSH to your server (`xsrv ssh`) and downgrade packages manually:
 
 ```bash
 sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugin-chartsd=2.1.1 netdata-plugin-debugfs=2.1.1 netdata-plugin-ebpf=2.1.1 netdata-plugin-go=2.1.1 netdata-plugin-nfacct=2.1.1 netdata-plugin-perf=2.1.1 netdata-plugin-pythond=2.1.1 netdata-plugin-slabinfo=2.1.1 netdata=2.1.1
