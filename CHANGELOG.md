@@ -19,7 +19,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - owncast: allow protecting the web interface behind HTTP Basic authentication ([`owncast_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml))
 
 **Changed:**
-- nextcloud: upgrade to v29.0.11 [[1]](https://nextcloud.com/changelog/) [[2](https://nextcloud.com/blog/nextcloud-hub8/)]
+- nextcloud: upgrade to v29.0.12 [[1]](https://nextcloud.com/changelog/) [[2](https://nextcloud.com/blog/nextcloud-hub8/)]
 - gitea: upgrade to v1.23.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.1) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.2)
 - openldap: upgrade self-service-password to [v1.7.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.2)
 - homepage/readme_gen: link directly to the netdata v3 dashboard, skip 'welcome'/sign-in page
