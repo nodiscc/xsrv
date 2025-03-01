@@ -30,7 +30,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - netdata: allow defining different access control lists from dashboard access and streaming ([`netdata_allow_dashboard_from/netdata_allow_streaming_from`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - xsrv: update trivy security scanner to [v0.59.1](https://github.com/aquasecurity/trivy/releases)
 - xsrv: update ansible to v11.2.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
-- matrix: update element-web to v1.11.91 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.90) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.91)
+- matrix: update element-web to v1.11.91 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.90) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.91) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.92) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.93) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.94)
 - owncast: update to v0.2.1 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.1) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.0)
 - goaccess: update IP to Country GeoIP database to v2025-02
 
