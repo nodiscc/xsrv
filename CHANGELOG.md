@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.27.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.27.0) - 2025-03-02
+
+**Upgrade procedure:**
+- `xsrv self-upgrade` to upgrade the xsrv script
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+- netdata: if you run into the error `No available installation candidate` during netdata packages installation/downgrade, please SSH to your server (`xsrv ssh`) and downgrade packages manually:
+
+```bash
+sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugin-chartsd=2.1.1 netdata-plugin-debugfs=2.1.1 netdata-plugin-ebpf=2.1.1 netdata-plugin-go=2.1.1 netdata-plugin-nfacct=2.1.1 netdata-plugin-perf=2.1.1 netdata-plugin-pythond=2.1.1 netdata-plugin-slabinfo=2.1.1 netdata=2.1.1
+```
+
+**Added:**
+- owncast: allow protecting the web interface behind HTTP Basic authentication ([`owncast_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml))
+
+**Changed:**
+- nextcloud: upgrade to v29.0.12 [[1]](https://nextcloud.com/changelog/) [[2](https://nextcloud.com/blog/nextcloud-hub8/)]
+- gitea: upgrade to v1.23.4 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.1) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.2) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.23.3) [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.23.4)
+- openldap: upgrade self-service-password to [v1.7.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.2)
+- homepage/readme_gen: link directly to the netdata v3 dashboard, skip 'welcome'/sign-in page
+- stirlingpdf: upgrade to v0.43.2 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.38.0) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.39.0) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.1) [[7]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.2) [[8]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.41.0) [[9]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.42.0) [[10]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.43.0) [[11]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.43.1) [[12]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.43.2)
+- netdata: pin version to v2.1.1, further versions artifically limit the number of nodes that can be accessed from the web dashboard [[1]](https://community.netdata.cloud/t/suddenly-local-dashboard-is-limited-to-5-nodes/)
+- netdata: send all alerts to the 'sysadmin' recipent by default (root)
+- netdata: disable systemd-journal log collection module by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: allow defining different access control lists from dashboard access and streaming ([`netdata_allow_dashboard_from/netdata_allow_streaming_from`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- xsrv: update trivy security scanner to [v0.59.1](https://github.com/aquasecurity/trivy/releases)
+- xsrv: update ansible to v11.3.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
+- matrix: update element-web to v1.11.91 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.90) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.91) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.92) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.93) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.94)
+- owncast: update to v0.2.1 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.1) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.0)
+- goaccess: update IP to Country GeoIP database to v2025-02
+
+**Fixed:**
+- owncast: fix occasional `Job for container-owncast.service failed because the service did not take the steps required by its unit configuration.` error during service restart
+
+[Full changes since v1.26.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.26.0...1.27.0)
+
+------------------
+
 #### [v1.26.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.26.0) - 2025-01-06
 
 **Upgrade procedure:**
@@ -42,6 +80,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 [Full changes since v1.25.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.1...1.26.0)
 
+------------------
 
 #### [v1.25.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.1) - 2024-10-19
 
@@ -54,6 +93,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 [Full changes since v1.25.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.0...1.25.1)
 
+------------------
 
 #### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - 2024-10-19
 

@@ -33,7 +33,17 @@
 [web]
    default port = 19999
    allow connections from = {{ netdata_allow_connections_from }} localhost
+{% if netdata_allow_dashboard_from is defined %}
+   allow dashboard from = {{ netdata_allow_dashboard_from }} localhost
+   allow badges from = {{ netdata_allow_dashboard_from }} localhost
+   allow netdata.conf from = {{ netdata_allow_dashboard_from }} localhost
+{% else %}
    allow netdata.conf from = {{ netdata_allow_connections_from }} localhost
+{% endif %}
+{% if netdata_allow_streaming_from is defined %}
+   allow streaming from = {{ netdata_allow_streaming_from }} localhost
+{% endif %}
+
    ssl key = /etc/ssl/netdata/netdata-key.pem
    ssl certificate = /etc/ssl/netdata/netdata-cert.pem
    web files owner = root
@@ -42,7 +52,7 @@
 
 [registry]
    enabled = yes
-   registry to announce = https://{{ inventory_hostname }}:{{ netdata_public_port | default('19999') }}
+   registry to announce = {{ netdata_public_url }}
 
 {% if netdata_streaming_send_enabled %}
 [ml]

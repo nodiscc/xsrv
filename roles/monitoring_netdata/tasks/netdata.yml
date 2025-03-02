@@ -71,8 +71,21 @@
 
 - name: install netdata
   apt:
-    package: netdata
+    package:
+      - netdata-dashboard=2.1.1
+      - netdata-plugin-apps=2.1.1
+      - netdata-plugin-chartsd=2.1.1
+      - netdata-plugin-debugfs=2.1.1
+      - netdata-plugin-ebpf=2.1.1
+      - netdata-plugin-go=2.1.1
+      - netdata-plugin-nfacct=2.1.1
+      - netdata-plugin-perf=2.1.1
+      - netdata-plugin-pythond=2.1.1
+      - netdata-plugin-slabinfo=2.1.1
+      - netdata=2.1.1
     state: present
+    allow_downgrade: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### SELF-SIGNED SSL CERTIFICATES #####
 
@@ -203,6 +216,8 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: netdata-config
 
+##### UTILITIES #####
+
 - name: install netdata downtime cron jobs
   template:
     src: etc_cron.d_netdata-downtime.j2
@@ -224,6 +239,8 @@
   tags:
     - mail
     - msmtp
+
+##### SERVICE #####
 
 - name: create directory for netdata systemd overrides
   file:
@@ -247,7 +264,6 @@
 # apply netdata systemd overrides
 - name: apply configuration (flush handlers)
   meta: flush_handlers
-
 
 - name: start and enable netdata
   service:

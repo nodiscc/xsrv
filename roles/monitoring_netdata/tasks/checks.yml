@@ -5,6 +5,8 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata"
   loop:
     - netdata_allow_connections_from is string
+    - (netdata_allow_dashboard_from is not defined) or (netdata_allow_dashboard_from is string)
+    - (netdata_allow_streaming_from is not defined) or (netdata_allow_streaming_from is string)
     - netdata_cloud_enabled == netdata_cloud_enabled | bool
     - netdata_dbengine_tier0_retention_days == netdata_dbengine_tier0_retention_days | int
     - netdata_dbengine_tier1_retention_days == netdata_dbengine_tier1_retention_days | int
@@ -39,7 +41,7 @@
     - setup_netdata_logcount == setup_netdata_logcount | bool
     - setup_netdata_apt == setup_netdata_apt | bool
     - (not needrestart_autorestart_cron) or (needrestart_autorestart_cron is string)
-    - netdata_public_port == netdata_public_port | int
+    - netdata_public_url is string
 
 - name: check that variables are correctly defined (netdata_notification_downtimes)
   assert:

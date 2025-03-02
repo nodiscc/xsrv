@@ -13,10 +13,14 @@ netdata_dbengine_tier2_retention_days: 730
 # space-separated list of IP addresses authorized to access netdata dashboard/API/badges/streaming (wildcards accepted, CIDR notation NOT accepted)
 # this is a global setting with higher priority to any of the ones below.
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
+# space-separated list of IP addresses authorized to access netdata dashboard/API/badges (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
+# netdata_allow_dashboard_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
+# space-separated list of IP addresses authorized to stream metrics to this netdata instance (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
+# netdata_allow_streaming_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# public port (i.e. outside NAT) used to access netdata, used for links in mail notifications, and the xsrv.homepage role
-netdata_public_port: 19999
+# public URL and port (i.e. outside NAT) used to access netdata, used for links in mail notifications
+netdata_public_url: "https://{{ inventory_hostname }}:19999"
 # netdata plugins to disable
 netdata_disabled_plugins:
   - ebpf
@@ -33,13 +37,16 @@ netdata_disabled_plugins:
   - supervisord
   - lighttpd
   - netdata monitoring
+  - systemd-journal
+
+##### HEALTH NOTIFICATIONS #####
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
 #   - start: "01 19 * * *"
 #     end: "00 07 * * *"
 netdata_notification_downtimes: []
-# enable/disable alarm notifications (yes/no)
+# enable/disable health notifications (yes/no)
 netdata_enable_health_notifications: yes
 # firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
