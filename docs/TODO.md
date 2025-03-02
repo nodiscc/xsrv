@@ -2,9 +2,11 @@
 
 ### xsrv/xsrv
 
+- #1338 - xsrv init-vm/init-vm-template: mount filesystems with noatime,nodiratime options - **`-`** `easy,enhancement,performance`
+- #1337 - xsrv readme-gen: 'dict object' has no attribute 'public_url' - **`1.27.0`** `bug`
+- #1335 - searxng: enable container autoupdates? - **`-`** `maintenance,question`
+- #1334 - owncast: upgrade to v0.2.0 - **`1.27.0`** `maintenance`
 - #1333 - openldap: upgrade ldap-account-manager to v9.0 - **`1.27.0`** `maintenance`
-- #1332 - release v1.26.0 - **`1.26.0`** `maintenance`
-- #1330 - WIP: owncast: allow requiring authentication to access the web application (HTTP basic auth) - **`1.27.0`** `enhancement,security`
 - #1328 - searxng: make hostnames plugin conifigurable thourgh host_vars - **`1.27.0`** `enhancement`
 - #1326 - nextcloud: upgrade to v30 - **`-`** `maintenance`
 - #1325 - Searxng: add new engines - **`-`** `feature`
@@ -12,13 +14,12 @@
 - #1323 - xsrv init-vm: allow specifying disk size - **`1.27.0`** `enhancement`
 - #1322 - update ollama role for version  > 0.3.6 - **`1.27.0`** `maintenance`
 - #1321 - WIP wireguard automatically generate a public/private key pair for peers where public_key is not defined - **`1.27.0`** `enhancement`
-- #1320 - sshd: disable socket activation? - **`-`** `configuration,easy,question,security`
+- #1320 - sshd: disable socket activation? - **`1.27.0`** `configuration,easy,question,security`
 - #1316 - netdata: allow limiting alert silencing to a specif host/chart - **`1.27.0`** `enhancement,monitoring`
 - #1313 - graylog: sigma rules? - **`-`** `question,security`
 - #1312 - WIP: netdata: netdata_notification_downtimes: allow disabling alerts completely instead of just silencing notifications - **`1.27.0`** `enhancement,monitoring`
 - #1307 - Webmail client - **`-`** `feature`
-- #1306 - nextcloud: upgrade to v29.0.x - **`1.27.0`** `enhancement`
-- #1305 - ZIM (Kiwix) server? - **`-`** `feature,question`
+- #1305 - ZIM (Kiwix) server? - **`1.27.0`** `feature`
 - #1301 - ollama: replace ollama-ui with text-generation-webui/open-webui? - **`-`** `enhancement,question`
 - #1298 - IRC web client + bouncer - **`1.27.0`** `feature`
 - #1297 - shaarli: backup/restore thumbnails cache during upgrades (or store data outside webroot) - **`1.27.0`** `enhancement`
@@ -32,9 +33,9 @@
 - #1275 - WIP: rsnapshot: allow automatic discovery of paths to backup from/commands to run on remote hosts - **`1.27.0`** `backups,enhancement`
 - #1269 - document getting ansible-vault-password from keepassxc - **`2.0.0`** `documentation,enhancement,security,upstream`
 - #1268 - backup: allow automatic discovery of paths to backup/commands to run for each host - **`1.27.0`** `backups,enhancement`
-- #1267 - xsrv self-upgrade: update the bash completion script as well - **`-`** `enhancement`
+- #1267 - xsrv self-upgrade: update the bash completion script as well - **`1.27.0`** `enhancement`
 - #1266 - homepage: allow displaying arbitrary netdata badges in the footer - **`-`** `easy,enhancement`
-- #1257 - graylog: upgrade to v5.2.x or 6.0.x - **`1.27.0`** `maintenance`
+- #1257 - graylog: upgrade to v5.2.x or 6.0.x - **`2.0.0`** `maintenance`
 - #1256 - wireguard: web interface? - **`-`** `enhancement,question`
 - #1253 - wireguard: add QR code to auto-generated client config files - **`1.27.0`** `enhancement`
 - #1251 - WIP: xsrv: don't require sudo during xsrv init-vm-template - **`-`** `difficult,enhancement`
@@ -76,7 +77,6 @@
 - #931 - jitsi: noise cancellation/suppression doesn't work for clients using Pulseaudio microphone input - **`-`** `bug,question,upstream`
 - #927 - jitsi: permanently disable RECENT_LIST_ENABLED - **`-`** `enhancement,security,upstream`
 - #925 - jitsi: setup TURN server for P2P one-to-one calls? - **`-`** `enhancement,question`
-- #920 - xsrv: graphical user interface? - **`-`** `question`
 - #915 - Snipe-IT role - **`-`** `feature`
 - #912 - mount /tmp noexec? - **`-`** `question,security`
 - #911 - test compatibility with librelogic.librelogic.gitlab/gitlab-runner? - **`2.0.0`** `documentation,easy,enhancement,feature`

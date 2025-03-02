@@ -674,7 +674,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.22.6"
+gitea_version: "1.23.4"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1215,7 +1215,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.89"
+matrix_element_version: "1.11.94"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1252,7 +1252,7 @@ goaccess_update_calendar_expression: "*:00:00"
 # (optional) only parse log lines containing this string
 # goaccess_filter: "mysite.CHANGEME.org"
 # IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
-goaccess_geoip_db_version: "2024-11"
+goaccess_geoip_db_version: "2025-02"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"
@@ -1282,10 +1282,14 @@ netdata_dbengine_tier2_retention_days: 730
 # space-separated list of IP addresses authorized to access netdata dashboard/API/badges/streaming (wildcards accepted, CIDR notation NOT accepted)
 # this is a global setting with higher priority to any of the ones below.
 netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
+# space-separated list of IP addresses authorized to access netdata dashboard/API/badges (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
+# netdata_allow_dashboard_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
+# space-separated list of IP addresses authorized to stream metrics to this netdata instance (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
+# netdata_allow_streaming_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
 # enable netdata cloud/SaaS features (yes/no)
 netdata_cloud_enabled: no
-# public port (i.e. outside NAT) used to access netdata, used for links in mail notifications, and the xsrv.homepage role
-netdata_public_port: 19999
+# public URL and port (i.e. outside NAT) used to access netdata, used for links in mail notifications
+netdata_public_url: "https://{{ inventory_hostname }}:19999"
 # netdata plugins to disable
 netdata_disabled_plugins:
   - ebpf
@@ -1302,13 +1306,16 @@ netdata_disabled_plugins:
   - supervisord
   - lighttpd
   - netdata monitoring
+  - systemd-journal
+
+##### HEALTH NOTIFICATIONS #####
 # Netdata notification downtimes (list), no notifications will be sent during these intervals
 # start/end: cron expression for downtime start/end time. Example:
 # netdata_notification_downtimes:
 #   - start: "01 19 * * *"
 #     end: "00 07 * * *"
 netdata_notification_downtimes: []
-# enable/disable alarm notifications (yes/no)
+# enable/disable health notifications (yes/no)
 netdata_enable_health_notifications: yes
 # firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
@@ -1635,7 +1642,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "28.0.14"
+nextcloud_version: "29.0.12"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1866,7 +1873,7 @@ self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.7.1"
+self_service_password_version: "1.7.2"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
@@ -1896,7 +1903,7 @@ self_service_password_php_upload_max_filesize: '2M'
 # Fully Qualified Domain Name for the owncast instance
 owncast_fqdn: "owncast.CHANGEME.org"
 # the owncast OCI image to pull (https://github.com/owncast/owncast/releases.atom)
-owncast_image: "docker.io/owncast/owncast:0.1.3"
+owncast_image: "docker.io/owncast/owncast:0.2.1"
 # password to access the admin interfaces at /admin (username admin)
 owncast_admin_password: "CHANGEME"
 # HTTPS and SSL/TLS certificate mode for the owncast webserver virtualhost
@@ -1915,6 +1922,11 @@ owncast_firewalld_zones:
 # list of IP addresses allowed to access the owncast web interface (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 owncast_allowed_hosts: []
+# enable HTTP basic authentication to access the web interface (yes/no)
+owncast_auth_enabled: no
+# if HTTP basic authentication is enabled, username and password for viewers
+owncast_auth_username: CHANGEME
+owncast_auth_password: CHANGEME
 ```
 
 
@@ -2164,7 +2176,7 @@ shaarli_enable_service: yes
 # Fully Qualified Domain Name for the stirlingpdf instance
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
 # the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
-stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:0.36.6"
+stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:0.43.2"
 # HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
