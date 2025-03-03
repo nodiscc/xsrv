@@ -94,7 +94,3 @@ owncast_admin_password: "{{ xsrv_admin_password }}"
 
 ##### SEARXNG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml
 searxng_secret: "CHANGEME64"
-
-#### OLLAMA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
-ollama_username: "{{ xsrv_admin_username }}"
-ollama_password: "{{ xsrv_admin_password }}"

@@ -67,8 +67,6 @@ apache_reverseproxies:
 goaccess_fqdn: "goaccess.example.test"
 ##### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
 owncast_fqdn: "livestream.example.test"
-##### OLLAMA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
-ollama_ui_fqdn: "llm.example.test"
 ##### STIRLING PDF - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/stirlingpdf/defaults/main.yml
 stirlingpdf_fqdn: "pdf.example.test"
 ##### MOODIST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml
