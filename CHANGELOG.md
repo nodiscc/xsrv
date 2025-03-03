@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v1.28.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.28.0) - UNRELEASED
+
+**Upgrade procedure:**
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv deploy` to apply changes
+
+**Changed:**
+- shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
+
+[Full changes since v1.27.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.27.0...1.28.0)
+
+------------------
+
+
 #### [v1.27.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.27.0) - 2025-03-02
 
 **Upgrade procedure:**
