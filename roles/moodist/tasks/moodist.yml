@@ -43,6 +43,17 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: moodist_enable_service | bool
 
+- name: configure nightly cleanup of unused podman data
+  cron:
+    user: moodist
+    cron_file: moodist-podman-system-prune
+    name: "cleanup unused podman data"
+    minute: "40"
+    hour: "03"
+    day: "*"
+    job: podman system prune --all --force | logger -t moodist-podman-system-prune
+
+
 ##### SERVICE #####
 
 - name: generate systemd unit file for moodist container

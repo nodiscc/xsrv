@@ -60,6 +60,16 @@
       - "/var/lib/owncast/data:/app/data"
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: configure nightly cleanup of unused podman data
+  cron:
+    user: owncast
+    cron_file: owncast-podman-system-prune
+    name: "cleanup unused podman data"
+    minute: "50"
+    hour: "03"
+    day: "*"
+    job: podman system prune --all --force | logger -t owncast-podman-system-prune
+
 - name: generate systemd unit file for owncast container
   become: yes
   become_user: owncast

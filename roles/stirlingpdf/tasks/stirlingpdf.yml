@@ -70,6 +70,16 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: stirlingpdf_enable_service | bool
 
+- name: configure nightly cleanup of unused podman data
+  cron:
+    user: stirlingpdf
+    cron_file: stirlingpdf-podman-system-prune
+    name: "cleanup unused podman data"
+    minute: "55"
+    hour: "03"
+    day: "*"
+    job: podman system prune --all --force | logger -t stirlingpdf-podman-system-prune
+
 - name: generate systemd unit file for stirlingpdf container
   become: yes
   become_user: stirlingpdf

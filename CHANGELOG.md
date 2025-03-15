@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 - **ollama:** if you want to keep using the [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/ollama) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.ollama`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 
+**Added:**
+- moodist/owncast/searxng/stirlingpdf: automatically remove unused podman images/containers, nightly (conserve disk space)
+
 **Changed:**
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
 - nextcloud: update to v29.0.13 [[1]](https://github.com/nextcloud/server/releases/tag/v29.0.13)

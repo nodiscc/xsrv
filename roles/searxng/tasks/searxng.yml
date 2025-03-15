@@ -74,6 +74,16 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: searxng_enable_service | bool
 
+- name: configure nightly cleanup of unused podman data
+  cron:
+    user: searxng
+    cron_file: searxng-podman-system-prune
+    name: "cleanup unused podman data"
+    minute: "25"
+    hour: "03"
+    day: "*"
+    job: podman system prune --all --force | logger -t searxng-podman-system-prune
+
 ##### SERVICE #####
 
 - name: generate systemd unit file for searxng container
