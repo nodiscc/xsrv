@@ -75,6 +75,7 @@
   when: searxng_enable_service | bool
 
 - name: configure nightly cleanup of unused podman data
+  become: yes
   cron:
     user: searxng
     cron_file: searxng-podman-system-prune

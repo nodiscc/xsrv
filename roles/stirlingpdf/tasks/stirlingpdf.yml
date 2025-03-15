@@ -71,6 +71,7 @@
   when: stirlingpdf_enable_service | bool
 
 - name: configure nightly cleanup of unused podman data
+  become: yes
   cron:
     user: stirlingpdf
     cron_file: stirlingpdf-podman-system-prune

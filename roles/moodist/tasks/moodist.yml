@@ -44,6 +44,7 @@
   when: moodist_enable_service | bool
 
 - name: configure nightly cleanup of unused podman data
+  become: yes
   cron:
     user: moodist
     cron_file: moodist-podman-system-prune

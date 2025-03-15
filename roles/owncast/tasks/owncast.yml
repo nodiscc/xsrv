@@ -61,6 +61,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure nightly cleanup of unused podman data
+  become: yes
   cron:
     user: owncast
     cron_file: owncast-podman-system-prune
