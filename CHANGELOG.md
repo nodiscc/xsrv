@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
+- nextcloud: update to v29.0.13 [[1]](https://github.com/nextcloud/server/releases/tag/v29.0.13)
 - postgresql: update pgmetrics to v1.17.1 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1)
 - stirlingpdf: update to v0.44.2 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.2)
 - xsrv: update trivy security scanner to v0.60.0 [[1]](https://github.com/aquasecurity/trivy/releases/tag/v0.60.0)
