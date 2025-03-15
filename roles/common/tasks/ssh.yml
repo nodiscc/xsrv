@@ -87,6 +87,18 @@
     owner: root
     group: root
 
+- name: enable ssh systemd service
+  systemd:
+    name: ssh.service
+    state: started
+    enabled: yes
+
+- name: disable ssh systemd service socket activation
+  systemd:
+    name: ssh.socket
+    state: stopped
+    enabled: no
+
 ##### FACTS #####
 
 - name: create ansible facts.d directory
