@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
-- nextcloud: update to v29.0.13 [[1]](https://github.com/nextcloud/server/releases/tag/v29.0.13)
+- nextcloud: update to v29.0.14 [[1]](https://nextcloud.com/changelog/#latest29)
 - gitea: update to v1.23.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.5)
 - postgresql: update pgmetrics to v1.17.1 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1)
 - stirlingpdf: update to v0.44.2 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.2)
