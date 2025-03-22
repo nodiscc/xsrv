@@ -27,6 +27,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository. It might be re-introduced later. The role was hard to test and maintain properly since it requires significant hardware resources.
 
+**Fixed:**
+- matrix: update APT repository signing key (the previous key has expired)
+
 [Full changes since v1.27.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.27.0...1.28.0)
 
 ------------------
