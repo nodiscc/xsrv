@@ -1,0 +1,16 @@
+- name: reload systemd unit files (it-tools)
+  become: yes
+  become_user: it-tools
+  systemd:
+    daemon_reload: yes
+    scope: user
+
+- name: restart it-tools service
+  become: yes
+  become_user: it-tools
+  retries: 3
+  systemd:
+    name: container-it-tools.service
+    scope: user
+    state: restarted
+  when: it_tools_enable_service | bool

@@ -1,0 +1,23 @@
+# @tag it_tools - setup it-tools online utilities
+
+galaxy_info:
+  role_name: it_tools
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "Collection of handy online tools for developers"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - podman
+    - tools
+    - utilities
+    - development
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration
+  # - nodiscc.xsrv.podman # required
