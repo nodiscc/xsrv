@@ -1,0 +1,10 @@
+# Fully Qualified Domain Name for the it-tools instance
+it_tools_fqdn: "it-tools.CHANGEME.org"
+# the it-tools OCI image to pull
+it_tools_image: "docker.io/corentinth/it-tools:latest"
+# HTTPS and SSL/TLS certificate mode for the it-tools webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+it_tools_https_mode: "selfsigned"
+# start/stop the it-tools service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+it_tools_enable_service: yes

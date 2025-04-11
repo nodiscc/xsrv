@@ -1,0 +1,35 @@
+- name: import variable check tasks
+  import_tasks: checks.yml
+  tags:
+    - checks
+    - it-tools
+
+- name: include it-tools configuration tasks
+  import_tasks: it-tools.yml
+  tags: it-tools
+
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - apache
+    - ssl
+    - it-tools
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - it-tools
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: it-tools

@@ -1,0 +1,10 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/it_tools"
+  loop:
+    - it_tools_fqdn is not search('CHANGEME')
+    - it_tools_image is string
+    - it_tools_enable_service == it_tools_enable_service | bool
+    - it_tools_https_mode in ['selfsigned', 'letsencrypt']
