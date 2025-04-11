@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to v11.4.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - xsrv: update trivy security scanner to v0.61.0 [[1]](https://github.com/aquasecurity/trivy/releases/tag/v0.60.0) [[2]](https://github.com/aquasecurity/trivy/releases/tag/v0.61.0)
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
+- common: ensure cron is installed
 
 **Removed:**
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository. It might be re-introduced later. The role was hard to test and maintain properly since it requires significant hardware resources.
