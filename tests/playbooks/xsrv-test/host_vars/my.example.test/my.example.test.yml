@@ -77,3 +77,5 @@ grafana_fqdn: "grafana.example.test"
 llamacpp_enable_service: false
 ##### MONITORING.VICTORIAMETRICS - https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
 victoriametrics_alertmanager_smtp_host: "smtp.example.test"
+##### IT-TOOLS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/it_tools/defaults/main.yml
+it_tools_fqdn: "it-tools.example.test"

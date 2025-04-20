@@ -35,5 +35,6 @@
     - nodiscc.xsrv.stirlingpdf # PDF manipulation tools
     - nodiscc.xsrv.moodist # ambient sound mixer
     - nodiscc.xsrv.kiwix # offline wiki viewer
+    - nodiscc.xsrv.it_tools # online tools for developers
     - nodiscc.xsrv.homepage # simple webserver homepage
     - nodiscc.xsrv.llamacpp # local LLM service
