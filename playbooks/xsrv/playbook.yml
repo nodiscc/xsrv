@@ -29,4 +29,5 @@
     # - nodiscc.xsrv.owncast # live video streaming and chat server
     # - nodiscc.xsrv.searxng # metasearch engine
     # - nodiscc.xsrv.stirlingpdf # PDF manipulation tools
+    # - nodiscc.xsrv.it_tools # online tools for developers
     # - nodiscc.xsrv.homepage # simple webserver homepage

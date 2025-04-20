@@ -71,5 +71,7 @@ owncast_fqdn: "livestream.example.test"
 stirlingpdf_fqdn: "pdf.example.test"
 ##### MOODIST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml
 moodist_fqdn: "moodist.example.test"
+##### IT-TOOLS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/it_tools/defaults/main.yml
+it_tools_fqdn: "it-tools.example.test"
 ##### SEARXNG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml
 searxng_fqdn: "search.example.test"
