@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - openldap: upgrade self-service-password to [v1.7.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.3)
 - xsrv: update ansible to v11.4.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - xsrv: update trivy security scanner to v0.61.0 [[1]](https://github.com/aquasecurity/trivy/releases/tag/v0.60.0) [[2]](https://github.com/aquasecurity/trivy/releases/tag/v0.61.0)
+- goaccess: update IP to Country GeoIP database to v2025-02
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 
