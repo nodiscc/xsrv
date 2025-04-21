@@ -7,6 +7,13 @@
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   notify: reload apache
 
+- name: install requirements for ansible htpasswd module
+  apt:
+    package:
+      - python3-passlib
+      - python3-bcrypt
+    state: present
+
 - name: create apache HTTP basic auth password file
   htpasswd:
     path: /etc/apache2/searxng-passwd
