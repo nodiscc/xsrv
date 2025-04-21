@@ -1,0 +1,12 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix"
+  loop:
+    - kiwix_backup_data == kiwix_backup_data | bool
+    - kiwix_fqdn is not search('CHANGEME')
+    - kiwix_enable_service ==  kiwix_enable_service | bool
+    - kiwix_allowed_hosts | type_debug == 'list'
+    - kiwix_https_mode in ['letsencrypt', 'selfsigned']
+    - kiwix_backup_data == kiwix_backup_data | bool

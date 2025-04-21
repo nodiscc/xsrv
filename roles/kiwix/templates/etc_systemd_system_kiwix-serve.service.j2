@@ -1,0 +1,19 @@
+# Systemd unit file for kiwix-serve
+[Unit]
+Description=kiwix wiki server
+After=syslog.target
+After=network.target
+StartLimitIntervalSec=10s
+StartLimitBurst=4
+
+[Service]
+RestartSec=2s
+Type=simple
+User=kiwix
+Group=kiwix
+WorkingDirectory=/var/lib/kiwix
+ExecStart=/usr/bin/kiwix-serve --address 127.0.0.1 --port 8093 --monitorLibrary --library /var/lib/kiwix/library.xml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

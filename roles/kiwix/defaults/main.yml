@@ -1,0 +1,26 @@
+##### KIWIX WIKI SERVER #####
+# fully qualified domain name of the kiwix server instance
+kiwix_fqdn: kiwix.CHANGEME.org
+# list of kiwix zim file URLs to to download and serve
+# See https://library.kiwix.org/# for a list of all available wikis
+# Examples:
+# kiwix_zim_urls:
+# - https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_maxi_2024-01.zim # 109GB, full english wikipedia
+# - https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_nopic_2024-06.zim # english wikipedia without pictures
+# - https://download.kiwix.org/zim/wikipedia/wikipedia_fr_all_maxi_2024-05.zim # 37GB, full french wikipedia
+# - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB, french wikipedia without pictures
+# - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2021-03.zim #116MB, rationalwiki.org
+kiwix_zim_urls:
+  - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2021-03.zim #116MB
+  - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB
+# yes/no: enable/disable kiwix server service, start it at boot
+kiwix_enable_service: yes
+# list of IP addresses allowed to access the kiwix web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+kiwix_allowed_hosts: []
+# HTTPS and SSL/TLS certificate mode for the kiwix webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+kiwix_https_mode: selfsigned
+# include kiwix data files in backups (when the nodiscc.xsrv.backup role is managed by ansible) (yes/no)
+kiwix_backup_data: no

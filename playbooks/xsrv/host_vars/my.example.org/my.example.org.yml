@@ -83,3 +83,6 @@ stirlingpdf_fqdn: "pdf.CHANGEME.org"
 
 ##### MOODIST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml
 moodist_fqdn: "moodist.CHANGEME.org"
+
+##### KIWIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/kiwix/defaults/main.yml
+kiwix_fqdn: "kiwix.CHANGEME.org"

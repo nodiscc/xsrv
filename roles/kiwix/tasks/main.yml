@@ -1,0 +1,66 @@
+- name: include variable checks tasks
+  import_tasks: checks.yml
+  tags:
+    - kiwix
+    - checks
+
+- name: include self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - kiwix
+    - ssl
+    - apache
+  when:
+    - kiwix_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include kiwix configuration tasks
+  import_tasks: kiwix.yml
+  become: yes
+  tags:
+    - kiwix
+
+- name: include apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - kiwix
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: include rsnapshot/backup configuration tasks
+  import_tasks: backups.yml
+  become: yes
+  tags:
+    - kiwix
+    - backup
+  when:
+    - ansible_local.backup.ansible_managed is defined
+    - ansible_local.backup.ansible_managed | bool
+
+- name: include netdata configuration tasks
+  import_tasks: netdata.yml
+  become: yes
+  tags:
+    - kiwix
+    - monitoring
+    - netdata
+  when:
+    - ansible_local.netdata.ansible_managed is defined
+    - ansible_local.netdata.ansible_managed | bool
+
+- name: include ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: kiwix
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - kiwix
+    - monitoring
+    - fail2ban

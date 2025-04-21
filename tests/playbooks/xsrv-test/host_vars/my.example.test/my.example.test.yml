@@ -73,3 +73,5 @@ stirlingpdf_fqdn: "pdf.example.test"
 moodist_fqdn: "moodist.example.test"
 ##### SEARXNG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml
 searxng_fqdn: "search.example.test"
+##### KIWIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/kiwix/defaults/main.yml
+kiwix_fqdn: "kiwix.example.test"

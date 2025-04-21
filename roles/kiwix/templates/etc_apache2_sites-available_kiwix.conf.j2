@@ -1,0 +1,38 @@
+<VirtualHost *:80>
+    ServerName {{ kiwix_fqdn }}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+{% if kiwix_https_mode == 'letsencrypt' %}
+MDomain {{ kiwix_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ kiwix_fqdn }}
+  SSLEngine on
+{% if kiwix_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ kiwix_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ kiwix_fqdn }}.key
+{% endif %}
+{% if not kiwix_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+  ProxyPreserveHost On
+  ProxyRequests off
+  AllowEncodedSlashes NoDecode
+  ProxyPass / http://127.0.0.1:8093/ nocanon
+  ProxyPassReverse / http://127.0.0.1:8093/
+{% endif %}
+{% if kiwix_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ kiwix_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
+</VirtualHost>

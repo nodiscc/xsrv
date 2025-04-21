@@ -32,4 +32,5 @@
     - nodiscc.xsrv.searxng # metasearch engine
     - nodiscc.xsrv.stirlingpdf # PDM manipulation tools
     - nodiscc.xsrv.moodist # ambient sound mixer
+    - nodiscc.xsrv.kiwix # offline wiki viewer
     - nodiscc.xsrv.homepage # simple webserver homepage

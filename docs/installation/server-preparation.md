@@ -89,6 +89,7 @@ livestream.CHANGEME.org # owncast
 search.CHANGEME.org # owncast
 pdf.CHANGEME.org # stirlingpdf
 moodist.CHANGEME.org # moodist
+kiwix.CHANGEME.org # kiwix
 ```
 
 ### External SMTP server

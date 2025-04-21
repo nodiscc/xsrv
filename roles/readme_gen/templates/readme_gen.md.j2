@@ -52,6 +52,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['moodist']['fqdn'] is defined %}
 - Moodist: https://{{ hostvars[item]['ansible_facts']['ansible_local']['moodist']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['kiwix']['fqdn'] is defined %}
+- Kiwix: https://{{ hostvars[item]['ansible_facts']['ansible_local']['kiwix']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] is defined %}
 - LDAP Account Manager: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] }}
 {% endif %}
