@@ -7,6 +7,18 @@
     creates: "/etc/apache2/mods-enabled/{{ item }}.load"
   notify: reload apache
 
+- name: create apache HTTP basic auth password file
+  htpasswd:
+    path: /etc/apache2/searxng-passwd
+    name: "{{ searxng_auth_username }}"
+    password: "{{ searxng_auth_password }}"
+    owner: root
+    group: www-data
+    mode: "0640"
+  notify: reload apache
+  when: searxng_auth_enabled | bool
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_searxng.conf.j2

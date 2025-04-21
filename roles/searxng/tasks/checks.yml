@@ -11,3 +11,13 @@
     - searxng_https_mode in ['selfsigned', 'letsencrypt']
     - searxng_image_proxy == searxng_image_proxy | bool
     - searxng_image is string
+    - searxng_auth_enabled == searxng_auth_enabled | bool
+
+- name: check that variables are correctly defined (searxng_auth_username/password)
+  assert:
+    quiet: yes
+    fail_msg: "searxng_auth_enabled is set, but credentials are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng"
+    that:
+      - searxng_auth_username is not search('CHANGEME')
+      - searxng_auth_password is not search('CHANGEME')
+  when: searxng_auth_enabled | bool

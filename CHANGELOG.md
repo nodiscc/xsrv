@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))
 - moodist/owncast/searxng/stirlingpdf: automatically remove unused podman images/containers, nightly (conserve disk space)
 
 **Changed:**

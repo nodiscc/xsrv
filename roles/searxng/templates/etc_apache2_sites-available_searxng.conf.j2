@@ -26,6 +26,17 @@ MDomain {{ searxng_fqdn }}
   RewriteCond %{REQUEST_URI} !=/maintenance.html
   RewriteRule ^.*$ - [R=503,L]
 {% else %}
+  <Location />
+{% if searxng_auth_enabled %}
+    AuthType Basic
+    AuthName "Authorization required"
+    AuthBasicProvider file
+    AuthUserFile /etc/apache2/searxng-passwd
+    <RequireAll>
+      Require valid-user
+    </RequireAll>
+{% endif %}
+  </Location>
   RequestHeader set X-Forwarded-Proto "https"
   ProxyPreserveHost On
   ProxyPass        / http://127.0.0.1:8091/
