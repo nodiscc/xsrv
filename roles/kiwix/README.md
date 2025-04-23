@@ -27,7 +27,7 @@ kiwix_fqdn: kiwix.CHANGEME.org
 kiwix_zim_urls:
 - https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_maxi_2024-01.zim # 109GB, full english wikipedia
 - https://download.kiwix.org/zim/wikipedia/wikipedia_fr_all_maxi_2024-05.zim # 37GB, full french wikipedia
-- https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2021-03.zim #116MB, rationalwiki.org
+- https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2021-03.zim # 116MB, rationalwiki.org
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
