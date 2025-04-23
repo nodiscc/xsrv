@@ -33,6 +33,7 @@ This project provides:
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - simple webserver homepage/dashboard
 - [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - media server
 - [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) - video conferencing solution
+- [kiwix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix) - mirror wikipedia or other wikis locally
 - [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) - virtualization toolkit
 - [mail_dovecot](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) - IMAP mailbox server
 - [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - secure instant messaging service
@@ -82,6 +83,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix)
 
 
 ## Source code

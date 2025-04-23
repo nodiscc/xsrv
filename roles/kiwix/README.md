@@ -44,6 +44,7 @@ See the included [rsnapshot configuration](templates/etc_rsnapshot.d_kiwix.conf.
 
 <!--BEGIN TAGS LIST-->
 ```
+kiwix - setup kiwix local wiki server
 ```
 <!--END TAGS LIST-->
 

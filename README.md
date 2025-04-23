@@ -33,6 +33,7 @@ This project provides:
 - [homepage](roles/homepage) - simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - media server
 - [jitsi](roles/jitsi) - video conferencing solution
+- [kiwix](roles/kiwix) - mirror wikipedia or other wikis locally
 - [libvirt](roles/libvirt) - virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [matrix](roles/matrix) - secure instant messaging service

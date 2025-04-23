@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.26.0
+  ╹ ╹┗━┛╹┗╸┗┛ v1.27.0
 [xsrv] INFO: list of tags in project xsrv-test
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
@@ -36,6 +36,7 @@ jellyfin-opensubtitles-plugin - setup jellyfin opensubtitles plugin
 jellyfin - setup jellyfin media server
 jitsi - setup jitsi videoconferencing server
 jitsi-users - setup jitsi registered users
+kiwix - setup kiwix local wiki server
 ldap-account-manager - setup LDAP account manager
 libvirt-networks - setup libvirt virtual networks
 libvirt-port-forwards - setup libvirt port forwards
