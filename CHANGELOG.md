@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Removed:**
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository. It might be re-introduced later. The role was hard to test and maintain properly since it requires significant hardware resources.
+- monitoring_rsyslog: ensure logrotate is installed
 
 **Fixed:**
 - matrix: update APT repository signing key (the previous key has expired)

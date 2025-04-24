@@ -4,6 +4,7 @@
     package:
       - rsyslog
       - rsyslog-gnutls # TLS forwarding support
+      - logrotate
 
 - name: set retention/rotation policy for rsyslog logs
   template:
