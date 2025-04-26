@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
-- nextcloud: update to v29.0.14 [[1]](https://nextcloud.com/changelog/#latest29)
+- nextcloud: update to v29.0.16 [[1]](https://nextcloud.com/changelog/#latest29)
 - gitea: update to v1.23.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.5) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.6) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.7)
 - postgresql: update pgmetrics to v1.17.1 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1)
 - stirlingpdf: update to v0.45.6 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.2) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.3) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.1) [[7]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.2) [[8]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.3) [[9]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.4) [[10]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.5) [[11]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.11)
