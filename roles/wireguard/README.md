@@ -41,7 +41,7 @@ Two methods are available to configure VPN clients (peers).
 
 #### Key generation on the client
 
-This method can be considered more secure since the private key never leaves the client (only the public key is transmitted to the server administrator). However it requires an additional back-and-forth between the client/server:
+This method is preferred, since the private key never leaves the client (only the public key is transmitted to the server administrator). However it requires an additional back-and-forth between the client/server:
 - generate the private/public key pair on the client. For example you could send the following text to the user of the client machine:
 
 > Please generate a public/private key:
@@ -53,7 +53,7 @@ This method can be considered more secure since the private key never leaves the
 > ```
 > Then send the public key file to the VPN server administrator, and keep `wireguard.key` somewhere safe on your machine.
 
-- configure the client in `wireguard_peers` using the `public_key` value received from the client
+- add the client to `wireguard_peers:` using the `public_key` value received from the client
 - deploy the wireguard role (`xsrv deploy`)
 - SSH to the wireguard server (`xsrv ssh`), run `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` and send the contents of this file to the client. It contains furter instructions to setup the VPN connection.
 
@@ -63,9 +63,11 @@ This method can be considered more secure since the private key never leaves the
 This method is quicker since it only requires configuring a client in `wireguard_peers` and deploying the role, without having the client generate a `public_key` beforehand:
 
 - SSH to the wireguard server (`xsrv ssh`)
-- display the configuration: `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` OR display the configuration as a QR code `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf | egrep -v '^#' | qrencode -t ansiutf8`
+- display the configuration: `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` OR display the configuration as a QR code `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.qrcode`
 - send the contents of the configuration file to the client (over a secure channel since it contains the private key) or have the client scan the QR code directly.
 
+Mobile wireguard clients:
+* [WG Tunnel](https://f-droid.org/en/packages/com.zaneschepke.wireguardautotunnel/)
 
 ### Other
 
