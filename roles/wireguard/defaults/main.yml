@@ -27,6 +27,13 @@ wireguard_firewalld_zones:
   - zone: internal
     state: enabled
 
+# allow wireguard client traffic to be forwarded out these network interfaces
+# if the wireguard tunnel is used to tunnel all client traffic through the VPN, you probably want to it to flow out the default interface
+# 'interface' is the interface name, set  'state:' to 'disabled' to remove the rule (the default is state: enabled)
+wireguard_allow_forward_to_interfaces:
+  - interface: "{{ ansible_facts.default_ipv4.interface }}"
+    state: enabled
+
 # allow wireguard clients to connect to these firewalld services/ports on the host
 # in addition, the clients must have a route to the server IP in wireguard_peers.*.routes, see anotherclient example above
 # Example:
