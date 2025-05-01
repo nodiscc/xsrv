@@ -17,10 +17,10 @@
   notify: reload firewalld
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: add public interface to the public firewalld zone
+- name: add wireguard_allow_forward_to_interfaces to the public firewalld zone
   firewalld:
     zone: public
-    interface: "{{ wireguard_public_interface }}"
+    interface: "{{ wireguard_allow_forward_to_interfaces }}"
     state: enabled
     permanent: yes
   notify: reload firewalld
