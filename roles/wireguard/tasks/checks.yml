@@ -9,7 +9,7 @@
     - wireguard_peers | type_debug == 'list'
     - wireguard_firewalld_zones | type_debug == "list"
     - wireguard_firewalld_services | type_debug == "list"
-    - wireguard_allow_forward_to_interfaces | type_debug == "list"
+    - wireguard_allow_forwarding == wireguard_allow_forwarding | bool
 
 - name: check that variables are correctly defined (wireguard_peers)
   assert:
@@ -30,14 +30,4 @@
       - item.name is string
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
   loop: "{{ wireguard_firewalld_services }}"
-  tags: firewall
-
-- name: check that variables are correctly defined (wireguard_allow_forward_to_interfaces)
-  assert:
-    quiet: yes
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard"
-    that:
-      - item.interface is string
-      - (item.state is not defined) or (item.state in ['enabled','disabled'])
-  loop: "{{ wireguard_allow_forward_to_interfaces }}"
   tags: firewall
