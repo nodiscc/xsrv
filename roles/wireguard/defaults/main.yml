@@ -35,7 +35,6 @@ wireguard_allow_forward_to_interfaces:
     state: enabled
 
 # allow wireguard clients to connect to these firewalld services/ports on the host
-# in addition, the clients must have a route to the server IP in wireguard_peers.*.routes, see anotherclient example above
 # Example:
 # wireguard_firewalld_services:
 #   - name: ssh # service name
