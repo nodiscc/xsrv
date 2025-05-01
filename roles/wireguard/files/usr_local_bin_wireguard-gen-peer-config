@@ -69,3 +69,4 @@ PersistentKeepalive = 45
 "
 
 echo "$client_config" > "/etc/wireguard/peers/client-config/$peer_name.conf"
+echo "$client_config" | egrep -v '^#' | qrencode -t ansiutf8 > "/etc/wireguard/peers/client-config/$peer_name.qrcode"
