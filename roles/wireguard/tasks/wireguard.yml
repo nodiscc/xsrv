@@ -93,6 +93,7 @@
     group: root
     mode: "0755"
 
+# positional arguments: PEER_NAME PUBLIC_KEY PEER_IP_ADDRESS SERVER_PUBLIC_ADDRESS SERVER_PRIVATE_ADDRESS ROUTES
 - name: generate wireguard peers configs
   command: >
     /usr/local/bin/wireguard-gen-peer-config
@@ -101,7 +102,7 @@
     {{ item.ip_address }}
     {{ wireguard_server_public_ip }}
     {{ wireguard_server_ip | ansible.utils.ipaddr('address') }}
-    {{ item.routes | default('0.0.0.0/0') }}"
+    {{ item.routes | default('0.0.0.0/0') }}
   when: (item.state is not defined) or (item.state == 'present')
   loop: "{{ wireguard_peers }}"
   register: wg_gen_config
