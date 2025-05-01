@@ -47,4 +47,7 @@ wireguard_allow_forward_to_interfaces:
 #   - name: netdata
 #   - name: imaps
 #     state: disabled
-wireguard_firewalld_services: []
+wireguard_firewalld_services:
+  - name: dns
+    state: enabled
+
