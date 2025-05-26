@@ -27,7 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update synapse-admin to v0.11.0 [[1]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.11.0) [[2]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.10.4)
 - openldap: update ldap-account-manager to v9.1 [[1]](https://github.com/LDAPAccountManager/lam/releases/tag/9.0) [[2]](https://github.com/LDAPAccountManager/lam/releases/tag/9.1)
 - openldap: upgrade self-service-password to [v1.7.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.3)
-- xsrv: update ansible to v11.5.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
+- xsrv: update ansible to v11.6.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - xsrv: update trivy security scanner to v0.62.1 [[1]](https://github.com/aquasecurity/trivy/releases/tag/v0.61.1) [[2]](https://github.com/aquasecurity/trivy/releases/tag/v0.62.1)
 - goaccess: update IP to Country GeoIP database to v2025-02
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
