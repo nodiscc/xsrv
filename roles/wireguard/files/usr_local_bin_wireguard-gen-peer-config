@@ -48,7 +48,7 @@ if [[ ! "$peer_config_hash_before" == "$peer_config_hash_after" ]]; then
 fi
 
 ##### CLIENT CONFIG GENERATION ####
-
+# shellcheck disable=SC2001
 allowed_ips_with_space=$(echo "$allowed_ips" | sed 's/,/, /g')
 
 client_config="
@@ -71,4 +71,4 @@ PersistentKeepalive = 45
 "
 
 echo "$client_config" > "/etc/wireguard/peers/client-config/$peer_name.conf"
-echo "$client_config" | egrep -v '^#' | qrencode -t ansiutf8 > "/etc/wireguard/peers/client-config/$peer_name.qrcode"
+echo "$client_config" | grep -E -v '^#' | qrencode -t ansiutf8 > "/etc/wireguard/peers/client-config/$peer_name.qrcode"
