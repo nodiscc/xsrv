@@ -53,4 +53,3 @@ wireguard_allow_forwarding: yes
 wireguard_firewalld_services:
   - name: dns
     state: enabled
-
