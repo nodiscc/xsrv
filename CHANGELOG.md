@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv deploy` to apply changes
 - you can remove the `data/wireguard/` directory from your project directory since it is no longer used
 - **ollama:** if you want to keep using the [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/ollama) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.ollama`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
+- wireguard:if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
+
+```diff
+-#     routes: "1.2.3.4/32, 192.168.18.0/24"
++#     routes:
++#       - 1.2.3.4/32
++#       - 192.168.18.0/24
+```
 
 **Added:**
 - add [`kiwix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix) role (offline viewer for Wikipedia and other wikis)

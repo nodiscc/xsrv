@@ -49,6 +49,8 @@ fi
 
 ##### CLIENT CONFIG GENERATION ####
 
+allowed_ips_with_space=$(echo "$allowed_ips" | sed 's/,/, /g')
+
 client_config="
 # Wireguard VPN client configuration file
 # To setup your wireguard client:
@@ -64,7 +66,7 @@ DNS = $server_private_ip
 [Peer]
 PublicKey = $server_public_key
 Endpoint = $server_public_ip:51820
-AllowedIPs = $allowed_ips
+AllowedIPs = $allowed_ips_with_space
 PersistentKeepalive = 45
 "
 

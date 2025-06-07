@@ -13,9 +13,17 @@ wireguard_enable_service: yes
 #   - name: client1 # arbitrary name for the peer
 #     state: present # (optional, present/absent, default present) set to absent to remove the peer and its keys)
 #     public_key: Faz...4vEQ= # (optional) public key of the peer (contents of its wireguard.pub) - if not specified a private/public key pair will be generated on the server
-#     ip_address: "10.200.200.10" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
-#     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/networks to route through the VPN on the client
+#     ip_address: 10.200.200.10 # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
+#     routes: # (optional, default 0.0.0.0/0 - route all traffic through the VPN) list of IP addresses/networks to route through the VPN on the client
+#       - 1.2.3.4/32
+#       - 192.168.18.0/24
 #   - name: client2
+#     state: present
+#     ip_address: 10.200.200.11
+#     routes:
+#       - 10.200.200.1/32 # required for wireguard client/server traffic
+#       - 10.0.10.1/24 # example, only route traffic to the server's local network through the VPN
+#   - name: client3
 #     state: absent
 wireguard_peers: []
 

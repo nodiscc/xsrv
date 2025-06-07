@@ -102,7 +102,7 @@
     {{ item.ip_address }}
     {{ wireguard_server_public_ip }}
     {{ wireguard_server_ip | ansible.utils.ipaddr('address') }}
-    {{ item.routes | default('0.0.0.0/0') }}
+    {{ item.routes | join(',') | default('0.0.0.0/0') }}
   when: (item.state is not defined) or (item.state == 'present')
   loop: "{{ wireguard_peers }}"
   register: wg_gen_config
