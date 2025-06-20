@@ -52,7 +52,7 @@ wireguard_peers:
     ip_address: 10.200.200.55
     routes:
       - 10.200.200.1/32
-      - 10.0.10.101/32"
+      - 10.0.10.101/32
   - name: client2
     ip_address: 10.200.200.56
   - name: test
