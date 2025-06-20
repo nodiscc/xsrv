@@ -32,7 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
-- nextcloud: update to v29.0.16 [[1]](https://nextcloud.com/changelog/#latest29)
+- nextcloud: update to 30.0.12 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/)
 - gitea: update to v1.23.8 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.5) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.6) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.7) [[4]((https://github.com/go-gitea/gitea/releases/tag/v1.23.8)
 - owncast: update to v0.2.3 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.2) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.3)
 - postgresql: update pgmetrics to v1.17.1 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1)
