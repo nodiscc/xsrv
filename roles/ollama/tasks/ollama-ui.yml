@@ -1,0 +1,39 @@
+- name: create ollama-ui base directory
+  file:
+    state: directory
+    path: /var/lib/ollama-ui
+    owner: root
+    group: ollama
+    mode: "0775"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: clone ollama-ui git repository
+  become: yes
+  become_user: ollama
+  git:
+    repo: https://github.com/ollama-ui/ollama-ui
+    dest: /var/lib/ollama-ui/web
+    version: ada8d50707fd704528ead13e87d1ec05fdd97492
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create systemd unit file
+  template:
+    src: etc_systemd_system_ollama-ui.service.j2
+    dest: /etc/systemd/system/ollama-ui.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart ollama-ui
+
+# load systemd unit file if changed
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable/disable start/stop ollama-ui service
+  systemd:
+    name: ollama-ui
+    enabled: "{{ ollama_enable_service }}"
+    state: "{{ 'started' if ollama_enable_service else 'stopped' }}"
+  ignore_errors: "{{ ansible_check_mode }}"

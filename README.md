@@ -46,6 +46,7 @@ This project provides:
 - [mumble](roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [nmap](roles/nmap) - automated network scanning for ansible-based projects
+- [ollama](roles/ollama) - Large Language Model (LLM) runner
 - [openldap](roles/openldap) - LDAP directory server and web management tools
 - [owncast](roles/owncast) - live video streaming and chat server
 - [podman](roles/podman) - OCI container engine and management tools
@@ -84,6 +85,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](roles/stirlingpdf)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](roles/moodist)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](roles/kiwix)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ollama-ui-thumb.png)](roles/ollama)
 
 
 ## Source code

@@ -30,7 +30,8 @@
     #- nodiscc.xsrv.graylog # log management, capture and analysis platform
     - nodiscc.xsrv.owncast # live video streaming and chat server
     - nodiscc.xsrv.searxng # metasearch engine
-    - nodiscc.xsrv.stirlingpdf # PDM manipulation tools
+    - nodiscc.xsrv.stirlingpdf # PDF manipulation tools
     - nodiscc.xsrv.moodist # ambient sound mixer
     - nodiscc.xsrv.kiwix # offline wiki viewer
+    - nodiscc.xsrv.ollama # Large Language Model (LLM) runner
     - nodiscc.xsrv.homepage # simple webserver homepage

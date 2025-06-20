@@ -1,0 +1,38 @@
+[Unit]
+Description=Ollama Web interface
+After=syslog.target
+After=network.target
+
+[Service]
+User=ollama
+Group=ollama
+Type=simple
+WorkingDirectory=/var/lib/ollama-ui/web/
+ExecStart=/usr/bin/python3 -m http.server 8079 --bind 127.0.0.1
+# Hardening directives
+CapabilityBoundingSet=
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateMounts=yes
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectClock=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectProc=invisible
+ProtectSystem=strict
+ReadWritePaths=/dev/null
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
+
+[Install]
+WantedBy=multi-user.target

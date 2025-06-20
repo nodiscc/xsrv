@@ -9,7 +9,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 - you can remove the `data/wireguard/` directory from your project directory since it is no longer used
-- **ollama:** if you want to keep using the [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/ollama) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.ollama`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 - wireguard:if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
 
 ```diff
@@ -37,6 +36,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - owncast: update to v0.2.3 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.2) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.3)
 - postgresql: update pgmetrics to v1.17.1 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1)
 - stirlingpdf: update to v0.46.2 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.2) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.3) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.1) [[7]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.2) [[8]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.3) [[9]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.4) [[10]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.5) [[11]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.11) [[12]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.46.0) [[13]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.46.1) [[14]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.46.2)
+- ollama: upgrade ollama to [v0.9.0](https://github.com/ollama/ollama/releases)
+- ollama: pull and `gemma3` 4B model by default
+- ollama: disable installation of ollama-ui web interface by default
 - matrix: update element-web to v1.11.101 [[1]](https://github.com/element-hq/element-web/releases/tag/v1.11.95) [[2]](https://github.com/element-hq/element-web/releases/tag/v1.11.96) [[3](-) [[4]](https://github.com/element-hq/element-web/releases/tag/v1.11.98) [[5]](https://github.com/element-hq/element-web/releases/tag/v1.11.99) [[6]](https://github.com/element-hq/element-web/releases/tag/v1.11.100) [[7]](https://github.com/element-hq/element-web/releases/tag/v1.11.101)
 - matrix: update synapse-admin to v0.11.0 [[1]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.11.0) [[2]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.10.4)
 - openldap: update ldap-account-manager to v9.1 [[1]](https://github.com/LDAPAccountManager/lam/releases/tag/9.0) [[2]](https://github.com/LDAPAccountManager/lam/releases/tag/9.1)
@@ -49,7 +51,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Removed:**
-- ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository. It might be re-introduced later. The role was hard to test and maintain properly since it requires significant hardware resources.
 - monitoring_rsyslog: ensure logrotate is installed
 
 **Fixed:**
