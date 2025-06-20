@@ -50,7 +50,11 @@ wireguard_peers:
   - name: client1
     public_key: "/s4v5fsncMYyvLwfPihTBsrqJm7nDn1SCiCKqqmrZGg="
     ip_address: 10.200.200.55
-    routes: "10.200.200.1/32, 10.0.10.101/32"
+    routes:
+      - 10.200.200.1/32
+      - 10.0.10.101/32"
+  - name: client2
+    ip_address: 10.200.200.56
   - name: test
     state: absent
 ##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
