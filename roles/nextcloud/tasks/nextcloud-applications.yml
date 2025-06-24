@@ -22,6 +22,7 @@
     - (nextcloud_app_install.rc !=0)
     - (not 'not compatible with this version of the server' in nextcloud_app_install.stderr)
     - (not 'already installed' in nextcloud_app_install.stdout)
+    - (not 'Could not download app' in nextcloud_app_install.stderr)
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable/disable nextcloud applications
