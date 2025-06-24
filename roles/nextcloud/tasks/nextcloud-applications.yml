@@ -17,12 +17,12 @@
   with_items: "{{ nextcloud_apps }}"
   register: nextcloud_app_install
   when: 'item.state == "enable"'
-  changed_when: not 'already installed' in nextcloud_app_install.stdout
+  changed_when: (not 'already installed' in nextcloud_app_install.stdout) or (not 'Could not download app' in nextcloud_app_install.stdout)
   failed_when:
     - (nextcloud_app_install.rc !=0)
     - (not 'not compatible with this version of the server' in nextcloud_app_install.stderr)
     - (not 'already installed' in nextcloud_app_install.stdout)
-    - (not 'Could not download app' in nextcloud_app_install.stderr)
+    - (not 'Could not download app' in nextcloud_app_install.stdout)
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: enable/disable nextcloud applications
