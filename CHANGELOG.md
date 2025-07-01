@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - ollama: upgrade ollama to [v0.9.0](https://github.com/ollama/ollama/releases)
 - ollama: pull and `gemma3` 4B model by default
 - ollama: disable installation of ollama-ui web interface by default
+- searxng: allow returning results as JSON (add `&format=json` to URL parameters)
 - matrix: update element-web to v1.11.101 [[1]](https://github.com/element-hq/element-web/releases/tag/v1.11.95) [[2]](https://github.com/element-hq/element-web/releases/tag/v1.11.96) [[3](-) [[4]](https://github.com/element-hq/element-web/releases/tag/v1.11.98) [[5]](https://github.com/element-hq/element-web/releases/tag/v1.11.99) [[6]](https://github.com/element-hq/element-web/releases/tag/v1.11.100) [[7]](https://github.com/element-hq/element-web/releases/tag/v1.11.101)
 - matrix: update synapse-admin to v0.11.0 [[1]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.11.0) [[2]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.10.4)
 - openldap: update ldap-account-manager to v9.1 [[1]](https://github.com/LDAPAccountManager/lam/releases/tag/9.0) [[2]](https://github.com/LDAPAccountManager/lam/releases/tag/9.1)
