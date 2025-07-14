@@ -130,17 +130,6 @@
   ignore_errors: "{{ ansible_check_mode }}"
   notify: restart jitsi
 
-- name: configure jitsi-videobridge prosody password
-  lineinfile:
-    path: /etc/jitsi/videobridge/sip-communicator.properties
-    regexp: '^org.jitsi.videobridge.xmpp.user.shard.PASSWORD'
-    line: 'org.jitsi.videobridge.xmpp.user.shard.PASSWORD={{ jitsi_jvb_prosody_password }}'
-    owner: jvb
-    group: jitsi
-    mode: "0644"
-  ignore_errors: "{{ ansible_check_mode }}"
-  notify: restart jitsi
-
 - name: configure prosody
   template:
     src: "{{ item.src }}"
