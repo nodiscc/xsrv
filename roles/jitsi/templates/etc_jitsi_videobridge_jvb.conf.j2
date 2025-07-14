@@ -10,4 +10,26 @@ videobridge {
         domain = "{{ jitsi_fqdn }}:443"
         tls = true
     }
+    apis.xmpp-client.configs {
+        shard {
+            HOSTNAME=localhost
+            DOMAIN="auth.{{ jitsi_fqdn }}"
+            USERNAME=jvb
+            PASSWORD={{ jitsi_jvb_prosody_password }}
+            MUC_JIDS="jvbbrewery@internal.auth.{{ jitsi_fqdn }}"
+            MUC_NICKNAME=65f2bbbb-ac8a-408f-bc11-38c4ebf3ad49
+        }
+    }
+}
+ice4j {
+    harvest {
+        mapping {
+            aws {
+                enabled = false
+            }
+            stun {
+                addresses = ["meet-jit-si-turnrelay.jitsi.net:443"]
+            }
+        }
+    }
 }
