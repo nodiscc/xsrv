@@ -1,7 +1,7 @@
 - name: download ollama archive
   get_url:
     url: "https://github.com/ollama/ollama/releases/download/{{ ollama_version }}/ollama-linux-amd64.tgz"
-    dest: /root/ollama-linux-amd64.tgz
+    dest: "/root/ollama-{{ ollama_version }}-linux-amd64.tgz"
     owner: root
     group: root
     mode: "0755"
@@ -15,7 +15,7 @@
 
 - name: extract ollama archive
   unarchive:
-    src: "/root/ollama-linux-amd64.tgz"
+    src: "/root/ollama-{{ ollama_version }}-linux-amd64.tgz"
     dest: "/root/ollama-{{ ollama_version }}-unpack"
     owner: root
     group: root
@@ -31,14 +31,16 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
-    group: root
+    group: "{{ item.group }}"
     mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"
   loop:
     - src: "/root/ollama-{{ ollama_version }}-unpack/bin/ollama"
       dest: /usr/local/bin/ollama
+      group: root
     - src: "/root/ollama-{{ ollama_version }}-unpack/lib/ollama"
       dest: /usr/local/lib/
+      group: ollama
   notify: restart ollama
 
 - name: create ollama user
