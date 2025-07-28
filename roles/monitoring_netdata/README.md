@@ -53,6 +53,41 @@ CVE-2022-3099,
 To install custom `httpcheck`/`x509check`/`portcheck`/`processes` module/alarm, create relevant files in `/etc/netadata/{go,python,health}.d/$module_name.conf.d/` and notify the `assemble netadata configuration` [handler](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/handlers/main.yml) (`$module_name.conf` will be assembled from configuration fragments).
 
 
+### Uninstallation
+
+```yaml
+# .venv/bin/ansible-playbook uninstall-netdata.yml
+# uninstall-netdata.yml
+- hosts: all
+  become: true
+  tasks:
+    - name: stop netdata service
+      systemd:
+        name: netdata.service
+        state: stopped
+      register: stop_netdata
+      failed_when:
+        - stop_netdata.failed
+        - 'not "Could not find the requested service netdata.service: host" in stop_netdata.msg'
+    - name: uninstall netdata
+      apt:
+        state: absent
+        package: netdata
+        purge: true
+    - name: remove netdata configuration and data
+      file:
+        state: absent
+        path: "{{ item }}"
+      loop:
+        - /usr/libexec/netdata
+        - /var/lib/netdata
+        - /etc/netdata
+        - /etc/ansible/facts.d/netdata.fact
+        - /var/cache/netdata
+        - /usr/share/netdata
+        - /var/log/netdata
+```
+
 ## Tags
 
 <!--BEGIN TAGS LIST-->
