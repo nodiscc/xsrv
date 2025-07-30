@@ -53,6 +53,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - goaccess: update IP to Country GeoIP database to v2025-06
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
+- doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - update documentation
 
 **Removed:**
