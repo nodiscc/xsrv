@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - ollama: disable installation of ollama-ui web interface by default
 - searxng: allow returning results as JSON (add `&format=json` to URL parameters)
 - searxng: increase sepiasearch search engine weight to 2
+- searxng: increase wiby search engine weight to 1.2
 - searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 2
 - matrix: update element-web to v1.11.106 [[1]](https://github.com/element-hq/element-web/releases/tag/v1.11.95) [[2]](https://github.com/element-hq/element-web/releases/tag/v1.11.96) [[3](-) [[4]](https://github.com/element-hq/element-web/releases/tag/v1.11.98) [[5]](https://github.com/element-hq/element-web/releases/tag/v1.11.99) [[6]](https://github.com/element-hq/element-web/releases/tag/v1.11.100) [[7]](https://github.com/element-hq/element-web/releases/tag/v1.11.101) [[8]](https://github.com/element-hq/element-web/releases/tag/v1.11.102) [[9]](https://github.com/element-hq/element-web/releases/tag/v1.11.103) [[10]](https://github.com/element-hq/element-web/releases/tag/v1.11.104) [[11]](https://github.com/element-hq/element-web/releases/tag/v1.11.105) [[12]](https://github.com/element-hq/element-web/releases/tag/v1.11.106)
 - matrix: update synapse-admin to v0.11.0 [[1]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.11.0) [[2]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.10.4)
