@@ -52,14 +52,6 @@ monitoring_utils - setup command-line/additional monitoring utilities
 moodist - setup Moodist ambient sound mixer
 msmtp - setup outgoing system mail
 mumble - setup mumble voip server
-netdata-apt - setup netdata apt module
-netdata-config - copy netdata configuration files
-netdata-debsecan - setup netdata debsecan module
-netdata-downtime - configure netdata downtime/silence schedules
-netdata-logcount - setup netdata logcount module
-netdata-modules - setup custom netdata modules
-netdata-needrestart - setup netdata needrestart module
-netdata - setup netdata monitoring system
 nextcloud-applications - setup nextcloud applications
 nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
@@ -105,7 +97,6 @@ utils-firewalld-info - (manual) get firewall status informations
 utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-jitsi-listusers - (manual) list jitsi (prosody) registered users
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
-utils-netdata-test-notifications - send test netdata notification
 utils-pgmetrics - (manual) get postgresql server metrics
 utils-podman-uninstall - (manual) uninstall podman container engine
 utils-reboot - (manual) reboot the host

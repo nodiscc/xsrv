@@ -38,7 +38,6 @@ If the network interface is in a [private network](https://en.wikipedia.org/wiki
 
 ```
 SSH server:                      TCP 22
-Netdata monitoring system:       TCP 19999
 Web server:                      TCP 80/443
 BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738

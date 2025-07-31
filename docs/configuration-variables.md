@@ -29,7 +29,6 @@ apache_letsencrypt_enable_hsts: no
 #     upstream: "https://localhost:3545" # (required) the server to proxy requests to
 #     https_mode: selfsigned # (optional, selfsigned/letsencrypt, default selfsigned) mode for the auto-generated SSL certificate
 #     redirect_https: yes # (optional, yes/no, default yes) redirect HTTP requests to HTTPS
-#     monitor_http: yes # (optional, yes/no, default yes) add a netdata HTTP check for this virtualhost, if nodiscc.xsrv.monitoring_netdata is deployed
 #     extra_directives: # (optional) list of additional config directives https://httpd.apache.org/docs/current/mod/directives.html
 #       - "SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1" # allow less-secure TLS1.2 for legacy clients
 #   - servername: site2.example.org
@@ -174,7 +173,7 @@ sysctl_vm_vfs_cache_pressure: '150'
 # These are usually not needed and may contain sensitive information
 kernel_enable_core_dump: no
 # no/yes: configure /proc mountpoint to hide processes from other users
-# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, netdata...)
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, prometheus...)
 kernel_proc_hidepid: no
 # list of kernel modules to prevent from being loaded
 kernel_modules_blacklist:
@@ -224,7 +223,6 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
   - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
-  - "origin=Netdata,label=Netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
@@ -317,7 +315,6 @@ apt_listbugs_ignore_list:
   - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
   - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
   - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
-  - 1088266 # https://bugs.debian.org/1088266 - only affects the official Debian netdata package,  but we use the upsteram package
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -1303,212 +1300,6 @@ goaccess_password: "CHANGEME"
 goaccess_allowed_hosts: []
 ```
 
-
-## monitoring_netdata
-
-[roles/monitoring_netdata/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
-
-```yaml
-##### NETDATA MONITORING SYSTEM #####
-# default interval between netdata updates (in seconds)
-# each plugin/module can override this setting (but only to set a longer interval)
-netdata_update_every: 2
-# amount of memory dedicated to caching recent (tier 0) metrics (MB)
-netdata_dbengine_page_cache_size: 32
-# number of days for which to keep recent (tier 0/per-second) metrics
-netdata_dbengine_tier0_retention_days: 7
-# number of days for which to keep downsampled (tier 1/per-minute) metrics
-netdata_dbengine_tier1_retention_days: 30
-# number of days for which to keep recent (tier 2/per-hour) metrics
-netdata_dbengine_tier2_retention_days: 730
-# space-separated list of IP addresses authorized to access netdata dashboard/API/badges/streaming (wildcards accepted, CIDR notation NOT accepted)
-# this is a global setting with higher priority to any of the ones below.
-netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-# space-separated list of IP addresses authorized to access netdata dashboard/API/badges (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
-# netdata_allow_dashboard_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-# space-separated list of IP addresses authorized to stream metrics to this netdata instance (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
-# netdata_allow_streaming_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-# enable netdata cloud/SaaS features (yes/no)
-netdata_cloud_enabled: no
-# public URL and port (i.e. outside NAT) used to access netdata, used for links in mail notifications
-netdata_public_url: "https://{{ inventory_hostname }}:19999"
-# netdata plugins to disable
-netdata_disabled_plugins:
-  - ebpf
-  - coredns
-  - unbound
-  - rabbitmq
-  - mysql
-  - prometheus
-  - bind
-  - pihole
-  - k8s_kubelet
-  - pulsar
-  - solr
-  - supervisord
-  - lighttpd
-  - netdata monitoring
-  - systemd-journal
-
-##### HEALTH NOTIFICATIONS #####
-# Netdata notification downtimes (list), no notifications will be sent during these intervals
-# start/end: cron expression for downtime start/end time. Example:
-# netdata_notification_downtimes:
-#   - start: "01 19 * * *"
-#     end: "00 07 * * *"
-netdata_notification_downtimes: []
-# enable/disable health notifications (yes/no)
-netdata_enable_health_notifications: yes
-# firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
-# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
-netdata_firewalld_zones:
-  - zone: internal
-    state: enabled
-
-## NETDATA CHECKS ##
-# Process checks
-#   name: process group name to check (apps_groups.conf)
-#   min_count: minimum expected number of processes
-#   interval: time interval (seconds) between checks
-# Example:
-# netdata_process_checks:
-#   - { name: ssh, min_count: 1, interval: 20} # SSH server
-#   - { name: time, min_count: 1, interval: 20} # NTP daemon
-#   - { name: fail2ban, min_count: 1, interval: 20} # bruteforce prevention/IPS
-#   - { name: httpd, min_count: 1, interval: 20} # web server
-#   - { name: sql, min_count: 1, interval: 20} # SQL database engine
-#   - { name: gitea, min_count: 1, interval: 20} # gitea self-hosted software forge
-#   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
-#   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
-#   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
-#   - { name: auth, min_count: 1, interval: 20} # openldap server
-#   - { name: media, min_count: 1, interval: 20} # jellyfin media server
-#   - { name: samba, min_count: 2, interval: 20} # samba file sharing server (smbd+nmbd)
-netdata_process_checks: []
-# HTTP checks
-# uses the same syntax and parameters as netdata httpcheck module
-# https://learn.netdata.cloud/docs/collecting-metrics/synthetic-checks/http-endpoints
-# Example:
-# netdata_http_checks:
-#   - name: example.com
-#     url: https://website.com:444
-#     status_accepted:
-#       - 200
-#       - 401
-#     tls_skip_verify: yes
-#     timeout: 10
-#     update_every: 20
-netdata_http_checks: []
-# X509/SSL/TLS certificate checks (time to expiration, revocation status)
-# uses the same syntax and parameters as netdata x509check module
-# Port is mandatory for all non-file schemes
-# https://learn.netdata.cloud/docs/collecting-metrics/synthetic-checks/x.509-certificate
-# Example:
-# netdata_x509_checks:
-#   - name: example-org
-#     source: https://example.org:443
-#     days_until_expiration_critical: 15
-#     timeout: 3
-#     tls_skip_verify: yes
-#     update_every: 20
-netdata_x509_checks: []
-# Netdata TCP port checks
-#   name: readable name of the check
-#   host: hostname or IP address to contact
-#   ports: list of TCP port numbers to check
-#   interval: time interval (seconds) between checks
-# Example:
-# netdata_port_checks:
-#   - name: ldap-available
-#     host: 192.168.10.10
-#     ports: [389, 636]
-#     interval: 10
-#   - name: mumble
-#     host: 192.168.10.10
-#     ports: [64738]
-#     interval: 10
-netdata_port_checks: []
-# Netdata file checks
-# see https://raw.githubusercontent.com/netdata/go.d.plugin/master/config/go.d/filecheck.conf
-# Example:
-# netdata_file_checks:
-#   - name: files_example
-#     files:
-#       include:
-#         - '/path/to/file1'
-#         - '/path/to/file2'
-#   - name: dirs_example
-#     dirs:
-#       collect_dir_size: yes
-#       include:
-#         - '/path/to/dir1'
-#         - '/path/to/dir2'
-netdata_file_checks: []
-# Netdata ping checks
-# List of hosts to ping using the fping plugin
-# Example:
-# netdata_fping_hosts:
-#   - netdata.cloud
-#   - debian.org
-#   - 1.1.1.1
-netdata_fping_hosts: []
-# Delay between ping checks (ms)
-netdata_fping_ping_every: 5000
-# Delay between ping chart updates (seconds) (this shohuld be longer than netdata_fping_ping_every)
-netdata_fping_update_every: 10
-# Do not send notifications on ping check failures (yes/no)
-netdata_fping_alarms_silent: no
-
-## NETDATA STREAMING ##
-# stream charts to a "parent" netdata instance (yes/no)
-netdata_streaming_send_enabled: no
-# netdata instance to stream metrics to (protocol:hostname:port:SSL)
-netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
-# enable/disable accepting streaming from another netdata instance (yes/no)
-netdata_streaming_receive_enabled: no
-# API key (UUID) used to authenticate on the destination instance/allow from source instances
-netdata_streaming_api_key: "CHANGEME"
-# enable health alarms for charts received from "child" netdata instances (yes/no)
-# if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
-netdata_streaming_receive_alarms: no
-
-## NETDATA MODULES ##
-# setup needrestart and netdata-needrestart module (yes/no)
-setup_needrestart: yes
-# automatically restart services that require it immediately after upgrades (yes/no)
-needrestart_autorestart_services: yes
-# reboot the OS automatically if required after a Linux kernel upgrade
-# set to no to disable automatic reboot/services restart completely,
-# or use cron syntax (https://crontab.guru/) to define the schedule
-# you may want to schedule a monitoring downtime for a few minutes at the same time, see netdata_downtimes
-# Example: needrestart_autorestart_cron: "00 5 * * *" # every day at 05:00
-needrestart_autorestart_cron: no
-# setup netdata-logcount module (yes/no)
-setup_netdata_logcount: yes
-# (minutes) interval between updates of log message counts in the logcount module. Set to 0 to disable the module and cron job
-netdata_logcount_update_interval: 1
-# maximum acceptable ERROR message in logs over the last period before raising a WARNING or CRITICAL alert
-netdata_logcount_error_threshold_warn: 10
-netdata_logcount_error_threshold_crit: 100
-# maximum acceptable WARNING message in logs over the last period before raising a WARNING alert
-netdata_logcount_warning_threshold_warn: 10
-# user to send logcount notifications to (eg. sysadmin, silent...)
-netdata_logcount_notification_to: "silent"
-# setup netdata-debsecan module (yes/no)
-setup_netdata_debsecan: yes
-# enable daily mail reports from debsecan (yes/no)
-debsecan_enable_reports: yes
-# list of vulnerabilities (CVE numbers) that will be ignored by debsecan
-# Example:
-# debsecan_whitelist:
-#   - CVE-2021-20316 # not applicable, SMBv1 disabled
-debsecan_whitelist:
-  - CVE-2023-28450 # minor issue https://security-tracker.debian.org/tracker/CVE-2023-28450
-# setup monitoring of pending package upgrades (yes/no)
-setup_netdata_apt: yes
-```
-
-
 ## monitoring_rsyslog
 
 [roles/monitoring_rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)
@@ -1569,7 +1360,7 @@ lynis_skip_tests:
   - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
   - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
   - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
-  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by netdata)
+  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by prometheus)
   - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
   - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
   - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
@@ -1586,7 +1377,7 @@ lynis_skip_tests:
   - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
   - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
   - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
-  - "KRNL-5830" # let needrestart/netdata send alarms when reboot is required
+  - "KRNL-5830" # let needrestart/prometheus send alarms when reboot is required
   - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
   - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
@@ -1963,33 +1754,6 @@ postgresql_pgmetrics_version: "1.17.1"
 # the set of hosts for which documentation should be auto-generated
 # Example: readme_gen_limit: ['host1.CHANGEME.org', 'host2.CHANGEME.org']
 readme_gen_limit: "{{ groups['all'] }}"
-# list of netdata badges to display for each host
-# Example:
-# readme_gen_netdata_badges:
-#   - chart: disk_space._var # netdata chart name
-#     alarm: disk_space_usage # netdata alarm name
-#     label: /var disk space usage # (optional) badge label, if unset the default label will be used
-readme_gen_netdata_badges:
-  - chart: needrestart.status
-    alarm: needrestart_kernel
-  - chart: needrestart.status
-    alarm: needrestart_services
-  - chart: disk_space._
-    alarm: disk_space_usage
-    label: / disk space usage
-  - chart: disk_space._var
-    alarm: disk_space_usage
-    label: /var disk space usage
-  - chart: system.load
-    alarm: load_average_5
-    label: 5min load average
-  - chart: system.ram
-    alarm: ram_in_use
-  - chart: mem.swap
-    alarm: used_swap
-  - chart: apt.upgradable
-    alarm: apt_upgradable
-    label: upgradable packages
 # write GTK bookmarks to access hosts over SFTP in the output README.md (yes/no)
 readme_gen_gtk_bookmarks: no
 # path to the markdown template
@@ -2334,7 +2098,6 @@ wireguard_firewalld_zones:
 #     state: enabled
 #   - name: http
 #   - name: https
-#   - name: netdata
 #   - name: imaps
 #     state: disabled
 wireguard_firewalld_services: []

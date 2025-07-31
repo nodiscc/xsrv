@@ -57,7 +57,7 @@ sudo systemctl stop mumble-server
 sudo apt purge mumble-server
 sudo firewall-cmd --zone public --remove-service mumble --permanent
 sudo firewall-cmd --zone internal --remove-service mumble --permanent
-sudo rm -rf /etc/mumble-server.ini /var/lib/mumble-server /etc/fail2ban/jail.d/mumble.conf /etc/rsnapshot.d/mumble-server.conf /etc/rsyslog.d/mumble.conf /etc/netdata/health.d/systemdunits.conf.d/mumble.conf /etc/firewalld/services/mumble.xml /etc/ansible/facts.d/mumble.fact
+sudo rm -rf /etc/mumble-server.ini /var/lib/mumble-server /etc/fail2ban/jail.d/mumble.conf /etc/rsnapshot.d/mumble-server.conf /etc/rsyslog.d/mumble.conf /etc/firewalld/services/mumble.xml /etc/ansible/facts.d/mumble.fact
 sudo systemctl reload fail2ban
 sudo systemctl restart rsyslog firewalld
 ```

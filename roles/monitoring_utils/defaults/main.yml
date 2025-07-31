@@ -11,7 +11,7 @@ lynis_skip_tests:
   - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
   - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
   - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
-  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by netdata)
+  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by prometheus)
   - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
   - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
   - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
@@ -28,7 +28,7 @@ lynis_skip_tests:
   - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
   - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
   - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
-  - "KRNL-5830" # let needrestart/netdata send alarms when reboot is required
+  - "KRNL-5830" # let needrestart/prometheus send alarms when reboot is required
   - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
   - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)

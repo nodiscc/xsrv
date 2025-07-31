@@ -39,7 +39,6 @@ This project provides:
 - [matrix](roles/matrix) - secure instant messaging service
 - [monitoring](roles/monitoring) - monitoring, alerting, audit and logging system
 - [monitoring_goaccess](roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring_netdata](roles/monitoring_netdata) - lightweight, real-time monitoring and alerting system
 - [monitoring_rsyslog](roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
 - [monitoring_utils](roles/monitoring_utils) - monitoring and audit utilities
 - [moodist](roles/moodist) - Ambient sound mixer
@@ -63,7 +62,6 @@ This project provides:
 
 ## Screenshots
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/netdata-dashboard-thumb.png)](roles/monitoring_netdata)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](roles/nextcloud)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](roles/tt_rss)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](roles/shaarli)

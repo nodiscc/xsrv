@@ -24,6 +24,5 @@
       - (item.https_mode is not defined) or (item.https_mode in ['selfsigned', 'letsencrypt'])
       - (item.redirect_https is not defined) or (item.redirect_https == item.redirect_https | bool)
       - (item.extra_directives is not defined) or (item.extra_directives | type_debug == "list")
-      - (item.monitor_http is not defined) or (item.monitor_http == item.monitor_http | bool)
   loop: "{{ apache_reverseproxies }}"
   tags: apache-reverseproxy

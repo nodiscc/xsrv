@@ -37,7 +37,6 @@ dnsmasq_upstream_servers:
   - 1.1.1.1
   - 1.0.0.1
 ##### COMMON - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml
-##### NETDATA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml
 ##### SAMBA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml
 ##### DOVECOT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml
 dovecot_fqdn: "imap.example.test"

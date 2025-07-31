@@ -156,12 +156,6 @@
             .synapse-admin-cb {
                 background-color: #2196F3;
             }
-            .netdata :hover{
-                border-color: #00FF00;
-            }
-            .netdata-cb {
-                background-color: #45DC11;
-            }
             .goaccess :hover{
                 border-color: #5BC0DE;
             }
@@ -547,19 +541,6 @@
                         <div class="app-text">
                             <p class="app-name">PlanarAlly</p>
                             <p class="app-description">Virtual TableTop (VTT)</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-{% endif %}
-{% if ansible_local.netdata.ansible_managed is defined %}
-            <div class="col-1-3 mobile-col-1-1 netdata">
-                <a href="{{ ansible_local.netdata.public_url }}/v3/">
-                    <div class="content">
-                        <div class="colorblock netdata-cb"><img class="app-icon" src="res/netdata.png"></div>
-                        <div class="app-text">
-                            <p class="app-name">Netdata</p>
-                            <p class="app-description">Realtime monitoring</p>
                         </div>
                     </div>
                 </a>

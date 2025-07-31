@@ -227,9 +227,8 @@ TAGS=nextcloud xsrv deploy
 This will remove all application files and data, and related configuration
 
 ```bash
-$ sudo rm -r /var/www/cloud.CHANGEME.org/ /var/nextcloud/ /etc/ansible/facts.d/nextcloud.fact /etc/apache2/sites-available/nextcloud.conf  /etc/apache2/sites-enabled/nextcloud.conf /etc/php/8.2/fpm/pool.d/nextcloud.conf /etc/netdata/go.d/httpcheck.conf.d/nextcloud.conf /etc/rsnapshot.d/nextcloud.conf /etc/rsyslog.d/nextcloud.conf /etc/fail2ban/filter.d/nextcloud-auth.conf /etc/fail2ban/jail.d/nextcloud.conf 
-$ sudo find /etc/netdata/go.d/httpcheck.conf.d/ -type f |sort | xargs sudo cat | sudo tee /etc/netdata/go.d/httpcheck.conf
-$ sudo systemctl restart apache2.service php8.2-fpm.service fail2ban.service netdata.service
+$ sudo rm -r /var/www/cloud.CHANGEME.org/ /var/nextcloud/ /etc/ansible/facts.d/nextcloud.fact /etc/apache2/sites-available/nextcloud.conf  /etc/apache2/sites-enabled/nextcloud.conf /etc/php/8.2/fpm/pool.d/nextcloud.conf /etc/rsnapshot.d/nextcloud.conf /etc/rsyslog.d/nextcloud.conf /etc/fail2ban/filter.d/nextcloud-auth.conf /etc/fail2ban/jail.d/nextcloud.conf 
+$ sudo systemctl restart apache2.service php8.2-fpm.service fail2ban.service
 $ sudo -u postgres psql -c 'DROP DATABASE nextcloud;'
 $ sudo -u postgres psql -c 'DROP USER nextcloud;'
 $ sudo userdel --remove nextcloud

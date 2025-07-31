@@ -18,6 +18,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 +#       - 192.168.18.0/24
 ```
 
+- **monitoring_netdata:** if you want to keep using the [`monitoring_netdata`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/monitoring_netdata) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.netdata`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. See the role README.md for more information on this removal. Automatic integration of netdata with other roles will no longer be maintained.
+
+
+**Removed:**
+- monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- monitoring_rsyslog: ensure logrotate is installed
+
+**Deprecated:**
+
 **Added:**
 - add [`kiwix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix) role (offline viewer for Wikipedia and other wikis)
 - common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
@@ -55,9 +64,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: ensure cron is installed
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - update documentation
-
-**Removed:**
-- monitoring_rsyslog: ensure logrotate is installed
 
 **Fixed:**
 - matrix: update APT repository signing key (the previous key has expired)

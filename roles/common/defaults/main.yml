@@ -43,7 +43,7 @@ sysctl_vm_vfs_cache_pressure: '150'
 # These are usually not needed and may contain sensitive information
 kernel_enable_core_dump: no
 # no/yes: configure /proc mountpoint to hide processes from other users
-# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, netdata...)
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, prometheus...)
 kernel_proc_hidepid: no
 # list of kernel modules to prevent from being loaded
 kernel_modules_blacklist:
@@ -93,7 +93,6 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
   - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
-  - "origin=Netdata,label=Netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
   - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
   - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
@@ -186,7 +185,6 @@ apt_listbugs_ignore_list:
   - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
   - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
   - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
-  - 1088266 # https://bugs.debian.org/1088266 - only affects the official Debian netdata package,  but we use the upsteram package
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service

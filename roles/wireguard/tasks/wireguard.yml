@@ -170,12 +170,3 @@
     state: "{{ 'started' if wireguard_enable_service else 'stopped' }}"
   ignore_errors: "{{ ansible_check_mode }}"
   register: wireguard_systemd_service
-
-- name: restart netdata
-  service:
-    name: netdata
-    state: restarted
-  when:
-    - wireguard_systemd_service.changed # noqa no-handler
-    - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed | bool

@@ -15,7 +15,6 @@ test_shellcheck:
 	shellcheck -e SC1090,SC1091 \
 		xsrv \
 		xsrv-completion.sh \
-		roles/monitoring_netdata/files/usr_local_bin_needrestart-autorestart \
 		roles/monitoring_utils/templates/usr_local_bin_bonnie++-wrapper.j2 \
 		roles/wireguard/files/usr_local_bin_wireguard-gen-peer-config
 
@@ -83,8 +82,6 @@ test_idempotence:
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv upgrade xsrv-test
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv deploy xsrv-test my.example.test
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv deploy xsrv-test my.example.test
-	# check netdata alarms count
-	curl --insecure https://my.example.test:19999/api/v1/alarms
 
 .PHONY: test_fetch_backups # test fetch-backups command against the host deployed with test_idempotence
 test_fetch_backups:

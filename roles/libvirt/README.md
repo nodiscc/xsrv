@@ -82,8 +82,8 @@ libvirt_port_forwards:
         host_port: 22100
         vm_port: 22
     forward:
-      - source_interface: virbr2 # allow VMs on virbr2/libvirt network prod2 to access netdata on this VM
-        vm_port: 19999
+      - source_interface: virbr2 # allow VMs on virbr2/libvirt network prod2 to access prometheus on this VM
+        vm_port: 9999
       - source_interface: virbr2 # only allow the VM with IP 10.20.20.113 on virbr2/libvirt network prod2 to access port udp/123 on this VM
         source_ip: 10.20.20.113
         vm_port: 123

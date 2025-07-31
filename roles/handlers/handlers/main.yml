@@ -64,40 +64,6 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
-### MONITORING_NETDATA ###
-
-# assemble all files from /etc/netdata/*/*.d/*.conf to main /etc/netdata/*/*.conf files
-# this is an example of how to do it manually:
-# sudo find /etc/netdata/go.d/httpcheck.conf.d/ -type f |sort | xargs sudo cat | sudo tee /etc/netdata/go.d/httpcheck.conf
-- name: assemble netdata configuration
-  become: yes
-  assemble:
-    src: /etc/netdata/{{ item }}.d
-    dest: /etc/netdata/{{ item }}
-    owner: root
-    group: netdata
-    mode: "0640"
-    delimiter: ''
-  with_items:
-    - go.d/filecheck.conf
-    - go.d/httpcheck.conf
-    - go.d/x509check.conf
-    - go.d/phpfpm.conf
-    - go.d/portcheck.conf
-    - health.d/filecheck.conf
-    - health.d/processes.conf
-    - health.d/systemdunits.conf
-  notify: restart netdata
-  ignore_errors: "{{ ansible_check_mode }}"
-
-- name: restart netdata
-  become: yes
-  service:
-    name: netdata
-    state: restarted
-    enabled: yes
-  ignore_errors: "{{ ansible_check_mode }}"
-
 ### BACKUP/RSNAPSHOT ###
 
 - name: check rsnapshot configuration

@@ -39,7 +39,6 @@ This project provides:
 - [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - secure instant messaging service
 - [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - monitoring, alerting, audit and logging system
 - [monitoring_goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring_netdata](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata) - lightweight, real-time monitoring and alerting system
 - [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
 - [monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils) - monitoring and audit utilities
 - [moodist](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist) - Ambient sound mixer
@@ -62,7 +61,6 @@ This project provides:
 
 ## Screenshots
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/netdata-dashboard-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_netdata)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/shaarli)

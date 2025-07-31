@@ -27,5 +27,4 @@ galaxy_info:
 dependencies:
   - nodiscc.xsrv.handlers
   - nodiscc.xsrv.monitoring_rsyslog
-  - nodiscc.xsrv.monitoring_netdata
   - nodiscc.xsrv.monitoring_utils

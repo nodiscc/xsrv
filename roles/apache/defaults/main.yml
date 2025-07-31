@@ -17,7 +17,6 @@ apache_letsencrypt_enable_hsts: no
 #     upstream: "https://localhost:3545" # (required) the server to proxy requests to
 #     https_mode: selfsigned # (optional, selfsigned/letsencrypt, default selfsigned) mode for the auto-generated SSL certificate
 #     redirect_https: yes # (optional, yes/no, default yes) redirect HTTP requests to HTTPS
-#     monitor_http: yes # (optional, yes/no, default yes) add a netdata HTTP check for this virtualhost, if nodiscc.xsrv.monitoring_netdata is deployed
 #     extra_directives: # (optional) list of additional config directives https://httpd.apache.org/docs/current/mod/directives.html
 #       - "SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1" # allow less-secure TLS1.2 for legacy clients
 #   - servername: site2.example.org

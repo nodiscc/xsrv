@@ -1,9 +1,0 @@
-{% if jitsi_enable_service %}
-  - name: jitsi
-    timeout: 1
-    tls_skip_verify: true
-    update_every: 10
-    url: https://127.0.0.1
-    headers:
-      Host: "{{ jitsi_fqdn }}"
-{% endif %}

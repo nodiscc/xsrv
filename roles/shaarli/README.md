@@ -4,7 +4,7 @@ This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a m
 - [apache](tasks/apache.yml) webserver configuration and SSL/TLS certificates
 - automatic local [backups](tasks/backup.yml)
 - [fail2ban](tasks/fail2ban.yml) login bruteforce prevention
-- monitoring and log aggregation through [netdata](tasks/netdata.yml) and [rsyslog](tasks/rsyslog.yml)
+- log aggregation through [rsyslog](tasks/rsyslog.yml)
 - [python client for the Shaarli API](https://github.com/shaarli/python-shaarli-client/)
 - [stack](https://github.com/RolandTi/shaarli-stack) theme/template
 

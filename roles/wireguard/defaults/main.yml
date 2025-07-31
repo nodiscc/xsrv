@@ -47,7 +47,6 @@ wireguard_allow_forwarding: yes
 #     state: enabled
 #   - name: http
 #   - name: https
-#   - name: netdata
 #   - name: imaps
 #     state: disabled
 wireguard_firewalld_services:

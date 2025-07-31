@@ -77,17 +77,6 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: import netdata configuration tasks
-  import_tasks: netdata.yml
-  become: yes
-  tags:
-    - shaarli
-    - monitoring
-    - netdata
-  when:
-    - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed | bool
-
 - name: import python-shaarli-client configuration tasks
   import_tasks: shaarli-client.yml
   become: yes

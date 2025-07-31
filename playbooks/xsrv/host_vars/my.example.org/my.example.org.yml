@@ -47,7 +47,6 @@ dnsmasq_upstream_servers:
 
 ##### COMMON - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml
 
-##### NETDATA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml
 
 ##### SAMBA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml
 
