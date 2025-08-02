@@ -1,0 +1,22 @@
+- name: install prometheus-libvirt-exporter
+  apt:
+    package: prometheus-libvirt-exporter
+    state: present
+
+- name: add libvirt exporter to exporter-exporter configuration
+  template:
+    src: etc_prometheus_exporter-exporter_libvirt.yaml.j2
+    dest: /etc/prometheus/exporter-exporter/libvirt.yaml
+    owner: root
+    group: prometheus
+    mode: "0640"
+  notify: restart prometheus-exporter-exporter
+
+- name: start and enable prometheus-libvirt-exporter
+  systemd:
+    name: prometheus-libvirt-exporter.service
+    state: started
+    enabled: true
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
