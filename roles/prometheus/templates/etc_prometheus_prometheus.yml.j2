@@ -90,16 +90,3 @@ scrape_configs:
     params:
       module:
         - libvirt
-
-{% if prometheus_scrape_local_netdata %}
-  - job_name: 'netdata-scrape'
-    metrics_path: '/api/v1/allmetrics'
-    scheme: https
-    tls_config:
-      insecure_skip_verify: true
-    params:
-      format: [ prometheus_all_hosts ]
-    honor_labels: true
-    static_configs:
-      - targets: [ '127.0.0.1:19999' ]
-{% endif %}
