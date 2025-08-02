@@ -1,0 +1,20 @@
+- name: include variable checks tasks
+  import_tasks: checks.yml
+  tags:
+    - victoriametrics
+    - monitoring
+    - checks
+
+- name: import victoriametrics installation tasks
+  become: yes
+  import_tasks: victoriametrics.yml
+  tags:
+    - victoriametrics
+    - monitoring
+
+- name: import ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags:
+    - victoriametrics
+    - monitoring

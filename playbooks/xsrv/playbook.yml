@@ -2,10 +2,14 @@
 - hosts: my.example.org
   roles:
     - nodiscc.xsrv.common # base setup
-    - nodiscc.xsrv.monitoring # monitoring, alerting and logging
+    - nodiscc.xsrv.monitoring.utils # basic monitoring utilities
+    - nodiscc.xsrv.monitoring.rsyslog # log aggregation, processing and forwarding system
+    - nodiscc.xsrv.monitoring.exporters # monitoring agents/exporters
+    - nodiscc.xsrv.monitoring.victoriametrics # monitoring metrics scraper and time-series database
     # - nodiscc.xsrv.backup # backup service
     # - nodiscc.xsrv.apache # web server + PHP interpreter
-    # - nodiscc.xsrv.monitoring_goaccess # real-time web log analyzer/interactive viewer
+    # - nodiscc.xsrv.monitoring.grafana # metrics visualization and analytics application
+    # - nodiscc.xsrv.monitoring.goaccess # real-time web log analyzer/interactive viewer
     # - nodiscc.xsrv.openldap # LDAP directory server
     # - nodiscc.xsrv.postgresql # database engine
     # - nodiscc.xsrv.nextcloud # file hosting/sharing/synchronization and collaboration

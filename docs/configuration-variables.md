@@ -34,7 +34,7 @@ apache_letsencrypt_enable_hsts: no
 #   - servername: site2.example.org
 #     upstream: https://10.0.0.36:3646
 apache_reverseproxies: []
-# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring.rsyslog role is deployed) (yes/no)
 apache_access_log_to_syslog: no
 # firewall zones for the apache service (if nodiscc.xsrv.common/firewalld role is deployed)
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
@@ -173,7 +173,7 @@ sysctl_vm_vfs_cache_pressure: '150'
 # These are usually not needed and may contain sensitive information
 kernel_enable_core_dump: no
 # no/yes: configure /proc mountpoint to hide processes from other users
-# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, prometheus...)
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, exporters...)
 kernel_proc_hidepid: no
 # list of kernel modules to prevent from being loaded
 kernel_modules_blacklist:
@@ -1269,9 +1269,9 @@ matrix_element_allowed_hosts: []
 ```
 
 
-## monitoring_goaccess
+## monitoring.goaccess
 
-[roles/monitoring_goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml)
+[roles/monitoring/goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml)
 
 ```yaml
 ##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
@@ -1301,9 +1301,9 @@ goaccess_allowed_hosts: []
 ```
 
 
-## monitoring_rsyslog
+## monitoring.rsyslog
 
-[roles/monitoring_rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)
+[roles/monitoring/rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/rsyslog/defaults/main.yml)
 
 ```yaml
 ##### RSYSLOG LOG PROCESSING SYSTEM #####
@@ -1343,9 +1343,9 @@ rsyslog_firewalld_zones:
 ```
 
 
-## monitoring_utils
+## monitoring.base
 
-[roles/monitoring_utils/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml)
+[roles/monitoring/base/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
 
 ```yaml
 ##### MONITORING UTILITIES #####
@@ -1361,7 +1361,7 @@ lynis_skip_tests:
   - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
   - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
   - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
-  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by prometheus)
+  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by victoriametrics)
   - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
   - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
   - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
@@ -1378,7 +1378,7 @@ lynis_skip_tests:
   - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
   - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
   - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
-  - "KRNL-5830" # let needrestart/prometheus send alarms when reboot is required
+  - "KRNL-5830" # let needrestart/victoriametrics send alarms when reboot is required
   - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
   - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
