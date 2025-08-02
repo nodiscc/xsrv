@@ -1,5 +1,3 @@
-# scrape metrics from local netdata prometheus endpoint (yes/no)
-prometheus_scrape_local_netdata: no
 # start/stop the prometheus service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 prometheus_enable_service: yes
 # firewall zones for the prometheus API/Web interface service, if nodiscc.xsrv.common/firewalld role is deployed
