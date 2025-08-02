@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 - you can remove the `data/wireguard/` directory from your project directory since it is no longer used
-- wireguard:if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
+- wireguard: if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
 
 ```diff
 -#     routes: "1.2.3.4/32, 192.168.18.0/24"
@@ -18,16 +18,33 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 +#       - 192.168.18.0/24
 ```
 
-- **monitoring_netdata:** if you want to keep using the [`monitoring_netdata`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/monitoring_netdata) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.netdata`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. See the role README.md for more information on this removal. Netdata should keep working as long you do not explicitely uninstall it, but automatic integration of netdata with other roles will no longer be maintained. Uninstallation instructions and alternative monitoring systems will be provided in the next release.
+**BREAKING: monitoring roles refactoring:**
+- update your playbook (`xsrv edit-playbook`):
+  - remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
+  - add the `nodiscc.xsrv.monitoring.utils`, `nodiscc.xsrv.monitoring.rsyslog` and `nodiscc.xsrv.monitoring.exporters` roles to all your hosts
+  - if present, rename `nodiscc.xsrv.monitoring_goaccess` to `nodiscc.xsrv.monitoring.goaccess`
+  - add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and scrape metrics from all hosts where the `nodiscc.xsrv.monitoring.exporters` is deployed
+  - add the `nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role. This will provide visualizations/dashboards for metrics collected by victoriametrics
+  - make sure the host where victoriametrics is deployed, can access hosts where exporters are deployed on port 9999/tcp (NAT, firewalls)
+- update your hosts/groups (`xsrv edit-host/edit-group`) and remove all variables named `netdata_*`, use the equivalents listed below instead:
+  - `netdata_allow_connections_from`: [`grafana_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+  - `netdata_http_checks`: [`exporter_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+  - `netdata_x509_checks`: [`exporter_tls_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+  - `netdata_port_checks`: [`exporter_port_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+  - `netdata_fping_hosts`: [`exporter_ping_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+  - `netdata_firewalld_zones`: [`exporter_firewalld_zones`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
+
+The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`. You should remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata).
 
 
 **Removed:**
-- monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
-- monitoring_rsyslog: ensure logrotate is installed
-
-**Deprecated:**
+- monitoring: remove role (it was only an alias for basic monitoring roles, the roles must now be enabled independently)
+- monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository. See the role README for more information on about this removal. It will no longer be supported or maintained, and automatic integration of netdata in other roles has been removed.
 
 **Added:**
+- add [`monitoring.exporters`](roles/monitoring/exporters) role (monitoring agents/metrics exporters)
+- add [`monitoring.victoriametrics`](roles/monitoring/victoriametrics/) role (monitoring metrics scraper and time-series database)
+- add [`monitoring.grafana`](roles/monitoring/grafana) role (analytics and interactive visualization web application)
 - add [`kiwix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix) role (offline viewer for Wikipedia and other wikis)
 - common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))
@@ -35,11 +52,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - wireguard: generate a QR code for each wireguard_peer containing the configuration (can be scanned with mobile apps such as WG Tunnel)
 
 **Changed:**
+- rename `monitoring_utils` role to `monitoring.utils`
+- rename `monitoring_rsyslog` role to `monitoring.rsyslog`
+- rename `monitoring_goaccess` to `monitoring.goaccess`
 - wireguard: allow specifying [`wireguard_peers`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
 - wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
 - nextcloud: schedule start of maintenance window (resource intensive tasks) at 02:00
+- ollama: pull `gemma3:4b` model by default
+- ollama: disable installation of ollama-ui web interface by default
+- searxng: allow returning results as JSON (add `&format=json` to URL parameters)
+- searxng: increase sepiasearch search engine weight to 2
+- searxng: increase wiby search engine weight to 1.2
+- searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 2
+- common: ssh: ensure ssh is automatically started at boot, disable socket activation
+- common: ensure cron is installed
+- monitoring.rsyslog: ensure logrotate is installed
+- doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)
 - shaarli: udpate to [v0.15.0](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
 - nextcloud: update to 30.0.15 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/)
@@ -63,9 +93,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update trivy security scanner to [v0.66.0](https://github.com/aquasecurity/trivy/releases)
 - gitea_act_runner: update act-runner to v0.2.12 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.12)
 - goaccess: update IP to Country GeoIP database to v2025-08
-- common: ssh: ensure ssh is automatically started at boot, disable socket activation
-- common: ensure cron is installed
-- doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - update documentation
 
 **Fixed:**
@@ -74,6 +101,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - searxng: remove engines that no longer exist from config file, fix warnings in logs
 - jitsi: fix apt prosody apt repository failing to update with `The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F7A37EB33D0B25D7`
 - matrix: update APT repository signing key (the previous key has expired)
+- postgresql: fix `'postgresql_version' is undefined` error when running the `monitoring` tag alone
 - wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
 - shaarli: fix missing php extension php-xml
 - nextcloud: fix `trusted_proxies is not correctly defined` warning in admin area

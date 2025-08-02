@@ -1,0 +1,22 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess"
+  loop:
+    - goaccess_fqdn is not search('CHANGEME')
+    - goaccess_https_mode in ['selfsigned', 'letsencrypt']
+    - goaccess_enable_service == goaccess_enable_service | bool
+    - goaccess_update_calendar_expression is string
+    - goaccess_username is not search('CHANGEME')
+    - goaccess_password is not search('CHANGEME')
+    - (goaccess_filter is not defined) or (goaccess_filter is string)
+    - goaccess_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (goaccess_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of goaccess_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/goaccess"
+    that:
+      - item | ansible.utils.ipv4
+  loop: "{{ goaccess_allowed_hosts }}"

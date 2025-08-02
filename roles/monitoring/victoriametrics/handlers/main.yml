@@ -1,0 +1,6 @@
+- name: restart victoriametrics
+  become: yes
+  systemd:
+    name: victoria-metrics.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"

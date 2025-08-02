@@ -1,0 +1,25 @@
+# @tag victoriametrics - setup victoriametrics monitoring service and time-series database
+
+galaxy_info:
+  role_name: monitoring.victoriametrics
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "monitoring metrics scraper and time-series database"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - metrics
+    - prometheus
+    - dashboard
+    - monitoring
+    - timeseries
+    - database
+    - tsdb
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring.exporters # required in the standard configuration
+  # - nodiscc.xsrv.monitoring.grafana # optional
