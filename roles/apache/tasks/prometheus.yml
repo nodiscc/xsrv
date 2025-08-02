@@ -77,4 +77,3 @@
     name: prometheus-php-fpm-exporter.service
     state: started
     enabled: true
-

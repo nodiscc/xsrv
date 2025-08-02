@@ -1,0 +1,21 @@
+# @tag prometheus - setup prometheus monitoring service and time-series database
+
+galaxy_info:
+  role_name: prometheus
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "monitoring service and time-series database"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - analytics
+    - visualization
+    - dashboard
+    - monitoring
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional

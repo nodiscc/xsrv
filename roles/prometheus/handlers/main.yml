@@ -1,0 +1,7 @@
+- name: restart prometheus
+  become: yes
+  systemd:
+    name: prometheus.service
+    state: restarted
+  when: prometheus_enable_service
+  ignore_errors: "{{ ansible_check_mode }}"

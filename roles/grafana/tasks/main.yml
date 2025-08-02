@@ -1,0 +1,32 @@
+- name: import variable checks tasks
+  import_tasks: checks.yml
+  tags:
+    - grafana
+    - checks
+
+- name: import grafana installation tasks
+  become: yes
+  import_tasks: grafana.yml
+  tags: grafana
+
+- name: import self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - apache
+    - ssl
+    - grafana
+  when:
+    - grafana_https_mode == 'selfsigned'
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool
+
+- name: import apache configuration tasks
+  import_tasks: apache.yml
+  become: yes
+  tags:
+    - grafana
+    - apache
+  when:
+    - ansible_local.apache.ansible_managed is defined
+    - ansible_local.apache.ansible_managed | bool

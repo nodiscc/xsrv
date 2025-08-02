@@ -1,0 +1,8 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/prometheus"
+  loop:
+    - prometheus_scrape_local_netdata == prometheus_scrape_local_netdata | bool
+    - prometheus_enable_service == prometheus_enable_service | bool
