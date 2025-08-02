@@ -56,6 +56,8 @@ nextcloud-applications - setup nextcloud applications
 nextcloud-config - setup main nextcloud configuration settings
 nextcloud - setup nextcloud file sharing/collaboration platform
 nmap - run nmap network scanner against managed hosts
+ollama - setup ollama Large Language Model server
+ollama-ui - setup ollama-ui web interface for ollama
 openldap - setup LDAP server
 owncast - setup owncast live streaming server
 packages - additional package installation/removal
@@ -85,7 +87,6 @@ tt_rss - setup tt-rss feed reader
 users - setup users and groups
 utils-apt-unattended-upgrade - (manual) run unattended-upgrade now
 utils-apt-upgrade - (manual) run apt upgrade now
-utils-autorestart - (manual) reboot hosts if a Linux kernel upgrade is pending
 utils-backup-now - (manual) transfer latest daily backups from the host to the controller
 utils-bonnie - (manual) run duc disk benchmarking tool and download the report on the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
