@@ -1,0 +1,7 @@
+- name: restart grafana
+  become: yes
+  systemd:
+    name: grafana-server.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: grafana_enable_service | bool

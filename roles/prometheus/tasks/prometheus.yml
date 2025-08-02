@@ -1,0 +1,28 @@
+- name: install prometheus
+  apt:
+    state: present
+    package:
+      - prometheus
+
+- name: configure prometheus
+  template:
+    src: etc_prometheus_prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+##### SERVICE #####
+
+- name: start/stop/enable/disable prometheus service
+  service:
+    name: prometheus
+    state: "{{ 'started' if prometheus_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if prometheus_enable_service else 'no' }}"
+  tags: services
+  ignore_errors: "{{ ansible_check_mode }}"
