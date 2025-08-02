@@ -34,7 +34,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 Access the Grafana instance from a web browser at `https://{{ grafana_fqdn }}`.
 
-By deploying the [nodiscc.toolbox.prometheus](../prometheus/) role alongside Grafana, you can add a Prometheus data source to your Grafana configuration and visualize Prometheus metrics in Grafana. Coupled with the [nodiscc.toolbox.netdata](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/netdaya) role, this provides a very simple yet flexible and powerful visualization solution for metrics across your whole infrastructure.
+By deploying the [nodiscc.toolbox.prometheus](../prometheus/) role alongside Grafana, you can add a Prometheus data source to your Grafana configuration and visualize Prometheus metrics in Grafana.
 
 
 ### Backups
