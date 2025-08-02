@@ -34,7 +34,7 @@ apache_letsencrypt_enable_hsts: no
 #   - servername: site2.example.org
 #     upstream: https://10.0.0.36:3646
 apache_reverseproxies: []
-# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring.rsyslog role is deployed) (yes/no)
 apache_access_log_to_syslog: no
 # firewall zones for the apache service (if nodiscc.xsrv.common/firewalld role is deployed)
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
@@ -1269,9 +1269,9 @@ matrix_element_allowed_hosts: []
 ```
 
 
-## monitoring_goaccess
+## monitoring.goaccess
 
-[roles/monitoring_goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml)
+[roles/monitoring/goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml)
 
 ```yaml
 ##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
@@ -1301,9 +1301,9 @@ goaccess_allowed_hosts: []
 ```
 
 
-## monitoring_rsyslog
+## monitoring.rsyslog
 
-[roles/monitoring_rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)
+[roles/monitoring/rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/rsyslog/defaults/main.yml)
 
 ```yaml
 ##### RSYSLOG LOG PROCESSING SYSTEM #####
@@ -1343,9 +1343,9 @@ rsyslog_firewalld_zones:
 ```
 
 
-## monitoring_utils
+## monitoring.base
 
-[roles/monitoring_utils/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml)
+[roles/monitoring/base/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
 
 ```yaml
 ##### MONITORING UTILITIES #####

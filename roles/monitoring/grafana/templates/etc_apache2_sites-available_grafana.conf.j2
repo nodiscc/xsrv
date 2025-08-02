@@ -1,0 +1,42 @@
+<VirtualHost *:80>
+    ServerName {{ grafana_fqdn }}
+{% if grafana_https_mode == 'selfsigned' %}
+    # Redirect all HTTP requests to HTTPS
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+{% endif %}
+</VirtualHost>
+
+{% if grafana_https_mode == 'letsencrypt' %}
+MDomain {{ grafana_fqdn }}
+{% endif %}
+
+<VirtualHost *:443>
+  ServerName  {{ grafana_fqdn }}
+  SSLEngine on
+{% if grafana_https_mode == 'selfsigned' %}
+  SSLCertificateFile /etc/ssl/certs/{{ grafana_fqdn }}.crt
+  SSLCertificateKeyFile /etc/ssl/private/{{ grafana_fqdn }}.key
+{% endif %}
+{% if not grafana_enable_service %}
+  DocumentRoot /var/www/maintenance/
+  ErrorDocument 503 /maintenance.html
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !=/maintenance.html
+  RewriteRule ^.*$ - [R=503,L]
+{% else %}
+{% if grafana_allowed_hosts %}
+  <Location />
+    Require ip 127.0.0.1 {{ grafana_allowed_hosts | join(' ') }}
+  </Location>
+{% endif %}
+  # Workaround for https://github.com/go-grafana/grafana/issues/19265
+  Protocols http/1.1
+  ProxyPreserveHost On
+  ProxyRequests off
+  AllowEncodedSlashes NoDecode
+  ProxyPass / http://localhost:3005/ nocanon
+  ProxyPassReverse / http://localhost:3005/
+{% endif %}
+</VirtualHost>

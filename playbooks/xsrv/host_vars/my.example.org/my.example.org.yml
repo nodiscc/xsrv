@@ -68,7 +68,7 @@ jitsi_fqdn: "conference.CHANGEME.org"
 matrix_synapse_fqdn: "matrix.CHANGEME.org"
 matrix_element_fqdn: "chat.CHANGEME.org"
 
-#### GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml
+#### GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml
 goaccess_fqdn: "goaccess.CHANGEME.org"
 
 #### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
