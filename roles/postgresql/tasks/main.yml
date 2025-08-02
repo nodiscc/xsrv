@@ -28,6 +28,18 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
+- name: import prometheus configuration tasks
+  import_tasks: prometheus.yml
+  become: yes
+  tags:
+    - postgresql
+    - monitoring
+    - prometheus
+    - prometheus_exporter
+  when:
+    - ansible_local.prometheus_exporter.ansible_managed is defined
+    - ansible_local.prometheus_exporter.ansible_managed | bool
+
 - name: import ansible-facts configuration tasks
   import_tasks: fact.yml
   become: yes
