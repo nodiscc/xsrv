@@ -22,7 +22,7 @@ apache_letsencrypt_enable_hsts: no
 #   - servername: site2.example.org
 #     upstream: https://10.0.0.36:3646
 apache_reverseproxies: []
-# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring.rsyslog role is deployed) (yes/no)
 apache_access_log_to_syslog: no
 # firewall zones for the apache service (if nodiscc.xsrv.common/firewalld role is deployed)
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)

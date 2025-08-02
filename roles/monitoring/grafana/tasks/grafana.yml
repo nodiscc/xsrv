@@ -1,0 +1,81 @@
+- name: install requirements
+  apt:
+    state: present
+    package:
+      - adduser
+      - libfontconfig1
+      - musl
+
+- name: download grafana deb package
+  get_url:
+    url: https://dl.grafana.com/oss/release/grafana_10.3.3_amd64.deb
+    dest: /root/grafana_10.3.3_amd64.deb
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: install grafana deb package
+  apt:
+    state: present
+    deb: /root/grafana_10.3.3_amd64.deb
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create provisioning directory
+  file:
+    state: directory
+    path: "{{ item }}"
+    owner: root
+    group: grafana
+    mode: "0750"
+  tags: grafana-config
+  ignore_errors: "{{ ansible_check_mode }}"
+  loop:
+    - /etc/grafana/provisioning
+    - /etc/grafana/provisioning/datasources
+    - /etc/grafana/provisioning/dashboards
+    - /var/lib/grafana/dashboards
+
+- name: configure grafana
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: grafana
+    mode: "0640"
+  tags: grafana-config
+  notify: restart grafana
+  ignore_errors: "{{ ansible_check_mode }}"
+  loop:
+    - src: etc_grafana_grafana.ini.j2
+      dest: /etc/grafana/grafana.ini
+    - src: etc_grafana_provisioning_datasources_default.yaml.j2
+      dest: /etc/grafana/provisioning/datasources/default.yaml
+    - src: etc_grafana_provisioning_dashboards_default.yaml.j2
+      dest: /etc/grafana/provisioning/dashboards/default.yaml
+
+- name: provision grafana dashboards
+  copy:
+    src: var_lib_grafana_dashboards_{{ item }}.json
+    dest: /var/lib/grafana/dashboards/{{ item }}.json
+    owner: grafana
+    group: grafana
+    mode: "0640"
+  notify: restart grafana
+  loop:
+    - node
+    - namedprocesses
+    - apache
+    - phpfpm
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+##### SERVICE #####
+
+- name: start/stop/enable/disable grafana service
+  service:
+    name: grafana-server
+    state: "{{ 'started' if grafana_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if grafana_enable_service else 'no' }}"
+  tags: services
+  ignore_errors: "{{ ansible_check_mode }}"

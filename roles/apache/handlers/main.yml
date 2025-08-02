@@ -1,7 +1,15 @@
 - name: restart php-fpm (apache)
-  service:
-    name: php{{ apache_php_fpm_version }}-fpm
+  become: yes
+  systemd:
+    name: php{{ apache_php_fpm_version }}-fpm.service
     state: restarted
     enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: restart prometheus apache exporter
   become: yes
+  systemd:
+    name: prometheus-apache-exporter.service
+    state: restarted
+    enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"

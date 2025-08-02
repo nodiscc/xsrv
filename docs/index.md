@@ -37,10 +37,12 @@ This project provides:
 - [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) - virtualization toolkit
 - [mail_dovecot](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) - IMAP mailbox server
 - [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - secure instant messaging service
-- [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - monitoring, alerting, audit and logging system
-- [monitoring_goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
-- [monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils) - monitoring and audit utilities
+- [monitoring.exporters](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/exporters) - monitoring agents/metrics exporters
+- [monitoring.goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
+- [monitoring.grafana](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/grafana) - Analytics and interactive visualization web application
+- [monitoring.rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog) - log aggregation, processing and forwarding system
+- [monitoring.utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/utils) - basic monitoring utilities
+- [monitoring.victoriametrics](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/victoriametrics) - monitoring metrics scraper and time-series database
 - [moodist](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist) - Ambient sound mixer
 - [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
@@ -76,7 +78,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap)

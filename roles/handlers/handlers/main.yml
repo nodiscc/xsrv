@@ -54,7 +54,7 @@
   become: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
-### MONITORING_RSYSLOG ###
+### MONITORING.RSYSLOG ###
 
 - name: restart rsyslog
   become: yes
@@ -63,6 +63,26 @@
     state: restarted
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
+
+### MONITORING.EXPORTERS ###
+
+- name: restart prometheus-exporter-exporter
+  become: true
+  systemd:
+    name: prometheus-exporter-exporter.service
+    state: restarted
+
+- name: restart prometheus-php-fpm-exporter
+  become: true
+  systemd:
+    name: prometheus-php-fpm-exporter.service
+    state: restarted
+
+- name: restart prometheus-blackbox-exporter
+  become: true
+  systemd:
+    name: prometheus-blackbox-exporter.service
+    state: restarted
 
 ### BACKUP/RSNAPSHOT ###
 

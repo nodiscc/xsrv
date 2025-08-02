@@ -15,7 +15,7 @@ test_shellcheck:
 	shellcheck -e SC1090,SC1091 \
 		xsrv \
 		xsrv-completion.sh \
-		roles/monitoring_utils/templates/usr_local_bin_bonnie++-wrapper.j2 \
+		roles/monitoring/utils/templates/usr_local_bin_bonnie++-wrapper.j2 \
 		roles/wireguard/files/usr_local_bin_wireguard-gen-peer-config
 
 .PHONY: venv # install dev tools in virtualenv
@@ -38,7 +38,7 @@ install_collection: venv build_collection
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ansible-lint -v -x fqcn[action-core],fqcn[action],name[casing],yaml[truthy],schema[meta],yaml[line-length],var-naming[no-role-prefix] roles/* docs/example-role
+	ansible-lint -v -x fqcn[action-core],fqcn[action],name[casing],yaml[truthy],schema[meta],yaml[line-length],var-naming[no-role-prefix],role-name roles/* roles/monitoring/*/ docs/example-role
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:
@@ -169,10 +169,11 @@ update_todo:
 .PHONY: doc_md # manual - generate markdown documentation
 doc_md:
 	# update README.md from available roles
-	@roles_list_md=$$(for i in roles/*/meta/main.yml; do \
+	@roles_list_md=$$(for i in roles/*/meta/main.yml roles/*/*/meta/main.yml; do \
 		name=$$(grep "role_name: " "$$i" | awk -F': ' '{print $$2}'); \
 		description=$$(grep "description: " "$$i" | awk -F': ' '{print $$2}' | sed 's/"//g'); \
-		echo "- [$$name](roles/$$name) - $$description"; \
+		role_path=$$(echo "$$name" | tr '.' '/'); \
+		echo "- [$$name](roles/$$role_path) - $$description"; \
 		done) && \
 		echo "$$roles_list_md" >| roles-list.tmp.md && \
 		awk ' \

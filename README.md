@@ -37,10 +37,12 @@ This project provides:
 - [libvirt](roles/libvirt) - virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [matrix](roles/matrix) - secure instant messaging service
-- [monitoring](roles/monitoring) - monitoring, alerting, audit and logging system
-- [monitoring_goaccess](roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring_rsyslog](roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
-- [monitoring_utils](roles/monitoring_utils) - monitoring and audit utilities
+- [monitoring.exporters](roles/monitoring/exporters) - monitoring agents/metrics exporters
+- [monitoring.goaccess](roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
+- [monitoring.grafana](roles/monitoring/grafana) - Analytics and interactive visualization web application
+- [monitoring.rsyslog](roles/monitoring/rsyslog) - log aggregation, processing and forwarding system
+- [monitoring.utils](roles/monitoring/utils) - basic monitoring utilities
+- [monitoring.victoriametrics](roles/monitoring/victoriametrics) - monitoring metrics scraper and time-series database
 - [moodist](roles/moodist) - Ambient sound mixer
 - [mumble](roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
@@ -76,7 +78,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](roles/jitsi)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](roles/readme_gen)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](roles/monitoring_goaccess)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](roles/monitoring/goaccess)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](roles/owncast)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](roles/searxng)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](roles/nmap)

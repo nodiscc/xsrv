@@ -1,0 +1,15 @@
+- targets:
+{% for item in victoriametrics_auto_check_http_limit %}
+  ##### {{ item }} #####
+{% for i in ['gitea', 'gotty', 'planarally', 'goaccess', 'graylog', 'homepage', 'jellyfin', 'owncast', 'stirlingpdf', 'moodist', 'kiwix', 'ldap_account_manager', 'self_service_password', 'nextcloud', 'synapse', 'element', 'jitsi', 'rocketchat', 'searxng', 'shaarli', 'transmission', 'tt_rss' ] %}
+{% set fqdn_var_name = i ~ '_fqdn' %}
+{% set enable_service_var_name = i ~ '_enable_service' %}
+{% if hostvars[item][fqdn_var_name] is defined %}
+{% if hostvars[item][enable_service_var_name] | default(True) %}
+  - https://{{ hostvars[item][fqdn_var_name] }}
+{% else %}
+  # - https://{{ hostvars[item][fqdn_var_name] }} # service disabled in configuration
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}

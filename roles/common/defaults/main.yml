@@ -187,6 +187,7 @@ apt_listbugs_ignore_list:
   - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
   - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
   - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
+  - 1051392 # https://bugs.debian.org/1051392 - only affects 32-bit architectures
   - 1114729 # https://bugs.debian.org/1114729 - only during dist-upgrade
 
 ### DATE/TIME ###

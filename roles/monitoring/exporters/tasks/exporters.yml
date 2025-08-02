@@ -1,0 +1,61 @@
+- name: install basic prometheus exporters
+  apt:
+    package:
+      - prometheus-exporter-exporter
+      - prometheus-node-exporter
+      - prometheus-node-exporter-collectors
+      - prometheus-process-exporter
+      - prometheus-blackbox-exporter
+    state: present
+
+- name: create dynamic configuration directory for exporter-exporter
+  file:
+    state: directory
+    path: /etc/prometheus/exporter-exporter
+    owner: root
+    group: prometheus
+    mode: "0750"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure basic prometheus exporters
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  diff: "{{ item.diff }}"
+  loop:
+    - src: etc_prometheus_exporter-exporter.token-file.j2
+      dest: /etc/prometheus/exporter-exporter.token-file
+      group: prometheus
+      mode: "0640"
+      diff: false
+    - src: etc_prometheus_exporter-exporter.yml.j2
+      dest: /etc/prometheus/exporter-exporter.yml
+      group: root
+      mode: "0644"
+      diff: true
+  notify: restart prometheus-exporter-exporter
+
+- name: start and enable prometheus exporter-exporter
+  systemd:
+    name: prometheus-exporter-exporter.service
+    state: started
+    enabled: true
+
+##### BLACKBOX EXPORTER #####
+
+- name: configure blackbox exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus-blackbox-exporter
+  loop:
+    - src: etc_default_prometheus-blackbox-exporter.j2
+      dest: /etc/default/prometheus-blackbox-exporter
+    - src: etc_prometheus_blackbox.yml.j2
+      dest: /etc/prometheus/blackbox.yml

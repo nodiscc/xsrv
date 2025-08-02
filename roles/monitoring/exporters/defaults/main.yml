@@ -1,0 +1,7 @@
+##### MONITORING.EXPORTERS #####
+# uninstall netdata and remove all its files/data/configuration
+netdata_uninstall: true
+# REQUIRED password used to authenticate to/scrape metrics from exporter-exporter
+monitoring_exporters_auth_password: CHANGEME
+# log level for prometheus-blackbox-exporter (info/debug/warn/error)
+exporters_blackbox_log_level: info

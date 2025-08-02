@@ -1,0 +1,17 @@
+[Unit]
+Description=Prometheus exporter for php-fpm
+Documentation=https://github.com/hipages/php-fpm_exporter
+
+[Service]
+Restart=on-failure
+User=prometheus
+SupplementaryGroups=www-data
+ExecStartPre=/usr/local/bin/prometheus-php-fpm-exporter-setup-env
+EnvironmentFile=/etc/prometheus/php-fpm-exporter.env
+ExecStart=/usr/local/bin/prometheus-php-fpm-exporter server
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target

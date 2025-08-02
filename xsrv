@@ -737,7 +737,7 @@ help_tags() {
     cd "$projects_dir/$project_name"
     echo "[xsrv] INFO: list of tags in project $project_name"
     echo "[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy $project_name"
-    tags_doc=$(grep --no-filename '^# @tag' ansible_collections/*/*/roles/*/meta/main.yml | \
+    tags_doc=$(grep --no-filename '^# @tag' ansible_collections/*/*/roles/*/meta/main.yml ansible_collections/*/*/roles/*/*/meta/main.yml | \
                cut -d " " -f 1-2 --complement | \
                sort --unique)
     echo "TAGS:"

@@ -1,0 +1,9 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/exporters"
+  loop:
+    - netdata_uninstall == netdata_uninstall | bool
+    - monitoring_exporters_auth_password is not search('CHANGEME')
+    - exporters_blackbox_log_level in ['info', 'debug', 'warn', 'error']

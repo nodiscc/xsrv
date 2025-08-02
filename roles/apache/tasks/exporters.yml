@@ -1,0 +1,81 @@
+- name: install prometheus-apache-exporter
+  apt:
+    package: prometheus-apache-exporter
+    state: present
+
+- name: start and enable prometheus-apache-exporter
+  systemd:
+    name: prometheus-apache-exporter.service
+    state: started
+    enabled: true
+  notify: restart prometheus apache exporter
+
+##### EXPORTER-EXPORTER #####
+
+- name: add apache exporter to exporter-exporter configuration
+  template:
+    src: etc_prometheus_exporter-exporter_apache.yaml.j2
+    dest: /etc/prometheus/exporter-exporter/apache.yaml
+    owner: root
+    group: prometheus
+    mode: "0640"
+  notify: restart prometheus-exporter-exporter
+
+##### PHP-FPM #####
+
+- name: download php-fpm exporter
+  get_url:
+    url: "https://github.com/hipages/php-fpm_exporter/releases/download/v{{ prometheus_php_fpm_exporter_version }}/php-fpm_exporter_{{ prometheus_php_fpm_exporter_version }}_linux_amd64"
+    dest: /usr/local/bin/prometheus-php-fpm-exporter
+    owner: root
+    group: root
+    mode: "0755"
+
+# the exporter does not read the configuration file (bug https://github.com/hipages/php-fpm_exporter/issues/93)
+# so we create an empty environment file with read/write permissions for the user running php-fpm-exporter,
+# populate this file through ExecStartPre=/usr/local/bin/prometheus-php-fpm-exporter-setup-env in the systemd service,
+# and load it as EnvironmentFile=
+- name: copy php-fpm exporter environment file
+  copy:
+    src: etc_prometheus_php-fpm-exporter.env
+    dest: /etc/prometheus/php-fpm-exporter.env
+    owner: root
+    group: prometheus
+    mode: "0660"
+    force: no
+  notify: restart prometheus-php-fpm-exporter
+
+- name: copy php-fpm exporter dynamic environment script
+  copy:
+    src: usr_local_bin_prometheus-php-fpm-exporter-setup-env
+    dest: /usr/local/bin/prometheus-php-fpm-exporter-setup-env
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: create php-fpm-exporter systemd unit file
+  template:
+    src: etc_systemd_system_prometheus-php-fpm-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-php-fpm-exporter.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: add php-fpm exporter to exporter-exporter configuration
+  template:
+    src: etc_prometheus_exporter-exporter_php-fpm.yaml.j2
+    dest: /etc/prometheus/exporter-exporter/php-fpm.yaml
+    owner: root
+    group: prometheus
+    mode: "0640"
+  notify: restart prometheus-exporter-exporter
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: start and enable prometheus-php-fpm-exporter
+  systemd:
+    name: prometheus-php-fpm-exporter.service
+    state: started
+    enabled: true
