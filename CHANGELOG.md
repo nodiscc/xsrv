@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 +#       - 192.168.18.0/24
 ```
 
-- **monitoring_netdata:** if you want to keep using the [`monitoring_netdata`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/monitoring_netdata) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.netdata`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. See the role README.md for more information on this removal. Automatic integration of netdata with other roles will no longer be maintained.
+- **monitoring_netdata:** if you want to keep using the [`monitoring_netdata`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/monitoring_netdata) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.netdata`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. See the role README.md for more information on this removal. Netdata should keep working as long you do not explicitely uninstall it, but automatic integration of netdata with other roles will no longer be maintained. Uninstallation instructions and alternative monitoring systems will be provided in the next release.
 
 
 **Removed:**
