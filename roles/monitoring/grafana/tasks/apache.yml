@@ -1,0 +1,29 @@
+- name: enable required apache modules
+  command: a2enmod {{ item }}
+  with_items:
+    - headers
+    - proxy
+    - proxy_http
+  args:
+    creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+
+- name: copy grafana apache virtualhost configuration
+  template:
+    src: etc_apache2_sites-available_grafana.conf.j2
+    dest: /etc/apache2/sites-available/grafana.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload apache
+
+- name: enable grafana apache virtualhost configuration
+  command: a2ensite grafana
+  args:
+    creates: "/etc/apache2/sites-enabled/grafana.conf"
+  notify: reload apache
+
+- name: add a hosts file entry for the grafana server fqdn
+  lineinfile:
+    path: /etc/hosts
+    line: '127.0.0.1	{{ grafana_fqdn }}' # noqa no-tabs
+    state: present

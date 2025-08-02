@@ -1,0 +1,15 @@
+# fully qualified domain name of the grafana instance
+grafana_fqdn: "grafana.CHANGEME.org"
+# username/password/e-mail address for the grafana admin user
+grafana_admin_username: "CHANGEME"
+grafana_admin_password: "CHANGEME20"
+grafana_admin_email: "CHANGEME@CHANGEME.org"
+# HTTPS and SSL/TLS certificate mode for the grafana webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+grafana_https_mode: selfsigned
+# start/stop the grafana service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+grafana_enable_service: yes
+# list of IP addresses allowed to access the grafana web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+grafana_allowed_hosts: []

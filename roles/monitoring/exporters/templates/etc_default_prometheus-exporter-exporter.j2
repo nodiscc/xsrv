@@ -1,0 +1,66 @@
+# Set the command-line arguments to pass to the exporter.
+#
+# prometheus-exporter-exporter supports the following options:
+#
+#  -allow.net value
+#    Allow connection from this network specified in CIDR notation. Can be
+#    specified multiple times.
+#
+#  -config.dirs value
+#    The path to directories of configuration files, can be specified multiple
+#    times.
+#
+#  -config.file string
+#    The path to the configuration file. (default
+#    "/etc/prometheus/exporter-exporter.yml")
+#
+#  -config.skip-dirs
+#    Skip non existent -config.dirs entries instead of terminating.
+#
+#  -log.json
+#    Serialize log messages in JSON
+#
+#  -log.level value
+#    Log level (default warning)
+#
+#  -version
+#    Print the version and exit
+#
+#  -web.bearer.token string
+#    Bearer authentication token.
+#
+#  -web.bearer.token-file string
+#    File containing the Bearer authentication token.
+#
+#  -web.listen-address string
+#    The address to listen on for HTTP requests. (default ":9999")
+#
+#  -web.proxy-path string
+#    The address to listen on for HTTP requests. (default "/proxy")
+#
+#  -web.telemetry-path string
+#    The address to listen on for HTTP requests. (default "/metrics")
+#
+#  -web.tls.ca string
+#    Path to CA to auth clients against (default "ca.pem")
+#
+#  -web.tls.cert string
+#    Path to cert (default "cert.pem")
+#
+#  -web.tls.certmatch string
+#    If set, this is used as a regexp that is matched against any certificate
+#    subject, dnsname or email address, only certs with a match are verified.
+#    web.tls.verify must also be set
+#
+#  -web.tls.key string
+#    Path to key (default "key.pem")
+#
+#  -web.tls.listen-address string
+#    The address to listen on for HTTPS requests.
+#
+#  -web.tls.verify
+#    Enable client verification
+#
+# See also the prometheus-exporter-exporter(8) manual page.
+#
+ARGS="-config.dirs /etc/prometheus/exporter-exporter/ -web.bearer.token-file /etc/prometheus/exporter-exporter.token-file"

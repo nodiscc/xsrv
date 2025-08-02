@@ -1,0 +1,55 @@
+- name: install victoriametrics
+  apt:
+    state: present
+    package:
+      - victoria-metrics
+
+- name: create dynamic configuration directories
+  file:
+    state: directory
+    path: /etc/prometheus/blackbox-exporter
+    owner: root
+    group: prometheus
+    mode: "0755"
+
+- name: configure victoriametrics
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart victoriametrics
+  loop:
+    - src: etc_victoriametrics.yml.j2
+      dest: /etc/victoriametrics.yml
+    - src: etc_default_victoria-metrics.j2
+      dest: /etc/default/victoria-metrics
+
+- name: configure victoriametrics http checks
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart victoriametrics
+  loop:
+    - src: etc_prometheus_blackbox-exporter_http-checks-xsrv.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks-xsrv.yml
+    - src: etc_prometheus_blackbox-exporter_http-checks.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks.yml
+  tags: victoriametrics-http-checks
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+##### SERVICE #####
+
+- name: start/stop/enable/disable victoria-metrics service
+  service:
+    name: victoria-metrics
+    state: started
+    enabled: true
+  tags: services
+  ignore_errors: "{{ ansible_check_mode }}"
