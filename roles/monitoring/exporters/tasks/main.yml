@@ -1,0 +1,31 @@
+- name: MIGRATION/1.28.0 - import netdata uninstallation tasks
+  become: yes
+  import_tasks: netdata-uninstall.yml
+  tags:
+    - monitoring
+    - prometheus
+    - exporters
+  when: netdata_uninstall
+
+- name: import prometheus exporter setup tasks
+  become: yes
+  import_tasks: exporters.yml
+  tags:
+    - monitoring
+    - prometheus
+    - exporters
+
+- name: import ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags:
+    - monitoring
+    - prometheus
+    - exporters
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags:
+    - monitoring
+    - prometheus
+    - exporters

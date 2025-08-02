@@ -1,0 +1,3 @@
+##### MONITORING.EXPORTERS #####
+# uninstall netdata and remove all its files/data/configuration
+netdata_uninstall: true

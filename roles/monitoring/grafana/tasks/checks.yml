@@ -1,0 +1,21 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/grafana"
+  loop:
+    - grafana_fqdn is not search("CHANGEME")
+    - grafana_admin_username is not search("CHANGEME")
+    - grafana_admin_password is not search("CHANGEME")
+    - grafana_admin_email is not search("CHANGEME")
+    - grafana_https_mode in ['selfsigned', 'letsencrypt']
+    - grafana_enable_service == grafana_enable_service | bool
+    - grafana_allowed_hosts | type_debug == "list"
+
+- name: check that variables are correctly defined (grafana_allowed_hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more of grafana_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/grafana"
+    that:
+      - item | ansible.utils.ipv4
+  loop: "{{ grafana_allowed_hosts }}"

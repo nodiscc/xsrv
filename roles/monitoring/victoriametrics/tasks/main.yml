@@ -1,0 +1,7 @@
+- name: import victoriametrics installation tasks
+  become: yes
+  import_tasks: victoriametrics.yml
+  tags:
+    - victoriametrics
+    - monitoring
+    - prometheus

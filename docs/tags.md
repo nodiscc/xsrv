@@ -21,6 +21,7 @@ dnsmasq - setup dnsmasq DNS server
 dns - setup DNS resolution
 dovecot - setup dovecot MDA/IMAP server
 element - setup element matrix web chat client
+exporters - deploy prometheus monitoring agents/exporters
 fail2ban - setup fail2ban intrusion prevention system
 firewall - setup firewall
 gitea_act_runner - setup gitea CI/CD runner (act-runner)
@@ -28,6 +29,8 @@ gitea-config - update gitea configuration
 gitea - setup gitea git service/software forge
 goaccess - setup goaccess web log analyzer/viewer
 gotty - setup gotty web terminal
+grafana-config - update grafana configuration
+grafana - setup grafana analytics and interactive visualization web application
 graylog - setup graylog log analyzer
 homepage - setup simple webserver homepage
 hostname - setup hostname
@@ -47,7 +50,7 @@ lynis - setup lynis security audit tool
 mail - setup outgoing system mail
 matrix - setup matrix chat server and web client
 mongodb - setup mongodb database
-monitoring - setup monitoring/alerting/logging system/utilities
+monitoring - deploy all monitoring-related components
 monitoring_utils - setup command-line/additional monitoring utilities
 moodist - setup Moodist ambient sound mixer
 msmtp - setup outgoing system mail
@@ -63,6 +66,8 @@ owncast - setup owncast live streaming server
 packages - additional package installation/removal
 podman - setup podman container engine
 postgresql - setup postgresql database server
+prometheus-exporter - deploy prometheus monitoring agents/exporters
+prometheus - setup all victoriametrics/prometheus related monitoring components
 readme_gen - add hosts information to the project's README.md
 rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
 rsyslog - setup system log processing
@@ -103,12 +108,23 @@ utils-podman-uninstall - (manual) uninstall podman container engine
 utils-reboot - (manual) reboot the host
 utils-samba-listusers - (manual) list samba users
 utils-shutdown - (manual) shut down the host
+victoriametrics - setup victoriametrics monitoring service and time-series database
 wireguard - setup wireguard
 OTHER TAGS:
+exporters
+grafana
+grafana-config
 graylog
+lynis
 mongodb
+monitoring_utils
 never
 nmap
+prometheus-exporter
 readme_gen
+prometheus_exporter
+utils-bonnie
+utils-duc
+victoriametrics
 
 ```
