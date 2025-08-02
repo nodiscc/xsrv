@@ -64,6 +64,20 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
+### PROMETHEUS ###
+
+- name: restart prometheus-exporter-exporter
+  become: true
+  systemd:
+    name: prometheus-exporter-exporter.service
+    state: restarted
+
+- name: restart prometheus-php-fpm-exporter
+  become: true
+  systemd:
+    name: prometheus-php-fpm-exporter.service
+    state: restarted
+
 ### BACKUP/RSNAPSHOT ###
 
 - name: check rsnapshot configuration
