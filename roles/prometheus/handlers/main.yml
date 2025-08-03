@@ -1,7 +1,6 @@
-- name: restart prometheus
+- name: restart victoriametrics
   become: yes
   systemd:
-    name: prometheus.service
+    name: victoria-metrics.service
     state: restarted
-  when: prometheus_enable_service
   ignore_errors: "{{ ansible_check_mode }}"
