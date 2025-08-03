@@ -1,21 +1,4 @@
-- name: import variable checks tasks
-  import_tasks: checks.yml
-  tags:
-    - prometheus
-    - checks
-
 - name: import prometheus installation tasks
   become: yes
   import_tasks: prometheus.yml
   tags: prometheus
-
-- name: import firewalld configuration tasks
-  import_tasks: firewalld.yml
-  become: yes
-  tags:
-    - monitoring
-    - prometheus
-    - firewall
-  when:
-    - ansible_local.firewalld.ansible_managed is defined
-    - ansible_local.firewalld.ansible_managed | bool

@@ -1,9 +1,0 @@
-- name: setup firewalld rules for prometheus
-  ansible.posix.firewalld:
-    zone: "{{ item.zone }}"
-    service: prometheus
-    state: "{{ item.state }}"
-    permanent: yes
-    immediate: yes
-  with_items: "{{ prometheus_firewalld_zones }}"
-  ignore_errors: "{{ ansible_check_mode }}"

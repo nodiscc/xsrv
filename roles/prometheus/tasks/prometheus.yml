@@ -1,28 +1,32 @@
-- name: install prometheus
+- name: install victoriametrics
   apt:
     state: present
     package:
-      - prometheus
+      - victoria-metrics
 
-- name: configure prometheus
+- name: configure victoriametrics
   template:
-    src: etc_prometheus_prometheus.yml.j2
-    dest: /etc/prometheus/prometheus.yml
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: "0644"
-  notify: restart prometheus
-  ignore_errors: "{{ ansible_check_mode }}"
+  notify: restart victoriametrics
+  loop:
+    - src: etc_victoriametrics.yml.j2
+      dest: /etc/victoriametrics.yml
+    - src: etc_default_victoria-metrics.j2
+      dest: /etc/default/victoria-metrics
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
 ##### SERVICE #####
 
-- name: start/stop/enable/disable prometheus service
+- name: start/stop/enable/disable victoria-metrics service
   service:
-    name: prometheus
-    state: "{{ 'started' if prometheus_enable_service else 'stopped' }}"
-    enabled: "{{ 'yes' if prometheus_enable_service else 'no' }}"
+    name: victoria-metrics
+    state: started
+    enabled: true
   tags: services
   ignore_errors: "{{ ansible_check_mode }}"
