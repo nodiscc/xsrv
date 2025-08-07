@@ -66,6 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - update documentation
 
 **Fixed:**
+- jitsi: fix apt prosody apt repository failing to update with `The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F7A37EB33D0B25D7`
 - matrix: update APT repository signing key (the previous key has expired)
 - wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
 
