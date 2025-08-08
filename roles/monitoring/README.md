@@ -2,7 +2,7 @@
 
 This role will install a monitoring, alerting and logging system on a Linux machine. It is an alias for the following roles:
  - [nodiscc.xsrv.monitoring_rsyslog](../monitoring_rsyslog)
- - [nodiscc.xsrv.monitoring_utils](../monitoring_utils)
+ - [nodiscc.xsrv.monitoring.base](base/)
 
 ## Requirements/dependencies/example playbook
 

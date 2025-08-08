@@ -9,7 +9,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 - you can remove the `data/wireguard/` directory from your project directory since it is no longer used
-- wireguard:if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
+- if you were calling the `nodiscc.xsrv.monitoring_utils` role directly from your playbook, rename it (`xsrv edit-playbook`) to `nodiscc.xsrv.monitoring.base`
+- wireguard: if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
 
 ```diff
 -#     routes: "1.2.3.4/32, 192.168.18.0/24"
@@ -18,8 +19,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 +#       - 192.168.18.0/24
 ```
 
-- **monitoring_netdata:** if you want to keep using the [`monitoring_netdata`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/monitoring_netdata) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.netdata`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. See the role README.md for more information on this removal. Netdata should keep working as long you do not explicitely uninstall it, but automatic integration of netdata with other roles will no longer be maintained. Uninstallation instructions and alternative monitoring systems will be provided in the next release.
+- **monitoring_netdata:** if you want to keep using the [`monitoring_netdata`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/monitoring_netdata) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.netdata`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. See the role README.md for more information on this removal. Netdata should keep working as long you do not explicitely uninstall it, but automatic integration of netdata with other roles will no longer be maintained.
 
+It is recommended to switch to the [monitoring.base](roles/monitoring/base/) and [monitoring.grafana](roles/monitoring/grafana) roles instead (`xsrv edit-playbook`, replace `nodiscc.xsrv.monitoring_netdata` with `nodiscc.xsrv.monitoring.base` and `nodiscc.xsrv.monitoring.grafana`). This will also [uninstall netdata](roles/monitoring/base/tasks/uninstall-netdata.yml).
 
 **Removed:**
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
@@ -28,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Deprecated:**
 
 **Added:**
+- add [`monitoring.base`](roles/monitoring/base) role (basic monitoring utilities + prometheus monitoring agents/exporters)
 - add [`kiwix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix) role (offline viewer for Wikipedia and other wikis)
 - common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))

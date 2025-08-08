@@ -40,7 +40,7 @@ This project provides:
 - [monitoring](roles/monitoring) - monitoring, alerting, audit and logging system
 - [monitoring_goaccess](roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
 - [monitoring_rsyslog](roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
-- [monitoring_utils](roles/monitoring_utils) - monitoring and audit utilities
+- [monitoring.base](roles/monitoring/base) - monitoring and audit utilities
 - [moodist](roles/moodist) - Ambient sound mixer
 - [mumble](roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
