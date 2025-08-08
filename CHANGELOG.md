@@ -27,10 +27,9 @@ It is recommended to switch to the [monitoring.base](roles/monitoring/base/) and
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - monitoring_rsyslog: ensure logrotate is installed
 
-**Deprecated:**
-
 **Added:**
 - add [`monitoring.base`](roles/monitoring/base) role (basic monitoring utilities + prometheus monitoring agents/exporters)
+- add [`monitoring.grafana`](roles/monitoring/base) role (analytics and interactive visualization web application)
 - add [`kiwix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix) role (offline viewer for Wikipedia and other wikis)
 - common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))
