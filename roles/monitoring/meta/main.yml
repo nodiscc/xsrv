@@ -28,5 +28,6 @@ galaxy_info:
     - grafana
 dependencies:
   - nodiscc.xsrv.handlers
-  - nodiscc.xsrv.monitoring_rsyslog
   - nodiscc.xsrv.monitoring.base
+  - nodiscc.xsrv.monitoring_rsyslog
+  - nodiscc.xsrv.monitoring.grafana
