@@ -40,7 +40,7 @@ This project provides:
 - [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) - monitoring, alerting, audit and logging system
 - [monitoring_goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
 - [monitoring_rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
-- [monitoring_utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils) - monitoring and audit utilities
+- [monitoring.base](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/base) - monitoring and audit utilities
 - [moodist](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist) - Ambient sound mixer
 - [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform

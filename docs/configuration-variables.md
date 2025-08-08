@@ -1343,9 +1343,9 @@ rsyslog_firewalld_zones:
 ```
 
 
-## monitoring_utils
+## monitoring.base
 
-[roles/monitoring_utils/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml)
+[roles/monitoring/base/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
 
 ```yaml
 ##### MONITORING UTILITIES #####

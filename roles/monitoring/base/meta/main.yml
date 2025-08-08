@@ -2,22 +2,28 @@
 # @tag monitoring_utils - setup command-line/additional monitoring utilities
 # @tag utils-duc - (manual) run duc disk usage analyzer and download the report on the controller
 # @tag utils-bonnie - (manual) run duc disk benchmarking tool and download the report on the controller
+# @tag prometheus-exporter - deploy prometheus monitoring agents/exporters
+# @tag monitoring - deploy all monitoring-related components
 
 galaxy_info:
-  role_name: monitoring_utils
+  role_name: monitoring.base
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "monitoring and audit utilities"
+  description: "basic monitoring utilities + prometheus monitoring agents/exporters"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:
     - name: Debian
       versions:
-        - "11"
         - "12"
   galaxy_tags:
+    - monitoring
+    - exporters
+    - prometheus
     - system
     - monitoring
     - audit
     - security
 dependencies:
   - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional

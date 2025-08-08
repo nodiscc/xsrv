@@ -1,6 +1,7 @@
-# xsrv.monitoring_utils
+# xsrv.monitoring.base
 
 This role will install and configure various [monitoring](../monitoring) and audit utilities:
+- prometheus [exporter-exporter](https://packages.debian.org/bookworm/prometheus-exporter-exporter)
 - [lynis](https://cisofy.com/lynis/) security auditing tool
 - [htop](https://hisham.hm/htop/) system monitor/process manager
 - [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor
@@ -23,11 +24,16 @@ See [meta/main.yml](meta/main.yml)
 - hosts: my.CHANGEME.org
   roles:
     - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall
-    - nodiscc.xsrv.monitoring_utils
-    # - nodiscc.xsrv.monitoring # (optional) full monitoring suite including monitoring_utils
+    - nodiscc.xsrv.monitoring.base
+    # - nodiscc.xsrv.apache # (example) any role that integrates a prometheus exporter
+    # - nodiscc.xsrv.postgresql # (example) any role that integrates a prometheus exporter
+    # - nodiscc.xsrv.monitoring.grafana # (optional) central scraper for prometheus metrics + visualization dashboards
+    # - nodiscc.xsrv.monitoring # (optional) full monitoring suite including monitoring.base
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
+
+This role should be deployed (in playbook order) before any other roles that integrate prometheus exporters. Their exporter will automatically register with prometheus-exporter and expose their metrics through it.
 
 
 ## Usage

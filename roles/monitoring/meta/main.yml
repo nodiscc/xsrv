@@ -24,7 +24,9 @@ galaxy_info:
     - logging
     - audit
     - security
+    - prometheus
+    - grafana
 dependencies:
   - nodiscc.xsrv.handlers
   - nodiscc.xsrv.monitoring_rsyslog
-  - nodiscc.xsrv.monitoring_utils
+  - nodiscc.xsrv.monitoring.base

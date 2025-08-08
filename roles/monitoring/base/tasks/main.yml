@@ -1,3 +1,19 @@
+- name: import prometheus exporter setup tasks
+  become: yes
+  import_tasks: prometheus_exporter.yml
+  tags:
+    - monitoring
+    - prometheus
+    - prometheus_exporter
+
+- name: import ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags:
+    - monitoring
+    - prometheus
+    - prometheus_exporter
+
 - name: import monitoring-utils configuration tasks
   import_tasks: monitoring-utils.yml
   become: yes
@@ -10,14 +26,12 @@
   become: yes
   tags:
     - monitoring
-    - monitoring_utils
     - lynis
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags:
     - monitoring
-    - monitoring_utils
     - lynis
 
 ##### UTILITIES #####
