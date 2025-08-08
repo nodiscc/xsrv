@@ -4,6 +4,7 @@
   tags:
     - postgresql
     - rsyslog
+    - monitoring
 
 - name: import postgresql configuration tasks
   import_tasks: postgresql.yml
