@@ -76,3 +76,12 @@ scrape_configs:
     params:
       module:
         - libvirt
+  - job_name: postgres
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets: ['localhost:9999']
+    metrics_path: /proxy
+    params:
+      module:
+        - postgres
