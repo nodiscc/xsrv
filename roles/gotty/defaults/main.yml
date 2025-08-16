@@ -27,7 +27,7 @@ gotty_input_timeout: 0
 # IP address to listen on
 gotty_listen_address: "0.0.0.0"
 # gotty release/version number (https://github.com/sorenisanerd/gotty/releases, without leading v)
-gotty_version: "1.5.0"
+gotty_version: "1.6.0"
 # list of IP addresses allowed to access gotty (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 gotty_allowed_hosts: []
