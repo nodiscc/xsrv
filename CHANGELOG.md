@@ -41,7 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
 - shaarli: udpate to [v0.15.0](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
-- nextcloud: update to 30.0.13 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/)
+- nextcloud: update to 30.0.14 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/)
 - gitea: update to v1.24.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.5) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.6) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.7) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.23.8) [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.24.0) [[6]](https://github.com/go-gitea/gitea/releases/tag/v1.24.1) [[7]](https://github.com/go-gitea/gitea/releases/tag/v1.24.2) [[8]](https://github.com/go-gitea/gitea/releases/tag/v1.24.3)
 - owncast: update to v0.2.3 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.2) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.3)
 - postgresql: update pgmetrics to v1.17.1 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1)
