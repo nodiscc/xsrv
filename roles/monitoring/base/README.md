@@ -73,6 +73,11 @@ linux_users:
 
 **Disk benchmarking:** `bonnie++` is configured to run the benchmark with test files of 1024MB, and will allocate a set amount of memory of 512MB.
 
+## Development
+
+### Integration with other roles
+
+Each role/component that needs to expose metrics through prometheus exporter-exporter needs to add an exporter-exporter configuration at under `/etc/prometheus/exporter-exporter/ROLENAME.yaml` and trigger the `restart prometheus-exporter-exporter` handler (this means that `nodiscc.xsrv.handlers` must be added to the role's `dependencies:` in `meta/main.yml`). See [roles/apache/tasks/prometheus.yml](../../apache/tasks/prometheus.yml) for a complete example.
 
 ## Tags
 
