@@ -69,6 +69,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - jitsi: fix apt prosody apt repository failing to update with `The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F7A37EB33D0B25D7`
 - matrix: update APT repository signing key (the previous key has expired)
 - wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
+- shaarli: fix missing php extension php-xml
 
 [Full changes since v1.27.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.27.0...1.28.0)
 

@@ -21,6 +21,7 @@
       - "php{{ shaarli_php_fpm_version }}-curl"
       - "php{{ shaarli_php_fpm_version }}-gettext"
       - "php{{ shaarli_php_fpm_version }}-ldap"
+      - "php{{ shaarli_php_fpm_version }}-xml"
 
 ### CHECK INSTALLATION STATUS ###
 
