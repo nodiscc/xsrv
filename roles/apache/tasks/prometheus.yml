@@ -23,7 +23,7 @@
 # TODO version
 - name: download php-fpm exporter
   get_url:
-    url: https://github.com/hipages/php-fpm_exporter/releases/download/v2.2.0/php-fpm_exporter_2.2.0_linux_amd64
+    url: "https://github.com/hipages/php-fpm_exporter/releases/download/v{{ prometheus_php_fpm_exporter_version }}/php-fpm_exporter_{{ prometheus_php_fpm_exporter_version }}_linux_amd64"
     dest: /usr/local/bin/prometheus-php-fpm-exporter
     owner: root
     group: root
