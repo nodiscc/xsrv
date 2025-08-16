@@ -61,7 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to v11.8.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - xsrv: update trivy security scanner to v0.62.1 [[1]](https://github.com/aquasecurity/trivy/releases/tag/v0.61.1) [[2]](https://github.com/aquasecurity/trivy/releases/tag/v0.62.1)
 - gitea_act_runner: update act-runner to v0.2.12 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.12)
-- goaccess: update IP to Country GeoIP database to v2025-06
+- goaccess: update IP to Country GeoIP database to v2025-08
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
