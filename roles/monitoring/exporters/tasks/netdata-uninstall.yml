@@ -3,6 +3,10 @@
     name: netdata.service
     state: stopped
     enabled: false
+  register: netdata_stop_service
+  failed_when:
+    - netdata_stop_service.failed
+    - '"Could not find the requested service netdata.service: host" not in netdata_stop_service.msg'
 
 - name: remove netdata packages
   apt:
