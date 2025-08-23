@@ -37,7 +37,7 @@ This project provides:
 - [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) - virtualization toolkit
 - [mail_dovecot](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) - IMAP mailbox server
 - [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - secure instant messaging service
-- [monitoring.exporters](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/exporters) - prometheus monitoring agents/exporters
+- [monitoring.exporters](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/exporters) - monitoring agents/metrics exporters
 - [monitoring.goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
 - [monitoring.grafana](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/grafana) - Analytics and interactive visualization web application
 - [monitoring.rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog) - log aggregation, processing and forwarding system

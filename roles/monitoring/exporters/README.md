@@ -30,7 +30,7 @@ This role should be deployed (in playbook order) before any other roles that int
 
 ### Integration with other roles
 
-Each role/component that needs to expose metrics through prometheus exporter-exporter needs to add an exporter-exporter configuration at under `/etc/prometheus/exporter-exporter/ROLENAME.yaml` and trigger the `restart prometheus-exporter-exporter` handler (this means that `nodiscc.xsrv.handlers` must be added to the role's `dependencies:` in `meta/main.yml`). See [roles/apache/tasks/prometheus.yml](../../apache/tasks/prometheus.yml) for a complete example.
+Each role/component that needs to expose metrics through prometheus exporter-exporter needs to add an exporter-exporter configuration at under `/etc/prometheus/exporter-exporter/ROLENAME.yaml` and trigger the `restart prometheus-exporter-exporter` handler (this means that `nodiscc.xsrv.handlers` must be added to the role's `dependencies:` in `meta/main.yml`). See [roles/apache/tasks/exporters.yml](../../apache/tasks/exporters.yml) for a complete example.
 
 ## Tags
 
