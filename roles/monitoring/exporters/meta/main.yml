@@ -5,7 +5,7 @@
 galaxy_info:
   role_name: monitoring.exporters
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "prometheus monitoring agents/exporters"
+  description: "monitoring agents/metrics exporters"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:
