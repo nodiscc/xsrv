@@ -25,7 +25,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
   - if present, rename `nodiscc.xsrv.monitoring_goaccess` to `nodiscc.xsrv.monitoring.goaccess`
   - if present, remove the `nodiscc.xsrv.monitoring_netdata` role
   - add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and scrape metrics from all hosts where the `nodiscc.xsrv.monitoring.exporters` is deployed
-  - add the ``nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role. This will provide visualizations/dashboards for metrics collected by victoriametrics.
+  - add the `nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role. This will provide visualizations/dashboards for metrics collected by victoriametrics
+  - make sure the host where victoriametrics is deployed, can access hosts where exporters are deployed on port 9999/tcp (NAT, firewalls)
 - update your hosts/groups (`xsrv edit-host/edit-group`) and remove all variables named `netdata_*`, use the equivalents listed below instead:
   - `netdata_allow_connections_from`: [`grafana_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
   - `netdata_http_checks`: [`grafana_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
@@ -34,13 +35,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
   - `netdata_fping_hosts`: [`grafana_ping_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
   - `netdata_firewalld_zones`: [`prometheus_exporter_exporter_firewalld_zones`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
 
-The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`
+The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`. You should remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata).
 
 
 **Removed:**
 - monitoring: remove role (it was only an alias for basic monitoring roles, the roles must now be enabled independently)
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository. See the role README for more information on about this removal. It will no longer be supported or maintained, and automatic integration of netdata in other roles has been removed.
-- monitoring.rsyslog: ensure logrotate is installed
 
 **Added:**
 - add [`monitoring.exporters`](roles/monitoring/exporters) role (monitoring agents/metrics exporters)
@@ -68,6 +68,7 @@ The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove a
 - searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 2
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
+- monitoring.rsyslog: ensure logrotate is installed
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - shaarli: update stack template to v0.11 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.11)
 - shaarli: udpate to [v0.15.0](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
