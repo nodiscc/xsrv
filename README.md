@@ -37,7 +37,7 @@ This project provides:
 - [libvirt](roles/libvirt) - virtualization toolkit
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [matrix](roles/matrix) - secure instant messaging service
-- [monitoring.exporters](roles/monitoring/exporters) - prometheus monitoring agents/exporters
+- [monitoring.exporters](roles/monitoring/exporters) - monitoring agents/metrics exporters
 - [monitoring.goaccess](roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
 - [monitoring.grafana](roles/monitoring/grafana) - Analytics and interactive visualization web application
 - [monitoring.rsyslog](roles/monitoring/rsyslog) - log aggregation, processing and forwarding system

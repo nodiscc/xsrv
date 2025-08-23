@@ -54,17 +54,16 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: import prometheus configuration tasks
-  import_tasks: prometheus.yml
+- name: import metrics exporters configuration tasks
+  import_tasks: exporters.yml
   become: yes
   tags:
     - apache
     - monitoring
-    - prometheus
-    - prometheus_exporter
+    - exporters
   when:
-    - ansible_local.prometheus_exporter.ansible_managed is defined
-    - ansible_local.prometheus_exporter.ansible_managed | bool
+    - ansible_local.exporters.ansible_managed is defined
+    - ansible_local.exporters.ansible_managed | bool
 
 - name: import ansible facts configuration tasks
   import_tasks: fact.yml
