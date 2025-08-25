@@ -9,6 +9,12 @@ modules:
     http:
       port: 9256
 
+  blackbox:
+    method: http
+    http:
+       port: 9115
+       path: probe
+
   # mtail:
   #   method: http
   #   http:
@@ -24,8 +30,3 @@ modules:
   #   http:
   #      port: 9101
 
-  # blackbox:
-  #   method: http
-  #   http:
-  #      port: 9115
-  #      path: probe

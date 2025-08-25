@@ -85,3 +85,10 @@ scrape_configs:
     params:
       module:
         - postgres
+  - job_name: blackbox
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: /probe
+    file_sd_configs:
+      - files:
+          - /etc/prometheus/blackbox-exporter/*.yml
