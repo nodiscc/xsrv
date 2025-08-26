@@ -3,7 +3,6 @@
   import_tasks: netdata-uninstall.yml
   tags:
     - monitoring
-    - prometheus
     - exporters
   when: netdata_uninstall
 
@@ -12,7 +11,6 @@
   import_tasks: exporters.yml
   tags:
     - monitoring
-    - prometheus
     - exporters
 
 - name: import ansible facts configuration tasks
@@ -20,12 +18,10 @@
   become: yes
   tags:
     - monitoring
-    - prometheus
     - exporters
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags:
     - monitoring
-    - prometheus
     - exporters
