@@ -447,7 +447,7 @@ Open the current `/var/log/syslog` log with the [lnav](https://lnav.org/) log vi
 $ xsrv logs default my.example.org
 ```
 
-If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring.rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog)/[monitoring.base](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/base) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be found [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/base#usage)
+If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring.rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog)/[monitoring.base](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/utils) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be found [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/utils#usage)
 
 
 ### xsrv show-groups
