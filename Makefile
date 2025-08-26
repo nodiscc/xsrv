@@ -169,7 +169,7 @@ update_todo:
 .PHONY: doc_md # manual - generate markdown documentation
 doc_md:
 	# update README.md from available roles
-	@roles_list_md=$$(for i in roles/*/meta/main.yml roles/monitoring/*/meta/main.yml; do \
+	@roles_list_md=$$(for i in roles/*/meta/main.yml roles/*/*/meta/main.yml; do \
 		name=$$(grep "role_name: " "$$i" | awk -F': ' '{print $$2}'); \
 		description=$$(grep "description: " "$$i" | awk -F': ' '{print $$2}' | sed 's/"//g'); \
 		role_path=$$(echo "$$name" | tr '.' '/'); \
