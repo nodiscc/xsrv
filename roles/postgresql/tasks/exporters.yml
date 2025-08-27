@@ -12,6 +12,16 @@
     configuration:
       search_path: prometheus,pg_catalog
 
+- name: grant pg_monitor,pg_read_all_stats privileges to prometheus postgresql user
+  become_user: postgres
+  become: true
+  community.postgresql.postgresql_privs:
+    roles: prometheus
+    login_db: postgres
+    type: group
+    objs: pg_monitor,pg_read_all_stats
+    admin_option: false
+
 - name: copy prometheus schema creation script
   copy:
     src: var_lib_prometheus_create-postgresql-exporter-schema.sql
