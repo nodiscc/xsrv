@@ -27,6 +27,15 @@
     path: /var/lib/prometheus/create-postgresql-exporter-schema.sql
   when: ansible_local.prometheus_postgresql_exporter.prometheus_schema_created is not defined
 
+- name: copy prometheus postgresql exporter configuration
+  template:
+    src: etc_default_prometheus-postgres-exporter.j2
+    dest: /etc/default/prometheus-postgres-exporter
+    owner: prometheus
+    group: prometheus
+    mode: "0640"
+  notify: restart prometheus postgresql exporter
+
 - name: add postgres exporter to exporter-exporter configuration
   template:
     src: etc_prometheus_exporter-exporter_postgres.yaml.j2
