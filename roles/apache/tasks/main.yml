@@ -11,6 +11,7 @@
     - apache
     - monitoring
     - rsyslog
+    - exporters
 
 - name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
