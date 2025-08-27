@@ -3,15 +3,6 @@
     package: prometheus-apache-exporter
     state: present
 
-- name: configure prometheus apache exporter
-  template:
-    src: etc_default_prometheus-apache-exporter.j2
-    dest: /etc/default/prometheus-apache-exporter
-    owner: root
-    group: root
-    mode: "0644"
-  notify: restart prometheus apache exporter
-
 - name: start and enable prometheus-apache-exporter
   systemd:
     name: prometheus-apache-exporter.service
@@ -32,7 +23,6 @@
 
 ##### PHP-FPM #####
 
-# TODO version
 - name: download php-fpm exporter
   get_url:
     url: "https://github.com/hipages/php-fpm_exporter/releases/download/v{{ prometheus_php_fpm_exporter_version }}/php-fpm_exporter_{{ prometheus_php_fpm_exporter_version }}_linux_amd64"
