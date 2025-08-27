@@ -1,4 +1,4 @@
-- name: import monitoring-utils configuration tasks
+- name: import monitoring utilities installation tasks
   import_tasks: monitoring-utils.yml
   become: yes
   tags:
@@ -11,12 +11,14 @@
   tags:
     - monitoring
     - lynis
+    - monitoring_utils
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags:
     - monitoring
     - lynis
+    - monitoring_utils
 
 ##### UTILITIES #####
 # These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line

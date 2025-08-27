@@ -1,5 +1,4 @@
 # @tag victoriametrics - setup victoriametrics monitoring service and time-series database
-# @tag prometheus - setup all victoriametrics/prometheus related monitoring components
 
 galaxy_info:
   role_name: monitoring.victoriametrics

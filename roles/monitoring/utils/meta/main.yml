@@ -2,7 +2,6 @@
 # @tag monitoring_utils - setup command-line/additional monitoring utilities
 # @tag utils-duc - (manual) run duc disk usage analyzer and download the report on the controller
 # @tag utils-bonnie - (manual) run duc disk benchmarking tool and download the report on the controller
-# @tag prometheus-exporter - deploy prometheus monitoring agents/exporters
 # @tag monitoring - deploy all monitoring-related components
 
 galaxy_info:
