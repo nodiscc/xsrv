@@ -3,6 +3,24 @@
     package: prometheus-apache-exporter
     state: present
 
+- name: configure prometheus apache exporter
+  template:
+    src: etc_default_prometheus-apache-exporter.j2
+    dest: /etc/default/prometheus-apache-exporter
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus apache exporter
+
+- name: start and enable prometheus-apache-exporter
+  systemd:
+    name: prometheus-apache-exporter.service
+    state: started
+    enabled: true
+  notify: restart prometheus apache exporter
+
+##### EXPORTER-EXPORTER #####
+
 - name: add apache exporter to exporter-exporter configuration
   template:
     src: etc_prometheus_exporter-exporter_apache.yaml.j2
@@ -11,12 +29,6 @@
     group: prometheus
     mode: "0640"
   notify: restart prometheus-exporter-exporter
-
-- name: start and enable prometheus-apache-exporter
-  systemd:
-    name: prometheus-apache-exporter.service
-    state: started
-    enabled: true
 
 ##### PHP-FPM #####
 
