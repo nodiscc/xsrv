@@ -2,6 +2,7 @@
   import_tasks: checks.yml
   tags:
     - tt_rss
+    - postgresql
     - checks
 
 - name: load distribution-specific variables
