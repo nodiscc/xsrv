@@ -27,7 +27,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "fieldConfig": {
         "defaults": {
@@ -94,7 +94,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "apache_uptime_seconds_total{instance=~\"$host:$port\"}",
           "format": "time_series",
@@ -113,7 +113,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "decimals": 0,
       "fieldConfig": {
@@ -172,7 +172,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "count(apache_up{instance=~\"$host:$port\"} == 1)",
           "format": "time_series",
@@ -184,7 +184,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "scalar(count(apache_up{instance=~\"$host:$port\"} == 0))",
           "format": "time_series",
@@ -232,7 +232,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "decimals": 2,
       "fieldConfig": {
@@ -281,7 +281,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "rate(apache_sent_kilobytes_total{instance=~\"$host:$port\"}[5m])",
           "format": "time_series",
@@ -328,7 +328,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "decimals": 2,
       "fieldConfig": {
@@ -377,7 +377,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "rate(apache_accesses_total{instance=~\"$host:$port\"}[5m])",
           "format": "time_series",
@@ -424,7 +424,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "decimals": 2,
       "fieldConfig": {
@@ -474,7 +474,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "apache_scoreboard{instance=~\"$host:$port\"}",
           "format": "time_series",
@@ -521,7 +521,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "decimals": 2,
       "fill": 1,
@@ -558,7 +558,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "apache_workers{instance=~\"$host:$port\"}\n",
           "format": "time_series",
@@ -601,7 +601,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "decimals": 2,
       "fill": 1,
@@ -638,7 +638,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "apache_cpuload{instance=~\"$host:$port\"}",
           "format": "time_series",
@@ -689,7 +689,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+          "uid": "local_prometheus_victoriametrics"
         },
         "definition": "",
         "hide": 0,
@@ -716,7 +716,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+          "uid": "local_prometheus_victoriametrics"
         },
         "definition": "",
         "hide": 2,

@@ -1199,7 +1199,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The maximum amount of memory consumed by the last request.",
       "fieldConfig": {
@@ -1280,7 +1280,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "avg(phpfpm_process_last_request_memory{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (pool)",
@@ -1296,7 +1296,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "Last CPU Request / Request Duration",
       "fieldConfig": {
@@ -1377,7 +1377,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "avg(phpfpm_process_last_request_cpu{instance=~\"^$Host$\", pool=~\"$Pool\"} / phpfpm_process_request_duration) by (pool) ",
@@ -1393,7 +1393,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The total number of requests served.",
       "fieldConfig": {
@@ -1473,7 +1473,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "avg(phpfpm_process_requests{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (pool)",
@@ -1489,7 +1489,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "Time used by the last request done (idle state) or the current request (all other states).",
       "fieldConfig": {
@@ -1570,7 +1570,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "avg(phpfpm_process_request_duration{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (pool)",
@@ -1586,7 +1586,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "",
       "fieldConfig": {
@@ -1668,7 +1668,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum(phpfpm_process_state{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (state)",
@@ -1680,7 +1680,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1735,7 +1735,7 @@
         "current": {
           "selected": false,
           "text": "prometheus",
-          "value": "b013a2f4-04f4-4650-8ef5-901474297d05"
+          "value": "local_prometheus_victoriametrics"
         },
         "hide": 2,
         "includeAll": false,
@@ -1803,7 +1803,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+          "uid": "local_prometheus_victoriametrics"
         },
         "definition": "label_values(phpfpm_up,pool)",
         "hide": 0,

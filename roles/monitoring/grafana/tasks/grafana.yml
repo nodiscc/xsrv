@@ -48,6 +48,8 @@
   loop:
     - src: etc_grafana_grafana.ini.j2
       dest: /etc/grafana/grafana.ini
+    - src: etc_grafana_provisioning_datasources_default.yaml.j2
+      dest: /etc/grafana/provisioning/datasources/default.yaml
     - src: etc_grafana_provisioning_dashboards_default.yaml.j2
       dest: /etc/grafana/provisioning/dashboards/default.yaml
 
