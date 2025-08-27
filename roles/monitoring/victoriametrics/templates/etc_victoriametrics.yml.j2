@@ -67,15 +67,15 @@ scrape_configs:
     params:
       module:
         - process
-  - job_name: libvirt
-    scrape_interval: 5s
-    scrape_timeout: 5s
-    static_configs:
-      - targets: ['localhost:9999']
-    metrics_path: /proxy
-    params:
-      module:
-        - libvirt
+  # - job_name: libvirt
+  #   scrape_interval: 5s
+  #   scrape_timeout: 5s
+  #   static_configs:
+  #     - targets: ['localhost:9999']
+  #   metrics_path: /proxy
+  #   params:
+  #     module:
+  #       - libvirt
   - job_name: postgres
     scrape_interval: 5s
     scrape_timeout: 5s
