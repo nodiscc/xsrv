@@ -43,7 +43,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "editable": true,
       "error": false,
@@ -93,7 +93,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "namedprocess_namegroup_num_procs{groupname=~\"$processes\"}",
           "intervalFactor": 2,
@@ -143,7 +143,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "editable": true,
       "error": false,
@@ -193,7 +193,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "rate(namedprocess_namegroup_cpu_seconds_total{groupname=~\"$processes\"}[$interval])",
           "intervalFactor": 2,
@@ -242,7 +242,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "editable": true,
       "error": false,
@@ -292,7 +292,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "rate(namedprocess_namegroup_read_bytes_total{groupname=~\"$processes\"}[$interval])",
           "intervalFactor": 2,
@@ -341,7 +341,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "editable": true,
       "error": false,
@@ -391,7 +391,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "rate(namedprocess_namegroup_write_bytes_total{groupname=~\"$processes\"}[$interval])",
           "intervalFactor": 2,
@@ -440,7 +440,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "editable": true,
       "error": false,
@@ -490,7 +490,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "namedprocess_namegroup_memory_bytes{groupname=~\"$processes\", memtype=\"resident\"}",
           "intervalFactor": 2,
@@ -539,7 +539,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+        "uid": "local_prometheus_victoriametrics"
       },
       "editable": true,
       "error": false,
@@ -589,7 +589,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+            "uid": "local_prometheus_victoriametrics"
           },
           "expr": "namedprocess_namegroup_memory_bytes{groupname=~\"$processes\", memtype=\"virtual\"}",
           "intervalFactor": 2,
@@ -728,7 +728,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "b013a2f4-04f4-4650-8ef5-901474297d05"
+          "uid": "local_prometheus_victoriametrics"
         },
         "definition": "",
         "hide": 0,
