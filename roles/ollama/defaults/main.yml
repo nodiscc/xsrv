@@ -13,7 +13,7 @@ ollama_models:
 ollama_username: "CHANGEME"
 ollama_password: "CHANGEME"
 # ollama version (https://github.com/ollama/ollama/releases.atom)
-ollama_version: "v0.11.10"
+ollama_version: "v0.11.11"
 # enable automatic backups of downloaded models (if the nodiscc.xsrv.backup role is deployed) (no/yes)
 ollama_backup_models: no
 # enable/disable installation of ollama-ui (yes/no)
