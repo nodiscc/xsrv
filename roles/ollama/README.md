@@ -51,6 +51,15 @@ Run `ollama help` to show all available CLI commands.
 
 See the included [rsnapshot configuration](templates/etc_rsnapshot.d_ollama.conf.j2) for the [backup role](../backup) and the [`ollama_backup_models`](defaults/main.yml) configuration variable. By default, automatic backups of downloaded models are disabled.
 
+### Uninstallation
+
+```bash
+sudo systemctl disable --now ollama-ui ollama
+sudo rm -rf /etc/apache2/ollama-passwd /etc/apache2/sites-available/ollama.conf /etc/apache2/sites-enabled/ollama.conf /etc/rsnapshot.d/ollama.conf /etc/ansible/facts.d/ollama.fact /var/lib/ollama-ui /etc/systemd/system/ollama-ui.service /usr/local/bin/ollama /usr/local/lib/ollama /var/lib/ollama /etc/systemd/system/ollama.service
+sudo deluser ollama
+sudo systemctl daemon-reload
+sudo systemctl restart apache2
+```
 
 ## Tags
 
