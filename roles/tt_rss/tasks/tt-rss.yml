@@ -30,7 +30,7 @@
 
 - name: clone/upgrade tt-rss
   git:
-    repo: https://git.tt-rss.org/fox/tt-rss.git
+    repo: https://gitlab.com/nodiscc/tt-rss
     dest: "{{ tt_rss_install_dir }}"
     version: '{{ tt_rss_version }}'
     accept_hostkey: yes
