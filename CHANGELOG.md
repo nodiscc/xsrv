@@ -20,10 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **BREAKING: monitoring roles refactoring:**
 - update your playbook (`xsrv edit-playbook`):
-  - if present, replace the `nodiscc.xsrv.monitoring` role with `nodiscc.xsrv.monitoring.utils`, `nodiscc.xsrv.monitoring.rsyslog`, `nodiscc.xsrv.monitoring.exporters`
-  - if present, rename `nodiscc.xsrv.monitoring_rsyslog` to `nodiscc.xsrv.monitoring.rsyslog`
+  - remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
+  - add the `nodiscc.xsrv.monitoring.utils`, `nodiscc.xsrv.monitoring.rsyslog` and `nodiscc.xsrv.monitoring.exporters` roles to all your hosts
   - if present, rename `nodiscc.xsrv.monitoring_goaccess` to `nodiscc.xsrv.monitoring.goaccess`
-  - if present, remove the `nodiscc.xsrv.monitoring_netdata` role
   - add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and scrape metrics from all hosts where the `nodiscc.xsrv.monitoring.exporters` is deployed
   - add the `nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role. This will provide visualizations/dashboards for metrics collected by victoriametrics
   - make sure the host where victoriametrics is deployed, can access hosts where exporters are deployed on port 9999/tcp (NAT, firewalls)
