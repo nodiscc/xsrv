@@ -88,7 +88,11 @@ scrape_configs:
   - job_name: blackbox
     scrape_interval: 5s
     scrape_timeout: 5s
-    metrics_path: /probe
+    metrics_path: /proxy
+    params:
+      module:
+        - blackbox
+        - http_2xx
     file_sd_configs:
       - files:
           - /etc/prometheus/blackbox-exporter/*.yml
@@ -98,4 +102,4 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 127.0.0.1:9115  # The blackbox exporter's real hostname:port.
+        replacement: 127.0.0.1:9999

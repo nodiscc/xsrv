@@ -10,7 +10,7 @@
     path: /etc/prometheus/blackbox-exporter
     owner: root
     group: prometheus
-    mode: "0750"
+    mode: "0755"
 
 - name: configure victoriametrics
   template:
