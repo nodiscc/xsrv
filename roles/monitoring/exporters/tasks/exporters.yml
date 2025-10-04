@@ -34,3 +34,14 @@
     name: prometheus-exporter-exporter.service
     state: started
     enabled: true
+
+##### BLACKBOX EXPORTER #####
+
+- name: configure blackbox exporter
+  template:
+    src: etc_prometheus_blackbox.yml.j2
+    dest: /etc/prometheus/blackbox.yml
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus-blackbox-exporter

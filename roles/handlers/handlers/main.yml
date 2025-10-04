@@ -64,7 +64,7 @@
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
 
-### PROMETHEUS ###
+### MONITORING.EXPORTERS ###
 
 - name: restart prometheus-exporter-exporter
   become: true
@@ -76,6 +76,12 @@
   become: true
   systemd:
     name: prometheus-php-fpm-exporter.service
+    state: restarted
+
+- name: restart prometheus-blackbox-exporter
+  become: true
+  systemd:
+    name: prometheus-blackbox-exporter.service
     state: restarted
 
 ### BACKUP/RSNAPSHOT ###
