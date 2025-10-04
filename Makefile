@@ -15,7 +15,7 @@ test_shellcheck:
 	shellcheck -e SC1090,SC1091 \
 		xsrv \
 		xsrv-completion.sh \
-		roles/monitoring/base/templates/usr_local_bin_bonnie++-wrapper.j2 \
+		roles/monitoring/utils/templates/usr_local_bin_bonnie++-wrapper.j2 \
 		roles/wireguard/files/usr_local_bin_wireguard-gen-peer-config
 
 .PHONY: venv # install dev tools in virtualenv
