@@ -25,8 +25,6 @@
       dest: /etc/victoriametrics.yml
     - src: etc_default_victoria-metrics.j2
       dest: /etc/default/victoria-metrics
-    - src: etc_prometheus_blackbox-exporter_http.yml.j2
-      dest: /etc/prometheus/blackbox-exporter/http.yml
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

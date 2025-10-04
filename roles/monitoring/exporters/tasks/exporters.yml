@@ -39,9 +39,14 @@
 
 - name: configure blackbox exporter
   template:
-    src: etc_prometheus_blackbox.yml.j2
-    dest: /etc/prometheus/blackbox.yml
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: "0644"
   notify: restart prometheus-blackbox-exporter
+  loop:
+    - src: etc_prometheus_blackbox.yml.j2
+      dest: /etc/prometheus/blackbox.yml
+    - src: etc_prometheus_blackbox-exporter_http-checks.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks.yml
