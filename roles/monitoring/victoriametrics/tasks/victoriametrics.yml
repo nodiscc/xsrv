@@ -25,6 +25,10 @@
       dest: /etc/victoriametrics.yml
     - src: etc_default_victoria-metrics.j2
       dest: /etc/default/victoria-metrics
+    - src: etc_prometheus_blackbox-exporter_http-checks.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks.yml
+    - src: etc_prometheus_blackbox-exporter_http-checks-xsrv.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks-xsrv.yml
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

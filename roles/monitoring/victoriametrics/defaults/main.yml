@@ -1,0 +1,2 @@
+# automatically create HTTP checks for services hosted on these hosts
+victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
