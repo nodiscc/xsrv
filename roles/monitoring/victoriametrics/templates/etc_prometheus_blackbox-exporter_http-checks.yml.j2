@@ -1,4 +1,4 @@
 - targets:
-  - https://prometheus.io
-  - https://www.debian.org
-  - https://lemonde.fr
+{% for url in victoriametrics_http_checks %}
+  - {{ url }}
+{% endfor %}

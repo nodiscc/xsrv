@@ -1,2 +1,8 @@
-# automatically create HTTP checks for services hosted on these hosts
+# automatically create HTTP probes for xsrv roles deployed on these hosts
 victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
+# list of URLs to monitor with victoriametrics/blackbox-exporter HTTP probes
+# Example:
+# victoriametrics_http_checks:
+#   - https://prometheus.io
+#   - https://www.debian.org
+victoriametrics_http_checks: []
