@@ -25,10 +25,31 @@
       dest: /etc/victoriametrics.yml
     - src: etc_default_victoria-metrics.j2
       dest: /etc/default/victoria-metrics
-    - src: etc_prometheus_blackbox-exporter_http-checks.yml.j2
-      dest: /etc/prometheus/blackbox-exporter/http-checks.yml
+
+- name: gather facts from hosts in victoriametrics_auto_check_http_limit
+  setup:
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  loop: "{{ victoriametrics_auto_check_http_limit }}"
+  run_once: yes
+  ignore_errors: true
+  ignore_unreachable: true
+  tags: victoriametrics-http-checks
+
+- name: configure victoriametrics http checks
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart victoriametrics
+  loop:
     - src: etc_prometheus_blackbox-exporter_http-checks-xsrv.yml.j2
       dest: /etc/prometheus/blackbox-exporter/http-checks-xsrv.yml
+    - src: etc_prometheus_blackbox-exporter_http-checks.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks.yml
+  tags: victoriametrics-http-checks
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
