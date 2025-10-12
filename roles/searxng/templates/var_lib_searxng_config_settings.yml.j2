@@ -227,7 +227,6 @@ outgoing:
 #   - 'Hash plugin'
 #   - 'Self Information'
 #   - 'Tracker URL remover'
-#   - 'Ahmia blacklist'  # activation depends on outgoing.using_tor_proxy
 #   # these plugins are disabled if nothing is configured ..
 #   - 'Hostnames plugin'  # see 'hostnames' configuration below
 #   - 'Open Access DOI rewrite'
@@ -362,13 +361,6 @@ engines:
     engine: apple_app_store
     shortcut: aps
     disabled: true
-
-  # Requires Tor
-  - name: ahmia
-    engine: ahmia
-    categories: onions
-    enable_http: true
-    shortcut: ah
 
   - name: anaconda
     engine: xpath
@@ -516,12 +508,6 @@ engines:
   #   shortcut: cor
   #   # get your API key from: https://core.ac.uk/api-keys/register/
   #   api_key: 'unset'
-
-  - name: cppreference
-    engine: cppreference
-    shortcut: cpp
-    paging: false
-    disabled: true
 
   - name: crossref
     engine: crossref
@@ -1388,14 +1374,6 @@ engines:
       - https://pipedapi-libre.kavin.rocks
       - https://pipedapi.adminforge.de
 
-  - name: piped.music
-    engine: piped
-    network: piped
-    shortcut: ppdm
-    categories: music
-    piped_filter: music_songs
-    timeout: 3.0
-
   - name: piratebay
     engine: piratebay
     shortcut: tpb
@@ -1644,11 +1622,6 @@ engines:
     api_site: 'askubuntu'
     categories: [it, q&a]
 
-  - name: internetarchivescholar
-    engine: internet_archive_scholar
-    shortcut: ias
-    timeout: 15.0
-
   - name: superuser
     engine: stackexchange
     shortcut: su
@@ -1781,20 +1754,6 @@ engines:
     content_xpath: .//div[contains(@class,"overview")]
     shortcut: tm
     disabled: true
-
-  # Requires Tor
-  - name: torch
-    engine: xpath
-    paging: true
-    search_url:
-      http://xmh57jrknzkhv6y3ls3ubitzfqnkrwxhopf5aygthi7d6rplyvk3noyd.onion/cgi-bin/omega/omega?P={query}&DEFAULTOP=and
-    results_xpath: //table//tr
-    url_xpath: ./td[2]/a
-    title_xpath: ./td[2]/b
-    content_xpath: ./td[2]/small
-    categories: onions
-    enable_http: true
-    shortcut: tch
 
   # torznab engine lets you query any torznab compatible indexer.  Using this
   # engine in combination with Jackett opens the possibility to query a lot of
@@ -2201,16 +2160,6 @@ engines:
     # timeout can be reduced in 'local' search mode
     timeout: 5.0
 
-  - name: yacy images
-    engine: yacy
-    network: yacy
-    categories: images
-    search_type: image
-    shortcut: yai
-    disabled: true
-    # timeout can be reduced in 'local' search mode
-    timeout: 5.0
-
   - name: rumble
     engine: rumble
     shortcut: ru
@@ -2275,13 +2224,6 @@ engines:
     seekr_category: videos
     disabled: true
 
-  - name: sjp.pwn
-    engine: sjp
-    shortcut: sjp
-    base_url: https://sjp.pwn.pl/
-    timeout: 5.0
-    disabled: true
-
   - name: stract
     engine: stract
     shortcut: str
@@ -2331,11 +2273,6 @@ engines:
     engine: wttr
     shortcut: wttr
     timeout: 9.0
-
-  - name: yummly
-    engine: yummly
-    shortcut: yum
-    disabled: true
 
   - name: brave
     engine: brave
