@@ -26,16 +26,6 @@
     - src: etc_default_victoria-metrics.j2
       dest: /etc/default/victoria-metrics
 
-- name: gather facts from hosts in victoriametrics_auto_check_http_limit
-  setup:
-  delegate_to: "{{ item }}"
-  delegate_facts: true
-  loop: "{{ victoriametrics_auto_check_http_limit }}"
-  run_once: yes
-  ignore_errors: true
-  ignore_unreachable: true
-  tags: victoriametrics-http-checks
-
 - name: configure victoriametrics http checks
   template:
     src: "{{ item.src }}"

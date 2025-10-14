@@ -1,76 +1,15 @@
 - targets:
 {% for item in victoriametrics_auto_check_http_limit %}
-  # {{ hostvars[item]['inventory_hostname'] }}
-{% if hostvars[item]['ansible_local']['gitea']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['gitea']['fqdn'] }}
+  ##### {{ item }} #####
+{% for i in ['gitea', 'gotty', 'planarally', 'goaccess', 'graylog', 'homepage', 'jellyfin', 'owncast', 'stirlingpdf', 'moodist', 'kiwix', 'ldap_account_manager', 'self_service_password', 'nextcloud', 'synapse', 'element', 'jitsi', 'rocketchat', 'rss_bridge', 'searxng', 'shaarli', 'transmission', 'tt_rss' ] %}
+{% set fqdn_var_name = i ~ '_fqdn' %}
+{% set enable_service_var_name = i ~ '_enable_service' %}
+{% if hostvars[item][fqdn_var_name] is defined %}
+{% if hostvars[item][enable_service_var_name] | default(True) %}
+  - https://{{ hostvars[item][fqdn_var_name] }}
+{% else %}
+  # - https://{{ hostvars[item][fqdn_var_name] }} # service disabled in configuration
 {% endif %}
-{% if hostvars[item]['ansible_local']['gotty']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['gotty']['fqdn'] }}
 {% endif %}
-{% if hostvars[item]['ansible_local']['planarally']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['planarally']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['goaccess']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['goaccess']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['graylog']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['graylog']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['homepage']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['homepage']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['jellyfin']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['jellyfin']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['owncast']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['owncast']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['ollama']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['ollama']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['stirlingpdf']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['stirlingpdf']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['moodist']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['moodist']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['kiwix']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['kiwix']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['ldap_account_manager']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['ldap_account_manager']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['self_service_password']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['self_service_password']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['nextcloud']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['nextcloud']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['matrix']['synapse']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['matrix']['synapse']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['matrix']['element']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['matrix']['element']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['jitsi']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['jitsi']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['rocketchat']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['rocketchat']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['rss_bridge']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['rss_bridge']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['searxng']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['searxng']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['shaarli']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['shaarli']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['transmission']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['transmission']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_local']['tt_rss']['fqdn'] is defined %}
-  - https://{{ hostvars[item]['ansible_local']['tt_rss']['fqdn'] }}
-{% endif %}
+{% endfor %}
 {% endfor %}
