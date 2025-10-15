@@ -172,7 +172,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: run first setup (this can take a while)
-  become: yes
+  become: true
   become_user: nextcloud
   command:
     cmd: |
@@ -215,7 +215,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: run nextcloud upgrade command
-  become: yes
+  become: true
   become_user: nextcloud
   command: /usr/bin/php ./occ upgrade
   args:
@@ -229,7 +229,7 @@
 # Note: if this fails the install will be left in a broken state, the working copy is still at /var/www/{{ nextcloud_fqdn }}.old/config/config.php
 # Some possible additional settings are documented here. See https://github.com/nextcloud/server/blob/master/config/config.sample.php for all available configuration settings
 - name: set nextcloud config.php values (always returns changed)
-  become: yes
+  become: true
   become_user: nextcloud
   command:
     cmd: /usr/bin/php ./occ config:system:set --type={{ item.type | default('string') }} {{ item.key }} --value={{ item.value }} # noqa no-changed-when
@@ -296,7 +296,7 @@
   tags: nextcloud-config
 
 - name: update .htaccess for clean URL support (always returns changed)
-  become: yes
+  become: true
   become_user: nextcloud
   command: "/usr/bin/php ./occ maintenance:update:htaccess" # noqa no-changed-when
   args:
@@ -312,7 +312,7 @@
     name: "run nextcloud background tasks"
 
 - name: add missing primary keys and indices to nextcloud database
-  become: yes
+  become: true
   become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:{{ item }}"
   args:
@@ -325,7 +325,7 @@
     - add-missing-indices
 
 - name: convert columns to bigint in nextcloud database
-  become: yes
+  become: true
   become_user: nextcloud
   command: "/usr/bin/php ./occ --no-interaction db:convert-filecache-bigint"
   args:
