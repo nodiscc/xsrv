@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
+- nextcloud: schedule start of maintenance window (resource intensive tasks) at 02:00
 - shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)
 - shaarli: udpate to [v0.15.0](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
 - nextcloud: update to 30.0.15 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/)

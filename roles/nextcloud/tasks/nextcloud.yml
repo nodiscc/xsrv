@@ -267,6 +267,7 @@
     - { key: "mail_smtpname", value: "{{ nextcloud_smtp_user if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '' }}", no_log: True }
     - { key: "mail_smtppassword", value: "{{ nextcloud_smtp_password if nextcloud_smtp_mode in ['smtp', 'smtp+ssl'] else '' }}", no_log: True }
     - { key: "mail_sendmailmode", value: "pipe" }
+    - { key: "maintenance_window_start", value: "2", type: "integer" }
     # - { key: "appstoreenabled", value: "true", type: "boolean" }
     # - { key: "enable_previews", value: "true", type: "boolean" }
     # - { key: "preview_max_x", value: "4096", type: "integer" }
