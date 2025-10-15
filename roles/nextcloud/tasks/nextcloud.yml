@@ -236,6 +236,7 @@
   args:
     chdir: "{{ nextcloud_install_dir }}/"
   with_items:
+    - { key: "trusted_proxies 0", value: "127.0.0.1" }
     - { key: "trusted_domains 1", value: "{{ nextcloud_fqdn }}" }
     - { key: "overwrite.cli.url", value: "{{ nextcloud_full_url }}" }
     - { key: "datadir", value: "{{ nextcloud_data_dir }}" }
