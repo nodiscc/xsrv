@@ -22,11 +22,20 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
-    group: root
-    mode: "0644"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    diff: "{{ item.diff }}"
   loop:
+    - src: etc_prometheus_exporter-exporter.token-file.j2
+      dest: /etc/prometheus/exporter-exporter.token-file
+      group: prometheus
+      mode: "0640"
+      diff: false
     - src: etc_prometheus_exporter-exporter.yml.j2
       dest: /etc/prometheus/exporter-exporter.yml
+      group: root
+      mode: "0644"
+      diff: true
   notify: restart prometheus-exporter-exporter
 
 - name: start and enable prometheus exporter-exporter

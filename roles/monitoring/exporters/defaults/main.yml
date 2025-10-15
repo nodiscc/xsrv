@@ -1,3 +1,6 @@
 ##### MONITORING.EXPORTERS #####
 # uninstall netdata and remove all its files/data/configuration
 netdata_uninstall: true
+
+# REQUIRED password used to authenticate to/scrape metrics from exporter-exporter
+monitoring_exporters_auth_password: CHANGEME
