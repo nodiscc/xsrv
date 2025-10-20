@@ -35,7 +35,7 @@ actionunban = <ipstype_<ipsettype>/actionunban>
 
 [ipstype_ipset]
 
-actionstart = ipset -exist create <ipmset> hash:ip timeout <default-ipsettime> maxelem <maxelem> <familyopt>
+actionstart = ipset -exist create <ipmset> hash:net timeout <default-ipsettime> maxelem <maxelem> <familyopt>
 
 actionflush = ipset flush <ipmset>
 
@@ -47,7 +47,7 @@ actionunban = ipset -exist del <ipmset> <ip>
 
 [ipstype_firewalld]
 
-actionstart = firewall-cmd --direct --new-ipset=<ipmset> --type=hash:ip --option=timeout=<default-ipsettime> --option=maxelem=<maxelem> <firewalld_familyopt>
+actionstart = firewall-cmd --direct --new-ipset=<ipmset> --type=hash:net --option=timeout=<default-ipsettime> --option=maxelem=<maxelem> <firewalld_familyopt>
 
 actionflush = 
 

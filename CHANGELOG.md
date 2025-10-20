@@ -70,6 +70,8 @@ xsrv check    # (optional) simulate changes that will be applied
 xsrv deploy   # apply changes
 ```
 
+--------------------
+
 **Removed:**
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - graylog: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
@@ -112,6 +114,7 @@ xsrv deploy   # apply changes
 - searxng: increase sepiasearch search engine weight to 2
 - searxng: increase wiby search engine weight to 1.2
 - searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 1.2
+* common: fail2ban: use `hash:net` ipset types instead of `hash:ip`
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - monitoring.rsyslog: ensure logrotate is installed
