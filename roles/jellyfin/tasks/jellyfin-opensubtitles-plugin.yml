@@ -1,14 +1,14 @@
 - name: download opensubtitles plugin zip
   get_url:
-    url: "https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases/download/v18/open-subtitles_18.0.0.0.zip"
-    dest: "/root/open-subtitles_18.0.0.0.zip"
+    url: "https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases/download/v22/open-subtitles_22.0.0.0.zip"
+    dest: "/root/open-subtitles_22.0.0.0.zip"
     owner: root
     group: root
     mode: "0640"
 
 - name: create opensubtitles plugin installation directory
   file:
-    path: "/var/lib/jellyfin/plugins/Open Subtitles_18.0.0.0"
+    path: "/var/lib/jellyfin/plugins/Open Subtitles_22.0.0.0"
     state: directory
     mode: "0755"
     owner: jellyfin
@@ -16,8 +16,8 @@
 
 - name: extract opensubtitles plugin zip
   unarchive:
-    src: "/root/open-subtitles_18.0.0.0.zip"
-    dest: "/var/lib/jellyfin/plugins/Open Subtitles_18.0.0.0"
+    src: "/root/open-subtitles_22.0.0.0.zip"
+    dest: "/var/lib/jellyfin/plugins/Open Subtitles_22.0.0.0"
     remote_src: yes
     mode: u=rwX,g=rX,o=rX
     owner: jellyfin
