@@ -66,6 +66,7 @@
     - namedprocesses
     - apache
     - phpfpm
+    - blackbox
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
