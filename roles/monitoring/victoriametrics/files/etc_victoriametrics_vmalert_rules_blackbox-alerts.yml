@@ -1,0 +1,21 @@
+groups:
+  - name: blackbox_alerts
+    interval: 30s
+    rules:
+      - alert: EndpointDown
+        expr: probe_success == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Endpoint {{ $labels.instance }} is down"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+
+      # - alert: EndpointSlowResponse
+      #   expr: probe_duration_seconds > 5
+      #   for: 5m
+      #   labels:
+      #     severity: warning
+      #   annotations:
+      #     summary: "Endpoint {{ $labels.instance }} is slow"
+      #     description: "{{ $labels.instance }} response time is {{ $value }}s"

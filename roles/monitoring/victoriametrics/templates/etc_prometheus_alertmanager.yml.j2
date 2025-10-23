@@ -1,0 +1,29 @@
+global:
+  smtp_smarthost: '{{ victoriametrics_alertmanager_smtp_host }}:{{ victoriametrics_alertmanager_smtp_port }}'
+  smtp_from: '{{ victoriametrics_alertmanager_smtp_from }}'
+  smtp_auth_username: '{{ victoriametrics_alertmanager_smtp_auth_username }}'
+  smtp_auth_password: '{{ victoriametrics_alertmanager_smtp_auth_password }}'
+  smtp_require_tls: true
+
+route:
+  group_by: ['alertname', 'instance']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 12h
+  receiver: 'email-notifications'
+
+receivers:
+  - name: 'email-notifications'
+    email_configs:
+      - to: '{{ victoriametrics_alertmanager_email_to }}'{% raw %}
+        headers:
+          Subject: '🚨 Alert: {{ .GroupLabels.alertname }}'
+        html: |
+          {{ range .Alerts }}
+          <b>Alert:</b> {{ .Labels.alertname }}<br>
+          <b>Instance:</b> {{ .Labels.instance }}<br>
+          <b>Severity:</b> {{ .Labels.severity }}<br>
+          <b>Description:</b> {{ .Annotations.description }}<br>
+          <b>Started:</b> {{ .StartsAt }}<br>
+          {{ end }}
+{% endraw %}
