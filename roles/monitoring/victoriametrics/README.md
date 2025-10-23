@@ -22,7 +22,15 @@ See [meta/main.yml](meta/main.yml)
     - nodiscc.toolbox.grafana # (optional) visualization tools and dashboards for prometheus data
 
 # required variables:
-# none
+# xsrv edit-host default my.example.org
+victoriametrics_alertmanager_smtp_host: CHANGEME
+victoriametrics_alertmanager_smtp_port: CHANGEME
+victoriametrics_alertmanager_smtp_from: CHANGEME
+victoriametrics_alertmanager_email_to: CHANGEME@CHANGEME.org
+
+# xsrv edit-vault default my.example.org
+victoriametrics_alertmanager_smtp_auth_username: CHANGEME
+victoriametrics_alertmanager_smtp_auth_password: CHANGEME
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.

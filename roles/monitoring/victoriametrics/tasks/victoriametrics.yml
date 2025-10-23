@@ -53,3 +53,55 @@
     enabled: true
   tags: services
   ignore_errors: "{{ ansible_check_mode }}"
+
+##### ALERTING #####
+
+- name: create directory for alerts configuration
+  file:
+    path: /etc/victoriametrics/vmalert/rules
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: "0755"
+
+- name: copy vmalert systemd service unit file
+  copy:
+    src: etc_systemd_system_vmalert.service
+    dest: /etc/systemd/system/vmalert.service
+    owner: prometheus
+    group: prometheus
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: start and enable vmalert service
+  systemd:
+    name: vmalert.service
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: copy vmalert alert definitions
+  copy:
+    src: etc_victoriametrics_vmalert_rules_blackbox-alerts.yml
+    dest: /etc/victoriametrics/vmalert/rules/blackbox-alerts.yml
+    owner: prometheus
+    group: prometheus
+    mode: "0644"
+  notify: reload vmalert
+
+- name: install prometheus-alertmanager
+  apt:
+    state: present
+    package: prometheus-alertmanager
+
+- name: copy alertmanager configuration
+  template:
+    src: etc_prometheus_alertmanager.yml.j2
+    dest: /etc/prometheus/alertmanager.yml
+    owner: prometheus
+    group: prometheus
+    mode: "0640"
+  notify: restart prometheus-alertmanager
