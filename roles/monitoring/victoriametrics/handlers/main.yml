@@ -4,3 +4,17 @@
     name: victoria-metrics.service
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: restart prometheus-alertmanager
+  become: yes
+  systemd:
+    name: prometheus-alertmanager.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: reload vmalert
+  become: yes
+  systemd:
+    name: vmalert.service
+    state: reloaded
+  ignore_errors: "{{ ansible_check_mode }}"

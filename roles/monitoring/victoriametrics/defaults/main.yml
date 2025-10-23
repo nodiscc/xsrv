@@ -8,3 +8,10 @@ victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
 victoriametrics_http_checks: []
 # REQUIRED password to authenticate on exporters when scraping them
 victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
+# REQUIRED SMTP host/from address/usernmae/password and recipient address for alertmaneger e-mail alerts
+victoriametrics_alertmanager_smtp_host: CHANGEME
+victoriametrics_alertmanager_smtp_port: CHANGEME
+victoriametrics_alertmanager_smtp_from: CHANGEME
+victoriametrics_alertmanager_smtp_auth_username: CHANGEME
+victoriametrics_alertmanager_smtp_auth_password: CHANGEME
+victoriametrics_alertmanager_email_to: CHANGEME@CHANGEME.org
