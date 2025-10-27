@@ -6,10 +6,10 @@ global:
   smtp_require_tls: true
 
 route:
-  group_by: ['alertname', 'instance']
+  group_by: ['alertname', 'severity', 'instance']
   group_wait: 10s
   group_interval: 10s
-  repeat_interval: 5min
+  repeat_interval: 1h
   receiver: 'email-notifications'
 
 receivers:
@@ -17,7 +17,7 @@ receivers:
     email_configs:
       - to: '{{ victoriametrics_alertmanager_email_to }}'{% raw %}
         headers:
-          Subject: '🚨 alert: {{ .Labels.severity }}: {{ .GroupLabels.alertname }}'
+          Subject: '🚨 alert: {{ .GroupLabels.severity }}: {{ .GroupLabels.alertname }}: {{ .GroupLabels.instance }}'
         html: |
           {{ range .Alerts }}
           <b>Alert:</b> {{ .Labels.alertname }}<br>
@@ -26,6 +26,5 @@ receivers:
           <b>Description:</b> {{ .Annotations.description }}<br>
           <b>Summary:</b> {{ .Annotations.summary }}<br>
           <b>Started:</b> {{ .StartsAt }}<br>
-          <b>KV: {{ .Labels.SortedPairs }}</b>
           {{ end }}
 {% endraw %}
