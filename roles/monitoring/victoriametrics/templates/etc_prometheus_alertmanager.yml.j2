@@ -17,13 +17,15 @@ receivers:
     email_configs:
       - to: '{{ victoriametrics_alertmanager_email_to }}'{% raw %}
         headers:
-          Subject: '🚨 Alert: {{ .GroupLabels.alertname }}'
+          Subject: '🚨 alert: {{ .Labels.severity }}: {{ .GroupLabels.alertname }}'
         html: |
           {{ range .Alerts }}
           <b>Alert:</b> {{ .Labels.alertname }}<br>
           <b>Instance:</b> {{ .Labels.instance }}<br>
           <b>Severity:</b> {{ .Labels.severity }}<br>
           <b>Description:</b> {{ .Annotations.description }}<br>
+          <b>Summary:</b> {{ .Annotations.summary }}<br>
           <b>Started:</b> {{ .StartsAt }}<br>
+          <b>KV: {{ .Labels.SortedPairs }}</b>
           {{ end }}
 {% endraw %}
