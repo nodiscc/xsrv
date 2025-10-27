@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=victoriametrics
-Group=victoriametrics
+User=prometheus
+Group=prometheus
 ExecStart=/usr/bin/vmalert -datasource.url=http://127.0.0.1:8428 -notifier.url=http://127.0.0.1:9093 -rule=/etc/victoriametrics/vmalert/rules/*.yml -httpListenAddr=127.0.0.1:8880 -evaluationInterval=30s
 ExecReload=/bin/kill -HUP $MAINPID
 # TODO -datasource.basicAuth.passwordFile -datasource.basicAuth.username
