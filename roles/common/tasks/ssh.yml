@@ -1,10 +1,3 @@
-- name: create revoked keys file
-  template:
-    src: 'etc_ssh_revoked_keys.j2'
-    dest: '/etc/ssh/revoked_keys'
-    mode: "0600"
-  notify: restart ssh
-
 - name: add authorized keys
   authorized_key:
     user: "{{ ansible_user }}"

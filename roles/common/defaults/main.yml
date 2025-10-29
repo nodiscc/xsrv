@@ -201,8 +201,6 @@ setup_ssh: yes
 # Example: ['data/public_keys/john.pub', 'data/public_keys/jane.pub']
 # Removing a key here does not remove it on the server!
 ssh_authorized_keys: []
-# a list of public keys that are never accepted by the ssh server
-ssh_server_revoked_keys: []
 # sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
 ssh_log_level: "VERBOSE"
 ssh_sftp_loglevel: "INFO"

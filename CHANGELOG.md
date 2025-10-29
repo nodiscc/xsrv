@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - monitoring_rsyslog: ensure logrotate is installed
+- common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
 
 **Deprecated:**
 
