@@ -68,6 +68,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - goaccess: update IP to Country GeoIP database to v2025-10
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
+- common/apt: make unattended-upgrades configuration file compatible with Debian 13
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - doc: update comments in several files to reflect new documentation in Debian 13
 - update documentation

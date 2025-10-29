@@ -92,9 +92,17 @@ Unattended-Upgrade::MinimalSteps "true";
 // 'mailx' must be installed. E.g. "user@example.com"
 Unattended-Upgrade::Mail "root";
 
+{% if ansible_facts.distribution_release in ['trixie'] %}
+// Set this value to one of:
+//    "always", "only-on-error" or "on-change"
+// If this is not set, then any legacy MailOnlyOnError (boolean) value
+// is used to chose between "only-on-error" and "on-change"
+Unattended-Upgrade::MailReport "only-on-error";
+{% else %}
 // Set this value to "true" to get emails only on errors. Default
 // is to always send a mail if Unattended-Upgrade::Mail is set
 Unattended-Upgrade::MailOnlyOnError "true";
+{% endif %}
 
 // Remove unused automatically installed kernel-related packages
 // (kernel images, kernel headers and kernel version locked tools).
