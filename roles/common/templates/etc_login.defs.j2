@@ -1,14 +1,6 @@
 #
 # /etc/login.defs - Configuration control definitions for the login package.
 #
-# Three items must be defined:  MAIL_DIR, ENV_SUPATH, and ENV_PATH.
-# If unspecified, some arbitrary (and possibly incorrect) value will
-# be assumed.  All other items are optional - if not specified then
-# the described action or option will be inhibited.
-#
-# Comment lines (lines beginning with "#") and blank lines are ignored.
-#
-# Modified for Linux.  --marekm
 
 # REQUIRED for useradd/userdel/usermod
 #   Directory where mailboxes reside, _or_ name of file, relative to the
@@ -36,7 +28,7 @@ MAIL_DIR        /var/mail
 #MAIL_FILE      .mail
 
 #
-# Enable logging and display of /var/log/faillog login failure info.
+# Enable logging and display of /var/log/faillog login(1) failure info.
 # This option conflicts with the pam_tally PAM module.
 #
 FAILLOG_ENAB		yes

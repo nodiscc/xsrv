@@ -6,9 +6,11 @@
 #  any later version.
 #
 # Entries in this file show the compile time defaults. Local configuration
-# should be created by either modifying this file, or by creating "drop-ins" in
-# the logind.conf.d/ subdirectory. The latter is generally recommended.
-# Defaults can be restored by simply deleting this file and all drop-ins.
+# should be created by either modifying this file (or a copy of it placed in
+# /etc/ if the original file is shipped in /usr/), or by creating "drop-ins" in
+# the /etc/systemd/logind.conf.d/ directory. The latter is generally
+# recommended. Defaults can be restored by simply deleting the main
+# configuration file and all drop-ins located in /etc/.
 #
 # Use 'systemd-analyze cat-config systemd/logind.conf' to display the full config.
 #
@@ -22,6 +24,7 @@
 #KillExcludeUsers=root
 #InhibitDelayMaxSec=5
 #UserStopDelaySec=10
+#SleepOperation=suspend-then-hibernate suspend
 #HandlePowerKey=poweroff
 #HandlePowerKeyLongPress=ignore
 #HandleRebootKey=reboot
@@ -33,6 +36,7 @@
 #HandleLidSwitch=suspend
 #HandleLidSwitchExternalPower=suspend
 #HandleLidSwitchDocked=ignore
+#HandleSecureAttentionKey=secure-attention-key
 #PowerKeyIgnoreInhibited=no
 #SuspendKeyIgnoreInhibited=no
 #HibernateKeyIgnoreInhibited=no
@@ -42,11 +46,12 @@
 #IdleAction=ignore
 #IdleActionSec=30min
 #RuntimeDirectorySize=10%
-#RuntimeDirectoryInodes=
+#RuntimeDirectoryInodesMax=
 #RemoveIPC=yes
 #InhibitorsMax=8192
 #SessionsMax=8192
 #StopIdleSessionSec=infinity
+#DesignatedMaintenanceTime=
 KillUserProcesses={{ 'yes' if systemd_logind_kill_user_processes else 'no' }}
 KillExcludeUsers={{ systemd_logind_kill_exclude_users|join(' ') }}
 {% if not systemd_logind_lock_after_idle_min == 0 %}

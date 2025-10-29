@@ -2,7 +2,7 @@
 // Unattended-Upgrade::Origins-Pattern controls which packages are
 // upgraded.
 //
-// Lines below have the format format is "keyword=value,...".  A
+// Lines below have the format "keyword=value,...".  A
 // package will be upgraded only if the values in its metadata match
 // all the supplied keywords in a line.  (In other words, omitted
 // keywords are wild cards.) The keywords originate from the Release
@@ -46,7 +46,7 @@ Unattended-Upgrade::Package-Blacklist {
     // The following matches all packages starting with linux-
 //  "linux-";
 
-    // Use $ to explicitly define the end of a package name. Without
+    // Use $ to explicitely define the end of a package name. Without
     // the $, "libc6" would match all of them.
 //  "libc6$";
 //  "libc6-dev$";
@@ -71,7 +71,7 @@ Unattended-Upgrade::Package-Blacklist {
 
 // Split the upgrade into the smallest possible chunks so that
 // they can be interrupted with SIGTERM. This makes the upgrade
-// a bit slower but it has the benefit that shutdown while a upgrade
+// a bit slower but it has the benefit that shutdown while an upgrade
 // is running is possible (with a small delay)
 Unattended-Upgrade::MinimalSteps "true";
 
@@ -145,6 +145,9 @@ Unattended-Upgrade::SyslogEnable "true";
 // in unattended-upgrade-shutdown
 // Unattended-Upgrade::Debug "false";
 
+// Allow package downgrade if Pin-Priority exceeds 1000
+// Unattended-Upgrade::Allow-downgrade "false";
+
 // automatically update package lists
 APT::Periodic::Update-Package-Lists "1";
 // automatically download upgradeable packages
@@ -153,6 +156,18 @@ APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "7";
 // automatically run package upgrades
 APT::Periodic::Unattended-Upgrade "1";
+
+// When APT fails to mark a package to be upgraded or installed try adjusting
+// candidates of related packages to help APT's resolver in finding a solution
+// where the package can be upgraded or installed.
+// This is a workaround until APT's resolver is fixed to always find a
+// solution if it exists. (See Debian bug #711128.)
+// The fallback is enabled by default, except on Debian's sid release because
+// uninstallable packages are frequent there.
+// Disabling the fallback speeds up unattended-upgrades when there are
+// uninstallable packages at the expense of rarely keeping back packages which
+// could be upgraded or installed.
+// Unattended-Upgrade::Allow-APT-Mark-Fallback "true";
 
 // Do "apt-get clean" every n-days (0=disable)
 APT::Periodic::CleanInterval "{{ apt_clean_days }}";
