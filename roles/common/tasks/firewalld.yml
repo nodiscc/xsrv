@@ -1,5 +1,11 @@
 ##### FIREWALLD #####
 
+- name: uninstall conflicting firewall management tools
+  apt:
+    package: ufw
+    state: absent
+    purge: true
+
 - name: install firewalld
   apt:
     package:

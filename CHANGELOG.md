@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - common: make the value of `kernel.yama.ptrace_scope` configurable
 
 **Changed:**
+- common/firewalld: ensure ufw is removed before installting firewalld
 - wireguard: allow specifying [`wireguard_peers`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
 - wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
