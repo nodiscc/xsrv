@@ -25,6 +25,15 @@
   no_log: True
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: create ollama user
+  user:
+    name: ollama
+    shell: /bin/bash
+    comment: "Ollama local LLM service"
+    password: "*"
+    home: "/var/lib/ollama"
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: copy ollama files to installation directories
   copy:
     remote_src: yes
@@ -42,15 +51,6 @@
       dest: /usr/local/lib/
       group: ollama
   notify: restart ollama
-
-- name: create ollama user
-  user:
-    name: ollama
-    shell: /bin/bash
-    comment: "Ollama local LLM service"
-    password: "*"
-    home: "/var/lib/ollama"
-  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: install ollama systemd service/unit file
   template:
