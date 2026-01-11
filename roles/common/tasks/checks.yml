@@ -11,13 +11,13 @@
     - kernel_enable_core_dump == kernel_enable_core_dump | bool
     - setup_apt == setup_apt | bool
     - apt_listbugs == apt_listbugs | bool
-    - apt_clean_days == apt_clean_days|int
+    - apt_clean_days == apt_clean_days | int
     - apt_unattended_upgrades_origins_patterns|type_debug == "list"
     - apt_purge_nightly == apt_purge_nightly | bool
     - packages_install | type_debug == "list"
     - packages_remove | type_debug == "list"
     - setup_cron == setup_cron | bool
-    - cron_log_level == cron_log_level|int
+    - cron_log_level == cron_log_level | int
     - setup_dns == setup_dns | bool
     - setup_hostname == setup_hostname | bool
     - setup_hosts_file == setup_hosts_file | bool
@@ -38,11 +38,12 @@
     - ssh_sftp_loglevel in ['QUIET', 'FATAL', 'ERROR', 'INFO', 'VERBOSE', 'DEBUG', 'DEBUG1', 'DEBUG2', 'DEBUG3']
     - sysctl_allow_forwarding == sysctl_allow_forwarding | bool
     - sysctl_answer_ping == sysctl_answer_ping | bool
-    - sysctl_vm_swappiness|int
-    - sysctl_vm_vfs_cache_pressure|int
+    - sysctl_vm_swappiness | int
+    - sysctl_vm_vfs_cache_pressure | int
+    - sysctl_kernel_yama_ptrace_scope == sysctl_kernel_yama_ptrace_scope | int
     - systemd_logind_kill_user_processes == systemd_logind_kill_user_processes|bool
     - systemd_logind_kill_exclude_users|type_debug == "list"
-    - systemd_logind_lock_after_idle_min == systemd_logind_lock_after_idle_min|int
+    - systemd_logind_lock_after_idle_min == systemd_logind_lock_after_idle_min | int
     - bash_timeout == bash_timeout | int
   tags:
     - ssh
@@ -58,7 +59,7 @@
   when: setup_msmtp | bool
   loop:
     - msmtp_host is not search("CHANGEME")
-    - msmtp_port == msmtp_port|int
+    - msmtp_port == msmtp_port | int
     - msmtp_auth_enabled == msmtp_auth_enabled | bool
     - msmtp_tls_enabled == msmtp_tls_enabled | bool
     - msmtp_admin_email is not search("CHANGEME")

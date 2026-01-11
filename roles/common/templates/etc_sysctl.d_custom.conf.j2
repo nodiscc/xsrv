@@ -222,7 +222,8 @@ kernel.kptr_restrict = 2
 # 1: only a parent process can be debugged.
 # 2: only administrators with the CAP_SYS_PTRACE capability can use ptrace
 # 3: no processes may be traced with ptrace. Once set, a reboot is needed to enable ptracing again.
-kernel.yama.ptrace_scope = 2
+# Setting it to !=0 can prevent programs that rely on PTRACE to inject libraries (wine/lutris/dxvk) from working
+kernel.yama.ptrace_scope = {{ sysctl_kernel_yama_ptrace_scope }}
 
 # disable potentially exploitable unprivileged user namespaces
 kernel.unprivileged_userns_clone = 0
