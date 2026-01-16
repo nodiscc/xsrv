@@ -57,47 +57,24 @@ libvirt_parallel_shutdown_number: 3
 #   - vm_name: vm01.EXAMPLE.org # VM name (rules will be applied/removed when this VM starts/shuts down)
 #     vm_ip: 10.2.0.225 # forward connections to the VM on this IP address
 #     vm_bridge: virbr2 # forward connections to the VM through this bridge
+#     host_interface: eth0 # forward connections arriving on this interface on the libvirt host
 #     dnat: # list of port forwarding/translation (DNAT) rules
-#       - host_interface: eth0 # forward connections arriving on this interface on the libvirt host
-#         host_port: 25 # forward (DNAT) connections arriving on this port on the libvirt host
+#       - host_port: 25 # forward (DNAT) connections arriving on this port on the libvirt host
 #         vm_port: 25 # forward connections to this port on the VM
 #         protocol: tcp # (optional, tcp/udp, default tcp) forward connections using this protocol
-#         source_ip: 4.5.6.7/24 # (optional, default any source IP) only forward connections from this IP address/network
-#       - host_ip: 1.2.3.4 # forward connections arriving on this IP address on the libvirt host
-#         host_port: 123
-#         vm_port: 123
-#       - host_interface: eth0
-#         host_ip: 1.2.3.4 # at least one of host_interface/host_ip is required, but both can be set for finer control (traffic must match both host IP AND interface)
-#         host_port: 456
-#         vm_port: 456
-#       - host_interface: eth0 # redirect port 19225 on the host to port 19999 on the VM
-#         host_port: 19225
+#       - host_port: 19225# redirect port 19225 on the host to port 19999 on the VM
 #         vm_port: 19999
-#       - host_interface: eth0
-#         host_port: 2456-2458 # port range, separated by -
+#       - host_port: 2456-2458 # port range, separated by -
 #         vm_port: 2456-2458
-#         protocol: udp
-#     forward: # list of port forwarding rules between interfaces/bridges (without DNAT)
-#       - source_interface: virbr1 # forward connections from this interface/bridge
-#         vm_port: 22 # forward connections to this port on the VM
-#         protocol: tcp # (optional, tcp/udp, default tcp) forward connections using this protocol
-#       - source_ip: 10.4.0.0/24 # forward connections from this IP address/network
-#         vm_port: 25
-#       - source_interface: virbr5
-#         source_ip: 10.5.0.0/24 # at least one of source_interface/source_ip is required, but both can be set for finer control (traffic must match both source IP AND interface)
-#         vm_port: 22
-#       - source_ip: 10.7.0.0/24
-#         vm_port: 2000-2300 # port range, separated by -
 #         protocol: udp
 #   - vm_name: vm02.EXAMPLE.org
 #     vm_ip: 10.3.0.226
 #     vm_bridge: virbr3
+#     host_interface: eth0
 #     dnat:
-#       - host_interface: eth0
-#         host_port: 22226
+#       - host_port: 22226
 #         vm_port: 22
-#       - host_interface: eth0
-#         host_port: 19226
+#       - host_port: 19226
 #         vm_port: 19999
 libvirt_port_forwards: []
 

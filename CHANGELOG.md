@@ -19,12 +19,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ```
 
 - **monitoring_netdata:** if you want to keep using the [`monitoring_netdata`](https://gitlab.com/nodiscc/xsrv/-/tree/1.27.0/roles/monitoring_netdata) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.netdata`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. See the role README.md for more information on this removal. Netdata should keep working as long you do not explicitely uninstall it, but automatic integration of netdata with other roles will no longer be maintained. Uninstallation instructions and alternative monitoring systems will be provided in the next release.
+- **libvirt:** in [libvirt_port_forwards](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), move `*.dnat.*.host_interface` to the top-level list (same level as `vm_name`)
 
 
 **Removed:**
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - monitoring_rsyslog: ensure logrotate is installed
 - common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
+- libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
+- libvirt: remove ability to forward ports using `host_ip` (only `host_interface` must be used)
 
 **Deprecated:**
 
@@ -39,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 - common/firewalld: ensure ufw is removed before installting firewalld
 - wireguard: allow specifying [`wireguard_peers`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
+- libvirt: use firewalld to manage port forwarding to libvirt VMs, remove direct iptables management
 - wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
