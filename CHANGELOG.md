@@ -66,7 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - xsrv: update ansible to v11.11.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - xsrv: update trivy security scanner to [v0.66.0](https://github.com/aquasecurity/trivy/releases)
 - gitea_act_runner: update act-runner to v0.2.12 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.12)
-- goaccess: update IP to Country GeoIP database to v2025-10
+- goaccess: update IP to Country GeoIP database
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - common/apt: make unattended-upgrades configuration and sources.list file compatible with Debian 13
