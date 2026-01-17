@@ -1,25 +1,24 @@
 #!/bin/bash
-{% if libvirt_port_forwards %}
-{% endif %}
+
 {% for item in libvirt_port_forwards %}
-/usr/bin/firewall-cmd --zone=public --add-masquerade
-/usr/bin/firewall-cmd --zone=public --change-interface={{ item.host_interface }}
 if [ "${1}" = "{{ item.vm_name }}" ]; then
     if [ "${2}" = "stopped" ] || [ "${2}" = "reconnect" ]; then
     /usr/bin/firewall-cmd --direct --remove-rule ipv4 filter FORWARD 0 -i {{ item.host_interface }} -o {{ item.vm_bridge }} -j ACCEPT
     /usr/bin/firewall-cmd --direct --remove-rule ipv4 filter FORWARD 0 -i {{ item.vm_bridge }} -o {{ item.host_interface }} -j ACCEPT
 {% for dnat_rule in item.dnat | default([]) %}
-    # {{ dnat_rule.host_port }}{{ dnat_rule.protocol | default('tcp') }} -> {{ dnat_rule.vm_port }}
+    # {{ dnat_rule.host_port }}/{{ dnat_rule.protocol | default('tcp') }} -> {{ dnat_rule.vm_port }}
     /usr/bin/firewall-cmd --zone=public --remove-port={{ dnat_rule.vm_port }}/{{ dnat_rule.protocol | default('tcp') }}
     /usr/bin/firewall-cmd --zone=public --remove-rich-rule='rule family="ipv4" forward-port port="{{ dnat_rule.host_port }}" protocol="{{ dnat_rule.protocol | default('tcp') }}" to-port="{{ dnat_rule.vm_port }}" to-addr="{{ item.vm_ip }}"'
     /usr/bin/firewall-cmd --direct --remove-rule ipv4 filter LIBVIRT_FWI 0 -d {{ item.vm_ip }} -o {{ item.vm_bridge }} -p {{ dnat_rule.protocol | default('tcp') }} --dport {{ dnat_rule.vm_port }} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
 {% endfor %}
     fi
     if [ "${2}" = "start" ] || [ "${2}" = "reconnect" ]; then
+    /usr/bin/firewall-cmd --zone=public --add-masquerade
+    /usr/bin/firewall-cmd --zone=public --change-interface={{ item.host_interface }}
     /usr/bin/firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i {{ item.host_interface }} -o {{ item.vm_bridge }} -j ACCEPT
     /usr/bin/firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i {{ item.vm_bridge }} -o {{ item.host_interface }} -j ACCEPT
 {% for dnat_rule in item.dnat | default([]) %}
-    # {{ dnat_rule.host_port }}{{ dnat_rule.protocol | default('tcp') }} -> {{ dnat_rule.vm_port }}
+    # {{ dnat_rule.host_port }}/{{ dnat_rule.protocol | default('tcp') }} -> {{ dnat_rule.vm_port }}
     /usr/bin/firewall-cmd --zone=public --add-port={{ dnat_rule.vm_port }}/{{ dnat_rule.protocol | default('tcp') }}
     /usr/bin/firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" forward-port port="{{ dnat_rule.host_port }}" protocol="{{ dnat_rule.protocol | default('tcp') }}" to-port="{{ dnat_rule.vm_port }}" to-addr="{{ item.vm_ip }}"'
     /usr/bin/firewall-cmd --direct --add-rule ipv4 filter LIBVIRT_FWI 0 -d {{ item.vm_ip }} -o {{ item.vm_bridge }} -p {{ dnat_rule.protocol | default('tcp') }} --dport {{ dnat_rule.vm_port }} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
