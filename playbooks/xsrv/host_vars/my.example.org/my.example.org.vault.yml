@@ -13,6 +13,9 @@ xsrv_admin_username: "CHANGEME"
 xsrv_admin_password: "CHANGEME20"
 xsrv_admin_email: "CHANGEME@CHANGEME.org"
 
+#### MONITORING.EXPORTERS
+monitoring_exporters_auth_password: CHANGEME20
+
 ##### APACHE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml
 apache_letsencrypt_email: "{{ xsrv_admin_email }}"
 
