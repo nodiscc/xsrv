@@ -24,8 +24,8 @@ See [meta/main.yml](meta/main.yml)
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
-If `rsyslog_enable_receive: yes`, the host must be reachable by syslog clients on port `514/tcp`.
-If `rsyslog_enable_receive: yes`, the host must be deployed **before** syslog clients in the playbook execution order (the syslog server's CA certificate must already exist in order to sign client certificates)
+* If `rsyslog_enable_receive: yes`, the host must be reachable by syslog clients on port `514/tcp`.
+* If `rsyslog_enable_receive: yes`, the role must be deployed on the receiving host **before** syslog clients in the playbook execution order (the syslog server's CA certificate must already exist in order to sign client certificates)
 
 ## Tags
 
