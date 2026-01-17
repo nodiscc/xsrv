@@ -60,6 +60,7 @@ The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove a
 - rename `monitoring_utils` role to `monitoring.utils`
 - rename `monitoring_rsyslog` role to `monitoring.rsyslog`
 - rename `monitoring_goaccess` to `monitoring.goaccess`
+- default playbook: only enable the common role by default, let user select which roles to enable
 - common/firewalld: ensure ufw is removed before installing firewalld
 - wireguard: allow specifying [`wireguard_peers`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
 - libvirt: use firewalld to manage port forwarding to libvirt VMs, remove direct iptables management
