@@ -122,7 +122,6 @@ never
 nmap
 prometheus-exporter
 readme_gen
-prometheus_exporter
 utils-bonnie
 utils-duc
 victoriametrics

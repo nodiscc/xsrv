@@ -6,6 +6,7 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 - [php-fpm](https://php-fpm.org/) PHP interpreter
 - (optional) basic authentication login form brutefore prevention with [fail2ban](tasks/fail2ban.yml)
 - (optional) aggregation of apache log files to [syslog](tasks/rsyslog.yml)
+- monitoring metrics exporter for [prometheus/victoriametrics](../monitoring/victoriametrics/)
 
 
 ## Requirements/dependencies/example playbook
@@ -18,7 +19,7 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 - hosts: my.CHANGEME.org
   roles:
      - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall, bruteforce prevention
-     - nodiscc.xsrv monitoring # (optional) apache/virtualhost monitoring, log aggregation
+     - nodiscc.xsrv.monitoring.exporters # (optional) monitoring metrics exporters
      - nodiscc.xsrv.apache
 
 # required variables:
