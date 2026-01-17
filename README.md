@@ -39,7 +39,7 @@ This project provides:
 - [matrix](roles/matrix) - secure instant messaging service
 - [monitoring.exporters](roles/monitoring/exporters) - monitoring agents/metrics exporters
 - [monitoring.goaccess](roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring.grafana](roles/monitoring/grafana) - Analytics and interactive visualization web application
+- [monitoring.grafana](roles/monitoring/grafana) - metrics visualization and analytics application
 - [monitoring.rsyslog](roles/monitoring/rsyslog) - log aggregation, processing and forwarding system
 - [monitoring.utils](roles/monitoring/utils) - basic monitoring utilities
 - [monitoring.victoriametrics](roles/monitoring/victoriametrics) - monitoring metrics scraper and time-series database

@@ -66,8 +66,6 @@ owncast - setup owncast live streaming server
 packages - additional package installation/removal
 podman - setup podman container engine
 postgresql - setup postgresql database server
-prometheus-exporter - deploy prometheus monitoring agents/exporters
-prometheus - setup all victoriametrics/prometheus related monitoring components
 readme_gen - add hosts information to the project's README.md
 rsnapshot-ssh-key - generate ssh key for rsnapshot backup utility
 rsyslog - setup system log processing
@@ -111,19 +109,11 @@ utils-shutdown - (manual) shut down the host
 victoriametrics - setup victoriametrics monitoring service and time-series database
 wireguard - setup wireguard
 OTHER TAGS:
-exporters
-grafana
-grafana-config
 graylog
-lynis
 mongodb
-monitoring_utils
 never
 nmap
-prometheus-exporter
 readme_gen
-utils-bonnie
-utils-duc
-victoriametrics
+victoriametrics-http-checks
 
 ```

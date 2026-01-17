@@ -39,7 +39,7 @@ This project provides:
 - [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - secure instant messaging service
 - [monitoring.exporters](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/exporters) - monitoring agents/metrics exporters
 - [monitoring.goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring.grafana](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/grafana) - Analytics and interactive visualization web application
+- [monitoring.grafana](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/grafana) - metrics visualization and analytics application
 - [monitoring.rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog) - log aggregation, processing and forwarding system
 - [monitoring.utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/utils) - basic monitoring utilities
 - [monitoring.victoriametrics](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/victoriametrics) - monitoring metrics scraper and time-series database

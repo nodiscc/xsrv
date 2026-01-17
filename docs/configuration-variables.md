@@ -169,11 +169,13 @@ sysctl_answer_ping: no
 sysctl_vm_swappiness: '10'
 # "VFS cache pressure" setting. 100+ : prefer caching memory pages over disk cache
 sysctl_vm_vfs_cache_pressure: '150'
+# value of sysctl control kernel.yama.ptrace_scope, see documentation in etc_sysctl.d_custom.conf.j2
+sysctl_kernel_yama_ptrace_scope: 2
 # yes/no: enable/disable creation of core dumps on kernel crashes
 # These are usually not needed and may contain sensitive information
 kernel_enable_core_dump: no
 # no/yes: configure /proc mountpoint to hide processes from other users
-# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, exporters...)
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, prometheus...)
 kernel_proc_hidepid: no
 # list of kernel modules to prevent from being loaded
 kernel_modules_blacklist:
@@ -315,6 +317,8 @@ apt_listbugs_ignore_list:
   - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
   - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
   - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
+  - 1051392 # https://bugs.debian.org/1051392 - only affects 32-bit architectures
+  - 1114729 # https://bugs.debian.org/1114729 - only during dist-upgrade
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -329,8 +333,6 @@ setup_ssh: yes
 # Example: ['data/public_keys/john.pub', 'data/public_keys/jane.pub']
 # Removing a key here does not remove it on the server!
 ssh_authorized_keys: []
-# a list of public keys that are never accepted by the ssh server
-ssh_server_revoked_keys: []
 # sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
 ssh_log_level: "VERBOSE"
 ssh_sftp_loglevel: "INFO"
@@ -679,7 +681,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.24.3"
+gitea_version: "1.24.7"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -788,7 +790,7 @@ gotty_input_timeout: 0
 # IP address to listen on
 gotty_listen_address: "0.0.0.0"
 # gotty release/version number (https://github.com/sorenisanerd/gotty/releases, without leading v)
-gotty_version: "1.5.0"
+gotty_version: "1.6.0"
 # list of IP addresses allowed to access gotty (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 gotty_allowed_hosts: []
@@ -1072,47 +1074,24 @@ libvirt_parallel_shutdown_number: 3
 #   - vm_name: vm01.EXAMPLE.org # VM name (rules will be applied/removed when this VM starts/shuts down)
 #     vm_ip: 10.2.0.225 # forward connections to the VM on this IP address
 #     vm_bridge: virbr2 # forward connections to the VM through this bridge
+#     host_interface: eth0 # forward connections arriving on this interface on the libvirt host
 #     dnat: # list of port forwarding/translation (DNAT) rules
-#       - host_interface: eth0 # forward connections arriving on this interface on the libvirt host
-#         host_port: 25 # forward (DNAT) connections arriving on this port on the libvirt host
+#       - host_port: 25 # forward (DNAT) connections arriving on this port on the libvirt host
 #         vm_port: 25 # forward connections to this port on the VM
 #         protocol: tcp # (optional, tcp/udp, default tcp) forward connections using this protocol
-#         source_ip: 4.5.6.7/24 # (optional, default any source IP) only forward connections from this IP address/network
-#       - host_ip: 1.2.3.4 # forward connections arriving on this IP address on the libvirt host
-#         host_port: 123
-#         vm_port: 123
-#       - host_interface: eth0
-#         host_ip: 1.2.3.4 # at least one of host_interface/host_ip is required, but both can be set for finer control (traffic must match both host IP AND interface)
-#         host_port: 456
-#         vm_port: 456
-#       - host_interface: eth0 # redirect port 19225 on the host to port 19999 on the VM
-#         host_port: 19225
+#       - host_port: 19225# redirect port 19225 on the host to port 19999 on the VM
 #         vm_port: 19999
-#       - host_interface: eth0
-#         host_port: 2456-2458 # port range, separated by -
+#       - host_port: 2456-2458 # port range, separated by -
 #         vm_port: 2456-2458
-#         protocol: udp
-#     forward: # list of port forwarding rules between interfaces/bridges (without DNAT)
-#       - source_interface: virbr1 # forward connections from this interface/bridge
-#         vm_port: 22 # forward connections to this port on the VM
-#         protocol: tcp # (optional, tcp/udp, default tcp) forward connections using this protocol
-#       - source_ip: 10.4.0.0/24 # forward connections from this IP address/network
-#         vm_port: 25
-#       - source_interface: virbr5
-#         source_ip: 10.5.0.0/24 # at least one of source_interface/source_ip is required, but both can be set for finer control (traffic must match both source IP AND interface)
-#         vm_port: 22
-#       - source_ip: 10.7.0.0/24
-#         vm_port: 2000-2300 # port range, separated by -
 #         protocol: udp
 #   - vm_name: vm02.EXAMPLE.org
 #     vm_ip: 10.3.0.226
 #     vm_bridge: virbr3
+#     host_interface: eth0
 #     dnat:
-#       - host_interface: eth0
-#         host_port: 22226
+#       - host_port: 22226
 #         vm_port: 22
-#       - host_interface: eth0
-#         host_port: 19226
+#       - host_port: 19226
 #         vm_port: 19999
 libvirt_port_forwards: []
 
@@ -1254,7 +1233,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.105"
+matrix_element_version: "1.12.2"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1266,128 +1245,6 @@ matrix_element_enable_service: yes
 # list of IP addresses allowed to access element (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 matrix_element_allowed_hosts: []
-```
-
-
-## monitoring.goaccess
-
-[roles/monitoring/goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml)
-
-```yaml
-##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
-# fully qualified domain used to access the HTML report
-goaccess_fqdn: "goaccess.CHANGEME.org"
-# HTTPS and SSL/TLS certificate mode for the goaccess webserver virtualhost
-#   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
-goaccess_https_mode: selfsigned
-# enable/disable the goaccess virtualhost (redirect users to maintenance page if disabled)
-goaccess_enable_service: yes
-# calendar expression for the periodic/scheduled update/re-generation of HTML reports
-# uses systemd's calendar events syntax https://manpages.debian.org/bookworm/systemd/systemd.time.7.en.html#CALENDAR_EVENTS
-# you can check whether an expression is valid using `systemd-analyze calendar "EXPRESSION"
-# Examples: "*:0/5:0" (every hour at minute 0, and every minute that is a multiple of 5), "21:00" (every day at 21:00), ...
-goaccess_update_calendar_expression: "*:00:00"
-# (optional) only parse log lines containing this string
-# goaccess_filter: "mysite.CHANGEME.org"
-# IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
-goaccess_geoip_db_version: "2025-06"
-# username/password used to access the HTML report
-goaccess_username: "CHANGEME"
-goaccess_password: "CHANGEME"
-# list of IP addresses allowed to access goaccess (IP or IP/netmask format)
-# set to empty list [] to allow access from any IP address
-goaccess_allowed_hosts: []
-```
-
-
-## monitoring.rsyslog
-
-[roles/monitoring/rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/rsyslog/defaults/main.yml)
-
-```yaml
-##### RSYSLOG LOG PROCESSING SYSTEM #####
-# number of daily /var/log/syslog archives to retain
-rsyslog_retention_days: 186
-# enable forwarding of syslog logs to a syslog server over TLS/TCP (no/yes)
-rsyslog_enable_forwarding: no
-# if forwarding is enabled, hostname/port to forward logs to
-rsyslog_forward_to_hostname: "logs.CHANGEME.org"
-rsyslog_forward_to_port: 5140
-# if forwarding is enabled, inventory hostname of the host to forward logs to
-rsyslog_forward_to_inventory_hostname: "my.CHANGEME.org"
-# enable receiving logs from other hosts over TLS/TCP port 514 (no/yes)
-# log collectors must be deployed before clients in the playbook execution order
-rsyslog_enable_receive: no
-# if rsyslog_enable_receive is enabled, DNS name of this syslog server/collector
-rsyslog_fqdn: "logs.CHANGEME.org"
-# if rsyslog_enable_receive is enabled, path to the directory to write remote hosts logs to
-rsyslog_remote_logs_path: /var/log/rsyslog/hosts
-# when rsyslog_enable_forwarding or rsyslog_enable_receive is enabled, start and end validity dates for TLS certificates (YYYYMMDDHHMMSSZ)
-rsyslog_cert_not_before: "20240219000000Z"
-rsyslog_cert_not_after: "20340219000000Z"
-# custom rsyslog configuration directives, applied before forwarding/single-file aggregation (list)
-# Example:
-# rsyslog_custom_config:
-#   - ':msg, contains, "failed to read Temperature" stop' # discard messages containing this string
-#   - 'if $programname == "apache" and re_match($msg, ".* 127.0.0.1 - - .* \"GET /server-status\?auto HTTP/1.1\" 200") then stop' # discard messages matching this program name and regular expression
-#   - 'if $programname == "CRON" and re_match($msg, "cron:session): session (opened|closed) for user .*") then stop'
-rsyslog_custom_config: []
-# firewall zones from which to allow incoming logs (zone, state), if rsyslog_enable_receive: yes and nodiscc.xsrv.common/firewalld role is deployed
-# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
-rsyslog_firewalld_zones:
-  - zone: internal
-    state: enabled
-  - zone: public
-    state: enabled
-```
-
-
-## monitoring.base
-
-[roles/monitoring/base/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
-
-```yaml
-##### MONITORING UTILITIES #####
-# setup lynis security audit tool (yes/no)
-setup_lynis: yes
-# list of strings to extract from lynis reports and forward by mail
-# Example: lynis_report_regex: 'warning|suggestion|manual'
-lynis_report_regex: 'warning'
-# list of lynis tests to ignore/skip (https://cisofy.com/lynis/controls/)
-lynis_skip_tests:
-  - "CUST-0285" # Install libpam-usb to enable multi-factor authentication for PAM sessions (we don't use multi-factor auth for SSH)
-  - "CUST-0830" # Install debian-goodies so that you can run checkrestart (needrestart is used instead)
-  - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
-  - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
-  - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
-  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by victoriametrics)
-  - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
-  - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
-  - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
-  - "BANN-7126" # legal banner for local logins is not needed
-  - "BANN-7130" # legal banner for ssh logins is not needed
-  - "LOGG-2190" # open file descriptors on deleted files is normal behavior
-  - "SSH-7408:Port" # changing ssh listen port from 22 does not mitigate the risk, not a security measure, can also be set to a non-standard port in NAT
-  - "SSH-7408:ClientAliveCountMax" # 3 is an acceptable value, nodiscc.xsrv.common sets the value to 3
-  - "SSH-7408:Compression" # any of yes/delayed/no can be considered secure since 2018 (pre-authentication compression never enabled)
-  - "SSH-7408:MaxAuthTries" # 5 is an acceptable value (nodiscc.xsrv.common), lowering it may cause login failures from systems where more than 3 ssh private keys are available
-  - "SSH-7408:MaxSessions" # 10 is an acceptable values, SSH connection multiplexing cannot be abused/cause performance issues unless the user is authenticated
-  - "PHP-2376" # allow_url_fopen is used legitimately by several applications in file_get_contents() to fetch remote files
-  - "HRDN-7230" # malware/rootkit detection software is inefficient when run on a compromised host
-  - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
-  - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
-  - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
-  - "KRNL-5830" # let needrestart/victoriametrics send alarms when reboot is required
-  - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
-  - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
-# when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
-debsums_cron_check: "daily"
-# base path to index with duc disk usage analyzer
-duc_index_path: "/"
-# list of directories/mountpoints on which to perform bonnie++ disk benchmarks
-bonnie_benchmark_paths:
-  - /var
 ```
 
 
@@ -1476,7 +1333,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "30.0.12"
+nextcloud_version: "30.0.17"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1609,7 +1466,7 @@ ollama_models:
 ollama_username: "CHANGEME"
 ollama_password: "CHANGEME"
 # ollama version (https://github.com/ollama/ollama/releases.atom)
-ollama_version: "v0.9.6"
+ollama_version: "v0.12.6"
 # enable automatic backups of downloaded models (if the nodiscc.xsrv.backup role is deployed) (no/yes)
 ollama_backup_models: no
 # enable/disable installation of ollama-ui (yes/no)
@@ -1781,7 +1638,7 @@ owncast_auth_password: CHANGEME
 # start/stop the postgresql service, enable/disable it on boot (yes/no)
 postgresql_enable_service: yes
 # pgmetrics version (https://github.com/rapidloop/pgmetrics/releases.atom, without leading v)
-postgresql_pgmetrics_version: "1.17.1"
+postgresql_pgmetrics_version: "1.18.0"
 ```
 
 
@@ -1965,14 +1822,14 @@ shaarli_setup_python_client: no
 # shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.14.0'
+shaarli_version: 'v0.15.0'
 # list of IP addresses allowed to access shaarli (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
 # default view mode when using the stack template (small/medium/large)
 shaarli_stack_default_ui: "medium"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
-shaarli_stack_version: "0.11"
+shaarli_stack_version: "0.12"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '256M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -1996,7 +1853,7 @@ shaarli_enable_service: yes
 # Fully Qualified Domain Name for the stirlingpdf instance
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
 # the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
-stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:1.0.2"
+stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:1.5.0"
 # HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -2071,7 +1928,7 @@ tt_rss_install_dir: "/var/www/{{ tt_rss_fqdn }}"
 # full public URL of your tt-rss installation (update this if you changed the install location to a subdirectory)
 tt_rss_full_url: "https://{{ tt_rss_fqdn }}/"
 # tt-rss version (git revision)
-tt_rss_version: "master"
+tt_rss_version: "c67b943aa894b90103c4752ac430958886b996b2"
 # Maximum number of users allowed to register accounts
 tt_rss_account_limit: 10
 # Error log destination. setting this to blank uses PHP logging/webserver error log (sql, syslog, '')
