@@ -85,3 +85,9 @@ moodist_fqdn: "moodist.CHANGEME.org"
 
 ##### KIWIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/kiwix/defaults/main.yml
 kiwix_fqdn: "kiwix.CHANGEME.org"
+
+##### MONITORING.VICTORIAMETRICS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
+victoriametrics_alertmanager_smtp_host: CHANGEME
+victoriametrics_alertmanager_smtp_port: CHANGEME
+victoriametrics_alertmanager_smtp_from: "{{ xsrv_admin_email }}"
+victoriametrics_alertmanager_email_to: "{{ xsrv_admin_email }}"

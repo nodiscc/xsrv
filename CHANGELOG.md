@@ -45,8 +45,6 @@ The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove a
 - libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
 - libvirt: remove ability to forward ports using `host_ip` (only `host_interface` must be used)
 
-**Deprecated:**
-
 **Added:**
 - add [`monitoring.exporters`](roles/monitoring/exporters) role (monitoring agents/metrics exporters)
 - add [`monitoring.victoriametrics`](roles/monitoring/victoriametrics/) role (monitoring metrics scraper and time-series database)

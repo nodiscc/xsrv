@@ -47,8 +47,8 @@
 ##### SERVICE #####
 
 - name: start/stop/enable/disable victoria-metrics service
-  service:
-    name: victoria-metrics
+  systemd:
+    name: victoria-metrics.service
     state: started
     enabled: true
   tags: services

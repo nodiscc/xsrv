@@ -101,3 +101,7 @@ searxng_secret: "CHANGEME64"
 ##### OLLAMA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
 ollama_username: "{{ xsrv_admin_username }}"
 ollama_password: "{{ xsrv_admin_password }}"
+
+##### MONITORING.VICTORIAMETRICS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
+victoriametrics_alertmanager_smtp_auth_username: CHANGEME
+victoriametrics_alertmanager_smtp_auth_password: CHANGEME
