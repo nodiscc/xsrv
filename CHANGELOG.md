@@ -3,22 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.28.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.28.0) - UNRELEASED
+#### [v2.0.0](https://gitlab.com/nodiscc/xsrv/-/releases#2.0.0) - UNRELEASED
 
 **Upgrade procedure:**
-- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- `xsrv deploy` to apply changes
-- you can remove the `data/wireguard/` directory from your project directory since it is no longer used
-- wireguard: if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
 
-```diff
--#     routes: "1.2.3.4/32, 192.168.18.0/24"
-+#     routes:
-+#       - 1.2.3.4/32
-+#       - 192.168.18.0/24
-```
-
-- **libvirt:** in [libvirt_port_forwards](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), move `*.dnat.*.host_interface` to the top-level list (same level as `vm_name`)
 **BREAKING: monitoring roles refactoring:**
 - update your playbook (`xsrv edit-playbook`):
   - remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
@@ -37,6 +25,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`. You should remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata).
 
+**Other changes:**
+- **libvirt:** in [libvirt_port_forwards](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), move `*.dnat.*.host_interface` to the top-level list (same level as `vm_name`)
+- **wireguard:** remove the `data/wireguard/` directory and its contents from your project directory since it is no longer used
+- **wireguard:** if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
+
+```diff
+-#     routes: "1.2.3.4/32, 192.168.18.0/24"
++#     routes:
++#       - 1.2.3.4/32
++#       - 192.168.18.0/24
+```
+
+- `xsrv upgrade` to upgrade roles/ansible environments to the latest release
+- `xsrv check` (optional) to simulate changes that will be applied
+- `xsrv deploy` to apply changes
 
 **Removed:**
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
