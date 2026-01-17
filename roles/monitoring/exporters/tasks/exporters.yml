@@ -43,6 +43,7 @@
     name: prometheus-exporter-exporter.service
     state: started
     enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### BLACKBOX EXPORTER #####
 
