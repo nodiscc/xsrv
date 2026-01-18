@@ -122,6 +122,7 @@ The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove a
 - wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
 - shaarli: fix missing php extension php-xml
 - nextcloud: fix `trusted_proxies is not correctly defined` warning in admin area
+- monitoring.utils: fix bonnie++ report generation
 
 [Full changes since v1.27.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.27.0...1.28.0)
 
