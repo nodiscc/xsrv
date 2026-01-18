@@ -72,7 +72,7 @@ scrape_configs:
     params:
       module:
         - process
-  # - job_name: libvirt
+  # - job_name: libvirt # does not work, will be reintroduced later, issue #1374
   #   bearer_token: {{ victoriametrics_exporters_auth_password }}
   #   scrape_interval: 5s
   #   scrape_timeout: 5s
