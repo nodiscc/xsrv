@@ -320,7 +320,7 @@ If you get an error message `No such index` in graylog queries after restoring a
 sudo systemctl stop elasticsearch graylog-server mongod
 sudo apt purge elasticsearch graylog-4.0-repository  graylog-server mongodb-org
 sudo firewall-cmd --remove-service=graylog-tcp --zone internal --permanent
-sudo rm -rf /etc/apache2/sites-available/graylog.conf /etc/apache2/sites-enabled/graylog.conf /usr/share/keyrings/elasticsearch.gpg /etc/apt/sources.list.d/elasticsearch.list /etc/systemd/system/elasticsearch.service.d/ /etc/elasticsearch /etc/ansible/facts.d/graylog.fact /etc/firewalld/services/graylog-tcp.xml /etc/graylog/ /usr/share/keyrings/mongodb.gpg /etc/apt/sources.list.d/mongodb.list /etc/rsyslog.d/graylog.conf /var/log/mongodb/ /var/log/elasticsearch/ /var/log/graylog-server/ /var/lib/elasticsearch /etc/rsnapshot.d/graylog.conf
+sudo rm -rf /etc/apache2/sites-available/graylog.conf /etc/apache2/sites-enabled/graylog.conf /usr/share/keyrings/elasticsearch.gpg /usr/share/keyrings/mongodb.gpg  /etc/systemd/system/elasticsearch.service.d/ /etc/elasticsearch /etc/ansible/facts.d/graylog.fact /etc/firewalld/services/graylog-tcp.xml /etc/graylog/ /etc/apt/sources.list.d/elasticsearch.list /etc/apt/sources.list.d/graylog.list /etc/apt/sources.list.d/mongodb.list /etc/rsyslog.d/graylog.conf /var/log/mongodb/ /var/log/elasticsearch/ /var/log/graylog-server/ /var/log/graylog /var/lib/elasticsearch /etc/rsnapshot.d/graylog.conf /var/lib/mongodb /etc/mongod.conf
 sudo systemctl daemon-reload
 sudo systemctl reload apache2 firewalld
 sudo systemctl restart rsyslog
