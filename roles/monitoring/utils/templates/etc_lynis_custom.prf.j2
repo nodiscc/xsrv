@@ -7,7 +7,9 @@ profile-name=Custom Audit Template
 skip-test={{ test }}
 {% endfor %}
 {% endif %}
-{{ "skip-test=ACCT-9626" if (ansible_local.exporters.ansible_managed is defined) and (ansible_local.exporters.ansible_managed) }}
+{% if (ansible_local.exporters.ansible_managed is defined) and (ansible_local.exporters.ansible_managed) %}
+   skip-test=ACCT-9626
+{% endif %}
 # Skip a particular option within a test (when applicable)
 #skip-test=SSH-7408:loglevel
 #skip-test=SSH-7408:permitrootlogin
