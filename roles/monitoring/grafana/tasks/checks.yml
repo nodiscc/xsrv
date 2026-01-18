@@ -11,6 +11,7 @@
     - grafana_https_mode in ['selfsigned', 'letsencrypt']
     - grafana_enable_service == grafana_enable_service | bool
     - grafana_allowed_hosts | type_debug == "list"
+    - grafana_version is string
 
 - name: check that variables are correctly defined (grafana_allowed_hosts)
   assert:

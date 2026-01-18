@@ -13,3 +13,5 @@ grafana_enable_service: yes
 # list of IP addresses allowed to access the grafana web interface (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 grafana_allowed_hosts: []
+# grafana version (https://github.com/grafana/grafana/releases.atom)
+grafana_version: "10.3.3"
