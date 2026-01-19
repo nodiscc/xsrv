@@ -5,3 +5,8 @@
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
   when: grafana_enable_service | bool
+
+- name: update CA certificates store
+  become: yes
+  command: update-ca-certificates
+  changed_when: yes
