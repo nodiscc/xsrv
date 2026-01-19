@@ -6,4 +6,4 @@ docs/html/
 /tests/playbooks/xsrv-test/data/cache/facts/
 /tests/playbooks/xsrv-init-playbook/
 /my.example.test.xml
-.vscode/tasks.json
+.ansible/

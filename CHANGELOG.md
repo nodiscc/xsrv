@@ -7,21 +7,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 
-**BREAKING: monitoring roles refactoring:**
-- update your playbook (`xsrv edit-playbook`):
-  - remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
-  - add the `nodiscc.xsrv.monitoring.utils`, `nodiscc.xsrv.monitoring.rsyslog` and `nodiscc.xsrv.monitoring.exporters` roles to all your hosts, early in the playbook
-  - add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and scrape metrics from all hosts where the `nodiscc.xsrv.monitoring.exporters` is deployed
-  - add the `nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role (but after the the `apache` role). This will provide visualizations/dashboards for metrics collected by victoriametrics
-  - if present, rename `nodiscc.xsrv.monitoring_goaccess` to `nodiscc.xsrv.monitoring.goaccess`
-  - make sure the host where victoriametrics is deployed, can access hosts where exporters are deployed on port 9999/tcp (NAT, firewalls)
-  - update your hosts/groups (`xsrv edit-host/edit-group`) and remove all variables named `netdata_*`, use the equivalents listed below instead:
-    - `netdata_allow_connections_from`: [`grafana_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
-    - `netdata_http_checks`: [`victoriametrics_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml)
-    - `netdata_x509_checks`: removed - use `victoriametrics_http_checks` instead, which includes automatic certificate validity/expiration time checks.
-    - `netdata_port_checks`: removed, might be re-added later.
-    - `netdata_fping_hosts`: removed, might be re-added later.
-    - `netdata_firewalld_zones`: [`exporter_firewalld_zones`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
+**BREAKING CHANGE: monitoring roles refactoring:**
+update your playbook (`xsrv edit-playbook`):
+- remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
+- add the `nodiscc.xsrv.monitoring.utils`, `nodiscc.xsrv.monitoring.rsyslog` and `nodiscc.xsrv.monitoring.exporters` roles to all your hosts, early in the playbook
+- add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and scrape metrics from all hosts where the `nodiscc.xsrv.monitoring.exporters` is deployed
+- add the `nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role (but after the the `apache` role). This will provide visualizations/dashboards for metrics collected by victoriametrics
+- if present, rename `nodiscc.xsrv.monitoring_goaccess` to `nodiscc.xsrv.monitoring.goaccess`
+
+update your hosts/groups (`xsrv edit-host/edit-group`) and remove all variables named `netdata_*`, use the equivalents listed below instead:
+  - `netdata_allow_connections_from`: [`grafana_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+  - `netdata_http_checks`: [`victoriametrics_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml)
+  - `netdata_x509_checks`: removed - use `victoriametrics_http_checks` instead, which includes automatic certificate validity/expiration time checks.
+  - `netdata_port_checks`: removed, might be re-added later.
+  - `netdata_fping_hosts`: removed, might be re-added later.
+  - `netdata_firewalld_zones`: [`exporter_firewalld_zones`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
   - add required variables for the new monitoring roles
 
 ```yaml
@@ -35,9 +35,8 @@ grafana_admin_password: "{{ xsrv_admin_password }}"
 grafana_admin_email: "{{ xsrv_admin_email }}"
 ```
 
-The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`. You should remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata).
-
-**Other changes:**
+- make sure the host where victoriametrics is deployed, can access hosts where exporters are deployed on port 9999/tcp (NAT, firewalls)
+- the `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`. You should remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata).
 - **libvirt:** in [libvirt_port_forwards](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), move `*.dnat.*.host_interface` to the top-level list (same level as `vm_name`)
 - **wireguard:** remove the `data/wireguard/` directory and its contents from your project directory since it is no longer used
 - **wireguard:** if you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax
