@@ -22,6 +22,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
     - `netdata_port_checks`: removed, might be re-added later.
     - `netdata_fping_hosts`: removed, might be re-added later.
     - `netdata_firewalld_zones`: [`exporter_firewalld_zones`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
+  - add required variables for the new monitoring roles
+
+```yaml
+# xsrv edit-group-vault default all
+victoriametrics_exporters_auth_password: CHANGEME
+```
 
 The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`. You should remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata).
 
