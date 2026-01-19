@@ -27,13 +27,17 @@ scrape_configs:
   #     - targets: ['localhost:9100']
 
   - job_name: exporter-exporter
-    bearer_token: {{ victoriametrics_exporters_auth_password }}
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
     scrape_interval: 5s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
   - job_name: apache
-    bearer_token: {{ victoriametrics_exporters_auth_password }}
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
     scrape_interval: 5s
     scrape_timeout: 5s
     static_configs:
@@ -43,7 +47,9 @@ scrape_configs:
       module:
         - apache
   - job_name: php-fpm
-    bearer_token: {{ victoriametrics_exporters_auth_password }}
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
     scrape_interval: 5s
     scrape_timeout: 5s
     static_configs:
@@ -53,7 +59,9 @@ scrape_configs:
       module:
         - php-fpm
   - job_name: node
-    bearer_token: {{ victoriametrics_exporters_auth_password }}
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
     scrape_interval: 5s
     scrape_timeout: 5s
     static_configs:
@@ -63,7 +71,9 @@ scrape_configs:
       module:
         - node
   - job_name: process
-    bearer_token: {{ victoriametrics_exporters_auth_password }}
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
     scrape_interval: 5s
     scrape_timeout: 5s
     static_configs:
@@ -73,7 +83,9 @@ scrape_configs:
       module:
         - process
   # - job_name: libvirt # does not work, will be reintroduced later, issue #1374
-  #   bearer_token: {{ victoriametrics_exporters_auth_password }}
+  #     authorization:
+  #   type: Bearer
+  #   credentials: '{{ victoriametrics_exporters_auth_password }}'
   #   scrape_interval: 5s
   #   scrape_timeout: 5s
   #   static_configs:
@@ -83,7 +95,9 @@ scrape_configs:
   #     module:
   #       - libvirt
   - job_name: postgres
-    bearer_token: {{ victoriametrics_exporters_auth_password }}
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
     scrape_interval: 5s
     scrape_timeout: 5s
     static_configs:
@@ -93,7 +107,9 @@ scrape_configs:
       module:
         - postgres
   - job_name: blackbox
-    bearer_token: {{ victoriametrics_exporters_auth_password }}
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
     scrape_interval: 10s
     scrape_timeout: 9s
     metrics_path: /proxy
