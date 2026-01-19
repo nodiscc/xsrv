@@ -9,6 +9,7 @@
     state: started
     enabled: true
   notify: restart prometheus apache exporter
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### EXPORTER-EXPORTER #####
 
@@ -79,3 +80,4 @@
     name: prometheus-php-fpm-exporter.service
     state: started
     enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
