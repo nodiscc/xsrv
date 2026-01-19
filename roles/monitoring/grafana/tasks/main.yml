@@ -35,3 +35,12 @@
   when:
     - ansible_local.apache.ansible_managed is defined
     - ansible_local.apache.ansible_managed | bool
+
+- name: import ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: grafana
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+  tags: grafana
