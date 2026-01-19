@@ -36,7 +36,7 @@
       group: root
       mode: "0644"
       diff: true
-    - src: etc_default_prometheus-exporter.j2
+    - src: etc_default_prometheus-exporter-exporter.j2
       dest: /etc/default/prometheus-exporter-exporter
       group: root
       mode: "0644"
