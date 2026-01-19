@@ -6,6 +6,14 @@
     - exporters
   when: netdata_uninstall
 
+- name: import variable check tasks
+  become: yes
+  import_tasks: checks.yml
+  tags:
+    - monitoring
+    - exporters
+    - checks
+
 - name: import prometheus exporter setup tasks
   become: yes
   import_tasks: exporters.yml

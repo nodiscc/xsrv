@@ -27,6 +27,7 @@ update your hosts/groups (`xsrv edit-host/edit-group`) and remove all variables 
 ```yaml
 # xsrv edit-group-vault default all
 victoriametrics_exporters_auth_password: CHANGEME
+monitoring_exporters_auth_password: CHANGEME
 # xsrv edit-host default my.CHANGEME.org
 grafana_fqdn: grafana.CHANGEME.org
 # xsrv edit-vault default my.CHANGEME.org
