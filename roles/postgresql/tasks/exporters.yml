@@ -37,6 +37,10 @@
   community.postgresql.postgresql_script:
     path: /var/lib/prometheus/create-postgresql-exporter-schema.sql
   when: ansible_local.prometheus_postgresql_exporter.prometheus_schema_created is not defined
+  register: prometheus_schema_command
+  failed_when:
+    - prometheus_schema_command.failed
+    - "not 'already exists' in prometheus_schema_command.msg"
 
 - name: copy prometheus postgresql exporter configuration
   template:
