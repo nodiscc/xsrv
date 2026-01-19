@@ -24,6 +24,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['planarally']['fqdn'] is defined %}
 - PlanarAlly: https://{{ hostvars[item]['ansible_facts']['ansible_local']['planarally']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['grafana']['fqdn'] is defined %}
+- Grafana: https://{{ hostvars[item]['ansible_facts']['ansible_local']['grafana']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] is defined %}
 - Goaccess: https://{{ hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] }}
 {% endif %}

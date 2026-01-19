@@ -88,7 +88,7 @@ matrix_synapse_db_password: "CHANGEME20"
 matrix_synapse_registration_shared_secret: "CHANGEME25"
 matrix_synapse_macaroon_secret_key: "CHANGEME25"
 
-#### GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml
+#### MONITORING.GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml
 goaccess_username: "{{ xsrv_admin_username }}"
 goaccess_password: "{{ xsrv_admin_password }}"
 
@@ -105,3 +105,8 @@ ollama_password: "{{ xsrv_admin_password }}"
 ##### MONITORING.VICTORIAMETRICS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
 victoriametrics_alertmanager_smtp_auth_username: CHANGEME
 victoriametrics_alertmanager_smtp_auth_password: CHANGEME
+
+##### MONITORING.GRAFANA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml
+grafana_admin_username: "{{ xsrv_admin_username }}"
+grafana_admin_password: "{{ xsrv_admin_password }}"
+grafana_admin_email: "{{ xsrv_admin_email }}"

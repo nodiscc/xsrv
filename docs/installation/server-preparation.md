@@ -84,7 +84,8 @@ media.CHANGEME.org # jellyfin
 logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
 imap.CHANGEME.org # mail_dovecot
-goaccess.CHANGEME.org # goaccess
+goaccess.CHANGEME.org # monitoring.goaccess
+grafana.CHANGEME.org # monitoring.grafana
 livestream.CHANGEME.org # owncast
 search.CHANGEME.org # owncast
 pdf.CHANGEME.org # stirlingpdf

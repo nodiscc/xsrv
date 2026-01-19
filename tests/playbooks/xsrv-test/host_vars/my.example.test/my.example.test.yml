@@ -78,3 +78,5 @@ moodist_fqdn: "moodist.example.test"
 searxng_fqdn: "search.example.test"
 ##### KIWIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/kiwix/defaults/main.yml
 kiwix_fqdn: "kiwix.example.test"
+##### MONITORING.GRAFANA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml
+grafana_fqdn: "grafana.example.test"

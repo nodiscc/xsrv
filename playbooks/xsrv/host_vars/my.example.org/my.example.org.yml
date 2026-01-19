@@ -68,7 +68,7 @@ jitsi_fqdn: "conference.CHANGEME.org"
 matrix_synapse_fqdn: "matrix.CHANGEME.org"
 matrix_element_fqdn: "chat.CHANGEME.org"
 
-#### GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml
+#### MONITORING.GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml
 goaccess_fqdn: "goaccess.CHANGEME.org"
 
 #### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
@@ -91,3 +91,6 @@ victoriametrics_alertmanager_smtp_host: CHANGEME
 victoriametrics_alertmanager_smtp_port: CHANGEME
 victoriametrics_alertmanager_smtp_from: "{{ xsrv_admin_email }}"
 victoriametrics_alertmanager_email_to: "{{ xsrv_admin_email }}"
+
+##### MONITORING.GRAFANA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml
+grafana_fqdn: "grafana.example.test"

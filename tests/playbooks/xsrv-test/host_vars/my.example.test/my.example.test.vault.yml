@@ -80,3 +80,7 @@ searxng_secret: "6BFxKW8cfXJqn991Ifzbrp0tlpzBsgpgj8BVwGTYPu8wZIDxR5ggV5WRKWV9Mpq
 ##### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml
 ollama_username: "{{ xsrv_admin_username }}"
 ollama_password: "{{ xsrv_admin_password }}"
+##### MONITORING.GRAFANA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml
+grafana_admin_username: "{{ xsrv_admin_username }}"
+grafana_admin_password: "{{ xsrv_admin_password }}"
+grafana_admin_email: "{{ xsrv_admin_email }}"
