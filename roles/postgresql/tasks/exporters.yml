@@ -12,7 +12,7 @@
     configuration:
       search_path: prometheus,pg_catalog
 
-- name: grant pg_monitor,pg_read_all_stats privileges to prometheus postgresql user
+- name: grant privileges to prometheus postgresql user
   become_user: postgres
   become: true
   community.postgresql.postgresql_privs:
@@ -21,6 +21,7 @@
     type: group
     objs: pg_monitor,pg_read_all_stats
     admin_option: false
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy prometheus schema creation script
   copy:
@@ -60,6 +61,7 @@
     name: prometheus-postgres-exporter.service
     state: started
     enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ### FACT
 
