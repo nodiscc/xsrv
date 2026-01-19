@@ -27,6 +27,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ```yaml
 # xsrv edit-group-vault default all
 victoriametrics_exporters_auth_password: CHANGEME
+# xsrv edit-host default my.CHANGEME.org
+grafana_fqdn: grafana.CHANGEME.org
+# xsrv edit-vault default my.CHANGEME.org
+grafana_admin_username: "{{ xsrv_admin_username }}"
+grafana_admin_password: "{{ xsrv_admin_password }}"
+grafana_admin_email: "{{ xsrv_admin_email }}"
 ```
 
 The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitely set `netdata_uninstall: false`. You should remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata).
