@@ -6,6 +6,8 @@ victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
 #   - https://prometheus.io
 #   - https://www.debian.org
 victoriametrics_http_checks: []
+# how long to wait before repeating the last notification
+victoriametrics_alertmanager_repeat_interval: "1h"
 # REQUIRED password to authenticate on exporters when scraping them
 victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
 # REQUIRED SMTP host/from address/username/password and recipient address for alertmaneger e-mail alerts
