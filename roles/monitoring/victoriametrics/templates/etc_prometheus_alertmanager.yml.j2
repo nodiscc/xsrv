@@ -17,7 +17,7 @@ receivers:
     email_configs:
       - to: '{{ victoriametrics_alertmanager_email_to }}'{% raw %}
         headers:
-          Subject: '🚨 alert: {{ .GroupLabels.severity }}: {{ .GroupLabels.alertname }}: {{ .GroupLabels.instance }}'
+          Subject: '🚨 {{ .GroupLabels.severity }}: {{ .GroupLabels.alertname }}: {{ .GroupLabels.instance }}'
         html: |
           {{ range .Alerts }}
           <b>Alert:</b> {{ .Labels.alertname }}<br>
