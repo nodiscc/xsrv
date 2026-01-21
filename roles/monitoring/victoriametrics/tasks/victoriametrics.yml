@@ -83,7 +83,7 @@
     enabled: true
   ignore_errors: "{{ ansible_check_mode }}"
 
-# to see currently active alerts, run the promQL query ALERTS against your prometheus datasource in grafana 
+# to see currently active alerts, run the promQL query ALERTS against your prometheus datasource in grafana
 - name: copy vmalert alert definitions
   copy:
     src: "{{ item.src }}"
