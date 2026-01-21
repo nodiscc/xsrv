@@ -11,3 +11,15 @@ groups:
         annotations:
           summary: "Systemd service {{ $labels.name }} failed on {{ $labels.instance }}"
           description: "Service {{ $labels.name }} on node {{ $labels.instance }} is in failed state."
+  - name: node_apt_alerts
+    interval: 1h
+    rules:
+      - alert: APTUpdatesAvailable
+        expr: |
+          apt_upgrades_pending > 0
+        for: 24h
+        labels:
+          severity: info
+        annotations:
+          summary: "APT updates pending on {{ $labels.instance }} for >24h"
+          description: "Node {{ $labels.instance }} has {{ $value }} APT package updates available for more than 24 hours."
