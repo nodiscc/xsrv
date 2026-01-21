@@ -23,3 +23,15 @@ groups:
         annotations:
           summary: "APT updates pending on {{ $labels.instance }} for >24h"
           description: "Node {{ $labels.instance }} has {{ $value }} APT package updates available for more than 24 hours."
+  - name: node_memory_alerts
+    interval: 30s
+    rules:
+      - alert: LowMemoryAvailable
+        expr: |
+          (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low memory available on {{ $labels.instance }}"
+          description: "Node {{ $labels.instance }} has only {{ $value | humanize }}% memory available (< 10% threshold)"
