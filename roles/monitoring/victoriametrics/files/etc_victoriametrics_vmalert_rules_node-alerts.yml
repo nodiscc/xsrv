@@ -34,4 +34,20 @@ groups:
           severity: warning
         annotations:
           summary: "Low memory available on {{ $labels.instance }}"
-          description: "Node {{ $labels.instance }} has only {{ $value | humanize }}% memory available (< 10% threshold)"
+          description: "Node {{ $labels.instance }} has only {{ $value | humanize }}% memory available (< 10% threshold)."
+  - name: node_filesystem_alerts
+    interval: 30s
+    rules:
+      - alert: LowDiskSpace
+        expr: |
+          (
+            node_filesystem_avail_bytes{fstype!~"tmpfs|fuse.lxcfs|squashfs|vfat"}
+            /
+            node_filesystem_size_bytes{fstype!~"tmpfs|fuse.lxcfs|squashfs|vfat"}
+          ) * 100 < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low disk space on {{ $labels.instance }}:{{ $labels.mountpoint }}"
+          description: "Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} has only {{ $value | humanize }}% free space remaining (< 10% threshold)."
