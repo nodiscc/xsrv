@@ -1,0 +1,13 @@
+groups:
+  - name: node_systemd_alerts
+    interval: 30s
+    rules:
+      - alert: SystemdServiceFailed
+        expr: |
+          node_systemd_unit_state{state="failed"} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Systemd service {{ $labels.name }} failed on {{ $labels.instance }}"
+          description: "Service {{ $labels.name }} on node {{ $labels.instance }} is in failed state."
