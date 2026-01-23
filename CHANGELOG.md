@@ -94,7 +94,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - monitoring.rsyslog: ensure logrotate is installed
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)
-- shaarli: udpate to [v0.15.0](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
+- shaarli: udpate to v0.16.0 [[1](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
 - nextcloud: update to 30.0.17 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/)
 - gitea: update to v1.24.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.23.5) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.23.6) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.23.7) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.23.8) [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.24.0) [[6]](https://github.com/go-gitea/gitea/releases/tag/v1.24.1) [[7]](https://github.com/go-gitea/gitea/releases/tag/v1.24.2) [[8]](https://github.com/go-gitea/gitea/releases/tag/v1.24.3) [[9]](https://github.com/go-gitea/gitea/releases/tag/v1.24.4) [[10]](https://github.com/go-gitea/gitea/releases/tag/v1.24.5) [[11]](https://github.com/go-gitea/gitea/releases/tag/v1.24.6) [[12]](https://github.com/go-gitea/gitea/releases/tag/v1.24.7)
 - owncast: update to v0.2.3 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.2) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.3)

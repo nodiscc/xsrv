@@ -35,7 +35,7 @@ shaarli_setup_python_client: no
 # shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.15.0'
+shaarli_version: 'v0.16.0'
 # list of IP addresses allowed to access shaarli (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
