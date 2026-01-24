@@ -82,6 +82,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
+- shaarli: preserve thumbnails cache during upgrades
 - nextcloud: schedule start of maintenance window (resource intensive tasks) at 02:00
 - ollama: pull `gemma3:4b` model by default
 - ollama: disable installation of ollama-ui web interface by default

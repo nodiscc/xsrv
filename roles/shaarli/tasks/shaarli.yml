@@ -132,6 +132,17 @@
   when: shaarli_action == 'upgrade'
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: copy cache directory from old installation
+  copy:
+    remote_src: yes
+    src: '{{ shaarli_install_dir }}.old/cache'
+    dest: '{{ shaarli_install_dir }}/'
+    mode: preserve
+    owner: www-data
+    group: shaarli
+  when: shaarli_action == 'upgrade'
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: copy shaarli configuration
   template:
     src: "var_www_shaarli_data_config.json.php.j2"
