@@ -115,6 +115,13 @@
     - common
     - packages
 
+- name: import hdparm configuration tasks
+  import_tasks: hdparm.yml
+  become: yes
+  tags:
+    - common
+    - hdparm
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: common

@@ -1,0 +1,26 @@
+- name: copy hdparm-auto-standby script
+  template:
+    src: usr_local_bin_hdparm-auto-standby.j2
+    dest: /usr/local/bin/hdparm-auto-standby
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: copy hdparm-auto-standby systemd unit file
+  template:
+    src: etc_systemd_system_hdparm-auto-standby.service.j2
+    dest: /etc/systemd/system/hdparm-auto-standby.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: start and enable hdparm-auto-standby service
+  systemd:
+    name: hdparm-auto-standby.service
+    state: "{{ 'started' if hdparm_auto_standby_drives else 'stopped' }}"
+    enabled: "{{ 'yes' if hdparm_auto_standby_drives else 'no' }}"
+  ignore_errors: "{{ ansible_check_mode }}"

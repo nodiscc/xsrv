@@ -402,3 +402,7 @@ packages_remove:
   # - rpcbind # not an NFS server
   # - nfs-common # not an NFS server
   # - exim4-base # use a smarthost/msmtp
+
+### DRIVES ###
+# standby mechanical/rotational hard drives after 1 hour of idle
+hdparm_auto_standby_drives: false

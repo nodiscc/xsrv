@@ -1,0 +1,11 @@
+[Unit]
+Description=Configure HDD standby timeout
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/hdparm-auto-standby
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

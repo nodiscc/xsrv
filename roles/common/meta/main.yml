@@ -25,6 +25,7 @@
 # @tag utils-reboot - (manual) reboot the host
 # @tag cron - configure cron task scheduler
 # @tag apt-listbugs - configure apt-listbugs bug prevention tool
+# @tag hdparm - configure hdparm hard drive standby settings
 
 galaxy_info:
   role_name: common
