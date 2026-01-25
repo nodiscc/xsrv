@@ -37,5 +37,4 @@
     - nodiscc.xsrv.stirlingpdf # PDF manipulation tools
     - nodiscc.xsrv.moodist # ambient sound mixer
     - nodiscc.xsrv.kiwix # offline wiki viewer
-    - nodiscc.xsrv.ollama # Large Language Model (LLM) runner
     - nodiscc.xsrv.homepage # simple webserver homepage

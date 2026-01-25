@@ -55,6 +55,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 
 **Removed:**
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - monitoring_rsyslog: ensure logrotate is installed
 - common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
 - libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
@@ -84,8 +85,6 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
 - shaarli: preserve thumbnails cache during upgrades
 - nextcloud: schedule start of maintenance window (resource intensive tasks) at 02:00
-- ollama: pull `gemma3:4b` model by default
-- ollama: disable installation of ollama-ui web interface by default
 - searxng: allow returning results as JSON (add `&format=json` to URL parameters)
 - searxng: increase sepiasearch search engine weight to 2
 - searxng: increase wiby search engine weight to 1.2
@@ -101,10 +100,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - owncast: update to v0.2.3 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.2) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.3)
 - postgresql: update pgmetrics to v1.18.0 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1) [[2]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.18.0)
 - stirlingpdf: update to v1.5.0 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.2) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.44.3) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.1) [[7]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.2) [[8]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.3) [[9]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.4) [[10]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.5) [[11]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.45.11) [[12]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.46.0) [[13]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.46.1) [[14]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.46.2) [[15]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.0.0) [[16]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.0.1) [[17]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.0.2) [[18]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.1.0) [[19]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.2.0) [[20]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.2.0) [[21]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.3.0) [[22]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.3.1) [[23]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.3.2) [[24]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.4.0) [[25]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v1.5.0)
-- ollama: update to [v0.12.6](https://github.com/ollama/ollama/releases)
 - gotty: update to v1.6.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.1) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.6.0)
-- ollama: pull `gemma3:4b` model by default
-- ollama: disable installation of ollama-ui web interface by default
 - searxng: allow returning results as JSON (add `&format=json` to URL parameters)
 - searxng: increase sepiasearch search engine weight to 2
 - searxng: increase wiby search engine weight to 1.2

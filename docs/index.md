@@ -47,7 +47,6 @@ This project provides:
 - [mumble](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [nmap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap) - automated network scanning for ansible-based projects
-- [ollama](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) - Large Language Model (LLM) runner and web interface
 - [openldap](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap) - LDAP directory server and web management tools
 - [owncast](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast) - live video streaming and chat server
 - [podman](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) - OCI container engine and management tools
