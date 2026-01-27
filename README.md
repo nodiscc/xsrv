@@ -29,7 +29,6 @@ This project provides:
 - [gitea](roles/gitea) - git version control service/software forge
 - [gitea_act_runner](roles/gitea_act_runner) - CI/CD runner for Gitea Actions
 - [gotty](roles/gotty) - web-based terminal emulator
-- [graylog](roles/graylog) - log aggregation, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - media server
 - [jitsi](roles/jitsi) - video conferencing solution
@@ -73,7 +72,6 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/udEAnKA.png)](roles/matrix)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Vvdj3Zu.png)](roles/homepage)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/H3PIWrt.png)](roles/jellyfin)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/wa3pkyJ.png)](roles/graylog)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](roles/jitsi)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](roles/readme_gen)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)

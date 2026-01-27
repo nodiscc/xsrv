@@ -165,12 +165,6 @@
             .goaccess-cb {
                 background-color: #5BC0DE;
             }
-            .graylog :hover{
-                border-color: #E84139;
-            }
-            .graylog-cb {
-                background-color: #FD6466;
-            }
             .ssh :hover {
                 border-color: #4E4E4E;
             }
@@ -570,19 +564,6 @@
                         <div class="app-text">
                             <p class="app-name">Goaccess</p>
                             <p class="app-description">Web log analyzer/viewer</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-{% endif %}
-{% if ansible_local.graylog.fqdn is defined %}
-            <div class="col-1-3 mobile-col-1-1 graylog">
-                <a href="https://{{ ansible_local.graylog.fqdn }}/">
-                    <div class="content">
-                        <div class="colorblock graylog-cb"><img class="app-icon" src="res/graylog.png"></div>
-                        <div class="app-text">
-                            <p class="app-name">Graylog</p>
-                            <p class="app-description">Log management and analysis</p>
                         </div>
                     </div>
                 </a>

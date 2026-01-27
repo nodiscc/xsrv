@@ -59,13 +59,6 @@ mumble_superuser_password: "{{ xsrv_admin_password }}"
 openldap_admin_password: "CHANGEME30"
 openldap_bind_password: "CHANGEME30"
 
-#### GRAYLOG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml
-graylog_root_username: "{{ xsrv_admin_username }}"
-graylog_root_password: "{{ xsrv_admin_password }}"
-graylog_secret_key: "CHANGEME96"
-mongodb_admin_password: "CHANGEME20"
-graylog_mongodb_password: "CHANGEME20"
-
 #### GOTTY - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml
 gotty_auth_username: "CHANGEME"
 gotty_auth_password: "CHANGEME"

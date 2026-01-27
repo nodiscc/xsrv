@@ -80,7 +80,6 @@ ssp.CHANGEME.org # openldap (self-service password)
 chat.CHANGEME.org # matrix (element web client)
 matrix.CHANGEME.org # matrix (synapse server)
 media.CHANGEME.org # jellyfin
-logs.CHANGEME.org # graylog
 tty.CHANGEME.org # gotty
 imap.CHANGEME.org # mail_dovecot
 goaccess.CHANGEME.org # monitoring.goaccess

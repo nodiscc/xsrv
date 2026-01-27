@@ -31,7 +31,6 @@ goaccess - setup goaccess web log analyzer/viewer
 gotty - setup gotty web terminal
 grafana-config - update grafana configuration
 grafana - setup grafana analytics and interactive visualization web application
-graylog - setup graylog log analyzer
 homepage - setup simple webserver homepage
 hostname - setup hostname
 hosts - setup /etc/hosts entries
@@ -107,7 +106,6 @@ utils-shutdown - (manual) shut down the host
 victoriametrics - setup victoriametrics monitoring service and time-series database
 wireguard - setup wireguard
 OTHER TAGS:
-graylog
 mongodb
 never
 nmap
