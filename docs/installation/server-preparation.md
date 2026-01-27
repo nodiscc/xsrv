@@ -42,7 +42,6 @@ Monitoring metrics exporter:     TCP 9999
 Web server:                      TCP 80/443
 BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738
-Graylog TCP input:               TCP 5140
 Dovecot IMAP server:             TCP 993
 Wireguard VPN server:            UDP 51820
 Jitsi videoconferencing server:  UDP 10000

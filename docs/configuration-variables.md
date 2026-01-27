@@ -226,9 +226,6 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
-  - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
-  - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
-  - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
   - "o=matrix.org,site=packages.matrix.org" # nodiscc.xsrv.matrix
@@ -794,51 +791,6 @@ gotty_version: "1.6.0"
 # list of IP addresses allowed to access gotty (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 gotty_allowed_hosts: []
-```
-
-
-## graylog
-
-[roles/graylog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml)
-
-```yaml
-##### GRAYLOG LOG AGGREGATION/ANALYSIS PLATFORM #####
-# fully qualified domain name of the graylog instance
-graylog_fqdn: "logs.CHANGEME.org"
-# graylog admin username/password, and secret key for hashing passwords
-graylog_root_username: "CHANGEME"
-graylog_root_password: "CHANGEME20"
-graylog_secret_key: "CHANGEME96"
-# password for the mongodb admin user
-mongodb_admin_password: "CHANGEME20"
-# password for the mongodb graylog user
-graylog_mongodb_password: "CHANGEME20"
-# timezone of the graylog admin user, from https://www.joda.org/joda-time/timezones.html
-graylog_root_timezone: "UTC"
-# start and end validity dates for TLS certificates for syslog inputs (YYYYMMDDHHMMSSZ)
-graylog_cert_not_before: "20240219000000Z"
-graylog_cert_not_after: "20340219000000Z"
-# HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
-#   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate
-graylog_https_mode: selfsigned
-# start/stop the graylog/elasticsearch/mongodb services, enable/disable them on boot (yes/no) (redirect users to maintenance page if disabled)
-graylog_enable_service: yes
-# (512m/1g...) JVM memory heap size for graylog
-graylog_heap_size: "1g"
-# (auto/512m/1g...) JVM memory heap size for elasticsearch
-elasticsearch_heap_size: "auto"
-# (auto/seconds) timeout for elasticsearch systemd service startup
-# set a longer value if the elasticsearch systemd service fails to start/times out
-elasticsearch_timeout_start_sec: auto
-# list of IP addresses allowed to access the graylog web interface (IP or IP/netmask format)
-# set to empty list [] to allow access from any IP address
-graylog_allowed_hosts: []
-# firewall zones for graylog TCP inputs, if nodiscc.xsrv.common/firewalld role is deployed
-# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
-graylog_tcp_firewalld_zones:
-  - zone: internal
-    state: enabled
 ```
 
 
