@@ -30,9 +30,6 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] is defined %}
 - Goaccess: https://{{ hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] }}
 {% endif %}
-{% if hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] is defined %}
-- Graylog: https://{{ hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] }}
-{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['homepage']['fqdn'] is defined %}
 - Homepage: https://{{ hostvars[item]['ansible_facts']['ansible_local']['homepage']['fqdn'] }}
 {% endif %}
@@ -109,7 +106,7 @@ Include ~/.ssh/*.conf
 
 ```
 # ~/.ssh/xsrv-{{ xsrv_project_name|default('default') }}.conf
-{% for item in readme_gen_limit %}
+{% for item in groups['all'] %}
 Host {{ hostvars[item].inventory_hostname }}
     HostName {{ hostvars[item].ansible_host | default(hostvars[item].inventory_hostname) }}{{ '
     User ' + hostvars[item].ansible_user if hostvars[item].ansible_user is defined }}
@@ -122,7 +119,7 @@ Host {{ hostvars[item].inventory_hostname }}
 ## GTK bookmarks/SFTP
 ```
 # ~/.config/gtk-3.0/bookmarks
-{% for item in readme_gen_limit %}
+{% for item in groups['all'] %}
 sftp://{{ hostvars[item].ansible_host | default(hostvars[item].inventory_hostname) }}:{{ hostvars[item].ansible_ssh_port|default('22') }}/home/{{ hostvars[item].ansible_user | default('') }} {{ hostvars[item].inventory_hostname }}
 {% endfor %}
 ```

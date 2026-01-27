@@ -80,7 +80,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - rename `monitoring_goaccess` to `monitoring.goaccess`
 - default playbook: only enable the common role by default, let user select which roles to enable
 - common/firewalld: ensure ufw is removed before installing firewalld
-- wireguard: allow specifying [`wireguard_peers`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
+- wireguard: allow specifying [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
 - libvirt: use firewalld to manage port forwarding to libvirt VMs, remove direct iptables management
 - wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
@@ -94,6 +94,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - monitoring.rsyslog: ensure logrotate is installed
+- readme-gen: always write SSH client configuration and GTK bookmarks for all hosts to README.md, even for hosts that are not in [`readme_gen_limit`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme-gen/defaults/main.yml)
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)
 - shaarli: udpate to v0.16.0 [[1](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
