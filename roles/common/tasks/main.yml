@@ -3,6 +3,21 @@
   tags:
     - common
     - checks
+    - users
+    - hostname
+    - hosts
+    - dns
+    - sysctl
+    - apt
+    - datetime
+    - ssh
+    - firewall
+    - fail2ban
+    - mail
+    - msmtp
+    - cron
+    - packages
+    - hdparm
 
 - name: import hostname configuration tasks
   import_tasks: hostname.yml

@@ -141,7 +141,7 @@ TTYPERM		0600
 # default to non-world readable files (umask)
 ERASECHAR	0177
 KILLCHAR	025
-UMASK		027
+UMASK		{{ umask }}
 
 # HOME_MODE is used by useradd(8) and newusers(8) to set the mode for new
 # home directories.

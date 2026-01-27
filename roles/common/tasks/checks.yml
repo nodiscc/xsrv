@@ -8,6 +8,7 @@
     - dns_nameservers|type_debug == "list"
     - setup_users == setup_users | bool
     - linux_users|type_debug == "list"
+    - umask is string
     - kernel_enable_core_dump == kernel_enable_core_dump | bool
     - setup_apt == setup_apt | bool
     - apt_listbugs == apt_listbugs | bool

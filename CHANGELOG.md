@@ -72,7 +72,8 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))
 - moodist/owncast/searxng/stirlingpdf: automatically remove unused podman images/containers, nightly (conserve disk space)
 - wireguard: generate a QR code for each wireguard_peer containing the configuration (can be scanned with mobile apps such as WG Tunnel)
-- common: make the value of `kernel.yama.ptrace_scope` configurable
+- common/users: make the default system `umask` configurable
+- common/sysctl: make the value of `kernel.yama.ptrace_scope` configurable
 
 **Changed:**
 - rename `monitoring_utils` role to `monitoring.utils`
