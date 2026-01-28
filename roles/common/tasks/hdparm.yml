@@ -1,3 +1,8 @@
+- name: install hdparm
+  apt:
+    package: hdparm
+    state: present
+
 - name: copy hdparm-auto-standby script
   template:
     src: usr_local_bin_hdparm-auto-standby.j2
