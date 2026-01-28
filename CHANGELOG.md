@@ -95,6 +95,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - monitoring.rsyslog: ensure logrotate is installed
+- libvirt: allow accessing VM SPICE graphical consoles remotely
 - readme-gen: always write SSH client configuration and GTK bookmarks for all hosts to README.md, even for hosts that are not in [`readme_gen_limit`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme-gen/defaults/main.yml)
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)

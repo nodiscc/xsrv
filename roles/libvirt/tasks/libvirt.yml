@@ -10,6 +10,7 @@
       - netcat-openbsd
       - python3-lxml
       - ksmtuned
+      - qemu-system-modules-spice
       # - ebtables
       # - virt-manager # graphical environments only
       # - virt-viewer # graphical environments only
