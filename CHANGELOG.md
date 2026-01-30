@@ -91,7 +91,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 - searxng: allow returning results as JSON (add `&format=json` to URL parameters)
 - searxng: increase sepiasearch search engine weight to 2
 - searxng: increase wiby search engine weight to 1.2
-- searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 2
+- searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 1.2
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - monitoring.rsyslog: ensure logrotate is installed
