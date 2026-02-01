@@ -2,4 +2,4 @@
 # Due to shell escaping, to pass backslashes for regexes, you need to double
 # them (\\d for \d). If running under systemd, you need to double them again
 # (\\\\d to mean \d), and escape newlines too.
-ARGS="-storageDataPath=/var/lib/victoria-metrics -promscrape.config=/etc/victoriametrics.yml"
+ARGS="-storageDataPath=/var/lib/victoria-metrics -promscrape.config=/etc/victoriametrics.yml -httpAuth.username=vmagent -httpAuth.password={{ victoriametrics_exporters_auth_password }}"

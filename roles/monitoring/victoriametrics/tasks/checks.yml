@@ -14,3 +14,4 @@
     - victoriametrics_alertmanager_smtp_auth_password is not search('CHANGEME')
     - victoriametrics_alertmanager_email_to is not search('CHANGEME')
     - victoriametrics_alertmanager_repeat_interval is string
+    - victoriametrics_firewalld_zones | type_debug == "list"

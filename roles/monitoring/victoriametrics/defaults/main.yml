@@ -17,3 +17,8 @@ victoriametrics_alertmanager_smtp_from: "{{ xsrv_admin_email }}"
 victoriametrics_alertmanager_email_to: "{{ xsrv_admin_email }}"
 victoriametrics_alertmanager_smtp_auth_username: "{{ msmtp_username | default('CHANGEME') }}"
 victoriametrics_alertmanager_smtp_auth_password: "{{ msmtp_password | default('CHANGEME') }}"
+# firewall zones from which to allow remote write (zone, state)
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule
+victoriametrics_firewalld_zones:
+  - zone: internal
+    state: enabled

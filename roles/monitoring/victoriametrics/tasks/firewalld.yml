@@ -1,0 +1,21 @@
+- name: copy victoriametrics firewalld service definition
+  template:
+    src: etc_firewalld_services_victoriametrics.xml.j2
+    dest: /etc/firewalld/services/victoriametrics.xml
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload firewalld
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: setup firewalld rules for victoriametrics remote write
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: victoriametrics
+    state: "{{ item.state }}"
+    permanent: yes
+    immediate: yes
+  with_items: "{{ victoriametrics_firewalld_zones }}"

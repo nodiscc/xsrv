@@ -54,6 +54,14 @@
   tags: services
   ignore_errors: "{{ ansible_check_mode }}"
 
+##### FIREWALL #####
+
+- name: include firewalld tasks
+  include_tasks: firewalld.yml
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed | bool
+
 ##### ALERTING #####
 
 - name: create directory for alerts configuration
@@ -65,13 +73,15 @@
     mode: "0755"
 
 - name: copy vmalert systemd service unit file
-  copy:
-    src: etc_systemd_system_vmalert.service
+  template:
+    src: etc_systemd_system_vmalert.service.j2
     dest: /etc/systemd/system/vmalert.service
     owner: prometheus
     group: prometheus
     mode: "0644"
-  notify: reload systemd unit files
+  notify:
+    - reload systemd unit files
+    - reload vmalert
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
