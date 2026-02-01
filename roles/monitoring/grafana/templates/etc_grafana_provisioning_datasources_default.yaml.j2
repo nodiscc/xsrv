@@ -5,3 +5,7 @@ datasources:
     type: prometheus
     url: http://localhost:8428
     uid: local_prometheus_victoriametrics
+    basicAuth: true
+    basicAuthUser: vmagent
+    secureJsonData:
+      basicAuthPassword: '{{ grafana_victoriametrics_auth_password }}'
