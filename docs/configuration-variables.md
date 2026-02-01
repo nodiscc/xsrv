@@ -166,9 +166,9 @@ sysctl_allow_forwarding: no
 # answer ICMP pings (yes/no)
 sysctl_answer_ping: no
 # "swappiness" setting. 100: swap/reclaim RAM aggressively. 0: do not swap unless necessary
-sysctl_vm_swappiness: '10'
+sysctl_vm_swappiness: 10
 # "VFS cache pressure" setting. 100+ : prefer caching memory pages over disk cache
-sysctl_vm_vfs_cache_pressure: '150'
+sysctl_vm_vfs_cache_pressure: 150
 # value of sysctl control kernel.yama.ptrace_scope, see documentation in etc_sysctl.d_custom.conf.j2
 sysctl_kernel_yama_ptrace_scope: 2
 # yes/no: enable/disable creation of core dumps on kernel crashes

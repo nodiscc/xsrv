@@ -38,8 +38,8 @@
     - ssh_sftp_loglevel in ['QUIET', 'FATAL', 'ERROR', 'INFO', 'VERBOSE', 'DEBUG', 'DEBUG1', 'DEBUG2', 'DEBUG3']
     - sysctl_allow_forwarding == sysctl_allow_forwarding | bool
     - sysctl_answer_ping == sysctl_answer_ping | bool
-    - sysctl_vm_swappiness | int
-    - sysctl_vm_vfs_cache_pressure | int
+    - sysctl_vm_swappiness == sysctl_vm_swappiness | int
+    - sysctl_vm_vfs_cache_pressure == sysctl_vm_vfs_cache_pressure | int
     - sysctl_kernel_yama_ptrace_scope == sysctl_kernel_yama_ptrace_scope | int
     - systemd_logind_kill_user_processes == systemd_logind_kill_user_processes|bool
     - systemd_logind_kill_exclude_users|type_debug == "list"
@@ -90,7 +90,7 @@
     quiet: yes
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
     that:
-      - item.ip_address | ansible.utils.ipaddr
+      - item.ip_address | ansible.utils.ipaddr | bool
       - (item.state is not defined) or (item.state in ['present', 'absent'])
   when: setup_hosts_file | bool
   loop: "{{ hosts_file_entries }}"

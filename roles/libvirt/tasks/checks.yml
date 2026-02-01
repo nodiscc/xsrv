@@ -13,7 +13,7 @@
     quiet: yes
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt"
     that:
-      - item.vm_ip | ansible.utils.ipaddr
+      - item.vm_ip | ansible.utils.ipaddr | bool
       - item.vm_name is string
       - item.vm_bridge is string
       - item.host_interface is string
@@ -30,7 +30,7 @@
       - (item.1.host_port == item.1.host_port|int) or (item.1.host_port | regex_search('^\d*\-\d*$'))
       - (item.1.vm_port == item.1.vm_port|int) or (item.1.vm_port | regex_search('^\d*\-\d*$'))
       - (item.1.protocol is not defined) or (item.1.protocol in ['tcp', 'udp'])
-      - (item.1.source_ip is not defined) or (item.1.source_ip | ansible.utils.ipaddr)
+      - (item.1.source_ip is not defined) or (item.1.source_ip | ansible.utils.ipaddr | bool)
   with_subelements:
     - "{{ libvirt_port_forwards }}"
     - dnat
@@ -45,7 +45,7 @@
       - (item.1.protocol is not defined) or (item.1.protocol in ['tcp', 'udp'])
       - (item.1.source_interface is defined) or (item.1.source_ip is defined)
       - (item.1.source_interface is not defined) or (item.1.source_interface is string)
-      - (item.1.source_ip is not defined) or (item.1.source_ip | ansible.utils.ipaddr)
+      - (item.1.source_ip is not defined) or (item.1.source_ip | ansible.utils.ipaddr | bool)
   with_subelements:
     - "{{ libvirt_port_forwards }}"
     - forward
