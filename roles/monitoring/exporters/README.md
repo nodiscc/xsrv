@@ -1,6 +1,6 @@
 # xsrv.monitoring.exporters
 
-This role will install and configure various basic monitoring agents (exporters) and expose their metrics through a single [exporter-exporter](https://packages.debian.org/bookworm/prometheus-exporter-exporter). These metrics can be scraped by Prometheus-compatible systems like [victoriametrics](../victoriametrics/). [grafana](../grafana/) can be used to visualize metrics stored in Prometheus/victoriametrics.
+This role will install and configure various basic monitoring agents (exporters) and expose their metrics through a single [exporter-exporter](https://packages.debian.org/bookworm/prometheus-exporter-exporter). Metrics are pushed to a central [VictoriaMetrics](../victoriametrics/) instance via [vmagent](https://docs.victoriametrics.com/vmagent/) remote write. [Grafana](../grafana/) can be used to visualize metrics stored in VictoriaMetrics.
 
 
 ## Requirements/dependencies/example playbook
@@ -20,7 +20,10 @@ See [meta/main.yml](meta/main.yml)
 ```
 
 ```yaml
-# xsrv edit-vaut default my.CHANGEME.org
+# xsrv edit-host default my.CHANGEME.org
+monitoring_victoriametrics_url: "http://monitoring.CHANGEME.org:8428"
+
+# xsrv edit-vault default my.CHANGEME.org
 monitoring_exporters_auth_password: CHANGEME
 ```
 

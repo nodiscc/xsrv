@@ -2,7 +2,7 @@
 
 This role will install [Grafana](https://en.wikipedia.org/wiki/Grafana), an open-source analytics and interactive visualization web application.
 
-VictoriaMetrics will be added as a data source for grafana if the [nodiscc.xsrv.victoriametrics](../victoriametrics/) is deployed on the same host as grafana.
+VictoriaMetrics will be added as a data source for Grafana if the [nodiscc.xsrv.victoriametrics](../victoriametrics/) role is deployed on the same host. Authentication credentials for the VictoriaMetrics datasource are configured automatically via `grafana_victoriametrics_auth_password`.
 
 [![](https://grafana.com/media/grafana/images/grafana-dashboard-english.png)](https://grafana.com/media/grafana/images/grafana-dashboard-english.png)
 

@@ -2,7 +2,7 @@
 
 This role will install [VictoriaMetrics](https://docs.victoriametrics.com/), an event monitoring and alerting application and time-series database. VictoriaMetrics is a drop-in replacement for [Prometheus](https://prometheus.io/).
 
-VictoriaMetrics will scrape metrics from hosts where the [monitoring.exporters](../exporters/) role is deployed.
+VictoriaMetrics receives metrics via remote write from [vmagent](https://docs.victoriametrics.com/vmagent/) instances deployed by the [monitoring.exporters](../exporters/) role on each host.
 
 VictoriaMetrics metrics can be visualized through Grafana, the simplest way to achieve this is to deploy the [grafana](../grafana/) role on the same host as VictoriaMetrics.
 
@@ -35,7 +35,7 @@ victoriametrics_alertmanager_smtp_auth_password: CHANGEME
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
-VictoriaMetrics must be able to reach `exporter-exporter` on other hosts over port 9999/tcp.
+Hosts running `vmagent` must be able to reach VictoriaMetrics on port 8428/tcp. Firewall zones allowing remote write are configured via `victoriametrics_firewalld_zones`.
 
 
 ## Usage
