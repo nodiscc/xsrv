@@ -4,3 +4,6 @@
 # dns_nameservers:
 #   - "1.1.1.1"
 #   - "1.0.0.1"
+
+##### MONITORING.EXPORTERS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/exporters/defaults/main.yml
+monitoring_victoriametrics_url: "http://my.CHANGEME.org:8428"

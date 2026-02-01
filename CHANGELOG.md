@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
 - Add the `nodiscc.xsrv.monitoring.utils`, `nodiscc.xsrv.monitoring.rsyslog` and `nodiscc.xsrv.monitoring.exporters` roles to all your hosts, early in the playbook
-- Add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and scrape metrics from all hosts where `nodiscc.xsrv.monitoring.exporters` is deployed
+- Add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and receive metrics from all hosts where `nodiscc.xsrv.monitoring.exporters` is deployed (via remote write)
 - Add the `nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role (but after the `apache` role). This will provide visualizations/dashboards for metrics collected by victoriametrics
 - If present, rename `nodiscc.xsrv.monitoring_goaccess` to `nodiscc.xsrv.monitoring.goaccess`
 
@@ -28,6 +28,9 @@ Remove all variables named `netdata_*` and use these equivalents:
 **3. Add required variables for the new monitoring roles:**
 
 ```yaml
+# xsrv edit-group default all
+monitoring_victoriametrics_url: "http://my.CHANGEME.org:8428"
+
 # xsrv edit-group-vault default all
 victoriametrics_exporters_auth_password: CHANGEME
 monitoring_exporters_auth_password: CHANGEME
@@ -42,7 +45,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 ```
 
 - Network/firewall: Remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata)
-- Network/firewall: Ensure the host where victoriametrics is deployed can access hosts where exporters are deployed on port 9999/tcp (NAT, firewalls)
+- Network/firewall: Ensure hosts where exporters are deployed can access the host where victoriametrics is deployed on port 8428/tcp (NAT, firewalls)
 - The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitly set `netdata_uninstall: false`
 
 
