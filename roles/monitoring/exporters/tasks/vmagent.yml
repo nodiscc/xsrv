@@ -16,7 +16,7 @@
     state: directory
     owner: prometheus
     group: prometheus
-    mode: "0644"
+    mode: "0755"
 
 - name: configure vmagent
   template:

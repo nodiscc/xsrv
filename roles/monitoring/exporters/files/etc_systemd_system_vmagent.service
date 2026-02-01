@@ -11,13 +11,5 @@ ExecStart=/usr/bin/vmagent $ARGS
 ExecReload=/bin/kill -HUP $MAINPID
 WorkingDirectory=/var/lib/prometheus/vmagent
 
-PrivateTmp=yes
-ProtectHome=yes
-NoNewPrivileges=yes
-ProtectSystem=full
-ProtectControlGroups=true
-ProtectKernelModules=true
-ProtectKernelTunables=yes
-
 [Install]
 WantedBy=multi-user.target
