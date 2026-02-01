@@ -14,6 +14,6 @@ grafana_enable_service: yes
 # set to empty list [] to allow access from any IP address
 grafana_allowed_hosts: []
 # grafana version (https://github.com/grafana/grafana/releases.atom)
-grafana_version: "12.3.1"
+grafana_version: "12.3.2"
 # password to authenticate to VictoriaMetrics datasource
 grafana_victoriametrics_auth_password: "{{ monitoring_exporters_auth_password }}"
