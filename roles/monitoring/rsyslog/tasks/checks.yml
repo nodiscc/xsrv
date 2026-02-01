@@ -21,8 +21,8 @@
     - rsyslog_forward_to_hostname is not search('CHANGEME')
     - rsyslog_forward_to_inventory_hostname is not search('CHANGEME')
     - rsyslog_forward_to_port == rsyslog_forward_to_port | int
-    - rsyslog_cert_not_after | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
-    - rsyslog_cert_not_before | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
+    - rsyslog_cert_not_after | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ") is truthy
+    - rsyslog_cert_not_before | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ") is truthy
 
 - name: check that mandatory variables are correctly defined (syslog receiving)
   assert:
@@ -32,5 +32,5 @@
   when: rsyslog_enable_receive
   loop:
     - rsyslog_fqdn is not search('CHANGEME')
-    - rsyslog_cert_not_after | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
-    - rsyslog_cert_not_before | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ")
+    - rsyslog_cert_not_after | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ") is truthy
+    - rsyslog_cert_not_before | ansible.builtin.to_datetime("%Y%m%d%H%M%SZ") is truthy
