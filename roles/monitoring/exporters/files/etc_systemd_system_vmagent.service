@@ -9,6 +9,7 @@ Group=prometheus
 EnvironmentFile=/etc/default/vmagent
 ExecStart=/usr/bin/vmagent $ARGS
 ExecReload=/bin/kill -HUP $MAINPID
+WorkingDirectory=/var/lib/prometheus/vmagent
 
 PrivateTmp=yes
 ProtectHome=yes

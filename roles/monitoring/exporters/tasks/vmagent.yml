@@ -10,6 +10,14 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
+- name: create working directory for vmagent
+  file:
+    path: /var/lib/prometheus/vmagent
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: "0644"
+
 - name: configure vmagent
   template:
     src: "{{ item.src }}"
