@@ -76,8 +76,10 @@ xsrv deploy   # apply changes
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - monitoring_rsyslog: ensure logrotate is installed
 - common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
+- common/ssh: no longer look for/replace weak DH parameters
 - libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
 - libvirt: remove ability to forward ports using `host_ip` (only `host_interface` must be used)
+
 
 **Added:**
 - add [`monitoring.exporters`](roles/monitoring/exporters) role (monitoring agents/metrics exporters)

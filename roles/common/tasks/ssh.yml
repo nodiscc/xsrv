@@ -43,22 +43,6 @@
       - openssh-server
       - pinentry-curses
 
-# Mitigate logjam attack
-- name: Check if /etc/ssh/moduli contains weak DH parameters
-  shell: awk '$5 < 2048' /etc/ssh/moduli
-  register: common_sshd_register_moduli
-  changed_when: false
-  check_mode: no # run even in check mode, doesn't change anything
-
-- name: remove all small primes
-  shell:
-    cmd: |
-      awk '$5 >= 2048' /etc/ssh/moduli > /etc/ssh/moduli.new;
-      [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
-  notify: restart ssh
-  when: common_sshd_register_moduli.stdout
-  changed_when: yes
-
 - name: replace default 2048 bits RSA keypair with 4096 bits keypair
   openssh_keypair:
     state: present
