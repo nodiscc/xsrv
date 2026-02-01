@@ -33,9 +33,9 @@
     - ldap_account_manager_install_method in ['tar.bz2']
     - ldap_account_manager_php_max_execution_time == ldap_account_manager_php_max_execution_time|int
     - ldap_account_manager_php_max_input_time == ldap_account_manager_php_max_input_time|int
-    - ldap_account_manager_php_memory_limit|regex_search('[KMG]$')
-    - ldap_account_manager_php_post_max_size|regex_search('[KMG]$')
-    - ldap_account_manager_php_upload_max_filesize|regex_search('[KMG]$')
+    - ldap_account_manager_php_memory_limit | regex_search('[KMG]$') is truthy
+    - ldap_account_manager_php_post_max_size | regex_search('[KMG]$') is truthy
+    - ldap_account_manager_php_upload_max_filesize | regex_search('[KMG]$') is truthy
     - ldap_account_manager_session_timeout == ldap_account_manager_session_timeout|int
     - ldap_account_manager_version is defined
     - ldap_account_manager_enable_service == ldap_account_manager_enable_service | bool
@@ -54,9 +54,9 @@
     - self_service_password_https_mode in ['selfsigned', 'letsencrypt']
     - self_service_password_php_max_execution_time == self_service_password_php_max_execution_time|int
     - self_service_password_php_max_input_time == self_service_password_php_max_input_time|int
-    - self_service_password_php_memory_limit|regex_search('[KMG]$')
-    - self_service_password_php_post_max_size|regex_search('[KMG]$')
-    - self_service_password_php_upload_max_filesize|regex_search('[KMG]$')
+    - self_service_password_php_memory_limit | regex_search('[KMG]$') is truthy
+    - self_service_password_php_post_max_size | regex_search('[KMG]$') is truthy
+    - self_service_password_php_upload_max_filesize | regex_search('[KMG]$') is truthy
     - self_service_password_allowed_hosts | type_debug == "list"
     - self_service_password_enable_service == self_service_password_enable_service | bool
 

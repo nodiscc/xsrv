@@ -21,11 +21,11 @@
     - nextcloud_version is string
     - nextcloud_defaultapp is string
     - nextcloud_loglevel == nextcloud_loglevel | int
-    - nextcloud_php_memory_limit|regex_search('[KMG]$')
+    - nextcloud_php_memory_limit | regex_search('[KMG]$') is truthy
     - nextcloud_php_max_execution_time == nextcloud_php_max_execution_time|int
     - nextcloud_php_max_input_time == nextcloud_php_max_input_time|int
-    - nextcloud_php_post_max_size|regex_search('[KMG]$')
-    - nextcloud_php_upload_max_filesize|regex_search('[KMG]$')
+    - nextcloud_php_post_max_size | regex_search('[KMG]$') is truthy
+    - nextcloud_php_upload_max_filesize | regex_search('[KMG]$') is truthy
     - nextcloud_enable_service == nextcloud_enable_service | bool
     - nextcloud_filesystem_check_changes == nextcloud_filesystem_check_changes | bool
     - nextcloud_allowed_hosts | type_debug == "list"
