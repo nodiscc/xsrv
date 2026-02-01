@@ -90,7 +90,7 @@
     quiet: yes
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
     that:
-      - item.ip_address | ansible.utils.ipaddr | bool
+      - item.ip_address | ansible.utils.ipaddr is truthy
       - (item.state is not defined) or (item.state in ['present', 'absent'])
   when: setup_hosts_file | bool
   loop: "{{ hosts_file_entries }}"
