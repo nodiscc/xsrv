@@ -51,3 +51,15 @@ groups:
         annotations:
           summary: "Low disk space on {{ $labels.instance }}:{{ $labels.mountpoint }}"
           description: "Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} has only {{ $value | humanize }}% free space remaining (< 10% threshold)."
+  - name: node_availability_alerts
+    interval: 30s
+    rules:
+      - alert: HostDown
+        expr: |
+          (time() - timestamp(up{job="node"})) > 300
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Host {{ $labels.instance }} stopped sending metrics"
+          description: "No metrics received from {{ $labels.instance }} for more than 5 minutes."
