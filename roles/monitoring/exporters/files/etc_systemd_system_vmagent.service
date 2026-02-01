@@ -1,0 +1,22 @@
+[Unit]
+Description=VictoriaMetrics vmagent service
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+Group=prometheus
+EnvironmentFile=/etc/default/vmagent
+ExecStart=/usr/bin/vmagent $ARGS
+ExecReload=/bin/kill -HUP $MAINPID
+
+PrivateTmp=yes
+ProtectHome=yes
+NoNewPrivileges=yes
+ProtectSystem=full
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=yes
+
+[Install]
+WantedBy=multi-user.target

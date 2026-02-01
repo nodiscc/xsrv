@@ -7,3 +7,4 @@
     - netdata_uninstall == netdata_uninstall | bool
     - monitoring_exporters_auth_password is not search('CHANGEME')
     - exporters_blackbox_log_level in ['info', 'debug', 'warn', 'error']
+    - monitoring_victoriametrics_url is not search('CHANGEME')

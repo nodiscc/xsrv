@@ -1,0 +1,39 @@
+- name: copy vmagent systemd service unit file
+  copy:
+    src: etc_systemd_system_vmagent.service
+    dest: /etc/systemd/system/vmagent.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: configure vmagent
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  diff: "{{ item.diff }}"
+  loop:
+    - src: etc_vmagent.yml.j2
+      dest: /etc/vmagent.yml
+      group: prometheus
+      mode: "0640"
+      diff: true
+    - src: etc_default_vmagent.j2
+      dest: /etc/default/vmagent
+      group: prometheus
+      mode: "0640"
+      diff: false
+  notify: restart vmagent
+
+- name: start and enable vmagent service
+  systemd:
+    name: vmagent.service
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"

@@ -5,3 +5,6 @@ netdata_uninstall: true
 monitoring_exporters_auth_password: CHANGEME
 # log level for prometheus-blackbox-exporter (info/debug/warn/error)
 exporters_blackbox_log_level: info
+# URL of the central VictoriaMetrics instance for remote write
+# Example: http://monitoring.example.com:8428
+monitoring_victoriametrics_url: "CHANGEME"

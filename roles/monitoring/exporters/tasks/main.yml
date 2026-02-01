@@ -21,6 +21,14 @@
     - monitoring
     - exporters
 
+- name: import vmagent setup tasks
+  become: yes
+  import_tasks: vmagent.yml
+  tags:
+    - monitoring
+    - exporters
+    - vmagent
+
 - name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
