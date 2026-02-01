@@ -57,6 +57,8 @@ groups:
       - alert: HostDown
         expr: |
           (time() - timestamp(up{job="node"})) > 300
+          and
+          (time() - timestamp(up{job="node"})) < 86400
         for: 0m
         labels:
           severity: critical
