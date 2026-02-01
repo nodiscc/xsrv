@@ -22,3 +22,5 @@ victoriametrics_alertmanager_smtp_auth_password: "{{ msmtp_password | default('C
 victoriametrics_firewalld_zones:
   - zone: internal
     state: enabled
+  - zone: public
+    state: enabled
