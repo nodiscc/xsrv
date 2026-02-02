@@ -95,7 +95,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "namedprocess_namegroup_num_procs{groupname=~\"$processes\"}",
+          "expr": "namedprocess_namegroup_num_procs{instance=\"$instance\", groupname=~\"$processes\"}",
           "intervalFactor": 2,
           "legendFormat": "{{groupname}}",
           "metric": "process_namegroup_num_procs",
@@ -195,7 +195,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "rate(namedprocess_namegroup_cpu_seconds_total{groupname=~\"$processes\"}[$interval])",
+          "expr": "rate(namedprocess_namegroup_cpu_seconds_total{instance=\"$instance\", groupname=~\"$processes\"}[$interval])",
           "intervalFactor": 2,
           "legendFormat": "{{groupname}}",
           "metric": "process_namegroup_cpu_seconds_total",
@@ -294,7 +294,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "rate(namedprocess_namegroup_read_bytes_total{groupname=~\"$processes\"}[$interval])",
+          "expr": "rate(namedprocess_namegroup_read_bytes_total{instance=\"$instance\", groupname=~\"$processes\"}[$interval])",
           "intervalFactor": 2,
           "legendFormat": "{{groupname}}",
           "metric": "namedprocess_namegroup_read_bytes_total",
@@ -393,7 +393,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "rate(namedprocess_namegroup_write_bytes_total{groupname=~\"$processes\"}[$interval])",
+          "expr": "rate(namedprocess_namegroup_write_bytes_total{instance=\"$instance\", groupname=~\"$processes\"}[$interval])",
           "intervalFactor": 2,
           "legendFormat": "{{groupname}}",
           "metric": "namedprocess_namegroup_read_bytes_total",
@@ -492,7 +492,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "namedprocess_namegroup_memory_bytes{groupname=~\"$processes\", memtype=\"resident\"}",
+          "expr": "namedprocess_namegroup_memory_bytes{instance=\"$instance\", groupname=~\"$processes\", memtype=\"resident\"}",
           "intervalFactor": 2,
           "legendFormat": "{{groupname}}",
           "metric": "namedprocess_namegroup_memory_bytes",
@@ -591,7 +591,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "namedprocess_namegroup_memory_bytes{groupname=~\"$processes\", memtype=\"virtual\"}",
+          "expr": "namedprocess_namegroup_memory_bytes{instance=\"$instance\", groupname=~\"$processes\", memtype=\"virtual\"}",
           "intervalFactor": 2,
           "legendFormat": "{{groupname}}",
           "metric": "namedprocess_namegroup_memory_bytes",
@@ -716,6 +716,30 @@
         "type": "interval"
       },
       {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "local_prometheus_victoriametrics"
+        },
+        "definition": "label_values(namedprocess_namegroup_cpu_seconds_total, instance)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Instance",
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": "label_values(namedprocess_namegroup_cpu_seconds_total, instance)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
         "allValue": ".+",
         "current": {
           "selected": true,
@@ -730,13 +754,13 @@
           "type": "prometheus",
           "uid": "local_prometheus_victoriametrics"
         },
-        "definition": "",
+        "definition": "label_values(namedprocess_namegroup_cpu_seconds_total{instance=\"$instance\"}, groupname)",
         "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "processes",
         "options": [],
-        "query": "label_values(namedprocess_namegroup_cpu_seconds_total,groupname)",
+        "query": "label_values(namedprocess_namegroup_cpu_seconds_total{instance=\"$instance\"}, groupname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
