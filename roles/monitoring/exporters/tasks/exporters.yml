@@ -65,3 +65,19 @@
       dest: /etc/default/prometheus-blackbox-exporter
     - src: etc_prometheus_blackbox.yml.j2
       dest: /etc/prometheus/blackbox.yml
+
+##### PROCESS EXPORTER #####
+
+- name: configure process exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus-process-exporter
+  loop:
+    - src: etc_default_prometheus-process-exporter.j2
+      dest: /etc/default/prometheus-process-exporter
+    - src: etc_prometheus_process-exporter.yml.j2
+      dest: /etc/prometheus/process-exporter.yml
