@@ -3,6 +3,14 @@
     package: victoria-metrics
     state: present
 
+- name: stop and disable victoria-metrics service (TSDB) on non-collector hosts
+  systemd:
+    name: victoria-metrics.service
+    state: stopped
+    enabled: false
+  when: ansible_local.victoriametrics.ansible_managed is not defined or not (ansible_local.victoriametrics.ansible_managed | bool)
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: copy vmagent systemd service unit file
   copy:
     src: etc_systemd_system_vmagent.service
