@@ -1,2 +1,2 @@
 # vmagent command-line arguments
-ARGS="-promscrape.config=/etc/vmagent.yml -remoteWrite.url={{ monitoring_victoriametrics_url }}/api/v1/write -remoteWrite.basicAuth.username=vmagent -remoteWrite.basicAuth.password={{ monitoring_exporters_auth_password }}"
+ARGS="-promscrape.config=/etc/vmagent.yml -remoteWrite.url={{ monitoring_victoriametrics_url }}/api/v1/write -remoteWrite.basicAuth.username=vmagent -remoteWrite.basicAuth.password={{ monitoring_exporters_auth_password }} -remoteWrite.tlsInsecureSkipVerify=true"

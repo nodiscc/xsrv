@@ -5,6 +5,14 @@
     - monitoring
     - checks
 
+- name: import self-signed certificates configuration tasks
+  import_tasks: ssl-selfsigned.yml
+  become: yes
+  tags:
+    - victoriametrics
+    - monitoring
+    - ssl
+
 - name: import victoriametrics installation tasks
   become: yes
   import_tasks: victoriametrics.yml
