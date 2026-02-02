@@ -4,6 +4,52 @@
     package:
       - victoria-metrics
 
+##### SELF-SIGNED SSL CERTIFICATE #####
+
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
+- name: create victoriametrics SSL directory
+  file:
+    state: directory
+    path: /etc/victoriametrics/ssl
+    owner: root
+    group: _victoria-metrics
+    mode: "0750"
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/victoriametrics/ssl/victoriametrics.key"
+    owner: root
+    group: _victoria-metrics
+    mode: "0640"
+  notify: restart victoriametrics
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/victoriametrics/ssl/victoriametrics.csr"
+    privatekey_path: "/etc/victoriametrics/ssl/victoriametrics.key"
+    common_name: "{{ inventory_hostname }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: generate self-signed openssl certificate
+  community.crypto.x509_certificate:
+    path: "/etc/victoriametrics/ssl/victoriametrics.crt"
+    privatekey_path: "/etc/victoriametrics/ssl/victoriametrics.key"
+    csr_path: "/etc/victoriametrics/ssl/victoriametrics.csr"
+    provider: selfsigned
+  notify: restart victoriametrics
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### CONFIGURATION #####
+
 - name: create dynamic configuration directories
   file:
     state: directory
