@@ -3,9 +3,11 @@ apiVersion: 1
 datasources:
   - name: prometheus
     type: prometheus
-    url: http://localhost:8428
+    url: https://localhost:8428
     uid: local_prometheus_victoriametrics
     basicAuth: true
     basicAuthUser: vmagent
+    jsonData:
+      tlsSkipVerify: true
     secureJsonData:
       basicAuthPassword: '{{ grafana_victoriametrics_auth_password }}'
