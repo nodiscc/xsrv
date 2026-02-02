@@ -27,7 +27,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "fieldConfig": {
         "defaults": {
@@ -112,7 +112,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "(phpfpm_up{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
@@ -132,7 +132,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "fieldConfig": {
         "defaults": {
@@ -215,7 +215,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "phpfpm_start_since{instance=~\"^$Host$\", pool=~\"$Pool\"}",
@@ -235,7 +235,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "fieldConfig": {
         "defaults": {
@@ -317,7 +317,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (phpfpm_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"}) / sum by (pool) ( phpfpm_max_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
@@ -360,7 +360,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The total number of accepted connections.",
       "fieldConfig": {
@@ -443,7 +443,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (rate(phpfpm_accepted_connections{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
@@ -462,7 +462,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "Number of requests that exceed request_slowlog_timeout",
       "fieldConfig": {
@@ -546,7 +546,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (rate(phpfpm_slow_requests{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
@@ -565,7 +565,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The number of processes that are currently processing requests.",
       "fieldConfig": {
@@ -650,7 +650,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum(phpfpm_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"}) by ( pool )",
@@ -670,7 +670,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The number of processes that are currently idle (waiting for requests).",
       "fieldConfig": {
@@ -755,7 +755,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (phpfpm_idle_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
@@ -775,7 +775,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "fieldConfig": {
         "defaults": {
@@ -858,7 +858,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (phpfpm_max_children_reached{instance=~\"^$Host$\", pool=~\"$Pool$\"} )",
@@ -878,7 +878,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The maximum number of concurrently active processes.",
       "fieldConfig": {
@@ -962,7 +962,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (phpfpm_max_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
@@ -982,7 +982,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The number of requests (backlog) currently waiting for a free process.",
       "fieldConfig": {
@@ -1065,7 +1065,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (rate(phpfpm_listen_queue{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
@@ -1084,7 +1084,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS_PROMETHEUS"
+        "uid": "local_prometheus_victoriametrics"
       },
       "description": "The maximum allowed size of the listen queue.",
       "fieldConfig": {
@@ -1167,7 +1167,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS_PROMETHEUS"
+            "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
           "expr": "sum by (pool) (rate(phpfpm_listen_queue_length{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
@@ -1710,7 +1710,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "$DS_PROMETHEUS"
+          "uid": "local_prometheus_victoriametrics"
         },
         "definition": "label_values(phpfpm_total_processes,instance)",
         "hide": 0,
@@ -1730,24 +1730,6 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "prometheus",
-          "value": "local_prometheus_victoriametrics"
-        },
-        "hide": 2,
-        "includeAll": false,
-        "label": "",
-        "multi": false,
-        "name": "DS_PROMETHEUS",
-        "options": [],
-        "query": "prometheus",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "type": "datasource"
       },
       {
         "auto": false,
