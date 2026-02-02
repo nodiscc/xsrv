@@ -1,3 +1,8 @@
+- name: install victoria-metrics (provides vmagent)
+  apt:
+    package: victoria-metrics
+    state: present
+
 - name: copy vmagent systemd service unit file
   copy:
     src: etc_systemd_system_vmagent.service
