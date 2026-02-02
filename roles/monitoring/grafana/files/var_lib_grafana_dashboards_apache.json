@@ -96,7 +96,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "apache_uptime_seconds_total{instance=~\"$host:$port\"}",
+          "expr": "apache_uptime_seconds_total{instance=\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A",
@@ -174,7 +174,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "count(apache_up{instance=~\"$host:$port\"} == 1)",
+          "expr": "count(apache_up{instance=\"$instance\"} == 1)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Apache Up",
@@ -186,7 +186,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "scalar(count(apache_up{instance=~\"$host:$port\"} == 0))",
+          "expr": "scalar(count(apache_up{instance=\"$instance\"} == 0))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Apache Down",
@@ -283,7 +283,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "rate(apache_sent_kilobytes_total{instance=~\"$host:$port\"}[5m])",
+          "expr": "rate(apache_sent_kilobytes_total{instance=\"$instance\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Kilobytes Sent",
@@ -379,7 +379,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "rate(apache_accesses_total{instance=~\"$host:$port\"}[5m])",
+          "expr": "rate(apache_accesses_total{instance=\"$instance\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Accesses",
@@ -476,7 +476,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "apache_scoreboard{instance=~\"$host:$port\"}",
+          "expr": "apache_scoreboard{instance=\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ state }}",
@@ -560,7 +560,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "apache_workers{instance=~\"$host:$port\"}\n",
+          "expr": "apache_workers{instance=\"$instance\"}\n",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ state }}",
@@ -640,7 +640,7 @@
             "type": "prometheus",
             "uid": "local_prometheus_victoriametrics"
           },
-          "expr": "apache_cpuload{instance=~\"$host:$port\"}",
+          "expr": "apache_cpuload{instance=\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Load",
@@ -684,51 +684,25 @@
       {
         "current": {
           "selected": false,
-          "text": "localhost",
-          "value": "localhost"
+          "text": "",
+          "value": ""
         },
         "datasource": {
           "type": "prometheus",
           "uid": "local_prometheus_victoriametrics"
         },
-        "definition": "",
+        "definition": "label_values(apache_up, instance)",
         "hide": 0,
         "includeAll": false,
-        "label": "host",
+        "label": "Instance",
         "multi": false,
-        "name": "host",
+        "name": "instance",
         "options": [],
         "query": "label_values(apache_up, instance)",
         "refresh": 2,
-        "regex": "/([^:]+):.*/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "9999",
-          "value": "9999"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "local_prometheus_victoriametrics"
-        },
-        "definition": "",
-        "hide": 2,
-        "includeAll": false,
-        "multi": false,
-        "name": "port",
-        "options": [],
-        "query": "label_values(apache_up, instance)",
-        "refresh": 1,
-        "regex": "/[^:]+:(.*)/",
-        "skipUrlSync": false,
-        "sort": 0,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
