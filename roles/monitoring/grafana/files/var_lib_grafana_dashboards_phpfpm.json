@@ -115,7 +115,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "(phpfpm_up{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
+          "expr": "(phpfpm_up{instance=\"$instance\", pool=~\"$Pool$\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -218,7 +218,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "phpfpm_start_since{instance=~\"^$Host$\", pool=~\"$Pool\"}",
+          "expr": "phpfpm_start_since{instance=\"$instance\", pool=~\"$Pool\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -320,7 +320,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (phpfpm_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"}) / sum by (pool) ( phpfpm_max_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
+          "expr": "sum by (pool) (phpfpm_active_processes{instance=\"$instance\", pool=~\"$Pool$\"}) / sum by (pool) ( phpfpm_max_active_processes{instance=\"$instance\", pool=~\"$Pool$\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ pool }}",
@@ -446,7 +446,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (rate(phpfpm_accepted_connections{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
+          "expr": "sum by (pool) (rate(phpfpm_accepted_connections{instance=\"$instance\", pool=~\"$Pool$\"} [$Interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -549,7 +549,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (rate(phpfpm_slow_requests{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
+          "expr": "sum by (pool) (rate(phpfpm_slow_requests{instance=\"$instance\", pool=~\"$Pool$\"} [$Interval]))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -653,7 +653,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum(phpfpm_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"}) by ( pool )",
+          "expr": "sum(phpfpm_active_processes{instance=\"$instance\", pool=~\"$Pool$\"}) by ( pool )",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -758,7 +758,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (phpfpm_idle_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
+          "expr": "sum by (pool) (phpfpm_idle_processes{instance=\"$instance\", pool=~\"$Pool$\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -861,7 +861,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (phpfpm_max_children_reached{instance=~\"^$Host$\", pool=~\"$Pool$\"} )",
+          "expr": "sum by (pool) (phpfpm_max_children_reached{instance=\"$instance\", pool=~\"$Pool$\"} )",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -965,7 +965,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (phpfpm_max_active_processes{instance=~\"^$Host$\", pool=~\"$Pool$\"})",
+          "expr": "sum by (pool) (phpfpm_max_active_processes{instance=\"$instance\", pool=~\"$Pool$\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1068,7 +1068,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (rate(phpfpm_listen_queue{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
+          "expr": "sum by (pool) (rate(phpfpm_listen_queue{instance=\"$instance\", pool=~\"$Pool$\"} [$Interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1170,7 +1170,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum by (pool) (rate(phpfpm_listen_queue_length{instance=~\"^$Host$\", pool=~\"$Pool$\"} [$Interval]))",
+          "expr": "sum by (pool) (rate(phpfpm_listen_queue_length{instance=\"$instance\", pool=~\"$Pool$\"} [$Interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1283,7 +1283,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "avg(phpfpm_process_last_request_memory{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (pool)",
+          "expr": "avg(phpfpm_process_last_request_memory{instance=\"$instance\", pool=~\"$Pool\"}) by (pool)",
           "instant": false,
           "legendFormat": "{{ pool }}",
           "range": true,
@@ -1380,7 +1380,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "avg(phpfpm_process_last_request_cpu{instance=~\"^$Host$\", pool=~\"$Pool\"} / phpfpm_process_request_duration) by (pool) ",
+          "expr": "avg(phpfpm_process_last_request_cpu{instance=\"$instance\", pool=~\"$Pool\"} / phpfpm_process_request_duration) by (pool) ",
           "instant": false,
           "legendFormat": "{{ pool }}",
           "range": true,
@@ -1476,7 +1476,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "avg(phpfpm_process_requests{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (pool)",
+          "expr": "avg(phpfpm_process_requests{instance=\"$instance\", pool=~\"$Pool\"}) by (pool)",
           "instant": false,
           "legendFormat": "{{ pool }}",
           "range": true,
@@ -1573,7 +1573,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "avg(phpfpm_process_request_duration{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (pool)",
+          "expr": "avg(phpfpm_process_request_duration{instance=\"$instance\", pool=~\"$Pool\"}) by (pool)",
           "instant": false,
           "legendFormat": "{{ pool }}",
           "range": true,
@@ -1671,7 +1671,7 @@
             "uid": "local_prometheus_victoriametrics"
           },
           "editorMode": "code",
-          "expr": "sum(phpfpm_process_state{instance=~\"^$Host$\", pool=~\"$Pool\"}) by (state)",
+          "expr": "sum(phpfpm_process_state{instance=\"$instance\", pool=~\"$Pool\"}) by (state)",
           "instant": false,
           "legendFormat": "{{state}}",
           "range": true,
@@ -1684,7 +1684,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(phpfpm_process_state{instance=~\"^$Host$\", pool=~\"$Pool\"})",
+          "expr": "sum(phpfpm_process_state{instance=\"$instance\", pool=~\"$Pool\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "Total",
@@ -1702,34 +1702,28 @@
   "templating": {
     "list": [
       {
-        "allFormat": "glob",
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "",
+          "value": ""
         },
         "datasource": {
           "type": "prometheus",
           "uid": "local_prometheus_victoriametrics"
         },
-        "definition": "label_values(phpfpm_total_processes,instance)",
+        "definition": "label_values(phpfpm_up, instance)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
+        "label": "Instance",
         "multi": false,
-        "name": "Host",
+        "name": "instance",
         "options": [],
-        "query": {
-          "query": "label_values(phpfpm_total_processes,instance)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
+        "query": "label_values(phpfpm_up, instance)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "auto": false,
@@ -1787,18 +1781,15 @@
           "type": "prometheus",
           "uid": "local_prometheus_victoriametrics"
         },
-        "definition": "label_values(phpfpm_up,pool)",
+        "definition": "label_values(phpfpm_up{instance=\"$instance\"}, pool)",
         "hide": 0,
         "includeAll": true,
         "label": "Pool",
         "multi": true,
         "name": "Pool",
         "options": [],
-        "query": {
-          "query": "label_values(phpfpm_up,pool)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
+        "query": "label_values(phpfpm_up{instance=\"$instance\"}, pool)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
