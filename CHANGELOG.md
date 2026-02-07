@@ -93,6 +93,7 @@ xsrv deploy   # apply changes
 - wireguard: generate a QR code for each wireguard_peer containing the configuration (can be scanned with mobile apps such as WG Tunnel)
 - common/users: make the default system `umask` configurable
 - common/sysctl: make the value of `kernel.yama.ptrace_scope` configurable
+- apache: add support for Debian 13
 
 **Changed:**
 - rename `monitoring_utils` role to `monitoring.utils`
