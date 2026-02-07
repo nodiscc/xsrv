@@ -31,6 +31,7 @@ goaccess - setup goaccess web log analyzer/viewer
 gotty - setup gotty web terminal
 grafana-config - update grafana configuration
 grafana - setup grafana analytics and interactive visualization web application
+hdparm - configure hdparm hard drive standby settings
 homepage - setup simple webserver homepage
 hostname - setup hostname
 hosts - setup /etc/hosts entries
@@ -48,7 +49,6 @@ libvirt-vms - setup libvirt virtual machines
 lynis - setup lynis security audit tool
 mail - setup outgoing system mail
 matrix - setup matrix chat server and web client
-mongodb - setup mongodb database
 monitoring - deploy all monitoring-related components
 monitoring_utils - setup command-line/additional monitoring utilities
 moodist - setup Moodist ambient sound mixer
@@ -106,10 +106,10 @@ utils-shutdown - (manual) shut down the host
 victoriametrics - setup victoriametrics monitoring service and time-series database
 wireguard - setup wireguard
 OTHER TAGS:
-mongodb
 never
 nmap
 readme_gen
 victoriametrics-http-checks
+vmagent
 
 ```

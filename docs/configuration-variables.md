@@ -474,7 +474,9 @@ systemd_logind_kill_exclude_users: ['root']
 systemd_logind_lock_after_idle_min: 0
 # terminate interactive bash processes after this number of seconds if no input is received (set to 0 to disable)
 bash_timeout: 900
-
+# default system umask to create new directories QUOTED
+# 027 can be considered safer for privacy but may interfer with some build systems that expect an umask of 022
+umask: "027"
 
 ### CRON TASK SCHEDULER ###
 # (yes/no): setup cron permission restrictions/logging options
@@ -529,6 +531,10 @@ packages_remove:
   # - rpcbind # not an NFS server
   # - nfs-common # not an NFS server
   # - exim4-base # use a smarthost/msmtp
+
+### DRIVES ###
+# standby mechanical/rotational hard drives after 1 hour of idle
+hdparm_auto_standby_drives: false
 ```
 
 
@@ -678,7 +684,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.24.7"
+gitea_version: "1.25.4"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1185,7 +1191,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.12.2"
+matrix_element_version: "1.12.9"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1285,7 +1291,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "30.0.17"
+nextcloud_version: "31.0.13"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1396,6 +1402,7 @@ nextcloud_enable_service: yes
 # Example: nmap_limit: ['host1.CHANGEME.org', 'host2.CHANGEME.org']
 nmap_limit: "{{ groups['all'] }}"
 ```
+
 
 ## openldap
 
@@ -1514,7 +1521,7 @@ self_service_password_php_upload_max_filesize: '2M'
 # Fully Qualified Domain Name for the owncast instance
 owncast_fqdn: "owncast.CHANGEME.org"
 # the owncast OCI image to pull (https://github.com/owncast/owncast/releases.atom)
-owncast_image: "docker.io/owncast/owncast:0.2.3"
+owncast_image: "docker.io/owncast/owncast:0.2.4"
 # password to access the admin interfaces at /admin (username admin)
 owncast_admin_password: "CHANGEME"
 # HTTPS and SSL/TLS certificate mode for the owncast webserver virtualhost
@@ -1734,7 +1741,7 @@ shaarli_setup_python_client: no
 # shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.15.0'
+shaarli_version: 'v0.16.0'
 # list of IP addresses allowed to access shaarli (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
@@ -1765,7 +1772,7 @@ shaarli_enable_service: yes
 # Fully Qualified Domain Name for the stirlingpdf instance
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
 # the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
-stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:1.5.0"
+stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:2.4.3"
 # HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1921,6 +1928,207 @@ wireguard_allow_forwarding: yes
 #     state: disabled
 wireguard_firewalld_services:
   - name: dns
+    state: enabled
+```
+
+
+## monitoring/exporters
+
+[roles/monitoring/exporters/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/exporters/defaults/main.yml)
+
+```yaml
+##### MONITORING.EXPORTERS #####
+# uninstall netdata and remove all its files/data/configuration
+netdata_uninstall: true
+# REQUIRED password used to authenticate to/scrape metrics from exporter-exporter
+monitoring_exporters_auth_password: CHANGEME
+# log level for prometheus-blackbox-exporter (info/debug/warn/error)
+exporters_blackbox_log_level: info
+# URL of the central VictoriaMetrics instance for remote write
+# Example: https://monitoring.example.com:8428
+monitoring_victoriametrics_url: "CHANGEME"
+```
+
+
+## monitoring/goaccess
+
+[roles/monitoring/goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml)
+
+```yaml
+##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
+# fully qualified domain used to access the HTML report
+goaccess_fqdn: "goaccess.CHANGEME.org"
+# HTTPS and SSL/TLS certificate mode for the goaccess webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+goaccess_https_mode: selfsigned
+# enable/disable the goaccess virtualhost (redirect users to maintenance page if disabled)
+goaccess_enable_service: yes
+# calendar expression for the periodic/scheduled update/re-generation of HTML reports
+# uses systemd's calendar events syntax https://manpages.debian.org/bookworm/systemd/systemd.time.7.en.html#CALENDAR_EVENTS
+# you can check whether an expression is valid using `systemd-analyze calendar "EXPRESSION"
+# Examples: "*:0/5:0" (every hour at minute 0, and every minute that is a multiple of 5), "21:00" (every day at 21:00), ...
+goaccess_update_calendar_expression: "*:00:00"
+# (optional) only parse log lines containing this string
+# goaccess_filter: "mysite.CHANGEME.org"
+# IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
+goaccess_geoip_db_version: "{{ ansible_date_time.year }}-{{ ansible_date_time.month }}"
+# username/password used to access the HTML report
+goaccess_username: "CHANGEME"
+goaccess_password: "CHANGEME"
+# list of IP addresses allowed to access goaccess (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+goaccess_allowed_hosts: []
+```
+
+
+## monitoring/grafana
+
+[roles/monitoring/grafana/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+
+```yaml
+# fully qualified domain name of the grafana instance
+grafana_fqdn: "grafana.CHANGEME.org"
+# username/password/e-mail address for the grafana admin user
+grafana_admin_username: "CHANGEME"
+grafana_admin_password: "CHANGEME20"
+grafana_admin_email: "CHANGEME@CHANGEME.org"
+# HTTPS and SSL/TLS certificate mode for the grafana webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+grafana_https_mode: selfsigned
+# start/stop the grafana service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+grafana_enable_service: yes
+# list of IP addresses allowed to access the grafana web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+grafana_allowed_hosts: []
+# grafana version (https://github.com/grafana/grafana/releases.atom)
+grafana_version: "12.3.2"
+# password to authenticate to VictoriaMetrics datasource
+grafana_victoriametrics_auth_password: "{{ monitoring_exporters_auth_password }}"
+```
+
+
+## monitoring/rsyslog
+
+[roles/monitoring/rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/rsyslog/defaults/main.yml)
+
+```yaml
+##### RSYSLOG LOG PROCESSING SYSTEM #####
+# number of daily /var/log/syslog archives to retain
+rsyslog_retention_days: 186
+# enable forwarding of syslog logs to a syslog server over TLS/TCP (no/yes)
+rsyslog_enable_forwarding: no
+# if forwarding is enabled, hostname/port to forward logs to
+rsyslog_forward_to_hostname: "logs.CHANGEME.org"
+rsyslog_forward_to_port: 5140
+# if forwarding is enabled, inventory hostname of the host to forward logs to
+rsyslog_forward_to_inventory_hostname: "my.CHANGEME.org"
+# enable receiving logs from other hosts over TLS/TCP port 514 (no/yes)
+# log collectors must be deployed before clients in the playbook execution order
+rsyslog_enable_receive: no
+# if rsyslog_enable_receive is enabled, DNS name of this syslog server/collector
+rsyslog_fqdn: "logs.CHANGEME.org"
+# if rsyslog_enable_receive is enabled, path to the directory to write remote hosts logs to
+rsyslog_remote_logs_path: /var/log/rsyslog/hosts
+# when rsyslog_enable_forwarding or rsyslog_enable_receive is enabled, start and end validity dates for TLS certificates (YYYYMMDDHHMMSSZ)
+rsyslog_cert_not_before: "20240219000000Z"
+rsyslog_cert_not_after: "20340219000000Z"
+# custom rsyslog configuration directives, applied before forwarding/single-file aggregation (list)
+# Example:
+# rsyslog_custom_config:
+#   - ':msg, contains, "failed to read Temperature" stop' # discard messages containing this string
+#   - 'if $programname == "apache" and re_match($msg, ".* 127.0.0.1 - - .* \"GET /server-status\?auto HTTP/1.1\" 200") then stop' # discard messages matching this program name and regular expression
+#   - 'if $programname == "CRON" and re_match($msg, "cron:session): session (opened|closed) for user .*") then stop'
+rsyslog_custom_config: []
+# firewall zones from which to allow incoming logs (zone, state), if rsyslog_enable_receive: yes and nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+rsyslog_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: enabled
+```
+
+
+## monitoring/utils
+
+[roles/monitoring/utils/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/utils/defaults/main.yml)
+
+```yaml
+##### MONITORING UTILITIES #####
+# setup lynis security audit tool (yes/no)
+setup_lynis: yes
+# list of strings to extract from lynis reports and forward by mail
+# Example: lynis_report_regex: 'warning|suggestion|manual'
+lynis_report_regex: 'warning'
+# list of lynis tests to ignore/skip (https://cisofy.com/lynis/controls/)
+lynis_skip_tests:
+  - "CUST-0285" # Install libpam-usb to enable multi-factor authentication for PAM sessions (we don't use multi-factor auth for SSH)
+  - "CUST-0830" # Install debian-goodies so that you can run checkrestart (needrestart is used instead)
+  - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
+  - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
+  - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
+  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by prometheus)
+  - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
+  - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
+  - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
+  - "BANN-7126" # legal banner for local logins is not needed
+  - "BANN-7130" # legal banner for ssh logins is not needed
+  - "LOGG-2190" # open file descriptors on deleted files is normal behavior
+  - "SSH-7408:Port" # changing ssh listen port from 22 does not mitigate the risk, not a security measure, can also be set to a non-standard port in NAT
+  - "SSH-7408:ClientAliveCountMax" # 3 is an acceptable value, nodiscc.xsrv.common sets the value to 3
+  - "SSH-7408:Compression" # any of yes/delayed/no can be considered secure since 2018 (pre-authentication compression never enabled)
+  - "SSH-7408:MaxAuthTries" # 5 is an acceptable value (nodiscc.xsrv.common), lowering it may cause login failures from systems where more than 3 ssh private keys are available
+  - "SSH-7408:MaxSessions" # 10 is an acceptable values, SSH connection multiplexing cannot be abused/cause performance issues unless the user is authenticated
+  - "PHP-2376" # allow_url_fopen is used legitimately by several applications in file_get_contents() to fetch remote files
+  - "HRDN-7230" # malware/rootkit detection software is inefficient when run on a compromised host
+  - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
+  - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
+  - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
+  - "KRNL-5830" # let needrestart/prometheus send alarms when reboot is required
+  - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
+  - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
+# when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
+debsums_cron_check: "daily"
+# base path to index with duc disk usage analyzer
+duc_index_path: "/"
+# list of directories/mountpoints on which to perform bonnie++ disk benchmarks
+bonnie_benchmark_paths:
+  - /var
+```
+
+
+## monitoring/victoriametrics
+
+[roles/monitoring/victoriametrics/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml)
+
+```yaml
+# automatically create HTTP probes for xsrv roles deployed on these hosts
+victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
+# list of URLs to monitor with victoriametrics/blackbox-exporter HTTP probes
+# Example:
+# victoriametrics_http_checks:
+#   - https://prometheus.io
+#   - https://www.debian.org
+victoriametrics_http_checks: []
+# how long to wait before repeating the last notification
+victoriametrics_alertmanager_repeat_interval: "1h"
+# REQUIRED password to authenticate on exporters when scraping them
+victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
+# REQUIRED SMTP host/from address/username/password and recipient address for alertmaneger e-mail alerts
+victoriametrics_alertmanager_smtp_host: "{{ msmtp_host | default('smtp.CHANGEME.org') }}"
+victoriametrics_alertmanager_smtp_port: "{{ msmtp_port | default('CHANGEME') }}"
+victoriametrics_alertmanager_smtp_from: "{{ xsrv_admin_email }}"
+victoriametrics_alertmanager_email_to: "{{ xsrv_admin_email }}"
+victoriametrics_alertmanager_smtp_auth_username: "{{ msmtp_username | default('CHANGEME') }}"
+victoriametrics_alertmanager_smtp_auth_password: "{{ msmtp_password | default('CHANGEME') }}"
+# firewall zones from which to allow remote write (zone, state)
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule
+victoriametrics_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
     state: enabled
 ```
 <!--END ROLES LIST-->

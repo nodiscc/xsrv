@@ -119,6 +119,7 @@ utils-shutdown - (manual) shut down the host
 utils-reboot - (manual) reboot the host
 cron - configure cron task scheduler
 apt-listbugs - configure apt-listbugs bug prevention tool
+hdparm - configure hdparm hard drive standby settings
 ```
 <!--END TAGS LIST-->
 

@@ -38,7 +38,7 @@ This project provides:
 - [matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) - secure instant messaging service
 - [monitoring.exporters](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/exporters) - monitoring agents/metrics exporters
 - [monitoring.goaccess](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring.grafana](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/grafana) - metrics visualization and analytics application
+- [monitoring.grafana](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/grafana) - monitoring metrics visualization and analytics
 - [monitoring.rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog) - log aggregation, processing and forwarding system
 - [monitoring.utils](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/utils) - basic monitoring utilities
 - [monitoring.victoriametrics](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/victoriametrics) - monitoring metrics scraper and time-series database
@@ -76,13 +76,13 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/grafana-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/grafana)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ollama-ui-thumb.png)](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama)
 
 
 ## Source code
