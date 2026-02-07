@@ -20,7 +20,7 @@
     quiet: yes
     fail_msg: "One or more of jellyfin_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin"
     that:
-      - item | ansible.utils.ipv4
+      - item | ansible.utils.ipv4 is truthy
   loop: "{{ jellyfin_allowed_hosts }}"
 
 - name: check that mandatory variables are correctly defined (opensubtitles plugin)
