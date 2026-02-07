@@ -5,11 +5,17 @@
     state: present
     package:
       - apache2
-      - libapache2-mod-md
       - libapache2-mod-fcgid
       - php{{ apache_php_fpm_version }}-apcu
       - php{{ apache_php_fpm_version }}
       - php{{ apache_php_fpm_version }}-fpm
+
+- name: install apache/php packages
+  apt:
+    state: present
+    package:
+      - libapache2-mod-md
+  when: ansible_facts.distribution_release == "bookworm"
 
 - name: remove mod-php (replaced with php-fpm)
   apt:
