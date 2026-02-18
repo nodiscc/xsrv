@@ -147,6 +147,7 @@ xsrv deploy   # apply changes
 - common/apt: make unattended-upgrades configuration and sources.list file compatible with Debian 13
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - doc: update comments in several files to reflect new documentation in Debian 13
+- doc: mark jitsi role as incompatible with Debian 13
 - update documentation
 
 **Fixed:**
