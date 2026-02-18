@@ -1,4 +1,3 @@
-# @tag lynis - setup lynis security audit tool
 # @tag monitoring_utils - setup command-line/additional monitoring utilities
 # @tag utils-duc - (manual) run duc disk usage analyzer and download the report on the controller
 # @tag utils-bonnie - (manual) run duc disk benchmarking tool and download the report on the controller

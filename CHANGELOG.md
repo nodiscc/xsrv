@@ -76,6 +76,7 @@ xsrv deploy   # apply changes
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - graylog: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- monitoring_utils: remove lynis, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate role/repository
 - monitoring_rsyslog: ensure logrotate is installed
 - common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
 - common/ssh: no longer look for/replace weak DH parameters

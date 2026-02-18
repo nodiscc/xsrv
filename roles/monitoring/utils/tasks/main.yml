@@ -5,19 +5,10 @@
     - monitoring
     - monitoring_utils
 
-- name: import lynis configuration tasks
-  import_tasks: lynis.yml
-  become: yes
-  tags:
-    - monitoring
-    - lynis
-    - monitoring_utils
-
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags:
     - monitoring
-    - lynis
     - monitoring_utils
 
 ##### UTILITIES #####

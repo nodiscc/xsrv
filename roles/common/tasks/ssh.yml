@@ -55,8 +55,7 @@
     group: root
     mode: "0600"
 
-# lynis: FILE-7524|Incorrect permissions for file /root/.ssh
-- name: ensure /root/.ssh is mode 0700
+s- name: ensure /root/.ssh is mode 0700
   file:
     state: directory
     path: /root/.ssh

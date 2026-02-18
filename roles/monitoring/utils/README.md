@@ -1,7 +1,6 @@
 # xsrv.monitoring.base
 
 This role will install and configure various [monitoring](../monitoring) and audit utilities:
-- [lynis](https://cisofy.com/lynis/) security auditing tool
 - [htop](https://hisham.hm/htop/) system monitor/process manager
 - [nethogs](https://github.com/raboof/nethogs) network bandwidth monitor
 - [ncdu](https://en.wikipedia.org/wiki/Ncdu) disk usage viewer
