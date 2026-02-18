@@ -77,7 +77,6 @@ xsrv deploy   # apply changes
 - graylog: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - monitoring_utils: remove lynis, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate role/repository
-- monitoring_rsyslog: ensure logrotate is installed
 - common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
 - common/ssh: no longer look for/replace weak DH parameters
 - libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
@@ -133,6 +132,7 @@ xsrv deploy   # apply changes
 - searxng: allow returning results as JSON (add `&format=json` to URL parameters)
 - searxng: increase sepiasearch search engine weight to 2
 - searxng: increase wiby search engine weight to 1.2
+- monitoring_rsyslog: ensure logrotate is installed
 - jellyfin: update opensubtitles plugin to v22.0.0
 - searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 2
 - matrix: update element-web to [v1.12.9](https://github.com/element-hq/element-web/releases/)
