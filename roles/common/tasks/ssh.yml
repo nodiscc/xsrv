@@ -55,7 +55,7 @@
     group: root
     mode: "0600"
 
-s- name: ensure /root/.ssh is mode 0700
+- name: ensure /root/.ssh is mode 0700
   file:
     state: directory
     path: /root/.ssh
