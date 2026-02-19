@@ -18,7 +18,7 @@
     that:
       - item.name is string
       - item.name is not search('/')
-      - ((item.state | default('present') == "present") and (item.ip_address | ansible.utils.ipaddr)) or (item.state == "absent")
+      - ((item.state | default('present') == "present") and (item.ip_address | ansible.utils.ipaddr is not none)) or (item.state == "absent")
       - (item.public_key is not defined) or (item.public_key | b64decode and item.public_key | length == 44)
       - (item.routes is not defined) or (item.routes | type_debug == "list")
   loop: "{{ wireguard_peers }}"
