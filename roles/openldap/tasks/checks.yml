@@ -65,5 +65,5 @@
     quiet: yes
     fail_msg: "One or more of self_service_password_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
     that:
-      - item | ansible.utils.ipv4
+      - item | ansible.utils.ipv4 is not none
   loop: "{{ self_service_password_allowed_hosts }}"
