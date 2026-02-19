@@ -59,7 +59,7 @@ client_config="
 #   - OR manually: run sudo mkdir -p /etc/wireguard && sudo cp PEER_NAME.conf /etc/wireguard/wg0.conf && sudo wg-quick up wg0
 #   - Verify that the traffic is correctly routed through the VPN by visiting https://ifconfig.me/ or running ip route get DESTINATION_IP
 [Interface]
-Address = $peer_ip_address
+Address = $peer_ip_address/32
 PrivateKey = $private_key
 DNS = $server_private_ip
 

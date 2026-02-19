@@ -159,6 +159,7 @@ xsrv deploy   # apply changes
 - matrix: update APT repository signing key (the previous key has expired)
 - postgresql: fix `'postgresql_version' is undefined` error when running the `monitoring` tag alone
 - wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
+- wireguard: fix missing /32 in generated client config files
 - shaarli: fix missing php extension php-xml
 - nextcloud: fix `trusted_proxies is not correctly defined` warning in admin area
 - monitoring.utils: fix bonnie++ report generation
