@@ -12,6 +12,7 @@ scrape_configs:
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
+{% if ansible_local.apache.ansible_managed is defined and ansible_local.apache.ansible_managed %}
   - job_name: apache
     authorization:
       type: Bearer
@@ -36,6 +37,7 @@ scrape_configs:
     params:
       module:
         - php-fpm
+{% endif %}
   - job_name: node
     authorization:
       type: Bearer
@@ -60,6 +62,7 @@ scrape_configs:
     params:
       module:
         - process
+{% if ansible_local.apache.ansible_managed is defined and ansible_local.apache.ansible_managed %}
   - job_name: postgres
     authorization:
       type: Bearer
@@ -72,3 +75,4 @@ scrape_configs:
     params:
       module:
         - postgres
+{% endif %}
