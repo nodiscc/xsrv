@@ -46,6 +46,14 @@ groups:
         annotations:
           summary: Host high CPU load (instance {{ $labels.instance }})
           description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: HostCpuHighIowait
+        expr: avg without (cpu) (rate(node_cpu_seconds_total{mode="iowait"}[5m])) > .10
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Host CPU high iowait (instance {{ $labels.instance }})
+          description: "CPU iowait > 10%. Your CPU is idling waiting for storage to respond.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
   - name: node_filesystem_alerts
     interval: 30s
     rules:
