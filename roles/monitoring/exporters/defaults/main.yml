@@ -8,3 +8,5 @@ exporters_blackbox_log_level: info
 # URL of the central VictoriaMetrics instance for remote write
 # Example: https://monitoring.example.com:8428
 monitoring_victoriametrics_url: "CHANGEME"
+# yes/no: start/stop the monitoring exporters services, enable/disable them on boot
+monitoring_exporters_enable_service: yes

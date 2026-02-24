@@ -52,9 +52,9 @@
       diff: false
   notify: restart vmagent
 
-- name: start and enable vmagent service
+- name: start/stop and enable/disable vmagent service
   systemd:
     name: vmagent.service
-    state: started
-    enabled: true
+    state: "{{ 'started' if monitoring_exporters_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if monitoring_exporters_enable_service else 'no' }}"
   ignore_errors: "{{ ansible_check_mode }}"

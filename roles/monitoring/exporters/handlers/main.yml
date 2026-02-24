@@ -4,3 +4,28 @@
     name: vmagent.service
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
+  when: monitoring_exporters_enable_service
+
+- name: restart prometheus-exporter-exporter
+  become: true
+  systemd:
+    name: prometheus-exporter-exporter.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: monitoring_exporters_enable_service
+
+- name: restart prometheus-blackbox-exporter
+  become: true
+  systemd:
+    name: prometheus-blackbox-exporter.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: monitoring_exporters_enable_service
+
+- name: restart prometheus-process-exporter
+  become: true
+  systemd:
+    name: prometheus-process-exporter.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: monitoring_exporters_enable_service

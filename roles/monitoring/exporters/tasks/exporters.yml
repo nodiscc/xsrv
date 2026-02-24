@@ -8,6 +8,13 @@
       - prometheus-blackbox-exporter
     state: present
 
+- name: start/stop and enable/disable prometheus node-exporter service
+  systemd:
+    name: prometheus-node-exporter.service
+    state: "{{ 'started' if monitoring_exporters_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if monitoring_exporters_enable_service else 'no' }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: create dynamic configuration directory for exporter-exporter
   file:
     state: directory
@@ -43,11 +50,11 @@
       diff: true
   notify: restart prometheus-exporter-exporter
 
-- name: start and enable prometheus exporter-exporter
+- name: start/stop and enable/disable prometheus exporter-exporter service
   systemd:
     name: prometheus-exporter-exporter.service
-    state: started
-    enabled: true
+    state: "{{ 'started' if monitoring_exporters_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if monitoring_exporters_enable_service else 'no' }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 ##### BLACKBOX EXPORTER #####
@@ -66,6 +73,13 @@
     - src: etc_prometheus_blackbox.yml.j2
       dest: /etc/prometheus/blackbox.yml
 
+- name: start/stop and enable/disable prometheus blackbox-exporter service
+  systemd:
+    name: prometheus-blackbox-exporter.service
+    state: "{{ 'started' if monitoring_exporters_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if monitoring_exporters_enable_service else 'no' }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+
 ##### PROCESS EXPORTER #####
 
 - name: configure process exporter
@@ -81,3 +95,10 @@
       dest: /etc/default/prometheus-process-exporter
     - src: etc_prometheus_process-exporter.yml.j2
       dest: /etc/prometheus/process-exporter.yml
+
+- name: start/stop and enable/disable prometheus process-exporter service
+  systemd:
+    name: prometheus-process-exporter.service
+    state: "{{ 'started' if monitoring_exporters_enable_service else 'stopped' }}"
+    enabled: "{{ 'yes' if monitoring_exporters_enable_service else 'no' }}"
+  ignore_errors: "{{ ansible_check_mode }}"
