@@ -135,7 +135,7 @@ xsrv deploy   # apply changes
 - monitoring_rsyslog: ensure logrotate is installed
 - jellyfin: update opensubtitles plugin to v22.0.0
 - searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 2
-- matrix: update element-web to [v1.12.9](https://github.com/element-hq/element-web/releases/)
+- matrix: update element-web to [v1.12.11](https://github.com/element-hq/element-web/releases/)
 - matrix: update synapse-admin to v0.11.0 [[1]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.11.0) [[2]](https://github.com/Awesome-Technologies/synapse-admin/releases/tag/0.10.4)
 - openldap: update ldap-account-manager to v9.2 [[1]](https://github.com/LDAPAccountManager/lam/releases/tag/9.0) [[2]](https://github.com/LDAPAccountManager/lam/releases/tag/9.1) [[3]](https://github.com/LDAPAccountManager/lam/releases/tag/9.2)
 - openldap: upgrade self-service-password to [v1.7.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.3)
