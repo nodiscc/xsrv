@@ -58,6 +58,7 @@ libvirt_parallel_shutdown_number: 3
 #     vm_ip: 10.2.0.225 # forward connections to the VM on this IP address
 #     vm_bridge: virbr2 # forward connections to the VM through this bridge
 #     host_interface: eth0 # forward connections arriving on this interface on the libvirt host
+#     zone: public # firewall zone to use for port forwarding rules (default: public)
 #     dnat: # list of port forwarding/translation (DNAT) rules
 #       - host_port: 25 # forward (DNAT) connections arriving on this port on the libvirt host
 #         vm_port: 25 # forward connections to this port on the VM
@@ -71,6 +72,7 @@ libvirt_parallel_shutdown_number: 3
 #     vm_ip: 10.3.0.226
 #     vm_bridge: virbr3
 #     host_interface: eth0
+#     zone: internal # firewall zone to use for port forwarding rules (default: public)
 #     dnat:
 #       - host_port: 22226
 #         vm_port: 22
