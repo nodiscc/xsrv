@@ -35,6 +35,17 @@ groups:
         annotations:
           summary: "Low memory available on {{ $labels.instance }}"
           description: "Node {{ $labels.instance }} has only {{ $value | humanize }}% memory available (< 10% threshold)."
+  - name: node_cpu_alerts
+    interval: 30s
+    rules:
+      - alert: HostHighCpuLoad
+        expr: 1 - (avg without (cpu) (rate(node_cpu_seconds_total{mode="idle"}[5m]))) > .80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Host high CPU load (instance {{ $labels.instance }})
+          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
   - name: node_filesystem_alerts
     interval: 30s
     rules:
