@@ -140,7 +140,7 @@ xsrv deploy   # apply changes
 - openldap: update ldap-account-manager to v9.2 [[1]](https://github.com/LDAPAccountManager/lam/releases/tag/9.0) [[2]](https://github.com/LDAPAccountManager/lam/releases/tag/9.1) [[3]](https://github.com/LDAPAccountManager/lam/releases/tag/9.2)
 - openldap: upgrade self-service-password to [v1.7.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.3)
 - xsrv: update ansible to v12.3.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst) [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/12/CHANGELOG-v12.rst)
-- xsrv: update trivy security scanner to [v0.66.0](https://github.com/aquasecurity/trivy/releases)
+- xsrv: update trivy security scanner to [v0.69.1](https://github.com/aquasecurity/trivy/releases)
 - gitea_act_runner: update act-runner to v0.3.0 [[1]](https://gitea.com/gitea/act_runner/releases)
 - goaccess: update IP to Country GeoIP database, adjust version number automatically base on current date
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
