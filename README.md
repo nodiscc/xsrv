@@ -28,7 +28,6 @@ This project provides:
 - [dnsmasq](roles/dnsmasq) - lightweight DNS server
 - [gitea](roles/gitea) - git version control service/software forge
 - [gitea_act_runner](roles/gitea_act_runner) - CI/CD runner for Gitea Actions
-- [gotty](roles/gotty) - web-based terminal emulator
 - [homepage](roles/homepage) - simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - media server
 - [jitsi](roles/jitsi) - video conferencing solution

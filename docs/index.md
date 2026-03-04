@@ -28,7 +28,6 @@ This project provides:
 - [dnsmasq](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq) - lightweight DNS server
 - [gitea](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea) - git version control service/software forge
 - [gitea_act_runner](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) - CI/CD runner for Gitea Actions
-- [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) - web-based terminal emulator
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - simple webserver homepage/dashboard
 - [jellyfin](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jellyfin) - media server
 - [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) - video conferencing solution

@@ -76,6 +76,7 @@ xsrv deploy   # apply changes
 - monitoring_netdata: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - graylog: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - ollama: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- gotty: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - monitoring_utils: remove lynis, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate role/repository
 - common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
 - common/ssh: no longer look for/replace weak DH parameters
@@ -128,7 +129,6 @@ xsrv deploy   # apply changes
 - owncast: update to v0.2.4 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.2) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.3) [[3]](https://github.com/owncast/owncast/releases/tag/v0.2.4)
 - postgresql: update pgmetrics to v1.18.0 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1) [[2]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.18.0)
 - stirlingpdf: update to [v2.6.0](https://github.com/Stirling-Tools/Stirling-PDF/releases)
-- gotty: update to v1.6.0 [[1]](https://github.com/sorenisanerd/gotty/releases/tag/v1.5.1) [[2]](https://github.com/sorenisanerd/gotty/releases/tag/v1.6.0)
 - searxng: allow returning results as JSON (add `&format=json` to URL parameters)
 - searxng: increase sepiasearch search engine weight to 2
 - searxng: increase wiby search engine weight to 1.2

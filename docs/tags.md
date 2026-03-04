@@ -28,7 +28,6 @@ gitea_act_runner - setup gitea CI/CD runner (act-runner)
 gitea-config - update gitea configuration
 gitea - setup gitea git service/software forge
 goaccess - setup goaccess web log analyzer/viewer
-gotty - setup gotty web terminal
 grafana-config - update grafana configuration
 grafana - setup grafana analytics and interactive visualization web application
 hdparm - configure hdparm hard drive standby settings

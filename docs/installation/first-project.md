@@ -56,7 +56,6 @@ nodiscc.xsrv:1.3.1 was installed successfully
     # - nodiscc.xsrv.dnsmasq # lightweight DNS server
     # - nodiscc.xsrv.wireguard # fast and modern VPN server
     # - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
-    # - nodiscc.xsrv.gotty # access server terminal as a web application
     # - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
     # - nodiscc.xsrv.homepage # simple webserver homepage
 ```
