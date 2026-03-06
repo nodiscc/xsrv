@@ -67,6 +67,8 @@
     - apache
     - phpfpm
     - blackbox
+    - postgresql
+    - alerts
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
