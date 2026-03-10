@@ -11,11 +11,30 @@ groups:
           summary: "Endpoint {{ $labels.instance }} is down"
           description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
 
-      # - alert: EndpointSlowResponse
-      #   expr: probe_duration_seconds > 5
-      #   for: 5m
-      #   labels:
-      #     severity: warning
-      #   annotations:
-      #     summary: "Endpoint {{ $labels.instance }} is slow"
-      #     description: "{{ $labels.instance }} response time is {{ $value }}s"
+      - alert: EndpointSlowResponse
+        expr: |
+          avg_over_time(probe_duration_seconds[1m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Endpoint {{ $labels.instance }} is slow"
+          description: "{{ $labels.instance }} average response time is {{ $value | humanize }}s (> 5s threshold)."
+      - alert: BlackboxSSLCertificateExpiringSoon
+        expr: |
+          30 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 40
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "SSL certificate expires soon on {{ $labels.instance }}"
+          description: "{{ $labels.instance }} SSL certificate expires in {{ $value }} days."
+      - alert: BlackboxSSLCertificateExpiring
+        expr: |
+          round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 30
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "SSL certificate expiring on {{ $labels.instance }}"
+          description: "{{ $labels.instance }} SSL certificate expires in {{ $value }} days."
