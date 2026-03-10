@@ -62,7 +62,7 @@ scrape_configs:
     params:
       module:
         - process
-{% if ansible_local.apache.ansible_managed is defined and ansible_local.apache.ansible_managed %}
+{% if ansible_local.postgresql.ansible_managed is defined and ansible_local.postgresql.ansible_managed %}
   - job_name: postgres
     authorization:
       type: Bearer
