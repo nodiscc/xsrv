@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=prometheus
 Group=prometheus
-ExecStart=/usr/bin/vmalert -datasource.url=http://127.0.0.1:8428 -datasource.basicAuth.username=vmagent -datasource.basicAuth.password={{ victoriametrics_exporters_auth_password }} -notifier.url=http://127.0.0.1:9093 -rule=/etc/victoriametrics/vmalert/rules/*.yml -httpListenAddr=127.0.0.1:8880 -evaluationInterval=30s -remoteWrite.url=http://127.0.0.1:8428 -remoteWrite.basicAuth.username=vmagent -remoteWrite.basicAuth.password={{ victoriametrics_exporters_auth_password }}
+ExecStart=/usr/bin/vmalert -datasource.url=https://127.0.0.1:8428 -datasource.basicAuth.username=vmagent -datasource.basicAuth.password={{ victoriametrics_exporters_auth_password }} -datasource.tlsInsecureSkipVerify=true -notifier.url=http://127.0.0.1:9093 -rule=/etc/victoriametrics/vmalert/rules/*.yml -httpListenAddr=127.0.0.1:8880 -evaluationInterval=30s -remoteWrite.url=https://127.0.0.1:8428 -remoteWrite.basicAuth.username=vmagent -remoteWrite.basicAuth.password={{ victoriametrics_exporters_auth_password }} -remoteWrite.tlsInsecureSkipVerify=true
 ExecReload=/bin/kill -HUP $MAINPID
 
 PrivateTmp=yes
