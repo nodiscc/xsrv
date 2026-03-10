@@ -6,7 +6,7 @@ global:
   smtp_require_tls: true
 
 route:
-  group_by: ['alertname', 'severity']
+  group_by: ['alertname', 'severity', 'instance']
   group_wait: 10s
   group_interval: 10s
   repeat_interval: {{ victoriametrics_alertmanager_repeat_interval }}
@@ -20,12 +20,12 @@ receivers:
           Subject: '🚨 {{ .GroupLabels.severity }}: {{ .GroupLabels.alertname }}: {{ .GroupLabels.instance }}'
         html: |
           {{ range .Alerts }}
-          <b>Alert:</b> {{ .Labels.alertname }}<br>
-          <b>Instance:</b> {{ .Labels.instance }}<br>
           <b>Severity:</b> {{ .Labels.severity }}<br>
-          <b>Description:</b> {{ .Annotations.description }}<br>
-          <b>Summary:</b> {{ .Annotations.summary }}<br>
+          <b>Instance:</b> {{ .Labels.instance }}<br>
+          <b>Alert:</b> {{ .Labels.alertname }}<br>
           <b>Started:</b> {{ .StartsAt }}<br>
+          <b>Summary:</b> {{ .Annotations.summary }}<br>
+          <b>Description:</b> {{ .Annotations.description }}<br>
           <hr>
           {{ end }}
 {% endraw %}
