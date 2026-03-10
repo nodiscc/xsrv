@@ -1,3 +1,4 @@
+{% raw %}
 groups:
   - name: node_systemd_alerts
     interval: 30s
@@ -142,3 +143,4 @@ groups:
         annotations:
           summary: "Host {{ $labels.instance }} stopped sending metrics"
           description: "No metrics received from {{ $labels.instance }} for more than 5 minutes."
+{% endraw %}
