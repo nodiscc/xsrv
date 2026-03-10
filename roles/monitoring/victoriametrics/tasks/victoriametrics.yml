@@ -4,6 +4,12 @@
     package:
       - victoria-metrics
 
+- name: add prometheus user to _victoria-metrics group
+  user:
+    name: prometheus
+    groups: _victoria-metrics
+    append: yes
+
 ##### SELF-SIGNED SSL CERTIFICATE #####
 
 - name: install requirements for SSL/TLS certificates generation
