@@ -146,6 +146,16 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 # to see currently active alerts, run the promQL query ALERTS against your prometheus datasource in grafana
+- name: template vmalert alert definitions (node-alerts)
+  template:
+    src: etc_victoriametrics_vmalert_rules_node-alerts.yml.j2
+    dest: /etc/victoriametrics/vmalert/rules/node-alerts.yml
+    owner: prometheus
+    group: prometheus
+    mode: "0644"
+  notify: reload vmalert
+  tags: victoriametrics_vmalert_rules
+
 - name: copy vmalert alert definitions
   copy:
     src: "{{ item.src }}"
@@ -157,8 +167,6 @@
   loop:
     - src: etc_victoriametrics_vmalert_rules_blackbox-alerts.yml
       dest: /etc/victoriametrics/vmalert/rules/blackbox-alerts.yml
-    - src: etc_victoriametrics_vmalert_rules_node-alerts.yml
-      dest: /etc/victoriametrics/vmalert/rules/node-alerts.yml
 
 - name: install prometheus-alertmanager
   apt:
