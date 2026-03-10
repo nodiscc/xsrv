@@ -169,6 +169,8 @@
       dest: /etc/victoriametrics/vmalert/rules/blackbox-alerts.yml
     - src: etc_victoriametrics_vmalert_rules_apache-alerts.yml
       dest: /etc/victoriametrics/vmalert/rules/apache-alerts.yml
+    - src: etc_victoriametrics_vmalert_rules_phpfpm-alerts.yml
+      dest: /etc/victoriametrics/vmalert/rules/phpfpm-alerts.yml
 
 - name: install prometheus-alertmanager
   apt:
