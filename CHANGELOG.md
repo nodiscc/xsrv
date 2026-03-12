@@ -152,6 +152,7 @@ xsrv deploy   # apply changes
 - update documentation
 
 **Fixed:**
+- xsrv: fix fetch-backups failing with numeric ansible_ssh_port
 - tt-rss: switch git repository to mirror on https://gitlab.com/nodiscc/tt-rss (upstream repository removed)
 - tt-rss: `clone/upgrade tt-rss` task no longer always returns changed (pin version to latest commit from upstream)
 - searxng: remove engines that no longer exist from config file, fix warnings in logs
