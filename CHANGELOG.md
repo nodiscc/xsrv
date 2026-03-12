@@ -96,7 +96,7 @@ xsrv deploy   # apply changes
 - wireguard: generate a QR code for each wireguard_peer containing the configuration (can be scanned with mobile apps such as WG Tunnel)
 - common/users: make the default system `umask` configurable
 - common/sysctl: make the value of `kernel.yama.ptrace_scope` configurable
-- apache: add support for Debian 13
+- add support for Debian 13 in all roles
 
 **Changed:**
 - rename `monitoring_utils` role to `monitoring.utils`
@@ -120,6 +120,7 @@ xsrv deploy   # apply changes
 - common: ensure cron is installed
 - monitoring.rsyslog: ensure logrotate is installed
 - libvirt: allow accessing VM SPICE graphical consoles remotely
+- apache: set a fixed 30 day renewal threshold for SSL/TLS certificates obtained thorugh `mod_md`
 - readme-gen: always write SSH client configuration and GTK bookmarks for all hosts to README.md, even for hosts that are not in [`readme_gen_limit`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme-gen/defaults/main.yml)
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)
