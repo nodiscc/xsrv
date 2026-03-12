@@ -115,7 +115,7 @@ xsrv deploy   # apply changes
 - searxng: increase sepiasearch search engine weight to 2
 - searxng: increase wiby search engine weight to 1.2
 - searxng: enable [searchmysite](https://searchmysite.net) search engine by default
-* common: fail2ban: use `hash:net` ipset types instead of `hash:ip`
+- common: fail2ban: use `hash:net` ipset types instead of `hash:ip`
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - monitoring.rsyslog: ensure logrotate is installed
@@ -142,6 +142,7 @@ xsrv deploy   # apply changes
 - xsrv: update ansible to v12.3.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst) [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/12/CHANGELOG-v12.rst)
 - xsrv: update trivy security scanner to [v0.66.0](https://github.com/aquasecurity/trivy/releases)
 - gitea_act_runner: update act-runner to v0.2.12 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.12)
+- gitea_act_runner: always enable nightly cleanup of podman volumes and containers created by act-runner, regardless of `gitea_act_runner_daily_podman_prune`
 - goaccess: update IP to Country GeoIP database, adjust version number automatically base on current date
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed

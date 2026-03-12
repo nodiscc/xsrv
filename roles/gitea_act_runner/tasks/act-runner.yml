@@ -80,13 +80,36 @@
 - name: configure nightly cleanup of unused podman data
   cron:
     user: act-runner
-    cron_file: act-runner-podman-system-prune
-    name: "cleanup unused podman data"
+    cron_file: act-runner-podman-volume-prune
+    name: "cleanup unused podman volumes"
     minute: "30"
     hour: "03"
     day: "*"
     job: podman system prune --all --force | logger -t act-runner-podman-system-prune
     disabled: "{{ True if not gitea_act_runner_container_engine == 'podman' or not gitea_act_runner_daily_podman_prune else False }}"
+
+- name: configure nightly cleanup of unused podman volumes
+  cron:
+    user: act-runner
+    cron_file: act-runner-podman-volume-prune
+    name: "cleanup unused podman volumes"
+    minute: "30"
+    hour: "05"
+    day: "*"
+    job: podman volume prune --all --force | logger -t act-runner-podman-volume-prune
+    disabled: "{{ True if not gitea_act_runner_container_engine == 'podman' }}"
+
+- name: configure nightly cleanup of unused podman containers
+  cron:
+    user: act-runner
+    cron_file: act-runner-podman-container-prune
+    name: "cleanup unused podman containers"
+    minute: "30"
+    hour: "05"
+    day: "*"
+    job: podman container prune --all --force | logger -t act-runner-podman-container-prune
+    disabled: "{{ True if not gitea_act_runner_container_engine == 'podman' }}"
+
 
 ##### ACT-RUNNER #####
 
