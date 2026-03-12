@@ -22,7 +22,7 @@ groups:
           description: "{{ $labels.instance }} average response time is {{ $value | humanize }}s (> 5s threshold)."
       - alert: BlackboxSSLCertificateExpiringSoon
         expr: |
-          30 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 40
+          30 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 29
         for: 0m
         labels:
           severity: warning
@@ -31,7 +31,7 @@ groups:
           description: "{{ $labels.instance }} SSL certificate expires in {{ $value }} days."
       - alert: BlackboxSSLCertificateExpiring
         expr: |
-          round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 30
+          round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 20
         for: 0m
         labels:
           severity: critical
