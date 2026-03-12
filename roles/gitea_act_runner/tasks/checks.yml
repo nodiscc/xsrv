@@ -8,7 +8,6 @@
     - gitea_act_runner_gitea_instance_fqdn is not search("CHANGEME")
     - (gitea_act_runner_gitea_instance_hostname is not defined) or (gitea_act_runner_gitea_instance_hostname is string)
     - gitea_act_runner_enable_service == gitea_act_runner_enable_service | bool
-    - gitea_act_runner_container_engine in ['docker', 'podman']
     - gitea_actions_runner_container_network is string
     - gitea_act_runner_labels | type_debug == 'list'
     - gitea_act_runner_capacity == gitea_act_runner_capacity | int

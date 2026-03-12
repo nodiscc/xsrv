@@ -82,6 +82,7 @@ xsrv deploy   # apply changes
 - common/ssh: no longer look for/replace weak DH parameters
 - libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
 - libvirt: remove ability to forward ports using `host_ip` (only `host_interface` must be used)
+- gitea_act_runner: remove support for `gitea_act_runner_container_engine: docker`, only podman is supported
 
 
 **Added:**

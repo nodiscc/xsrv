@@ -58,7 +58,7 @@ container:
   privileged: false
   # And other options to be used when the container is started (eg, --add-host=my.gitea.url:host-gateway).
 {% if (ansible_local.gitea.fqdn is defined) and (gitea_act_runner_gitea_instance_fqdn == ansible_local.gitea.fqdn) %}
-  options: --add-host={{ gitea_fqdn }}:{{ 'host-gateway' if gitea_act_runner_container_engine == 'docker' else '127.0.0.1' }} --mount type=bind,source=/etc/act-runner/ca-certificates.crt,target=/etc/ssl/certs/ca-certificates.crt,readonly
+  options: --add-host={{ gitea_fqdn }}:127.0.0.1 --mount type=bind,source=/etc/act-runner/ca-certificates.crt,target=/etc/ssl/certs/ca-certificates.crt,readonly
 {% else %}
   options:
 {% endif %}
@@ -80,11 +80,7 @@ container:
   # If it's empty, act_runner will find an available docker host automatically.
   # If it's "-", act_runner will find an available docker host automatically, but the docker host won't be mounted to the job containers and service containers.
   # If it's not empty or "-", the specified docker host will be used. An error will be returned if it doesn't work.
-{% if gitea_act_runner_container_engine == 'podman' %}
   docker_host: "unix:///run/user/{{ gitea_act_runner_user.uid }}/podman/podman.sock"
-{% else %}
-  docker_host: ""
-{% endif %}
 
 host:
   # The parent directory of a job's working directory.

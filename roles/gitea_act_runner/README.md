@@ -13,8 +13,7 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.podman # if using gitea_act_runner_container_engine: "podman" (the default)
-    - nodiscc.xsrv.docker # if using gitea_act_runner_container_engine: "docker"
+    - nodiscc.xsrv.podman # (required) container management engine
     - nodiscc.xsrv.gitea # (optional) gitea git service (can also be deployed to a different host)
     - nodiscc.xsrv.gitea_act_runner
 

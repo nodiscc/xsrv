@@ -622,10 +622,8 @@ gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org
 # gitea_act_runner_gitea_instance_hostname: "CHANGEME"
 # how many tasks the runner can execute concurrently at the same time (integer)
 gitea_act_runner_capacity: 1
-# container engine to use (docker/podman)
-gitea_act_runner_container_engine: "podman"
 # network to which the containers managed by act-runner will connect (host/bridge/custom)
-# set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
+# set to an empty string to have act-runner create a network automatically. "host" is required when the gitea instance is on the same host as the runner
 gitea_actions_runner_container_network: "host"
 # list of labels to use when registering the runner (https://docs.gitea.com/usage/actions/design)
 # If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role must be redeployed
