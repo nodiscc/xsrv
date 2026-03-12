@@ -29,7 +29,7 @@ Remove all variables named `netdata_*` and use these equivalents:
 
 ```yaml
 # xsrv edit-group default all
-monitoring_victoriametrics_url: "http://my.CHANGEME.org:8428"
+monitoring_victoriametrics_url: "https://my.CHANGEME.org:8428"
 
 # xsrv edit-group-vault default all
 victoriametrics_exporters_auth_password: CHANGEME

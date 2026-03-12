@@ -21,7 +21,7 @@ See [meta/main.yml](meta/main.yml)
 
 ```yaml
 # xsrv edit-host default my.CHANGEME.org
-monitoring_victoriametrics_url: "http://monitoring.CHANGEME.org:8428"
+monitoring_victoriametrics_url: "https://monitoring.CHANGEME.org:8428"
 
 # xsrv edit-vault default my.CHANGEME.org
 monitoring_exporters_auth_password: CHANGEME
