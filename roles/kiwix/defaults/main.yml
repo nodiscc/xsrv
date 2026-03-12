@@ -9,9 +9,9 @@ kiwix_fqdn: kiwix.CHANGEME.org
 # - https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_nopic_2024-06.zim # english wikipedia without pictures
 # - https://download.kiwix.org/zim/wikipedia/wikipedia_fr_all_maxi_2024-05.zim # 37GB, full french wikipedia
 # - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB, french wikipedia without pictures
-# - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2021-03.zim #116MB, rationalwiki.org
+# - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim #238MB, rationalwiki.org
 kiwix_zim_urls:
-  - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2021-03.zim # 116MB
+  - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim # 238MB
   - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB
 # yes/no: enable/disable kiwix server service, start it at boot
 kiwix_enable_service: yes
