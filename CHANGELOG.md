@@ -24,6 +24,7 @@ Remove all variables named `netdata_*` and use these equivalents:
 - `netdata_port_checks`: Removed
 - `netdata_fping_hosts`: Removed
 - `netdata_firewalld_zones`: [`exporter_firewalld_zones`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/base/defaults/main.yml)
+- `rsnapshot_enable_cron`: [`rsnapshot_enable_service`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
 
 **3. Add required variables for the new monitoring roles:**
 
@@ -107,6 +108,7 @@ xsrv deploy   # apply changes
 - common/firewalld: ensure ufw is removed before installing firewalld
 - wireguard: allow specifying [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
 - libvirt: use firewalld to manage port forwarding to libvirt VMs, remove direct iptables management
+- backup: migrate from cron to systemd timers/services
 - wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
 - wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
 - wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
