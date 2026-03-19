@@ -145,7 +145,7 @@ xsrv deploy   # apply changes
 - openldap: update ldap-account-manager to [v9.5.1](https://github.com/LDAPAccountManager/lam/releases)
 - openldap: upgrade self-service-password to [v1.7.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.3)
 - xsrv: update ansible to v12.3.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst) [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/12/CHANGELOG-v12.rst)
-- xsrv: update trivy security scanner to [v0.66.0](https://github.com/aquasecurity/trivy/releases)
+- xsrv: update trivy security scanner to [v0.69.3](https://github.com/aquasecurity/trivy/releases)
 - gitea_act_runner: update act-runner to v0.2.12 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.12)
 - gitea_act_runner: always enable nightly cleanup of podman volumes and containers created by act-runner, regardless of `gitea_act_runner_daily_podman_prune`
 - goaccess: update IP to Country GeoIP database, adjust version number automatically base on current date
