@@ -1,5 +1,11 @@
 # automatically create HTTP probes for xsrv roles deployed on these hosts
 victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
+# list of domains to exclude from automatic HTTP checks
+# Example:
+# victoriametrics_auto_check_exclude:
+#   - gitea.example.org
+#   - media.example.org
+victoriametrics_auto_check_exclude: []
 # list of URLs to monitor with victoriametrics/blackbox-exporter HTTP probes
 # Example:
 # victoriametrics_http_checks:

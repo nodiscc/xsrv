@@ -5,10 +5,10 @@
 {% set fqdn_var_name = i ~ '_fqdn' %}
 {% set enable_service_var_name = i ~ '_enable_service' %}
 {% if hostvars[item][fqdn_var_name] is defined %}
-{% if hostvars[item][enable_service_var_name] | default(True) %}
+{% if (hostvars[item][enable_service_var_name] | default(True)) and not (hostvars[item][fqdn_var_name] in victoriametrics_auto_check_exclude) %}
   - https://{{ hostvars[item][fqdn_var_name] }}
 {% else %}
-  # - https://{{ hostvars[item][fqdn_var_name] }} # service disabled in configuration
+  # - https://{{ hostvars[item][fqdn_var_name] }} # service disabled in configuration or URL excluded by victoriametrics_auto_check_exclude
 {% endif %}
 {% endif %}
 {% endfor %}
