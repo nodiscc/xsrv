@@ -73,6 +73,13 @@
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: restart prometheus-blackbox-exporter
+  become: true
+  systemd:
+    name: prometheus-blackbox-exporter.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: restart prometheus-php-fpm-exporter
   become: true
   systemd:
