@@ -1,0 +1,7 @@
+[Unit]
+Description=Export systemd user services state to textfile collector
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/systemd-user-services-exporter
+RemainAfterExit=no

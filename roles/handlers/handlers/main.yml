@@ -101,6 +101,13 @@
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: restart prometheus-node-exporter
+  become: true
+  systemd:
+    name: prometheus-node-exporter.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+
 ### BACKUP/RSNAPSHOT ###
 
 - name: check rsnapshot configuration

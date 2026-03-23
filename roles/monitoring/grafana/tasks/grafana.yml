@@ -69,6 +69,7 @@
     - blackbox
     - postgresql
     - alerts
+    - systemd-user-services
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

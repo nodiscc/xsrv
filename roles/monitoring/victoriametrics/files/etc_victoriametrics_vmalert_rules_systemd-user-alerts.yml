@@ -1,0 +1,12 @@
+groups:
+  - name: systemd_user_alerts
+    interval: 30s
+    rules:
+      - alert: SystemdUserServiceFailed
+        expr: systemd_user_service_state{active="failed"} == 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "User service {{ $labels.service }} failed on {{ $labels.instance }}"
+          description: "User service {{ $labels.service }} for user {{ $labels.user }} is in failed state."
