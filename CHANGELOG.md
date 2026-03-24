@@ -96,6 +96,7 @@ xsrv deploy   # apply changes
 - searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))
 - moodist/owncast/searxng/stirlingpdf: automatically remove unused podman images/containers, nightly (conserve disk space)
 - wireguard: generate a QR code for each wireguard_peer containing the configuration (can be scanned with mobile apps such as WG Tunnel)
+- backup: add [`rsnapshot_remote_backups[*].port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) option (default 22, allows backups over different SSH port)
 - common/users: make the default system `umask` configurable
 - common/sysctl: make the value of `kernel.yama.ptrace_scope` configurable
 - add support for Debian 13 in all roles

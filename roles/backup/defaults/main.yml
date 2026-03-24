@@ -42,6 +42,7 @@ rsnapshot_local_backups: []
 #    user: SSH username to connect with (must have read access to backup paths)
 #    host: host address
 #    path: file/directory path to backup
+#    port: SSH port (optional, defaults to 22)
 # Example:
 # rsnapshot_remote_backups:
 #   - { user: 'rsnapshot', host: 'srv01.example.org', path: '/var/backup/mysql/nextcloud/' }
@@ -51,6 +52,7 @@ rsnapshot_local_backups: []
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/var/www/my.example.org/public/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/letsencrypt/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/ssl/private/' }
+#   - { user: 'rsnapshot', host: 'srv05.example.org', port: 2222, path: '/path/to/data/' }
 rsnapshot_remote_backups: []
 # file name patterns to exclude from backups, globally
 # Example:

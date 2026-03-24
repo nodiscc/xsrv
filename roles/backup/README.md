@@ -52,7 +52,7 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
 </details>
 
 **Backup data from remote machines:**
- - configure the list of hosts, SSH users, ports, paths... in the [`rsnapshot_remote_backups`](backup/defaults/main.yml#L41) configuration variable and deploy the role to the backup server.
+ - configure the list of hosts, SSH users, ports, paths... in the [`rsnapshot_remote_backups`](backup/defaults/main.yml#L41) configuration variable and deploy the role to the backup server. Set `port` for non-standard SSH ports (defaults to 22).
  - setup a user account on the machine to backup, authorize the backup server's `root` public SSH key to connect to it (the key is displayed when the `backup` role is deployed, and a copy is downloaded to `"{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"` on the controller), and allow it to run `sudo rsync` without password.
 
 ```yaml
