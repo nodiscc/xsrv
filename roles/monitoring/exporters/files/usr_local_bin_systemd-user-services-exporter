@@ -24,7 +24,7 @@ mkdir -p "$TEXTFILE_DIR"
         sudo -u "$username" XDG_RUNTIME_DIR="/run/user/$uid" \
             systemctl --user list-units --type=service --all --plain --no-legend 2>/dev/null | \
             awk -v user="$username" '{
-                state = ($3 == "failed") ? 1 : 0
+                state = ($3 == "active" || $3 == "failed") ? 1 : 0
                 printf "systemd_user_service_state{user=\"%s\",service=\"%s\",active=\"%s\"} %d\n", user, $1, $3, state
             }'
     done
