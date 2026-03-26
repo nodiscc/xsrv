@@ -45,7 +45,6 @@ libvirt-port-forwards - setup libvirt port forwards
 libvirt - setup libvirt virtualization toolkit
 libvirt-storage - setup libvirt storage pools
 libvirt-vms - setup libvirt virtual machines
-lynis - setup lynis security audit tool
 mail - setup outgoing system mail
 matrix - setup matrix chat server and web client
 monitoring - deploy all monitoring-related components
@@ -109,6 +108,7 @@ never
 nmap
 readme_gen
 victoriametrics-http-checks
+victoriametrics_vmalert_rules
 vmagent
 
 ```

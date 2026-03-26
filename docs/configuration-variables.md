@@ -65,7 +65,7 @@ rsnapshot_retain_daily: 6
 rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6
 # enable/disable automatic/scheduled backups (yes/no)
-rsnapshot_enable_cron: yes
+rsnapshot_enable_service: yes
 # automatically create the backup storage directory (yes/no)
 # if the backup directory should be created by another process, such as USB drive automounter, you may want to set this to no
 rsnapshot_create_root: yes
@@ -101,6 +101,7 @@ rsnapshot_local_backups: []
 #    user: SSH username to connect with (must have read access to backup paths)
 #    host: host address
 #    path: file/directory path to backup
+#    port: SSH port (optional, defaults to 22)
 # Example:
 # rsnapshot_remote_backups:
 #   - { user: 'rsnapshot', host: 'srv01.example.org', path: '/var/backup/mysql/nextcloud/' }
@@ -110,6 +111,7 @@ rsnapshot_local_backups: []
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/var/www/my.example.org/public/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/letsencrypt/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/ssl/private/' }
+#   - { user: 'rsnapshot', host: 'srv05.example.org', port: 2222, path: '/path/to/data/' }
 rsnapshot_remote_backups: []
 # file name patterns to exclude from backups, globally
 # Example:
@@ -682,7 +684,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.25.4"
+gitea_version: "1.25.5"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1132,7 +1134,7 @@ matrix_synapse_ldap_validate_certs: yes
 # enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
-matrix_synapse_admin_version: "0.11.0"
+matrix_synapse_admin_version: "0.11.4"
 # list of IP addresses allowed to access synapse-admin and synapse admin API endpoints (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 matrix_synapse_admin_allowed_hosts: []
@@ -1148,7 +1150,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.12.9"
+matrix_element_version: "1.12.12"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1403,7 +1405,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "9.2"
+ldap_account_manager_version: "9.5.1"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1729,7 +1731,7 @@ shaarli_enable_service: yes
 # Fully Qualified Domain Name for the stirlingpdf instance
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
 # the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
-stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:2.4.3"
+stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:2.7.1"
 # HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -1855,8 +1857,8 @@ wireguard_enable_service: yes
 #     state: present
 #     ip_address: 10.200.200.11
 #     routes:
-#       - 10.200.200.1/32 # required for wireguard client/server traffic
-#       - 10.0.10.1/24 # example, only route traffic to the server's local network through the VPN
+#       - 10.200.200.0/32 # required for wireguard client/server traffic
+#       - 10.0.10.0/24 # example, only route traffic to the server's local network through the VPN
 #   - name: client3
 #     state: absent
 wireguard_peers: []
@@ -1960,7 +1962,7 @@ grafana_enable_service: yes
 # set to empty list [] to allow access from any IP address
 grafana_allowed_hosts: []
 # grafana version (https://github.com/grafana/grafana/releases.atom)
-grafana_version: "12.3.2"
+grafana_version: "12.4.1"
 # password to authenticate to VictoriaMetrics datasource
 grafana_victoriametrics_auth_password: "{{ monitoring_exporters_auth_password }}"
 ```
@@ -2014,38 +2016,6 @@ rsyslog_firewalld_zones:
 
 ```yaml
 ##### MONITORING UTILITIES #####
-# setup lynis security audit tool (yes/no)
-setup_lynis: yes
-# list of strings to extract from lynis reports and forward by mail
-# Example: lynis_report_regex: 'warning|suggestion|manual'
-lynis_report_regex: 'warning'
-# list of lynis tests to ignore/skip (https://cisofy.com/lynis/controls/)
-lynis_skip_tests:
-  - "CUST-0285" # Install libpam-usb to enable multi-factor authentication for PAM sessions (we don't use multi-factor auth for SSH)
-  - "CUST-0830" # Install debian-goodies so that you can run checkrestart (needrestart is used instead)
-  - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
-  - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
-  - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
-  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by prometheus)
-  - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
-  - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
-  - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
-  - "BANN-7126" # legal banner for local logins is not needed
-  - "BANN-7130" # legal banner for ssh logins is not needed
-  - "LOGG-2190" # open file descriptors on deleted files is normal behavior
-  - "SSH-7408:Port" # changing ssh listen port from 22 does not mitigate the risk, not a security measure, can also be set to a non-standard port in NAT
-  - "SSH-7408:ClientAliveCountMax" # 3 is an acceptable value, nodiscc.xsrv.common sets the value to 3
-  - "SSH-7408:Compression" # any of yes/delayed/no can be considered secure since 2018 (pre-authentication compression never enabled)
-  - "SSH-7408:MaxAuthTries" # 5 is an acceptable value (nodiscc.xsrv.common), lowering it may cause login failures from systems where more than 3 ssh private keys are available
-  - "SSH-7408:MaxSessions" # 10 is an acceptable values, SSH connection multiplexing cannot be abused/cause performance issues unless the user is authenticated
-  - "PHP-2376" # allow_url_fopen is used legitimately by several applications in file_get_contents() to fetch remote files
-  - "HRDN-7230" # malware/rootkit detection software is inefficient when run on a compromised host
-  - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
-  - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
-  - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
-  - "KRNL-5830" # let needrestart/prometheus send alarms when reboot is required
-  - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
-  - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
 # when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
 debsums_cron_check: "daily"
 # base path to index with duc disk usage analyzer
@@ -2063,6 +2033,12 @@ bonnie_benchmark_paths:
 ```yaml
 # automatically create HTTP probes for xsrv roles deployed on these hosts
 victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
+# list of domains to exclude from automatic HTTP checks
+# Example:
+# victoriametrics_auto_check_exclude:
+#   - gitea.example.org
+#   - media.example.org
+victoriametrics_auto_check_exclude: []
 # list of URLs to monitor with victoriametrics/blackbox-exporter HTTP probes
 # Example:
 # victoriametrics_http_checks:
