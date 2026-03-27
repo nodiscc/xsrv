@@ -91,6 +91,7 @@ xsrv deploy   # apply changes
 - add [`monitoring.victoriametrics`](roles/monitoring/victoriametrics/) role (monitoring metrics scraper and time-series database)
 - add [`monitoring.grafana`](roles/monitoring/grafana) role (analytics and interactive visualization web application)
 - add [`kiwix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/kiwix) role (offline viewer for Wikipedia and other wikis)
+- add [`llamacpp`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/llamacpp) role (run Large Langue Models (LLM) locally)
 - common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
 - common: allow automatically putting mechanical/rotational hard drives in standby mode after 1 hour ([`hdparm_auto_standby_drives: false/true`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)))
 - searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml))

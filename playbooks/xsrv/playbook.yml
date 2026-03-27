@@ -33,3 +33,4 @@
     # - nodiscc.xsrv.stirlingpdf # PDF manipulation tools
     # - nodiscc.xsrv.kiwix # offline wiki viewer
     # - nodiscc.xsrv.homepage # simple webserver homepage
+    # - nodiscc.xsrv.llamacpp # local LLM service

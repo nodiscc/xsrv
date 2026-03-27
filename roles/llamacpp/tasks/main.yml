@@ -1,0 +1,15 @@
+- name: import variable checks tasks
+  import_tasks: checks.yml
+  tags:
+    - llamacpp
+    - checks
+
+- name: import llamacpp installation tasks
+  import_tasks: llamacpp.yml
+  become: true
+  tags: llamacpp
+
+- name: import ansible facts configuration tasks
+  import_tasks: fact.yml
+  become: yes
+  tags: llamacpp

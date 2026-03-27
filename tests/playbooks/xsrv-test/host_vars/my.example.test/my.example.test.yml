@@ -73,3 +73,5 @@ searxng_fqdn: "search.example.test"
 kiwix_fqdn: "kiwix.example.test"
 ##### MONITORING.GRAFANA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml
 grafana_fqdn: "grafana.example.test"
+##### LLAMACPP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/llamacpp/defaults/main.yml
+llamacpp_enable_service: false

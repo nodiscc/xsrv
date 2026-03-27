@@ -1,0 +1,17 @@
+version = 1
+
+{% for model in llamacpp_models %}
+{% for preset_name, preset_config in model.presets.items() %}
+{% set filename = model.url.split('/')[-1] %}
+{% set preset_key = model.name %}
+{% if preset_name != 'default' %}
+{% set preset_key = preset_key + ':' + preset_name %}
+{% endif %}
+
+[{{ preset_key }}]
+model = /var/lib/llamacpp/models/{{ filename }}
+{% for key, value in preset_config.items() %}
+{{ key }} = {{ value }}
+{% endfor %}
+
+{% endfor %}{% endfor %}

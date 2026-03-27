@@ -42,6 +42,9 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['ollama']['fqdn'] is defined %}
 - Ollama: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ollama']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['llamacpp']['ansible_managed'] is defined %}
+- LLamaCPP: http://127.0.0.1:8033
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['stirlingpdf']['fqdn'] is defined %}
 - Stirling PDF: https://{{ hostvars[item]['ansible_facts']['ansible_local']['stirlingpdf']['fqdn'] }}
 {% endif %}

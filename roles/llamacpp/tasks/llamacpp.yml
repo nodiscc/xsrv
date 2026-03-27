@@ -1,0 +1,108 @@
+- name: download llamacpp tarball
+  get_url:
+    url: https://github.com/ggml-org/llama.cpp/releases/download/{{ llamacpp_version }}/llama-{{ llamacpp_version }}-bin-ubuntu-vulkan-x64.tar.gz
+    dest: /root/llama-{{ llamacpp_version }}-bin-ubuntu-vulkan-x64.tar.gz
+    mode: "0644"
+
+- name: create llamacpp installation directory
+  file:
+    path: "/opt/llamacpp"
+    state: directory
+    mode: "0755"
+
+- name: extract llamacpp archive
+  unarchive:
+    src: "/root/llama-{{ llamacpp_version }}-bin-ubuntu-vulkan-x64.tar.gz"
+    dest: "/opt/llamacpp"
+    owner: root
+    group: root
+    remote_src: yes
+    mode: u=rwX,g=rX,o=rX
+  no_log: True
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create llamacpp user
+  user:
+    name: llamacpp
+    shell: /bin/bash
+    comment: "llamacpp local LLM service"
+    password: "*"
+    home: "/var/lib/llamacpp"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: add llamacpp to the render group
+  user:
+    name: llamacpp
+    group: render
+
+##### MODELS
+
+- name: Install required packages
+  package:
+    name:
+      - aria2
+      - jq
+    state: present
+
+- name: Create models directory
+  file:
+    path: "/var/lib/llamacpp/models"
+    state: directory
+    owner: llamacpp
+    group: llamacpp
+    mode: "0755"
+
+- name: Create aliases directory
+  file:
+    path: "/var/lib/llamacpp/aliases"
+    state: directory
+    owner: llamacpp
+    group: llamacpp
+    mode: "0755"
+
+- name: Create model download script
+  template:
+    src: usr_local_bin_llamacpp-download-models.j2
+    dest: /usr/local/bin/llamacpp-download-models
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Run model download script
+  become: true
+  become_user: llamacpp
+  command: /usr/local/bin/llamacpp-download-models
+  register: download_result
+  changed_when: "'SUCCESS:' in download_result.stdout"
+  notify: restart llamacpp
+
+- name: copy model presets configuration
+  template:
+    src: var_lib_llamacpp_presets.ini.j2
+    dest: /var/lib/llamacpp/presets.ini
+    owner: root
+    group: llamacpp
+    mode: "0644"
+  notify: restart llamacpp
+
+##### SYSTEMD
+
+- name: install llamacpp systemd service/unit file
+  template:
+    src: "etc_systemd_system_llamacpp.service.j2"
+    dest: "/etc/systemd/system/llamacpp.service"
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart llamacpp
+
+# load systemd unit file if changed
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable/disable start/stop llamacpp service
+  systemd:
+    name: llamacpp
+    enabled: "{{ llamacpp_enable_service }}"
+    state: "{{ 'started' if llamacpp_enable_service else 'stopped' }}"
+  ignore_errors: "{{ ansible_check_mode }}"

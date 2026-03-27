@@ -36,3 +36,4 @@
     - nodiscc.xsrv.moodist # ambient sound mixer
     - nodiscc.xsrv.kiwix # offline wiki viewer
     - nodiscc.xsrv.homepage # simple webserver homepage
+    - nodiscc.xsrv.llamacpp # local LLM service

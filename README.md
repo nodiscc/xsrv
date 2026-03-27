@@ -33,6 +33,7 @@ This project provides:
 - [jitsi](roles/jitsi) - video conferencing solution
 - [kiwix](roles/kiwix) - mirror wikipedia or other wikis locally
 - [libvirt](roles/libvirt) - virtualization toolkit
+- [llamacpp](roles/llamacpp) - llamacpp local LLM service
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [matrix](roles/matrix) - secure instant messaging service
 - [monitoring.exporters](roles/monitoring/exporters) - monitoring agents/metrics exporters
@@ -82,6 +83,7 @@ This project provides:
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](roles/stirlingpdf)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](roles/moodist)
 [![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](roles/kiwix)
+[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/llamacpp-thumb.png)](roles/llamacpp)
 
 
 ## Source code
