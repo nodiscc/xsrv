@@ -133,6 +133,7 @@
 - name: import hdparm configuration tasks
   import_tasks: hdparm.yml
   become: yes
+  when: ansible_virtualization_role is not defined or ansible_virtualization_role != "guest"
   tags:
     - common
     - hdparm
