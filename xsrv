@@ -349,7 +349,7 @@ self_upgrade() {
     fi
     new_version="$(grep '^version=.*' "$xsrv_clone_dir/xsrv" | cut -d= -f2)"
     new_commit="$(git -C "$xsrv_clone_dir" rev-parse HEAD)"
-    read -r -p "[xsrv] INFO: this will upgrade the script at $script_path ($version) to $new_version ($new_commit). Type YES to confirm: " confirm_upgrade
+    read -r -p "[xsrv] INFO: this will upgrade the script at $script_path ($version) to $new_version ($new_commit) and the bash completion script. Type YES to confirm: " confirm_upgrade
     if [[ "$confirm_upgrade" == "YES" ]]; then
         if [[ -w "$script_path" ]]; then
             echo "[xsrv] INFO: $script_path is writeable"
@@ -360,12 +360,31 @@ self_upgrade() {
             echo "[xsrv] INFO: $script_path is not writeable. Upgrading with sudo"
             sudo cp -v "$xsrv_clone_dir/xsrv" "$script_path"
             echo "[xsrv] INFO: upgrade complete"
-            exit 0
         fi
     else
         echo "[xsrv] ERROR: did not enter YES, aborting"
         exit 1
     fi
+
+    # Also update bash completion script if it exists
+    completion_path="/etc/bash_completion.d/xsrv-completion.sh"
+    if [[ -f "$xsrv_clone_dir/xsrv-completion.sh" ]]; then
+        if [[ -f "$completion_path" ]]; then
+            echo "[xsrv] INFO: updating bash completion script at $completion_path"
+            if [[ -w "$completion_path" ]]; then
+                cp "$xsrv_clone_dir/xsrv-completion.sh" "$completion_path"
+                echo "[xsrv] INFO: bash completion script updated"
+            else
+                echo "[xsrv] INFO: $completion_path is not writeable. Upgrading with sudo"
+                sudo cp -v "$xsrv_clone_dir/xsrv-completion.sh" "$completion_path"
+                echo "[xsrv] INFO: bash completion script updated"
+            fi
+        else
+            echo "[xsrv] INFO: bash completion script not found at $completion_path, skipping"
+        fi
+    fi
+
+    exit 0
 }
 
 ########## LIBVIRT RELATED COMMANDS ##########

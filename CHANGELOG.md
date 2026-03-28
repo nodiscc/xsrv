@@ -131,6 +131,7 @@ xsrv deploy   # apply changes
 - kiwix: update rationalwiki download URL
 - readme-gen: always write SSH client configuration and GTK bookmarks for all hosts to README.md, even for hosts that are not in [`readme_gen_limit`](https://github.com/nodiscc/xsrv/blob/master/roles/readme-gen/defaults/main.yml)
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
+- xsrv: self-upgrade now also updates the bash completion script if it exists
 - shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)
 - shaarli: udpate to v0.16.0 [[1](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
 - nextcloud: update to 31.0.13 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/) [[4]](https://nextcloud.com/blog/nextcloud-hub10/)
