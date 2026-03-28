@@ -41,6 +41,14 @@
 
 ##### PODMAN ####
 
+- name: MIGRATION/2.1.0 - migrate to overlayfs storage driver
+  become: yes
+  become_user: stirlingpdf
+  command:
+    cmd: podman system reset --force
+  when: ansible_local.stirlingpdf.storage_driver_migrated is not defined
+
+
 - name: pull stirlingpdf image
   become: yes
   become_user: stirlingpdf
