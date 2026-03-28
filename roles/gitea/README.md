@@ -136,32 +136,7 @@ Repeat for every repository, you can then see your list list of mirrors at https
 
 ### API usage
 
-Example [gitea-cli](https://github.com/bashup/gitea-cli) usage (command-line project creation):
-
-```bash
-#Edit ~/.config/gitearc:
-export GITEA_USER=someone
-export GITEA_API_TOKEN='aaabbbccdddefffggghhiijjs'
-export GITEA_URL='https://example.com/gitea/'
-# If your server certificate is self-signed:
-curl() { command curl --insecure "$@"; }
-# Add a function to get the list of issues for a repo
-gitea.issues() {
-  split_repo "$1"
-  auth curl --silent "${GITEA_URL%/}/api/v1/repos/$REPLY/issues?limit=50"
-}
-
-```
-
-```bash
-# Create a project
-gitea --description "My new project" --private new myusername/myproject
-
-# Get the list of issues for a project
-./gitea issues myusername/myproject | jq -r '.[] | "#\(.number) - \(.title)"'
-```
-
-[tea](https://gitea.com/gitea/tea) will be the officially supported command line Gitea API client.
+[tea](https://gitea.com/gitea/tea) is the officially supported command line Gitea API client.
 
 ### CI/CD
 
