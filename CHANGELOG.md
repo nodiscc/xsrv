@@ -38,11 +38,6 @@ monitoring_exporters_auth_password: CHANGEME
 
 # xsrv edit-host default my.CHANGEME.org
 grafana_fqdn: grafana.CHANGEME.org
-
-# xsrv edit-vault default my.CHANGEME.org
-grafana_admin_username: "{{ xsrv_admin_username }}"
-grafana_admin_password: "{{ xsrv_admin_password }}"
-grafana_admin_email: "{{ xsrv_admin_email }}"
 ```
 
 - Network/firewall: Remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata)
@@ -52,7 +47,7 @@ grafana_admin_email: "{{ xsrv_admin_email }}"
 
 **4. Other role-specific changes:**
 
-* libvirt: In [libvirt_port_forwards](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), move `*.dnat.*.host_interface` to the top-level list (same level as `vm_name`)
+* libvirt: In [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), move `*.dnat.*.host_interface` to the top-level list (same level as `vm_name`)
 * wireguard: remove the `data/wireguard/` directory and its contents from your project directory (no longer used)
 * wireguard: If you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax:
 
