@@ -2,7 +2,7 @@
 
 This role will run a [nmap](https://nmap.org/) scan against hosts listed in your inventory, and generate a report of up/down hosts and discovered services, that can be viewed from a web browser.
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/nmap.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/nmap.png)
 
 ## Requirements/dependencies/example playbook
 

@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/gitea"
   loop:
     - gitea_admin_email is not search("CHANGEME")
     - gitea_admin_password is not search("CHANGEME")
@@ -47,7 +47,7 @@
 - name: check that variables are correctly defined (gitea_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of gitea_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea"
+    fail_msg: "One or more of gitea_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/gitea"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ gitea_allowed_hosts }}"

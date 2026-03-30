@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   loop:
     - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd | bool
     - dns_nameservers|type_debug == "list"
@@ -55,7 +55,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when: setup_msmtp | bool
   loop:
     - msmtp_host is not search("CHANGEME")
@@ -74,7 +74,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when:
     - setup_msmtp | bool
     - msmtp_auth_enabled | bool
@@ -88,7 +88,7 @@
 - name: check that variables are correctly defined (hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
     that:
       - item.ip_address | ansible.utils.ipaddr is truthy
       - (item.state is not defined) or (item.state in ['present', 'absent'])
@@ -99,7 +99,7 @@
 - name: check that variables are correctly defined (apt-listbugs)
   assert:
     quiet: yes
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
     that:
       - apt_listbugs_action in ['force-no', 'force-yes', 'force-default']
       - apt_listbugs_ignore_list|type_debug == "list"
@@ -125,7 +125,7 @@
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
       - (item.permanent is not defined) or (item.permanent == item.permanent | bool)
       - (item.immediate is not defined) or (item.immediate == item.permanent | bool)
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when:
     - setup_firewall | bool
     - (item.delete is not defined) or (not item.delete)
@@ -141,7 +141,7 @@
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
       - (item.permanent is not defined) or (item.permanent == item.permanent | bool)
       - (item.immediate is not defined) or (item.immediate == item.permanent | bool)
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when: setup_firewall | bool
   loop: "{{ firewalld_zone_services }}"
   tags: firewall

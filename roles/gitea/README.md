@@ -14,10 +14,10 @@ This role will install the [Gitea](https://gitea.io/en-us/) self-hosted Git serv
 - LDAP authentication
 - [Gitea actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Rks90zV.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/2TGIshE.png)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/cBktctp.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/EauaJxq.png)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/gvcfs6G.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/DHku4ke.png)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/4NhXqdG.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/d5glB4P.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Rks90zV.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/2TGIshE.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/cBktctp.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/EauaJxq.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/gvcfs6G.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/DHku4ke.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/4NhXqdG.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/d5glB4P.png)
 
 
 ## Requirements/dependencies/example playbook
@@ -221,6 +221,6 @@ gitea-config - update gitea configuration
 ## References/Documentation
 
 - https://github.com/nodiscc/xsrv/tree/master/roles/gitea
-- https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea
+- https://github.com/nodiscc/xsrv/tree/master/roles/gitea
 - https://stdout.root.sx/links/?searchterm=gitea
 - https://stdout.root.sx/links/?searchtags=git

@@ -2,7 +2,7 @@
 
 This role will install [llamacpp](https://github.com/ggml-org/llama.cpp), a tool to run [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) locally.
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/llamacpp.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/llamacpp.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/llamacpp.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/llamacpp.png)
 
 
 ## Requirements/dependencies/example playbook

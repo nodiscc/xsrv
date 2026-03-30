@@ -7,7 +7,7 @@ Then run `xsrv deploy` to apply changes. See [Manage configuration](usage.md#man
 <!--BEGIN ROLES LIST-->
 ## apache
 
-[roles/apache/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
+[roles/apache/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/apache/defaults/main.yml)
 
 ```yaml
 ##### APACHE WEB SERVER #####
@@ -54,7 +54,7 @@ php_fpm_enable_default_pool: yes
 
 ## backup
 
-[roles/backup/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
+[roles/backup/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml)
 
 ```yaml
 ##### RSNAPSHOT BACKUP SERVICE #####
@@ -127,7 +127,7 @@ rsnapshot_excludes: []
 
 ## common
 
-[roles/common/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
+[roles/common/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml)
 
 ```yaml
 ##### COMMON/GENERAL SYSTEM SETTINGS #####
@@ -542,7 +542,7 @@ hdparm_auto_standby_drives: false
 
 ## dnsmasq
 
-[roles/dnsmasq/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml)
+[roles/dnsmasq/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/dnsmasq/defaults/main.yml)
 
 ```yaml
 ##### DNSMASQ DNS SERVER #####
@@ -614,7 +614,7 @@ dnsmasq_blocklist_whitelist: []
 
 ## gitea_act_runner
 
-[roles/gitea_act_runner/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
+[roles/gitea_act_runner/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/gitea_act_runner/defaults/main.yml)
 
 ```yaml
 ##### GITEA ACTIONS RUNNER #####
@@ -652,7 +652,7 @@ gitea_act_runner_enable_service: yes
 
 ## gitea
 
-[roles/gitea/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml)
+[roles/gitea/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml)
 
 ```yaml
 ##### GITEA SELF-HOSTED GIT SERVICE #####
@@ -761,7 +761,7 @@ gitea_allowed_hosts: []
 
 ## homepage
 
-[roles/homepage/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
+[roles/homepage/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/homepage/defaults/main.yml)
 
 ```yaml
 ##### HOMEPAGE #####
@@ -777,7 +777,7 @@ homepage_message: "<i>Welcome to this server managed by <a href='https://xsrv.re
 #   - url: https://myapp.EXAMPLE.org # URL to link to
 #     title: "My App" # title of the link
 #     description: "A custom application" # (optional, default empty) description of the link
-#     icon: sftp # (optional, default globe) icon file for the link, one of https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res without .png extension
+#     icon: sftp # (optional, default globe) icon file for the link, one of https://github.com/nodiscc/xsrv/tree/master/roles/homepage/files/res without .png extension
 #     compact: no # (optional, yes/no, default no) make this link/tile half as wide, and hide description (pick a short title or it will overflow)
 #   - url: https://anotherapp.EXAMPLE.org
 #     title: "Another App"
@@ -802,7 +802,7 @@ homepage_enable_service: yes
 
 ## jellyfin
 
-[roles/jellyfin/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml)
+[roles/jellyfin/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml)
 
 ```yaml
 ##### JELLYFIN MEDIA SERVER #####
@@ -846,7 +846,7 @@ jellyfin_allowed_hosts:
 
 ## jitsi
 
-[roles/jitsi/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml)
+[roles/jitsi/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/jitsi/defaults/main.yml)
 
 ```yaml
 ##### JITSI MEET VIDEO CONFERENCE PLATFORM #####
@@ -895,7 +895,7 @@ jitsi_firewalld_zones:
 
 ## kiwix
 
-[roles/kiwix/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/kiwix/defaults/main.yml)
+[roles/kiwix/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/kiwix/defaults/main.yml)
 
 ```yaml
 ##### KIWIX WIKI SERVER #####
@@ -929,7 +929,7 @@ kiwix_backup_data: no
 
 ## libvirt
 
-[roles/libvirt/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml)
+[roles/libvirt/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml)
 
 ```yaml
 ##### LIBVIRT VIRTUALIZATION TOOLKIT #####
@@ -1033,7 +1033,7 @@ libvirt_users:
 
 ## mail_dovecot
 
-[roles/mail_dovecot/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml)
+[roles/mail_dovecot/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/mail_dovecot/defaults/main.yml)
 
 ```yaml
 ##### DOVECOT MAIL SERVER (IMAP/MDA) #####
@@ -1073,7 +1073,7 @@ dovecot_firewalld_zones:
 
 ## matrix
 
-[roles/matrix/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml)
+[roles/matrix/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/matrix/defaults/main.yml)
 
 ```yaml
 ##### MATRIX REAL-TIME COMMUNICATION SERVER #####
@@ -1167,7 +1167,7 @@ matrix_element_allowed_hosts: []
 
 ## moodist
 
-[roles/moodist/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml)
+[roles/moodist/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/moodist/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the moodist instance
@@ -1185,7 +1185,7 @@ moodist_enable_service: yes
 
 ## mumble
 
-[roles/mumble/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mumble/defaults/main.yml)
+[roles/mumble/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/mumble/defaults/main.yml)
 
 ```yaml
 ##### MUMBLE VOIP SERVER #####
@@ -1217,7 +1217,7 @@ mumble_firewalld_zones:
 
 ## nextcloud
 
-[roles/nextcloud/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)
+[roles/nextcloud/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml)
 
 ```yaml
 ##### NEXTCLOUD #####
@@ -1353,7 +1353,7 @@ nextcloud_enable_service: yes
 
 ## nmap
 
-[roles/nmap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nmap/defaults/main.yml)
+[roles/nmap/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/nmap/defaults/main.yml)
 
 ```yaml
 ##### NMAP NETWORK SCANNER #####
@@ -1365,7 +1365,7 @@ nmap_limit: "{{ groups['all'] }}"
 
 ## openldap
 
-[roles/openldap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml)
+[roles/openldap/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml)
 
 ```yaml
 ##### OPENLDAP DIRECTORY SERVICE #####
@@ -1474,7 +1474,7 @@ self_service_password_php_upload_max_filesize: '2M'
 
 ## owncast
 
-[roles/owncast/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml)
+[roles/owncast/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/owncast/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the owncast instance
@@ -1509,7 +1509,7 @@ owncast_auth_password: CHANGEME
 
 ## postgresql
 
-[roles/postgresql/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/postgresql/defaults/main.yml)
+[roles/postgresql/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/postgresql/defaults/main.yml)
 
 ```yaml
 ##### POSTGRESQL DATABASE SERVER #####
@@ -1522,7 +1522,7 @@ postgresql_pgmetrics_version: "1.18.0"
 
 ## readme_gen
 
-[roles/readme_gen/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml)
+[roles/readme_gen/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/readme_gen/defaults/main.yml)
 
 ```yaml
 ##### MARKDOWN INVENTORY GENERATION #####
@@ -1538,7 +1538,7 @@ readme_gen_template: "readme_gen.md.j2"
 
 ## samba
 
-[roles/samba/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml)
+[roles/samba/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/samba/defaults/main.yml)
 
 ```yaml
 ##### SAMBA FILE SHARING SERVER #####
@@ -1633,7 +1633,7 @@ samba_nscd_cache_time_to_live: 60
 
 ## searxng
 
-[roles/searxng/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml)
+[roles/searxng/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/searxng/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the searxng instance
@@ -1660,7 +1660,7 @@ searxng_auth_password: CHANGEME
 
 ## shaarli
 
-[roles/shaarli/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)
+[roles/shaarli/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml)
 
 ```yaml
 ##### SHAARLI BOOKMARKING SERVICE #####
@@ -1725,7 +1725,7 @@ shaarli_enable_service: yes
 
 ## stirlingpdf
 
-[roles/stirlingpdf/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/stirlingpdf/defaults/main.yml)
+[roles/stirlingpdf/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/stirlingpdf/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the stirlingpdf instance
@@ -1746,7 +1746,7 @@ stirlingpdf_allowed_hosts: []
 
 ## transmission
 
-[roles/transmission/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml)
+[roles/transmission/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/transmission/defaults/main.yml)
 
 ```yaml
 ##### TRANSMISSION BITTORRENT CLIENT #####
@@ -1782,7 +1782,7 @@ transmission_firewalld_zones:
 
 ## tt_rss
 
-[roles/tt_rss/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml)
+[roles/tt_rss/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/tt_rss/defaults/main.yml)
 
 ```yaml
 ##### TT-RSS FEED READER #####
@@ -1831,7 +1831,7 @@ tt_rss_enable_service: yes
 
 ## wireguard
 
-[roles/wireguard/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml)
+[roles/wireguard/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml)
 
 ```yaml
 ##### WIREGUARD VPN SERVER #####
@@ -1893,7 +1893,7 @@ wireguard_firewalld_services:
 
 ## monitoring/exporters
 
-[roles/monitoring/exporters/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/exporters/defaults/main.yml)
+[roles/monitoring/exporters/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/exporters/defaults/main.yml)
 
 ```yaml
 ##### MONITORING.EXPORTERS #####
@@ -1911,7 +1911,7 @@ monitoring_victoriametrics_url: "CHANGEME"
 
 ## monitoring/goaccess
 
-[roles/monitoring/goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml)
+[roles/monitoring/goaccess/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/goaccess/defaults/main.yml)
 
 ```yaml
 ##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
@@ -1943,7 +1943,7 @@ goaccess_allowed_hosts: []
 
 ## monitoring/grafana
 
-[roles/monitoring/grafana/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml)
+[roles/monitoring/grafana/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/grafana/defaults/main.yml)
 
 ```yaml
 # fully qualified domain name of the grafana instance
@@ -1970,7 +1970,7 @@ grafana_victoriametrics_auth_password: "{{ monitoring_exporters_auth_password }}
 
 ## monitoring/rsyslog
 
-[roles/monitoring/rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/rsyslog/defaults/main.yml)
+[roles/monitoring/rsyslog/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/rsyslog/defaults/main.yml)
 
 ```yaml
 ##### RSYSLOG LOG PROCESSING SYSTEM #####
@@ -2012,7 +2012,7 @@ rsyslog_firewalld_zones:
 
 ## monitoring/utils
 
-[roles/monitoring/utils/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/utils/defaults/main.yml)
+[roles/monitoring/utils/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/utils/defaults/main.yml)
 
 ```yaml
 ##### MONITORING UTILITIES #####
@@ -2028,7 +2028,7 @@ bonnie_benchmark_paths:
 
 ## monitoring/victoriametrics
 
-[roles/monitoring/victoriametrics/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml)
+[roles/monitoring/victoriametrics/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/victoriametrics/defaults/main.yml)
 
 ```yaml
 # automatically create HTTP probes for xsrv roles deployed on these hosts

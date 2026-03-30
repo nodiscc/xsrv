@@ -30,7 +30,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
       - name: install xsrv
-        run: wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/master/xsrv && chmod a+x /usr/local/bin/xsrv
+        run: wget -O /usr/local/bin/xsrv https://github.com/nodiscc/xsrv/-/raw/master/xsrv && chmod a+x /usr/local/bin/xsrv
       - name: link project to default projects directory
         run: mkdir ~/playbooks && ln -s $PWD ~/playbooks/default
       - name: run xsrv scan
@@ -44,7 +44,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
       - name: install xsrv
-        run: wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv && chmod a+x /usr/local/bin/xsrv
+        run: wget -O /usr/local/bin/xsrv https://github.com/nodiscc/xsrv/-/raw/release/xsrv && chmod a+x /usr/local/bin/xsrv
       - name: install requirements
         run: echo 'Apt::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-norecommends && apt update && apt -y install git bash python3-pip python3-venv
       - name: link project to default projects directory

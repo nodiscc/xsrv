@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/apache"
   loop:
     - apache_enable_service == apache_enable_service | bool
     - apache_letsencrypt_email is not search("CHANGEME")
@@ -17,7 +17,7 @@
 - name: check that variables are correctly defined (apache_reverseproxies)
   assert:
     quiet: yes
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/apache"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/apache"
     that:
       - item.servername is string
       - item.upstream is string

@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/rsyslog"
   loop:
     - rsyslog_retention_days == rsyslog_retention_days | int
     - rsyslog_enable_forwarding == rsyslog_enable_forwarding | bool
@@ -15,7 +15,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/rsyslog"
   when: rsyslog_enable_forwarding
   loop:
     - rsyslog_forward_to_hostname is not search('CHANGEME')
@@ -28,7 +28,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/rsyslog"
   when: rsyslog_enable_receive
   loop:
     - rsyslog_fqdn is not search('CHANGEME')

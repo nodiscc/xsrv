@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
   loop:
     - openldap_fqdn is not search("CHANGEME")
     - openldap_domain is not search("CHANGEME")
@@ -21,7 +21,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
   when: openldap_setup_lam | bool
   loop:
     - ldap_account_manager_allowed_hosts is not search(" ")
@@ -44,7 +44,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
   when: openldap_setup_ssp | bool
   loop:
     - self_service_password_fqdn is not search("CHANGEME")
@@ -63,7 +63,7 @@
 - name: check that variables are correctly defined (self_service_password_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of self_service_password_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "One or more of self_service_password_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
     that:
       - item | ansible.utils.ipv4 is not none
   loop: "{{ self_service_password_allowed_hosts }}"

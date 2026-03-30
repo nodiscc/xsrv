@@ -7,7 +7,7 @@ Self-hosting places your services and data under your own responsibility (availa
 
 Always keep at least 3 copies of valuable data (the working data, a local backup - preferably on a dedicated drive, and an off-line, off-site backup).
 
-The [backup](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/backup) role performs automatic daily/weekly/monthly backups of your data, with a [default retention](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) of 6 daily, 6 weekly and 6 monthly backups, to a local directory `/var/backups/rsnapshot` on the server. These backups are suitable for restoration after a minor incident or limited data loss.
+The [backup](https://github.com/nodiscc/xsrv/tree/master/roles/backup) role performs automatic daily/weekly/monthly backups of your data, with a [default retention](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml) of 6 daily, 6 weekly and 6 monthly backups, to a local directory `/var/backups/rsnapshot` on the server. These backups are suitable for restoration after a minor incident or limited data loss.
 
 In case of catastrophic failure (destroyed/compromised server, disk failure), an off-site backup must be restored. To download a copy of latest daily backups from a host, to the `data/backups/` directory on the controller, run:
 
@@ -25,7 +25,7 @@ Also keep off-line, off-site backups of your `~/playbooks/` directory.
 
 ## Upgrading
 
-Security upgrades for software provided by official Debian packages are applied [automatically, daily](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common). To upgrade roles to the latest [release](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md) [[1]](https://gitlab.com/nodiscc/xsrv/-/tags?format=atom) (bugfixes, new features/roles, latest releases of all applications):
+Security upgrades for software provided by official Debian packages are applied [automatically, daily](https://github.com/nodiscc/xsrv/tree/master/roles/common). To upgrade roles to the latest [release](https://github.com/nodiscc/xsrv/blob/master/CHANGELOG.md) [[1]](https://github.com/nodiscc/xsrv/-/tags?format=atom) (bugfixes, new features/roles, latest releases of all applications):
 
 - Ensure you have a valid [backup](#backups) of the server's data and/or do a snapshot of the machine
 - Upgrade roles in your playbook: `xsrv upgrade`
@@ -36,7 +36,7 @@ Security upgrades for software provided by official Debian packages are applied 
 ## Security
 
 - Check and apply [upgrades](#upgrading) on a regular basis.
-- Check [monitoring](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring) reports for abnormal messages or alarms.
+- Check [monitoring](https://github.com/nodiscc/xsrv/tree/master/roles/monitoring) reports for abnormal messages or alarms.
 - Ensure appropriate [physical access control](https://www.stigviewer.com/controls/800-53/PE-3) measures are in place for physical servers.
 
 Isolation between services/applications relies on [file permissions, ownership and groups](https://wiki.debian.org/Permissions), namespacing and reduced capabilities through `systemd`, [AppArmor](https://wiki.debian.org/AppArmor) confinement. Each service/application should only have read/write access to the required resources (principle of least privilege). Compromise of a single service or account must not allow compromise of other services and accounts.

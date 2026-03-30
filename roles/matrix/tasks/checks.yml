@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix_synapse"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/matrix_synapse"
   loop:
     - matrix_synapse_fqdn is not search("CHANGEME")
     - matrix_synapse_db_password is not search("CHANGEME")
@@ -32,7 +32,7 @@
 - name: check that variables are correctly defined (LDAP authentication)
   assert:
     quiet: yes
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/matrix"
     that:
       - matrix_synapse_ldap_uri is not search('CHANGEME')
       - matrix_synapse_ldap_starttls == matrix_synapse_ldap_starttls | bool
@@ -49,7 +49,7 @@
 - name: check that variables are correctly defined (matrix_synapse_admin_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of matrix_synapse_admin_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix"
+    fail_msg: "One or more of matrix_synapse_admin_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/matrix"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ matrix_synapse_admin_allowed_hosts }}"
@@ -57,7 +57,7 @@
 - name: check that variables are correctly defined (matrix_element_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of matrix_element_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix"
+    fail_msg: "One or more of matrix_element_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/matrix"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ matrix_element_allowed_hosts }}"

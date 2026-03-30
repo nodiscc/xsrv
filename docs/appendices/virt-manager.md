@@ -33,7 +33,7 @@ sudo apt install virt-manager virt-viewer
 sudo usermod --appent --groups $USER libvirt,kvm,libvirt-qemu
 ```
 
-Libvirt can also be installed and managed from xsrv, using the [libvirt role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt).
+Libvirt can also be installed and managed from xsrv, using the [libvirt role](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt).
 
 ## VM creation
 
@@ -41,31 +41,31 @@ Libvirt can also be installed and managed from xsrv, using the [libvirt role](ht
 
 Run virt-manager from your applications menu and click `New virtual machine`
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/1e2jNP0.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/1e2jNP0.png)
 
 Select QEMU/KVM as the virtual machine type:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/F7ZSXFS.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/F7ZSXFS.png)
 
 Select the installation media/ISO image for the operating system you want to install:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/o5Fu0IX.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/o5Fu0IX.png)
 
 Set memory amount and virtual CPU number depending on your performance requirements:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/0aQlobJ.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/0aQlobJ.png)
 
 Create a new virtual hard disk image for your VM depending on your storage requirements:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Ra4vp3S.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Ra4vp3S.png)
 
 Set a unique name (such as a [FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) for your VM, and attach it to the default `NAT` virtual network:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/3Tn34xD.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/3Tn34xD.png)
 
 Click `Finish` and start the VM from virt-manager's main window.
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/aJGkUJz.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/aJGkUJz.png)
 
 
 ### Automated
@@ -99,7 +99,7 @@ srvadmin@hv2:~$ virsh define my.virtual.machine.xml
 srvadmin@hv2:~$ virsh start my.virtual.machine.xml
 ```
 
-If your VMs are managed by the [libvirt role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt), instead of dumping/transferring the XML definition and loading it manually, you should just copy the relevant `libvirt_vms` entry to the target hypervisor host_vars, and set its state to `absent` on the original hypervisor. Don't forget to migrate any `libvirt_port_fowards` related to it.
+If your VMs are managed by the [libvirt role](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt), instead of dumping/transferring the XML definition and loading it manually, you should just copy the relevant `libvirt_vms` entry to the target hypervisor host_vars, and set its state to `absent` on the original hypervisor. Don't forget to migrate any `libvirt_port_fowards` related to it.
 
 <!-- TODO
 

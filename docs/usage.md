@@ -107,14 +107,14 @@ A single project is suitable for most setups (you can still organize hosts as di
 
 ### xsrv init-project
 
-Initialize a new project from the [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv) - creates all necessary files and prepares a playbook/environment with a single host.
+Initialize a new project from the [template](https://github.com/nodiscc/xsrv/tree/master/playbooks/xsrv) - creates all necessary files and prepares a playbook/environment with a single host.
 
 <!-- TODO screencast -->
 
 
 ### xsrv edit-requirements
 
-Edit the project's [`requirements.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) file, which lists [ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/index.html) (a distribution format for Ansible content) used by the project.
+Edit the project's [`requirements.yml`](https://github.com/nodiscc/xsrv/blob/master/playbooks/xsrv/requirements.yml) file, which lists [ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/index.html) (a distribution format for Ansible content) used by the project.
 
 -----------------------
 
@@ -408,9 +408,9 @@ VMs created using this method can then be added to your project using [`xsrv ini
 
 ## Upgrading
 
-**Upgrade roles to the latest release:** (this is the default) run `xsrv upgrade` to upgrade to the latest stable [release](https://gitlab.com/nodiscc/xsrv/-/releases) at any point in time (please read release notes/upgrade procedures and check if manual steps are required).
+**Upgrade roles to the latest release:** (this is the default) run `xsrv upgrade` to upgrade to the latest stable [release](https://github.com/nodiscc/xsrv/releases) at any point in time (please read release notes/upgrade procedures and check if manual steps are required).
 
-**Upgrade roles to the latest development revision**: replace `release` with `master` (or any other branch/tag) in the [requirements.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/playbooks/xsrv/requirements.yml) file of your project (`xsrv edit-requirements`) , then run `xsrv upgrade`.
+**Upgrade roles to the latest development revision**: replace `release` with `master` (or any other branch/tag) in the [requirements.yml](https://github.com/nodiscc/xsrv/blob/master/playbooks/xsrv/requirements.yml) file of your project (`xsrv edit-requirements`) , then run `xsrv upgrade`.
 
 **Upgrade the xsrv script**: run `xsrv self-upgrade` to upgrade the `xsrv` command-line utility to the latest stable release.
 
@@ -436,7 +436,7 @@ An alternative is to use the [`readme-gen`](#xsrv-readme-gen) command to generat
 
 Adds a summary of basic information about your hosts (groups, IP addresses, OS/virtualization, CPU, memory, storage, quick access links to services deployed on the host, monitoring badges, custom comment...) in README.md at the root of your project, using Markdown. Running this command multiple times will update the summary with the latest information gathered from your hosts.
 
-See the detailed [documentation](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen).
+See the detailed [documentation](https://github.com/nodiscc/xsrv/tree/master/roles/readme_gen).
 
 
 ### xsrv logs
@@ -447,7 +447,7 @@ Open the current `/var/log/syslog` log with the [lnav](https://lnav.org/) log vi
 $ xsrv logs default my.example.org
 ```
 
-If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring.rsyslog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/rsyslog)/[monitoring.base](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/utils) roles, or manually (for example using [`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be found [here](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/utils#usage)
+If the remote user is not allowed to read `/var/log/syslog` directly, the `sudo` password will be asked (a.k.a. `ansible_become_pass`). This assumes `lnav` is installed either by one of the [monitoring.rsyslog](https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/rsyslog)/[monitoring.base](https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/utils) roles, or manually (for example using [`packages_install`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml)). A quick introduction to `lnav` usage can be found [here](https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/utils#usage)
 
 
 ### xsrv show-groups
@@ -469,7 +469,7 @@ my.example.org | SUCCESS => {
 
 Scans a project directory for passwords/secrets stored in cleartext in host/group variables. Sensitive values such as password and encryption keys should be stored in encrypted (_vaulted_) variable files - see [`edit-vault`](#xsrv-edit-vault) and [`edit-group-vault`](#xsrv-edit-group-vault) commands.
 
-This command uses [trivy](https://github.com/aquasecurity/trivy) and a [built-in configuration file](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/trivy-secrets.yml?ref_type=heads). Note that it doesn't scan other files such as custom roles or files inside the `data/` directory of the project. It is your responsibility to ensure that any secrets in these files are properly encrypted.
+This command uses [trivy](https://github.com/aquasecurity/trivy) and a [built-in configuration file](https://github.com/nodiscc/xsrv/blob/master/docs/trivy-secrets.yml?ref_type=heads). Note that it doesn't scan other files such as custom roles or files inside the `data/` directory of the project. It is your responsibility to ensure that any secrets in these files are properly encrypted.
 
 `xsrv scan` can be used in your [continuous integration](#continuous-deployment) jobs to detect secrets that have been pushed accidentally to your project's git repository (although at this point it is too late, and the secret should be considered as compromised and rotated).
 
@@ -535,12 +535,12 @@ To import roles as a [collection](https://docs.ansible.com/ansible/latest/user_g
 ```yaml
 # cat requirements.yml
 collections:
-  - name: https://gitlab.com/nodiscc/xsrv.git
+  - name: https://github.com/nodiscc/xsrv.git
     type: git
     version: release
 ```
 
-Install the collection (or upgrade it to the latest [release](https://gitlab.com/nodiscc/xsrv/-/releases)):
+Install the collection (or upgrade it to the latest [release](https://github.com/nodiscc/xsrv/releases)):
 
 ```bash
 ansible-galaxy collection install --force -r requirements.yml
@@ -560,12 +560,12 @@ Include the collection and roles in your playbooks:
    - ...
 ```
 
-Note that `xsrv` roles may require a minimum ansible version, specified in [`meta/runtime.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/meta/runtime.yml)
+Note that `xsrv` roles may require a minimum ansible version, specified in [`meta/runtime.yml`](https://github.com/nodiscc/xsrv/blob/master/meta/runtime.yml)
 
 See [`man ansible-galaxy`](https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html), [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) and [roles](index.md) documentation.
 
 Other collections:
-- [nodiscc.toolbox](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) - less-maintained, experimental or project-specific roles (`awesome_selfhosted_html`, `bitmagnet`, `docker`, `homepage_extra_icons`, `icecast`, `k8s`, `mariadb`, `nfs_server`, `ollama`, `planarally`, `proxmox`, `pulseaudio`, `reverse_ssh_tunnel`, `rocketchat`, `rss2email`, `rss_bridge`, `valheim_server`, `vscodium`, `znc`, `gotty`)
+- [nodiscc.toolbox](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) - less-maintained, experimental or project-specific roles (`awesome_selfhosted_html`, `bitmagnet`, `docker`, `homepage_extra_icons`, `icecast`, `k8s`, `mariadb`, `nfs_server`, `ollama`, `planarally`, `proxmox`, `pulseaudio`, `reverse_ssh_tunnel`, `rocketchat`, `rss2email`, `rss_bridge`, `valheim_server`, `vscodium`, `znc`, `gotty`)
 - [devsec.hardening](https://github.com/dev-sec/ansible-collection-hardening) - battle tested hardening for Linux, SSH, nginx, MySQL
 - [debops.debops](https://galaxy.ansible.com/debops/debops) - general-purpose Ansible roles that can be used to manage Debian or Ubuntu hosts
 - [Ansible Galaxy](https://galaxy.ansible.com/) - help other Ansible users by sharing the awesome roles and collections you create
@@ -653,7 +653,7 @@ Projects stored in [git](#version-control) repositories can be tied to a [Contin
 
 This example [`.gitea/workflows/ci.yml`](.gitea_workflows_ci.yml) for [Gitea Actions](https://docs.gitea.com/next/usage/actions/overview) will deploy your project against specific environments/hosts/groups (optionally running the playbook in `check` mode beforehand) automatically when changes are pushed. It should also work from [Github Actions](https://docs.github.com/en/actions) since the syntax is the same. Different target hosts/groups can be specified for master and non-master branches.
 
-This example [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.yml) for [Gitlab CI](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments. Pipeline execution time can be optimized by building a CI image that includes preinstalled dependencies: [`.gitlab-ci.Dockerfile`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.Dockerfile), [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/docs/.gitlab-ci.docker.yml).
+This example [`.gitlab-ci.yml`](https://github.com/nodiscc/xsrv/blob/master/docs/.gitlab-ci.yml) for [Gitlab CI](https://docs.gitlab.com/ee/ci/) checks the playbook for syntax errors, simulates the changes against `staging` and `production` environments, and waits for manual action (click on `‣`) to run actual staging/production deployments. Pipeline execution time can be optimized by building a CI image that includes preinstalled dependencies: [`.gitlab-ci.Dockerfile`](https://github.com/nodiscc/xsrv/blob/master/docs/.gitlab-ci.Dockerfile), [`.gitlab-ci.yml`](https://github.com/nodiscc/xsrv/blob/master/docs/.gitlab-ci.docker.yml).
 
 
 ## External links
@@ -662,5 +662,5 @@ This example [`.gitlab-ci.yml`](https://gitlab.com/nodiscc/xsrv/-/blob/master/do
 - [Awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted)
 - <https://stdout.root.sx/xsrv/xsrv> (upstream)
 - <https://github.com/nodiscc/xsrv> (mirror)
-- <https://gitlab.com/nodiscc/xsrv> (mirror)
+- <https://github.com/nodiscc/xsrv> (mirror)
 

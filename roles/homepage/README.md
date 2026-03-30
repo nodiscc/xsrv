@@ -4,7 +4,7 @@ This role will setup a simple webserver homepage/dashboard:
 - Links to services installed on the host (if managed by xsrv [roles](https://xsrv.readthedocs.io/en/latest/#roles))
 - [Custom links](#adding-custom-links)
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/oA8WG4e.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/oA8WG4e.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/oA8WG4e.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/oA8WG4e.png)
 
 
 ## Requirements/dependencies/example playbook
@@ -60,7 +60,7 @@ homepage_custom_links:
     icon: github
 ```
 
-You can use any of the [icons provided by this role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res) as value for the `icon:` key. If you wish to upload custom icons, you can create a custom role as a supplement to this one. See the [`nodiscc.toolbox.homepage_extra_icons`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/homepage_extra_icons) role for an example.
+You can use any of the [icons provided by this role](https://github.com/nodiscc/xsrv/tree/master/roles/homepage/files/res) as value for the `icon:` key. If you wish to upload custom icons, you can create a custom role as a supplement to this one. See the [`nodiscc.toolbox.homepage_extra_icons`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/homepage_extra_icons) role for an example.
 
 Icons must have a `.png` extension, and should have dimensions of 16x16px for a consistent appearance.
 

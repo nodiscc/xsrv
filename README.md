@@ -8,7 +8,7 @@
 
 [![](https://github.com/nodiscc/xsrv/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/nodiscc/xsrv/actions)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.27.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-1.27.0-blue)](https://github.com/nodiscc/xsrv/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -62,39 +62,39 @@ This project provides:
 
 ## Screenshots
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](roles/nextcloud)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](roles/tt_rss)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](roles/shaarli)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8cAGkf2.png)](roles/gitea)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Imb0dqO.png)](roles/transmission)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/6Im61B0.png)](roles/mumble)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/REzcZVh.png)](roles/openldap)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/udEAnKA.png)](roles/matrix)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Vvdj3Zu.png)](roles/homepage)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/H3PIWrt.png)](roles/jellyfin)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](roles/jitsi)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](roles/readme_gen)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](roles/monitoring/goaccess)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/grafana-thumb.png)](roles/monitoring/grafana)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](roles/owncast)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](roles/searxng)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](roles/nmap)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](roles/stirlingpdf)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](roles/moodist)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](roles/kiwix)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/llamacpp-thumb.png)](roles/llamacpp)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](roles/nextcloud)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](roles/tt_rss)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](roles/shaarli)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/8cAGkf2.png)](roles/gitea)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Imb0dqO.png)](roles/transmission)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/6Im61B0.png)](roles/mumble)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/REzcZVh.png)](roles/openldap)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/udEAnKA.png)](roles/matrix)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Vvdj3Zu.png)](roles/homepage)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/H3PIWrt.png)](roles/jellyfin)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](roles/jitsi)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](roles/readme_gen)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](roles/monitoring/goaccess)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/grafana-thumb.png)](roles/monitoring/grafana)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](roles/owncast)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](roles/searxng)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](roles/nmap)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](roles/stirlingpdf)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](roles/moodist)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](roles/kiwix)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/llamacpp-thumb.png)](roles/llamacpp)
 
 
 ## Source code
 
-- [Gitlab](https://gitlab.com/nodiscc/xsrv)
+- [Gitlab](https://github.com/nodiscc/xsrv)
 - [Github](https://github.com/nodiscc/xsrv)
 
 
 ## License
 
-- [GNU GPLv3](https://gitlab.com/nodiscc/xsrv/-/blob/master/LICENSE) unless noted otherwise in individual files/directories
+- [GNU GPLv3](https://github.com/nodiscc/xsrv/blob/master/LICENSE) unless noted otherwise in individual files/directories
 - Documentation is under the [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license
 
 
@@ -110,7 +110,7 @@ This project provides:
 - [Maintenance](docs/maintenance.md)
 - [Contributing](docs/contributing.md)
 - [Appendices](docs/appendices.md)
-- [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)
+- [Changelog](https://github.com/nodiscc/xsrv/blob/master/CHANGELOG.md)
 
 
 

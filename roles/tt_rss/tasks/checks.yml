@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/tt_rss"
   loop:
     - tt_rss_account_limit == tt_rss_account_limit|int
     - tt_rss_db_name is string
@@ -28,7 +28,7 @@
 - name: check that variables are correctly defined (tt_rss_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of tt_rss_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
+    fail_msg: "One or more of tt_rss_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/tt_rss"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ tt_rss_allowed_hosts }}"

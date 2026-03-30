@@ -11,27 +11,27 @@ ansible_become_pass: "cj5Bfvv5Bm5JYNJiEEOG"
 xsrv_admin_username: "xhEx7suWUTkbs8v7d0vK"
 xsrv_admin_password: "0v2CIXtzxOfj2nrUNdTB"
 xsrv_admin_email: "adminer@example.test"
-##### APACHE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml
+##### APACHE - https://github.com/nodiscc/xsrv/blob/master/roles/apache/defaults/main.yml
 apache_letsencrypt_email: "{{ xsrv_admin_email }}"
-##### NEXTCLOUD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml
+##### NEXTCLOUD - https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml
 nextcloud_user: "{{ xsrv_admin_username }}"
 nextcloud_password: "{{ xsrv_admin_password }}"
 nextcloud_admin_email: "{{ xsrv_admin_email }}"
 nextcloud_db_password: "JwO50Ue4LlZxYmEBPZzh"
-##### SHAARLI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml
+##### SHAARLI - https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml
 shaarli_username: "{{ xsrv_admin_username }}"
 shaarli_password: "{{ xsrv_admin_password }}"
 shaarli_password_salt: "fkvBduiT4y8EV0BOKeTr7PA5bTnwzzMRohJj6RKd" # 40 characters
 shaarli_api_secret: "ibUJplG9DZkc" # 12 or more characters
-##### TT_RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt-rss/defaults/main.yml
+##### TT_RSS - https://github.com/nodiscc/xsrv/blob/master/roles/tt-rss/defaults/main.yml
 tt_rss_user: "{{ xsrv_admin_username }}"
 tt_rss_password: "{{ xsrv_admin_password }}"
 tt_rss_db_password: "4JdWLnGYkHQbM5fe1XqG"
 tt_rss_password_salt: "vpKLZuRoTe2bB2ptzD25lTm9ZYYaOIV8WthEQPmZXfaM3KvilXF1KoOpLkiuLEwEOGZXhOG4YundwEhE6bIOg7MxhYd0L5TCQdLQCvczjrD3v2DW0qh7EnzJommqkJwiEbBJsnE4yUfBfMrotGM0TLJ7dyXJavjpsPZL7GbaeL8PmYWL4Y69ijZ4qZ5iapDTuLQjPGBAU1U0bkQabDKzULQ8xuB58ygcaQExOo3ePTefWlMwfUz9UbPBux" # 250 characters
-##### TRANSMISSION - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml
+##### TRANSMISSION - https://github.com/nodiscc/xsrv/blob/master/roles/transmission/defaults/main.yml
 transmission_username: "{{ xsrv_admin_username }}"
 transmission_password: "{{ xsrv_admin_password }}"
-##### GITEA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml
+##### GITEA - https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml
 gitea_admin_username: "{{ xsrv_admin_username }}"
 gitea_admin_password: "{{ xsrv_admin_password }}"
 gitea_admin_email: "{{ xsrv_admin_email }}"
@@ -40,35 +40,35 @@ gitea_internal_token: "3aUMDXbFGB8dXI1ndJTlPQmMnXC8BqNElL2piZA0LoDnCxpUo2K7pfEHE
 gitea_secret_key: "CQ35nKQr5jTtdW7wANJRJh7l7sJgGkDBsGn9eZmwpncoVOAsdifHzbruaZ2g9IEb" # 64 characters
 gitea_oauth2_jwt_secret: "FuFb1c7ml9mNeA57VltGUwrBlb9iXcKHcrinhTFcPa4" # 43 characters
 gitea_lfs_jwt_secret: "p4ES9WEzenovXCmvFXL6oYmxnIgUeBAgMZbpxdlEJJF" # 43 characters
-##### MUMBLE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mumble/defaults/main.yml
+##### MUMBLE - https://github.com/nodiscc/xsrv/blob/master/roles/mumble/defaults/main.yml
 mumble_password: "FkVVh41phgFXniC8hhR6"
 mumble_superuser_password: "{{ xsrv_admin_password }}"
-##### OPENLDAP - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml
+##### OPENLDAP - https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml
 openldap_admin_password: "LcOmrE30ZLTfubYcz6J6dWaxqLXB0t"
 openldap_bind_password: "R2FPSgjrG8YEL77lUtwlZaJvBZ5WD5"
-##### DOVECOT - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml
+##### DOVECOT - https://github.com/nodiscc/xsrv/blob/master/roles/mail_dovecot/defaults/main.yml
 dovecot_ldap_bind_password: "{{ openldap_bind_password }}"
-##### JITSI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml
+##### JITSI - https://github.com/nodiscc/xsrv/blob/master/roles/jitsi/defaults/main.yml
 jitsi_turn_secret: "4QrsaPYn7Y9g8yJW"
 jitsi_prosody_password: "2StaUC05"
 jitsi_jvb_prosody_password: "n0nvEJOf"
 jitsi_users:
   - name: "{{ xsrv_admin_username }}"
     password: "{{ xsrv_admin_password }}"
-##### MATRIX - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml
+##### MATRIX - https://github.com/nodiscc/xsrv/blob/master/roles/matrix/defaults/main.yml
 matrix_synapse_db_password: Wr1ofTQoFssv2HxcvrQr
 matrix_synapse_macaroon_secret_key: YXx9oNFQaPznAWVY5jXebBu3
 matrix_synapse_registration_shared_secret: VTDelSuKAtqMPGdzEGi6tFdc
 matrix_synapse_admin_user: "{{ xsrv_admin_username }}"
 matrix_synapse_admin_password: "{{ xsrv_admin_password }}"
-##### MONITORING.GOACCESS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/goaccess/defaults/main.yml
+##### MONITORING.GOACCESS - https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/goaccess/defaults/main.yml
 goaccess_username: "{{ xsrv_admin_username }}"
 goaccess_password: "{{ xsrv_admin_password }}"
-##### OWNCAST - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml
+##### OWNCAST - https://github.com/nodiscc/xsrv/blob/master/roles/owncast/defaults/main.yml
 owncast_admin_password: "{{ xsrv_admin_password }}"
-##### SEARXNG - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml
+##### SEARXNG - https://github.com/nodiscc/xsrv/blob/master/roles/searxng/defaults/main.yml
 searxng_secret: "6BFxKW8cfXJqn991Ifzbrp0tlpzBsgpgj8BVwGTYPu8wZIDxR5ggV5WRKWV9Mpqw"
-##### MONITORING.GRAFANA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/grafana/defaults/main.yml
+##### MONITORING.GRAFANA - https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/grafana/defaults/main.yml
 grafana_admin_username: "{{ xsrv_admin_username }}"
 grafana_admin_password: "{{ xsrv_admin_password }}"
 grafana_admin_email: "{{ xsrv_admin_email }}"

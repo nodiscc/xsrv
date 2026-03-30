@@ -56,7 +56,7 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
  - setup a user account on the machine to backup, authorize the backup server's `root` public SSH key to connect to it (the key is displayed when the `backup` role is deployed, and a copy is downloaded to `"{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"` on the controller), and allow it to run `sudo rsync` without password.
 
 ```yaml
-# example using https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common
+# example using https://github.com/nodiscc/xsrv/tree/master/roles/common
 linux_users:
    - name: "rsnapshot"
      groups: [ "ssh-access", "sudo" ]

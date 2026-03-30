@@ -4,7 +4,7 @@ This role will install [kiwix](https://kiwix.org/), allowing you to serve a loca
 
 A demo instance of kiwix can be found at https://library.kiwix.org/
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kiwix2.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kiwix2.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/kiwix2.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/kiwix2.png)
 
 
 ## Requirements/dependencies/kiwix playbook

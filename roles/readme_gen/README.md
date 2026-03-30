@@ -2,7 +2,7 @@
 
 This role automatically inserts useful information about your hosts in your project's README.md file.
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/G96iP0G.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/G96iP0G.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/G96iP0G.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/G96iP0G.png)
 
 ## Requirements/dependencies/example playbook
 

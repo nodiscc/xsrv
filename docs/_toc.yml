@@ -25,5 +25,5 @@ entries:
         title: Debian
       - file: appendices/virt-manager.md
         title: Libvirt/virt-manager
-  - url: https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md
+  - url: https://github.com/nodiscc/xsrv/blob/master/CHANGELOG.md
     title: Changelog

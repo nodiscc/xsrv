@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring/goaccess"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/goaccess"
   loop:
     - goaccess_fqdn is not search('CHANGEME')
     - goaccess_https_mode in ['selfsigned', 'letsencrypt']
@@ -16,7 +16,7 @@
 - name: check that variables are correctly defined (goaccess_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of goaccess_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/goaccess"
+    fail_msg: "One or more of goaccess_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/goaccess"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ goaccess_allowed_hosts }}"
