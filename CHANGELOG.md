@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v2.0.0](https://github.com/nodiscc/xsrv/releases/tag/2.0.0) - UNRELEASED
 
+> [!IMPORTANT]
+> The mirror at https://gitlab.com/nodiscc/xsrv will no longer be maintained after this release.
+> Please use https://github.com/nodiscc/xsrv instead
+
 **Upgrade procedure:** Follow these steps in order:
 
 **1. Update your playbook** (`xsrv edit-playbook`):
@@ -154,7 +158,7 @@ xsrv deploy   # apply changes
 - make all roles compatibles with debian 13, except jitsi
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - doc: update comments in several files to reflect new documentation in Debian 13
-- doc: migrate all gitlab.com/nodiscc/xsrv and gitlab.com/nodiscc/toolbox URLs to github
+- doc: migrate all gitlab.com/nodiscc/xsrv and gitlab.com/nodiscc/toolbox URLs to github, deprecate gitlab mirror
 - doc: mark jitsi role as incompatible with Debian 13
 - update documentation
 - CI/CD: migrate from GitLab CI to GitHub Actions
