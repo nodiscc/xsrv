@@ -61,7 +61,7 @@ pager="${PAGER:=nano --syntax=YAML --view +1 -}"
 version="1.27.0"
 ansible_version="12.3.0"
 trivy_version="0.69.3"
-xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
+xsrv_git_url="https://github.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
 ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
@@ -636,7 +636,7 @@ init_vm_template() {
 
 readme_gen() {
     # generate a markdown inventory with information on ansible facts in the project's README.md
-    # see https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen
+    # see roles/readme_gen/
     (cd "$project_dir" && (ansible --one-line --module-name setup all || true))
     (cd "$project_dir" && ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --extra-vars="xsrv_project_name=$project_name" --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost)
 }
@@ -654,7 +654,7 @@ scan_secrets() {
 
 nmap() {
     # run nmap against hosts in the project and generate a HTML report
-    # see https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap
+    # see roles/nmap/
     (cd "$project_dir" && ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --ask-become-pass --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.nmap" localhost)
 }
 
