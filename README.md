@@ -6,7 +6,7 @@
   ╹ ╹┗━┛╹┗╸┗┛ 
 ```
 
-[![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
+[![](https://github.com/nodiscc/xsrv/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/nodiscc/xsrv/actions)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
 [![](https://img.shields.io/badge/latest%20release-1.27.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)

@@ -156,6 +156,7 @@ xsrv deploy   # apply changes
 - doc: update comments in several files to reflect new documentation in Debian 13
 - doc: mark jitsi role as incompatible with Debian 13
 - update documentation
+- CI/CD: migrate from GitLab CI to GitHub Actions
 
 **Fixed:**
 - xsrv: fix fetch-backups failing with numeric ansible_ssh_port

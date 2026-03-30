@@ -234,7 +234,7 @@ codespell: venv
 
 .PHONY: test_install_test_deps # manual - install requirements for test suite
 test_install_test_deps:
-	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq cloc
+	sudo apt update && sudo apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq cloc
 
 .PHONY: test_cloc # count SLOC with cloc
 test_cloc:
