@@ -151,6 +151,7 @@ xsrv deploy   # apply changes
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
 - common: ensure cron is installed
 - common/apt: make unattended-upgrades configuration and sources.list file compatible with Debian 13
+- make all roles compatibles with debian 13, except jitsi
 - doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
 - doc: update comments in several files to reflect new documentation in Debian 13
 - doc: mark jitsi role as incompatible with Debian 13
