@@ -75,6 +75,7 @@
   register: download_result
   changed_when: "'SUCCESS:' in download_result.stdout"
   notify: restart llamacpp
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy model presets configuration
   template:
