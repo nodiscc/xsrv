@@ -15,7 +15,7 @@ llamacpp_context_size: 60000
 # Fast GPU VRAM us preferred to run inference at acceptable speeds (tokens read or output per second, t/s)
 # The disk size of the downloaded model file is mentioned in comments
 # Some models have additional capabilities such as tool use in agents, internal reasoning/thinking capabilities, or image/PDF vision
-# Only 2 small models that can run on CPU/RAM are enabled by default, enable/experiment other models below if your hardware configuration allows
+# Only a small model that can run on CPU/RAM is enabled by default, enable/experiment other models below if your hardware configuration allows
 # to delete a model from the llama.cpp server, access it over ssh (xsrv shell) and `sudo rm` the relevant files under `/var/lib/llamacpp/{aliases,models}/`, then `sudo systemctl restart llamacpp.service`
 llamacpp_models:
   - name: gemma3:4b # 4B, 3.2GB, vision
@@ -34,10 +34,10 @@ llamacpp_models:
   #   url: https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_L.gguf
   #   presets:
   #     default: {temp: 1.0}
-  - name: gpt-oss:20b # 20B, 12GB, tools + reasoning
-    url: https://huggingface.co/bartowski/openai_gpt-oss-20b-GGUF/resolve/main/openai_gpt-oss-20b-MXFP4.gguf
-    presets:
-      default: {temp: 1.0, top-p: 1.0, top-k: 40}
+  # - name: gpt-oss:20b # 20B, 12GB, tools + reasoning
+  #   url: https://huggingface.co/bartowski/openai_gpt-oss-20b-GGUF/resolve/main/openai_gpt-oss-20b-MXFP4.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 1.0, top-k: 40}
   # - name: qwen3-vl:8b #8B, 4.2GB, tools
   #   url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/Qwen_Qwen3-VL-8B-Instruct-Q3_K_L.gguf
   #   presets:
@@ -85,13 +85,13 @@ llamacpp_models:
   #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
   #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
   #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  - name: qwen3.5:4b # 4B, 6GB, tools + vision
-    url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-UD-Q8_K_XL.gguf
-    presets:
-      default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-      coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-      instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
-      reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: qwen3.5:4b # 4B, 6GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-UD-Q8_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   # - name: qwen3.5:27b # 27B, 17.5GB, tools + vision
   #   url: https://huggingface.co/unsloth/Qwen3.5-27B-GGUF/resolve/main/Qwen3.5-27B-UD-Q4_K_XL.gguf
   #   presets:
