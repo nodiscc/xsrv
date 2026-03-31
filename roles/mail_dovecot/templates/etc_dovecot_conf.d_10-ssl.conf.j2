@@ -10,8 +10,13 @@ ssl = {{ 'required' if dovecot_ssl_required else 'yes' }}
 # dropping root privileges, so keep the key file unreadable by anyone but
 # root. Included doc/mkcert.sh can be used to easily generate self-signed
 # certificate, just make sure to update the domains in dovecot-openssl.cnf
+{% if ansible_facts.distribution_release == "trixie" %}
+ssl_server_cert_file = /etc/ssl/certs/dovecot.crt
+ssl_server_key_file = /etc/ssl/private/dovecot.key
+{% else %}
 ssl_cert = </etc/ssl/certs/dovecot.crt
 ssl_key = </etc/ssl/private/dovecot.key
+{% endif %}
 
 # If key file is password protected, give the password here. Alternatively
 # give it when starting dovecot with -p parameter. Since this file is often
@@ -50,10 +55,14 @@ ssl_client_ca_dir = /etc/ssl/certs
 #ssl_cert_username_field = commonName
 
 # SSL DH parameters
-# Generate new params with `openssl dhparam -out /etc/dovecot/dh.pem 4096`
+# Generate new params with openssl dhparam -out /etc/dovecot/dh.pem 4096
 # Or migrate from old ssl-parameters.dat file with the command dovecot
 # gives on startup when ssl_dh is unset.
+{% if ansible_facts.distribution_release == "trixie" %}
+ssl_server_dh_file = /usr/share/dovecot/dh.pem
+{% else %}
 ssl_dh = </usr/share/dovecot/dh.pem
+{% endif %}
 
 # Minimum SSL protocol version to use. Potentially recognized values are SSLv3,
 # TLSv1, TLSv1.1, and TLSv1.2, depending on the OpenSSL version used.

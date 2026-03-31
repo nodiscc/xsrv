@@ -27,7 +27,12 @@
 #
 # <doc/wiki/MailLocation.txt>
 #
+{% if ansible_facts.distribution_release == "trixie" %}
+mail_driver = maildir
+mail_path = var/mail/vhosts/%d/%n
+{% else %}
 mail_location = maildir:/var/mail/vhosts/%d/%n
+{% endif %}
 
 # If you need to set multiple mailbox locations or want to change default
 # namespace settings, you can do it by defining namespace sections.
