@@ -4,6 +4,11 @@
     - mumble
     - checks
 
+- name: load distribution-specific variables
+  include_vars:
+    file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
+  tags: mumble
+
 - name: import mumble configuration tasks
   import_tasks: mumble.yml
   become: yes
