@@ -145,6 +145,7 @@ xsrv deploy   # apply changes
 - xsrv: update trivy security scanner to [v0.69.3](https://github.com/aquasecurity/trivy/releases)
 - xsrv: init-template: update installer image to Debian 13
 - gitea_act_runner: update act-runner to v0.2.12 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.12)
+- gitea_act_runner: update `debian-latest` and `ubuntu-latest` base image aliases to use `node:22-trixie`
 - gitea_act_runner: always enable nightly cleanup of podman volumes and containers created by act-runner, regardless of `gitea_act_runner_daily_podman_prune`
 - goaccess: update IP to Country GeoIP database, adjust version number automatically base on current date
 - common: ssh: ensure ssh is automatically started at boot, disable socket activation
