@@ -619,7 +619,7 @@ init_vm_template() {
         --os-variant debian10 \
         --graphics none \
         --console pty,target_type=serial \
-        --location http://deb.debian.org/debian/dists/bookworm/main/installer-amd64 \
+        --location http://deb.debian.org/debian/dists/trixie/main/installer-amd64 \
         --extra-args "console=ttyS0,115200n8 serial" \
         --initrd-inject="/var/lib/libvirt/preseed.cfg" \
         --network network="$network" \
