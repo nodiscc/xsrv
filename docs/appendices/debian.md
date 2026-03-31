@@ -39,7 +39,7 @@
 
 `xsrv` allows automated creation/provisioning of VMs with a minimal Debian operating system as described above. [libvirt](virt-manager.md) must be installed on the machine where these commands are run.
 
-The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/bookworm/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
+The template will be created by downloading an [official Debian installer image](http://deb.debian.org/debian/dists/trixie/main), and applying a [preseed](https://wiki.debian.org/DebianInstaller/Preseed) file to automate answers to all installer questions. Provisioning a new host using this method should be no longer than a few minutes.
 
 ```bash
 $ xsrv init-vm-template --help
@@ -97,7 +97,7 @@ USAGE: ./xsrv init-vm  --name VM_NAME [--template debian12-base] --ip IP_ADDRESS
 
 [![](https://asciinema.org/a/v7B0c8ulfMz14OqF5b5yRb3VE.svg)](https://asciinema.org/a/v7B0c8ulfMz14OqF5b5yRb3VE?speed=2&theme=monokai&autoplay=true)
 
-You can then use the [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role to manage VMs, the [`virsh`](https://manpages.debian.org/bookworm/libvirt-clients/virsh.1.en.html) command-line tool, and/or [virt-manager](virt-manager.md) to manage the hypervisor from a remote machine.
+You can then use the [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role to manage VMs, the [`virsh`](https://manpages.debian.org/trixie/libvirt-clients/virsh.1.en.html) command-line tool, and/or [virt-manager](virt-manager.md) to manage the hypervisor from a remote machine.
 
 
 ### From a hosting provider

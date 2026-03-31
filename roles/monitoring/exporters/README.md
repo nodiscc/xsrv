@@ -1,6 +1,6 @@
 # xsrv.monitoring.exporters
 
-This role will install and configure various basic monitoring agents (exporters) and expose their metrics through a single [exporter-exporter](https://packages.debian.org/bookworm/prometheus-exporter-exporter). Metrics are pushed to a central [VictoriaMetrics](../victoriametrics/) instance via [vmagent](https://docs.victoriametrics.com/vmagent/) remote write. [Grafana](../grafana/) can be used to visualize metrics stored in VictoriaMetrics.
+This role will install and configure various basic monitoring agents (exporters) and expose their metrics through a single [exporter-exporter](https://packages.debian.org/trixie/prometheus-exporter-exporter). Metrics are pushed to a central [VictoriaMetrics](../victoriametrics/) instance via [vmagent](https://docs.victoriametrics.com/vmagent/) remote write. [Grafana](../grafana/) can be used to visualize metrics stored in VictoriaMetrics.
 
 
 ## Requirements/dependencies/example playbook

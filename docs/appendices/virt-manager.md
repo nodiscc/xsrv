@@ -1,6 +1,6 @@
 # libvirt / virt-manager
 
-[libvirt](https://en.wikipedia.org/wiki/Libvirt) is a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more. libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical ([`virt-manager`](https://en.wikipedia.org/wiki/Virtual_Machine_Manager)) and command-line ([`virsh`](https://manpages.debian.org/bookworm/libvirt-clients/virsh.1.en.html)) interfaces.
+[libvirt](https://en.wikipedia.org/wiki/Libvirt) is a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more. libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical ([`virt-manager`](https://en.wikipedia.org/wiki/Virtual_Machine_Manager)) and command-line ([`virsh`](https://manpages.debian.org/trixie/libvirt-clients/virsh.1.en.html)) interfaces.
 
 Advantages of virtualization include:
 
@@ -70,16 +70,16 @@ Click `Finish` and start the VM from virt-manager's main window.
 
 ### Automated
 
-You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bookworm/virtinst/virt-install.1.en.html) command. The [`xsrv init-vm`](debian.md##automated-from-a-vm-template) and [`xsrv init-vm-template`](debian.md#automated-from-preseed-file) [commands](../usage.md) automate running `virt-install` with the correct options.
+You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/trixie/virtinst/virt-install.1.en.html) command. The [`xsrv init-vm`](debian.md##automated-from-a-vm-template) and [`xsrv init-vm-template`](debian.md#automated-from-preseed-file) [commands](../usage.md) automate running `virt-install` with the correct options.
 
 
 ## Cloning VMs
 
 See [Debian/Installation/From a VM template](debian.md), [`xsrv init-vm --help`](../usage.md), and the following manpages:
-- [`virt-clone`](https://manpages.debian.org/bookworm/virtinst/virt-clone.1.en.html)
-- [`virt-sysprep`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-sysprep.1.en.html)
-- [`virt-customize`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-customize.1.en.html)
-- [`virt-builder`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-builder.1.en.html)
+- [`virt-clone`](https://manpages.debian.org/trixie/virtinst/virt-clone.1.en.html)
+- [`virt-sysprep`](https://manpages.debian.org/trixie/libguestfs-tools/virt-sysprep.1.en.html)
+- [`virt-customize`](https://manpages.debian.org/trixie/libguestfs-tools/virt-customize.1.en.html)
+- [`virt-builder`](https://manpages.debian.org/trixie/libguestfs-tools/virt-builder.1.en.html)
 
 
 ## Migrating VMs between hypervisors

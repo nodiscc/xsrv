@@ -34,7 +34,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - Analyze disk usage by directory: `ssh -t user@my.CHANGEME.org sudo ncdu /`
 - Show network bandwidth usage by process: `ssh -t user@my.CHANGEME.org sudo nethogs`
 - Show network connections: `ssh -t user@my.CHANGEME.org sudo watch -n 2 ss -laptu`
-- Visualize disk usage by directory: `TAGS=utils-duc xsrv deploy default my.CHANGEME.org` and run `duc gui --database=data/duc-my.CHANGEME.org.db /` on the controller (requires [duc](https://packages.debian.org/bookworm/duc))
+- Visualize disk usage by directory: `TAGS=utils-duc xsrv deploy default my.CHANGEME.org` and run `duc gui --database=data/duc-my.CHANGEME.org.db /` on the controller (requires [duc](https://packages.debian.org/trixie/duc))
 - Run disk read/write speed benchmarks: `TAGS=utils-bonnie xsrv deploy default my.CHANGEME.org` and open `data/bonnie++-my.CHANGEME.org.html` on the controller. You can compare reports from multiple hosts using `cat data/bonnie++*.csv | bon_csv2html > bonnie++.html`.
 - Use [lnav](https://docs.lnav.org/) to navigate/search/filter aggregated system logs:
 
