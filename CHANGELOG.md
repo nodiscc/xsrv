@@ -170,6 +170,7 @@ xsrv deploy   # apply changes
 - shaarli: fix missing php extension php-xml
 - nextcloud: fix `trusted_proxies is not correctly defined` warning in admin area
 - monitoring.utils: fix bonnie++ report generation
+- tt_rss: fix DB update error on first deployment
 
 [Full changes since v1.27.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.27.0...1.28.0)
 

@@ -121,6 +121,9 @@
   register: tt_rss_db_upgrade
   changed_when: "'Database schema is already at latest version.' not in tt_rss_db_upgrade.stdout"
   ignore_errors: "{{ ansible_check_mode }}"
+  failed_when:
+    - "tt_rss_db_upgrade.rc != 0"
+    - "'Applied migration to version 0' not in tt_rss_db_upgrade.stdout"
   vars:
     ansible_remote_tmp: /tmp # noqa var-naming[no-role-prefix] # workaround for https://github.com/ansible/ansible-lint/issues/3453
 
