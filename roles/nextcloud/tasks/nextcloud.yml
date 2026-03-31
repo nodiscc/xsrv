@@ -40,7 +40,6 @@
       - "php{{ nextcloud_php_fpm_version }}-xml"
       - "php{{ nextcloud_php_fpm_version }}-zip"
       - "php{{ nextcloud_php_fpm_version }}-bz2"
-      - "php{{ nextcloud_php_fpm_version }}-imap"
       - "php{{ nextcloud_php_fpm_version }}-apcu"
       - ffmpeg
       - acl

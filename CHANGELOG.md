@@ -79,7 +79,7 @@ xsrv deploy   # apply changes
 - libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
 - libvirt: remove ability to forward ports using `host_ip` (only `host_interface` must be used)
 - gitea_act_runner: remove support for `gitea_act_runner_container_engine: docker`, only podman is supported
-
+- nextcloud: remove support for external user authentication
 
 **Added:**
 - add [`monitoring.exporters`](roles/monitoring/exporters) role (monitoring agents/metrics exporters)
