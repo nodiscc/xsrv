@@ -57,7 +57,7 @@ test_init_vm_template:
 	./xsrv init-vm-template --name my.template.test --ip 10.0.10.240 --network=$(NETWORK)
 
 # TODO the resulting VM has no video output, access over serial console only, --graphics spice,listen=none during init-vm-template will prevent it from working, spice console must be added during init_vm
-# requirements: libvirt libguestfs-tools, prebuilt debian VM template, host configuration initialized with xsrv init-host
+# requirements: libvirt libguestfs-tools
 # usage: make test_init_vm SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG
 .PHONY: test_init_vm # test correct execution of xsrv init-vm
 test_init_vm:
