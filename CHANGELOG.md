@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 > [!IMPORTANT]
 > The mirror at https://gitlab.com/nodiscc/xsrv will no longer be maintained after this release.
-> Please use https://github.com/nodiscc/xsrv instead
+> Please use https://github.com/nodiscc/xsrv or https://codeberg.org/nodiscc/xsrv instead
+> Issues ahve been moved to https://codeberg.org/nodiscc/xsrv/issues
 
 **Upgrade procedure:** Follow these steps in order:
 
