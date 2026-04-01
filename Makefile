@@ -100,7 +100,7 @@ test_fetch_backups:
 # - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag
 # - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tag
 # - touch roles/README.md && ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
-# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
+# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases and https://codeberg.org/nodiscc/xsrv/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
 bump_versions: doc_md
