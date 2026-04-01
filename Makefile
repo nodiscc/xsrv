@@ -97,9 +97,6 @@ test_fetch_backups:
 # - update release date in CHANGELOG.md, add and commit version bumps/changelog updates with message "release v$new_tag"
 # - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
-# - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag
-# - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tag
-# - touch roles/README.md && ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
 # - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases and https://codeberg.org/nodiscc/xsrv/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
@@ -112,42 +109,6 @@ endif
 	sed -i "s/^version =.*/version = '$(new_tag)'/" docs/conf.py && \
 	sed -i "s/^release =.*/release = '$(new_tag)'/" docs/conf.py && \
 	sed -i "s/latest%20release-.*-blue/latest%20release-$(new_tag)-blue/" README.md docs/index.md
-
-.PHONY: gitlab_release # create a new gitlab release (new_tag=X.Y.Z required, GITLAB_PRIVATE_TOKEN must be defined in the environment)
-gitlab_release:
-ifndef new_tag
-	$(error new_tag is undefined)
-endif
-ifndef GITLAB_PRIVATE_TOKEN
-	$(error GITLAB_PRIVATE_TOKEN is undefined)
-endif
-	curl --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" \
-	--data '{ "name": "$(new_tag)", "tag_name": "$(new_tag)" }' \
-	--request POST "https://gitlab.com/api/v4/projects/14306200/releases"
-
-.PHONY: github_release # create a new github release (new_tag=X.Y.Z required, GITHUB_PRIVATE_TOKEN must be defined in the environment)
-github_release:
-ifndef new_tag
-	$(error new_tag is undefined)
-endif
-ifndef GITHUB_PRIVATE_TOKEN
-	$(error GITHUB_PRIVATE_TOKEN is undefined)
-endif
-	curl --user nodiscc:$$GITHUB_PRIVATE_TOKEN --header "Accept: application/vnd.github.v3+json" \
-	--data '{ "tag_name": "$(new_tag)", "prerelease": true }' \
-	--request POST https://api.github.com/repos/nodiscc/xsrv/releases
-
-.PHONY: publish_collection # publish the ansible collection (ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment)
-publish_collection: build_collection
-ifndef new_tag
-	$(error new_tag is undefined)
-endif
-ifndef ANSIBLE_GALAXY_PRIVATE_TOKEN
-	$(error ANSIBLE_GALAXY_PRIVATE_TOKEN is undefined)
-endif
-	source .venv/bin/activate && \
-	ansible-galaxy collection publish --token "$$ANSIBLE_GALAXY_PRIVATE_TOKEN" nodiscc-xsrv-$(new_tag).tar.gz
-
 
 ##### DOCUMENTATION #####
 
