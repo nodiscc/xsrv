@@ -1,2 +1,2 @@
 openldap_php_fpm_version: "7.4"
-php_gettext-package: php-php-gettext
+php_gettext_package: php-php-gettext
