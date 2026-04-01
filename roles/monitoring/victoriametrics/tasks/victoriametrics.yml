@@ -51,6 +51,9 @@
     privatekey_path: "/etc/victoriametrics/ssl/victoriametrics.key"
     csr_path: "/etc/victoriametrics/ssl/victoriametrics.csr"
     provider: selfsigned
+    owner: root
+    group: _victoria-metrics
+    mode: "0640"
   notify: restart victoriametrics
   ignore_errors: "{{ ansible_check_mode }}"
 
