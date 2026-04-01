@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:** Follow these steps in order:
 
+**0. Upgrade to v1.27.0** and deploy, if not already done
+
 **1. Update your playbook** (`xsrv edit-playbook`):
 
 - Remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
