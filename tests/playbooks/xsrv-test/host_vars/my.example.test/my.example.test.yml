@@ -75,5 +75,5 @@ kiwix_fqdn: "kiwix.example.test"
 grafana_fqdn: "grafana.example.test"
 ##### LLAMACPP - https://github.com/nodiscc/xsrv/blob/master/roles/llamacpp/defaults/main.yml
 llamacpp_enable_service: false
-##### MONITORING.VICTORIAMETRICS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
+##### MONITORING.VICTORIAMETRICS - https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
 victoriametrics_alertmanager_smtp_host: "smtp.example.test"

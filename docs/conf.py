@@ -58,10 +58,9 @@ html_theme_options = {
 }
 
 html_context = {
-    "display_gitlab": True, # Integrate Gitlab
-    "gitlab_host": "gitlab.com",
-    "gitlab_user": "nodiscc", # Username
-    "gitlab_repo": "xsrv", # Repo name
-    "gitlab_version": "master", # Version
-    "conf_py_path": "/docs/" # Path in the checkout to the docs root
+    "display_github": True,
+    "gitlab_user": "nodiscc"
+    "gitlab_repo": "xsrv",
+    "gitlab_version": "master",
+    "conf_py_path": "/docs/"
 }

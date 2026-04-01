@@ -72,9 +72,9 @@ searxng_secret: "6BFxKW8cfXJqn991Ifzbrp0tlpzBsgpgj8BVwGTYPu8wZIDxR5ggV5WRKWV9Mpq
 grafana_admin_username: "{{ xsrv_admin_username }}"
 grafana_admin_password: "{{ xsrv_admin_password }}"
 grafana_admin_email: "{{ xsrv_admin_email }}"
-##### MONITORING.EXPORTERS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/exporters/defaults/main.yml
+##### MONITORING.EXPORTERS - https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/exporters/defaults/main.yml
 monitoring_exporters_auth_password: 2k3rpeBSsbD2tzDIj9A1
-##### MONITORING.VICTORIAMETRICS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
+##### MONITORING.VICTORIAMETRICS - https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/victoriametrics/defaults/main.yml
 victoriametrics_alertmanager_smtp_auth_username: DYbMxvvPZrR0P1Yw5eiy
 victoriametrics_alertmanager_smtp_auth_password: 5iATcAP2AHyWCWZDT7Gy
 
