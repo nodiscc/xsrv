@@ -53,7 +53,7 @@
     dest: "/root/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb.gz"
     owner: root
     group: root
-    mode: "0640"
+    mode: "0644"
 
 - name: extract geoIP database tarball
   shell:
