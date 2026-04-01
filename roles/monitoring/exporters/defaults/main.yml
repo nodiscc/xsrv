@@ -4,7 +4,7 @@ netdata_uninstall: true
 # REQUIRED password used to authenticate to/scrape metrics from exporter-exporter
 monitoring_exporters_auth_password: CHANGEME
 # log level for prometheus-blackbox-exporter (info/debug/warn/error)
-exporters_blackbox_log_level: info
+exporters_blackbox_log_level: warn
 # URL of the central VictoriaMetrics instance for remote write
 # Example: https://monitoring.example.com:8428
 monitoring_victoriametrics_url: "CHANGEME"
