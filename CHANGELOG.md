@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v2.1.0](https://github.com/nodiscc/xsrv/releases/tag/2.1.0) - UNRELEASED
+
+**Upgrade procedure:**
+* Upgrade to v2.0.0 if not already done
+* `xsrv upgrade` to update roles to their latest version
+* `xsrv check` (optional) simulate changes that will be applied
+* `xsrv deploy` apply changes
+
+**Changed:**
+* llamacpp: update to latest version
+
+[Full changes since v2.0.0](https://github.com/nodiscc/xsrv/compare/2.0.0...2.1.0)
+
+
 #### [v2.0.0](https://github.com/nodiscc/xsrv/releases/tag/2.0.0) - 2026-04-02
 
 > [!IMPORTANT]
