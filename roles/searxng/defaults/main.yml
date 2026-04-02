@@ -17,3 +17,13 @@ searxng_auth_enabled: no
 # if HTTP basic authentication is enabled, username and password for viewers
 searxng_auth_username: CHANGEME
 searxng_auth_password: CHANGEME
+
+# Remove results whose domain match these patterns
+# https://docs.searxng.org/dev/plugins/hostnames.html
+searxng_hostnames_remove:
+  - '(.*\.)?facebook.com$'
+  - '(.*\.)?w3schools.com$'
+  - '(.*\.)?geeksforgeeks.org$'
+  - '(.*\.)?gitmemory.com$'
+  - '(.*\.)?githubmemory.com$'
+  - '(.*\.)?amazon.(.*\.)?'

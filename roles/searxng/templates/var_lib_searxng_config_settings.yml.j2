@@ -238,11 +238,10 @@ outgoing:
 enabled_plugins:
   - 'Basic Calculator'
   - 'Tracker URL remover'
-  - 'Hostnames plugin'  # see 'hostnames' configuration below
+  - 'Hostnames plugin'
   - 'Unit converter plugin'
 
-# Configuration of the "Hostnames plugin":
-#
+# https://docs.searxng.org/dev/plugins/hostnames.html
 # hostnames:
 #   replace:
 #     '(.*\.)?youtube\.com$': 'invidious.example.com'
@@ -266,6 +265,13 @@ enabled_plugins:
 # '(.*\.)?youtube\.com$': 'invidious.example.com'
 # '(.*\.)?youtu\.be$': 'invidious.example.com'
 #
+{% if searxng_hostnames_remove %}
+hostnames:
+  remove:
+{% for pattern in searxng_hostnames_remove %}
+    - '{{ pattern }}'
+{% endfor %}
+{% endif %}
 
 checker:
   # disable checker when in debug mode
