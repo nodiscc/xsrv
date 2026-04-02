@@ -1,4 +1,5 @@
 ####### gitea issues: xsrv/xsrv
+- #1416 - backup: rsnapshot-monthy.service fails whern there are no weekly backups yet - **`2.1.0`** `backups,bug`
 - #1413 - podman: switch to overlay storage driver, reduces disk space usage - **`-`** `easy,enhancement,performance`
 - #1412 - llamacpp: performance improvements and additional models - **`-`** `enhancement,performance`
 - #1410 - kiwix: add project gutenberg ZIM URLs - **`-`** `easy,enhancement`
@@ -17,7 +18,6 @@
 - #1392 - victoriametrics/alertmanager/vmalert: allow silencing alerts - **`-`** `enhancement,monitoring`
 - #1391 - llama.cpp: toggle siwtch to backup models - **`-`** `backups,enhancement`
 - #1387 - cleanup: use hyphens in all tags - **`-`** `enhancement,maintenance`
-- #1384 - makefile: update_todo: replace gitea-cli - **`2.1.0`** `documentation,tools`
 - #1381 - victoriametrics: protect metrics endpoint with basic auth/key - **`-`** `easy,enhancement,monitoring,security`
 - #1380 - monitor podman with victoriametrics - **`-`** `enhancement,monitoring`
 - #1379 - postgresql: create prometheus postgresql user always returns changed - **`-`** `enhancement`
@@ -59,7 +59,6 @@
 - #1275 - WIP: rsnapshot: allow automatic discovery of paths to backup from/commands to run on remote hosts - **`3.0.0`** `backups,enhancement`
 - #1269 - document getting ansible-vault-password from keepassxc - **`3.0.0`** `documentation,enhancement,security,upstream`
 - #1268 - backup: allow automatic discovery of paths to backup/commands to run for each host - **`-`** `backups,enhancement`
-- #1267 - xsrv self-upgrade: update the bash completion script as well - **`-`** `enhancement`
 - #1256 - wireguard: web interface? - **`-`** `enhancement,question`
 - #1251 - WIP: xsrv: don't require sudo during xsrv init-vm-template - **`3.0.0`** `difficult,enhancement`
 - #1245 - gitea: use unix socket instead of HTTP socket? - **`-`** `enhancement,question,security`
@@ -96,7 +95,6 @@
 - #925 - jitsi: setup TURN server for P2P one-to-one calls? - **`-`** `enhancement,question`
 - #915 - Snipe-IT role - **`-`** `feature`
 - #912 - mount /tmp noexec? - **`-`** `question,security`
-- #911 - test compatibility with librelogic.librelogic.gitlab/gitlab-runner? - **`3.0.0`** `documentation,easy,enhancement,feature`
 - #890 - apache: implement modpagespeed? - **`-`** `performance,question`
 - #881 - Keycloak role? - **`-`** `feature,question`
 - #870 - xsrv: allow using `xsrv show-defaults | grep some_search_term` to search/filter available configuration variables - **`3.0.0`** `enhancement`

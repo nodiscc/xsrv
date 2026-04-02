@@ -6,9 +6,9 @@
   ╹ ╹┗━┛╹┗╸┗┛ 
 ```
 
-[![](https://github.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://github.com/nodiscc/xsrv/-/pipelines)
+[![](https://github.com/nodiscc/xsrv/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/nodiscc/xsrv/actions)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.27.0-blue)](https://github.com/nodiscc/xsrv/releases)
+[![](https://img.shields.io/badge/latest%20release-2.0.0-blue)](https://github.com/nodiscc/xsrv/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -33,6 +33,7 @@ This project provides:
 - [jitsi](https://github.com/nodiscc/xsrv/tree/master/roles/jitsi) - video conferencing solution
 - [kiwix](https://github.com/nodiscc/xsrv/tree/master/roles/kiwix) - mirror wikipedia or other wikis locally
 - [libvirt](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt) - virtualization toolkit
+- [llamacpp](https://github.com/nodiscc/xsrv/tree/master/roles/llamacpp) - llamacpp local LLM service
 - [mail_dovecot](https://github.com/nodiscc/xsrv/tree/master/roles/mail_dovecot) - IMAP mailbox server
 - [matrix](https://github.com/nodiscc/xsrv/tree/master/roles/matrix) - secure instant messaging service
 - [monitoring.exporters](https://github.com/nodiscc/xsrv/tree/master/roles/monitoring/exporters) - monitoring agents/metrics exporters
@@ -82,6 +83,7 @@ This project provides:
 [![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](https://github.com/nodiscc/xsrv/tree/master/roles/stirlingpdf)
 [![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](https://github.com/nodiscc/xsrv/tree/master/roles/moodist)
 [![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](https://github.com/nodiscc/xsrv/tree/master/roles/kiwix)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/llamacpp-thumb.png)](https://github.com/nodiscc/xsrv/tree/master/roles/llamacpp)
 
 
 ## Source code

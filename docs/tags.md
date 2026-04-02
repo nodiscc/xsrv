@@ -104,6 +104,7 @@ utils-shutdown - (manual) shut down the host
 victoriametrics - setup victoriametrics monitoring service and time-series database
 wireguard - setup wireguard
 OTHER TAGS:
+llamacpp
 never
 nmap
 readme_gen

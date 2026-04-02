@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v2.0.0](https://github.com/nodiscc/xsrv/releases/tag/2.0.0) - UNRELEASED
+#### [v2.0.0](https://github.com/nodiscc/xsrv/releases/tag/2.0.0) - 2026-04-02
 
 > [!IMPORTANT]
 > The mirror at https://gitlab.com/nodiscc/xsrv will no longer be maintained after this release.

@@ -636,8 +636,8 @@ gitea_actions_runner_container_network: "host"
 #   - 'host:host'
 #   - "debian-bookworm-backports:docker://debian:bookworm-backports"
 gitea_act_runner_labels:
-  - "debian-latest:docker://node:21-bookworm"
-  - "ubuntu-latest:docker://node:21-bookworm"
+  - "debian-latest:docker://node:22-trixie"
+  - "ubuntu-latest:docker://node:22-trixie"
   - "ubuntu-22.04:docker://node:16-bullseye"
   - "ubuntu-20.04:docker://node:16-bullseye"
   - "ubuntu-18.04:docker://node:16-buster"
@@ -1028,6 +1028,136 @@ libvirt_service_after: []
 #   - anotheruser
 libvirt_users:
   - "{{ ansible_user }}"
+```
+
+
+## llamacpp
+
+[roles/llamacpp/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/llamacpp/defaults/main.yml)
+
+```yaml
+# LlamaCPP version to install (commit hash or tag)
+llamacpp_version: b8416
+
+# Whether to enable and start the LlamaCPP systemd service
+llamacpp_enable_service: true
+
+# Context size for llama.cpp (set to 0 to use model default)
+llamacpp_context_size: 60000
+
+# list of Large Language models to download and enable in llama.cpp
+# each entry requires the following parmeters:
+#   url: url of the model to download (GGUF format)
+#   name: the human-readable name displayed in the llama.cpp web interface and API
+# The size of each model is (B = billion parameters) is roughly equivalent to the GB of memory required to run it
+# Fast GPU VRAM us preferred to run inference at acceptable speeds (tokens read or output per second, t/s)
+# The disk size of the downloaded model file is mentioned in comments
+# Some models have additional capabilities such as tool use in agents, internal reasoning/thinking capabilities, or image/PDF vision
+# Only a small model that can run on CPU/RAM is enabled by default, enable/experiment other models below if your hardware configuration allows
+# to delete a model from the llama.cpp server, access it over ssh (xsrv shell) and `sudo rm` the relevant files under `/var/lib/llamacpp/{aliases,models}/`, then `sudo systemctl restart llamacpp.service`
+llamacpp_models:
+  - name: gemma3:4b # 4B, 3.2GB, vision
+    url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/google_gemma-3-4b-it-Q6_K_L.gguf
+    presets:
+      default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma3:12b # 12B, 9.3GB, vision
+  #   url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/google_gemma-3-12b-it-Q6_K_L.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma3:27b #27B, 16GB, vision
+  #   url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/google_gemma-3-27b-it-qat-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: llama3.1:8b # 8B, 5GB, tools
+  #   url: https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 1.0}
+  # - name: gpt-oss:20b # 20B, 12GB, tools + reasoning
+  #   url: https://huggingface.co/bartowski/openai_gpt-oss-20b-GGUF/resolve/main/openai_gpt-oss-20b-MXFP4.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 1.0, top-k: 40}
+  # - name: qwen3-vl:8b #8B, 4.2GB, tools
+  #   url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/Qwen_Qwen3-VL-8B-Instruct-Q3_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.7, top-p: 0.8, top-k: 20}
+  # - name: qwen2.5-coder:7b #7B, 7.6GB, tools + reasoning
+  #   url: https://huggingface.co/bartowski/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/Qwen2.5-Coder-7B-Instruct-Q8_0.gguf
+  #   presets:
+  #     default: {temp: 0.7, top-p: 0.8, top-k: 20, repeat-penalty: 1.05}
+  # - name: qwen3-instruct:4b # 4B, 3.6GB, tools
+  #   url: https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/main/Qwen3-4B-Instruct-2507-UD-Q6_K_XL.gguf
+  #   presets:
+  #     default: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.0}
+  # - name: qwen3:14b #14B, 8.4GB, tools
+  #   url: https://huggingface.co/Qwen/Qwen3-14B-GGUF/resolve/main/Qwen3-14B-Q4_K_M.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5}
+  # - name: qwen3-coder:30b # 30B, 21GB, tools + reasoning
+  #   url: https://huggingface.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF/resolve/main/Qwen3-Coder-30B-A3B-Instruct-UD-Q5_K_XL.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
+  # - name: nemotron-nano:12b # 12B, 7.5GB
+  #   url: https://huggingface.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-12B-v2-GGUF/resolve/main/nvidia_NVIDIA-Nemotron-Nano-12B-v2-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95}
+  # - name: devstral-small:24b #24B, 14GB, tools
+  #   url: https://huggingface.co/bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF/resolve/main/mistralai_Devstral-Small-2-24B-Instruct-2512-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.15, min-p: 0.01}
+  # - name: deepseek-r1:14b #14B, 9.8GB, reasoning
+  #   url: https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF/resolve/main/DeepSeek-R1-Distill-Qwen-14B-Q5_K_M.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 1.5}
+  # - name: deepseek-coder-v2:16b #16B, 14GB, tools + reasoning
+  #   url: https://huggingface.co/bartowski/DeepSeek-Coder-V2-Lite-Instruct-GGUF/resolve/main/DeepSeek-Coder-V2-Lite-Instruct-Q6_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
+  # - name: phi3-mini-128k:4b # 4B, 3.1GB
+  #   url: https://huggingface.co/QuantFactory/Phi-3-mini-128k-instruct-GGUF/resolve/main/Phi-3-mini-128k-instruct.Q6_K.gguf
+  #   presets:
+  #     default: {temp: 0.9, top-p: 0.95, repeat-penalty: 1.05}
+  # - name: qwen3.5:2b # 2B, 2.8GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-UD-Q8_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: qwen3.5:4b # 4B, 6GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-UD-Q8_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: qwen3.5:27b # 27B, 17.5GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-27B-GGUF/resolve/main/Qwen3.5-27B-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: qwen3.5:35b-a3b # 35B + 3B MoE, 22GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/Qwen3.5-35B-A3B-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: ministral-3:8b # 8B, 9GB, reasoning + vision
+  #   url: https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF/resolve/main/Ministral-3-8B-Instruct-2512-Q8_0.gguf
+  #   presets:
+  #     default: {temp: 0.1}
+  #     creative: {temp: 0.6}
+  # - name: glm4.6v-flash:9b # 9B, 8.9GB, reasoning + tools + vision
+  #   url: https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF/resolve/main/GLM-4.6V-Flash-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 0.8, top-p: 0.6, top-k: 2, repeat-penalty: 1.1}
+  # - name: glm4.7-flash:30b # 30B, 18GB, reasoning + tools
+  #   url: https://huggingface.co/unsloth/GLM-4.7-Flash-GGUF/resolve/main/GLM-4.7-Flash-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, min-p: 0.01}
+  #     coding: {temp: 0.7, top-p: 1.0, min-p: 0.01}
 ```
 
 
@@ -1902,7 +2032,7 @@ netdata_uninstall: true
 # REQUIRED password used to authenticate to/scrape metrics from exporter-exporter
 monitoring_exporters_auth_password: CHANGEME
 # log level for prometheus-blackbox-exporter (info/debug/warn/error)
-exporters_blackbox_log_level: info
+exporters_blackbox_log_level: warn
 # URL of the central VictoriaMetrics instance for remote write
 # Example: https://monitoring.example.com:8428
 monitoring_victoriametrics_url: "CHANGEME"
@@ -1924,14 +2054,14 @@ goaccess_https_mode: selfsigned
 # enable/disable the goaccess virtualhost (redirect users to maintenance page if disabled)
 goaccess_enable_service: yes
 # calendar expression for the periodic/scheduled update/re-generation of HTML reports
-# uses systemd's calendar events syntax https://manpages.debian.org/bookworm/systemd/systemd.time.7.en.html#CALENDAR_EVENTS
+# uses systemd's calendar events syntax https://manpages.debian.org/trixie/systemd/systemd.time.7.en.html#CALENDAR_EVENTS
 # you can check whether an expression is valid using `systemd-analyze calendar "EXPRESSION"
 # Examples: "*:0/5:0" (every hour at minute 0, and every minute that is a multiple of 5), "21:00" (every day at 21:00), ...
 goaccess_update_calendar_expression: "*:00:00"
 # (optional) only parse log lines containing this string
 # goaccess_filter: "mysite.CHANGEME.org"
 # IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
-goaccess_geoip_db_version: "{{ ansible_date_time.year }}-{{ ansible_date_time.month }}"
+goaccess_geoip_db_version: "{{ ansible_date_time.year }}-02"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"
