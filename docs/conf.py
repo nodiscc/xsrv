@@ -59,7 +59,7 @@ html_theme_options = {
 
 html_context = {
     "display_github": True,
-    "gitlab_user": "nodiscc"
+    "gitlab_user": "nodiscc",
     "gitlab_repo": "xsrv",
     "gitlab_version": "master",
     "conf_py_path": "/docs/"
