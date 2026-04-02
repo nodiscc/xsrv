@@ -183,7 +183,7 @@ xsrv deploy   # apply changes
 - tt_rss: fix DB update error on first deployment
 - podman/owncast: fix `"pasta": executable file not found`
 
-[Full changes since v1.27.0](https://github.com/nodiscc/xsrv/compare/1.27.0...1.28.0)
+[Full changes since v1.27.0](https://github.com/nodiscc/xsrv/compare/1.27.0...2.0.0)
 
 ------------------
 
