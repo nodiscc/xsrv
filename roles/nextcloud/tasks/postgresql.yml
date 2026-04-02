@@ -41,7 +41,7 @@
   become: yes
   become_user: postgres
   postgresql_privs:
-    db: "{{ nextcloud_db_name }}"
+    login_db: "{{ nextcloud_db_name }}"
     privs: ALL
     type: database
     role: "{{ nextcloud_db_user }}"

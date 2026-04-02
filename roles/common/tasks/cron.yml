@@ -1,3 +1,8 @@
+- name: install cron
+  apt:
+    package: cron
+    state: present
+
 - name: configure cron daemon
   template:
     src: etc_default_cron.j2

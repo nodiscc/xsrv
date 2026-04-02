@@ -10,8 +10,8 @@ Stream to any device from your own server, with no strings attached. Your media,
  - LDAP authentication support
  - (optional) Automatic subtitles download from https://opensubtitles.com
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/yd06nxh.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/YA8bBGX.jpg)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/gmJspSD.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/kyqr1mh.jpg)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/yd06nxh.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/YA8bBGX.jpg)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/gmJspSD.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/kyqr1mh.jpg)
 
 
 ## Requirements/dependencies/example playbook

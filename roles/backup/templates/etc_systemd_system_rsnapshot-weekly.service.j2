@@ -1,0 +1,10 @@
+[Unit]
+Description=rsnapshot weekly backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rsnapshot weekly
+SyslogIdentifier=rsnapshot-weekly
+
+[Install]
+WantedBy=multi-user.target

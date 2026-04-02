@@ -4,7 +4,7 @@ This role will setup [Moodist](https://moodist.app/), an ambient sound mixer for
 
 Moodist will be deployed as a rootless [podman](../podman) container managed by a systemd service.
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/moodist.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/moodist.png)
 
 ## Requirements/dependencies/example playbook
 

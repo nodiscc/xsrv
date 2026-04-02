@@ -1,6 +1,6 @@
 namespace: nodiscc
 name: xsrv
-version: 1.27.0
+version: 2.0.0
 readme: README.md
 authors:
   - nodiscc <nodiscc@gmail.com>
@@ -8,7 +8,7 @@ description: "Install and manage self-hosted network services and applications o
 license: "GPL-3.0-or-later"
 tags: []
 dependencies: {}
-repository: "https://gitlab.com/nodiscc/xsrv"
+repository: "https://github.com/nodiscc/xsrv"
 documentation: "https://xsrv.readthedocs.io"
 homepage: "https://xsrv.readthedocs.io"
 issues: "https://xsrv.readthedocs.io/en/latest/contributing.html"

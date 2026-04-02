@@ -7,7 +7,7 @@ Then run `xsrv deploy` to apply changes. See [Manage configuration](usage.md#man
 <!--BEGIN ROLES LIST-->
 ## apache
 
-[roles/apache/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
+[roles/apache/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/apache/defaults/main.yml)
 
 ```yaml
 ##### APACHE WEB SERVER #####
@@ -29,13 +29,12 @@ apache_letsencrypt_enable_hsts: no
 #     upstream: "https://localhost:3545" # (required) the server to proxy requests to
 #     https_mode: selfsigned # (optional, selfsigned/letsencrypt, default selfsigned) mode for the auto-generated SSL certificate
 #     redirect_https: yes # (optional, yes/no, default yes) redirect HTTP requests to HTTPS
-#     monitor_http: yes # (optional, yes/no, default yes) add a netdata HTTP check for this virtualhost, if nodiscc.xsrv.monitoring_netdata is deployed
 #     extra_directives: # (optional) list of additional config directives https://httpd.apache.org/docs/current/mod/directives.html
 #       - "SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1" # allow less-secure TLS1.2 for legacy clients
 #   - servername: site2.example.org
 #     upstream: https://10.0.0.36:3646
 apache_reverseproxies: []
-# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring.rsyslog role is deployed) (yes/no)
 apache_access_log_to_syslog: no
 # firewall zones for the apache service (if nodiscc.xsrv.common/firewalld role is deployed)
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
@@ -55,7 +54,7 @@ php_fpm_enable_default_pool: yes
 
 ## backup
 
-[roles/backup/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
+[roles/backup/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml)
 
 ```yaml
 ##### RSNAPSHOT BACKUP SERVICE #####
@@ -66,7 +65,7 @@ rsnapshot_retain_daily: 6
 rsnapshot_retain_weekly: 6
 rsnapshot_retain_monthly: 6
 # enable/disable automatic/scheduled backups (yes/no)
-rsnapshot_enable_cron: yes
+rsnapshot_enable_service: yes
 # automatically create the backup storage directory (yes/no)
 # if the backup directory should be created by another process, such as USB drive automounter, you may want to set this to no
 rsnapshot_create_root: yes
@@ -102,6 +101,7 @@ rsnapshot_local_backups: []
 #    user: SSH username to connect with (must have read access to backup paths)
 #    host: host address
 #    path: file/directory path to backup
+#    port: SSH port (optional, defaults to 22)
 # Example:
 # rsnapshot_remote_backups:
 #   - { user: 'rsnapshot', host: 'srv01.example.org', path: '/var/backup/mysql/nextcloud/' }
@@ -111,6 +111,7 @@ rsnapshot_local_backups: []
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/var/www/my.example.org/public/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/letsencrypt/' }
 #   - { user: 'rsnapshot', host: 'srv04.example.org', path: '/etc/ssl/private/' }
+#   - { user: 'rsnapshot', host: 'srv05.example.org', port: 2222, path: '/path/to/data/' }
 rsnapshot_remote_backups: []
 # file name patterns to exclude from backups, globally
 # Example:
@@ -126,7 +127,7 @@ rsnapshot_excludes: []
 
 ## common
 
-[roles/common/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
+[roles/common/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml)
 
 ```yaml
 ##### COMMON/GENERAL SYSTEM SETTINGS #####
@@ -167,14 +168,16 @@ sysctl_allow_forwarding: no
 # answer ICMP pings (yes/no)
 sysctl_answer_ping: no
 # "swappiness" setting. 100: swap/reclaim RAM aggressively. 0: do not swap unless necessary
-sysctl_vm_swappiness: '10'
+sysctl_vm_swappiness: 10
 # "VFS cache pressure" setting. 100+ : prefer caching memory pages over disk cache
-sysctl_vm_vfs_cache_pressure: '150'
+sysctl_vm_vfs_cache_pressure: 150
+# value of sysctl control kernel.yama.ptrace_scope, see documentation in etc_sysctl.d_custom.conf.j2
+sysctl_kernel_yama_ptrace_scope: 2
 # yes/no: enable/disable creation of core dumps on kernel crashes
 # These are usually not needed and may contain sensitive information
 kernel_enable_core_dump: no
 # no/yes: configure /proc mountpoint to hide processes from other users
-# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, netdata...)
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, prometheus...)
 kernel_proc_hidepid: no
 # list of kernel modules to prevent from being loaded
 kernel_modules_blacklist:
@@ -224,11 +227,7 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
   - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
-  - "origin=Netdata,label=Netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
-  - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
-  - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
-  - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
   - "o=matrix.org,site=packages.matrix.org" # nodiscc.xsrv.matrix
@@ -317,7 +316,8 @@ apt_listbugs_ignore_list:
   - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
   - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
   - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
-  - 1088266 # https://bugs.debian.org/1088266 - only affects the official Debian netdata package,  but we use the upsteram package
+  - 1051392 # https://bugs.debian.org/1051392 - only affects 32-bit architectures
+  - 1114729 # https://bugs.debian.org/1114729 - only during dist-upgrade
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -332,8 +332,6 @@ setup_ssh: yes
 # Example: ['data/public_keys/john.pub', 'data/public_keys/jane.pub']
 # Removing a key here does not remove it on the server!
 ssh_authorized_keys: []
-# a list of public keys that are never accepted by the ssh server
-ssh_server_revoked_keys: []
 # sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
 ssh_log_level: "VERBOSE"
 ssh_sftp_loglevel: "INFO"
@@ -353,7 +351,7 @@ ssh_password_authentication: "no"
 setup_firewall: yes
 # log rejected/dropped packets (all/unicast/broadcast/multicast/off)
 firewalld_log_denied: all
-# Firewalld zones
+# firewalld zones
 # Example:
 # firewalld_zone_sources:
 #   - zone: internal # add 192.168.0.0/16 and 10.0.0.0/8 to the internal zone
@@ -383,7 +381,7 @@ firewalld_zone_sources:
       - 192.168.0.0/16
       - 172.16.0.0/12
       - 10.0.0.0/8
-# Services to allow in firewalld zones
+# services to allow in firewalld zones
 # Example:
 # firewalld_zone_services:
 #   - zone: public # firewall zone to configure
@@ -410,6 +408,14 @@ firewalld_zone_services:
     services:
       - dhcpv6-client # remove dhcpv6-client rule from the default public zone
     state: disabled
+# list of IP addresses/networks to block globally
+# Example:
+# firewalld_blocklist:
+#   - 1.2.3.4
+#   - 5.6.7.8/24
+#   - 9.10.11.12/16
+firewalld_blocklist: []
+
 # additional firewalld configuration - https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
 firewalld: []
 
@@ -470,7 +476,9 @@ systemd_logind_kill_exclude_users: ['root']
 systemd_logind_lock_after_idle_min: 0
 # terminate interactive bash processes after this number of seconds if no input is received (set to 0 to disable)
 bash_timeout: 900
-
+# default system umask to create new directories QUOTED
+# 027 can be considered safer for privacy but may interfer with some build systems that expect an umask of 022
+umask: "027"
 
 ### CRON TASK SCHEDULER ###
 # (yes/no): setup cron permission restrictions/logging options
@@ -525,12 +533,16 @@ packages_remove:
   # - rpcbind # not an NFS server
   # - nfs-common # not an NFS server
   # - exim4-base # use a smarthost/msmtp
+
+### DRIVES ###
+# standby mechanical/rotational hard drives after 1 hour of idle
+hdparm_auto_standby_drives: false
 ```
 
 
 ## dnsmasq
 
-[roles/dnsmasq/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml)
+[roles/dnsmasq/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/dnsmasq/defaults/main.yml)
 
 ```yaml
 ##### DNSMASQ DNS SERVER #####
@@ -543,8 +555,8 @@ packages_remove:
 #   - 1.0.0.1 # https://en.wikipedia.org/wiki/1.1.1.1
 #   - 8.8.8.8 # https://en.wikipedia.org/wiki/Google_Public_DNS
 #   - 8.8.4.4 # https://en.wikipedia.org/wiki/Google_Public_DNS
-#   - 80.67.169.12 # https://www.fdn.fr/actions/dns/
-#   - 80.67.169.40 # https://www.fdn.fr/actions/dns/
+#   - 185.222.222.222 # https://dns.sb/guide/
+#   - 45.11.45.11 # https://dns.sb/guide/
 dnsmasq_upstream_servers:
   - CHANGEME
   - CHANGEME
@@ -602,7 +614,7 @@ dnsmasq_blocklist_whitelist: []
 
 ## gitea_act_runner
 
-[roles/gitea_act_runner/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
+[roles/gitea_act_runner/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/gitea_act_runner/defaults/main.yml)
 
 ```yaml
 ##### GITEA ACTIONS RUNNER #####
@@ -612,10 +624,8 @@ gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org
 # gitea_act_runner_gitea_instance_hostname: "CHANGEME"
 # how many tasks the runner can execute concurrently at the same time (integer)
 gitea_act_runner_capacity: 1
-# container engine to use (docker/podman)
-gitea_act_runner_container_engine: "podman"
 # network to which the containers managed by act-runner will connect (host/bridge/custom)
-# set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
+# set to an empty string to have act-runner create a network automatically. "host" is required when the gitea instance is on the same host as the runner
 gitea_actions_runner_container_network: "host"
 # list of labels to use when registering the runner (https://docs.gitea.com/usage/actions/design)
 # If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role must be redeployed
@@ -626,15 +636,15 @@ gitea_actions_runner_container_network: "host"
 #   - 'host:host'
 #   - "debian-bookworm-backports:docker://debian:bookworm-backports"
 gitea_act_runner_labels:
-  - "debian-latest:docker://node:21-bookworm"
-  - "ubuntu-latest:docker://node:21-bookworm"
+  - "debian-latest:docker://node:22-trixie"
+  - "ubuntu-latest:docker://node:22-trixie"
   - "ubuntu-22.04:docker://node:16-bullseye"
   - "ubuntu-20.04:docker://node:16-bullseye"
   - "ubuntu-18.04:docker://node:16-buster"
 # prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
 gitea_act_runner_daily_podman_prune: no
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
-gitea_act_runner_version: "0.2.10"
+gitea_act_runner_version: "0.2.12"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
 gitea_act_runner_enable_service: yes
 ```
@@ -642,7 +652,7 @@ gitea_act_runner_enable_service: yes
 
 ## gitea
 
-[roles/gitea/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml)
+[roles/gitea/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml)
 
 ```yaml
 ##### GITEA SELF-HOSTED GIT SERVICE #####
@@ -674,7 +684,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.23.4"
+gitea_version: "1.25.5"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -749,95 +759,9 @@ gitea_allowed_hosts: []
 ```
 
 
-## gotty
-
-[roles/gotty/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml)
-
-```yaml
-##### GOTTY WEB TERMINAL #####
-# fully qualified domain name of the gotty instance
-gotty_fqdn: "tty.CHANGEME.org"
-# username/password for gotty HTTP basic authentication
-gotty_auth_username: "CHANGEME"
-gotty_auth_password: "CHANGEME"
-# linux username to run the gotty process as
-gotty_run_username: "CHANGEME"
-# command to run as soon as a client connects
-gotty_run_command: "bash"
-# (yes/no) allow users to write to the terminal
-gotty_permit_write: no
-# HTTPS and SSL/TLS certificate mode for the gotty webserver virtualhost
-#   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate
-gotty_https_mode: selfsigned
-# start/stop the gotty service, enable/disable it on boot (yes/no)
-gotty_enable_service: yes
-# (seconds) time to wait before killing chil processes after client is disconnected
-gotty_close_timeout: 60
-# (yes/no) enable reconnection
-gotty_reconnect: no
-# (seconds) time to reconnect
-gotty_reconnect_time: 10
-# (seconds) timeout seconds for waiting a client
-gotty_input_timeout: 0
-# IP address to listen on
-gotty_listen_address: "0.0.0.0"
-# gotty release/version number (https://github.com/sorenisanerd/gotty/releases, without leading v)
-gotty_version: "1.5.0"
-# list of IP addresses allowed to access gotty (IP or IP/netmask format)
-# set to empty list [] to allow access from any IP address
-gotty_allowed_hosts: []
-```
-
-
-## graylog
-
-[roles/graylog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml)
-
-```yaml
-##### GRAYLOG LOG AGGREGATION/ANALYSIS PLATFORM #####
-# fully qualified domain name of the graylog instance
-graylog_fqdn: "logs.CHANGEME.org"
-# graylog admin username/password, and secret key for hashing passwords
-graylog_root_username: "CHANGEME"
-graylog_root_password: "CHANGEME20"
-graylog_secret_key: "CHANGEME96"
-# password for the mongodb admin user
-mongodb_admin_password: "CHANGEME20"
-# password for the mongodb graylog user
-graylog_mongodb_password: "CHANGEME20"
-# timezone of the graylog admin user, from https://www.joda.org/joda-time/timezones.html
-graylog_root_timezone: "UTC"
-# start and end validity dates for TLS certificates for syslog inputs (YYYYMMDDHHMMSSZ)
-graylog_cert_not_before: "20240219000000Z"
-graylog_cert_not_after: "20340219000000Z"
-# HTTPS and SSL/TLS certificate mode for the graylog webserver virtualhost
-#   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate
-graylog_https_mode: selfsigned
-# start/stop the graylog/elasticsearch/mongodb services, enable/disable them on boot (yes/no) (redirect users to maintenance page if disabled)
-graylog_enable_service: yes
-# (512m/1g...) JVM memory heap size for graylog
-graylog_heap_size: "1g"
-# (auto/512m/1g...) JVM memory heap size for elasticsearch
-elasticsearch_heap_size: "auto"
-# (auto/seconds) timeout for elasticsearch systemd service startup
-# set a longer value if the elasticsearch systemd service fails to start/times out
-elasticsearch_timeout_start_sec: auto
-# list of IP addresses allowed to access the graylog web interface (IP or IP/netmask format)
-# set to empty list [] to allow access from any IP address
-graylog_allowed_hosts: []
-# firewall zones for graylog TCP inputs, if nodiscc.xsrv.common/firewalld role is deployed
-# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
-graylog_tcp_firewalld_zones:
-  - zone: internal
-    state: enabled
-```
-
-
 ## homepage
 
-[roles/homepage/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
+[roles/homepage/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/homepage/defaults/main.yml)
 
 ```yaml
 ##### HOMEPAGE #####
@@ -853,7 +777,7 @@ homepage_message: "<i>Welcome to this server managed by <a href='https://xsrv.re
 #   - url: https://myapp.EXAMPLE.org # URL to link to
 #     title: "My App" # title of the link
 #     description: "A custom application" # (optional, default empty) description of the link
-#     icon: sftp # (optional, default globe) icon file for the link, one of https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage/files/res without .png extension
+#     icon: sftp # (optional, default globe) icon file for the link, one of https://github.com/nodiscc/xsrv/tree/master/roles/homepage/files/res without .png extension
 #     compact: no # (optional, yes/no, default no) make this link/tile half as wide, and hide description (pick a short title or it will overflow)
 #   - url: https://anotherapp.EXAMPLE.org
 #     title: "Another App"
@@ -878,7 +802,7 @@ homepage_enable_service: yes
 
 ## jellyfin
 
-[roles/jellyfin/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml)
+[roles/jellyfin/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml)
 
 ```yaml
 ##### JELLYFIN MEDIA SERVER #####
@@ -922,7 +846,7 @@ jellyfin_allowed_hosts:
 
 ## jitsi
 
-[roles/jitsi/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml)
+[roles/jitsi/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/jitsi/defaults/main.yml)
 
 ```yaml
 ##### JITSI MEET VIDEO CONFERENCE PLATFORM #####
@@ -969,9 +893,43 @@ jitsi_firewalld_zones:
 ```
 
 
+## kiwix
+
+[roles/kiwix/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/kiwix/defaults/main.yml)
+
+```yaml
+##### KIWIX WIKI SERVER #####
+# fully qualified domain name of the kiwix server instance
+kiwix_fqdn: kiwix.CHANGEME.org
+# list of kiwix zim file URLs to to download and serve
+# See https://library.kiwix.org/# for a list of all available wikis
+# Examples:
+# kiwix_zim_urls:
+# - https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_maxi_2024-01.zim # 109GB, full english wikipedia
+# - https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_nopic_2024-06.zim # english wikipedia without pictures
+# - https://download.kiwix.org/zim/wikipedia/wikipedia_fr_all_maxi_2024-05.zim # 37GB, full french wikipedia
+# - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB, french wikipedia without pictures
+# - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim #238MB, rationalwiki.org
+kiwix_zim_urls:
+  - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim # 238MB
+  - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB
+# yes/no: enable/disable kiwix server service, start it at boot
+kiwix_enable_service: yes
+# list of IP addresses allowed to access the kiwix web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+kiwix_allowed_hosts: []
+# HTTPS and SSL/TLS certificate mode for the kiwix webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+kiwix_https_mode: selfsigned
+# include kiwix data files in backups (when the nodiscc.xsrv.backup role is managed by ansible) (yes/no)
+kiwix_backup_data: no
+```
+
+
 ## libvirt
 
-[roles/libvirt/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml)
+[roles/libvirt/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml)
 
 ```yaml
 ##### LIBVIRT VIRTUALIZATION TOOLKIT #####
@@ -1033,47 +991,24 @@ libvirt_parallel_shutdown_number: 3
 #   - vm_name: vm01.EXAMPLE.org # VM name (rules will be applied/removed when this VM starts/shuts down)
 #     vm_ip: 10.2.0.225 # forward connections to the VM on this IP address
 #     vm_bridge: virbr2 # forward connections to the VM through this bridge
+#     host_interface: eth0 # forward connections arriving on this interface on the libvirt host
 #     dnat: # list of port forwarding/translation (DNAT) rules
-#       - host_interface: eth0 # forward connections arriving on this interface on the libvirt host
-#         host_port: 25 # forward (DNAT) connections arriving on this port on the libvirt host
+#       - host_port: 25 # forward (DNAT) connections arriving on this port on the libvirt host
 #         vm_port: 25 # forward connections to this port on the VM
 #         protocol: tcp # (optional, tcp/udp, default tcp) forward connections using this protocol
-#         source_ip: 4.5.6.7/24 # (optional, default any source IP) only forward connections from this IP address/network
-#       - host_ip: 1.2.3.4 # forward connections arriving on this IP address on the libvirt host
-#         host_port: 123
-#         vm_port: 123
-#       - host_interface: eth0
-#         host_ip: 1.2.3.4 # at least one of host_interface/host_ip is required, but both can be set for finer control (traffic must match both host IP AND interface)
-#         host_port: 456
-#         vm_port: 456
-#       - host_interface: eth0 # redirect port 19225 on the host to port 19999 on the VM
-#         host_port: 19225
+#       - host_port: 19225# redirect port 19225 on the host to port 19999 on the VM
 #         vm_port: 19999
-#       - host_interface: eth0
-#         host_port: 2456-2458 # port range, separated by -
+#       - host_port: 2456-2458 # port range, separated by -
 #         vm_port: 2456-2458
-#         protocol: udp
-#     forward: # list of port forwarding rules between interfaces/bridges (without DNAT)
-#       - source_interface: virbr1 # forward connections from this interface/bridge
-#         vm_port: 22 # forward connections to this port on the VM
-#         protocol: tcp # (optional, tcp/udp, default tcp) forward connections using this protocol
-#       - source_ip: 10.4.0.0/24 # forward connections from this IP address/network
-#         vm_port: 25
-#       - source_interface: virbr5
-#         source_ip: 10.5.0.0/24 # at least one of source_interface/source_ip is required, but both can be set for finer control (traffic must match both source IP AND interface)
-#         vm_port: 22
-#       - source_ip: 10.7.0.0/24
-#         vm_port: 2000-2300 # port range, separated by -
 #         protocol: udp
 #   - vm_name: vm02.EXAMPLE.org
 #     vm_ip: 10.3.0.226
 #     vm_bridge: virbr3
+#     host_interface: eth0
 #     dnat:
-#       - host_interface: eth0
-#         host_port: 22226
+#       - host_port: 22226
 #         vm_port: 22
-#       - host_interface: eth0
-#         host_port: 19226
+#       - host_port: 19226
 #         vm_port: 19999
 libvirt_port_forwards: []
 
@@ -1096,9 +1031,139 @@ libvirt_users:
 ```
 
 
+## llamacpp
+
+[roles/llamacpp/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/llamacpp/defaults/main.yml)
+
+```yaml
+# LlamaCPP version to install (commit hash or tag)
+llamacpp_version: b8416
+
+# Whether to enable and start the LlamaCPP systemd service
+llamacpp_enable_service: true
+
+# Context size for llama.cpp (set to 0 to use model default)
+llamacpp_context_size: 60000
+
+# list of Large Language models to download and enable in llama.cpp
+# each entry requires the following parmeters:
+#   url: url of the model to download (GGUF format)
+#   name: the human-readable name displayed in the llama.cpp web interface and API
+# The size of each model is (B = billion parameters) is roughly equivalent to the GB of memory required to run it
+# Fast GPU VRAM us preferred to run inference at acceptable speeds (tokens read or output per second, t/s)
+# The disk size of the downloaded model file is mentioned in comments
+# Some models have additional capabilities such as tool use in agents, internal reasoning/thinking capabilities, or image/PDF vision
+# Only a small model that can run on CPU/RAM is enabled by default, enable/experiment other models below if your hardware configuration allows
+# to delete a model from the llama.cpp server, access it over ssh (xsrv shell) and `sudo rm` the relevant files under `/var/lib/llamacpp/{aliases,models}/`, then `sudo systemctl restart llamacpp.service`
+llamacpp_models:
+  - name: gemma3:4b # 4B, 3.2GB, vision
+    url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/google_gemma-3-4b-it-Q6_K_L.gguf
+    presets:
+      default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma3:12b # 12B, 9.3GB, vision
+  #   url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/google_gemma-3-12b-it-Q6_K_L.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma3:27b #27B, 16GB, vision
+  #   url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/google_gemma-3-27b-it-qat-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: llama3.1:8b # 8B, 5GB, tools
+  #   url: https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 1.0}
+  # - name: gpt-oss:20b # 20B, 12GB, tools + reasoning
+  #   url: https://huggingface.co/bartowski/openai_gpt-oss-20b-GGUF/resolve/main/openai_gpt-oss-20b-MXFP4.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 1.0, top-k: 40}
+  # - name: qwen3-vl:8b #8B, 4.2GB, tools
+  #   url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/Qwen_Qwen3-VL-8B-Instruct-Q3_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.7, top-p: 0.8, top-k: 20}
+  # - name: qwen2.5-coder:7b #7B, 7.6GB, tools + reasoning
+  #   url: https://huggingface.co/bartowski/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/Qwen2.5-Coder-7B-Instruct-Q8_0.gguf
+  #   presets:
+  #     default: {temp: 0.7, top-p: 0.8, top-k: 20, repeat-penalty: 1.05}
+  # - name: qwen3-instruct:4b # 4B, 3.6GB, tools
+  #   url: https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/main/Qwen3-4B-Instruct-2507-UD-Q6_K_XL.gguf
+  #   presets:
+  #     default: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.0}
+  # - name: qwen3:14b #14B, 8.4GB, tools
+  #   url: https://huggingface.co/Qwen/Qwen3-14B-GGUF/resolve/main/Qwen3-14B-Q4_K_M.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5}
+  # - name: qwen3-coder:30b # 30B, 21GB, tools + reasoning
+  #   url: https://huggingface.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF/resolve/main/Qwen3-Coder-30B-A3B-Instruct-UD-Q5_K_XL.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
+  # - name: nemotron-nano:12b # 12B, 7.5GB
+  #   url: https://huggingface.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-12B-v2-GGUF/resolve/main/nvidia_NVIDIA-Nemotron-Nano-12B-v2-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95}
+  # - name: devstral-small:24b #24B, 14GB, tools
+  #   url: https://huggingface.co/bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF/resolve/main/mistralai_Devstral-Small-2-24B-Instruct-2512-Q4_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.15, min-p: 0.01}
+  # - name: deepseek-r1:14b #14B, 9.8GB, reasoning
+  #   url: https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF/resolve/main/DeepSeek-R1-Distill-Qwen-14B-Q5_K_M.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 1.5}
+  # - name: deepseek-coder-v2:16b #16B, 14GB, tools + reasoning
+  #   url: https://huggingface.co/bartowski/DeepSeek-Coder-V2-Lite-Instruct-GGUF/resolve/main/DeepSeek-Coder-V2-Lite-Instruct-Q6_K_L.gguf
+  #   presets:
+  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
+  # - name: phi3-mini-128k:4b # 4B, 3.1GB
+  #   url: https://huggingface.co/QuantFactory/Phi-3-mini-128k-instruct-GGUF/resolve/main/Phi-3-mini-128k-instruct.Q6_K.gguf
+  #   presets:
+  #     default: {temp: 0.9, top-p: 0.95, repeat-penalty: 1.05}
+  # - name: qwen3.5:2b # 2B, 2.8GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-UD-Q8_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: qwen3.5:4b # 4B, 6GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-UD-Q8_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: qwen3.5:27b # 27B, 17.5GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-27B-GGUF/resolve/main/Qwen3.5-27B-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: qwen3.5:35b-a3b # 35B + 3B MoE, 22GB, tools + vision
+  #   url: https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/Qwen3.5-35B-A3B-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  # - name: ministral-3:8b # 8B, 9GB, reasoning + vision
+  #   url: https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF/resolve/main/Ministral-3-8B-Instruct-2512-Q8_0.gguf
+  #   presets:
+  #     default: {temp: 0.1}
+  #     creative: {temp: 0.6}
+  # - name: glm4.6v-flash:9b # 9B, 8.9GB, reasoning + tools + vision
+  #   url: https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF/resolve/main/GLM-4.6V-Flash-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 0.8, top-p: 0.6, top-k: 2, repeat-penalty: 1.1}
+  # - name: glm4.7-flash:30b # 30B, 18GB, reasoning + tools
+  #   url: https://huggingface.co/unsloth/GLM-4.7-Flash-GGUF/resolve/main/GLM-4.7-Flash-UD-Q4_K_XL.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, min-p: 0.01}
+  #     coding: {temp: 0.7, top-p: 1.0, min-p: 0.01}
+```
+
+
 ## mail_dovecot
 
-[roles/mail_dovecot/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml)
+[roles/mail_dovecot/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/mail_dovecot/defaults/main.yml)
 
 ```yaml
 ##### DOVECOT MAIL SERVER (IMAP/MDA) #####
@@ -1138,7 +1203,7 @@ dovecot_firewalld_zones:
 
 ## matrix
 
-[roles/matrix/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml)
+[roles/matrix/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/matrix/defaults/main.yml)
 
 ```yaml
 ##### MATRIX REAL-TIME COMMUNICATION SERVER #####
@@ -1199,7 +1264,7 @@ matrix_synapse_ldap_validate_certs: yes
 # enable/disable the synapse-admin virtualhost (redirect users to maintenance page if disabled)
 matrix_synapse_admin_enable_service: yes
 # synapse-admin version (https://github.com/Awesome-Technologies/synapse-admin/releases)
-matrix_synapse_admin_version: "0.10.3"
+matrix_synapse_admin_version: "0.11.4"
 # list of IP addresses allowed to access synapse-admin and synapse admin API endpoints (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 matrix_synapse_admin_allowed_hosts: []
@@ -1215,7 +1280,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.11.94"
+matrix_element_version: "1.12.12"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1230,336 +1295,9 @@ matrix_element_allowed_hosts: []
 ```
 
 
-## monitoring_goaccess
-
-[roles/monitoring_goaccess/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml)
-
-```yaml
-##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
-# fully qualified domain used to access the HTML report
-goaccess_fqdn: "goaccess.CHANGEME.org"
-# HTTPS and SSL/TLS certificate mode for the goaccess webserver virtualhost
-#   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
-goaccess_https_mode: selfsigned
-# enable/disable the goaccess virtualhost (redirect users to maintenance page if disabled)
-goaccess_enable_service: yes
-# calendar expression for the periodic/scheduled update/re-generation of HTML reports
-# uses systemd's calendar events syntax https://manpages.debian.org/bookworm/systemd/systemd.time.7.en.html#CALENDAR_EVENTS
-# you can check whether an expression is valid using `systemd-analyze calendar "EXPRESSION"
-# Examples: "*:0/5:0" (every hour at minute 0, and every minute that is a multiple of 5), "21:00" (every day at 21:00), ...
-goaccess_update_calendar_expression: "*:00:00"
-# (optional) only parse log lines containing this string
-# goaccess_filter: "mysite.CHANGEME.org"
-# IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
-goaccess_geoip_db_version: "2025-02"
-# username/password used to access the HTML report
-goaccess_username: "CHANGEME"
-goaccess_password: "CHANGEME"
-# list of IP addresses allowed to access goaccess (IP or IP/netmask format)
-# set to empty list [] to allow access from any IP address
-goaccess_allowed_hosts: []
-```
-
-
-## monitoring_netdata
-
-[roles/monitoring_netdata/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
-
-```yaml
-##### NETDATA MONITORING SYSTEM #####
-# default interval between netdata updates (in seconds)
-# each plugin/module can override this setting (but only to set a longer interval)
-netdata_update_every: 2
-# amount of memory dedicated to caching recent (tier 0) metrics (MB)
-netdata_dbengine_page_cache_size: 32
-# number of days for which to keep recent (tier 0/per-second) metrics
-netdata_dbengine_tier0_retention_days: 7
-# number of days for which to keep downsampled (tier 1/per-minute) metrics
-netdata_dbengine_tier1_retention_days: 30
-# number of days for which to keep recent (tier 2/per-hour) metrics
-netdata_dbengine_tier2_retention_days: 730
-# space-separated list of IP addresses authorized to access netdata dashboard/API/badges/streaming (wildcards accepted, CIDR notation NOT accepted)
-# this is a global setting with higher priority to any of the ones below.
-netdata_allow_connections_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-# space-separated list of IP addresses authorized to access netdata dashboard/API/badges (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
-# netdata_allow_dashboard_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-# space-separated list of IP addresses authorized to stream metrics to this netdata instance (wildcards accepted, CIDR notation NOT accepted) (optional, netdata_allow_connections_from takes precedence)
-# netdata_allow_streaming_from: '10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.*'
-# enable netdata cloud/SaaS features (yes/no)
-netdata_cloud_enabled: no
-# public URL and port (i.e. outside NAT) used to access netdata, used for links in mail notifications
-netdata_public_url: "https://{{ inventory_hostname }}:19999"
-# netdata plugins to disable
-netdata_disabled_plugins:
-  - ebpf
-  - coredns
-  - unbound
-  - rabbitmq
-  - mysql
-  - prometheus
-  - bind
-  - pihole
-  - k8s_kubelet
-  - pulsar
-  - solr
-  - supervisord
-  - lighttpd
-  - netdata monitoring
-  - systemd-journal
-
-##### HEALTH NOTIFICATIONS #####
-# Netdata notification downtimes (list), no notifications will be sent during these intervals
-# start/end: cron expression for downtime start/end time. Example:
-# netdata_notification_downtimes:
-#   - start: "01 19 * * *"
-#     end: "00 07 * * *"
-netdata_notification_downtimes: []
-# enable/disable health notifications (yes/no)
-netdata_enable_health_notifications: yes
-# firewall zones for the netdata Web service, if nodiscc.xsrv.common/firewalld role is deployed
-# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
-netdata_firewalld_zones:
-  - zone: internal
-    state: enabled
-
-## NETDATA CHECKS ##
-# Process checks
-#   name: process group name to check (apps_groups.conf)
-#   min_count: minimum expected number of processes
-#   interval: time interval (seconds) between checks
-# Example:
-# netdata_process_checks:
-#   - { name: ssh, min_count: 1, interval: 20} # SSH server
-#   - { name: time, min_count: 1, interval: 20} # NTP daemon
-#   - { name: fail2ban, min_count: 1, interval: 20} # bruteforce prevention/IPS
-#   - { name: httpd, min_count: 1, interval: 20} # web server
-#   - { name: sql, min_count: 1, interval: 20} # SQL database engine
-#   - { name: gitea, min_count: 1, interval: 20} # gitea self-hosted software forge
-#   - { name: gitlab_runner, min_count: 1, interval: 20} # gitlab CI job runner
-#   - { name: murmurd, min_count: 1, interval: 20} # mumble VoIP server
-#   - { name: pulseaudio, min_count: 1, interval: 20} # pulseaudio network sound server
-#   - { name: auth, min_count: 1, interval: 20} # openldap server
-#   - { name: media, min_count: 1, interval: 20} # jellyfin media server
-#   - { name: samba, min_count: 2, interval: 20} # samba file sharing server (smbd+nmbd)
-netdata_process_checks: []
-# HTTP checks
-# uses the same syntax and parameters as netdata httpcheck module
-# https://learn.netdata.cloud/docs/collecting-metrics/synthetic-checks/http-endpoints
-# Example:
-# netdata_http_checks:
-#   - name: example.com
-#     url: https://website.com:444
-#     status_accepted:
-#       - 200
-#       - 401
-#     tls_skip_verify: yes
-#     timeout: 10
-#     update_every: 20
-netdata_http_checks: []
-# X509/SSL/TLS certificate checks (time to expiration, revocation status)
-# uses the same syntax and parameters as netdata x509check module
-# Port is mandatory for all non-file schemes
-# https://learn.netdata.cloud/docs/collecting-metrics/synthetic-checks/x.509-certificate
-# Example:
-# netdata_x509_checks:
-#   - name: example-org
-#     source: https://example.org:443
-#     days_until_expiration_critical: 15
-#     timeout: 3
-#     tls_skip_verify: yes
-#     update_every: 20
-netdata_x509_checks: []
-# Netdata TCP port checks
-#   name: readable name of the check
-#   host: hostname or IP address to contact
-#   ports: list of TCP port numbers to check
-#   interval: time interval (seconds) between checks
-# Example:
-# netdata_port_checks:
-#   - name: ldap-available
-#     host: 192.168.10.10
-#     ports: [389, 636]
-#     interval: 10
-#   - name: mumble
-#     host: 192.168.10.10
-#     ports: [64738]
-#     interval: 10
-netdata_port_checks: []
-# Netdata file checks
-# see https://raw.githubusercontent.com/netdata/go.d.plugin/master/config/go.d/filecheck.conf
-# Example:
-# netdata_file_checks:
-#   - name: files_example
-#     files:
-#       include:
-#         - '/path/to/file1'
-#         - '/path/to/file2'
-#   - name: dirs_example
-#     dirs:
-#       collect_dir_size: yes
-#       include:
-#         - '/path/to/dir1'
-#         - '/path/to/dir2'
-netdata_file_checks: []
-# Netdata ping checks
-# List of hosts to ping using the fping plugin
-# Example:
-# netdata_fping_hosts:
-#   - netdata.cloud
-#   - debian.org
-#   - 1.1.1.1
-netdata_fping_hosts: []
-# Delay between ping checks (ms)
-netdata_fping_ping_every: 5000
-# Delay between ping chart updates (seconds) (this shohuld be longer than netdata_fping_ping_every)
-netdata_fping_update_every: 10
-# Do not send notifications on ping check failures (yes/no)
-netdata_fping_alarms_silent: no
-
-## NETDATA STREAMING ##
-# stream charts to a "parent" netdata instance (yes/no)
-netdata_streaming_send_enabled: no
-# netdata instance to stream metrics to (protocol:hostname:port:SSL)
-netdata_streaming_destination: "tcp:monitoring.CHANGEME.org:19999:SSL"
-# enable/disable accepting streaming from another netdata instance (yes/no)
-netdata_streaming_receive_enabled: no
-# API key (UUID) used to authenticate on the destination instance/allow from source instances
-netdata_streaming_api_key: "CHANGEME"
-# enable health alarms for charts received from "child" netdata instances (yes/no)
-# if this is enabled, you may want to set `netdata_enable_health_notifications: no` on child instances, to prevent duplicate notifications
-netdata_streaming_receive_alarms: no
-
-## NETDATA MODULES ##
-# setup needrestart and netdata-needrestart module (yes/no)
-setup_needrestart: yes
-# automatically restart services that require it immediately after upgrades (yes/no)
-needrestart_autorestart_services: yes
-# reboot the OS automatically if required after a Linux kernel upgrade
-# set to no to disable automatic reboot/services restart completely,
-# or use cron syntax (https://crontab.guru/) to define the schedule
-# you may want to schedule a monitoring downtime for a few minutes at the same time, see netdata_downtimes
-# Example: needrestart_autorestart_cron: "00 5 * * *" # every day at 05:00
-needrestart_autorestart_cron: no
-# setup netdata-logcount module (yes/no)
-setup_netdata_logcount: yes
-# (minutes) interval between updates of log message counts in the logcount module. Set to 0 to disable the module and cron job
-netdata_logcount_update_interval: 1
-# maximum acceptable ERROR message in logs over the last period before raising a WARNING or CRITICAL alert
-netdata_logcount_error_threshold_warn: 10
-netdata_logcount_error_threshold_crit: 100
-# maximum acceptable WARNING message in logs over the last period before raising a WARNING alert
-netdata_logcount_warning_threshold_warn: 10
-# user to send logcount notifications to (eg. sysadmin, silent...)
-netdata_logcount_notification_to: "silent"
-# setup netdata-debsecan module (yes/no)
-setup_netdata_debsecan: yes
-# enable daily mail reports from debsecan (yes/no)
-debsecan_enable_reports: yes
-# list of vulnerabilities (CVE numbers) that will be ignored by debsecan
-# Example:
-# debsecan_whitelist:
-#   - CVE-2021-20316 # not applicable, SMBv1 disabled
-debsecan_whitelist:
-  - CVE-2023-28450 # minor issue https://security-tracker.debian.org/tracker/CVE-2023-28450
-# setup monitoring of pending package upgrades (yes/no)
-setup_netdata_apt: yes
-```
-
-
-## monitoring_rsyslog
-
-[roles/monitoring_rsyslog/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)
-
-```yaml
-##### RSYSLOG LOG PROCESSING SYSTEM #####
-# number of daily /var/log/syslog archives to retain
-rsyslog_retention_days: 186
-# enable forwarding of syslog logs to a syslog server over TLS/TCP (no/yes)
-rsyslog_enable_forwarding: no
-# if forwarding is enabled, hostname/port to forward logs to
-rsyslog_forward_to_hostname: "logs.CHANGEME.org"
-rsyslog_forward_to_port: 5140
-# if forwarding is enabled, inventory hostname of the host to forward logs to
-rsyslog_forward_to_inventory_hostname: "my.CHANGEME.org"
-# enable receiving logs from other hosts over TLS/TCP port 514 (no/yes)
-# log collectors must be deployed before clients in the playbook execution order
-rsyslog_enable_receive: no
-# if rsyslog_enable_receive is enabled, DNS name of this syslog server/collector
-rsyslog_fqdn: "logs.CHANGEME.org"
-# if rsyslog_enable_receive is enabled, path to the directory to write remote hosts logs to
-rsyslog_remote_logs_path: /var/log/rsyslog/hosts
-# when rsyslog_enable_forwarding or rsyslog_enable_receive is enabled, start and end validity dates for TLS certificates (YYYYMMDDHHMMSSZ)
-rsyslog_cert_not_before: "20240219000000Z"
-rsyslog_cert_not_after: "20340219000000Z"
-# custom rsyslog configuration directives, applied before forwarding/single-file aggregation (list)
-# Example:
-# rsyslog_custom_config:
-#   - ':msg, contains, "failed to read Temperature" stop' # discard messages containing this string
-#   - 'if $programname == "apache" and re_match($msg, ".* 127.0.0.1 - - .* \"GET /server-status\?auto HTTP/1.1\" 200") then stop' # discard messages matching this program name and regular expression
-#   - 'if $programname == "CRON" and re_match($msg, "cron:session): session (opened|closed) for user .*") then stop'
-rsyslog_custom_config: []
-# firewall zones from which to allow incoming logs (zone, state), if rsyslog_enable_receive: yes and nodiscc.xsrv.common/firewalld role is deployed
-# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
-rsyslog_firewalld_zones:
-  - zone: internal
-    state: enabled
-  - zone: public
-    state: enabled
-```
-
-
-## monitoring_utils
-
-[roles/monitoring_utils/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml)
-
-```yaml
-##### MONITORING UTILITIES #####
-# setup lynis security audit tool (yes/no)
-setup_lynis: yes
-# list of strings to extract from lynis reports and forward by mail
-# Example: lynis_report_regex: 'warning|suggestion|manual'
-lynis_report_regex: 'warning'
-# list of lynis tests to ignore/skip (https://cisofy.com/lynis/controls/)
-lynis_skip_tests:
-  - "CUST-0285" # Install libpam-usb to enable multi-factor authentication for PAM sessions (we don't use multi-factor auth for SSH)
-  - "CUST-0830" # Install debian-goodies so that you can run checkrestart (needrestart is used instead)
-  - "BOOT-5122" # Password on GRUB bootloader to prevent altering boot configuration (access protected by physical security/hoster/hypervisor console password)
-  - "AUTH-9286" # Configure minimum/maximum password age in /etc/login.defs (we don't enforce password aging)
-  - "AUTH-9308" # No password set for single mode (access protected by physical security/hoster/hypervisor console password)
-  - "FILE-6310" # place /tmp on a separated partition (root partition free disk space is monitored by netdata)
-  - "TIME-3120" # Check ntpq peers output for unreliable ntp peers (we use a NTP pool, correct NTP peers will be selected automatically)
-  - "CONT-8104" # Run 'docker info' to see warnings applicable to Docker daemon (no swap support)
-  - "AUTH-9283" # logins without password are denied by PAM and SSH (nodiscc.xsrv.common)
-  - "BANN-7126" # legal banner for local logins is not needed
-  - "BANN-7130" # legal banner for ssh logins is not needed
-  - "LOGG-2190" # open file descriptors on deleted files is normal behavior
-  - "SSH-7408:Port" # changing ssh listen port from 22 does not mitigate the risk, not a security measure, can also be set to a non-standard port in NAT
-  - "SSH-7408:ClientAliveCountMax" # 3 is an acceptable value, nodiscc.xsrv.common sets the value to 3
-  - "SSH-7408:Compression" # any of yes/delayed/no can be considered secure since 2018 (pre-authentication compression never enabled)
-  - "SSH-7408:MaxAuthTries" # 5 is an acceptable value (nodiscc.xsrv.common), lowering it may cause login failures from systems where more than 3 ssh private keys are available
-  - "SSH-7408:MaxSessions" # 10 is an acceptable values, SSH connection multiplexing cannot be abused/cause performance issues unless the user is authenticated
-  - "PHP-2376" # allow_url_fopen is used legitimately by several applications in file_get_contents() to fetch remote files
-  - "HRDN-7230" # malware/rootkit detection software is inefficient when run on a compromised host
-  - "HRDN-7222" # having compilers installed is an acceptable risk, /usr/bin/as installed by needrestart->binutils dependency
-  - "USB-1000" # Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft (access protected by physical security/hoster/hypervisor console password)
-  - "NETW-3015" # promiscuous interfaces are used legitimately by some programs (libvirt), and setting the promiscuous flag requires root anyway
-  - "KRNL-5830" # let needrestart/netdata send alarms when reboot is required
-  - "PKGS-7392" # let debsecan handle reporting of vulnerable packages
-  - "MALW-3280" # commercial antivirus software not required, non-free software not recommended, causes https://github.com/CISOfy/lynis/issues/1420
-# when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
-debsums_cron_check: "daily"
-# base path to index with duc disk usage analyzer
-duc_index_path: "/"
-# list of directories/mountpoints on which to perform bonnie++ disk benchmarks
-bonnie_benchmark_paths:
-  - /var
-```
-
-
 ## moodist
 
-[roles/moodist/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml)
+[roles/moodist/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/moodist/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the moodist instance
@@ -1577,7 +1315,7 @@ moodist_enable_service: yes
 
 ## mumble
 
-[roles/mumble/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mumble/defaults/main.yml)
+[roles/mumble/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/mumble/defaults/main.yml)
 
 ```yaml
 ##### MUMBLE VOIP SERVER #####
@@ -1609,7 +1347,7 @@ mumble_firewalld_zones:
 
 ## nextcloud
 
-[roles/nextcloud/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)
+[roles/nextcloud/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml)
 
 ```yaml
 ##### NEXTCLOUD #####
@@ -1642,7 +1380,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "29.0.12"
+nextcloud_version: "31.0.13"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1745,7 +1483,7 @@ nextcloud_enable_service: yes
 
 ## nmap
 
-[roles/nmap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nmap/defaults/main.yml)
+[roles/nmap/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/nmap/defaults/main.yml)
 
 ```yaml
 ##### NMAP NETWORK SCANNER #####
@@ -1755,40 +1493,9 @@ nmap_limit: "{{ groups['all'] }}"
 ```
 
 
-## ollama
-
-[roles/ollama/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/ollama/defaults/main.yml)
-
-```yaml
-##### EXAMPLE APPLICATION/SERVICE #####
-# list of models to pull by default, see https://github.com/ollama/ollama?tab=readme-ov-file#model-library
-# you can still pull/run any model by running ollama pull/run MODEL_NAME manually
-ollama_models:
-  - orca-mini
-# fully qualified domain name of the ollama-ui web interface
-ollama_ui_fqdn: "llm.CHANGEME.org"
-# username/password for access to the ollama web interface/API
-ollama_username: "CHANGEME"
-ollama_password: "CHANGEME"
-# ollama version (https://github.com/ollama/ollama/releases.atom)
-ollama_version: "v0.3.6"
-# HTTPS and SSL/TLS certificate mode for the ollama-ui webserver virtualhost
-#   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate
-ollama_ui_https_mode: selfsigned
-# enable automatic backups of downloaded models (if the nodiscc.xsrv.backup role is deployed) (no/yes)
-ollama_backup_models: no
-# start/stop the ollama service and web UI, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
-ollama_enable_service: yes
-# list of IP addresses allowed to access the ollama web interface (IP or IP/netmask format)
-# set to empty list [] to allow access from any IP address
-ollama_ui_allowed_hosts: []
-```
-
-
 ## openldap
 
-[roles/openldap/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml)
+[roles/openldap/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml)
 
 ```yaml
 ##### OPENLDAP DIRECTORY SERVICE #####
@@ -1828,7 +1535,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "8.9"
+ldap_account_manager_version: "9.5.1"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1873,7 +1580,7 @@ self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.7.2"
+self_service_password_version: "1.7.3"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
@@ -1897,13 +1604,13 @@ self_service_password_php_upload_max_filesize: '2M'
 
 ## owncast
 
-[roles/owncast/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml)
+[roles/owncast/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/owncast/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the owncast instance
 owncast_fqdn: "owncast.CHANGEME.org"
 # the owncast OCI image to pull (https://github.com/owncast/owncast/releases.atom)
-owncast_image: "docker.io/owncast/owncast:0.2.1"
+owncast_image: "docker.io/owncast/owncast:0.2.4"
 # password to access the admin interfaces at /admin (username admin)
 owncast_admin_password: "CHANGEME"
 # HTTPS and SSL/TLS certificate mode for the owncast webserver virtualhost
@@ -1932,53 +1639,26 @@ owncast_auth_password: CHANGEME
 
 ## postgresql
 
-[roles/postgresql/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/postgresql/defaults/main.yml)
+[roles/postgresql/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/postgresql/defaults/main.yml)
 
 ```yaml
 ##### POSTGRESQL DATABASE SERVER #####
 # start/stop the postgresql service, enable/disable it on boot (yes/no)
 postgresql_enable_service: yes
 # pgmetrics version (https://github.com/rapidloop/pgmetrics/releases.atom, without leading v)
-postgresql_pgmetrics_version: "1.17.0"
+postgresql_pgmetrics_version: "1.18.0"
 ```
 
 
 ## readme_gen
 
-[roles/readme_gen/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml)
+[roles/readme_gen/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/readme_gen/defaults/main.yml)
 
 ```yaml
 ##### MARKDOWN INVENTORY GENERATION #####
 # the set of hosts for which documentation should be auto-generated
 # Example: readme_gen_limit: ['host1.CHANGEME.org', 'host2.CHANGEME.org']
 readme_gen_limit: "{{ groups['all'] }}"
-# list of netdata badges to display for each host
-# Example:
-# readme_gen_netdata_badges:
-#   - chart: disk_space._var # netdata chart name
-#     alarm: disk_space_usage # netdata alarm name
-#     label: /var disk space usage # (optional) badge label, if unset the default label will be used
-readme_gen_netdata_badges:
-  - chart: needrestart.status
-    alarm: needrestart_kernel
-  - chart: needrestart.status
-    alarm: needrestart_services
-  - chart: disk_space._
-    alarm: disk_space_usage
-    label: / disk space usage
-  - chart: disk_space._var
-    alarm: disk_space_usage
-    label: /var disk space usage
-  - chart: system.load
-    alarm: load_average_5
-    label: 5min load average
-  - chart: system.ram
-    alarm: ram_in_use
-  - chart: mem.swap
-    alarm: used_swap
-  - chart: apt.upgradable
-    alarm: apt_upgradable
-    label: upgradable packages
 # write GTK bookmarks to access hosts over SFTP in the output README.md (yes/no)
 readme_gen_gtk_bookmarks: no
 # path to the markdown template
@@ -1988,7 +1668,7 @@ readme_gen_template: "readme_gen.md.j2"
 
 ## samba
 
-[roles/samba/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml)
+[roles/samba/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/samba/defaults/main.yml)
 
 ```yaml
 ##### SAMBA FILE SHARING SERVER #####
@@ -2083,7 +1763,7 @@ samba_nscd_cache_time_to_live: 60
 
 ## searxng
 
-[roles/searxng/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/searxng/defaults/main.yml)
+[roles/searxng/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/searxng/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the searxng instance
@@ -2100,12 +1780,17 @@ searxng_image: "docker.io/searxng/searxng:latest"
 searxng_https_mode: "selfsigned"
 # start/stop the searxng service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 searxng_enable_service: yes
+# enable HTTP basic authentication to access the web interface (yes/no)
+searxng_auth_enabled: no
+# if HTTP basic authentication is enabled, username and password for viewers
+searxng_auth_username: CHANGEME
+searxng_auth_password: CHANGEME
 ```
 
 
 ## shaarli
 
-[roles/shaarli/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)
+[roles/shaarli/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml)
 
 ```yaml
 ##### SHAARLI BOOKMARKING SERVICE #####
@@ -2145,14 +1830,14 @@ shaarli_setup_python_client: no
 # shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.14.0'
+shaarli_version: 'v0.16.0'
 # list of IP addresses allowed to access shaarli (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
 # default view mode when using the stack template (small/medium/large)
 shaarli_stack_default_ui: "medium"
 # shaarli stack template version (https://github.com/RolandTi/shaarli-stack/releases.atom)
-shaarli_stack_version: "0.10"
+shaarli_stack_version: "0.12"
 # php-fpm: Maximum amount of memory a script may consume (K, M, G)
 shaarli_php_memory_limit: '256M'
 # php_fpm: Maximum execution time of each script (seconds)
@@ -2170,13 +1855,13 @@ shaarli_enable_service: yes
 
 ## stirlingpdf
 
-[roles/stirlingpdf/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/stirlingpdf/defaults/main.yml)
+[roles/stirlingpdf/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/stirlingpdf/defaults/main.yml)
 
 ```yaml
 # Fully Qualified Domain Name for the stirlingpdf instance
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
 # the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
-stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:0.43.2"
+stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:2.7.1"
 # HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -2191,7 +1876,7 @@ stirlingpdf_allowed_hosts: []
 
 ## transmission
 
-[roles/transmission/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml)
+[roles/transmission/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/transmission/defaults/main.yml)
 
 ```yaml
 ##### TRANSMISSION BITTORRENT CLIENT #####
@@ -2227,7 +1912,7 @@ transmission_firewalld_zones:
 
 ## tt_rss
 
-[roles/tt_rss/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml)
+[roles/tt_rss/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/tt_rss/defaults/main.yml)
 
 ```yaml
 ##### TT-RSS FEED READER #####
@@ -2251,7 +1936,7 @@ tt_rss_install_dir: "/var/www/{{ tt_rss_fqdn }}"
 # full public URL of your tt-rss installation (update this if you changed the install location to a subdirectory)
 tt_rss_full_url: "https://{{ tt_rss_fqdn }}/"
 # tt-rss version (git revision)
-tt_rss_version: "master"
+tt_rss_version: "c67b943aa894b90103c4752ac430958886b996b2"
 # Maximum number of users allowed to register accounts
 tt_rss_account_limit: 10
 # Error log destination. setting this to blank uses PHP logging/webserver error log (sql, syslog, '')
@@ -2276,7 +1961,7 @@ tt_rss_enable_service: yes
 
 ## wireguard
 
-[roles/wireguard/defaults/main.yml](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml)
+[roles/wireguard/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml)
 
 ```yaml
 ##### WIREGUARD VPN SERVER #####
@@ -2293,10 +1978,18 @@ wireguard_enable_service: yes
 # wireguard_peers:
 #   - name: client1 # arbitrary name for the peer
 #     state: present # (optional, present/absent, default present) set to absent to remove the peer and its keys)
-#     public_key: Faz...4vEQ= # the public key of the peer (contents of its wireguard.pub)
-#     ip_address: "10.200.200.10" # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
-#     routes: "1.2.3.4/32, 192.168.18.0/24" # (optional, default 0.0.0.0/0 - route all traffic through the VPN) IP addresses/networks to route through the VPN on the client
+#     public_key: Faz...4vEQ= # (optional) public key of the peer (contents of its wireguard.pub) - if not specified a private/public key pair will be generated on the server
+#     ip_address: 10.200.200.10 # IP address of the client on the VPN network (CIDR notation), must be part of the VPN server network
+#     routes: # (optional, default 0.0.0.0/0 - route all traffic through the VPN) list of IP addresses/networks to route through the VPN on the client
+#       - 1.2.3.4/32
+#       - 192.168.18.0/24
 #   - name: client2
+#     state: present
+#     ip_address: 10.200.200.11
+#     routes:
+#       - 10.200.200.0/32 # required for wireguard client/server traffic
+#       - 10.0.10.0/24 # example, only route traffic to the server's local network through the VPN
+#   - name: client3
 #     state: absent
 wireguard_peers: []
 
@@ -2308,8 +2001,10 @@ wireguard_firewalld_zones:
   - zone: internal
     state: enabled
 
+# allow forwarding wireguard peers traffic to other zones (e.g. internet) (yes/no)
+wireguard_allow_forwarding: yes
+
 # allow wireguard clients to connect to these firewalld services/ports on the host
-# in addition, the clients must have a route to the server IP in wireguard_peers.*.routes, see anotherclient example above
 # Example:
 # wireguard_firewalld_services:
 #   - name: ssh # service name
@@ -2318,9 +2013,185 @@ wireguard_firewalld_zones:
 #     state: enabled
 #   - name: http
 #   - name: https
-#   - name: netdata
 #   - name: imaps
 #     state: disabled
-wireguard_firewalld_services: []
+wireguard_firewalld_services:
+  - name: dns
+    state: enabled
+```
+
+
+## monitoring/exporters
+
+[roles/monitoring/exporters/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/exporters/defaults/main.yml)
+
+```yaml
+##### MONITORING.EXPORTERS #####
+# uninstall netdata and remove all its files/data/configuration
+netdata_uninstall: true
+# REQUIRED password used to authenticate to/scrape metrics from exporter-exporter
+monitoring_exporters_auth_password: CHANGEME
+# log level for prometheus-blackbox-exporter (info/debug/warn/error)
+exporters_blackbox_log_level: warn
+# URL of the central VictoriaMetrics instance for remote write
+# Example: https://monitoring.example.com:8428
+monitoring_victoriametrics_url: "CHANGEME"
+```
+
+
+## monitoring/goaccess
+
+[roles/monitoring/goaccess/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/goaccess/defaults/main.yml)
+
+```yaml
+##### GO ACCESS WEB LOG ANALYZER/VIEWER #####
+# fully qualified domain used to access the HTML report
+goaccess_fqdn: "goaccess.CHANGEME.org"
+# HTTPS and SSL/TLS certificate mode for the goaccess webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate (will generate warning in browsers and clients)
+goaccess_https_mode: selfsigned
+# enable/disable the goaccess virtualhost (redirect users to maintenance page if disabled)
+goaccess_enable_service: yes
+# calendar expression for the periodic/scheduled update/re-generation of HTML reports
+# uses systemd's calendar events syntax https://manpages.debian.org/trixie/systemd/systemd.time.7.en.html#CALENDAR_EVENTS
+# you can check whether an expression is valid using `systemd-analyze calendar "EXPRESSION"
+# Examples: "*:0/5:0" (every hour at minute 0, and every minute that is a multiple of 5), "21:00" (every day at 21:00), ...
+goaccess_update_calendar_expression: "*:00:00"
+# (optional) only parse log lines containing this string
+# goaccess_filter: "mysite.CHANGEME.org"
+# IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
+goaccess_geoip_db_version: "{{ ansible_date_time.year }}-02"
+# username/password used to access the HTML report
+goaccess_username: "CHANGEME"
+goaccess_password: "CHANGEME"
+# list of IP addresses allowed to access goaccess (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+goaccess_allowed_hosts: []
+```
+
+
+## monitoring/grafana
+
+[roles/monitoring/grafana/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/grafana/defaults/main.yml)
+
+```yaml
+# fully qualified domain name of the grafana instance
+grafana_fqdn: "grafana.CHANGEME.org"
+# username/password/e-mail address for the grafana admin user
+grafana_admin_username: "CHANGEME"
+grafana_admin_password: "CHANGEME20"
+grafana_admin_email: "CHANGEME@CHANGEME.org"
+# HTTPS and SSL/TLS certificate mode for the grafana webserver virtualhost
+#   letsencrypt: acquire a certificate from letsencrypt.org
+#   selfsigned: generate a self-signed certificate
+grafana_https_mode: selfsigned
+# start/stop the grafana service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
+grafana_enable_service: yes
+# list of IP addresses allowed to access the grafana web interface (IP or IP/netmask format)
+# set to empty list [] to allow access from any IP address
+grafana_allowed_hosts: []
+# grafana version (https://github.com/grafana/grafana/releases.atom)
+grafana_version: "12.4.1"
+# password to authenticate to VictoriaMetrics datasource
+grafana_victoriametrics_auth_password: "{{ monitoring_exporters_auth_password }}"
+```
+
+
+## monitoring/rsyslog
+
+[roles/monitoring/rsyslog/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/rsyslog/defaults/main.yml)
+
+```yaml
+##### RSYSLOG LOG PROCESSING SYSTEM #####
+# number of daily /var/log/syslog archives to retain
+rsyslog_retention_days: 186
+# enable forwarding of syslog logs to a syslog server over TLS/TCP (no/yes)
+rsyslog_enable_forwarding: no
+# if forwarding is enabled, hostname/port to forward logs to
+rsyslog_forward_to_hostname: "logs.CHANGEME.org"
+rsyslog_forward_to_port: 5140
+# if forwarding is enabled, inventory hostname of the host to forward logs to
+rsyslog_forward_to_inventory_hostname: "my.CHANGEME.org"
+# enable receiving logs from other hosts over TLS/TCP port 514 (no/yes)
+# log collectors must be deployed before clients in the playbook execution order
+rsyslog_enable_receive: no
+# if rsyslog_enable_receive is enabled, DNS name of this syslog server/collector
+rsyslog_fqdn: "logs.CHANGEME.org"
+# if rsyslog_enable_receive is enabled, path to the directory to write remote hosts logs to
+rsyslog_remote_logs_path: /var/log/rsyslog/hosts
+# when rsyslog_enable_forwarding or rsyslog_enable_receive is enabled, start and end validity dates for TLS certificates (YYYYMMDDHHMMSSZ)
+rsyslog_cert_not_before: "20240219000000Z"
+rsyslog_cert_not_after: "20340219000000Z"
+# custom rsyslog configuration directives, applied before forwarding/single-file aggregation (list)
+# Example:
+# rsyslog_custom_config:
+#   - ':msg, contains, "failed to read Temperature" stop' # discard messages containing this string
+#   - 'if $programname == "apache" and re_match($msg, ".* 127.0.0.1 - - .* \"GET /server-status\?auto HTTP/1.1\" 200") then stop' # discard messages matching this program name and regular expression
+#   - 'if $programname == "CRON" and re_match($msg, "cron:session): session (opened|closed) for user .*") then stop'
+rsyslog_custom_config: []
+# firewall zones from which to allow incoming logs (zone, state), if rsyslog_enable_receive: yes and nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+rsyslog_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: enabled
+```
+
+
+## monitoring/utils
+
+[roles/monitoring/utils/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/utils/defaults/main.yml)
+
+```yaml
+##### MONITORING UTILITIES #####
+# when to verify installed package files against MD5 checksums (daily/weekly/monthly/never)
+debsums_cron_check: "daily"
+# base path to index with duc disk usage analyzer
+duc_index_path: "/"
+# list of directories/mountpoints on which to perform bonnie++ disk benchmarks
+bonnie_benchmark_paths:
+  - /var
+```
+
+
+## monitoring/victoriametrics
+
+[roles/monitoring/victoriametrics/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/victoriametrics/defaults/main.yml)
+
+```yaml
+# automatically create HTTP probes for xsrv roles deployed on these hosts
+victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
+# list of domains to exclude from automatic HTTP checks
+# Example:
+# victoriametrics_auto_check_exclude:
+#   - gitea.example.org
+#   - media.example.org
+victoriametrics_auto_check_exclude: []
+# list of URLs to monitor with victoriametrics/blackbox-exporter HTTP probes
+# Example:
+# victoriametrics_http_checks:
+#   - https://prometheus.io
+#   - https://www.debian.org
+victoriametrics_http_checks: []
+# how long to wait before repeating the last notification
+victoriametrics_alertmanager_repeat_interval: "1h"
+# REQUIRED password to authenticate on exporters when scraping them
+victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
+# REQUIRED SMTP host/from address/username/password and recipient address for alertmaneger e-mail alerts
+victoriametrics_alertmanager_smtp_host: "{{ msmtp_host | default('smtp.CHANGEME.org') }}"
+victoriametrics_alertmanager_smtp_port: "{{ msmtp_port | default('CHANGEME') }}"
+victoriametrics_alertmanager_smtp_from: "{{ xsrv_admin_email }}"
+victoriametrics_alertmanager_email_to: "{{ xsrv_admin_email }}"
+victoriametrics_alertmanager_smtp_auth_username: "{{ msmtp_username | default('CHANGEME') }}"
+victoriametrics_alertmanager_smtp_auth_password: "{{ msmtp_password | default('CHANGEME') }}"
+# firewall zones from which to allow remote write (zone, state)
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule
+victoriametrics_firewalld_zones:
+  - zone: internal
+    state: enabled
+  - zone: public
+    state: enabled
 ```
 <!--END ROLES LIST-->

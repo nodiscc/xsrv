@@ -1,0 +1,15 @@
+[Unit]
+Description=VictoriaMetrics vmagent service
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+Group=prometheus
+EnvironmentFile=/etc/default/vmagent
+ExecStart=/usr/bin/vmagent $ARGS
+ExecReload=/bin/kill -HUP $MAINPID
+WorkingDirectory=/var/lib/prometheus/vmagent
+
+[Install]
+WantedBy=multi-user.target

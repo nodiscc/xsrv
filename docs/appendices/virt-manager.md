@@ -1,6 +1,6 @@
 # libvirt / virt-manager
 
-[libvirt](https://en.wikipedia.org/wiki/Libvirt) is a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more. libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical ([`virt-manager`](https://en.wikipedia.org/wiki/Virtual_Machine_Manager)) and command-line ([`virsh`](https://manpages.debian.org/bookworm/libvirt-clients/virsh.1.en.html)) interfaces.
+[libvirt](https://en.wikipedia.org/wiki/Libvirt) is a toolkit to manage [virtual machines](https://en.wikipedia.org/wiki/Virtual_machine) and accompanying virtual storage, networking, and more. libvirt allows easy and comprehensive management of [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine)/[QEMU](https://en.wikipedia.org/wiki/QEMU) virtual machines through graphical ([`virt-manager`](https://en.wikipedia.org/wiki/Virtual_Machine_Manager)) and command-line ([`virsh`](https://manpages.debian.org/trixie/libvirt-clients/virsh.1.en.html)) interfaces.
 
 Advantages of virtualization include:
 
@@ -33,7 +33,7 @@ sudo apt install virt-manager virt-viewer
 sudo usermod --appent --groups $USER libvirt,kvm,libvirt-qemu
 ```
 
-Libvirt can also be installed and managed from xsrv, using the [libvirt role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt).
+Libvirt can also be installed and managed from xsrv, using the [libvirt role](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt).
 
 ## VM creation
 
@@ -41,45 +41,45 @@ Libvirt can also be installed and managed from xsrv, using the [libvirt role](ht
 
 Run virt-manager from your applications menu and click `New virtual machine`
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/1e2jNP0.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/1e2jNP0.png)
 
 Select QEMU/KVM as the virtual machine type:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/F7ZSXFS.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/F7ZSXFS.png)
 
 Select the installation media/ISO image for the operating system you want to install:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/o5Fu0IX.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/o5Fu0IX.png)
 
 Set memory amount and virtual CPU number depending on your performance requirements:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/0aQlobJ.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/0aQlobJ.png)
 
 Create a new virtual hard disk image for your VM depending on your storage requirements:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Ra4vp3S.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Ra4vp3S.png)
 
 Set a unique name (such as a [FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)) for your VM, and attach it to the default `NAT` virtual network:
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/3Tn34xD.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/3Tn34xD.png)
 
 Click `Finish` and start the VM from virt-manager's main window.
 
-![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/aJGkUJz.png)
+![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/aJGkUJz.png)
 
 
 ### Automated
 
-You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/bookworm/virtinst/virt-install.1.en.html) command. The [`xsrv init-vm`](debian.md##automated-from-a-vm-template) and [`xsrv init-vm-template`](debian.md#automated-from-preseed-file) [commands](../usage.md) automate running `virt-install` with the correct options.
+You can also create a VM from the command-line using the [virt-install](https://manpages.debian.org/trixie/virtinst/virt-install.1.en.html) command. The [`xsrv init-vm`](debian.md##automated-from-a-vm-template) and [`xsrv init-vm-template`](debian.md#automated-from-preseed-file) [commands](../usage.md) automate running `virt-install` with the correct options.
 
 
 ## Cloning VMs
 
 See [Debian/Installation/From a VM template](debian.md), [`xsrv init-vm --help`](../usage.md), and the following manpages:
-- [`virt-clone`](https://manpages.debian.org/bookworm/virtinst/virt-clone.1.en.html)
-- [`virt-sysprep`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-sysprep.1.en.html)
-- [`virt-customize`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-customize.1.en.html)
-- [`virt-builder`](https://manpages.debian.org/bookworm/libguestfs-tools/virt-builder.1.en.html)
+- [`virt-clone`](https://manpages.debian.org/trixie/virtinst/virt-clone.1.en.html)
+- [`virt-sysprep`](https://manpages.debian.org/trixie/libguestfs-tools/virt-sysprep.1.en.html)
+- [`virt-customize`](https://manpages.debian.org/trixie/libguestfs-tools/virt-customize.1.en.html)
+- [`virt-builder`](https://manpages.debian.org/trixie/libguestfs-tools/virt-builder.1.en.html)
 
 
 ## Migrating VMs between hypervisors
@@ -99,41 +99,7 @@ srvadmin@hv2:~$ virsh define my.virtual.machine.xml
 srvadmin@hv2:~$ virsh start my.virtual.machine.xml
 ```
 
-If your VMs are managed by the [libvirt role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt), instead of dumping/transferring the XML definition and loading it manually, you should just copy the relevant `libvirt_vms` entry to the target hypervisor host_vars, and set its state to `absent` on the original hypervisor. Don't forget to migrate any port forwards related to it:
-
-```diff
-# host_vars/hv1/hv1.yml
- libvirt_vms:
--  - name: my.virtual.machine
--    xml_file: "{{ playbook_dir }}/data/libvirt/my.virtual.machine.xml"
-+  - name: my.virtual.machine
-+    state: absent
-   - name: an.other.vm
-     xml_file: "{{ playbook_dir }}/data/libvirt/an.other.vm.xml"
--libvirt_port_forwards:
--  - vm_name: my.virtual.machine
--    host_port: 443
--    vm_port: 443
--    protocol: tcp
--    host_ip: 192.168.1.20
--    vm_ip: 10.0.0.101
--    bridge: virbr1
-
-# host_vars/hv2/hv2.yml
- libvirt_vms:
-+  - name: my.virtual.machine
-+    xml_file: "{{ playbook_dir }}/data/libvirt/my.virtual.machine.xml"
-   - name: yet.another.vm
-     xml_file: "{{ playbook_dir }}/data/libvirt/yet.another.vm.xml"
-+libvirt_port_forwards:
-+  - vm_name: my.virtual.machine
-+    host_port: 443
-+    vm_port: 443
-+    protocol: tcp
-+    host_ip: 192.168.1.21
-+    vm_ip: 10.0.0.101
-+    bridge: virbr1
-```
+If your VMs are managed by the [libvirt role](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt), instead of dumping/transferring the XML definition and loading it manually, you should just copy the relevant `libvirt_vms` entry to the target hypervisor host_vars, and set its state to `absent` on the original hypervisor. Don't forget to migrate any `libvirt_port_fowards` related to it.
 
 <!-- TODO
 

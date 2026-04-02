@@ -1,9 +1,0 @@
-- name: install netdata checks for gitea
-  template:
-    src: etc_netdata_go.d_httpcheck.conf.d_gitea.conf.j2
-    dest: /etc/netdata/go.d/httpcheck.conf.d/gitea.conf
-    owner: root
-    group: netdata
-    mode: "0640"
-  notify: assemble netdata configuration
-  ignore_errors: "{{ ansible_check_mode }}"

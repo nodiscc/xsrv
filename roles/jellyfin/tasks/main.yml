@@ -73,17 +73,6 @@
     - ansible_local.backup.ansible_managed is defined
     - ansible_local.backup.ansible_managed | bool
 
-- name: import netdata configuration tasks
-  import_tasks: netdata.yml
-  become: yes
-  tags:
-    - jellyfin
-    - monitoring
-    - netdata
-  when:
-    - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed | bool
-
 - name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes

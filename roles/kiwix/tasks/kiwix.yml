@@ -1,0 +1,95 @@
+##### PACKAGES #####
+
+- name: install kiwix packages
+  apt:
+    state: present
+    package:
+      - kiwix-tools
+
+- name: create kiwix user
+  user:
+    name: kiwix
+    state: present
+    create_home: no
+    shell: /bin/bash
+    comment: "Kiwix wiki server"
+    password: "*"
+    home: "/var/lib/kiwix"
+
+- name: create kiwix data directory
+  file:
+    state: directory
+    path: /var/lib/kiwix
+    owner: kiwix
+    group: kiwix
+    mode: "0770"
+
+##### SERVICES #####
+
+- name: create kiwix systemd service
+  template:
+    src: etc_systemd_system_kiwix-serve.service.j2
+    dest: /etc/systemd/system/kiwix-serve.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable/disable start/stop kiwix service
+  systemd:
+    name: kiwix-serve
+    enabled: "{{ kiwix_enable_service }}"
+    state: "{{ 'started' if kiwix_enable_service else 'stopped' }}"
+    daemon_reload: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### SYMLINK #####
+
+- name: add the ansible user to the kiwix group
+  user:
+    user: "{{ ansible_user }}"
+    groups: kiwix
+    append: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: create symlink to data directory in ansible user's home
+  file:
+    state: link
+    src: /var/lib/kiwix
+    dest: "/home/{{ ansible_user }}/KIWIX"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### ZIM DATA/DOWNLOAD #####
+
+- name: create empty zim library
+  copy:
+    src: var_lib_kiwix_library.xml
+    dest: /var/lib/kiwix/library.xml
+    owner: kiwix
+    group: kiwix
+    mode: "0640"
+    force: no
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: install kiwix data download script
+  template:
+    src: usr_local_bin_kiwix-update.j2
+    dest: /usr/local/bin/kiwix-update
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: download/update kiwix data
+  become: yes
+  become_user: kiwix
+  command:
+    cmd: /usr/local/bin/kiwix-update
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: kiwix_update
+  changed_when: '"[INFO] file updated" in kiwix_update.stdout_lines'
+
+# - debug:
+#     msg: "{{ kiwix_update }}"

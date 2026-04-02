@@ -1,0 +1,7 @@
+# Set the command-line arguments to pass to the server.
+# Due to shell escaping, to pass backslashes for regexes, you need to double
+# them (\\d for \d). If running under systemd, you need to double them again
+# (\\\\d to mean \d), and escape newlines too.
+# On sysvinit systems, when changing the configuration pathname also
+# change it in the init script.
+ARGS="--config.file /etc/prometheus/blackbox.yml --log.level={{ exporters_blackbox_log_level }}"

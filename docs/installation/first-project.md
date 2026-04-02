@@ -1,6 +1,6 @@
 # First project
 
-This example will create a new project based on a [template](https://gitlab.com/nodiscc/xsrv/-/tree/master/playbooks/xsrv/) - this is the simplest setup using a single server ([host](server-preparation.md)) with multiple roles. On the [controller](controller-preparation.md):
+This example will create a new project based on a [template](https://github.com/nodiscc/xsrv/tree/master/playbooks/xsrv/) - this is the simplest setup using a single server ([host](server-preparation.md)) with multiple roles. On the [controller](controller-preparation.md):
 
 
 ```bash
@@ -13,7 +13,7 @@ $ xsrv init-project
 [xsrv] INFO: creating virtualenv in /home/live/playbooks/default/.venv
 [xsrv] INFO: installing ansible in /home/live/playbooks/default/.venv
 [....]
-[xsrv] INFO: installing default collection git+https://gitlab.com/nodiscc/xsrv,release
+[xsrv] INFO: installing default collection git+https://github.com/nodiscc/xsrv,release
 [....]
 Installing 'nodiscc.xsrv:1.3.1' to '/home/live/playbooks/default/ansible_collections/nodiscc/xsrv'
 Created collection for nodiscc.xsrv:1.3.1 at /home/live/playbooks/default/ansible_collections/nodiscc/xsrv
@@ -56,9 +56,7 @@ nodiscc.xsrv:1.3.1 was installed successfully
     # - nodiscc.xsrv.dnsmasq # lightweight DNS server
     # - nodiscc.xsrv.wireguard # fast and modern VPN server
     # - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
-    # - nodiscc.xsrv.gotty # access server terminal as a web application
     # - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
-    # - nodiscc.xsrv.graylog # log management, capture and analysis platform
     # - nodiscc.xsrv.homepage # simple webserver homepage
 ```
 ```
@@ -70,25 +68,25 @@ nodiscc.xsrv:1.3.1 was installed successfully
 # Please set all values labeled CHANGEME.
 # You may remove variables for roles you don't use
 
-##### GITEA - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml
+##### GITEA - https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml
 gitea_fqdn: "git.CHANGEME.org"
 
-##### HOMEPAGE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml
+##### HOMEPAGE - https://github.com/nodiscc/xsrv/blob/master/roles/homepage/defaults/main.yml
 homepage_fqdn: "www.CHANGEME.org"
 
-##### JELLYFIN - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml
+##### JELLYFIN - https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml
 jellyfin_fqdn: "media.CHANGEME.org"
 
-##### NEXTCLOUD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml
+##### NEXTCLOUD - https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml
 nextcloud_fqdn: "cloud.CHANGEME.org"
 
-##### SHAARLI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml
+##### SHAARLI - https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml
 shaarli_fqdn: "links.CHANGEME.org"
 
-##### TRANSMISSION - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml
+##### TRANSMISSION - https://github.com/nodiscc/xsrv/blob/master/roles/transmission/defaults/main.yml
 transmission_fqdn: "torrent.CHANGEME.org"
 
-##### TT-RSS - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml
+##### TT-RSS - https://github.com/nodiscc/xsrv/blob/master/roles/tt_rss/defaults/main.yml
 tt_rss_fqdn: "rss.CHANGEME.org"
 ...
 ```
@@ -111,16 +109,16 @@ xsrv_admin_username: "CHANGEME"
 xsrv_admin_password: "CHANGEME20"
 xsrv_admin_email: "CHANGEME@CHANGEME.org"
 
-##### APACHE - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml
+##### APACHE - https://github.com/nodiscc/xsrv/blob/master/roles/apache/defaults/main.yml
 apache_letsencrypt_email: "{{ xsrv_admin_email }}"
 
-##### NEXTCLOUD - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml
+##### NEXTCLOUD - https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml
 nextcloud_user: "{{ xsrv_admin_username }}"
 nextcloud_password: "{{ xsrv_admin_password }}"
 nextcloud_admin_email: "{{ xsrv_admin_email }}"
 nextcloud_db_password: "CHANGEME20"
 
-##### SHAARLI - https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml
+##### SHAARLI - https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml
 shaarli_username: "{{ xsrv_admin_username }}"
 shaarli_password: "{{ xsrv_admin_password }}"
 shaarli_password_salt: "CHANGEME40" # 40 characters
@@ -143,8 +141,8 @@ xsrv deploy
 ```
 
 **Your services are now ready to use.** Access your services and web applications from domain names configured earlier. You can get a human-readable list of installed services, their URLs and other useful information using:
-- the [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) role
-- the [readme_gen](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) role
+- the [homepage](https://github.com/nodiscc/xsrv/tree/master/roles/homepage) role
+- the [readme_gen](https://github.com/nodiscc/xsrv/tree/master/roles/readme_gen) role
 
 [![](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq.svg)](https://asciinema.org/a/kGt6mVg3GxFlDPXwagiwg4Laq?speed=2&theme=monokai&autoplay=true)
 

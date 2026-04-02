@@ -1,0 +1,38 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/llamacpp"
+  loop:
+    - llamacpp_version is string
+    - llamacpp_enable_service == llamacpp_enable_service | bool
+    - llamacpp_context_size == llamacpp_context_size | int
+    - llamacpp_models is defined
+    - llamacpp_models | type_debug == "list"
+    - llamacpp_models | length > 0
+
+- name: check that llamacpp_models list items are correctly defined
+  assert:
+    quiet: yes
+    fail_msg: "One or more model entries in llamacpp_models are not correctly defined. Each model must have 'name' and 'url' fields."
+    that:
+      - item.name is defined
+      - item.name is string
+      - item.name | length > 0
+      - item.name is not search("CHANGEME")
+      - item.url is defined
+      - item.url is string
+      - item.url | length > 0
+      - item.url is search("http")
+  loop: "{{ llamacpp_models }}"
+
+- name: check that llamacpp_models presets are correctly defined
+  assert:
+    quiet: yes
+    fail_msg: "One or more model presets in llamacpp_models are not correctly defined."
+    that:
+      - item.presets is defined
+      - item.presets | type_debug == "dict"
+      - item.presets | length > 0
+      - '"default" in item.presets.keys()'
+  loop: "{{ llamacpp_models }}"

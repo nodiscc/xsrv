@@ -1,0 +1,10 @@
+[Unit]
+Description=rsnapshot daily backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rsnapshot daily
+SyslogIdentifier=rsnapshot-daily
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,32 @@
+modules:
+  node:
+    method: http
+    http:
+      port: 9100
+
+  process:
+    method: http
+    http:
+      port: 9256
+
+  blackbox:
+    method: http
+    http:
+       port: 9115
+       path: /probe
+
+  # mtail:
+  #   method: http
+  #   http:
+  #      port: 3903
+
+  # cadvisor:
+  #   method: http
+  #   http:
+  #      port: 4194
+
+  # haproxy:
+  #   method: http
+  #   http:
+  #      port: 9101
+

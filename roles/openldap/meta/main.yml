@@ -13,6 +13,7 @@ galaxy_info:
       versions:
         - "11"
         - "12"
+        - "13"
   galaxy_tags:
     - ldap
     - directory

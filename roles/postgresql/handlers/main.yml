@@ -1,0 +1,7 @@
+- name: restart prometheus postgresql exporter
+  become: yes
+  systemd:
+    name: prometheus-postgres-exporter.service
+    state: restarted
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"

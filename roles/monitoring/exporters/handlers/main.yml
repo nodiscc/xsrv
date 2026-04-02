@@ -1,0 +1,6 @@
+- name: restart vmagent
+  become: true
+  systemd:
+    name: vmagent.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"

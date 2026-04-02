@@ -1,4 +1,0 @@
-{% for downtime in netdata_notification_downtimes %}
-{{ downtime.start }} netdata SHELL=/bin/bash netdata_api_key=$(cat /var/lib/netdata/netdata.api.key) && curl --silent --insecure "https://127.0.0.1:19999/api/v1/manage/health?cmd=SILENCE ALL" -H "X-Auth-Token: $netdata_api_key" >/dev/null
-{{ downtime.end }} netdata SHELL=/bin/bash netdata_api_key=$(cat /var/lib/netdata/netdata.api.key) && curl --silent --insecure "https://127.0.0.1:19999/api/v1/manage/health?cmd=RESET" -H "X-Auth-Token: $netdata_api_key" >/dev/null
-{% endfor %}

@@ -1,8 +1,0 @@
-- name: restart gotty
-  service:
-    name: gotty
-    state: restarted
-    enabled: yes
-  become: yes
-  when: gotty_enable_service
-  ignore_errors: "{{ ansible_check_mode }}"

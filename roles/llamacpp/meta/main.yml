@@ -1,0 +1,22 @@
+galaxy_info:
+  role_name: llamacpp
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "llamacpp local LLM service"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "11"
+        - "12"
+  galaxy_tags:
+    - llm
+    - ai
+    - generative
+    - model
+dependencies:
+  - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.common # optional
+  # - nodiscc.xsrv.monitoring # optional
+  # - nodiscc.xsrv.backup # optional
+  # - nodiscc.xsrv.apache # required in the standard configuration

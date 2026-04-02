@@ -1,0 +1,29 @@
+global:
+  scrape_interval: 15s
+  external_labels:
+    monitor: 'example'
+
+# Metrics are received via remote write from vmagent instances on each host.
+# Only blackbox HTTP probes are scraped locally.
+scrape_configs:
+  - job_name: blackbox
+    authorization:
+      type: Bearer
+      credentials: '{{ victoriametrics_exporters_auth_password }}'
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    metrics_path: /proxy
+    params:
+      module:
+        - blackbox
+        - http
+    file_sd_configs:
+      - files:
+        - "/etc/prometheus/blackbox-exporter/*.yml"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9999

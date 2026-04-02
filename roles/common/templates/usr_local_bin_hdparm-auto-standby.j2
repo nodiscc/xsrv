@@ -1,0 +1,16 @@
+#!/bin/bash
+# Description: Configure rotational drives to standby after 1 hour of idle
+set -o errexit
+set -o nounset
+
+for disk in /sys/block/sd*; do
+    device="/dev/$(basename "$disk")"
+    # Check if it's a rotational drive
+    if [ "$(cat "$disk/queue/rotational")" = "1" ]; then
+        # Values 1-240: multiply by 5 seconds
+        # Values 241-251: (value - 240) × 30 minutes
+        # So 242 = 1 hour of idle before standby
+        sudo hdparm -S 242 "$device"  # 242 = (242-240)*30min = 1 hour
+        echo "Configured $device for 1 hour standby"
+    fi
+done

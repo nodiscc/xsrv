@@ -2,27 +2,29 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   loop:
     - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd | bool
     - dns_nameservers|type_debug == "list"
     - setup_users == setup_users | bool
     - linux_users|type_debug == "list"
+    - umask is string
     - kernel_enable_core_dump == kernel_enable_core_dump | bool
     - setup_apt == setup_apt | bool
     - apt_listbugs == apt_listbugs | bool
-    - apt_clean_days == apt_clean_days|int
+    - apt_clean_days == apt_clean_days | int
     - apt_unattended_upgrades_origins_patterns|type_debug == "list"
     - apt_purge_nightly == apt_purge_nightly | bool
     - packages_install | type_debug == "list"
     - packages_remove | type_debug == "list"
     - setup_cron == setup_cron | bool
-    - cron_log_level == cron_log_level|int
+    - cron_log_level == cron_log_level | int
     - setup_dns == setup_dns | bool
     - setup_hostname == setup_hostname | bool
     - setup_hosts_file == setup_hosts_file | bool
     - setup_firewall == setup_firewall | bool
-    - firewalld|type_debug == "list"
+    - firewalld | type_debug == "list"
+    - firewalld_blocklist | type_debug == "list"
     - setup_fail2ban == setup_fail2ban | bool
     - setup_msmtp == setup_msmtp | bool
     - setup_ssh == setup_ssh | bool
@@ -33,15 +35,15 @@
     - ssh_allow_tcp_forwarding in ['no', 'local', 'remote', 'all']
     - ssh_authorized_keys|type_debug == "list"
     - ssh_log_level in ['QUIET', 'FATAL', 'ERROR', 'INFO', 'VERBOSE', 'DEBUG', 'DEBUG1', 'DEBUG2', 'DEBUG3']
-    - ssh_server_revoked_keys|type_debug == "list"
     - ssh_sftp_loglevel in ['QUIET', 'FATAL', 'ERROR', 'INFO', 'VERBOSE', 'DEBUG', 'DEBUG1', 'DEBUG2', 'DEBUG3']
     - sysctl_allow_forwarding == sysctl_allow_forwarding | bool
     - sysctl_answer_ping == sysctl_answer_ping | bool
-    - sysctl_vm_swappiness|int
-    - sysctl_vm_vfs_cache_pressure|int
+    - sysctl_vm_swappiness == sysctl_vm_swappiness | int
+    - sysctl_vm_vfs_cache_pressure == sysctl_vm_vfs_cache_pressure | int
+    - sysctl_kernel_yama_ptrace_scope == sysctl_kernel_yama_ptrace_scope | int
     - systemd_logind_kill_user_processes == systemd_logind_kill_user_processes|bool
     - systemd_logind_kill_exclude_users|type_debug == "list"
-    - systemd_logind_lock_after_idle_min == systemd_logind_lock_after_idle_min|int
+    - systemd_logind_lock_after_idle_min == systemd_logind_lock_after_idle_min | int
     - bash_timeout == bash_timeout | int
   tags:
     - ssh
@@ -53,11 +55,11 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when: setup_msmtp | bool
   loop:
     - msmtp_host is not search("CHANGEME")
-    - msmtp_port == msmtp_port|int
+    - msmtp_port == msmtp_port | int
     - msmtp_auth_enabled == msmtp_auth_enabled | bool
     - msmtp_tls_enabled == msmtp_tls_enabled | bool
     - msmtp_admin_email is not search("CHANGEME")
@@ -72,7 +74,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when:
     - setup_msmtp | bool
     - msmtp_auth_enabled | bool
@@ -86,9 +88,9 @@
 - name: check that variables are correctly defined (hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
     that:
-      - item.ip_address | ansible.utils.ipaddr
+      - item.ip_address | ansible.utils.ipaddr is truthy
       - (item.state is not defined) or (item.state in ['present', 'absent'])
   when: setup_hosts_file | bool
   loop: "{{ hosts_file_entries }}"
@@ -97,7 +99,7 @@
 - name: check that variables are correctly defined (apt-listbugs)
   assert:
     quiet: yes
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
     that:
       - apt_listbugs_action in ['force-no', 'force-yes', 'force-default']
       - apt_listbugs_ignore_list|type_debug == "list"
@@ -105,6 +107,14 @@
   tags:
     - apt
     - apt-listbugs
+
+- name: check that variables are correctly defined (firewalld_blocklist)
+  assert:
+    quiet: yes
+    that: item | ansible.utils.ipv4
+    fail_msg: "items in the firewalld_blocklist list must be valid IPv4 addresses/networks"
+  with_items: "{{ firewalld_blocklist }}"
+  tags: firewall
 
 - name: check that variables are correctly defined (firewalld_zone_sources)
   assert:
@@ -115,13 +125,12 @@
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
       - (item.permanent is not defined) or (item.permanent == item.permanent | bool)
       - (item.immediate is not defined) or (item.immediate == item.permanent | bool)
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when:
     - setup_firewall | bool
     - (item.delete is not defined) or (not item.delete)
   loop: "{{ firewalld_zone_sources }}"
-  tags:
-    - firewall
+  tags: firewall
 
 - name: check that variables are correctly defined (firewalld_zone_services)
   assert:
@@ -132,11 +141,10 @@
       - (item.state is not defined) or (item.state in ['enabled','disabled'])
       - (item.permanent is not defined) or (item.permanent == item.permanent | bool)
       - (item.immediate is not defined) or (item.immediate == item.permanent | bool)
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/common"
   when: setup_firewall | bool
   loop: "{{ firewalld_zone_services }}"
-  tags:
-    - firewall
+  tags: firewall
 
 - name: check that DNS resolvers are configured
   assert:
@@ -150,7 +158,8 @@
 - name: check that variables are correctly defined (dns_nameservers)
   assert:
     quiet: yes
-    that: "{{ item == item | ansible.utils.ipaddr('address') }}"
+    that: item == item | ansible.utils.ipaddr('address')
     fail_msg: "dns_nameservers: {{ item }} is not a valid IP address"
   when: setup_dns | bool
   loop: "{{ dns_nameservers }}"
+  tags: dns

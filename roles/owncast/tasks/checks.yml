@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/owncast"
   loop:
     - owncast_fqdn is not search('CHANGEME')
     - owncast_admin_password is not search('CHANGEME')
@@ -16,7 +16,7 @@
 - name: check that variables are correctly defined (owncast_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of owncast_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast"
+    fail_msg: "One or more of owncast_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/owncast"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ owncast_allowed_hosts }}"
@@ -24,7 +24,7 @@
 - name: check that variables are correctly defined (owncast_auth_username/password)
   assert:
     quiet: yes
-    fail_msg: "owncast_auth_enabled is set, but credentials are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast"
+    fail_msg: "owncast_auth_enabled is set, but credentials are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/owncast"
     that:
       - owncast_auth_username is not search('CHANGEME')
       - owncast_auth_password is not search('CHANGEME')

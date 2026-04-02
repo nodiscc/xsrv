@@ -1,0 +1,6 @@
+- name: restart llamacpp
+  become: true
+  systemd:
+    name: llamacpp.service
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"

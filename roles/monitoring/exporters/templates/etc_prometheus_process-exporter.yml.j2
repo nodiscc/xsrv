@@ -1,0 +1,7 @@
+# Process exporter configuration
+# https://github.com/ncabatoff/process-exporter
+process_names:
+  # Group processes by their executable name (comm)
+  - name: "{{ '{{.Comm}}' }}"
+    cmdline:
+      - '.+'

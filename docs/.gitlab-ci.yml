@@ -4,7 +4,7 @@
 # ANSIBLE_VAULT_PASSWORD (contents of .ansible-vault-password, type variable, masked)
 # GITLAB_CI_SSH_KEY (contents of private SSH key authorized on remote hosts, terminated by newline, type file)
 
-image: debian:bookworm
+image: debian:trixie
 
 stages:
   - staging
@@ -35,7 +35,7 @@ before_script:
   - ln -s $CI_PROJECT_DIR $CI_PROJECT_DIR/../default
   - echo 'Apt::Install-Recommends "false";' >> /etc/apt/apt.conf.d/99-norecommends
   - apt update && apt -y install git bash python3-pip python3-venv
-  - wget -O /usr/local/bin/xsrv https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv
+  - wget -O /usr/local/bin/xsrv https://github.com/nodiscc/xsrv/-/raw/release/xsrv
   - chmod a+x /usr/local/bin/xsrv
 
 ##### STAGING #####

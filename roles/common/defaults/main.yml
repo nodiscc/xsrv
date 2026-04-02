@@ -36,14 +36,16 @@ sysctl_allow_forwarding: no
 # answer ICMP pings (yes/no)
 sysctl_answer_ping: no
 # "swappiness" setting. 100: swap/reclaim RAM aggressively. 0: do not swap unless necessary
-sysctl_vm_swappiness: '10'
+sysctl_vm_swappiness: 10
 # "VFS cache pressure" setting. 100+ : prefer caching memory pages over disk cache
-sysctl_vm_vfs_cache_pressure: '150'
+sysctl_vm_vfs_cache_pressure: 150
+# value of sysctl control kernel.yama.ptrace_scope, see documentation in etc_sysctl.d_custom.conf.j2
+sysctl_kernel_yama_ptrace_scope: 2
 # yes/no: enable/disable creation of core dumps on kernel crashes
 # These are usually not needed and may contain sensitive information
 kernel_enable_core_dump: no
 # no/yes: configure /proc mountpoint to hide processes from other users
-# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, netdata...)
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, prometheus...)
 kernel_proc_hidepid: no
 # list of kernel modules to prevent from being loaded
 kernel_modules_blacklist:
@@ -93,11 +95,7 @@ apt_unattended_upgrades_origins_patterns:
   - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
   - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
   - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
-  - "origin=Netdata,label=Netdata" # nodiscc.xsrv.monitoring_netdata
   - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
-  - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
-  - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
-  - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
   - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
   - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
   - "o=matrix.org,site=packages.matrix.org" # nodiscc.xsrv.matrix
@@ -186,7 +184,8 @@ apt_listbugs_ignore_list:
   - 770171 # https://bugs.debian.org/770171 - only affects ssh jail on systems without rsyslog
   - 862348 # https://bugs.debian.org/862348 - only affects ssh jail on systems without rsyslog
   - 1058777 # https://bugs.debian.org/1058777 - licensing problem, fix available
-  - 1088266 # https://bugs.debian.org/1088266 - only affects the official Debian netdata package,  but we use the upsteram package
+  - 1051392 # https://bugs.debian.org/1051392 - only affects 32-bit architectures
+  - 1114729 # https://bugs.debian.org/1114729 - only during dist-upgrade
 
 ### DATE/TIME ###
 # yes/no: setup ntp time service
@@ -201,8 +200,6 @@ setup_ssh: yes
 # Example: ['data/public_keys/john.pub', 'data/public_keys/jane.pub']
 # Removing a key here does not remove it on the server!
 ssh_authorized_keys: []
-# a list of public keys that are never accepted by the ssh server
-ssh_server_revoked_keys: []
 # sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
 ssh_log_level: "VERBOSE"
 ssh_sftp_loglevel: "INFO"
@@ -222,7 +219,7 @@ ssh_password_authentication: "no"
 setup_firewall: yes
 # log rejected/dropped packets (all/unicast/broadcast/multicast/off)
 firewalld_log_denied: all
-# Firewalld zones
+# firewalld zones
 # Example:
 # firewalld_zone_sources:
 #   - zone: internal # add 192.168.0.0/16 and 10.0.0.0/8 to the internal zone
@@ -252,7 +249,7 @@ firewalld_zone_sources:
       - 192.168.0.0/16
       - 172.16.0.0/12
       - 10.0.0.0/8
-# Services to allow in firewalld zones
+# services to allow in firewalld zones
 # Example:
 # firewalld_zone_services:
 #   - zone: public # firewall zone to configure
@@ -279,6 +276,14 @@ firewalld_zone_services:
     services:
       - dhcpv6-client # remove dhcpv6-client rule from the default public zone
     state: disabled
+# list of IP addresses/networks to block globally
+# Example:
+# firewalld_blocklist:
+#   - 1.2.3.4
+#   - 5.6.7.8/24
+#   - 9.10.11.12/16
+firewalld_blocklist: []
+
 # additional firewalld configuration - https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
 firewalld: []
 
@@ -339,7 +344,9 @@ systemd_logind_kill_exclude_users: ['root']
 systemd_logind_lock_after_idle_min: 0
 # terminate interactive bash processes after this number of seconds if no input is received (set to 0 to disable)
 bash_timeout: 900
-
+# default system umask to create new directories QUOTED
+# 027 can be considered safer for privacy but may interfer with some build systems that expect an umask of 022
+umask: "027"
 
 ### CRON TASK SCHEDULER ###
 # (yes/no): setup cron permission restrictions/logging options
@@ -394,3 +401,7 @@ packages_remove:
   # - rpcbind # not an NFS server
   # - nfs-common # not an NFS server
   # - exim4-base # use a smarthost/msmtp
+
+### DRIVES ###
+# standby mechanical/rotational hard drives after 1 hour of idle
+hdparm_auto_standby_drives: false

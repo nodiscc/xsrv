@@ -2,7 +2,7 @@
 
 This role will install [Wireguard](https://en.wikipedia.org/wiki/WireGuard), a [virtual private network (VPN)](https://en.wikipedia.org/wiki/Virtual_private_network) server designed with the goals of ease of use, high speed performance, and low attack surface.
 
-Clients of the wireguard server will be able to route their traffic through it.
+Clients of the wireguard server will be able to route part or whole of their network traffic through it.
 
 ## Requirements/dependencies/example playbook
 
@@ -34,21 +34,53 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 ## Usage
 
-**Connecting VPN clients** VPN clients (peers) must generate their private/public keys beforehand:
+### Connecting VPN clients
 
-> Please generate VPN keys by running:  
-> `sudo apt install wireguard-tools`  
-> `wg genkey | (umask 0077 && tee $HOSTNAME-wireguard.key) | wg pubkey > $HOSTNAME-wireguard.pub`  
-> and send the contents of the `$HOSTNAME-wireguard.pub` file to the VPN server administrator. Keep a copy of the content of `$HOSTNAME-wireguard.key` somewhere safe as you will need it later. You may then delete `$HOSTNAME-wireguard.pub/key` files.
+Two methods are available to configure VPN clients (peers).
 
-Setup clients in `wireguard_peers` using the `public_key` value they provided and deploy the role. A configuration file for each client will be generated in `data/wireguard/` in the playbook directory. Send their respective configuration file to all clients - it contains further instructions to connect to the VPN on client machines.
 
-**List connected clients:** Access the server over SSH (`xsrv ssh`) and run `sudo wg`.
+#### Key generation on the client
 
-**Only allow VPN clients to connect to a service on the host:** When firewalld is managed by the [common](../common/) role, by default VPN clients are part of the `internal` zone. To make VPN clients part of the `wireguard` zone instead:
+This method is preferred, since the private key never leaves the client (only the public key is transmitted to the server administrator). However it requires an additional back-and-forth between the client/server:
+- generate the private/public key pair on the client. For example the server admin could send the following text to the user of the client machine:
+
+> Please generate a public/private key:
+> ```bash
+> sudo apt install wireguard-tools
+> wg genkey | (umask 0077 && tee wireguard.key) | wg pubkey > wireguard.pub
+> # display the public key
+> cat wireguard.pub
+> ```
+> Then send the public key file to the VPN server administrator, and keep `wireguard.key` somewhere safe on your machine.
+
+- add the client to `wireguard_peers:` using the `public_key` value received from the client (see example above)
+- deploy the wireguard role (`xsrv deploy`)
+- SSH to the wireguard server (`xsrv ssh`), run `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` and send the contents of this file to the client. It contains furter instructions to setup the VPN connection.
+
+
+#### Automatic key generation on the server
+
+This method is quicker since it only requires configuring a client in `wireguard_peers` and deploying the role, without having the client generate a `public_key` beforehand:
+
+- SSH to the wireguard server (`xsrv ssh`)
+- display the configuration: `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` OR display the configuration as a QR code `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.qrcode`
+- send the contents of the configuration file to the client (over a secure channel since it contains the private key) or have the client scan the QR code directly.
+
+Mobile wireguard clients:
+* [WG Tunnel](https://f-droid.org/en/packages/com.zaneschepke.wireguardautotunnel/)
+
+### Other
+
+#### List connected clients
+
+Access the server over SSH (`xsrv ssh`) and run `sudo wg`.
+
+
+#### Only allow VPN clients to connect to a service on the host
+
+When firewalld is managed by the [common](../common/) role, by default VPN clients are part of the `internal` zone. To make VPN clients part of the `wireguard` zone instead:
 
 ```yaml
-# remove 10.0.0.0/8 from the internal zone
 firewalld_zone_sources:
   - zone: internal
     sources:
@@ -58,39 +90,33 @@ firewalld_zone_sources:
       - ...
   - zone: internal
     sources:
-      - 10.0.0.0/8
+      - 10.0.0.0/8 # remove 10.0.0.0/8 from the internal zone
     state: absent
 
-# disallow connections from LAN to the service, but explicitly allow from wireguard
 apache_firewalld_zones:
   - zone: public
     state: disabled
   - zone: internal
-    state: disabled
+    state: disabled # disallow connections from LAN to the service
   - zone: wireguard
-    state: enabled
-
-# to disallow connections from VPN clients instead, but still allow connections from LAN:
-apache_firewalld_zones:
-  - zone: public
-    state: enabled
-  - zone: internal
-    state: enabled
-  - zone: wireguard
-    state: disabled
+    state: enabled # explicitely allow connections from wireguard sources
 ```
+
 
 ### Debugging
 
 You can turn on debug logging at any time by running `echo module wireguard +p | sudo tee /sys/kernel/debug/dynamic_debug/control`. To disable debug logging: `echo module wireguard -p | sudo tee /sys/kernel/debug/dynamic_debug/control`. Debug logging will log events such as peers connecting/disconnecting and rejected connection attempts.
 
+
 ### Troubleshooting
 
 **Unexpected failure during module execution: Incorrect padding:** make sure `public_key`s for `wireguard_peers` are valid 44 character long base64 keys generated by `wg genkey` or similar.
 
+
 ### Backups
 
 The server's private/public keys should be backed up. See the included [rsnapshot configuration](templates/etc/rsnapshot.d_wireguard.conf.j2) for information about directories to backup/restore.
+
 
 ## Tags
 
@@ -99,6 +125,7 @@ The server's private/public keys should be backed up. See the included [rsnapsho
 wireguard - setup wireguard
 ```
 <!--END TAGS LIST-->
+
 
 ## License
 

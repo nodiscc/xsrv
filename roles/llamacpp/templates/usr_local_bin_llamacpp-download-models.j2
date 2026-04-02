@@ -1,0 +1,73 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Configuration
+MODELS_DIR="/var/lib/llamacpp/models"
+ALIAS_DIR="/var/lib/llamacpp/aliases"
+DOWNLOAD_LIST='{{ llamacpp_models | to_json }}'
+
+# Parse download list
+function parse_download_list() {
+    echo "$DOWNLOAD_LIST" | jq -r '.[] | "\(.url)|\(.name)|\(.url | split("/") | last)"'
+}
+
+# Download function with aria2c
+function download_model() {
+    local url=$1
+    local alias=$2.gguf
+    local filename=$3
+
+    if [ -f "$MODELS_DIR/${filename}" ]; then
+        echo "Model ${filename} already exists, skipping download"
+    else
+        echo "Downloading ${alias} from ${url}..."
+        aria2c \
+            --dir="$MODELS_DIR" \
+            --out="${filename}" \
+            --max-connection-per-server=16 \
+            --split=16 \
+            --min-split-size=1M \
+            --file-allocation=none \
+            --auto-file-renaming=false \
+            --continue \
+            --check-certificate=true \
+            --retry-wait=5 \
+            --summary-interval=60 \
+            "${url}"
+        echo "SUCCESS: $alias ($url)"
+    fi
+
+    # Verify download
+    if [ -f "$MODELS_DIR/$filename" ]; then
+        ln -vsf "$MODELS_DIR/${filename}" "$ALIAS_DIR/${alias}"
+        return 0
+    else
+        echo "FAILED: $alias $url"
+        return 1
+    fi
+}
+
+# Main execution
+echo "Starting model downloads"
+echo "----------------------------------------"
+
+SUCCESS_COUNT=0
+TOTAL_COUNT=0
+
+while IFS='|' read -r url alias filename; do
+    TOTAL_COUNT=$((TOTAL_COUNT + 1))
+    if download_model "$url" "$alias" "$filename"; then
+        SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+    fi
+done < <(parse_download_list)
+
+echo "----------------------------------------"
+echo "Completed ${SUCCESS_COUNT}/${TOTAL_COUNT} models"
+
+# Only exit with success if all models were either present or successfully downloaded
+if [ $SUCCESS_COUNT -eq $TOTAL_COUNT ]; then
+    exit 0
+else
+    exit 1
+fi

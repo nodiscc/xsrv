@@ -1,0 +1,38 @@
+- name: stop and disable netdata service
+  systemd:
+    name: netdata.service
+    state: stopped
+    enabled: false
+  register: netdata_stop_service
+  failed_when:
+    - netdata_stop_service.failed
+    - '"Could not find the requested service netdata.service: host" not in netdata_stop_service.msg'
+
+- name: remove netdata packages
+  apt:
+    state: absent
+    package:
+      - netdata
+      - netdata-dashboard
+      - netdata-plugin-apps
+      - netdata-plugin-chartsd
+      - netdata-plugin-debugfs
+      - netdata-plugin-ebpf
+      - netdata-plugin-go
+      - netdata-plugin-nfacct
+      - netdata-plugin-perf
+      - netdata-plugin-pythond
+      - netdata-plugin-slabinfo
+
+- name: remove netdata configuration/data directories
+  file:
+    state: absent
+    path: "{{ item }}"
+  loop:
+    - /var/run/netdata
+    - /var/log/netdata
+    - /var/lib/netdata/registry
+    - /var/lib/netdata/cloud.d
+    - /var/cache/netdata
+    - /usr/libexec/netdata/plugins.d
+    - /etc/netdata/health.d

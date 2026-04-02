@@ -38,11 +38,10 @@ If the network interface is in a [private network](https://en.wikipedia.org/wiki
 
 ```
 SSH server:                      TCP 22
-Netdata monitoring system:       TCP 19999
+Monitoring metrics exporter:     TCP 9999
 Web server:                      TCP 80/443
 BitTorrent incoming connections: TCP/UDP 52943
 Mumble VoIP server:              TCP/UDP 64738
-Graylog TCP input:               TCP 5140
 Dovecot IMAP server:             TCP 993
 Wireguard VPN server:            UDP 51820
 Jitsi videoconferencing server:  UDP 10000
@@ -81,20 +80,19 @@ ssp.CHANGEME.org # openldap (self-service password)
 chat.CHANGEME.org # matrix (element web client)
 matrix.CHANGEME.org # matrix (synapse server)
 media.CHANGEME.org # jellyfin
-logs.CHANGEME.org # graylog
-tty.CHANGEME.org # gotty
 imap.CHANGEME.org # mail_dovecot
-goaccess.CHANGEME.org # goaccess
+goaccess.CHANGEME.org # monitoring.goaccess
+grafana.CHANGEME.org # monitoring.grafana
 livestream.CHANGEME.org # owncast
 search.CHANGEME.org # owncast
-llm.CHANGEME.org # ollama
 pdf.CHANGEME.org # stirlingpdf
 moodist.CHANGEME.org # moodist
+kiwix.CHANGEME.org # kiwix
 ```
 
 ### External SMTP server
 
-For your applications/services/monitoring tools to be able to send e-mail (notifications, confirmations, reports...), a valid account on an external e-mail (SMTP) server must be configured (see [`msmtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) and `*mailer*` configuration variables). By default all outgoing e-mail functionality is disabled and you will not receive any e-mail from your servers.
+For your applications/services/monitoring tools to be able to send e-mail (notifications, confirmations, reports...), a valid account on an external e-mail (SMTP) server must be configured (see [`msmtp_*`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml) and `*mailer*` configuration variables). By default all outgoing e-mail functionality is disabled and you will not receive any e-mail from your servers.
 
 You can use your own SMTP server or a commercial e-mail service such as [Mailjet](https://www.mailjet.com/) (requires public DNS A and TXT [DNS records](#domain-names) for the host), or a [Gmail](https://caupo.ee/blog/2020/07/05/how-to-install-msmtp-to-debian-10-for-sending-emails-with-gmail/) (requires enabling 2FA and less-secure app access) or other [[1]](https://www.ovhcloud.com/en-ie/emails/) [[2]](https://posteo.de/en) [[3]](https://mailbox.org/en/services#tariffs) e-mail account.
 

@@ -17,13 +17,12 @@ apache_letsencrypt_enable_hsts: no
 #     upstream: "https://localhost:3545" # (required) the server to proxy requests to
 #     https_mode: selfsigned # (optional, selfsigned/letsencrypt, default selfsigned) mode for the auto-generated SSL certificate
 #     redirect_https: yes # (optional, yes/no, default yes) redirect HTTP requests to HTTPS
-#     monitor_http: yes # (optional, yes/no, default yes) add a netdata HTTP check for this virtualhost, if nodiscc.xsrv.monitoring_netdata is deployed
 #     extra_directives: # (optional) list of additional config directives https://httpd.apache.org/docs/current/mod/directives.html
 #       - "SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1" # allow less-secure TLS1.2 for legacy clients
 #   - servername: site2.example.org
 #     upstream: https://10.0.0.36:3646
 apache_reverseproxies: []
-# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring_rsyslog role is deployed) (yes/no)
+# aggregate apache access logs to syslog (if nodiscc.xsrv.monitoring.rsyslog role is deployed) (yes/no)
 apache_access_log_to_syslog: no
 # firewall zones for the apache service (if nodiscc.xsrv.common/firewalld role is deployed)
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)

@@ -4,10 +4,14 @@
   # strategy: free # if your servers do not require ordered/synchronized execution of tasks
   roles:
     - nodiscc.xsrv.common # base setup
-    - nodiscc.xsrv.monitoring # monitoring, alerting and logging
+    - nodiscc.xsrv.monitoring.utils # basic monitoring utilities
+    - nodiscc.xsrv.monitoring.rsyslog # log aggregation, processing and forwarding system
+    - nodiscc.xsrv.monitoring.exporters # monitoring agents/exporters
+    - nodiscc.xsrv.monitoring.victoriametrics # monitoring metrics scraper and time-series database*
     - nodiscc.xsrv.backup # backup service
     - nodiscc.xsrv.apache # web server + PHP interpreter
-    - nodiscc.xsrv.monitoring_goaccess # real-time web log analyzer/interactive viewer
+    - nodiscc.xsrv.monitoring.grafana # metrics visualization and analytics application
+    - nodiscc.xsrv.monitoring.goaccess # real-time web log analyzer/interactive viewer
     - nodiscc.xsrv.openldap # LDAP directory server
     - nodiscc.xsrv.postgresql # database engine
     - nodiscc.xsrv.nextcloud # file hosting/sharing/synchronization and collaboration
@@ -25,12 +29,11 @@
     - nodiscc.xsrv.dnsmasq # lightweight DNS server
     - nodiscc.xsrv.wireguard # fast and modern VPN server
     - nodiscc.xsrv.mail_dovecot # IMAP mailbox server
-    - nodiscc.xsrv.gotty # access server terminal as a web application
     - nodiscc.xsrv.libvirt # libvirt virtualization toolkit
-    #- nodiscc.xsrv.graylog # log management, capture and analysis platform
     - nodiscc.xsrv.owncast # live video streaming and chat server
     - nodiscc.xsrv.searxng # metasearch engine
-    - nodiscc.xsrv.ollama # large language model (LLM) server
-    - nodiscc.xsrv.stirlingpdf # PDM manipulation tools
+    - nodiscc.xsrv.stirlingpdf # PDF manipulation tools
     - nodiscc.xsrv.moodist # ambient sound mixer
+    - nodiscc.xsrv.kiwix # offline wiki viewer
     - nodiscc.xsrv.homepage # simple webserver homepage
+    - nodiscc.xsrv.llamacpp # local LLM service

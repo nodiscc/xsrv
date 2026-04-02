@@ -1,0 +1,13 @@
+groups:
+  - name: phpfpm_alerts
+    interval: 30s
+    rules:
+      - alert: PHPFPMMaxChildrenReached
+        expr: |
+          increase(phpfpm_max_children_reached_total[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "PHP-FPM max children reached on {{ $labels.instance }}"
+          description: "{{ $labels.instance }} PHP-FPM pool has reached max children. Requests may be queued."

@@ -4,7 +4,6 @@ This role will install and configure [dovecot](https://en.wikipedia.org/wiki/Dov
 - LDAP authentication
 - SSL/TLS certificates (self-signed)
 - (optional) login bruteforce protection with [fail2ban](../common)
-- (optional) monitoring with [netdata](../monitoring_netdata)
 - setup default mailbox virtual folders (All, Flagged, Sent, Junk, Drafts, Trash)
 
 
@@ -65,9 +64,6 @@ sudo apt purge dovecot-core dovecot-imapd dovecot-ldap
 sudo rm -r /var/mail/vhosts/ /etc/dovecot/ /etc/ssl/certs/dovecot.crt
 sudo firewall-cmd --remove-service=imaps --zone=public --permanent
 sudo firewall-cmd --remove-service=imaps --zone=internal --permanent
-sudo rm /etc/netdata/health.d/systemdunits.conf.d/dovecot.conf
-sudo find /etc/netdata/health.d/systemdunits.conf.d/ -type f |sort | xargs sudo cat | sudo tee /etc/netdata/health.d/systemdunits.conf
-sudo systemctl restart netdata
 sudo systemctl reload firewalld
 ```
 

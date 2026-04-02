@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/jitsi"
   loop:
     - jitsi_fqdn is not search('CHANGEME')
     - jitsi_turn_secret is not search('CHANGEME')
@@ -16,6 +16,13 @@
     - jitsi_enable_recent_list == jitsi_enable_recent_list | bool
     - jitsi_allowed_hosts | type_debug == "list"
 
+- name: check that target system is Debian 12 Bookworm
+  assert:
+    that:
+      - ansible_distribution_release == "bookworm"
+    fail_msg: "This role only supports Debian 12 Bookworm. Current system is {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}."
+    success_msg: "Target system is Debian 12 Bookworm"
+
 - name: check that variables are correctly defined (jitsi_users)
   assert:
     quiet: yes
@@ -23,7 +30,7 @@
       - item.name is not search('CHANGEME')
       - item.password is not search('CHANGEME')
       - (item.state is not defined) or (item.state in ['present', 'absent'])
-    fail_msg: "One or more jitsi users are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi"
+    fail_msg: "One or more jitsi users are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/jitsi"
   when: jitsi_secure_domain | bool
   no_log: yes
   loop: "{{ jitsi_users }}"
@@ -31,7 +38,7 @@
 - name: check that variables are correctly defined (jitsi_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of jitsi_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi"
+    fail_msg: "One or more of jitsi_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/jitsi"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ jitsi_allowed_hosts }}"

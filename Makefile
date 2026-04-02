@@ -12,14 +12,18 @@ tests: test_shellcheck test_ansible_lint test_command_line
 .PHONY: test_shellcheck # static syntax checker for shell scripts
 test_shellcheck:
 	# ignore 'Can't follow non-constant source' warnings
-	shellcheck -e SC1090,SC1091 xsrv xsrv-completion.sh roles/monitoring_netdata/files/usr_local_bin_needrestart-autorestart roles/monitoring_utils/templates/usr_local_bin_bonnie++-wrapper.j2
+	shellcheck -e SC1090,SC1091 \
+		xsrv \
+		xsrv-completion.sh \
+		roles/monitoring/utils/templates/usr_local_bin_bonnie++-wrapper.j2 \
+		roles/wireguard/files/usr_local_bin_wireguard-gen-peer-config
 
 .PHONY: venv # install dev tools in virtualenv
 venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==25.1.3 yamllint ansible==11.3.0
+	pip3 install isort ansible-lint==26.3.0 yamllint ansible==12.3.0
 
 .PHONY: build_collection # build the ansible collection tar.gz
 build_collection: venv
@@ -34,7 +38,7 @@ install_collection: venv build_collection
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
 	source .venv/bin/activate && \
-	ansible-lint -v -x fqcn[action-core],fqcn[action],name[casing],yaml[truthy],schema[meta],yaml[line-length],var-naming[no-role-prefix] roles/* docs/example-role
+	ansible-lint -v -x fqcn[action-core],fqcn[action],name[casing],yaml[truthy],schema[meta],yaml[line-length],var-naming[no-role-prefix],role-name roles/* roles/monitoring/*/ docs/example-role
 
 .PHONY: test_command_line # test correct execution of xsrv commands
 test_command_line:
@@ -53,7 +57,7 @@ test_init_vm_template:
 	./xsrv init-vm-template --name my.template.test --ip 10.0.10.240 --network=$(NETWORK)
 
 # TODO the resulting VM has no video output, access over serial console only, --graphics spice,listen=none during init-vm-template will prevent it from working, spice console must be added during init_vm
-# requirements: libvirt libguestfs-tools, prebuilt debian VM template, host configuration initialized with xsrv init-host
+# requirements: libvirt libguestfs-tools
 # usage: make test_init_vm SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG
 .PHONY: test_init_vm # test correct execution of xsrv init-vm
 test_init_vm:
@@ -78,8 +82,6 @@ test_idempotence:
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv upgrade xsrv-test
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv deploy xsrv-test my.example.test
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv deploy xsrv-test my.example.test
-	# check netdata alarms count
-	curl --insecure https://my.example.test:19999/api/v1/alarms
 
 .PHONY: test_fetch_backups # test fetch-backups command against the host deployed with test_idempotence
 test_fetch_backups:
@@ -95,10 +97,7 @@ test_fetch_backups:
 # - update release date in CHANGELOG.md, add and commit version bumps/changelog updates with message "release v$new_tag"
 # - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
-# - GITLAB_PRIVATE_TOKEN=AAAbbbCCCddd make gitlab_release new_tag=$new_tag
-# - GITHUB_PRIVATE_TOKEN=XXXXyyyZZZzz make github_release new_tag=$new_tag
-# - touch roles/README.md && ANSIBLE_GALAXY_PRIVATE_TOKEN=AAbC make publish_collection new_tag=$new_tag
-# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases
+# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases and https://codeberg.org/nodiscc/xsrv/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
 bump_versions: doc_md
@@ -111,66 +110,21 @@ endif
 	sed -i "s/^release =.*/release = '$(new_tag)'/" docs/conf.py && \
 	sed -i "s/latest%20release-.*-blue/latest%20release-$(new_tag)-blue/" README.md docs/index.md
 
-.PHONY: gitlab_release # create a new gitlab release (new_tag=X.Y.Z required, GITLAB_PRIVATE_TOKEN must be defined in the environment)
-gitlab_release:
-ifndef new_tag
-	$(error new_tag is undefined)
-endif
-ifndef GITLAB_PRIVATE_TOKEN
-	$(error GITLAB_PRIVATE_TOKEN is undefined)
-endif
-	curl --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" \
-	--data '{ "name": "$(new_tag)", "tag_name": "$(new_tag)" }' \
-	--request POST "https://gitlab.com/api/v4/projects/14306200/releases"
-
-.PHONY: github_release # create a new github release (new_tag=X.Y.Z required, GITHUB_PRIVATE_TOKEN must be defined in the environment)
-github_release:
-ifndef new_tag
-	$(error new_tag is undefined)
-endif
-ifndef GITHUB_PRIVATE_TOKEN
-	$(error GITHUB_PRIVATE_TOKEN is undefined)
-endif
-	curl --user nodiscc:$$GITHUB_PRIVATE_TOKEN --header "Accept: application/vnd.github.v3+json" \
-	--data '{ "tag_name": "$(new_tag)", "prerelease": true }' \
-	--request POST https://api.github.com/repos/nodiscc/xsrv/releases
-
-.PHONY: publish_collection # publish the ansible collection (ANSIBLE_GALAXY_PRIVATE_TOKEN must be defined in the environment)
-publish_collection: build_collection
-ifndef new_tag
-	$(error new_tag is undefined)
-endif
-ifndef ANSIBLE_GALAXY_PRIVATE_TOKEN
-	$(error ANSIBLE_GALAXY_PRIVATE_TOKEN is undefined)
-endif
-	source .venv/bin/activate && \
-	ansible-galaxy collection publish --token "$$ANSIBLE_GALAXY_PRIVATE_TOKEN" nodiscc-xsrv-$(new_tag).tar.gz
-
-
 ##### DOCUMENTATION #####
 
 # requirements: sudo apt install git jq
-#               gitea-cli config defined in ~/.config/gitearc:
-# export GITEA_API_TOKEN="AAAbbbCCCdddZZ"
-# gitea.issues() {
-# 	split_repo "$1"
-# 	auth curl --silent --insecure "https://gitea.example.org/api/v1/repos/$REPLY/issues?limit=1000"
-# }
 .PHONY: update_todo # manual - Update TODO.md by fetching issues from the main gitea instance API
 update_todo:
-	git clone https://github.com/bashup/gitea-cli gitea-cli
-	echo '<!-- This file is automatically generated by "make update_todo" -->' >| docs/TODO.md
-	echo -e "\n### xsrv/xsrv\n" >> docs/TODO.md; \
-	./gitea-cli/bin/gitea issues xsrv/xsrv | jq -r '.[] | "- #\(.number) - \(.title) - **`\(.milestone.title // "-")`** `\(.labels | map(.name) | join(","))`"'  | sed 's/ - `null`//' >> docs/TODO.md
-	rm -rf gitea-cli
+	~/.venv/bin/python3 ~/GIT/toolbox.git/SCRIPTS/gitea-issues --repo xsrv/xsrv --limit 10000 --format markdown >| docs/TODO.md
 
 .PHONY: doc_md # manual - generate markdown documentation
 doc_md:
 	# update README.md from available roles
-	@roles_list_md=$$(for i in roles/*/meta/main.yml; do \
+	@roles_list_md=$$(for i in roles/*/meta/main.yml roles/*/*/meta/main.yml; do \
 		name=$$(grep "role_name: " "$$i" | awk -F': ' '{print $$2}'); \
 		description=$$(grep "description: " "$$i" | awk -F': ' '{print $$2}' | sed 's/"//g'); \
-		echo "- [$$name](roles/$$name) - $$description"; \
+		role_path=$$(echo "$$name" | tr '.' '/'); \
+		echo "- [$$name](roles/$$role_path) - $$description"; \
 		done) && \
 		echo "$$roles_list_md" >| roles-list.tmp.md && \
 		awk ' \
@@ -182,11 +136,15 @@ doc_md:
 		rm roles-list.tmp.md
 	# generate docs/index.md from README.md
 	@cp README.md docs/index.md && \
-		sed -i 's|(roles/|(https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/|g' docs/index.md && \
+		sed -i 's|(roles/|(https://github.com/nodiscc/xsrv/tree/master/roles/|g' docs/index.md && \
 		sed -i 's|https://xsrv.readthedocs.io/en/latest/\(.*\).html|\1.md|g' docs/index.md && \
 		sed -i 's|docs/||g' docs/index.md
 	# update docs/configuration-variables.md from available roles
-	@roles_list_defaults_md=$$(for file in roles/*/defaults/main.yml; do echo -e "## $$(echo $$file | cut -d '/' -f 2)\n\n[$$file](https://gitlab.com/nodiscc/xsrv/-/blob/master/$$file)\n\n\`\`\`yaml\n$$(cat $$file)\n\`\`\`\n\n"; done); \
+	@roles_list_defaults_md=$$(for file in roles/*/defaults/main.yml roles/*/*/defaults/main.yml; do \
+		[ -f "$$file" ] || continue; \
+		role_path=$$(echo $$file | sed 's|roles/||' | sed 's|/defaults/main.yml||'); \
+		echo -e "## $$role_path\n\n[$$file](https://github.com/nodiscc/xsrv/blob/master/$$file)\n\n\`\`\`yaml\n$$(cat $$file)\n\`\`\`\n\n"; \
+	done); \
 		echo "$$roles_list_defaults_md" >| roles-list-defaults.tmp.md && \
 		awk ' \
 		BEGIN {p=1} \
@@ -237,7 +195,7 @@ codespell: venv
 
 .PHONY: test_install_test_deps # manual - install requirements for test suite
 test_install_test_deps:
-	apt update && apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq cloc
+	sudo apt update && sudo apt -y install git bash python3-venv python3-pip python3-cryptography ssh pwgen shellcheck jq cloc
 
 .PHONY: test_cloc # count SLOC with cloc
 test_cloc:
@@ -250,15 +208,6 @@ list_default_variables:
 	echo -e "\n#### $$i #####\n"; \
 	grep --no-filename -E --only-matching "^(# )?[a-z\_]*:" $$i/defaults/main.yml | sed 's/# //' | sort -u ; \
 	done
-
-.PHONY: get_build_status # manual - get build status of the current commit/branch (GITLAB_PRIVATE_TOKEN must be defined in the environment)
-get_build_status:
-ifndef GITLAB_PRIVATE_TOKEN
-	$(error GITLAB_PRIVATE_TOKEN is undefined)
-endif
-	@branch=$$(git rev-parse --abbrev-ref HEAD) && \
-	commit=$$(git rev-parse HEAD) && \
-	curl --silent --header "PRIVATE-TOKEN: $$GITLAB_PRIVATE_TOKEN" "https://gitlab.com/api/v4/projects/nodiscc%2Fxsrv/repository/commits/$$commit/statuses?ref=$$branch" | jq  .[].status
 
 .PHONY: clean # manual - clean artifacts generated by tests
 clean:
@@ -276,8 +225,6 @@ clean:
 	rm -rf nodiscc-xsrv-*.tar.gz
 	# clean files generated by test_check_mode/test_idempotence
 	rm -rf tests/playbooks/xsrv-test/ansible_collections/ tests/playbooks/xsrv-test/.venv/ tests/playbooks/xsrv-test/data/cache/facts/ tests/playbooks/xsrv-test/data/public_keys/root@my.example.test.pub tests/playbooks/xsrv-test/data/certificates/ tests/playbooks/xsrv-test/data/backups/daily.*
-	# clean files generated by update_todo
-	rm -rf gitea-cli/
 
 .PHONY: help # generate list of targets with descriptions
 help:

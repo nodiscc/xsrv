@@ -7,7 +7,7 @@
       - "php{{ openldap_php_fpm_version }}-gmp"
       - "php{{ openldap_php_fpm_version }}-ldap"
       - "php{{ openldap_php_fpm_version }}-zip"
-      - php-php-gettext
+      - "{{ php_gettext_package }}"
 
 ### LDAP ACCOUNT MANAGER INSTALLATION ###
 

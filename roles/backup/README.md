@@ -38,7 +38,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - show the size of backups on the host: `ssh -t user@my.example.org sudo du --human-readable --summarize --time /var/backups/srv01/*`
 - transfer latest daily backups form the host to the controller (this may take a while): `xsrv fetch-backups PROJECT my.CHANGEME.org`
 
-**Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep adding/removing/renaming/editing large files. If you want to free up disk space, and you are **certain** you will not need to recover files from old backups, you can start by deleting the oldest generations (e.g. `xsrv shell` then `sudo rm -r /var/backups/rsnapshot/monthly.5`). You can visualize disk space consumed by each backup generatino using tools such as `ncdu` or `duc` provided by the [monitoring_utils](../monitoring_utils/) role.
+**Backups size:** If a file is completely unchanged between two backups, the second backup  will not consume more space on disk ([incremental backup](https://en.wikipedia.org/wiki/Incremental_backup), deduplication using hardlinks). If you rename the file or change a single byte, the full file will we backed up again. This can increase disk usage if you keep adding/removing/renaming/editing large files. If you want to free up disk space, and you are **certain** you will not need to recover files from old backups, you can start by deleting the oldest generations (e.g. `xsrv shell` then `sudo rm -r /var/backups/rsnapshot/monthly.5`). You can visualize disk space consumed by each backup generatino using tools such as `ncdu` or `duc` provided by the [monitoring.base](../monitoring/base/) role.
 
 **Local backups** are inherently not secure, because the device being backed up is able to delete/compromise its own backups, and backups are stored in the same location as the live data. Local backups still offer a recovery solution for accidental deletion of a specific piece of data, or application bugs. For disaster recovery, prefer remote _pull_ backups from another machine (i.e. setup the backup role on a dedicated machine, and configure it to pull backups from other hosts, see [backup data from remote machines](#backup-data-from-remote-machines)). In addition, you should perform periodic copies of the latest backup generation to an offline/offiste storage, using the `xsrv fetch-backups` command, or manually:
 
@@ -52,11 +52,11 @@ rsync --quiet --hard-links --archive --verbose --compress --partial --progress -
 </details>
 
 **Backup data from remote machines:**
- - configure the list of hosts, SSH users, ports, paths... in the [`rsnapshot_remote_backups`](backup/defaults/main.yml#L41) configuration variable and deploy the role to the backup server.
+ - configure the list of hosts, SSH users, ports, paths... in the [`rsnapshot_remote_backups`](backup/defaults/main.yml#L41) configuration variable and deploy the role to the backup server. Set `port` for non-standard SSH ports (defaults to 22).
  - setup a user account on the machine to backup, authorize the backup server's `root` public SSH key to connect to it (the key is displayed when the `backup` role is deployed, and a copy is downloaded to `"{{ playbook_dir }}/data/public_keys/root@{{ inventory_hostname }}.pub"` on the controller), and allow it to run `sudo rsync` without password.
 
 ```yaml
-# example using https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common
+# example using https://github.com/nodiscc/xsrv/tree/master/roles/common
 linux_users:
    - name: "rsnapshot"
      groups: [ "ssh-access", "sudo" ]

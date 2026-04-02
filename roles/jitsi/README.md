@@ -6,13 +6,14 @@ This role will install [Jitsi Meet](https://jitsi.org/jitsi-meet/), a fully encr
 - Encrypted by default, advanced security settings
 - Web, desktop and mobile clients
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)
-
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/WyhF0tl.jpg)
 
 ## Requirements/dependencies/example playbook
 
 - See [meta/main.yml](meta/main.yml)
 - See [Jitsi documentation](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-requirements) on hardware and network requirements for acceptable performance.
+
+> Note: This role only supports Debian 12 Bookworm. Jitsi cannot currently be installed on Debian 13 due to known compatibility issues (https://github.com/jitsi/jitsi-meet/issues/16798) with the JDK version.
 
 
 ```yaml
@@ -53,11 +54,9 @@ sudo systemctl stop prosody.service jitsi-videobridge2.service jicofo.service
 sudo apt purge lua5.2 lua-unbound prosody prosody-modules jicofo jitsi-meet-web jitsi-meet-prosody jitsi-videobridge2
 sudo firewall-cmd --zone public --remove-service jitsi --permanent
 sudo firewall-cmd --zone internal --remove-service jitsi --permanent
-sudo rm -r /etc/apt/sources.list.d/prosody.list /etc/apt/sources.list.d/jitsi.list /usr/share/keyrings/prosody.gpg /usr/share/keyrings/jitsi.gpg /etc/apt/preferences.d/jitsi /etc/jitsi/ /etc/prosody/ /usr/share/jitsi-meet/ /var/lib/prosody/ /etc/fail2ban/jail.d/prosody.conf /etc/fail2ban/filter.d/prosody-auth.conf /etc/rsyslog.d/jitsi.conf /etc/ansible/facts.d/jitsi.fact /etc/firewalld/services/jitsi.xml /etc/apache2/sites-available/jitsi.conf /etc/apache2/sites-enabled/jitsi.conf /etc/netdata/go.d/httpcheck.conf.d/jitsi.conf /etc/netdata/health.d/systemdunits.conf.d/jitsi.conf
-sudo find /etc/netdata/health.d/systemdunits.conf.d/ -type f |sort | xargs sudo cat | sudo tee /etc/netdata/health.d/systemdunits.conf
-sudo find /etc/netdata/go.d/httpcheck.conf.d/ -type f |sort | xargs sudo cat | sudo tee /etc/netdata/go.d/httpcheck.conf
+sudo rm -r /etc/apt/sources.list.d/prosody.list /etc/apt/sources.list.d/jitsi.list /usr/share/keyrings/prosody.gpg /usr/share/keyrings/jitsi.gpg /etc/apt/preferences.d/jitsi /etc/jitsi/ /etc/prosody/ /usr/share/jitsi-meet/ /var/lib/prosody/ /etc/fail2ban/jail.d/prosody.conf /etc/fail2ban/filter.d/prosody-auth.conf /etc/rsyslog.d/jitsi.conf /etc/ansible/facts.d/jitsi.fact /etc/firewalld/services/jitsi.xml /etc/apache2/sites-available/jitsi.conf /etc/apache2/sites-enabled/jitsi.conf 
 sudo systemctl reload fail2ban.service apache2
-sudo systemctl restart rsyslog firewalld netdata
+sudo systemctl restart rsyslog firewalld
 ```
 
 ### Backups

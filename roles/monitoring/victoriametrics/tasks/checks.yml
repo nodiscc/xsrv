@@ -1,0 +1,18 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/victoriametrics"
+  loop:
+    - victoriametrics_auto_check_http_limit | type_debug == "list"
+    - victoriametrics_http_checks | type_debug == "list"
+    - victoriametrics_exporters_auth_password is not search('CHANGEME')
+    - victoriametrics_alertmanager_smtp_host is not search('CHANGEME')
+    - victoriametrics_alertmanager_smtp_port == victoriametrics_alertmanager_smtp_port | int
+    - victoriametrics_alertmanager_smtp_from is not search('CHANGEME')
+    - victoriametrics_alertmanager_smtp_auth_username is not search('CHANGEME')
+    - victoriametrics_alertmanager_smtp_auth_password is not search('CHANGEME')
+    - victoriametrics_alertmanager_email_to is not search('CHANGEME')
+    - victoriametrics_alertmanager_repeat_interval is string
+    - victoriametrics_firewalld_zones | type_debug == "list"
+    - victoriametrics_auto_check_exclude | type_debug == "list"

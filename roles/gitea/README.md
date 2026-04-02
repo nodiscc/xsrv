@@ -14,10 +14,10 @@ This role will install the [Gitea](https://gitea.io/en-us/) self-hosted Git serv
 - LDAP authentication
 - [Gitea actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Rks90zV.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/2TGIshE.png)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/cBktctp.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/EauaJxq.png)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/gvcfs6G.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/DHku4ke.png)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/4NhXqdG.png)](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/d5glB4P.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Rks90zV.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/2TGIshE.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/cBktctp.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/EauaJxq.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/gvcfs6G.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/DHku4ke.png)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/4NhXqdG.png)](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/d5glB4P.png)
 
 
 ## Requirements/dependencies/example playbook
@@ -136,32 +136,7 @@ Repeat for every repository, you can then see your list list of mirrors at https
 
 ### API usage
 
-Example [gitea-cli](https://github.com/bashup/gitea-cli) usage (command-line project creation):
-
-```bash
-#Edit ~/.config/gitearc:
-export GITEA_USER=someone
-export GITEA_API_TOKEN='aaabbbccdddefffggghhiijjs'
-export GITEA_URL='https://example.com/gitea/'
-# If your server certificate is self-signed:
-curl() { command curl --insecure "$@"; }
-# Add a function to get the list of issues for a repo
-gitea.issues() {
-  split_repo "$1"
-  auth curl --silent "${GITEA_URL%/}/api/v1/repos/$REPLY/issues?limit=50"
-}
-
-```
-
-```bash
-# Create a project
-gitea --description "My new project" --private new myusername/myproject
-
-# Get the list of issues for a project
-./gitea issues myusername/myproject | jq -r '.[] | "#\(.number) - \(.title)"'
-```
-
-[tea](https://gitea.com/gitea/tea) will be the officially supported command line Gitea API client.
+[tea](https://gitea.com/gitea/tea) is the officially supported command line Gitea API client.
 
 ### CI/CD
 
@@ -221,6 +196,6 @@ gitea-config - update gitea configuration
 ## References/Documentation
 
 - https://github.com/nodiscc/xsrv/tree/master/roles/gitea
-- https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea
+- https://github.com/nodiscc/xsrv/tree/master/roles/gitea
 - https://stdout.root.sx/links/?searchterm=gitea
 - https://stdout.root.sx/links/?searchtags=git

@@ -15,10 +15,6 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['rsnapshot']['ansible_managed'] is defined %}
 - Fetch latest backups: `xsrv fetch-backups {{ xsrv_project_name|default('default') }} {{ hostvars[item].inventory_hostname }}`
 {% endif %}
-{% if hostvars[item]['ansible_facts']['ansible_local']['netdata']['ansible_managed'] is defined %}
-- Monitoring (Netdata): {{ hostvars[item]['ansible_facts']['ansible_local']['netdata']['public_url'] }}/v3/
-- Badges (Netdata): {% for badge in readme_gen_netdata_badges %}![](https://{{ hostvars[item]['ansible_facts']['ansible_local']['netdata']['public_url'] }}/api/v1/badge.svg?chart={{ badge.chart }}&alarm={{ badge.alarm }}{{ '&label=' + badge.label | urlencode if badge.label is defined else '' }}){% if not loop.last %} {% endif %}{% endfor +%}
-{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] is defined %}
 - Gitea: https://{{ hostvars[item]['ansible_facts']['ansible_local']['gitea']['fqdn'] }}
 {% endif %}
@@ -28,11 +24,11 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['planarally']['fqdn'] is defined %}
 - PlanarAlly: https://{{ hostvars[item]['ansible_facts']['ansible_local']['planarally']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['grafana']['fqdn'] is defined %}
+- Grafana: https://{{ hostvars[item]['ansible_facts']['ansible_local']['grafana']['fqdn'] }}
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] is defined %}
 - Goaccess: https://{{ hostvars[item]['ansible_facts']['ansible_local']['goaccess']['fqdn'] }}
-{% endif %}
-{% if hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] is defined %}
-- Graylog: https://{{ hostvars[item]['ansible_facts']['ansible_local']['graylog']['fqdn'] }}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['homepage']['fqdn'] is defined %}
 - Homepage: https://{{ hostvars[item]['ansible_facts']['ansible_local']['homepage']['fqdn'] }}
@@ -46,11 +42,17 @@
 {% if hostvars[item]['ansible_facts']['ansible_local']['ollama']['fqdn'] is defined %}
 - Ollama: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ollama']['fqdn'] }}
 {% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['llamacpp']['ansible_managed'] is defined %}
+- LLamaCPP: http://127.0.0.1:8033
+{% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['stirlingpdf']['fqdn'] is defined %}
 - Stirling PDF: https://{{ hostvars[item]['ansible_facts']['ansible_local']['stirlingpdf']['fqdn'] }}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['moodist']['fqdn'] is defined %}
 - Moodist: https://{{ hostvars[item]['ansible_facts']['ansible_local']['moodist']['fqdn'] }}
+{% endif %}
+{% if hostvars[item]['ansible_facts']['ansible_local']['kiwix']['fqdn'] is defined %}
+- Kiwix: https://{{ hostvars[item]['ansible_facts']['ansible_local']['kiwix']['fqdn'] }}
 {% endif %}
 {% if hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] is defined %}
 - LDAP Account Manager: https://{{ hostvars[item]['ansible_facts']['ansible_local']['ldap_account_manager']['fqdn'] }}
@@ -107,7 +109,7 @@ Include ~/.ssh/*.conf
 
 ```
 # ~/.ssh/xsrv-{{ xsrv_project_name|default('default') }}.conf
-{% for item in readme_gen_limit %}
+{% for item in groups['all'] %}
 Host {{ hostvars[item].inventory_hostname }}
     HostName {{ hostvars[item].ansible_host | default(hostvars[item].inventory_hostname) }}{{ '
     User ' + hostvars[item].ansible_user if hostvars[item].ansible_user is defined }}
@@ -120,7 +122,7 @@ Host {{ hostvars[item].inventory_hostname }}
 ## GTK bookmarks/SFTP
 ```
 # ~/.config/gtk-3.0/bookmarks
-{% for item in readme_gen_limit %}
+{% for item in groups['all'] %}
 sftp://{{ hostvars[item].ansible_host | default(hostvars[item].inventory_hostname) }}:{{ hostvars[item].ansible_ssh_port|default('22') }}/home/{{ hostvars[item].ansible_user | default('') }} {{ hostvars[item].inventory_hostname }}
 {% endfor %}
 ```

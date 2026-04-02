@@ -11,6 +11,7 @@
     - apache
     - monitoring
     - rsyslog
+    - exporters
 
 - name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
@@ -54,16 +55,16 @@
     - ansible_local.rsyslog.ansible_managed is defined
     - ansible_local.rsyslog.ansible_managed | bool
 
-- name: import netdata configuration tasks
-  import_tasks: netdata.yml
+- name: import metrics exporters configuration tasks
+  import_tasks: exporters.yml
   become: yes
   tags:
     - apache
     - monitoring
-    - netdata
+    - exporters
   when:
-    - ansible_local.netdata.ansible_managed is defined
-    - ansible_local.netdata.ansible_managed | bool
+    - ansible_local.exporters.ansible_managed is defined
+    - ansible_local.exporters.ansible_managed | bool
 
 - name: import ansible facts configuration tasks
   import_tasks: fact.yml

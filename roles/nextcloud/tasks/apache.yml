@@ -15,7 +15,9 @@
     src: etc_php_PHPVERSION_fpm_pool.d_nextcloud.conf.j2
     dest: /etc/php/{{ nextcloud_php_fpm_version }}/fpm/pool.d/nextcloud.conf
     mode: "0644"
-  notify: restart php-fpm (nextcloud)
+  notify:
+    - restart php-fpm (nextcloud)
+    - restart prometheus-php-fpm-exporter
 
 - name: copy apache2 virtualhost configuration
   template:

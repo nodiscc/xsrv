@@ -12,3 +12,8 @@ searxng_image: "docker.io/searxng/searxng:latest"
 searxng_https_mode: "selfsigned"
 # start/stop the searxng service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
 searxng_enable_service: yes
+# enable HTTP basic authentication to access the web interface (yes/no)
+searxng_auth_enabled: no
+# if HTTP basic authentication is enabled, username and password for viewers
+searxng_auth_username: CHANGEME
+searxng_auth_password: CHANGEME

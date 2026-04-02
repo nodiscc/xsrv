@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
   loop:
     - openldap_fqdn is not search("CHANGEME")
     - openldap_domain is not search("CHANGEME")
@@ -21,7 +21,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "LDAP Account Manager installation enabled but one or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
   when: openldap_setup_lam | bool
   loop:
     - ldap_account_manager_allowed_hosts is not search(" ")
@@ -33,9 +33,9 @@
     - ldap_account_manager_install_method in ['tar.bz2']
     - ldap_account_manager_php_max_execution_time == ldap_account_manager_php_max_execution_time|int
     - ldap_account_manager_php_max_input_time == ldap_account_manager_php_max_input_time|int
-    - ldap_account_manager_php_memory_limit|regex_search('[KMG]$')
-    - ldap_account_manager_php_post_max_size|regex_search('[KMG]$')
-    - ldap_account_manager_php_upload_max_filesize|regex_search('[KMG]$')
+    - ldap_account_manager_php_memory_limit | regex_search('[KMG]$') is truthy
+    - ldap_account_manager_php_post_max_size | regex_search('[KMG]$') is truthy
+    - ldap_account_manager_php_upload_max_filesize | regex_search('[KMG]$') is truthy
     - ldap_account_manager_session_timeout == ldap_account_manager_session_timeout|int
     - ldap_account_manager_version is defined
     - ldap_account_manager_enable_service == ldap_account_manager_enable_service | bool
@@ -44,7 +44,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "Self Service Password installation enabled but one or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
   when: openldap_setup_ssp | bool
   loop:
     - self_service_password_fqdn is not search("CHANGEME")
@@ -54,16 +54,16 @@
     - self_service_password_https_mode in ['selfsigned', 'letsencrypt']
     - self_service_password_php_max_execution_time == self_service_password_php_max_execution_time|int
     - self_service_password_php_max_input_time == self_service_password_php_max_input_time|int
-    - self_service_password_php_memory_limit|regex_search('[KMG]$')
-    - self_service_password_php_post_max_size|regex_search('[KMG]$')
-    - self_service_password_php_upload_max_filesize|regex_search('[KMG]$')
+    - self_service_password_php_memory_limit | regex_search('[KMG]$') is truthy
+    - self_service_password_php_post_max_size | regex_search('[KMG]$') is truthy
+    - self_service_password_php_upload_max_filesize | regex_search('[KMG]$') is truthy
     - self_service_password_allowed_hosts | type_debug == "list"
     - self_service_password_enable_service == self_service_password_enable_service | bool
 
 - name: check that variables are correctly defined (self_service_password_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of self_service_password_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/openldap"
+    fail_msg: "One or more of self_service_password_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/openldap"
     that:
-      - item | ansible.utils.ipv4
+      - item | ansible.utils.ipv4 is not none
   loop: "{{ self_service_password_allowed_hosts }}"

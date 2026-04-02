@@ -6,9 +6,9 @@
   ╹ ╹┗━┛╹┗╸┗┛ 
 ```
 
-[![](https://gitlab.com/nodiscc/xsrv/badges/master/pipeline.svg)](https://gitlab.com/nodiscc/xsrv/-/pipelines)
+[![](https://github.com/nodiscc/xsrv/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/nodiscc/xsrv/actions)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-1.27.0-blue)](https://gitlab.com/nodiscc/xsrv/-/releases)
+[![](https://img.shields.io/badge/latest%20release-2.0.0-blue)](https://github.com/nodiscc/xsrv/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -28,24 +28,24 @@ This project provides:
 - [dnsmasq](roles/dnsmasq) - lightweight DNS server
 - [gitea](roles/gitea) - git version control service/software forge
 - [gitea_act_runner](roles/gitea_act_runner) - CI/CD runner for Gitea Actions
-- [gotty](roles/gotty) - web-based terminal emulator
-- [graylog](roles/graylog) - log aggregation, storage, real-time search and analysis tool
 - [homepage](roles/homepage) - simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - media server
 - [jitsi](roles/jitsi) - video conferencing solution
+- [kiwix](roles/kiwix) - mirror wikipedia or other wikis locally
 - [libvirt](roles/libvirt) - virtualization toolkit
+- [llamacpp](roles/llamacpp) - llamacpp local LLM service
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
 - [matrix](roles/matrix) - secure instant messaging service
-- [monitoring](roles/monitoring) - monitoring, alerting, audit and logging system
-- [monitoring_goaccess](roles/monitoring_goaccess) - real-time web log analyzer/interactive viewer
-- [monitoring_netdata](roles/monitoring_netdata) - lightweight, real-time monitoring and alerting system
-- [monitoring_rsyslog](roles/monitoring_rsyslog) - log aggregation, processing and forwarding system
-- [monitoring_utils](roles/monitoring_utils) - monitoring and audit utilities
+- [monitoring.exporters](roles/monitoring/exporters) - monitoring agents/metrics exporters
+- [monitoring.goaccess](roles/monitoring/goaccess) - real-time web log analyzer/interactive viewer
+- [monitoring.grafana](roles/monitoring/grafana) - monitoring metrics visualization and analytics
+- [monitoring.rsyslog](roles/monitoring/rsyslog) - log aggregation, processing and forwarding system
+- [monitoring.utils](roles/monitoring/utils) - basic monitoring utilities
+- [monitoring.victoriametrics](roles/monitoring/victoriametrics) - monitoring metrics scraper and time-series database
 - [moodist](roles/moodist) - Ambient sound mixer
 - [mumble](roles/mumble) - low-latency VoIP/voice chat server
 - [nextcloud](roles/nextcloud) - file hosting/sharing/synchronization and collaboration platform
 - [nmap](roles/nmap) - automated network scanning for ansible-based projects
-- [ollama](roles/ollama) - Large Language Model (LLM) server and web interface
 - [openldap](roles/openldap) - LDAP directory server and web management tools
 - [owncast](roles/owncast) - live video streaming and chat server
 - [podman](roles/podman) - OCI container engine and management tools
@@ -62,39 +62,39 @@ This project provides:
 
 ## Screenshots
 
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/netdata-dashboard-thumb.png)](roles/monitoring_netdata)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](roles/nextcloud)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](roles/tt_rss)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](roles/shaarli)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/8cAGkf2.png)](roles/gitea)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Imb0dqO.png)](roles/transmission)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/6Im61B0.png)](roles/mumble)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/REzcZVh.png)](roles/openldap)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/udEAnKA.png)](roles/matrix)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/Vvdj3Zu.png)](roles/homepage)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/H3PIWrt.png)](roles/jellyfin)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/wa3pkyJ.png)](roles/graylog)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](roles/jitsi)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](roles/readme_gen)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](roles/monitoring_goaccess)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](roles/owncast)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](roles/searxng)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/ollama-ui-thumb.png)](roles/ollama)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](roles/nmap)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](roles/stirlingpdf)
-[![](https://gitlab.com/nodiscc/toolbox/-/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](roles/moodist)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/LNaAH2L.png)](roles/nextcloud)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/5TXg6vm.png)](roles/tt_rss)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Jlmj0iE.png)](roles/shaarli)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/8cAGkf2.png)](roles/gitea)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Imb0dqO.png)](roles/transmission)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/6Im61B0.png)](roles/mumble)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/REzcZVh.png)](roles/openldap)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/udEAnKA.png)](roles/matrix)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/Vvdj3Zu.png)](roles/homepage)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/H3PIWrt.png)](roles/jellyfin)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/g0jUMXE.jpg)](roles/jitsi)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/v3lHJGx.png)](roles/readme_gen)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/XYmHNqT.png)](roles/libvirt)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/goaccess-bright-thumb.png)](roles/monitoring/goaccess)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/grafana-thumb.png)](roles/monitoring/grafana)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/owncast-thumb.png)](roles/owncast)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/searxng-thumb.png)](roles/searxng)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/nmap-thumb.png)](roles/nmap)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/stirlingpdf-thumb.png)](roles/stirlingpdf)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/moodist-thumb.png)](roles/moodist)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/kiwix2_thumb.png)](roles/kiwix)
+[![](https://github.com/nodiscc/toolbox/raw/master/DOC/SCREENSHOTS/llamacpp-thumb.png)](roles/llamacpp)
 
 
 ## Source code
 
-- [Gitlab](https://gitlab.com/nodiscc/xsrv)
+- [Gitlab](https://github.com/nodiscc/xsrv)
 - [Github](https://github.com/nodiscc/xsrv)
 
 
 ## License
 
-- [GNU GPLv3](https://gitlab.com/nodiscc/xsrv/-/blob/master/LICENSE) unless noted otherwise in individual files/directories
+- [GNU GPLv3](https://github.com/nodiscc/xsrv/blob/master/LICENSE) unless noted otherwise in individual files/directories
 - Documentation is under the [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license
 
 
@@ -110,7 +110,7 @@ This project provides:
 - [Maintenance](docs/maintenance.md)
 - [Contributing](docs/contributing.md)
 - [Appendices](docs/appendices.md)
-- [Changelog](https://gitlab.com/nodiscc/xsrv/-/blob/master/CHANGELOG.md)
+- [Changelog](https://github.com/nodiscc/xsrv/blob/master/CHANGELOG.md)
 
 
 

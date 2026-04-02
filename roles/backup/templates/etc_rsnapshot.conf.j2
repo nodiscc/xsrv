@@ -247,8 +247,8 @@ backup_exec	{{ command }}	required
 backup	{{ local_path }}	localhost/
 {% endfor %}
 
-{% for remote_backup in rsnapshot_remote_backups %}
-backup	{{ remote_backup.user }}@{{ remote_backup.host }}:{{ remote_backup.path }}	{{ remote_backup.host }}/
+{% for remote_backup in rsnapshot_remote_backups -%}
+backup	{{ remote_backup.user }}@{{ remote_backup.host }}:{{ remote_backup.path }}	{{ remote_backup.host }}{% if remote_backup.port is defined and remote_backup.port != 22 %}	+ssh_args=-p{{ remote_backup.port }}{% endif +%}
 {% endfor %}
 
 # load additional config from /etc/rsnapshot.d/*.conf

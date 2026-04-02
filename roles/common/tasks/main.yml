@@ -3,6 +3,21 @@
   tags:
     - common
     - checks
+    - users
+    - hostname
+    - hosts
+    - dns
+    - sysctl
+    - apt
+    - datetime
+    - ssh
+    - firewall
+    - fail2ban
+    - mail
+    - msmtp
+    - cron
+    - packages
+    - hdparm
 
 - name: import hostname configuration tasks
   import_tasks: hostname.yml
@@ -114,6 +129,14 @@
   tags:
     - common
     - packages
+
+- name: import hdparm configuration tasks
+  import_tasks: hdparm.yml
+  become: yes
+  when: ansible_virtualization_role is not defined or ansible_virtualization_role != "guest"
+  tags:
+    - common
+    - hdparm
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers

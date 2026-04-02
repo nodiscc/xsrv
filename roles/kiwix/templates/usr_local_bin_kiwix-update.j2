@@ -1,0 +1,45 @@
+#!/bin/bash
+# Description: download kiwix dumps
+set -o errexit
+set -o nounset
+
+library_file="/var/lib/kiwix/library.xml"
+
+for url in {{ kiwix_zim_urls | join(' ') }}; do
+  output_file="/var/lib/kiwix/$(basename "$url")"
+  last_modification_time=0
+  local_file_size=0
+
+  if [[ -f "$output_file" ]]; then
+    last_modification_time=$(stat --format=%Y "$output_file")
+    local_file_size="$(du -B1 "$output_file" | cut -f1)"
+  fi
+
+  echo "[INFO] checking free disk space"
+  remote_file_size=$(curl -sI -L "$url" |grep content-length |cut -d ' ' -f 2 | tr -d '\r')
+  free_disk_space=$(df -B1 --output=avail /var/lib/kiwix/|tail -n1)
+  real_free_disk_space="$(( free_disk_space - local_file_size ))"
+  if [[ $remote_file_size -gt $real_free_disk_space ]]; then
+    echo "[ERROR] not enough free disk space to download $url, aborting"
+    exit 1
+  fi
+
+  echo "[INFO] downloading $url to $output_file"
+  wget --no-verbose --timestamping --directory-prefix=/var/lib/kiwix/ "$url"
+  new_modification_time=$(stat --format=%Y "$output_file")
+  if [[ "$new_modification_time" == "$last_modification_time" ]]; then
+    echo "[INFO] file unchanged: $output_file"
+  else
+    echo "[INFO] file updated: $output_file"
+  fi
+
+  echo "[INFO] adding $output_file to library $library_file"
+  library_md5sum_before="$(md5sum "$library_file")"
+  kiwix-manage /var/lib/kiwix/library.xml add "$output_file"
+  library_md5sum_after="$(md5sum "$library_file")"
+  if [[ "$library_md5sum_before" == "$library_md5sum_after" ]]; then
+    echo "[INFO] file unchanged: $library_file"
+  else
+    echo "[INFO] file updated: $library_file"
+  fi
+done

@@ -3,7 +3,192 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v1.27.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.27.0) - 2025-03-02
+#### [v2.0.0](https://github.com/nodiscc/xsrv/releases/tag/2.0.0) - 2026-04-02
+
+> [!IMPORTANT]
+> The mirror at https://gitlab.com/nodiscc/xsrv will no longer be maintained after this release.
+> Please use https://github.com/nodiscc/xsrv or https://codeberg.org/nodiscc/xsrv instead
+> Issues ahve been moved to https://codeberg.org/nodiscc/xsrv/issues
+
+**Upgrade procedure:** Follow these steps in order:
+
+**0. Upgrade to v1.27.0** and deploy, if not already done
+
+**1. Update your playbook** (`xsrv edit-playbook`):
+
+- Remove the `nodiscc.xsrv.monitoring` and `nodiscc.xsrv.monitoring_netdata` roles from all your hosts
+- Add the `nodiscc.xsrv.monitoring.utils`, `nodiscc.xsrv.monitoring.rsyslog` and `nodiscc.xsrv.monitoring.exporters` roles to all your hosts, early in the playbook
+- Add the `nodiscc.xsrv.monitoring.victoriametrics` role to one of your hosts. This host will act as a central monitoring point and receive metrics from all hosts where `nodiscc.xsrv.monitoring.exporters` is deployed (via remote write)
+- Add the `nodiscc.xsrv.monitoring.grafana` role to the same host as the victoriametrics role (but after the `apache` role). This will provide visualizations/dashboards for metrics collected by victoriametrics
+- If present, rename `nodiscc.xsrv.monitoring_goaccess` to `nodiscc.xsrv.monitoring.goaccess`
+
+**2. Migrate variables** (`xsrv edit-host` / `xsrv edit-group`):
+
+Remove all variables named `netdata_*` and use these equivalents:
+- `netdata_allow_connections_from`: [`grafana_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/grafana/defaults/main.yml)
+- `netdata_http_checks`: [`victoriametrics_http_checks`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/victoriametrics/defaults/main.yml)
+- `netdata_x509_checks`: Removed - use `victoriametrics_http_checks` instead (includes automatic certificate validity/expiration checks)
+- `netdata_port_checks`: Removed
+- `netdata_fping_hosts`: Removed
+- `netdata_firewalld_zones`: [`exporter_firewalld_zones`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/base/defaults/main.yml)
+- `rsnapshot_enable_cron`: [`rsnapshot_enable_service`](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml)
+
+**3. Add required variables for the new monitoring roles:**
+
+```yaml
+# xsrv edit-group default all
+monitoring_victoriametrics_url: "https://my.CHANGEME.org:8428"
+
+# xsrv edit-group-vault default all
+victoriametrics_exporters_auth_password: CHANGEME
+monitoring_exporters_auth_password: CHANGEME
+
+# xsrv edit-host default my.CHANGEME.org
+grafana_fqdn: grafana.CHANGEME.org
+```
+
+- Network/firewall: Remove all NAT/firewall rules allowing access to hosts on port 19999/tcp (netdata)
+- Network/firewall: Ensure hosts where exporters are deployed can access the host where victoriametrics is deployed on port 8428/tcp (NAT, firewalls)
+- The `nodiscc.xsrv.monitoring.exporters` role will uninstall netdata and remove all its configuration files/historical data unless you explicitly set `netdata_uninstall: false`
+
+
+**4. Other role-specific changes:**
+
+* libvirt: In [`libvirt_port_forwards`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml), move `*.dnat.*.host_interface` to the top-level list (same level as `vm_name`)
+* wireguard: remove the `data/wireguard/` directory and its contents from your project directory (no longer used)
+* wireguard: If you had custom `routes` defined under `wireguard_peers`, update them to use the new list syntax:
+
+```diff
+-#     routes: "1.2.3.4/32, 192.168.18.0/24"
++#     routes:
++#       - 1.2.3.4/32
++#       - 192.168.18.0/24
+```
+
+**5. Deploy the changes:**
+
+```bash
+xsrv upgrade  # upgrade roles/ansible environments to the latest release
+xsrv check    # (optional) simulate changes that will be applied
+xsrv deploy   # apply changes
+```
+
+--------------------
+
+**Removed:**
+- monitoring_netdata: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- graylog: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- ollama: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- gotty: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- monitoring_utils: remove lynis, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate role/repository
+- common/ssh: remove ability to revoke SSH keys globally using `ssh_server_revoked_keys`
+- common/ssh: no longer look for/replace weak DH parameters
+- libvirt: remove ability to route/forward ports between bridges (`libvirt_port_forwards.*.forward`)
+- libvirt: remove ability to forward ports using `host_ip` (only `host_interface` must be used)
+- gitea_act_runner: remove support for `gitea_act_runner_container_engine: docker`, only podman is supported
+- nextcloud: remove support for external user authentication
+
+**Added:**
+- add [`monitoring.exporters`](roles/monitoring/exporters) role (monitoring agents/metrics exporters)
+- add [`monitoring.victoriametrics`](roles/monitoring/victoriametrics/) role (monitoring metrics scraper and time-series database)
+- add [`monitoring.grafana`](roles/monitoring/grafana) role (analytics and interactive visualization web application)
+- add [`kiwix`](https://github.com/nodiscc/xsrv/tree/master/roles/kiwix) role (offline viewer for Wikipedia and other wikis)
+- add [`llamacpp`](https://github.com/nodiscc/xsrv/tree/master/roles/llamacpp) role (run Large Langue Models (LLM) locally)
+- common/firewalld: allow defining a manual IP address/network blocklist ([`firewalld_blocklist`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- common: allow automatically putting mechanical/rotational hard drives in standby mode after 1 hour ([`hdparm_auto_standby_drives: false/true`]((https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml)))
+- searxng: allow protecting the web interface behind HTTP Basic authentication ([`searxng_auth_enabled/username/password`](https://github.com/nodiscc/xsrv/blob/master/roles/searxng/defaults/main.yml))
+- moodist/owncast/searxng/stirlingpdf: automatically remove unused podman images/containers, nightly (conserve disk space)
+- wireguard: generate a QR code for each wireguard_peer containing the configuration (can be scanned with mobile apps such as WG Tunnel)
+- backup: add [`rsnapshot_remote_backups[*].port`](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml) option (default 22, allows backups over different SSH port)
+- common/users: make the default system `umask` configurable
+- common/sysctl: make the value of `kernel.yama.ptrace_scope` configurable
+- add support for Debian 13 in all roles
+
+**Changed:**
+- rename `monitoring_utils` role to `monitoring.utils`
+- rename `monitoring_rsyslog` role to `monitoring.rsyslog`
+- rename `monitoring_goaccess` to `monitoring.goaccess`
+- default playbook: only enable the common role by default, let user select which roles to enable
+- common/firewalld: ensure ufw is removed before installing firewalld
+- wireguard: allow specifying [`wireguard_peers`](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml) without a `public_key`, in which case a private/public key pair will be generated automatically on the server
+- libvirt: use firewalld to manage port forwarding to libvirt VMs, remove direct iptables management
+- backup: migrate from cron to systemd timers/services
+- wireguard: allow wireguard clients/peers traffic to flow out the default network interface by default (allows clients to tunnel all their internet traffic through the VPN)
+- wireguard: allow wireguard peers to connect to the DNS service on the wireguard server by default
+- wireguard: allow forwarding of wireguard peers network traffic to other zones by default (`wireguard_allow_forwarding: yes/no`)
+- shaarli: preserve thumbnails cache during upgrades
+- nextcloud: schedule start of maintenance window (resource intensive tasks) at 02:00
+- searxng: allow returning results as JSON (add `&format=json` to URL parameters)
+- searxng: increase sepiasearch search engine weight to 2
+- searxng: increase wiby search engine weight to 1.2
+- searxng: enable [searchmysite](https://searchmysite.net) search engine by default
+- common: fail2ban: use `hash:net` ipset types instead of `hash:ip`
+- common: ssh: ensure ssh is automatically started at boot, disable socket activation
+- common: ensure cron is installed
+- monitoring.rsyslog: ensure logrotate is installed
+- libvirt: allow accessing VM SPICE graphical consoles remotely
+- apache: set a fixed 30 day renewal threshold for SSL/TLS certificates obtained through `mod_md`
+- kiwix: update rationalwiki download URL
+- readme-gen: always write SSH client configuration and GTK bookmarks for all hosts to README.md, even for hosts that are not in [`readme_gen_limit`](https://github.com/nodiscc/xsrv/blob/master/roles/readme-gen/defaults/main.yml)
+- doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
+- xsrv: self-upgrade now also updates the bash completion script if it exists
+- shaarli: update stack template to v0.12 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12) [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.12)
+- shaarli: udpate to v0.16.0 [[1](https://github.com/shaarli/Shaarli/releases/tag/v0.15.0)
+- nextcloud: update to 31.0.13 [[1]](https://nextcloud.com/changelog/#latest29) [[2]](https://nextcloud.com/changelog/#latest30) [[3]](https://nextcloud.com/blog/nextcloud-hub9/) [[4]](https://nextcloud.com/blog/nextcloud-hub10/)
+- gitea: update to [v1.25.5](https://github.com/go-gitea/gitea/releases)
+- owncast: update to v0.2.4 [[1]](https://github.com/owncast/owncast/releases/tag/v0.2.2) [[2]](https://github.com/owncast/owncast/releases/tag/v0.2.3) [[3]](https://github.com/owncast/owncast/releases/tag/v0.2.4)
+- postgresql: update pgmetrics to v1.18.0 [[1]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.17.1) [[2]](https://github.com/rapidloop/pgmetrics/releases/tag/v1.18.0)
+- stirlingpdf: update to [v2.7.1](https://github.com/Stirling-Tools/Stirling-PDF/releases)
+- searxng: allow returning results as JSON (add `&format=json` to URL parameters)
+- searxng: increase sepiasearch search engine weight to 2
+- searxng: increase wiby search engine weight to 1.2
+- monitoring_rsyslog: ensure logrotate is installed
+- jellyfin: update opensubtitles plugin to v22.0.0
+- searxng: enable [searchmysite](https://searchmysite.net) search engine by default, increase weight to 2
+- matrix: update element-web to [v1.12.12](https://github.com/element-hq/element-web/releases/)
+- matrix: update synapse-admin to [v0.11.4](https://github.com/Awesome-Technologies/synapse-admin/releases)
+- openldap: update ldap-account-manager to [v9.5.1](https://github.com/LDAPAccountManager/lam/releases)
+- openldap: upgrade self-service-password to [v1.7.3](https://github.com/ltb-project/self-service-password/releases/tag/v1.7.3)
+- xsrv: update ansible to v12.3.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst) [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/12/CHANGELOG-v12.rst)
+- xsrv: update trivy security scanner to [v0.69.3](https://github.com/aquasecurity/trivy/releases)
+- xsrv: init-template: update installer image to Debian 13
+- gitea_act_runner: update act-runner to v0.2.12 [[1]](https://gitea.com/gitea/act_runner/releases/tag/v0.2.12)
+- gitea_act_runner: update `debian-latest` and `ubuntu-latest` base image aliases to use `node:22-trixie`
+- gitea_act_runner: always enable nightly cleanup of podman volumes and containers created by act-runner, regardless of `gitea_act_runner_daily_podman_prune`
+- goaccess: update IP to Country GeoIP database, adjust version number automatically base on current date
+- common: ssh: ensure ssh is automatically started at boot, disable socket activation
+- common: ensure cron is installed
+- common/apt: make unattended-upgrades configuration and sources.list file compatible with Debian 13
+- make all roles compatibles with debian 13, except jitsi
+- doc: gitea actions: document manually triggering a workflow from the actions page (workflow_dispatch)
+- doc: update comments in several files to reflect new documentation in Debian 13
+- doc: migrate all gitlab.com/nodiscc/xsrv and gitlab.com/nodiscc/toolbox URLs to github, deprecate gitlab mirror
+- doc: mark jitsi role as incompatible with Debian 13
+- update documentation
+- CI/CD: migrate from GitLab CI to GitHub Actions
+
+**Fixed:**
+- xsrv: fix fetch-backups failing with numeric ansible_ssh_port
+- tt-rss: switch git repository to mirror on https://gitlab.com/nodiscc/tt-rss (upstream repository removed)
+- tt-rss: `clone/upgrade tt-rss` task no longer always returns changed (pin version to latest commit from upstream)
+- searxng: remove engines that no longer exist from config file, fix warnings in logs
+- jitsi: fix apt prosody apt repository failing to update with `The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F7A37EB33D0B25D7`
+- matrix: update APT repository signing key (the previous key has expired)
+- postgresql: fix `'postgresql_version' is undefined` error when running the `monitoring` tag alone
+- wireguard: really delete peers and associated keys/configuration when [`wireguard_peers[*].state`](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
+- wireguard: fix missing /32 in generated client config files
+- shaarli: fix missing php extension php-xml
+- nextcloud: fix `trusted_proxies is not correctly defined` warning in admin area
+- monitoring.utils: fix bonnie++ report generation
+- tt_rss: fix DB update error on first deployment
+- podman/owncast: fix `"pasta": executable file not found`
+
+[Full changes since v1.27.0](https://github.com/nodiscc/xsrv/compare/1.27.0...1.28.0)
+
+------------------
+
+
+#### [v1.27.0](https://github.com/nodiscc/xsrv/releases/tag/1.27.0) - 2025-03-02
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -16,7 +201,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 ```
 
 **Added:**
-- owncast: allow protecting the web interface behind HTTP Basic authentication ([`owncast_auth_enabled/username/password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/owncast/defaults/main.yml))
+- owncast: allow protecting the web interface behind HTTP Basic authentication ([`owncast_auth_enabled/username/password`](https://github.com/nodiscc/xsrv/blob/master/roles/owncast/defaults/main.yml))
 
 **Changed:**
 - nextcloud: upgrade to v29.0.12 [[1]](https://nextcloud.com/changelog/) [[2](https://nextcloud.com/blog/nextcloud-hub8/)]
@@ -26,8 +211,8 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - stirlingpdf: upgrade to v0.43.2 [[1]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.0) [[2]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.37.1) [[3]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.38.0) [[4]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.39.0) [[5]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.0) [[6]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.1) [[7]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.40.2) [[8]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.41.0) [[9]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.42.0) [[10]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.43.0) [[11]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.43.1) [[12]](https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v0.43.2)
 - netdata: pin version to v2.1.1, further versions artifically limit the number of nodes that can be accessed from the web dashboard [[1]](https://community.netdata.cloud/t/suddenly-local-dashboard-is-limited-to-5-nodes/)
 - netdata: send all alerts to the 'sysadmin' recipent by default (root)
-- netdata: disable systemd-journal log collection module by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- netdata: allow defining different access control lists from dashboard access and streaming ([`netdata_allow_dashboard_from/netdata_allow_streaming_from`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: disable systemd-journal log collection module by default ([`netdata_disabled_plugins`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: allow defining different access control lists from dashboard access and streaming ([`netdata_allow_dashboard_from/netdata_allow_streaming_from`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - xsrv: update trivy security scanner to [v0.59.1](https://github.com/aquasecurity/trivy/releases)
 - xsrv: update ansible to v11.3.0 [[1]](https://github.com/ansible-community/ansible-build-data/blob/main/11/CHANGELOG-v11.rst)
 - matrix: update element-web to v1.11.91 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.90) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.91) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.92) [[4]](https://github.com/vector-im/element-web/releases/tag/v1.11.93) [[5]](https://github.com/vector-im/element-web/releases/tag/v1.11.94)
@@ -37,20 +222,20 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 **Fixed:**
 - owncast: fix occasional `Job for container-owncast.service failed because the service did not take the steps required by its unit configuration.` error during service restart
 
-[Full changes since v1.26.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.26.0...1.27.0)
+[Full changes since v1.26.0](https://github.com/nodiscc/xsrv/compare/1.26.0...1.27.0)
 
 ------------------
 
-#### [v1.26.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.26.0) - 2025-01-06
+#### [v1.26.0](https://github.com/nodiscc/xsrv/releases/tag/1.26.0) - 2025-01-06
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- monitoring_netdata: if you had changed the default value of `netdata_dbengine_disk_space` in your host/group configuration, remove this variable and configure [`netdata_dbengine_tier0/1/2_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead
+- monitoring_netdata: if you had changed the default value of `netdata_dbengine_disk_space` in your host/group configuration, remove this variable and configure [`netdata_dbengine_tier0/1/2_retention_days`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml) instead
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`searxng`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/searxng) role (metasearch engine)
+- add [`searxng`](https://github.com/nodiscc/xsrv/tree/master/roles/searxng) role (metasearch engine)
 
 **Changed:**
 - monitoring_netdata: define maximum metrics retention in days (`netdata_dbengine_tier0/1/2_retention_days`) instead of MB (default to 7 days of per-second data, 30 days of per-minute data, 730 days of per-hour data)
@@ -78,24 +263,24 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - owncast: fix container/service not restarting after upgrades
 - netdata: fix netdata unable to determine podman container names
 
-[Full changes since v1.25.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.1...1.26.0)
+[Full changes since v1.25.1](https://github.com/nodiscc/xsrv/compare/1.25.1...1.26.0)
 
 ------------------
 
-#### [v1.25.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.1) - 2024-10-19
+#### [v1.25.1](https://github.com/nodiscc/xsrv/releases/tag/1.25.1) - 2024-10-19
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
 **Fixed:**
-- moodist: fix variable name ([`moodist_https_mode`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/moodist/defaults/main.yml))
+- moodist: fix variable name ([`moodist_https_mode`](https://github.com/nodiscc/xsrv/blob/master/roles/moodist/defaults/main.yml))
 
-[Full changes since v1.25.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.25.0...1.25.1)
+[Full changes since v1.25.0](https://github.com/nodiscc/xsrv/compare/1.25.0...1.25.1)
 
 ------------------
 
-#### [v1.25.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.25.0) - 2024-10-19
+#### [v1.25.0](https://github.com/nodiscc/xsrv/releases/tag/1.25.0) - 2024-10-19
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -103,8 +288,8 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`stirlingpdf`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/stirlingpdf) role (PDF manipulation tools)
-- add [`moodist`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/moodist) role (ambient sound mixer)
+- add [`stirlingpdf`](https://github.com/nodiscc/xsrv/tree/master/roles/stirlingpdf) role (PDF manipulation tools)
+- add [`moodist`](https://github.com/nodiscc/xsrv/tree/master/roles/moodist) role (ambient sound mixer)
 - libvirt: enable [KSM](https://packages.debian.org/bookworm/ksmtuned) (VM memory deduplication)
 
 **Changed:**
@@ -126,24 +311,24 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 **Fixed:**
 - netdata: fix netdata not upgrading automatically from 1.45.6 to later versions
 - jellyfin: fix jellyfin not upgrading automtically from 10.8.13 to 10.9.2
-- wireguard: really delete peers from the configuration when [`wireguard_peers[*].state`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
-- wireguard: fix variable checks for [`wireguard_peers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) with `state: absent` and no `public_key` defined
+- wireguard: really delete peers from the configuration when [`wireguard_peers[*].state`](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml) is set to `absent`
+- wireguard: fix variable checks for [`wireguard_peers`](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml) with `state: absent` and no `public_key` defined
 - postgresql: rsyslog: fix postgresql log messages incorrectly tagged as `mongodb` in syslog
 - openldap: fix ldap-account-manager download failing with `urlopen error timed out`
 - gitea_act_runner: fix runner failing to register with `[E] Deprecated config option [oauth2].ENABLE is present, please use [oauth2].ENABLED instead`
 
-[Full changes since v1.24.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.24.0...1.25.0)
+[Full changes since v1.24.0](https://github.com/nodiscc/xsrv/compare/1.24.0...1.25.0)
 
 ------------------
 
-#### [v1.24.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.24.0) - 2024-05-09
+#### [v1.24.0](https://github.com/nodiscc/xsrv/releases/tag/1.24.0) - 2024-05-09
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`ollama`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/ollama) role (local Large Language Model (LLM) server and web interface)
+- add [`ollama`](https://github.com/nodiscc/xsrv/tree/master/roles/ollama) role (local Large Language Model (LLM) server and web interface)
 - monitoring_utils: add [bonnie++](https://doc.coker.com.au/projects/bonnie/) disk benchmarking tool and automated report script (`TAGS=utils-bonnie xsrv deploy`)
 
 **Changed:**
@@ -160,14 +345,14 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 **Fixed:**
 - handlers: fix recursion loop in `handlers/meta/main.yml`
 - all roles/apache: ensure apache is restarted (not just reloaded) when new modules are loaded
-- graylog: make syslog certificate generation idempotent (add [`graylog_cert_not_before/after`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml) variables)
+- graylog: make syslog certificate generation idempotent (add [`graylog_cert_not_before/after`](https://github.com/nodiscc/xsrv/blob/master/roles/graylog/defaults/main.yml) variables)
 - matrix: fix broken version number comparison leading to error `'matrix_synapse_admin_action' is undefined.`
 
-[Full changes since v1.23.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.23.0...1.24.0)
+[Full changes since v1.23.0](https://github.com/nodiscc/xsrv/compare/1.23.0...1.24.0)
 
 ------------------
 
-#### [v1.23.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.23.0) - 2024-04-09
+#### [v1.23.0](https://github.com/nodiscc/xsrv/releases/tag/1.23.0) - 2024-04-09
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -180,18 +365,18 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 **Added:**
 - xsrv: add [`scan`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-scan) command (scan a project directory for cleartext secrets/passwords using [trivy](https://github.com/aquasecurity/trivy))
 - xsrv: add [`show-groups`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-show-groups) command (list all groups a host is a member of)
-- monitoring_rsyslog: allow receiving logs from syslog clients over the network on port `514/tcp` ([`rsyslog_enable_receive: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
+- monitoring_rsyslog: allow receiving logs from syslog clients over the network on port `514/tcp` ([`rsyslog_enable_receive: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
 
 **Removed:**
 - monitoring_netdata: remove configuration variables `netdata_log_to_syslog`, `netdata_disable_debug_log`, `netdata_disable_error_log`, `netdata_disable_access_log`
 
 **Changed:**
-- gitea_act_runner: disable automatic nightly prune of podman images/containers by default [`gitea_act_runner_daily_podman_prune: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml)
+- gitea_act_runner: disable automatic nightly prune of podman images/containers by default [`gitea_act_runner_daily_podman_prune: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea_act_runner/defaults/main.yml)
 - monitoring_netdata: send all logs to systemd-journald, except access log
-- monitoring_netdata: disable machine learning/anomaly detection functionality when streaming to a parent node (when [`netdata_streaming_send_enabled`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) is enabled)
-- shaarli: allow setting the default view mode when using the `stack` template ([`shaarli_stack_default_ui: small/medium/large`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)), change the default to `medium`
-- monitoring_rsyslog/graylog: setup mutual TLS authentication between syslog clients and server, sign server and client certificates with server CA certificate - [`rsyslog_forward_to_inventory_hostname`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) is now required on rsyslog clients
-- common: apt: enable non-free-firmware section when [`apt_enable_nonfree: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) [[1]](https://wiki.debian.org/Firmware)
+- monitoring_netdata: disable machine learning/anomaly detection functionality when streaming to a parent node (when [`netdata_streaming_send_enabled`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml) is enabled)
+- shaarli: allow setting the default view mode when using the `stack` template ([`shaarli_stack_default_ui: small/medium/large`](https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml)), change the default to `medium`
+- monitoring_rsyslog/graylog: setup mutual TLS authentication between syslog clients and server, sign server and client certificates with server CA certificate - [`rsyslog_forward_to_inventory_hostname`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_rsyslog/defaults/main.yml) is now required on rsyslog clients
+- common: apt: enable non-free-firmware section when [`apt_enable_nonfree: yes`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml) [[1]](https://wiki.debian.org/Firmware)
 - gitea: update to v1.21.7 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.7)
 - nextcloud: upgrade to v28.0.4 [[1]](https://nextcloud.com/changelog/) [[2]](https://github.com/nextcloud/server/releases/tag/v28.0.3) [[3]](https://github.com/nextcloud/server/releases/tag/v28.0.4)
 - shaarli: update stack template to v0.7 [[1]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.6) [[2]](https://github.com/RolandTi/shaarli-stack/releases/tag/0.7)
@@ -207,10 +392,10 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - shaarli: fix stack theme favicon not being displayed
 - postgresql: fix role execution when called with `rsyslog` ansible tag 
 
-[Full changes since v1.22.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.22.0...1.23.0)
+[Full changes since v1.22.0](https://github.com/nodiscc/xsrv/compare/1.22.0...1.23.0)
 
 
-#### [v1.22.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.22.0) - 2024-02-03
+#### [v1.22.0](https://github.com/nodiscc/xsrv/releases/tag/1.22.0) - 2024-02-03
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -218,7 +403,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`nmap`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap) command and role - run nmap network scanner against hosts from the inventory
+- add [`nmap`](https://github.com/nodiscc/xsrv/tree/master/roles/nmap) command and role - run nmap network scanner against hosts from the inventory
 
 **Changed:**
 - graylog: support initial deployment of the role with graylog/mongodb/elasticsearch disabled
@@ -228,11 +413,11 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - xsrv: update ansible to [v9.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 - update documentation
 
-[Full changes since v1.21.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.21.0...1.22.0)
+[Full changes since v1.21.0](https://github.com/nodiscc/xsrv/compare/1.21.0...1.22.0)
 
 ------------------
 
-#### [v1.21.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.21.0) - 2024-01-17
+#### [v1.21.0](https://github.com/nodiscc/xsrv/releases/tag/1.21.0) - 2024-01-17
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -242,12 +427,12 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`owncast`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/owncast) role role (live video streaming and chat server)
-- graylog/mongodb: require authentication to connect to mongodb ([`mongodb_admin_password`, `graylog_mongodb_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml))
+- add [`owncast`](https://github.com/nodiscc/xsrv/tree/master/roles/owncast) role role (live video streaming and chat server)
+- graylog/mongodb: require authentication to connect to mongodb ([`mongodb_admin_password`, `graylog_mongodb_password`](https://github.com/nodiscc/xsrv/blob/master/roles/graylog/defaults/main.yml))
 - jitsi: add an automated procedure to get the list of jitsi (prosody) registered users (`TAGS=utils-jitsi-listusers xsrv deploy`)
-- gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- gitea_act_runner: allow configuring how many tasks the runner can execute concurrently ([`gitea_act_runner_capacity: 1`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea_act_runner/defaults/main.yml))
 - postgresql: aggregate postgresql logs to syslog (when the `monitoring_rsyslog` role is deployed)
-- wireguard/firewalld: allow configuring services to which wireguard clients can connect on the host ([`wireguard_firewalld_services`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml))
+- wireguard/firewalld: allow configuring services to which wireguard clients can connect on the host ([`wireguard_firewalld_services`](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml))
 
 **Removed:**
 - postgresql: drop compatibility with Debian <12
@@ -279,29 +464,29 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - graylog: don't fail with `'graylog_mongodb_apt_repo_distribution' is undefined` when running the `mongodb` tag alone
 - dnsmasq: only attempt to update blocklists after network is online and dnsmasq has started
 
-[Full changes since v1.20.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.20.0...1.21.0)
+[Full changes since v1.20.0](https://github.com/nodiscc/xsrv/compare/1.20.0...1.21.0)
 
 ------------------
 
-#### [v1.20.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.20.0) - 2023-12-02
+#### [v1.20.0](https://github.com/nodiscc/xsrv/releases/tag/1.20.0) - 2023-12-02
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
 **Added:**
-- dnsmasq: allow loading custom DNS blocklists from an URL ([`dnsmasq_blocklist_url`, `dnsmasq_blocklist_mode`, `dnsmasq_blocklist_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml))
+- dnsmasq: allow loading custom DNS blocklists from an URL ([`dnsmasq_blocklist_url`, `dnsmasq_blocklist_mode`, `dnsmasq_blocklist_whitelist`](https://github.com/nodiscc/xsrv/blob/master/roles/dnsmasq/defaults/main.yml))
 - shaarli: install [stack](https://github.com/RolandTi/shaarli-stack) custom theme/template and enable it by default
-- shaarli: allow setting the theme/template via the ([`shaarli_theme`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml)) configuration variable
-- dnsmasq: allow logging DNS queries processed by dnsmasq ([`dnsmasq_log_queries: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/dnsmasq/defaults/main.yml))
-- nextcloud: allow configuring outgoing mail settings ([`nextcloud_smtp_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
-- common: add automated procedures to reboot or shutdown hosts ([`TAGS=utils-shutdown,utils-reboot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common#usage))
-- netdata: debsecan: allow whitelisting vulnerabilities reported by debsecan by CVE number ([`debsecan_whitelist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- shaarli: allow setting the theme/template via the ([`shaarli_theme`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml)) configuration variable
+- dnsmasq: allow logging DNS queries processed by dnsmasq ([`dnsmasq_log_queries: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/dnsmasq/defaults/main.yml))
+- nextcloud: allow configuring outgoing mail settings ([`nextcloud_smtp_*`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml))
+- common: add automated procedures to reboot or shutdown hosts ([`TAGS=utils-shutdown,utils-reboot`](https://github.com/nodiscc/xsrv/tree/master/roles/common#usage))
+- netdata: debsecan: allow whitelisting vulnerabilities reported by debsecan by CVE number ([`debsecan_whitelist`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - act-runner: prune unused podman data automatically, nightly (volumes, networks, containers, images)
-- apache: allow restricting access to individual web applications by IP address/network ([`shaarli_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml), [`matrix_synapse/element_admin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml), [`goaccess_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/goaccess/defaults/main.yml), [`ldap_account_manager/self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml), [`nextcloud_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml), [`transmission_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml), [`tt_rss_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/tt_rss/defaults/main.yml), [`jitsi_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml), [`homepage_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml), [`graylog_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/graylog/defaults/main.yml), [`gotty_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gotty/defaults/main.yml), [`gitea_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
-- jellyfin: allow disabling the allowed IP list entirely (allow access from any IP) by setting an empty [`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml) list
-- goaccess: allow configuring IP to Country GeoIP database version ([`goaccess_geoip_db_version`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_goaccess/defaults/main.yml))
-- common: sysctl: add hardening measures against reading/writing files controlled by an attacker [`fs.protected_fifos/hardlinks/regular/symlinks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/templates/etc_sysctl.d_custom.conf.j2)
+- apache: allow restricting access to individual web applications by IP address/network ([`shaarli_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml), [`matrix_synapse/element_admin_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/matrix/defaults/main.yml), [`goaccess_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/goaccess/defaults/main.yml), [`ldap_account_manager/self_service_password_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml), [`nextcloud_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml), [`transmission_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/transmission/defaults/main.yml), [`tt_rss_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/tt_rss/defaults/main.yml), [`jitsi_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/jitsi/defaults/main.yml), [`homepage_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/homepage/defaults/main.yml), [`graylog_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/graylog/defaults/main.yml), [`gotty_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/gotty/defaults/main.yml), [`gitea_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml))
+- jellyfin: allow disabling the allowed IP list entirely (allow access from any IP) by setting an empty [`jellyfin_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml) list
+- goaccess: allow configuring IP to Country GeoIP database version ([`goaccess_geoip_db_version`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_goaccess/defaults/main.yml))
+- common: sysctl: add hardening measures against reading/writing files controlled by an attacker [`fs.protected_fifos/hardlinks/regular/symlinks`](https://github.com/nodiscc/xsrv/blob/master/roles/common/templates/etc_sysctl.d_custom.conf.j2)
 - podman: add `podman-docker` wrapper (execute `docker` commands through podman)
 
 **Removed:**
@@ -311,7 +496,7 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 **Changed:**
 - xsrv: init-vm-template: use the gateway IP address as DNS server ([`--nameservers`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file)) by default instead of Cloudflare public DNS
 - netdata: when `*_enable_service: no`, disable HTTP checks entirely for this service (instead of accepting HTTP 503)
-- netdata: debsecan: allow disabling daily debsecan mail reports ([`debsecan_enable_reports: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- netdata: debsecan: allow disabling daily debsecan mail reports ([`debsecan_enable_reports: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml))
 - transmission/netdata: only accept HTTP 401 as valid return code for the HTTP check
 - nextcloud: verify downloaded .zip using GPG signatures
 - jellyfin: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `5.7 MEDIUM`)
@@ -332,42 +517,42 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - readme_gen: fix netdata alarm badge URL for used swap alarm
 - shaarli: make `remove shaarli zip extraction directory` task idempotent
 
-[Full changes since v1.19.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.19.0...1.20.0)
+[Full changes since v1.19.0](https://github.com/nodiscc/xsrv/compare/1.19.0...1.20.0)
 
 ------------------
 
-#### [v1.19.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.19.0) - 2023-11-03
+#### [v1.19.0](https://github.com/nodiscc/xsrv/releases/tag/1.19.0) - 2023-11-03
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- **gitea_act_runner:** if you changed it from the default value, rename the variable `gitea_act_runner_gitea_instance_url` to [`gitea_act_runner_gitea_instance_fqdn`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- **gitea_act_runner:** if you changed it from the default value, rename the variable `gitea_act_runner_gitea_instance_url` to [`gitea_act_runner_gitea_instance_fqdn`]((https://github.com/nodiscc/xsrv/blob/master/roles/gitea_act_runner/defaults/main.yml))
 - **monitoring_utils:** if your projects are under git version control, you may want to add `data/duc-*.db` to  your `.gitignore` before using the `utils-duc` tag.
 - **common:** if your projects are under git version control, you may want to add `data/firewalld-info-*.log` to  your `.gitignore` before using the `utils-firewalld-info` tag.
 - `xsrv deploy` to apply changes
 
 **Added:**
 - common: packages: automatically install [qemu-guest-agent](https://qemu-project.gitlab.io/qemu/interop/qemu-ga.html) when the host is a KVM VM
-- gitea_act_runner: allow running workflows directly on the host without containerization ([`gitea_act_runner_labels`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea_act_runner/defaults/main.yml))
-- monitoring_utils: allow analyzing disk usage by directory and visualizing it locally using [duc](https://duc.zevv.nl/) ([`TAGS=utils-duc xsrv deploy default my.CHANGEME.org`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_utils#usage))
-- backup: allow disabling specific rsnapshot backup intervals by setting [`rsnapshot_retain_daily/weekly/monthly`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml) to `0`
-- backup: allow disabling automatic/scheduled backups entirely [`rsnapshot_enable_cron: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
-- backup: allow disabling automatic creation of the backup storage directory [`rsnapshot_create_root: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/defaults/main.yml)
+- gitea_act_runner: allow running workflows directly on the host without containerization ([`gitea_act_runner_labels`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea_act_runner/defaults/main.yml))
+- monitoring_utils: allow analyzing disk usage by directory and visualizing it locally using [duc](https://duc.zevv.nl/) ([`TAGS=utils-duc xsrv deploy default my.CHANGEME.org`](https://github.com/nodiscc/xsrv/tree/master/roles/monitoring_utils#usage))
+- backup: allow disabling specific rsnapshot backup intervals by setting [`rsnapshot_retain_daily/weekly/monthly`](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml) to `0`
+- backup: allow disabling automatic/scheduled backups entirely [`rsnapshot_enable_cron: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml)
+- backup: allow disabling automatic creation of the backup storage directory [`rsnapshot_create_root: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml)
 - common: allow getting firewalld status information (`TAGS=utils-firewalld-info xsrv deploy`)
 - netdata/shaarli/tt_rss/openldap/nextcloud: enable monitoring of PHP-FPM pools
 - when generating self-signed certificates, download them to the controller in `data/certificates/` under the project directory
 
 **Removed:**
-- netdata: remove variable `netdata_self_monitoring_enabled` (use [`netdata_disabled_plugins: ['netdata monitoring']`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) instead)
+- netdata: remove variable `netdata_self_monitoring_enabled` (use [`netdata_disabled_plugins: ['netdata monitoring']`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml) instead)
 - monitoring_utils: remove `logwatch` from the list of default installed packages
 
 **Changed:**
 - netdata: disable all netdata self-monitoring by default
-- netdata: update logs/db storage configuration for newer netdata versions, store 400MB of per-minute data and 200MB of per-hour data in addition to the amount of per-second data defined by [`netdata_dbengine_disk_space`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
+- netdata: update logs/db storage configuration for newer netdata versions, store 400MB of per-minute data and 200MB of per-hour data in addition to the amount of per-second data defined by [`netdata_dbengine_disk_space`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml)
 - gitea_act_runner: don't run the runner as root but as dedicated act-runner user
 - gitea_act_runner: force re-registering the runner when the `.runner` file is absent
 - gitea_act_runner: rename variable `gitea_act_runner_gitea_instance_url` to `gitea_act_runner_gitea_instance_fqdn`
 - gitea_act_runner: log runner registration attempts to syslog for easier debugging
-- common: users/logind: don't lock auto-lock idle user sessions by default ([`systemd_logind_lock_after_idle_min: 0`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: users/logind: don't lock auto-lock idle user sessions by default ([`systemd_logind_lock_after_idle_min: 0`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
 - jitsi/goaccess: only generate self-signed certificates when `jitsi/goaccess_https_mode: selfsigned`
 - transmission: only generate self-signed certificates when apache is managed by xsrv
 - nextcloud: upgrade to v27.1.3 [[1]](https://nextcloud.com/changelog/) [[2]](https://nextcloud.com/blog/introducing-hub-5-first-to-deliver-self-hosted-ai-powered-digital-workspace/) [[3]](https://github.com/nextcloud/server/releases/tag/v27.1.0) [[4]](https://github.com/nextcloud/server/releases/tag/v27.1.1) [[5]](https://github.com/nextcloud/server/releases/tag/v27.1.2) [[6]](https://github.com/nextcloud/server/releases/tag/v27.1.3)
@@ -383,37 +568,37 @@ sudo apt install netdata-dashboard=2.1.1 netdata-plugin-apps=2.1.1 netdata-plugi
 - monitoring_netdata/debsecan: fix debsecan unable to send email reports
 - default playbook: fix role ordering (`podman` must be deployed before `gitea_act_runner`)
 
-[Full changes since v1.18.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.18.0...1.19.0)
+[Full changes since v1.18.0](https://github.com/nodiscc/xsrv/compare/1.18.0...1.19.0)
 
 ------------------
 
-#### [v1.18.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.18.0) - 2023-10-11
+#### [v1.18.0](https://github.com/nodiscc/xsrv/releases/tag/1.18.0) - 2023-10-11
 
 **Upgrade procedure:**
-- **docker:** if you want to keep using the [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) is now the recommended role for container management.
+- **docker:** if you want to keep using the [`docker`](https://github.com/nodiscc/xsrv/tree/1.17.0/roles/docker) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.docker`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.podman`](https://github.com/nodiscc/xsrv/tree/master/roles/podman) is now the recommended role for container management.
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
 _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui/repo/published/nodiscc/xsrv/ until https://github.com/ansible/galaxy/issues/2438 is fixed, please use the git repository URL in your `requirements.yml`, as documented in https://xsrv.readthedocs.io/en/latest/usage.html#use-as-ansible-collection._
 
 **Added:**
-- add [`gitea_act_runner`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gitea_act_runner) role (Gitea Actions CI/CD runner)
-- add [`podman`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker))
-- gitea: allow enabling built-in [Gitea Actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system ([`gitea_enable_actions: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
-- common: allow running `unattended-upgrade` or `apt upgrade` immediately ([`TAGS=utils-apt-unattended-upgrade,utils-apt-upgrade`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/README.md#usage))
-- matrix: allow setting up LDAP authentication backend for synapse ([`matrix_synapse_ldap_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/matrix/defaults/main.yml))
-- netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://gitlab.com/nodiscc/xsrv/-/tree/1.17.0/roles/docker#uninstallation))
-- nextcloud: allow automatically checking the filesystem/data directory for changes made outside Nextcloud ([`nextcloud_filesystem_check_changes: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
+- add [`gitea_act_runner`](https://github.com/nodiscc/xsrv/tree/master/roles/gitea_act_runner) role (Gitea Actions CI/CD runner)
+- add [`podman`](https://github.com/nodiscc/xsrv/tree/master/roles/podman) role (OCI container engine and management tools, replacement for [`docker`](https://github.com/nodiscc/xsrv/tree/1.17.0/roles/docker))
+- gitea: allow enabling built-in [Gitea Actions](https://docs.gitea.com/next/usage/actions/overview) CI/CD system ([`gitea_enable_actions: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml))
+- common: allow running `unattended-upgrade` or `apt upgrade` immediately ([`TAGS=utils-apt-unattended-upgrade,utils-apt-upgrade`](https://github.com/nodiscc/xsrv/blob/master/roles/common/README.md#usage))
+- matrix: allow setting up LDAP authentication backend for synapse ([`matrix_synapse_ldap_*`](https://github.com/nodiscc/xsrv/blob/master/roles/matrix/defaults/main.yml))
+- netdata: allow aggregating netdata error/health alarm/collector logs to syslog ([`netdata_logs_to_syslog: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- docker: add an automated procedure to uninstall docker role components ([`TAGS=utils-docker-uninstall`](https://github.com/nodiscc/xsrv/tree/1.17.0/roles/docker#uninstallation))
+- nextcloud: allow automatically checking the filesystem/data directory for changes made outside Nextcloud ([`nextcloud_filesystem_check_changes: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml))
 
 **Removed:**
-- docker: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- docker: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - apache: remove remove ability to install/configure `mod-evasive` anti-DDoS module
 
 **Changed:**
 - common: datetime: replace `ntpd` time synchronization service by `systemd-timesyncd`
-- common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- graylog: don't perform mongodb backups when the graylog/mongodb service is disabled on the host configuration ([`graylog_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: ssh: don't accept locale/language-related environment variables set by the client by default ([`ssh_accept_locale_env: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- graylog: don't perform mongodb backups when the graylog/mongodb service is disabled on the host configuration ([`graylog_enable_service: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
 - gitea: update to v 1.20.5 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.5)
 - matrix: update element-web to v1.11.46 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.44) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.45) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.46)
 - graylog: update to v5.1 [[1]](https://graylog.org/post/announcing-graylog-v5-1/) [[2]](https://graylog.org/videos/whats-new-in-v5-1/) [[3]](https://graylog.org/post/announcing-graylog-v5-1-1/) [[4]](https://graylog.org/post/announcing-graylog-v5-1-2/) [[5]](https://graylog.org/post/announcing-graylog-v5-1-3/) [[6]](https://graylog.org/post/announcing-graylog-v5-1-4/) [[7]](https://graylog.org/post/announcing-graylog-v5-1-5/)
@@ -425,30 +610,30 @@ _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui
 **Fixed:**
 - jitsi: fixed jitsi-videobridge sometimes failing to connect to prosody (`org.jivesoftware.smack.sasl.SASLErrorException: SASLError using SCRAM-SHA-1: not-authorized`) - force updating jvb prosody password
 
-[Full changes since v1.17.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.17.0...1.18.0)
+[Full changes since v1.17.0](https://github.com/nodiscc/xsrv/compare/1.17.0...1.18.0)
 
 ------------------
 
 
-#### [v1.17.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.17.0) - 2023-09-21
+#### [v1.17.0](https://github.com/nodiscc/xsrv/releases/tag/1.17.0) - 2023-09-21
 
 **Upgrade procedure:**
-- upgrade to [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) and deploy it first, if not already done
+- upgrade to [v1.16.0](https://github.com/nodiscc/xsrv/releases/tag/1.16.0) and deploy it first, if not already done
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- if you had changed it from its default value, rename the variable `syslog_retention_days` to [`rsyslog_retention_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml) in your hosts/groups configuration (`xsrv edit-host/edit-group`)
+- if you had changed it from its default value, rename the variable `syslog_retention_days` to [`rsyslog_retention_days`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_rsyslog/defaults/main.yml) in your hosts/groups configuration (`xsrv edit-host/edit-group`)
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes
 - `TAGS=debian11to12 xsrv deploy && xsrv deploy` to upgrade hosts still on Debian 11 "Bullseye" to [Debian 12 "Bookworm"](https://www.debian.org/News/2023/20230610) [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html). Debian 11 will no longer be supported after this release.
 
 **Added:**
-- add [`monitoring_goaccess`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring_goaccess) role - real-time web log analyzer/interactive viewer
-- netdata: allow enabling health alarms for charts received from "child" streaming nodes ([`netdata_streaming_receive_alarms: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- netdata: allow enabling/disabling alarm notifications ([`netdata_enable_health_notifications: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- apache: allow enabling [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) for all applications/sites using Let's Encrypt certificates ([`apache_letsencrypt_enable_hsts: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
+- add [`monitoring_goaccess`](https://github.com/nodiscc/xsrv/tree/master/roles/monitoring_goaccess) role - real-time web log analyzer/interactive viewer
+- netdata: allow enabling health alarms for charts received from "child" streaming nodes ([`netdata_streaming_receive_alarms: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: allow enabling/disabling alarm notifications ([`netdata_enable_health_notifications: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- apache: allow enabling [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) for all applications/sites using Let's Encrypt certificates ([`apache_letsencrypt_enable_hsts: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/apache/defaults/main.yml))
 - apache/fail2ban: ban IP addresses doing requests on the default virtualhost
-- monitoring_netdata: allow disabling the logcount module by setting [`netdata_logcount_update_interval`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) to 0
-- jellyfin: allow adding users to the `jellyfin` group (may read/write files inside the media directory), add the ansible user to this group by default ([`jellyfin_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
-- transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default ([`transmission_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/transmission/defaults/main.yml))
+- monitoring_netdata: allow disabling the logcount module by setting [`netdata_logcount_update_interval`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml) to 0
+- jellyfin: allow adding users to the `jellyfin` group (may read/write files inside the media directory), add the ansible user to this group by default ([`jellyfin_users`](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml))
+- transmission: allow adding users to the `debian-transmission` group (may read/write files inside the downloads directory), add the ansible user to this group by default ([`transmission_users`](https://github.com/nodiscc/xsrv/blob/master/roles/transmission/defaults/main.yml))
 
 **Removed:**
 - cleanup: remove all previous migration tasks
@@ -497,11 +682,11 @@ _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui
 - monitoring_netdata/needrestart: fix automatic reboot not triggered by cron job when ABI-compatible kernel upgrades are pending
 - nextcloud: fail2ban: fix `Found a match but no valid date/time` warning when a login failure is detected
 
-[Full changes since v1.16.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.16.0...1.17.0)
+[Full changes since v1.16.0](https://github.com/nodiscc/xsrv/compare/1.16.0...1.17.0)
 
 ------------------
 
-#### [v1.16.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.16.0) - 2023-07-29
+#### [v1.16.0](https://github.com/nodiscc/xsrv/releases/tag/1.16.0) - 2023-07-29
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
@@ -512,13 +697,13 @@ _Note: the collection will no longer be updated on https://galaxy.ansible.com/ui
 You must upgrade to this release and deploy it before deploying future versions (old migrations will be removed after this release).
 
 **Added:**
-- homepage: allow making individual custom links mare compact (half as wide, no description) ([`homepage_custom_links.*.compact: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
+- homepage: allow making individual custom links mare compact (half as wide, no description) ([`homepage_custom_links.*.compact: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/homepage/defaults/main.yml))
 
 **Removed:**
 - drop support for Debian 10 Buster [[1]](https://www.debian.org/releases/buster/)
 
 **Changed:**
-- libvirt: add the ansible user to the libvirt group by default (can manage libvirt VMs without sudo) ([`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- libvirt: add the ansible user to the libvirt group by default (can manage libvirt VMs without sudo) ([`libvirt_users`](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml))
 - libvirt: configure non-root user accounts to use `qemu:///system` connection URI by default (can manage libvirt VMs without sudo/without specifying `--connect qemu:///system`)
 - gitea: update to v1.20.1 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.20.0) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.20.1)
 - nextcloud: update to v26.0.5 [[1]](https://nextcloud.com/changelog/)
@@ -544,11 +729,11 @@ You must upgrade to this release and deploy it before deploying future versions 
 - monitoring_utils/graylog: fix debsums incorrectly reporting missing files in mongodb packages (definitive fix)
 - mail_dovecot/gitea/backup: fix wrong ansible tag `gitea` on dovecot backup configuration tasks
 
-[Full changes since v1.15.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.15.0...1.16.0)
+[Full changes since v1.15.0](https://github.com/nodiscc/xsrv/compare/1.15.0...1.16.0)
 
 ------------------
 
-#### [v1.15.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.15.0) - 2023-07-16
+#### [v1.15.0](https://github.com/nodiscc/xsrv/releases/tag/1.15.0) - 2023-07-16
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -579,13 +764,13 @@ The Debian 11 -> 12 upgrade procedure was only tested for hosts managed by `xsrv
 - common: add an automated procedure to upgrade Debian 11 hosts to Debian 12 (`TAGS=utils-debian11to12 xsrv deploy`)
 - common: fail2ban: allow downloading the list of banned IPs to the controller (`TAGS=utils-fail2ban-get-banned xsrv deploy`)
 - backup: allow taking a snapshot immediately (`TAGS=utils-backup-now xsrv deploy`)
-- graylog: allow setting the admin user account timezone ([`graylog_root_timezone`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
+- graylog: allow setting the admin user account timezone ([`graylog_root_timezone`](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml))
 
 **Changed:**
 - make all roles (except `graylog`) compatible with Debian 12 "Bookworm"
 - xsrv: `init-vm-template`: use Debian 12 "Bookworm" as the base OS image [[1]](https://www.debian.org/releases/bookworm/amd64/release-notes/index.en.html)
 - common: ssh: change the group name allowed to access the SSH server from `ssh` to `ssh-access` (`ssh` is a reserved group name used for internal purposes)
-- common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: fail2ban: use `firewallcmd-ipset` ban action when firewalld is enabled and managed by xsrv ([`setup_firewall: yes`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
 - common: firewalld: allow SSH connections from both the internal and public zones by default
 - apache: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `7.6 EXPOSED`)
 - xsrv: `init-vm`: check that the user-provided value for `--memory` has the `M` or `G` suffix
@@ -615,12 +800,12 @@ The Debian 11 -> 12 upgrade procedure was only tested for hosts managed by `xsrv
 - graylog: decouple role from the apache role, skip apache configuration tasks when apache is not managed by ansible
 - nextcloud: fix mysql ansible module arguments
 
-[Full changes since v1.14.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.14.0...1.15.0)
+[Full changes since v1.14.0](https://github.com/nodiscc/xsrv/compare/1.14.0...1.15.0)
 
 ------------------
 
 
-#### [v1.14.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.14.0) - 2023-05-17
+#### [v1.14.0](https://github.com/nodiscc/xsrv/releases/tag/1.14.0) - 2023-05-17
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -630,21 +815,21 @@ The Debian 11 -> 12 upgrade procedure was only tested for hosts managed by `xsrv
 - (optional) download and install the tab/auto-completion script:
 
 ```bash
-wget https://gitlab.com/nodiscc/xsrv/-/raw/release/xsrv-completion.sh
+wget https://github.com/nodiscc/xsrv/-/raw/release/xsrv-completion.sh
 sudo cp xsrv-completion.sh /etc/bash_completion.d/
 ```
 
 **Added:**
 - matrix: add [synapse-admin](https://github.com/Awesome-Technologies/synapse-admin) user/room administration web interface
 - xsrv: add (optional) bash completion script ([installation](https://xsrv.readthedocs.io/en/latest/installation/controller-preparation.html))
-- jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
-- homepage: allow adding custom links to the homepage ([`homepage_custom_links`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml))
+- jellyfin: allow installing and configuring [OpenSubtitles plugin](https://github.com/jellyfin/jellyfin-plugin-opensubtitles) ([`jellyfin_setup_opensubtitles_plugin: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml))
+- homepage: allow adding custom links to the homepage ([`homepage_custom_links`](https://github.com/nodiscc/xsrv/blob/master/roles/homepage/defaults/main.yml))
 - graylog: setup automatic local backups of graylog configuration when the `nodiscc.xsrv.backup` role is deployed
-- nextcloud add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps ([`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
+- nextcloud add the [Tables](https://apps.nextcloud.com/apps/tables) app to the list of default disabled apps ([`nextcloud_apps`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml))
 - readme-gen: show `mumble://` server URIs/links for hosts where the `nodiscc.xsrv.mumble` role is deployed
 - readme-gen: show homepage URL/link for hosts where the `nodiscc.xsrv.homepage` role is deployed
 - readme-gen: display a list of storage devices with size, for each host
-- readme-gen: allow adding SFTP bookmarks for GTK-based file managers to the output markdown file ([`readme_gen_gtk_bookmarks: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
+- readme-gen: allow adding SFTP bookmarks for GTK-based file managers to the output markdown file ([`readme_gen_gtk_bookmarks: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/readme_gen/defaults/main.yml))
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): validate that values of `--ip`/`--gateway` are valid IPv4 addresses
 
 **Removed:**
@@ -670,45 +855,45 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - jellyfin: fix idempotence/opensubtitles plugin installation always returning `changed`
 - decouple web application roles from the `nodiscc.xsrv.apache` role (only run apache configuration tasks if the apache role is deployed). `nodiscc.xsrv.apache` is still required in the standard configuration to act as a reverse proxy for web applications. If not deployed, you will need to provide your own reverse proxy configuration.
 
-[Full changes since v1.13.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.1...1.14.0)
+[Full changes since v1.13.1](https://github.com/nodiscc/xsrv/compare/1.13.1...1.14.0)
 
 ------------------
 
 
-#### [v1.13.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.1) - 2023-04-14
+#### [v1.13.1](https://github.com/nodiscc/xsrv/releases/tag/1.13.1) - 2023-04-14
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
 **Added:**
-- readme-gen: allow displaying custom netdata badges for each host ([`readme_gen_netdata_badges`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/readme_gen/defaults/main.yml))
-- openldap: allow enabling/disabling the service ([`openldap_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
+- readme-gen: allow displaying custom netdata badges for each host ([`readme_gen_netdata_badges`](https://github.com/nodiscc/xsrv/blob/master/roles/readme_gen/defaults/main.yml))
+- openldap: allow enabling/disabling the service ([`openldap_enable_service: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml))
 
 
 **Fixed:**
 - readme-gen: fix syntax error in template (`template error while templating string`)
 
-[Full changes since v1.13.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.13.0...1.13.1)
+[Full changes since v1.13.0](https://github.com/nodiscc/xsrv/compare/1.13.0...1.13.1)
 
 ------------------
 
-#### [v1.13.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.13.0) - 2023-04-14
+#### [v1.13.0](https://github.com/nodiscc/xsrv/releases/tag/1.13.0) - 2023-04-14
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
-- monitoring/netdata: if you have configured custom [`netdata_port_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml), ensure the `ports:` parameter is a list, even if it only contains a single port (e.g. `ports: [64738]`)
+- monitoring/netdata: if you have configured custom [`netdata_port_checks`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml), ensure the `ports:` parameter is a list, even if it only contains a single port (e.g. `ports: [64738]`)
 
 **Added:**
-- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades) ([`setup_netdata_apt: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- monitoring_netdata: add [netdata-apt](https://gitlab.com/nodiscc/netdata-apt) module (monitor number of upgradeable packages, and available distribution upgrades) ([`setup_netdata_apt: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - apache: add a custom maintenance page (`/var/www/maintenance/maintenance.html`)
 - homepage/matrix_element/nextcloud/ldap_account_manager/self_service_password/shaarli/tt_rss: allow disabling individual web applications (`*_enable_service: yes/no`), redirect to the maintenance page when disabled
-- dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/mail_dovecot/defaults/main.yml))
-- samba: allow enabling/disabling the service ([`samba_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
+- dovecot: allow enabling/disabling the service ([`dovecot_enable_service: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/mail_dovecot/defaults/main.yml))
+- samba: allow enabling/disabling the service ([`samba_enable_service: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/samba/defaults/main.yml))
 - postgresql: netdata: allow netdata to gather detailed statistics about the postgresql instance [[1]](https://learn.netdata.cloud/docs/data-collection/monitor-anything/Databases/PostgresSQL) [[2]](https://blog.netdata.cloud/postgresql-monitoring/)
-- monitoring_netdata: allow declaring the public port (i.e. outside NAT) used to access netdata ([`netdata_public_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)), and use it in mail notifications/[`nodiscc.xsrv.homepage`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) role
+- monitoring_netdata: allow declaring the public port (i.e. outside NAT) used to access netdata ([`netdata_public_port`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml)), and use it in mail notifications/[`nodiscc.xsrv.homepage`](https://github.com/nodiscc/xsrv/tree/master/roles/homepage) role
 
 **Removed:**
 - common: remove task `ensure /var/log/wtmp is not world-readable`
@@ -718,10 +903,10 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--gateway` optional, by default use the value of `--ip` with the last octet replaced by `.1`
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): make `--ssh-pubkey` optional, by default use the contents of `~/.ssh/id_rsa.pub`
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): always dump VM XML definition to a file (`--dumpxml`), by default to `$projects_dir/VM_NAME.xml`
-- monitoring/netdata: disable more netdata modules by default ([`netdata_disabled_plugins`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- monitoring/netdata: disable more netdata modules by default ([`netdata_disabled_plugins`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - monitoring/netdata: allow HTTP code 503/don't raise HTTP check alarms when web applications/services are disabled in the configuration through `*_enable_service: no`
 - monitoring/rsyslog: switch systemd-journald's storage mode to volatile, don't write logs twice on disk
-- monitoring/rsyslog: allow setting custom configuration directives ([`rsyslog_custom_config`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
+- monitoring/rsyslog: allow setting custom configuration directives ([`rsyslog_custom_config`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_rsyslog/defaults/main.yml))
 - monitoring/rsyslog: don't discard any messages by default, custom discard rules can be configured through `rsyslog_custom_config`
 - monitoring_utils/lynis: don't throw a warning when promiscuous network interfaces are detected
 - gitea: harden systemd service (`systemd-analyze security` exposure score down from `9.2 UNSAFE` to `1.9 OK`)
@@ -740,7 +925,7 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 
 **Fixed:**
 - homepage/readme-gen/jitsi: display Jitsi Meet instances URLs
-- monitoring_netdata: fix [`netdata_fping_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
+- monitoring_netdata: fix [`netdata_fping_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml)/ping checks not displaying anymore
 - monitoring_netdata: fix `Go to chart` links in mail notifications pointing to Netdata Cloud/SaaS instead of the netdata instance
 - monitoring_netdata: prevent duplicate alarms on failed systemd services
 - monitoring_netdata: prevent duplicate alarm notifications when streaming is enabled (only send notifications from the child node)
@@ -753,19 +938,19 @@ sudo cp xsrv-completion.sh /etc/bash_completion.d/
 - shaarli: make task `create initial shaarli log.txt` idempotent
 - matrix: don't attempt to create synapse users when the service is disabled
 
-[Full changes since v1.12.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.12.0...1.13.0)
+[Full changes since v1.12.0](https://github.com/nodiscc/xsrv/compare/1.12.0...1.13.0)
 
 ------------------
 
-#### [v1.12.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.12.0) - 2023-03-06
+#### [v1.12.0](https://github.com/nodiscc/xsrv/releases/tag/1.12.0) - 2023-03-06
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- **proxmox:** if you want to keep using the [`proxmox`](https://gitlab.com/nodiscc/xsrv/-/tree/1.11.1/roles/proxmox) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.proxmox`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.libvirt`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) includes more features and is now the recommended role for simplified management of hypervisors and virtual machines. Proxmox VE remains suitable for more complex setups where management through a Web interface is desirable.
-- **rsyslog/graylog**: if you use the [`rsyslog_forward_to_hostname`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variable and it is pointing to a graylog instance deployed with the `graylog` role, update it to use the graylog instance FQDN instead of the graylog host inventory hostname (e.g. `logs.example.org` instead of `host1.example.org`)
+- **proxmox:** if you want to keep using the [`proxmox`](https://github.com/nodiscc/xsrv/tree/1.11.1/roles/proxmox) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.proxmox`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. [`nodiscc.xsrv.libvirt`](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt) includes more features and is now the recommended role for simplified management of hypervisors and virtual machines. Proxmox VE remains suitable for more complex setups where management through a Web interface is desirable.
+- **rsyslog/graylog**: if you use the [`rsyslog_forward_to_hostname`]((https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variable and it is pointing to a graylog instance deployed with the `graylog` role, update it to use the graylog instance FQDN instead of the graylog host inventory hostname (e.g. `logs.example.org` instead of `host1.example.org`)
 - **libvirt:** you will need to restart all libvirt networks and attached VMs for the changes to take effect (a full hypervisor reboot may be simpler)
-- **libvirt:** if you have defined custom [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml), update them to use the new syntax:
+- **libvirt:** if you have defined custom [`libvirt_port_forwards`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml), update them to use the new syntax:
 - **tt_rss:** to prevent a possible error during upgrade (`fatal: detected dubious ownership in repository`), run the playbook with the `tt_rss-permissions` tag first (`TAGS=tt_rss-permissions xsrv deploy`)
 - **jitsi:** set the variable `jitsi_jvb_prosody_password` to a random 8 character string in your host configuration
 - make sure `fact_caching_timeout = 1` is set in your project's `ansible.cfg` (`xsrv edit-cfg`) since long cache timeouts can cause problems with tasks that expect up-to-date facts
@@ -824,23 +1009,23 @@ libvirt_port_forwards:
 
 
 **Added:**
-- apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml))
-- libvirt: add [`utils-libvirt-setmem` tag](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
-- libvirt: add [`libvirt_users`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml) variable: users to add to the `libvirt/libvirt-qemu/kvm` groups so that they can use `virsh` without sudo
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding port ranges
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow limiting DNAT rules to specific source IPs/networks (`libvirt_port_forwards.*.dnat.*.source_ip`)
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): allow forwarding ports between libvirt bridges/networks without DNAT (`libvirt_port_forwards.*.forward`)
+- apache: allow configuration of custom reverse proxies ([`apache_reverseproxies`](https://github.com/nodiscc/xsrv/blob/master/roles/apache/defaults/main.yml))
+- libvirt: add [`utils-libvirt-setmem` tag](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt#tags) (update libvirt VMs current memory allocation immediately)
+- libvirt: add [`libvirt_users`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml) variable: users to add to the `libvirt/libvirt-qemu/kvm` groups so that they can use `virsh` without sudo
+- libvirt: [`libvirt_port_forwards`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml): allow forwarding port ranges
+- libvirt: [`libvirt_port_forwards`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml): allow limiting DNAT rules to specific source IPs/networks (`libvirt_port_forwards.*.dnat.*.source_ip`)
+- libvirt: [`libvirt_port_forwards`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml): allow forwarding ports between libvirt bridges/networks without DNAT (`libvirt_port_forwards.*.forward`)
 - readme_gen: add more information to the default host summary (`xsrv shell`, `xsrv logs`, `xsrv fetch-backups`)
 
 **Changed:**
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): rename `--dump` option to `--dumpxml`, require an output file as argument
-- common: [`users.*.sudo_nopasswd_commands`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml): allow using passwordless sudo as any user, not just root
+- common: [`users.*.sudo_nopasswd_commands`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml): allow using passwordless sudo as any user, not just root
 - common: create the `ssh` group automatically during initial setup, don't require manually adding the ansible user to the group
-- common/matrix: enable automatic upgrades for matrix (synapse) packages by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common/matrix: enable automatic upgrades for matrix (synapse) packages by default ([`apt_unattended_upgrades_origins_patterns`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
 - libvirt: don't install `virt-manager` automatically since it requires a graphical/desktop environment
 - libvirt: always use [NAT-based](https://jamielinux.com/docs/libvirt-networking-handbook/nat-based-network.html) networks, not [routed networks](https://jamielinux.com/docs/libvirt-networking-handbook/routed-network.html)
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): add a `dnat` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding/DNAT rules (each one with its `host_interface/host_ip,host_port,vm_port,protocol`)
-- libvirt: [`libvirt_port_forwards`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (allow omitting `protocol: tcp`)
+- libvirt: [`libvirt_port_forwards`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml): add a `dnat` list under each `libvirt_port_forwards` entry, allowing to specify multiple port forwarding/DNAT rules (each one with its `host_interface/host_ip,host_port,vm_port,protocol`)
+- libvirt: [`libvirt_port_forwards`](https://github.com/nodiscc/xsrv/blob/master/roles/libvirt/defaults/main.yml): make `tcp` the default protocol (allow omitting `protocol: tcp`)
 - graylog: rename the generated rsyslog server CA certificate to `{{ graylog_fqdn }}-graylog-ca.crt`
 - graylog/rsyslog: don't aggregate noisy graylog access logs to syslog
 - xsrv: don't require setting a long fact caching timeout in `ansible.cfg` anymore
@@ -856,7 +1041,7 @@ libvirt_port_forwards:
 - update documentation
 
 **Removed:**
-- proxmox: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- proxmox: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 
 **Fixed:**
 - netdata: fix netdata not alerting on failed systemd services
@@ -875,55 +1060,55 @@ libvirt_port_forwards:
 - xsrv: [`init-vm/init-vm-template`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-preseed-file): refuse to run if the current user is not part of required groups
 - xsrv: [`init-vm`](https://xsrv.readthedocs.io/en/latest/appendices/debian.html#automated-from-a-vm-template): do not require `--sudo-user` option, use the default value `deploy` if not provided
 
-[Full changes since v1.11.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.12.0)
+[Full changes since v1.11.1](https://github.com/nodiscc/xsrv/compare/1.11.0...1.12.0)
 
 ------------------
 
 
-#### [v1.11.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.1) - 2023-01-22
+#### [v1.11.1](https://github.com/nodiscc/xsrv/releases/tag/1.11.1) - 2023-01-22
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - `xsrv deploy` to apply changes
 
 **Fixed:**
-- gitea: fix gitea settings [`gitea_enable_api/gitea_api_max_results`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml) not having any effect
+- gitea: fix gitea settings [`gitea_enable_api/gitea_api_max_results`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml) not having any effect
 
 
-[Full changes since v1.11.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.11.0...1.11.1)
+[Full changes since v1.11.0](https://github.com/nodiscc/xsrv/compare/1.11.0...1.11.1)
 
 ------------------
 
-#### [v1.11.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.11.0) - 2023-01-20
+#### [v1.11.0](https://github.com/nodiscc/xsrv/releases/tag/1.11.0) - 2023-01-20
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
-- **nextcloud:** if you changed [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml) from its default value, remove `files_videoplayer` from the list (`xsrv edit-host/edit-group`)
-- **jitsi:** set [`jitsi_prosody_password`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
-- **gitea:** if `gitea_mailer_enabled` is set to `yes`, add the new [`gitea_mail_protocol/gitea_mail_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml) settings to your host configuration.
-- **rss_bridge:** if you want to keep using the [`rss_bridge`](https://gitlab.com/nodiscc/xsrv/-/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. This can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
-- **rocketchat:** consider [uninstalling rocket.chat](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#uninstall), and migrating to [Matrix](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix). Alternatively, a simple instant messaging application (Nextcloud Talk) is available through the [`nextcloud`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nextcloud) role, by enabling the `spreed` app under [`nextcloud_apps`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml). If you want to keep using the `rocketchat` role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rocketchat`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. Reasons for the deprecation can be found [here](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#deprecated).
-- **readme_gen:** if you want to use the [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command, make sure that your project's `README.md` contains the markers `<!-- BEGIN/END AUTOMATICALLY GENERATED CONTENT - README_GEN ROLE -->`
+- **nextcloud:** if you changed [`nextcloud_apps`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml) from its default value, remove `files_videoplayer` from the list (`xsrv edit-host/edit-group`)
+- **jitsi:** set [`jitsi_prosody_password`](https://github.com/nodiscc/xsrv/blob/master/roles/jitsi/defaults/main.yml) in your host configuration variables (`xsrv edit-vault`)
+- **gitea:** if `gitea_mailer_enabled` is set to `yes`, add the new [`gitea_mail_protocol/gitea_mail_port`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml) settings to your host configuration.
+- **rss_bridge:** if you want to keep using the [`rss_bridge`](https://github.com/nodiscc/xsrv/tree/1.10.0/roles/rss_bridge) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rss_bridge`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. The primary goal for the RSS-Bridge role was to provide RSS feeds for Twitter accounts. This can be done by using https://nitter.net/ACCOUNT/rss instead (or one of the [public Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)).
+- **rocketchat:** consider [uninstalling rocket.chat](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#uninstall), and migrating to [Matrix](https://github.com/nodiscc/xsrv/tree/master/roles/matrix). Alternatively, a simple instant messaging application (Nextcloud Talk) is available through the [`nextcloud`](https://github.com/nodiscc/xsrv/tree/master/roles/nextcloud) role, by enabling the `spreed` app under [`nextcloud_apps`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml). If you want to keep using the `rocketchat` role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.rocketchat`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead. Reasons for the deprecation can be found [here](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/rocketchat#deprecated).
+- **readme_gen:** if you want to use the [`readme-gen`](https://github.com/nodiscc/xsrv/tree/master/roles/readme_gen) command, make sure that your project's `README.md` contains the markers `<!-- BEGIN/END AUTOMATICALLY GENERATED CONTENT - README_GEN ROLE -->`
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`matrix`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/matrix) role - real-time, secure communication server and web client
-- add [`readme-gen`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen) command and role - generate a markdown inventory in the project's README.md
-- netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
-- common: make the timeout for interactive bash sessions configurable ([`bash_timeout`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml), default 900s)
-- common: add [bash-completion](https://packages.debian.org/bullseye/bash-completion) to the list of default packages to install ([`packages_install`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- add [`matrix`](https://github.com/nodiscc/xsrv/tree/master/roles/matrix) role - real-time, secure communication server and web client
+- add [`readme-gen`](https://github.com/nodiscc/xsrv/tree/master/roles/readme_gen) command and role - generate a markdown inventory in the project's README.md
+- netdata: needrestart: add an option to reboot the OS periodically if needed after Linux kernel upgrades ([`needrestart_autorestart_cron`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- gitea: allow enabling repository indexing/global code search ([`gitea_repo_indexer_enabled, gitea_repo_indexer_exclude`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml))
+- common: make the timeout for interactive bash sessions configurable ([`bash_timeout`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml), default 900s)
+- common: add [bash-completion](https://packages.debian.org/bullseye/bash-completion) to the list of default packages to install ([`packages_install`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
 
 **Removed:**
-- rocketchat: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
-- rss_bridge: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- rocketchat: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- rss_bridge: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - remove ansible tag `firewalld` (use `firewall` instead)
 
 **Changed:**
 - nextcloud: enable clean URLs
 - nextcloud: remove obsolete/unsupported `files_videoplayer` app [[1]](https://github.com/nextcloud/files_videoplayer)
-- monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- monitoring_utils: lynis: only report warnings by default, not suggestion or manual checklist items ([`lynis_report_regex`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_utils/defaults/main.yml))
 - common: ensure `/var/log/wtmp` does not become world-readable again after log rotation
 - nextcloud: upgrade to v25.0.4 [[1]](https://nextcloud.com/blog/announcing-nextcloud-hub-3-brand-new-design-and-photos-2-0-with-editor-and-ai/) [[2]](https://nextcloud.com/changelog/#latest25)
 - gitea: update to v1.18.2 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.17.4) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.18.0) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.18.1) [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.18.2)
@@ -936,7 +1121,7 @@ libvirt_port_forwards:
 **Fixed:**
 - jitsi: fix jitsi meet/jicofo unable to authenticate to XMPP server (`Unfortunately something went wrong. We're trying to fix this. Reconnecting in...`)
 - apache: fix default virtualhost/direct IP access not redirecting to error 403 page
-- common: fix [`kernel_proc_hidepid`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) changes not being applied unless the host is rebooted
+- common: fix [`kernel_proc_hidepid`](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml) changes not being applied unless the host is rebooted
 - libvirt: fix libvirtd service not properly reloaded after updating firewall/port forwarding rules
 - gitea: fix configuration file templating failures in `check` mode
 - jitsi: prevent debsums warnings about modified `interface_config.js`
@@ -945,19 +1130,19 @@ libvirt_port_forwards:
 - gitea/gotty: fix systemd services automatic restart limits in case of failure
 - gitea: fixes slow browsing that may be experienced in particular cases
 
-[Full changes since v1.10.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.10.0...1.11.0)
+[Full changes since v1.10.0](https://github.com/nodiscc/xsrv/compare/1.10.0...1.11.0)
 
 -------------------------------
 
-#### [v1.10.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.10.0) - 2022-11-19
+#### [v1.10.0](https://github.com/nodiscc/xsrv/releases/tag/1.10.0) - 2022-11-19
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - move the `public_keys/` directory from the root of your project directory, under the `data/` directory.
 - if it exists, move the `certificates/` directory from the root of your project directory, under the `data/` directory.
-- **common:** if you had changed the variable `os_security_kernel_enable_core_dump` from its default value in your hosts/groups configuration, rename it to [`kernel_enable_core_dump`]((https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- **common:** if you had changed the variable `os_security_kernel_enable_core_dump` from its default value in your hosts/groups configuration, rename it to [`kernel_enable_core_dump`]((https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
 - **graylog/monitoring_rsyslog:** move the `*-graylog-ca.crt` file from the `public_keys/` directory to the `data/certificates/` directory (create it if it does not exist)
-- **openldap: self-sevice-password:** if you had changed the variable [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) from its default value in your host/groups configuration, update it to the new format (YAML list instead of a list of addresses separated by spaces):
+- **openldap: self-sevice-password:** if you had changed the variable [`self_service_password_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml) from its default value in your host/groups configuration, update it to the new format (YAML list instead of a list of addresses separated by spaces):
 
 ```yaml
 # old format
@@ -970,16 +1155,16 @@ self_service_password_allowed_hosts:
 ```
 
 **Added:**
-- add [jitsi](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/jitsi) role - video conferencing solution
-- add [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) role - libvirt virtualization toolkit
+- add [jitsi](https://github.com/nodiscc/xsrv/tree/master/roles/jitsi) role - video conferencing solution
+- add [libvirt](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt) role - libvirt virtualization toolkit
 - xsrv: add [`xsrv open`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (open the project directory in the default file manager)
 - xsrv: `init-vm`: add [`--dump`](https://xsrv.readthedocs.io/en/latest/usage.html#provision-hosts) option (display the VM XML definition after creation)
 - apache: automatically load new Let's Encrypt certificates every minute, manually reloading the server is no longer needed
-- nextcloud: allow configuration of nextcloud log level, default app on login ([`nextcloud_loglevel`/`nextcloud_defaultapp`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/nextcloud/defaults/main.yml))
-- common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- shaarli: add ability to install the python API client ([`shaarli_setup_python_client: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and export all shaarli data to a JSON file every hour
-- wireguard: add ability to enable/disable the wireguard server service ([`wireguard_enable_service: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml))
-- monitoring/netdata: allow disabling notifications for ping check alarms ([`netdata_fping_alarms_silent: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- nextcloud: allow configuration of nextcloud log level, default app on login ([`nextcloud_loglevel`/`nextcloud_defaultapp`](https://github.com/nodiscc/xsrv/blob/master/roles/nextcloud/defaults/main.yml))
+- common: kernel: hardening: allow hiding processes from other users ([`kernel_proc_hidepid: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- shaarli: add ability to install the python API client ([`shaarli_setup_python_client: no/yes`](https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml)) and export all shaarli data to a JSON file every hour
+- wireguard: add ability to enable/disable the wireguard server service ([`wireguard_enable_service: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/wireguard/defaults/main.yml))
+- monitoring/netdata: allow disabling notifications for ping check alarms ([`netdata_fping_alarms_silent: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - apache/monitoring: netdata: monitor state of the php-fpm service and alert in case of failure
 - apache: start/stop the php7.4-fpm service alongside the apache service depending on `apache_enable_service: yes/no`
 - shaarli: add required packages for LDAP authentication
@@ -995,8 +1180,8 @@ self_service_password_allowed_hosts:
 - nextcloud: disable the web updater
 - nextcloud: disable link to https://nextcloud.com/signup/ on public pages
 - nextcloud: backup: add `config.php` to the list of files to backup (may contain the encryption secret if encryption was enabled by the admin)
-- openldap: self-service-password: update format of [`self_service_password_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml) (use a YAML list instead of space-separated list)
-- common: kernel: rename variable `os_security_kernel_enable_core_dump` -> [`kernel_enable_core_dump`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
+- openldap: self-service-password: update format of [`self_service_password_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml) (use a YAML list instead of space-separated list)
+- common: kernel: rename variable `os_security_kernel_enable_core_dump` -> [`kernel_enable_core_dump`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml)
 - common: kernel/sysctl: ensure ipv4/ipv6 configuration is applied to all new/future interfaces as well
 - common: kernel/sysctl: don't disable USB storage, audio input/output, USB MIDI, bluetooth and camera modules by default
 - common: kernel/sysctl: don't disable audio input/output module by default
@@ -1004,7 +1189,7 @@ self_service_password_allowed_hosts:
 - common: kernel/sysctl: don't disable camera modules by default
 - common: kernel/sysctl: don't disable `vfat` `squashfs` filesystems module by default
 - common/graylog: apt: use HTTPS to access APT packages repositories
-- common: dns: check that valid IP addresses are specified in [`dns_nameservers`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)
+- common: dns: check that valid IP addresses are specified in [`dns_nameservers`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml)
 - common: kernel/sysctl: load all sysctl variables, not just those in `custom.conf`
 - common: users: configure bash to terminate idle sessions after 15 minutes
 - common: packages: always install haveged entropy source on KVM/VMware VMs
@@ -1044,14 +1229,14 @@ self_service_password_allowed_hosts:
 - xsrv: fix `init-vm-template` command not working unless `xsrv self-upgrade` had already been run
 
 **Security:**
-- jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml))
-- common: fix [`kernel_enable_core_dump`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) not having any effect
+- jellyfin: only allow connections from LAN (RFC1918) IP addresses by default ([`jellyfin_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml))
+- common: fix [`kernel_enable_core_dump`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml) not having any effect
 
-[Full changes since v1.9.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.9.0...1.10.0)
+[Full changes since v1.9.0](https://github.com/nodiscc/xsrv/compare/1.9.0...1.10.0)
 
 -------------------------------
 
-#### [v1.9.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.9.0) - 2022-09-18
+#### [v1.9.0](https://github.com/nodiscc/xsrv/releases/tag/1.9.0) - 2022-09-18
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -1061,16 +1246,16 @@ self_service_password_allowed_hosts:
 
 **Added:**
 - xsrv: add [`xsrv init-vm-template`](https://xsrv.readthedocs.io/en/latest/usage.html#provision-hosts) command (create a libvirt Debian VM template, unattended using a preconfiguration file)
-- add [wireguard](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/wireguard) role - fast and modern VPN server
+- add [wireguard](https://github.com/nodiscc/xsrv/tree/master/roles/wireguard) role - fast and modern VPN server
 - nextcloud: enable [group folders](https://apps.nextcloud.com/apps/groupfolders) app by default
-- common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- common: allow specifying a list of packages to install/remove ([`packages_install/remove`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- gitea: allow enabling/disabling git hooks and webhooks features globally ([`gitea_enable_git_hooks/webhooks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
-- gitea: allow configuring the list of hosts that can be called from webhooks ([`gitea_webhook_allowed_hosts`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
-- gitea: allow configuring the SSH port exposed in the clone URL ([`gitea_ssh_url_port`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/gitea/defaults/main.yml))
+- common: allow setting up [apt-listbugs](https://packages.debian.org/bullseye/apt-listbugs) to prevent installation of packages with known serious bugs ([`apt_listbugs: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- common: allow specifying a list of packages to install/remove ([`packages_install/remove`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- gitea: allow enabling/disabling git hooks and webhooks features globally ([`gitea_enable_git_hooks/webhooks`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml))
+- gitea: allow configuring the list of hosts that can be called from webhooks ([`gitea_webhook_allowed_hosts`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml))
+- gitea: allow configuring the SSH port exposed in the clone URL ([`gitea_ssh_url_port`](https://github.com/nodiscc/xsrv/blob/master/roles/gitea/defaults/main.yml))
 
 **Removed:**
-- common: remove `setup_cli_utils` and `setup_haveged` variables. Use [`packages_install/remove`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml) instead.
+- common: remove `setup_cli_utils` and `setup_haveged` variables. Use [`packages_install/remove`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml) instead.
 
 **Changed:**
 - gitea: disable git hooks by default
@@ -1101,11 +1286,11 @@ self_service_password_allowed_hosts:
 **Fixed:**
 - common: users: fix errors during creation of `sftponly` user accounts when no groups are defined in the user definition
 
-[Full changes since v1.8.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.1...1.9.0)
+[Full changes since v1.8.1](https://github.com/nodiscc/xsrv/compare/1.8.1...1.9.0)
 
 -------------------------------
 
-#### [v1.8.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-10
+#### [v1.8.1](https://github.com/nodiscc/xsrv/releases/tag/1.8.0) - 2022-07-10
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
@@ -1114,36 +1299,36 @@ self_service_password_allowed_hosts:
 **Fixed:**
 - backup/rsnapshot: fix rsnapshot installation, always install from Debian repositories
 
-[Full changes since v1.8.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.8.0...1.8.1)
+[Full changes since v1.8.0](https://github.com/nodiscc/xsrv/compare/1.8.0...1.8.1)
 
 -------------------------------
 
-#### [v1.8.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.8.0) - 2022-07-04
+#### [v1.8.0](https://github.com/nodiscc/xsrv/releases/tag/1.8.0) - 2022-07-04
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles/ansible environments to the latest release
 - **gitea/gotty/graylog/homepage/jellyfin/nextcloud/openldap/rocketchat/rss_bridge/shaarli/transmission/tt_rss:** ensure the `apache` role or equivalent is explicitly deployed to the host *before* deploying any of these roles.
 - **jellyfin/samba:** if both jellyfin and samba roles are deployed on the same host, ensure `samba` is deployed before `jellyfin` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook))
-- **valheim_server:** if you are using the [`valheim_server`](https://gitlab.com/nodiscc/xsrv/-/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
+- **valheim_server:** if you are using the [`valheim_server`](https://github.com/nodiscc/xsrv/tree/1.7.0/roles/valheim_server) role, update `requirements.yml` ([`xsrv edit-requirements`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-requirements)) and `playbook.yml` ([`xsrv edit-playbook`](https://xsrv.readthedocs.io/en/latest/usage.html#xsrv-edit-playbook)) to use the archived [`nodiscc.toolbox.valheim_server`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 - `xsrv deploy` to apply changes
 
 **Added:**
-- add [`mail_dovecot`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/mail_dovecot) role - IMAP mailbox server
-- monitoring: netdata: allow streaming charts data/alarms to/from other netdata nodes ([`netdata_streaming_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- add [`mail_dovecot`](https://github.com/nodiscc/xsrv/tree/master/roles/mail_dovecot) role - IMAP mailbox server
+- monitoring: netdata: allow streaming charts data/alarms to/from other netdata nodes ([`netdata_streaming_*`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - monitoring: netdata: enable monitoring of hard drives SMART status
 - xsrv: add [`xsrv ssh`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (alias for `shell`)
 - openldap: allow secure LDAP communication over SSL/TLS on port 636/tcp (use a self-signed certificate)
-- common: allow disabling PAM/user accounts configuration tasks ([`setup_users: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml)), disable unused network/firewire modules by default
-- common: automatically remove (purge) configuration files of removed packages, nightly, enabled by default ([`apt_purge_nightly: yes/no`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
+- common: allow disabling PAM/user accounts configuration tasks ([`setup_users: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- common: allow blacklisting unused/potentially insecure kernel modules ([`kernel_modules_blacklist`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml)), disable unused network/firewire modules by default
+- common: automatically remove (purge) configuration files of removed packages, nightly, enabled by default ([`apt_purge_nightly: yes/no`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
 - common: attempt to automatically repair (fsck) failed filesystems on boot
-- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://gitlab.com/nodiscc/xsrv/-/blob/1.17.0/roles/docker/defaults/main.yml))
+- docker: allow enabling automatic firewall/iptables rules setup by Docker ([`docker_iptables: no/yes`](https://github.com/nodiscc/xsrv/blob/1.17.0/roles/docker/defaults/main.yml))
 - docker: install requirements for logging in to private docker registries
-- openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
-- openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/openldap/defaults/main.yml))
-- samba: make events logged by full_audit configurable ([`samba_log_full_audit_success_events`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml))
-- shaarli: add an option to configure thumbnail generation mode ([`shaarli_thumbnails_mode`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/shaarli/defaults/main.yml)) and default number of links per page (`shaarli_links_per_page`, default 30)
+- openldap: self-service-password/ldap-account-manager: make LDAP server URI configurable ([`*_ldap_url`](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml))
+- openldap: ldap-account-manager: allow specifying a trusted LDAPS server certificate ([`ldap_account_manager_ldaps_cert`](https://github.com/nodiscc/xsrv/blob/master/roles/openldap/defaults/main.yml))
+- samba: make events logged by full_audit configurable ([`samba_log_full_audit_success_events`](https://github.com/nodiscc/xsrv/blob/master/roles/samba/defaults/main.yml))
+- shaarli: add an option to configure thumbnail generation mode ([`shaarli_thumbnails_mode`](https://github.com/nodiscc/xsrv/blob/master/roles/shaarli/defaults/main.yml)) and default number of links per page (`shaarli_links_per_page`, default 30)
 - postgresql: download pgmetrics report to the controller when running `TAGS=utils-pgmetrics`
 - all roles: checks: add an info message pointing to roles documentation when one or more variables are not correctly defined
 - xsrv: [`xsrv help-tags`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) will now parse tag descriptions from custom roles in `roles/` in addition to collections
@@ -1151,7 +1336,7 @@ self_service_password_allowed_hosts:
 
 **Removed:**
 - common: firewalld/mail/msmtp: drop compatibility with Debian 10
-- valheim_server: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
+- valheim_server: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository (installs non-free components)
 
 **Changed:**
 - netdata: needrestart: don't send e-mail notifications for needrestart alarms
@@ -1164,12 +1349,12 @@ self_service_password_allowed_hosts:
 - apache/proxmox: only setup fail2ban when it is marked as managed by ansible through ansible local facts
 - common: ssh: increase the frequency of "client alive" messages to 1 every 5 minutes
 - common: ssh/users: don't allow login for users without an existing home directory
-- apache: rsyslog: prefix apache access logs with `apache-access:` in syslog when [`apache_access_log_to_syslog: yes`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/apache/defaults/main.yml)
+- apache: rsyslog: prefix apache access logs with `apache-access:` in syslog when [`apache_access_log_to_syslog: yes`](https://github.com/nodiscc/xsrv/blob/master/roles/apache/defaults/main.yml)
 - homepage: improve homepage styling/layout, link directly to `ssh://` and `sftp://` URIs
-- homepage: reword default [`homepage_message`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/homepage/defaults/main.yml)
+- homepage: reword default [`homepage_message`](https://github.com/nodiscc/xsrv/blob/master/roles/homepage/defaults/main.yml)
 - shaarli: default to generating thumbnails only for common media hosts
 - transmission: firewall: always allow bittorrent peer traffic from the public zone
-- monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_utils/defaults/main.yml))
+- monitoring_utils: lynis: review and whitelist unapplicable "suggestion" level report items ([`lynis_skip_tests`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_utils/defaults/main.yml))
 - nextcloud: upgrade to v24.0.1 [[1]](https://nextcloud.com/blog/nextcloud-hub-24-is-here/) [[2]](https://nextcloud.com/blog/maintenance-releases-24-0-1-23-0-5-and-22-2-8-are-out-update/) [[3]](https://nextcloud.com/changelog/#latest23)
 - gitea: upgrade to v1.16.8 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.16.6) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.16.7) [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.16.8)
 - openldap: ldap-account-manager: upgrade to [v7.9.1](https://www.ldap-account-manager.org/lamcms/node/446)
@@ -1191,8 +1376,8 @@ self_service_password_allowed_hosts:
 - graylog: fix elasticsearch/graylog unable to start caused by too strict permissions on configuration files
 - openldap: ldap-account-manager: fix access to tree view
 - homepage: fix homepage generation when the mumble role was deployed from a different play
-- jellyfin/samba: fix jellyfin [samba share](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/jellyfin/defaults/main.yml) creation when samba role is not part of the same play
-- samba: fix [`samba_passdb_backend: ldapsam`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/samba/defaults/main.yml#L39) mode when openldap role is not part of the same play
+- jellyfin/samba: fix jellyfin [samba share](https://github.com/nodiscc/xsrv/blob/master/roles/jellyfin/defaults/main.yml) creation when samba role is not part of the same play
+- samba: fix [`samba_passdb_backend: ldapsam`](https://github.com/nodiscc/xsrv/blob/master/roles/samba/defaults/main.yml#L39) mode when openldap role is not part of the same play
 - xsrv: [`fetch-backups`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): use the first host in alphabetical order, when no host is specified
 - monitoring: rsyslog: add correctness checks for `syslog_retention_days` variable
 - monitoring: netdata/needrestart: fix `needrestart_autorestart_services` value not taken into account when true
@@ -1202,11 +1387,11 @@ self_service_password_allowed_hosts:
 **Security:**
 - proxmox: fail2ban: fix detection of failed login attempts
 
-[Full changes since v1.7.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.7.0...1.8.0)
+[Full changes since v1.7.0](https://github.com/nodiscc/xsrv/compare/1.7.0...1.8.0)
 
 -------------------------------
 
-#### [v1.7.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.7.0) - 2022-04-22
+#### [v1.7.0](https://github.com/nodiscc/xsrv/releases/tag/1.7.0) - 2022-04-22
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -1216,10 +1401,10 @@ self_service_password_allowed_hosts:
 **Added:**
 - xsrv: add [`init-vm`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (initialize a ready-to-deploy libvirt VM from a template)
 - xsrv: add [`edit-group-vault`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) command (edit encrypted group variables file)
-- common: make cron jobs log level configurable ([`cron_log_level`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- common: apt: clean downloaded package archives every 7 days by default ([`apt_clean_days`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml))
-- netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency) ([`netdata_fping_*`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
-- netdata: make netdata filechecks configurable ([`netdata_file_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- common: make cron jobs log level configurable ([`cron_log_level`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- common: apt: clean downloaded package archives every 7 days by default ([`apt_clean_days`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml))
+- netdata: allow configuring the [fping](https://learn.netdata.cloud/docs/agent/collectors/fping.plugin) plugin (ping hosts/measure loss/latency) ([`netdata_fping_*`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
+- netdata: make netdata filechecks configurable ([`netdata_file_checks`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml))
 - transmission/gotty/jellyfin/docker: monitoring/netdata: raise alarms when corresponding systemd services are in the failed state (and the `monitoring_netdata` role is deployed)
 - homepage: add rss-bridge to the homepage when the rss_bridge role is deployed on the host
 - add ansible [tags](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage): `netdata-modules`, `netdata-needrestart`, `netdata-debsecan`, `netdata-logcount`, `netdata-config`
@@ -1261,18 +1446,18 @@ self_service_password_allowed_hosts:
 - shaarli: explicitly use php 7.4 packages, fix possible installation problems on Debian 11
 - tests: fix and speed up `ansible-lint` tests, fix ansible-lint warnings
 
-[Full changes since v1.6.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.6.0...1.7.0)
+[Full changes since v1.6.0](https://github.com/nodiscc/xsrv/compare/1.6.0...1.7.0)
 
 -------------------------------
 
-#### [v1.6.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.6.0) - 2022-03-17
+#### [v1.6.0](https://github.com/nodiscc/xsrv/releases/tag/1.6.0) - 2022-03-17
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 
 **Added:**
-- add [rss_bridge](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/rss_bridge) role - the RSS feed for websites missing it
+- add [rss_bridge](https://github.com/nodiscc/xsrv/tree/master/roles/rss_bridge) role - the RSS feed for websites missing it
 - monitoring_utils: install [debsums](https://packages.debian.org/sid/debsums) utility for the verification of packages with known good database (by default, run weekly)
 - common: cron: allow disabling cron setup (`setup_cron: yes/no`)
 - monitoring_netdata: allow configuring netdata notification downtime periods (start/end)
@@ -1291,28 +1476,28 @@ self_service_password_allowed_hosts:
 - xsrv: fix error on new project creation/`init-playbook` - missing playbook directory
 - xsrv: fix support for `XSRV_PROJECTS_DIR` environment variable
 
-[Full changes since v1.5.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.5.0...1.6.0)
+[Full changes since v1.5.0](https://github.com/nodiscc/xsrv/compare/1.5.0...1.6.0)
 
 -------------------------------
 
-#### [v1.5.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.5.0) - 2022-02-25
+#### [v1.5.0](https://github.com/nodiscc/xsrv/releases/tag/1.5.0) - 2022-02-25
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
 - `TAGS=utils-debian10to11 xsrv deploy` to upgrade your host's distribution from Debian 10 "Buster" to [Debian 11 "Bullseye"](https://www.debian.org/News/2021/20210814.html). Debian 10 compatibility will not be maintained after this release.
-- **common/firewall:** remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if firewalld is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L74))
+- **common/firewall:** remove `firehol_*` variables from your configuration. Roles from the `xsrv` collection will automatically insert their own rules, if firewalld is deployed. If you had custom firewall rules in place/not related to xsrv roles, please port them to the new [`firewalld` configuration](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml#L74))
 - **common/hosts:** if the `hosts:` variable (hosts file entries) is used in your `host/group_vars`, rename it to  `hosts_file_entries`. If `setup_hosts` is used in your `host/group_vars`, rename it to `setup_hosts_file`.
-- **mariadb:** if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION).
+- **mariadb:** if you had the `nodiscc.xsrv.mariadb` role enabled, migrate to PostgreSQL, or use the [archived `nodiscc.toolbox.mariadb` role](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION).
 - **gitea/nextcloud/tt_rss:** if any of these roles is listed in your playbook, ensure `nodiscc.xsrv.postgresql` is explicitly deployed before it.
-- **jellyfin/proxmox/docker:** remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48) list, automatic upgrades are enabled by default for these components.
+- **jellyfin/proxmox/docker:** remove `jellyfin_auto_upgrade`, `proxmox_auto_upgrade` or `docker_auto_upgrade` variables from your configuration, if you changed the defaults. These settings are now controlled by the [`apt_unattended_upgrades_origins_patterns`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml#L48) list, automatic upgrades are enabled by default for these components.
 - **jellyfin/samba:** if you have both the `samba` and `jellyfin` roles enabled on a host, and want to keep using the jellyfin samba share for media storage, explicitly set `jellyfin_samba_share: yes` in the host's configuration variables.
 - **monitoring:** remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables from your configuration, if you changed the defaults. If you don't want monitoring utilities or rsyslog set up, enable individual `monitoring_netdata/rsyslog/utils` roles, instead of the global `monitoring` role.
 - (optional) `xsrv check` to simulate changes.
 - `xsrv deploy` to apply changes.
 
 **Added:**
-- add [dnsmasq](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/dnsmasq) lightweight DNS server role
+- add [dnsmasq](https://github.com/nodiscc/xsrv/tree/master/roles/dnsmasq) lightweight DNS server role
 - common: add [firewalld](https://firewalld.org/) firewall management tool
 - common: apt: allow configuration of allowed origins for unattended-upgrades
 - common: packages: add `at` task scheduler
@@ -1333,7 +1518,7 @@ self_service_password_allowed_hosts:
 - drop compatibility with Debian 9
 - monitoring: remove `setup_monitoring_cli_utils: yes/no` and `setup_rsyslog: yes/no` variables
 - common: fail2ban: remove `fail2ban_destemail` variable, always send mail to root
-- mariadb: remove role, [archive](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+- mariadb: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 - remove ansible tags `certificates lamp valheim valheim-server`
 
 **Changed:**
@@ -1350,7 +1535,7 @@ self_service_password_allowed_hosts:
 - common: apt: automatically remove unused dependency packages on every install/upgrade/remove operation
 - common: fail2ban: increase maximum IP/attempts count retention to 1 year
 - common: ssh: decrease SFTP logs verbosity to INFO by default
-- common/graylog: apt: enable automatic upgrades for graylog/mongodb/elasticsearch packages by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48))
+- common/graylog: apt: enable automatic upgrades for graylog/mongodb/elasticsearch packages by default ([`apt_unattended_upgrades_origins_patterns`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml#L48))
 - gitea: upgrade to v1.16.0 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.15.8), [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.15.9), [[3]](https://github.com/go-gitea/gitea/releases/tag/v1.15.10), [[4]](https://github.com/go-gitea/gitea/releases/tag/v1.15.11), [[5]](https://github.com/go-gitea/gitea/releases/tag/v1.16.0)
 - xsrv: upgrade ansible to [5.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/5/CHANGELOG-v5.rst)
 - gitea: cleanup/maintenance: update config file comments/ordering to reduce diff with upstream example file
@@ -1382,11 +1567,11 @@ self_service_password_allowed_hosts:
 - default playbook/xsrv: fix invalid `"%%ANSIBLE_HOST%%"` value set by `xsrv init-host`
 - common: hosts: fix warning: Found variable using reserved name: hosts
 
-[Full changes since v1.4.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.4.0...1.5.0)
+[Full changes since v1.4.0](https://github.com/nodiscc/xsrv/compare/1.4.0...1.5.0)
 
 -------------------------
 
-#### [v1.4.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.4.0) - 2021-12-17
+#### [v1.4.0](https://github.com/nodiscc/xsrv/releases/tag/1.4.0) - 2021-12-17
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script
@@ -1473,11 +1658,11 @@ self_service_password_allowed_hosts:
 - nextcloud: fail2ban: fix log file location/login failures not detected by fail2ban
 - common: automatically apply security updates for packages installed from Debian Backports
 
-[Full changes since v1.3.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.3.1...1.4.0)
+[Full changes since v1.3.1](https://github.com/nodiscc/xsrv/compare/1.3.1...1.4.0)
 
 ------------------------
 
-#### [v1.3.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.1) - 2021-06-24
+#### [v1.3.1](https://github.com/nodiscc/xsrv/releases/tag/1.3.1) - 2021-06-24
 
 **Upgrade procedure:**
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
@@ -1497,16 +1682,16 @@ self_service_password_allowed_hosts:
 - nextcloud: upgrade to 20.0.10
 - update documentation (virt-manager/add basic VM provisioning procedure)
 
-[Full changes since v1.3.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.3.0...1.3.1)
+[Full changes since v1.3.0](https://github.com/nodiscc/xsrv/compare/1.3.0...1.3.1)
 
 ----------------------------
 
-#### [v1.3.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.3.0) - 2021-06-08
+#### [v1.3.0](https://github.com/nodiscc/xsrv/releases/tag/1.3.0) - 2021-06-08
 
 **Upgrade procedure:**
 - `xsrv self-upgrade` to upgrade the xsrv script to the latest release
 - `xsrv upgrade` to upgrade roles in your playbook to the latest release
-- if you had defined custom `netdata_http_checks`, port them to the new [`netdata_http_checks`/`netdata_x509_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring/defaults/main.yml#L64) syntax
+- if you had defined custom `netdata_http_checks`, port them to the new [`netdata_http_checks`/`netdata_x509_checks`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring/defaults/main.yml#L64) syntax
 - (optional/cleanup) `xsrv edit-vault`: remove all `vault_` prefixes from encrypted host variables; `xsrv edit-host`: remove all variables that are just `variable_name: {{ vault_variable_name }}` references
 - (optional/cleanup) remove previous hardcoded/default `netdata_modtime_checks` and `netdata_process_checks` from your host variables
 - (optional) `xsrv check` to simulate and review changes
@@ -1520,12 +1705,12 @@ self_service_password_allowed_hosts:
 - monitoring/rsyslog: remove hardcoded, service-specific configuration
 
 **Added:**
-- add [graylog](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/graylog) log analyzer role
-- add [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) role
-- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add [`rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port`]([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variables)
-- jellyfin/common/apt: enable automatic upgrades for jellyfin by default ([`apt_unattended_upgrades_origins_patterns`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/common/defaults/main.yml#L48))
-- monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in [`netdata_http_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml)
-- monitoring/netdata: add [`netdata_x509_checks`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/monitoring_netdata/defaults/main.yml) (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
+- add [graylog](https://github.com/nodiscc/xsrv/tree/master/roles/graylog) log analyzer role
+- add [gotty](https://github.com/nodiscc/xsrv/tree/master/roles/gotty) role
+- monitoring/rsyslog: add ability forward logs to a remote syslog/graylog server over TCP/SSL/TLS (add [`rsyslog_enable_forwarding`, `rsyslog_forward_to_hostname` and `rsyslog_forward_to_port`]([`apt_unattended_upgrades_origins_patterns`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_rsyslog/defaults/main.yml)) variables)
+- jellyfin/common/apt: enable automatic upgrades for jellyfin by default ([`apt_unattended_upgrades_origins_patterns`](https://github.com/nodiscc/xsrv/blob/master/roles/common/defaults/main.yml#L48))
+- monitoring: support all [httpcheck](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/httpcheck.conf) parameters in [`netdata_http_checks`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml)
+- monitoring/netdata: add [`netdata_x509_checks`](https://github.com/nodiscc/xsrv/blob/master/roles/monitoring_netdata/defaults/main.yml) (list of x509 certificate checks, supports all [x509check](https://github.com/netdata/go.d.plugin/blob/master/config/go.d/x509check.conf) parameters)
 - rocketchat: allow disabling rocketchat/mongodb services (`rocketchat_enable_service: yes/no`)
 - xsrv: add [`xsrv edit-group`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (edit group variables - default group: `all`)
 - xsrv: add [`xsrv ls`](https://xsrv.readthedocs.io/en/latest/usage.html#command-line-usage) subcommand (list files in the playbooks directory - accepts a path)
@@ -1582,22 +1767,22 @@ self_service_password_allowed_hosts:
 **Security:**
 - common: fail2ban: fix bantime for ssh jail (~49 days)
 
-[Full changes since v1.2.2](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.2...1.3.0)
+[Full changes since v1.2.2](https://github.com/nodiscc/xsrv/compare/1.2.2...1.3.0)
 
 -------------------------------
 
-#### [v1.2.2](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.2) - 2021-04-01
+#### [v1.2.2](https://github.com/nodiscc/xsrv/releases/tag/1.2.2) - 2021-04-01
 
 Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the latest release
 
 **Fixed:**
  - samba: fix nscd default log level, update samba default log level
 
-[Full changes since v1.2.1](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.1...1.2.2)
+[Full changes since v1.2.1](https://github.com/nodiscc/xsrv/compare/1.2.1...1.2.2)
 
 ---------------------------
 
-#### [v1.2.1](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.1) - 2021-04-01
+#### [v1.2.1](https://github.com/nodiscc/xsrv/releases/tag/1.2.1) - 2021-04-01
 
 Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the latest release
 
@@ -1606,11 +1791,11 @@ Upgrade procedure: `xsrv upgrade` to upgrade roles in your playbook to the lates
 
 samba: fix nscd default log level, update samba default log level
 
-[Full changes since v1.2.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.2.0...1.2.1)
+[Full changes since v1.2.0](https://github.com/nodiscc/xsrv/compare/1.2.0...1.2.1)
 
 -------------------------------
 
-#### [v1.2.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.2.0) - 2021-03-27
+#### [v1.2.0](https://github.com/nodiscc/xsrv/releases/tag/1.2.0) - 2021-03-27
 
 **Added:**
 - homepage: add configurable message/paragraph to homepage (homepage_message)
@@ -1635,11 +1820,11 @@ samba: fix nscd default log level, update samba default log level
 - rocketchat: fix port 3001 exposed on 0.0.0.0 instead of localhost-only/firewall bypass
 - gitea: update to v1.13.6
 
-[Full changes since v1.1.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.1.0...1.2.0)
+[Full changes since v1.1.0](https://github.com/nodiscc/xsrv/compare/1.1.0...1.2.0)
 
 -------------------------------
 
-#### [v1.1.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.1.0) - 2021-03-14
+#### [v1.1.0](https://github.com/nodiscc/xsrv/releases/tag/1.1.0) - 2021-03-14
 
 **Added:**
 - xsrv: add self-upgrade command
@@ -1688,12 +1873,12 @@ samba: fix nscd default log level, update samba default log level
 - upgrade ansible to 2.10.7 - https://pypi.org/project/ansible/#history
 - move TODOs to issues
 
-[Full changes since v1.0.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.0.0...1.1.0)
+[Full changes since v1.0.0](https://github.com/nodiscc/xsrv/compare/1.0.0...1.1.0)
 
 -------------------------------
 
 
-#### [v1.0.0](https://gitlab.com/nodiscc/xsrv/-/releases#1.0.0) - 2021-02-12
+#### [v1.0.0](https://github.com/nodiscc/xsrv/releases/tag/1.0.0) - 2021-02-12
 
 This is a major rewrite of https://github.com/nodiscc/srv01. To upgrade/migrate from previous releases, you must redeploy services to a new instance, and restore user data from backups/exports.
 
@@ -2129,7 +2314,7 @@ make deploy
 - manage all components from a single git repository
 - publish roles and default playbook as ansible collection (https://galaxy.ansible.com/nodiscc/xsrv - use make publish_collection to build)
 - add automated tests (ansible-lint, yamllint, shellcheck) for all roles, add ansible-playbook --syntax-check test
-- add a test suite, add automatic tests with Gitlab CI (https://gitlab.com/nodiscc/xsrv/-/pipelines)
+- add a test suite, add automatic tests with Gitlab CI (https://github.com/nodiscc/xsrv/-/pipelines)
 - remove pip install requirements (performed by xsrv script)
 - change release/branching model to 'release" (latest stable release), 'X.Y.Z' (semantic versioning), 'master' (development version)
 - automate TODO.md updates and version headers updates

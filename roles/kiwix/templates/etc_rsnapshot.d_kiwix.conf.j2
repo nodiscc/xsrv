@@ -1,0 +1,7 @@
+# rsnapshot configuration for kiwix backups
+{% if kiwix_backup_data %}
+# backup kiwix data directory
+backup	/var/lib/kiwix/data/	localhost/
+{% else %}
+# backups of the data directory are disabled by kiwix_backup_data: no
+{% endif %}

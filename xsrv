@@ -58,10 +58,10 @@ projects_dir="${XSRV_PROJECTS_DIR:=$HOME/playbooks}"
 editor="${EDITOR:=nano}"
 ansible_tags="${TAGS:-}"
 pager="${PAGER:=nano --syntax=YAML --view +1 -}"
-version="1.27.0"
-ansible_version="11.3.0"
-trivy_version="0.59.1"
-xsrv_git_url="https://gitlab.com/nodiscc/xsrv"
+version="2.0.0"
+ansible_version="12.3.0"
+trivy_version="0.69.3"
+xsrv_git_url="https://github.com/nodiscc/xsrv"
 xsrv_upgrade_channel="${XSRV_UPGRADE_CHANNEL:=release}"
 local_backups_dir="data/backups"
 ascii_banner="  ╻ ╻┏━┓┏━┓╻ ╻
@@ -349,7 +349,7 @@ self_upgrade() {
     fi
     new_version="$(grep '^version=.*' "$xsrv_clone_dir/xsrv" | cut -d= -f2)"
     new_commit="$(git -C "$xsrv_clone_dir" rev-parse HEAD)"
-    read -r -p "[xsrv] INFO: this will upgrade the script at $script_path ($version) to $new_version ($new_commit). Type YES to confirm: " confirm_upgrade
+    read -r -p "[xsrv] INFO: this will upgrade the script at $script_path ($version) to $new_version ($new_commit) and the bash completion script. Type YES to confirm: " confirm_upgrade
     if [[ "$confirm_upgrade" == "YES" ]]; then
         if [[ -w "$script_path" ]]; then
             echo "[xsrv] INFO: $script_path is writeable"
@@ -360,12 +360,31 @@ self_upgrade() {
             echo "[xsrv] INFO: $script_path is not writeable. Upgrading with sudo"
             sudo cp -v "$xsrv_clone_dir/xsrv" "$script_path"
             echo "[xsrv] INFO: upgrade complete"
-            exit 0
         fi
     else
         echo "[xsrv] ERROR: did not enter YES, aborting"
         exit 1
     fi
+
+    # Also update bash completion script if it exists
+    completion_path="/etc/bash_completion.d/xsrv-completion.sh"
+    if [[ -f "$xsrv_clone_dir/xsrv-completion.sh" ]]; then
+        if [[ -f "$completion_path" ]]; then
+            echo "[xsrv] INFO: updating bash completion script at $completion_path"
+            if [[ -w "$completion_path" ]]; then
+                cp "$xsrv_clone_dir/xsrv-completion.sh" "$completion_path"
+                echo "[xsrv] INFO: bash completion script updated"
+            else
+                echo "[xsrv] INFO: $completion_path is not writeable. Upgrading with sudo"
+                sudo cp -v "$xsrv_clone_dir/xsrv-completion.sh" "$completion_path"
+                echo "[xsrv] INFO: bash completion script updated"
+            fi
+        else
+            echo "[xsrv] INFO: bash completion script not found at $completion_path, skipping"
+        fi
+    fi
+
+    exit 0
 }
 
 ########## LIBVIRT RELATED COMMANDS ##########
@@ -619,7 +638,7 @@ init_vm_template() {
         --os-variant debian10 \
         --graphics none \
         --console pty,target_type=serial \
-        --location http://deb.debian.org/debian/dists/bookworm/main/installer-amd64 \
+        --location http://deb.debian.org/debian/dists/trixie/main/installer-amd64 \
         --extra-args "console=ttyS0,115200n8 serial" \
         --initrd-inject="/var/lib/libvirt/preseed.cfg" \
         --network network="$network" \
@@ -636,7 +655,7 @@ init_vm_template() {
 
 readme_gen() {
     # generate a markdown inventory with information on ansible facts in the project's README.md
-    # see https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/readme_gen
+    # see roles/readme_gen/
     (cd "$project_dir" && (ansible --one-line --module-name setup all || true))
     (cd "$project_dir" && ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --extra-vars="xsrv_project_name=$project_name" --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.readme_gen" localhost)
 }
@@ -654,7 +673,7 @@ scan_secrets() {
 
 nmap() {
     # run nmap against hosts in the project and generate a HTML report
-    # see https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap
+    # see roles/nmap/
     (cd "$project_dir" && ANSIBLE_CACHE_PLUGIN_TIMEOUT=3600 ansible --ask-become-pass --module-name "ansible.builtin.import_role" --args "name=nodiscc.xsrv.nmap" localhost)
 }
 
@@ -664,7 +683,7 @@ _get_host_var() {
     # get a host var using ansible -m debug | grep
     # $1: the variable to get, filters allowed (example: "ansible_ssh_port|default(22)")
     (cd "$project_dir" && ansible --one-line --inventory inventory.yml --module-name debug --args "msg={{ $1 }}" "$host_name" | \
-    grep -oP '(?<="msg": ").*(?="})')
+    grep -oP '(?<="msg": ")[^"]*|(?<="msg": )\d+')
 }
 
 gen_vault_password_file() {
@@ -737,7 +756,7 @@ help_tags() {
     cd "$projects_dir/$project_name"
     echo "[xsrv] INFO: list of tags in project $project_name"
     echo "[xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy $project_name"
-    tags_doc=$(grep --no-filename '^# @tag' ansible_collections/*/*/roles/*/meta/main.yml | \
+    tags_doc=$(grep --no-filename '^# @tag' ansible_collections/*/*/roles/*/meta/main.yml ansible_collections/*/*/roles/*/*/meta/main.yml | \
                cut -d " " -f 1-2 --complement | \
                sort --unique)
     echo "TAGS:"

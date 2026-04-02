@@ -23,7 +23,7 @@ _Note: the `podman` role will ask you to first [uninstall the `docker` role](../
 
 ## Usage
 
-Podman can be used as a base component to deploy other/services and applications. The [`gitea_act_runner`](../gitea_act_runner/) role uses podman to manage containers in which workflows are run. You can also use it directly from the [podman command-line tools](https://manpages.debian.org/bookworm/podman/podman.1.en.html).
+Podman can be used as a base component to deploy other/services and applications. The [`gitea_act_runner`](../gitea_act_runner/) role uses podman to manage containers in which workflows are run. You can also use it directly from the [podman command-line tools](https://manpages.debian.org/trixie/podman/podman.1.en.html).
 
 
 ### Uninstallation

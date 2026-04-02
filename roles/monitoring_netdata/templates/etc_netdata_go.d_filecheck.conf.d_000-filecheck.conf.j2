@@ -1,5 +1,0 @@
-# netdata go.d.plugin configuration for filecheck
-jobs:
-{% if netdata_file_checks %}
-{{ netdata_file_checks|to_nice_yaml(indent=2) | indent(2, first=True) }}
-{% endif %}

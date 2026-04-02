@@ -2,7 +2,7 @@
   assert:
     quiet: yes
     that: "{{ item }}"
-    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/tt_rss"
   loop:
     - tt_rss_account_limit == tt_rss_account_limit|int
     - tt_rss_db_name is string
@@ -17,18 +17,18 @@
     - tt_rss_password_salt|length == 250
     - tt_rss_user is not search("CHANGEME")
     - tt_rss_version is string
-    - tt_rss_php_memory_limit|regex_search('[KMG]$')
+    - tt_rss_php_memory_limit | regex_search('[KMG]$') is truthy
     - tt_rss_php_max_execution_time == tt_rss_php_max_execution_time|int
     - tt_rss_php_max_input_time == tt_rss_php_max_input_time|int
-    - tt_rss_php_post_max_size|regex_search('[KMG]$')
-    - tt_rss_php_upload_max_filesize|regex_search('[KMG]$')
+    - tt_rss_php_post_max_size | regex_search('[KMG]$') is truthy
+    - tt_rss_php_upload_max_filesize | regex_search('[KMG]$') is truthy
     - tt_rss_enable_service == tt_rss_enable_service | bool
     - tt_rss_allowed_hosts | type_debug == "list"
 
 - name: check that variables are correctly defined (tt_rss_allowed_hosts)
   assert:
     quiet: yes
-    fail_msg: "One or more of tt_rss_allowed_hosts is not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/tt_rss"
+    fail_msg: "One or more of tt_rss_allowed_hosts is not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/tt_rss"
     that:
       - item | ansible.utils.ipv4
   loop: "{{ tt_rss_allowed_hosts }}"

@@ -23,3 +23,4 @@ galaxy_info:
     - lamp
 dependencies:
   - nodiscc.xsrv.handlers
+  # - nodiscc.xsrv.monitoring.exporters # optional

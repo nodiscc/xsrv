@@ -4,3 +4,4 @@ MDContactEmail {{ apache_letsencrypt_email }}
 MDPrivateKeys RSA 4096
 MDMessageCmd /usr/local/bin/apache-mod-md-reload request
 MDRequireHttps {{ 'permanent' if apache_letsencrypt_enable_hsts else 'temporary' }}
+MdRenewWindow 30d

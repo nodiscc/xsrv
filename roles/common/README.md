@@ -50,7 +50,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
   - Linux clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/), `sftp`, `rsync`, `scp`,
   - Windows clients: [WinSCP](https://winscp.net/eng/index.php)
 - Upgrade from Debian 10 to Debian 11: `TAGS=utils-debian10to11 xsrv deploy` or `ansible-playbook --tags utils-debian10to11 playbook.yml`
-- Upgrade from Debian 11 to Debian 12: `TAGS=utils-debian11to12 xsrv deploy` or `ansible-playbook --tags utils-debian11to12 playbook.yml`. Upgrading from one distribution version to another can take a while, and some services may become shortly unavailable during the operation. You can follow progress by watching `apt` logs on the host (or `/var/log/syslog` if the [`monitoring_rsyslog`](../monitoring_rsyslog) role is deployed).
+- Upgrade from Debian 11 to Debian 12: `TAGS=utils-debian11to12 xsrv deploy` or `ansible-playbook --tags utils-debian11to12 playbook.yml`. Upgrading from one distribution version to another can take a while, and some services may become shortly unavailable during the operation. You can follow progress by watching `apt` logs on the host (or `/var/log/syslog` if the [`monitoring.rsyslog`](../monitoring/rsyslog) role is deployed).
 - Upgrade all packages immediately, using unattended-upgrades: `TAGS=utils-apt-unattended-upgrade`. This allows upgrading immediately, without waiting for the daily unattended-upgrades timer to run. It respects the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting.
 - Upgrade all packages immediately: `TAGS=utils-apt-upgrade`. This will upgrade all upgradable packages, regardless of unattended-upgrades configuration (in particular the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting).
 - Get information about IP addresses banned by fail2ban: `TAGS=utils-fail2ban-get-banned xsrv deploy my.CHANGEME.org`
@@ -85,6 +85,9 @@ In that case you should check the bug report details on https://bugs.debian.org/
 - set `apt_listbugs_action` to `force-yes` and re-run the playbook/common role/`apt-listbugs` tag before retrying package installation
 - add the bug number manually to `/etc/apt/listbugs/ignore_bugs` on the target host, temporarily
 
+**Remove an IP address network from the firewalld blocklist:** Remove the address from the `firewalld_blocklist` list, and deploy the role. If you locked yourself out of the server (by adding your own IP to the blocklist), access the server using an out-of-band mechanism (serial console, VM console, IP KVM...) and run `sudo firewall-cmd --ipset=blocklist --remove-entry=YOUR_IP && sudo systemctl reload firewalld`. You can check which addresses are currently in the blocklist by running `sudo firewall-cmd --ipset=blocklist --get-entries`.
+
+
 ## Tags
 
 <!--BEGIN TAGS LIST-->
@@ -116,6 +119,7 @@ utils-shutdown - (manual) shut down the host
 utils-reboot - (manual) reboot the host
 cron - configure cron task scheduler
 apt-listbugs - configure apt-listbugs bug prevention tool
+hdparm - configure hdparm hard drive standby settings
 ```
 <!--END TAGS LIST-->
 

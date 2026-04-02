@@ -156,23 +156,14 @@
             .synapse-admin-cb {
                 background-color: #2196F3;
             }
-            .netdata :hover{
-                border-color: #00FF00;
-            }
-            .netdata-cb {
-                background-color: #45DC11;
+            .grafana :hover{
+                border-color: #f4962b;
             }
             .goaccess :hover{
                 border-color: #5BC0DE;
             }
             .goaccess-cb {
                 background-color: #5BC0DE;
-            }
-            .graylog :hover{
-                border-color: #E84139;
-            }
-            .graylog-cb {
-                background-color: #FD6466;
             }
             .ssh :hover {
                 border-color: #4E4E4E;
@@ -221,6 +212,12 @@
             }
             .searxng-cb {
                 background-color: #3050FF;
+            }
+            .kiwix :hover{
+                border-color: #002bb8;
+            }
+            .kiwix-cb {
+                background-color: #002bb8;
             }
             .customlink :hover{
                 border-color: #FAFAFA;
@@ -520,6 +517,19 @@
                 </a>
             </div>
 {% endif %}
+{% if ansible_local.kiwix.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 kiwix">
+                <a href="https://{{ ansible_local.kiwix.fqdn }}">
+                    <div class="content">
+                        <div class="colorblock kiwix-cb"><img class="app-icon" src="res/kiwix.png"></div>
+                        <div class="app-text">
+                            <p class="app-name">Kiwix</p>
+                            <p class="app-description">Offline wiki viewer</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+{% endif %}
 {% if ansible_local.planarally.fqdn is defined %}
             <div class="col-1-3 mobile-col-1-1 planarally">
                 <a href="https://{{ ansible_local.planarally.fqdn }}">
@@ -533,14 +543,14 @@
                 </a>
             </div>
 {% endif %}
-{% if ansible_local.netdata.ansible_managed is defined %}
-            <div class="col-1-3 mobile-col-1-1 netdata">
-                <a href="{{ ansible_local.netdata.public_url }}/v3/">
+{% if ansible_local.grafana.fqdn is defined %}
+            <div class="col-1-3 mobile-col-1-1 grafana">
+                <a href="https://{{ grafana_fqdn }}/">
                     <div class="content">
-                        <div class="colorblock netdata-cb"><img class="app-icon" src="res/netdata.png"></div>
+                        <div class="colorblock grafana-cb"><img class="app-icon" src="res/grafana.png"></div>
                         <div class="app-text">
-                            <p class="app-name">Netdata</p>
-                            <p class="app-description">Realtime monitoring</p>
+                            <p class="app-name">grafana</p>
+                            <p class="app-description">Metrics visualization and analytics</p>
                         </div>
                     </div>
                 </a>
@@ -554,19 +564,6 @@
                         <div class="app-text">
                             <p class="app-name">Goaccess</p>
                             <p class="app-description">Web log analyzer/viewer</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-{% endif %}
-{% if ansible_local.graylog.fqdn is defined %}
-            <div class="col-1-3 mobile-col-1-1 graylog">
-                <a href="https://{{ ansible_local.graylog.fqdn }}/">
-                    <div class="content">
-                        <div class="colorblock graylog-cb"><img class="app-icon" src="res/graylog.png"></div>
-                        <div class="app-text">
-                            <p class="app-name">Graylog</p>
-                            <p class="app-description">Log management and analysis</p>
                         </div>
                     </div>
                 </a>

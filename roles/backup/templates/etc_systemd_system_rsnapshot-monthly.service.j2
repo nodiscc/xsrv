@@ -1,0 +1,10 @@
+[Unit]
+Description=rsnapshot monthly backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rsnapshot monthly
+SyslogIdentifier=rsnapshot-monthly
+
+[Install]
+WantedBy=multi-user.target

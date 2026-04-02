@@ -1,0 +1,6 @@
+#!/bin/bash
+# Description: finds paths to all php-fpm pools sockets, and adds them to the 
+#              PHP_FPM_SCRAPE_URI environment variable in /etc/prometheus/php-fpm-exporter.env
+echo "INFO: building php-fpm-exporter configuration"
+fpm_status_paths=$(find /etc/php/*/fpm/pool.d -name '*.conf' | grep -v 'pool.d/www.conf' | xargs grep '^listen = /run/php/' | cut -d' ' -f -2 --complement | while read path; do echo -n "unix://${path};/.fpm-status,"; done | sed 's/,$//')
+echo "PHP_FPM_SCRAPE_URI=$fpm_status_paths" > /etc/prometheus/php-fpm-exporter.env

@@ -1,0 +1,141 @@
+- name: install basic prometheus exporters
+  apt:
+    package:
+      - prometheus-exporter-exporter
+      - prometheus-node-exporter
+      - prometheus-node-exporter-collectors
+      - prometheus-process-exporter
+      - prometheus-blackbox-exporter
+    state: present
+
+- name: create dynamic configuration directory for exporter-exporter
+  file:
+    state: directory
+    path: /etc/prometheus/exporter-exporter
+    owner: root
+    group: prometheus
+    mode: "0750"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure exporter-exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  diff: "{{ item.diff }}"
+  loop:
+    - src: etc_prometheus_exporter-exporter.token-file.j2
+      dest: /etc/prometheus/exporter-exporter.token-file
+      group: prometheus
+      mode: "0640"
+      diff: false
+    - src: etc_prometheus_exporter-exporter.yml.j2
+      dest: /etc/prometheus/exporter-exporter.yml
+      group: root
+      mode: "0644"
+      diff: true
+    - src: etc_default_prometheus-exporter-exporter.j2
+      dest: /etc/default/prometheus-exporter-exporter
+      group: root
+      mode: "0644"
+      diff: true
+  notify: restart prometheus-exporter-exporter
+
+- name: start and enable prometheus exporter-exporter
+  systemd:
+    name: prometheus-exporter-exporter.service
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### BLACKBOX EXPORTER #####
+
+- name: configure blackbox exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus-blackbox-exporter
+  loop:
+    - src: etc_default_prometheus-blackbox-exporter.j2
+      dest: /etc/default/prometheus-blackbox-exporter
+    - src: etc_prometheus_blackbox.yml.j2
+      dest: /etc/prometheus/blackbox.yml
+
+##### PROCESS EXPORTER #####
+
+- name: configure process exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus-process-exporter
+  loop:
+    - src: etc_default_prometheus-process-exporter.j2
+      dest: /etc/default/prometheus-process-exporter
+    - src: etc_prometheus_process-exporter.yml.j2
+      dest: /etc/prometheus/process-exporter.yml
+
+##### NODE EXPORTER #####
+
+- name: configure node exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart prometheus-node-exporter
+  loop:
+    - src: etc_default_prometheus-node-exporter.j2
+      dest: /etc/default/prometheus-node-exporter
+
+- name: create output directory for textfile exporter
+  file:
+    state: directory
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: "0755"
+  loop:
+    - /var/lib/node_exporter
+    - /var/lib/node_exporter/textfile_collector
+
+- name: deploy custom systemd user services exporter script
+  copy:
+    src: usr_local_bin_systemd-user-services-exporter
+    dest: /usr/local/bin/systemd-user-services-exporter
+    owner: root
+    group: root
+    mode: "0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: deploy systemd user services exporter units
+  copy:
+    src: systemd-user-services-exporter.{{ item }}
+    dest: /etc/systemd/system/systemd-user-services-exporter.{{ item }}
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+  loop:
+    - timer
+    - service
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable and start systemd user services exporter timer
+  systemd:
+    name: systemd-user-services-exporter.timer
+    state: started
+    enabled: true
+    daemon_reload: false
+  ignore_errors: "{{ ansible_check_mode }}"

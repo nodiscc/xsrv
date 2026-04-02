@@ -1,0 +1,13 @@
+groups:
+  - name: apache_alerts
+    interval: 30s
+    rules:
+      - alert: ApacheWorkersLoad
+        expr: |
+          (sum by (instance) (apache_workers{state="busy"}) / sum by (instance) (apache_scoreboard)) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Apache workers load high on {{ $labels.instance }}"
+          description: "{{ $labels.instance }} has {{ $value | humanize }}% of Apache workers busy (> 80% threshold)."

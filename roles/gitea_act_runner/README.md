@@ -2,7 +2,7 @@
 
 This role will install and configure [act-runner](https://docs.gitea.com/next/usage/actions/act-runner), the runner for Gitea Actions, Gitea's built-in CI/CD system, and register it on a Gitea instance.
 
-You can configure it to run workflows in rootless [podman](../podman) containers, [docker](https://gitlab.com/nodiscc/toolbox/-/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/docker) containers, or directly on the host.
+You can configure it to run workflows in rootless [podman](../podman) containers, [docker](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION/roles/docker) containers, or directly on the host.
 
 
 ## Requirements/dependencies/example playbook
@@ -13,8 +13,7 @@ See [meta/main.yml](meta/main.yml)
 # playbook.yml
 - hosts: my.CHANGEME.org
   roles:
-    - nodiscc.xsrv.podman # if using gitea_act_runner_container_engine: "podman" (the default)
-    - nodiscc.xsrv.docker # if using gitea_act_runner_container_engine: "docker"
+    - nodiscc.xsrv.podman # (required) container management engine
     - nodiscc.xsrv.gitea # (optional) gitea git service (can also be deployed to a different host)
     - nodiscc.xsrv.gitea_act_runner
 

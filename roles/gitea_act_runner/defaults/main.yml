@@ -5,10 +5,8 @@ gitea_act_runner_gitea_instance_fqdn: "{{ gitea_fqdn | default('git.CHANGEME.org
 # gitea_act_runner_gitea_instance_hostname: "CHANGEME"
 # how many tasks the runner can execute concurrently at the same time (integer)
 gitea_act_runner_capacity: 1
-# container engine to use (docker/podman)
-gitea_act_runner_container_engine: "podman"
 # network to which the containers managed by act-runner will connect (host/bridge/custom)
-# set to an empty string to have act-runner create a network automatically. "host" is required when using gitea_act_runner_container_engine: podman, and the gitea instance is on the same host as the runner
+# set to an empty string to have act-runner create a network automatically. "host" is required when the gitea instance is on the same host as the runner
 gitea_actions_runner_container_network: "host"
 # list of labels to use when registering the runner (https://docs.gitea.com/usage/actions/design)
 # If the list of labels is changed, the runner must be unregistered (delete /var/lib/act-runner/.runner) and the role must be redeployed
@@ -19,14 +17,14 @@ gitea_actions_runner_container_network: "host"
 #   - 'host:host'
 #   - "debian-bookworm-backports:docker://debian:bookworm-backports"
 gitea_act_runner_labels:
-  - "debian-latest:docker://node:21-bookworm"
-  - "ubuntu-latest:docker://node:21-bookworm"
+  - "debian-latest:docker://node:22-trixie"
+  - "ubuntu-latest:docker://node:22-trixie"
   - "ubuntu-22.04:docker://node:16-bullseye"
   - "ubuntu-20.04:docker://node:16-bullseye"
   - "ubuntu-18.04:docker://node:16-buster"
 # prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
 gitea_act_runner_daily_podman_prune: no
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
-gitea_act_runner_version: "0.2.10"
+gitea_act_runner_version: "0.2.12"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
 gitea_act_runner_enable_service: yes

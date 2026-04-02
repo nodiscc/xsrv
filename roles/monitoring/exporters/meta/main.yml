@@ -1,0 +1,21 @@
+# @tag exporters - deploy prometheus monitoring agents/exporters
+# @tag monitoring - deploy all monitoring-related components
+
+galaxy_info:
+  role_name: monitoring.exporters
+  author: "nodiscc <nodiscc@gmail.com>"
+  description: "monitoring agents/metrics exporters"
+  license: GPL-3.0
+  min_ansible_version: "2.12"
+  platforms:
+    - name: Debian
+      versions:
+        - "12"
+  galaxy_tags:
+    - monitoring
+    - prometheus
+    - system
+    - exporters
+    - victoriametrics
+dependencies:
+  - nodiscc.xsrv.handlers

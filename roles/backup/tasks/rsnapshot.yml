@@ -20,12 +20,10 @@
 
 ##### INSTALLATION/CONFIGURATION #####
 
-
 - name: install rsnapshot
   apt:
     package: rsnapshot
     state: present
-  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: copy rsnapshot configuration
   template:
@@ -112,37 +110,37 @@
 
 ##### SCHEDULING #####
 
-# At 01:00 every day
-- name: setup daily backup cron job
-  cron:
-    user: root
-    cron_file: '/etc/cron.d/rsnapshot'
-    name: rsnapshot-daily
-    hour: '1'
-    minute: '0'
-    day: '*'
-    job: 'rsnapshot daily >/dev/null && touch /var/log/rsnapshot_last_success'
-    disabled: "{{ True if (rsnapshot_retain_daily == 0 or not rsnapshot_enable_cron) else False }}"
+- name: install rsnapshot systemd files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - { src: 'etc_systemd_system_rsnapshot-daily.timer.j2', dest: '/etc/systemd/system/rsnapshot-daily.timer' }
+    - { src: 'etc_systemd_system_rsnapshot-weekly.timer.j2', dest: '/etc/systemd/system/rsnapshot-weekly.timer' }
+    - { src: 'etc_systemd_system_rsnapshot-monthly.timer.j2', dest: '/etc/systemd/system/rsnapshot-monthly.timer' }
+    - { src: 'etc_systemd_system_rsnapshot-daily.service.j2', dest: '/etc/systemd/system/rsnapshot-daily.service' }
+    - { src: 'etc_systemd_system_rsnapshot-weekly.service.j2', dest: '/etc/systemd/system/rsnapshot-weekly.service' }
+    - { src: 'etc_systemd_system_rsnapshot-monthly.service.j2', dest: '/etc/systemd/system/rsnapshot-monthly.service' }
+  notify: reload systemd unit files
 
-# At 00:30 every sunday
-- name: setup weekly backup cron job
-  cron:
-    user: root
-    cron_file: '/etc/cron.d/rsnapshot'
-    name: rsnapshot-weekly
-    hour: '0'
-    minute: '30'
-    weekday: '0'
-    job: 'rsnapshot weekly >/dev/null'
-    disabled: "{{ True if (rsnapshot_retain_weekly == 0 or not rsnapshot_enable_cron) else False }}"
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
 
-- name: setup monthly backup cron job
-  cron:
-    user: root
-    cron_file: '/etc/cron.d/rsnapshot'
-    name: rsnapshot-monthly
-    hour: '4'
-    minute: '1'
-    day: '1'
-    job: 'rsnapshot monthly >/dev/null'
-    disabled: "{{ True if (rsnapshot_retain_monthly == 0 or not rsnapshot_enable_cron) else False }}"
+- name: start/stop and enable/disable rsnapshot timers
+  systemd:
+    name: "rsnapshot-{{ item }}"
+    state: "{{ 'started' if rsnapshot_enable_service else 'stopped' }}"
+    enabled: "{{ rsnapshot_enable_service }}"
+  loop:
+    - daily.timer
+    - weekly.timer
+    - monthly.timer
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: remove rsnapshot cron file
+  file:
+    path: /etc/cron.d/rsnapshot
+    state: absent

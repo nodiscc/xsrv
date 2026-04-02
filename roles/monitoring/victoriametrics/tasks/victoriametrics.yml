@@ -1,0 +1,194 @@
+- name: install victoriametrics
+  apt:
+    state: present
+    package:
+      - victoria-metrics
+
+- name: add prometheus user to _victoria-metrics group
+  user:
+    name: prometheus
+    groups: _victoria-metrics
+    append: yes
+
+##### SELF-SIGNED SSL CERTIFICATE #####
+
+- name: install requirements for SSL/TLS certificates generation
+  apt:
+    state: present
+    package:
+      - python3-openssl
+      - ssl-cert
+
+- name: create victoriametrics SSL directory
+  file:
+    state: directory
+    path: /etc/victoriametrics/ssl
+    owner: root
+    group: _victoria-metrics
+    mode: "0750"
+
+- name: generate openssl private key
+  openssl_privatekey:
+    path: "/etc/victoriametrics/ssl/victoriametrics.key"
+    owner: root
+    group: _victoria-metrics
+    mode: "0640"
+  notify: restart victoriametrics
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: generate openssl certificate signing request
+  openssl_csr:
+    path: "/etc/victoriametrics/ssl/victoriametrics.csr"
+    privatekey_path: "/etc/victoriametrics/ssl/victoriametrics.key"
+    common_name: "{{ inventory_hostname }}"
+    key_usage: "digitalSignature,keyEncipherment"
+    basicConstraints: "CA:TRUE"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: generate self-signed openssl certificate
+  community.crypto.x509_certificate:
+    path: "/etc/victoriametrics/ssl/victoriametrics.crt"
+    privatekey_path: "/etc/victoriametrics/ssl/victoriametrics.key"
+    csr_path: "/etc/victoriametrics/ssl/victoriametrics.csr"
+    provider: selfsigned
+    owner: root
+    group: _victoria-metrics
+    mode: "0640"
+  notify: restart victoriametrics
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### CONFIGURATION #####
+
+- name: create dynamic configuration directories
+  file:
+    state: directory
+    path: /etc/prometheus/blackbox-exporter
+    owner: root
+    group: prometheus
+    mode: "0755"
+
+- name: configure victoriametrics
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart victoriametrics
+  loop:
+    - src: etc_victoriametrics.yml.j2
+      dest: /etc/victoriametrics.yml
+    - src: etc_default_victoria-metrics.j2
+      dest: /etc/default/victoria-metrics
+
+- name: configure victoriametrics http checks
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - src: etc_prometheus_blackbox-exporter_http-checks-xsrv.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks-xsrv.yml
+    - src: etc_prometheus_blackbox-exporter_http-checks.yml.j2
+      dest: /etc/prometheus/blackbox-exporter/http-checks.yml
+  tags: victoriametrics-http-checks
+  notify:
+    - restart prometheus-blackbox-exporter
+    - restart victoriametrics
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+##### SERVICE #####
+
+- name: start/stop/enable/disable victoria-metrics service
+  systemd:
+    name: victoria-metrics.service
+    state: started
+    enabled: true
+  tags: services
+  ignore_errors: "{{ ansible_check_mode }}"
+
+##### FIREWALL #####
+
+- name: include firewalld tasks
+  include_tasks: firewalld.yml
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed | bool
+
+##### ALERTING #####
+
+- name: create directory for alerts configuration
+  file:
+    path: /etc/victoriametrics/vmalert/rules
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: "0755"
+
+- name: copy vmalert systemd service unit file
+  template:
+    src: etc_systemd_system_vmalert.service.j2
+    dest: /etc/systemd/system/vmalert.service
+    owner: prometheus
+    group: prometheus
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - reload vmalert
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: start and enable vmalert service
+  systemd:
+    name: vmalert.service
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# to see currently active alerts, run the promQL query ALERTS against your prometheus datasource in grafana
+- name: template vmalert alert definitions (node-alerts)
+  template:
+    src: etc_victoriametrics_vmalert_rules_node-alerts.yml.j2
+    dest: /etc/victoriametrics/vmalert/rules/node-alerts.yml
+    owner: prometheus
+    group: prometheus
+    mode: "0644"
+  notify: reload vmalert
+  tags: victoriametrics_vmalert_rules
+
+- name: copy vmalert alert definitions
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: prometheus
+    group: prometheus
+    mode: "0644"
+  notify: reload vmalert
+  loop:
+    - src: etc_victoriametrics_vmalert_rules_blackbox-alerts.yml
+      dest: /etc/victoriametrics/vmalert/rules/blackbox-alerts.yml
+    - src: etc_victoriametrics_vmalert_rules_apache-alerts.yml
+      dest: /etc/victoriametrics/vmalert/rules/apache-alerts.yml
+    - src: etc_victoriametrics_vmalert_rules_phpfpm-alerts.yml
+      dest: /etc/victoriametrics/vmalert/rules/phpfpm-alerts.yml
+    - src: etc_victoriametrics_vmalert_rules_systemd-user-alerts.yml
+      dest: /etc/victoriametrics/vmalert/rules/systemd-user-alerts.yml
+
+- name: install prometheus-alertmanager
+  apt:
+    state: present
+    package: prometheus-alertmanager
+
+- name: copy alertmanager configuration
+  template:
+    src: etc_prometheus_alertmanager.yml.j2
+    dest: /etc/prometheus/alertmanager.yml
+    owner: prometheus
+    group: prometheus
+    mode: "0640"
+  notify: restart prometheus-alertmanager
