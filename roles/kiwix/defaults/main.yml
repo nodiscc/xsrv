@@ -13,6 +13,8 @@ kiwix_fqdn: kiwix.CHANGEME.org
 kiwix_zim_urls:
   - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim # 238MB
   - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB
+  # - https://download.kiwix.org/zim/gutenberg/gutenberg_en_all_2025-11.zim # 206GB, English Project Gutenberg
+  # - https://download.kiwix.org/zim/gutenberg/gutenberg_fr_all_2026-01.zim # 9.8GB, French Project Gutenberg
 # yes/no: enable/disable kiwix server service, start it at boot
 kiwix_enable_service: yes
 # list of IP addresses allowed to access the kiwix web interface (IP or IP/netmask format)
