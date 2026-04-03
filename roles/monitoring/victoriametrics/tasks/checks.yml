@@ -16,3 +16,4 @@
     - victoriametrics_alertmanager_repeat_interval is string
     - victoriametrics_firewalld_zones | type_debug == "list"
     - victoriametrics_auto_check_exclude | type_debug == "list"
+    - victoriametrics_retention_period == victoriametrics_retention_period | int

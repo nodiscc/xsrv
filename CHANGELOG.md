@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
 
+**Added:**
+* monitoring/victoriametrics: add configurable retention period `victoriametrics_retention_period` (increase to 365 days instead of 1 month by default)
+
+
 **Changed:**
 * llamacpp: update to latest version
 * monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showingin process lists
