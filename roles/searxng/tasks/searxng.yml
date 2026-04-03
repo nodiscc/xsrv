@@ -53,6 +53,7 @@
   become_user: searxng
   command:
     cmd: podman system reset --force
+  changed_when: true
   when: ansible_local.searxng.storage_driver_migrated is not defined
 
 - name: pull searxng image

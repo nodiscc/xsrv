@@ -46,6 +46,7 @@
   become_user: stirlingpdf
   command:
     cmd: podman system reset --force
+  changed_when: true
   when: ansible_local.stirlingpdf.storage_driver_migrated is not defined
 
 

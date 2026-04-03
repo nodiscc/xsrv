@@ -27,6 +27,7 @@
   become_user: moodist
   command:
     cmd: podman system reset --force
+  changed_when: true
   when: ansible_local.moodist.storage_driver_migrated is not defined
 
 - name: pull moodist image
