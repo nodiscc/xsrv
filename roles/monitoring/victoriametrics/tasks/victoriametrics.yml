@@ -64,7 +64,7 @@
     content: "{{ victoriametrics_exporters_auth_password }}\n"
     dest: /etc/victoriametrics/exporters_auth_password
     owner: root
-    group: prometheus
+    group: _victoria-metrics
     mode: "0640"
   notify: restart victoriametrics
 
