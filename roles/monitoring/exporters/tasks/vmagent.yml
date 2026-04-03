@@ -3,6 +3,11 @@
     package: victoria-metrics
     state: present
 
+- name: add prometheus user to _victoria-metrics group
+  user:
+    name: prometheus
+    groups: _victoria-metrics
+
 - name: stop and disable victoria-metrics service (TSDB) on non-collector hosts
   systemd:
     name: victoria-metrics.service
