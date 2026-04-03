@@ -67,6 +67,7 @@
     group: _victoria-metrics
     mode: "0640"
   notify: restart victoriametrics
+  diff: no # contains sensitive values
 
 - name: create dynamic configuration directories
   file:

@@ -33,6 +33,7 @@
     group: prometheus
     mode: "0640"
   notify: restart vmagent
+  diff: no # contains sensitive values
 
 - name: create working directory for vmagent
   file:
