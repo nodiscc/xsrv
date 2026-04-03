@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showingin process lists
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
 
+**Fixed:**
+* owncast: fix incorrect tag on owncast facts copy tasks
 
 [Full changes since v2.0.0](https://github.com/nodiscc/xsrv/compare/2.0.0...2.1.0)
 
