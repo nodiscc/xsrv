@@ -8,6 +8,7 @@
       - podman-docker
       - dbus-user-session
       - passt
+      - fuse-overlayfs
 
 - name: copy sysctl configuration (enable kernel.unprivileged_userns_clone)
   template:
