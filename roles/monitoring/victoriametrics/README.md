@@ -44,12 +44,25 @@ Metrics sent by the [monitoring.exporters](../exporters) role to Victoriametrics
 
 Alerts will be sent by mail to the recipient configurezd in `victoriametrics_alertmanager_email_to` (this requires a working SMTP relay and `victoriametrics_alertmanager_smtp_auth_username:/password` credentials)
 
-To list currently active alerts, access the Alerts Grafana dashboard. You may also SSH to the host running victoriametrics and run:
+### List currently active alerts
+
+* access the Grafana alerts dashboard
+* You may also SSH to the host running victoriametrics and run:
 
 ```bash
 # display active alerts in json format
 curl http://127.0.0.1:8880/api/v1/alerts
 ```
+
+### Delete metrics for a specific host
+
+SSH to the host running victoriametrics and run:
+
+```bash
+password=$(sudo cat /etc/victoriametrics/exporters_auth_password)
+curl -v -u "vmagent:$password" --insecure -X POST https://127.0.0.1:8428/api/v1/admin/tsdb/delete_series -d 'match[]={instance="host.example.org"}'
+```
+
 
 ### Backups
 
