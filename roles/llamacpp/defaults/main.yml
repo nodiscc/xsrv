@@ -74,10 +74,6 @@ llamacpp_models:
   #   url: https://huggingface.co/bartowski/DeepSeek-Coder-V2-Lite-Instruct-GGUF/resolve/main/DeepSeek-Coder-V2-Lite-Instruct-Q6_K_L.gguf
   #   presets:
   #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
-  # - name: phi3-mini-128k:4b # 4B, 3.1GB
-  #   url: https://huggingface.co/QuantFactory/Phi-3-mini-128k-instruct-GGUF/resolve/main/Phi-3-mini-128k-instruct.Q6_K.gguf
-  #   presets:
-  #     default: {temp: 0.9, top-p: 0.95, repeat-penalty: 1.05}
   # - name: qwen3.5:2b # 2B, 2.8GB, tools + vision
   #   url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-UD-Q8_K_XL.gguf
   #   presets:
