@@ -1,14 +1,14 @@
 # LlamaCPP version to install (commit hash or tag)
 llamacpp_version: b8754
-
 # Whether to enable and start the LlamaCPP systemd service
 llamacpp_enable_service: true
-
 # Context size for llama.cpp (set to 0 to use model default)
 llamacpp_context_size: 60000
+# Seconds before unloading idle/unused models from memory (set to -1 to disable)
+llamacpp_sleep_idle_seconds: -1
 
 # list of Large Language models to download and enable in llama.cpp
-# each entry requires the following parmeters:
+# each entry requires the following parameters:
 #   url: url of the model to download (GGUF format)
 #   name: the human-readable name displayed in the llama.cpp web interface and API
 # The size of each model is (B = billion parameters) is roughly equivalent to the GB of memory required to run it

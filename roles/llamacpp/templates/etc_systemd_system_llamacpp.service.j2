@@ -11,6 +11,7 @@ WorkingDirectory=/var/lib/llamacpp/
 ExecStart=/opt/llamacpp/llama-{{ llamacpp_version }}/llama-server \
   --models-dir /var/lib/llamacpp/aliases \
   --models-preset /var/lib/llamacpp/presets.ini \
+  --sleep-idle-seconds {{ llamacpp_sleep_idle_seconds }} \
   --jinja --ctx-size {{ llamacpp_context_size }} --host 127.0.0.1 --port 8033
 
 [Install]
