@@ -192,6 +192,7 @@
       dest: /etc/victoriametrics/vmalert/rules/phpfpm-alerts.yml
     - src: etc_victoriametrics_vmalert_rules_systemd-user-alerts.yml
       dest: /etc/victoriametrics/vmalert/rules/systemd-user-alerts.yml
+  tags: victoriametrics-vmalert-rules
 
 - name: install prometheus-alertmanager
   apt:
