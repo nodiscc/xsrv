@@ -15,12 +15,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: add configurable retention period (`victoriametrics_retention_period`)
 * monitoring/victoriametrics: add configurable mute time intervals for alert notifications (`victoriametrics_notifications_mute_time_intervals`)
 
-
 **Changed:**
 * monitoring/victoriametrics: increase metrics retention to 365 days instead of 1 month by default
-* llamacpp: update to latest version
-* monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showingin process lists
+* monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showing in process lists
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
+* llamacpp: update to latest version
+* matrix/element-web: update to latest version
+
 
 **Fixed:**
 * owncast: fix incorrect tag on owncast facts copy tasks
