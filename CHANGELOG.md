@@ -12,10 +12,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv deploy` apply changes
 
 **Added:**
-* monitoring/victoriametrics: add configurable retention period `victoriametrics_retention_period` (increase to 365 days instead of 1 month by default)
+* monitoring/victoriametrics: add configurable retention period (`victoriametrics_retention_period`)
+* monitoring/victoriametrics: add configurable mute time intervals for alert notifications (`victoriametrics_notifications_mute_time_intervals`)
 
 
 **Changed:**
+* monitoring/victoriametrics: increase metrics retention to 365 days instead of 1 month by default
 * llamacpp: update to latest version
 * monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showingin process lists
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
