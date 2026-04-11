@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * apache: remove deprecated `X-XSS-Protection` HTTP header
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
 * stirlingpdf: update to [v2.9.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
+* openldap: update LDAP-account-mnaager to [v9.5.2](https://github.com/LDAPAccountManager/lam/releases/tag/9.5.2)
 * llamacpp: update to latest version
 * matrix/element-web: update to latest version
 
