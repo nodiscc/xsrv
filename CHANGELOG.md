@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * stirlingpdf: update to [v2.9.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * openldap: update LDAP-account-mnaager to [v9.5.2](https://github.com/LDAPAccountManager/lam/releases/tag/9.5.2)
 * gitea_act_runner: update to [v0.3.1](https://gitea.com/gitea/act_runner/releases)
+* monitoring/grafana: update to [v12.4.2](https://github.com/grafana/grafana/releases/tag/v12.4.2)
 * llamacpp: update to latest version
 * matrix/element-web: update to latest version
 
