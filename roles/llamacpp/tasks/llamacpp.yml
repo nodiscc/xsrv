@@ -52,6 +52,14 @@
     group: llamacpp
     mode: "0755"
 
+- name: Create mmproj directory
+  file:
+    path: "/var/lib/llamacpp/mmproj"
+    state: directory
+    owner: llamacpp
+    group: llamacpp
+    mode: "0755"
+
 - name: Create aliases directory
   file:
     path: "/var/lib/llamacpp/aliases"

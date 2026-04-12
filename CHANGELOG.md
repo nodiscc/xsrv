@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: add configurable retention period (`victoriametrics_retention_period`)
 * monitoring/victoriametrics: add configurable mute time intervals for alert notifications (`victoriametrics_notifications_mute_time_intervals`)
 * llamacpp: allow automatically unloading models after a period of inactivity (`llamacpp_sleep_idle_seconds`)
+* llamacpp: add support for vision models, add global switch to enable/disable vision capabilities (`llamacpp_enable_vision`, default: false)
 
 **Changed:**
 * monitoring/victoriametrics: increase metrics retention to 365 days instead of 1 month by default
