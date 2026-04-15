@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * owncast: fix incorrect tag on owncast facts copy tasks
 * stirlingpdf,owncast: fix podman image pull always returning changed/unnecessary restart on each deployment
 * monitoring/goaccess: fix 404 error when downloading geoip database
+* nextcloud: remove old PHP 7.x pool definitions
 
 [Full changes since v2.0.0](https://github.com/nodiscc/xsrv/compare/2.0.0...2.1.0)
 
