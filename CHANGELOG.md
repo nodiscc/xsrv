@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea_act_runner: update to [v0.3.1](https://gitea.com/gitea/act_runner/releases)
 * monitoring/grafana: update to [v12.4.2](https://github.com/grafana/grafana/releases)
 * owncast: update to [v0.2.5](https://github.com/owncast/owncast/releases)
+* llamacpp: refactor: remove aliases directory and symlink logic
 * llamacpp: update to latest version
 * matrix/element-web: update to latest version
 

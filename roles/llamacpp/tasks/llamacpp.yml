@@ -60,13 +60,10 @@
     group: llamacpp
     mode: "0755"
 
-- name: Create aliases directory
+- name: MIGRATION/3.0.0 - remove files from old version of the role
   file:
     path: "/var/lib/llamacpp/aliases"
-    state: directory
-    owner: llamacpp
-    group: llamacpp
-    mode: "0755"
+    state: absent
 
 - name: Create model download script
   template:

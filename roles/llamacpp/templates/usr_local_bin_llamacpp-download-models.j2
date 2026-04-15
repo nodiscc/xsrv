@@ -4,7 +4,6 @@ set -euo pipefail
 
 # Configuration
 MODELS_DIR="/var/lib/llamacpp/models"
-alias_gguf_DIR="/var/lib/llamacpp/alias_ggufes"
 MMPROJ_DIR="/var/lib/llamacpp/mmproj"
 DOWNLOAD_LIST='{{ llamacpp_models | to_json }}'
 
@@ -12,25 +11,23 @@ DOWNLOAD_LIST='{{ llamacpp_models | to_json }}'
 function parse_download_list() {
     echo "$DOWNLOAD_LIST" | jq -r '.[] | 
         if .mmproj_url then
-            "\(.url)|\(.name)|\(.url | split("/") | last)|\(.mmproj_url)|\(.mmproj_url | split("/") | last)"
+            "\(.url)|\(.url | split("/") | last)|\(.mmproj_url)|\(.mmproj_url | split("/") | last)"
         else
-            "\(.url)|\(.name)|\(.url | split("/") | last)||"
+            "\(.url)|\(.url | split("/") | last)||"
         end'
 }
 
 # Download function with aria2c
 function download_model() {
     local url=$1
-    local alias=$2
-    local alias_gguf=$2.gguf
-    local filename=$3
-    local mmproj_url=$4
-    local mmproj_filename=$5
+    local filename=$2
+    local mmproj_url=$3
+    local mmproj_filename=$4
 
     if [ -f "$MODELS_DIR/${filename}" ]; then
         echo "Model ${filename} already exists, skipping download"
     else
-        echo "Downloading ${alias_gguf} from ${url}..."
+        echo "Downloading ${filename} from ${url}..."
         aria2c \
             --dir="$MODELS_DIR" \
             --out="${filename}" \
@@ -44,25 +41,25 @@ function download_model() {
             --retry-wait=5 \
             --summary-interval=60 \
             "${url}"
-        echo "SUCCESS: $alias_gguf ($url)"
+        echo "SUCCESS: $filename ($url)"
     fi
 
     # Verify download
     if [ -f "$MODELS_DIR/$filename" ]; then
-        ln -vsf "$MODELS_DIR/${filename}" "$alias_gguf_DIR/${alias_gguf}"
+        echo "Download verified"
     else
-        echo "FAILED: $alias_gguf $url"
+        echo "FAILED: $filename $url"
         return 1
     fi
 
     # Download mmproj if mmproj_url is set
     if [ -n "$mmproj_url" ]; then
-        MMPROJ_SUBDIR="$MMPROJ_DIR/$alias"
+        MMPROJ_SUBDIR="$MMPROJ_DIR/${filename%.*}"
         mkdir -p "$MMPROJ_SUBDIR"
         if [ -f "$MMPROJ_SUBDIR/${mmproj_filename}" ]; then
             echo "mmproj ${mmproj_filename} already exists, skipping download"
         else
-            echo "Downloading mmproj for ${alias} from ${mmproj_url}..."
+            echo "Downloading mmproj for ${filename} from ${mmproj_url}..."
             aria2c \
                 --dir="$MMPROJ_SUBDIR" \
                 --out="${mmproj_filename}" \
@@ -76,13 +73,13 @@ function download_model() {
                 --retry-wait=5 \
                 --summary-interval=60 \
                 "${mmproj_url}"
-            echo "SUCCESS: mmproj for $alias ($mmproj_url)"
+            echo "SUCCESS: mmproj for $filename ($mmproj_url)"
         fi
 
         if [ -f "$MMPROJ_SUBDIR/$mmproj_filename" ]; then
-            echo "mmproj download successful for $alias"
+            echo "mmproj download successful for $filename"
         else
-            echo "FAILED: mmproj download for $alias"
+            echo "FAILED: mmproj download for $filename"
             return 1
         fi
     fi
@@ -97,9 +94,9 @@ echo "----------------------------------------"
 SUCCESS_COUNT=0
 TOTAL_COUNT=0
 
-while IFS='|' read -r url alias filename mmproj_url mmproj_filename; do
+while IFS='|' read -r url filename mmproj_url mmproj_filename; do
     TOTAL_COUNT=$((TOTAL_COUNT + 1))
-    if download_model "$url" "$alias" "$filename" "$mmproj_url" "$mmproj_filename"; then
+    if download_model "$url" "$filename" "$mmproj_url" "$mmproj_filename"; then
         SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
     fi
 done < <(parse_download_list)
