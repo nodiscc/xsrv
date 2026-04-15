@@ -12,7 +12,7 @@ version = 1
 [{{ preset_key }}]
 model = /var/lib/llamacpp/models/{{ filename }}
 {% if model.get('mmproj_url') and llamacpp_enable_vision %}
-mmproj = /var/lib/llamacpp/mmproj/{{ model.name }}/{{ mmproj_filename }}
+mmproj = /var/lib/llamacpp/mmproj/{{ filename.split('.')[0] }}/{{ mmproj_filename }}
 {% endif %}
 {% for key, value in preset_config.items() %}
 {{ key }} = {{ value }}
