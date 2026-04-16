@@ -67,6 +67,9 @@ libvirt_parallel_shutdown_number: 3
 #       - host_port: 2456-2458 # port range, separated by -
 #         vm_port: 2456-2458
 #         protocol: udp
+#       - host_port: 8428 # restrict to specific firewall zone
+#         vm_port: 8428
+#         source_zone: known-public
 #   - vm_name: vm02.EXAMPLE.org
 #     vm_ip: 10.3.0.226
 #     vm_bridge: virbr3
