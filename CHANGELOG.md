@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * stirlingpdf,owncast: fix podman image pull always returning changed/unnecessary restart on each deployment
 * monitoring/goaccess: fix 404 error when downloading geoip database
 * nextcloud: remove old PHP 7.x pool definitions
+* apache: fix conflicting download location on the controller for `apache_reverseproxies` self-signed certificates
 
 [Full changes since v2.0.0](https://github.com/nodiscc/xsrv/compare/2.0.0...2.1.0)
 
