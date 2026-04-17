@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 * monitoring/victoriametrics: increase metrics retention to 365 days instead of 1 month by default
 * monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showing in process lists
+* monitoring/victoriametrics: clear HostDown alert after 10 minutes
 * apache: remove deprecated `X-XSS-Protection` HTTP header
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
 * nextcloud: disable maps app by default (not compatible with Nextcloud 32)
