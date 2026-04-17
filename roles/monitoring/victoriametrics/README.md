@@ -80,6 +80,10 @@ curl -v -u "vmagent:$password" --insecure -X POST https://127.0.0.1:8428/api/v1/
 
 ## References/Documentation
 
-- https://stdout.root.sx/links/?searchterm=prometheus
-- https://stdout.root.sx/links/?searchterm=victoriametrics
-- https://stdout.root.sx/links/?searchtags=monitoring
+- https://github.com/samber/awesome-prometheus-alerts
+- https://utcc.utoronto.ca/~cks/space/blog/sysadmin/PrometheusGrafanaSetup-2019
+- https://samber.github.io/awesome-prometheus-alerts/rules.html
+- https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/
+- https://docs.victoriametrics.com/vmalert.html
+- https://docs.victoriametrics.com/anomaly-detection/guides/guide-vmanomaly-vmalert/
+- https://docs.victoriametrics.com/victoriametrics/vmagent/
