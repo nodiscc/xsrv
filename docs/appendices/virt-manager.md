@@ -123,15 +123,9 @@ If your VMs are managed by the [libvirt role](https://github.com/nodiscc/xsrv/tr
 
 -->
 
-#### Share a directory from the hypervisor/host to the VM/guest
+## See also
 
-- Access VM settings in `virt-manager`
-- Click `Add hardware > Filesystem`
-  - Mode: `Mapped`
-  - Source path: `/path/to/the/directory/to/share` (on the hypervisor)
-  - Target path: `/dev/p9-name-of-share` (in the VM)
-- Inside the VM run `sudo apt install 9mount, mount -t 9p /dev/p9-name-of-share /mnt/example-share`
-- The shared filesystem will be available in `/mnt/example-share`
+The [libvirt role](https://github.com/nodiscc/xsrv/tree/master/roles/libvirt) documentation includes more examples.
 
 
 ## Alternatives
