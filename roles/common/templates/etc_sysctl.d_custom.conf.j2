@@ -263,3 +263,10 @@ net.core.bpf_jit_harden = 2
 # When you use the software watchdog, the recommended setting is 60.
 # Setting this to 0 disables automatic reboot on panic.
 kernel.panic = 60
+
+### PRINTK/CONSOLE LOGGING #####
+
+# Control console log level for printk
+# Format: console_loglevel default_message_loglevel minimum_console_loglevel default_console_loglevel
+# Changed from default "7 4 1 7" to "3 4 1 3" to hide firewall warning messages (level 4) from serial console
+kernel.printk = 3 4 1 3

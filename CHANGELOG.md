@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * libvirt: `libvirt_port_forwards`: allow restricting DNAT rules to a specific source zone
 
 **Changed:**
+* common: hide firewall warning messages from serial console
 * monitoring/victoriametrics: increase metrics retention to 365 days instead of 1 month by default
 * monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showing in process lists
 * monitoring/victoriametrics: clear HostDown alert after 10 minutes
