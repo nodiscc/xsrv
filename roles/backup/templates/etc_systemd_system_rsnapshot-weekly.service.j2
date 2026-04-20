@@ -3,6 +3,7 @@ Description=rsnapshot weekly backup
 
 [Service]
 Type=oneshot
+ConditionPathExists=/var/backups/rsnapshot/daily.{{ rsnapshot_retain_daily | int - 1 }}
 ExecStart=/usr/bin/rsnapshot weekly
 SyslogIdentifier=rsnapshot-weekly
 
