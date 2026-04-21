@@ -138,6 +138,13 @@
     - common
     - hdparm
 
+- name: import needrestart autorestart configuration tasks
+  import_tasks: needrestart-autorestart.yml
+  become: yes
+  tags:
+    - common
+    - needrestart
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: common

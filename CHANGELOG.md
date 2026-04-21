@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: allow automatically unloading models after a period of inactivity (`llamacpp_sleep_idle_seconds`)
 * llamacpp: add support for vision models, add global switch to enable/disable vision capabilities (`llamacpp_enable_vision`, default: false)
 * libvirt: `libvirt_port_forwards`: allow restricting DNAT rules to a specific source zone
+* common: re-introduce optional services/OS autorestart (`setup_needrestart`, `needrestart_autorestart_services`, `needrestart_autorestart_cron`)
 
 **Changed:**
 * common: hide firewall warning messages from serial console

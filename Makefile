@@ -15,6 +15,7 @@ test_shellcheck:
 	shellcheck -e SC1090,SC1091 \
 		xsrv \
 		xsrv-completion.sh \
+		roles/common/files/usr_local_bin_needrestart-autorestart \
 		roles/monitoring/utils/templates/usr_local_bin_bonnie++-wrapper.j2 \
 		roles/wireguard/files/usr_local_bin_wireguard-gen-peer-config
 
