@@ -1,3 +1,5 @@
 # rsnapshot configuration for shaarli backups
 # backup shaarli data directory
 backup	{{ shaarli_install_dir }}/data/	localhost/
+# backup shaarli thumbnails cache
+backup	{{ shaarli_install_dir }}/cache/thumb/	localhost/

@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * nextcloud: remove old PHP 7.x pool definitions
 * apache: fix conflicting download location on the controller for `apache_reverseproxies` self-signed certificates
 * backup: don't run weekly/monthly backups when the required number of daily/weekly backup generations is not met
+* shaarli: backup cache/thumb/ (thumbnails) directory in addition to data/
 
 [Full changes since v2.0.0](https://github.com/nodiscc/xsrv/compare/2.0.0...2.1.0)
 
