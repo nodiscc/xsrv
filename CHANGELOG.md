@@ -31,7 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * nextcloud: updgrade to [v32.0.8](https://nextcloud.com/blog/nextcloud-hub25-autumn/)
 * stirlingpdf: update to [v2.9.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * openldap: update LDAP-account-mnaager to [v9.5.2](https://github.com/LDAPAccountManager/lam/releases/tag/9.5.2)
-* gitea_act_runner: update to [v0.3.1](https://gitea.com/gitea/act_runner/releases)
+* gitea_act_runner: update to [v0.4.1](https://gitea.com/gitea/act_runner/releases)
 * monitoring/grafana: update to [v12.4.3](https://github.com/grafana/grafana/releases)
 * owncast: update to [v0.2.5](https://github.com/owncast/owncast/releases)
 * llamacpp: refactor: remove aliases directory and symlink logic
