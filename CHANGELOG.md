@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 * Upgrade to v2.0.0 if not already done
-* nextcloud: if you have changed `nextcloud_applications` from the defautl value, disable the `maps` app
+* nextcloud: if you have changed `nextcloud_applications` from the default value, disable the `maps` app
 * `xsrv upgrade` to update roles to their latest version
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
