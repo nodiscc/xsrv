@@ -108,15 +108,15 @@
 
 - name: download act-runner binary
   get_url:
-    url: "https://dl.gitea.com/act_runner/0.2.3/act_runner-0.2.3-linux-amd64"
-    dest: "/root/act_runner-0.2.3-linux-amd64"
+    url: "https://dl.gitea.com/runner/1.0.3/gitea-runner-1.0.3-linux-amd64"
+    dest: "/root/gitea-runner-1.0.3-linux-amd64"
     owner: root
     group: root
     mode: "0640"
 
 - name: install act-runner binary
   copy:
-    src: "/root/act_runner-0.2.3-linux-amd64"
+    src: "/root/gitea-runner-1.0.3-linux-amd64"
     dest: "/usr/local/bin/act-runner"
     mode: "0755"
     remote_src: yes
