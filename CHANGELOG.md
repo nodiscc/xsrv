@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 * llamacpp: update to latest version
+* gitea-act-runner: update to [v1.0.8](https://gitea.com/gitea/runner/releases)
 
 **Fixed:**
 * fix deprecation warnings
