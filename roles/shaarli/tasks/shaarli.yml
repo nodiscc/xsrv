@@ -186,6 +186,14 @@
       owner: www-data
     - path: "{{ shaarli_install_dir }}/pagecache"
 
+- name: ensure shaarli thumb cache directory exists
+  file:
+    path: "{{ shaarli_install_dir }}/cache/thumb"
+    state: directory
+    owner: www-data
+    group: shaarli
+    mode: "0770"
+
 - name: remove old shaarli installation
   file:
     path: '{{ shaarli_install_dir }}.old'
