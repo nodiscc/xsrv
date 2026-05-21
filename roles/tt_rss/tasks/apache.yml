@@ -21,3 +21,9 @@
     cmd: a2ensite tt-rss
     creates: "/etc/apache2/sites-enabled/tt-rss.conf"
   notify: reload apache
+
+- name: add tt-rss instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ tt_rss_fqdn }}" # noqa no-tabs

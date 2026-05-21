@@ -37,3 +37,9 @@
     cmd: a2ensite transmission
     creates: "/etc/apache2/sites-enabled/transmission.conf"
   notify: reload apache
+
+- name: add transmission instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ transmission_fqdn }}" # noqa no-tabs
