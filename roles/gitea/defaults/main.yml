@@ -46,8 +46,6 @@ gitea_register_email_confirm: "true"
 gitea_show_user_email: "false"
 # disable all third-party/external services/CDNs (true/false - QUOTED)
 gitea_offline_mode: "true"
-# disable third-party gravatar service (true/false - QUOTED)
-gitea_disable_gravatar: "true"
 # global limit of repositories per user, applied at creation time. -1 means no limit
 gitea_user_repo_limit: -1
 # number of issues that are displayed on one page

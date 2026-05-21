@@ -41,6 +41,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * matrix/element-web: update to latest version
 * tests: disable jitsi role release tests
 
+**Removed:**
+* gitea: remove `gitea_disable_gravatar` - this setting has been removed upstream in Gitea
+
 **Fixed:**
 * owncast: fix incorrect tag on owncast facts copy tasks
 * stirlingpdf,owncast: fix podman image pull always returning changed/unnecessary restart on each deployment
