@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: refactor: remove aliases directory and symlink logic
 * llamacpp: update to latest version
 * matrix/element-web: update to latest version
+* searxng: decrease wiby search engine weight to 1.0
 * tests: disable jitsi role release tests
 
 **Removed:**
