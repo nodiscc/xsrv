@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
 * nextcloud: disable maps app by default (not compatible with Nextcloud 32)
 * tt-rss: migrate source code mirror/archive to codeberg.org
-* nextcloud: updgrade to [v32.0.9](https://nextcloud.com/blog/nextcloud-hub25-autumn/)
+* nextcloud: upgrade to [v32.0.11](https://nextcloud.com/changelog/)
 * stirlingpdf: update to [v2.9.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * openldap: update LDAP-account-mnaager to [v9.5.2](https://github.com/LDAPAccountManager/lam/releases/tag/9.5.2)
 * gitea: update to [v1.26.2](https://github.com/go-gitea/gitea/releases)
