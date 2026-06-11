@@ -1,5 +1,5 @@
 # llama.cpp version to install (commit hash or tag)
-llamacpp_version: b9371
+llamacpp_version: b9601
 # enable and start the LlamaCPP systemd service (true/false)
 llamacpp_enable_service: true
 # context size in tokens for llama.cpp (set to 0 to use model default)
