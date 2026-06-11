@@ -40,3 +40,9 @@
     cmd: a2ensite nextcloud
     creates: "/etc/apache2/sites-enabled/nextcloud.conf"
   notify: restart apache
+
+- name: add nextcloud instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ nextcloud_fqdn }}" # noqa no-tabs

@@ -100,9 +100,9 @@
     owner: root
     group: shaarli
     mode: "{{ item.mode }}"
-    recurse: no
+    recurse: yes
   with_items:
-    - { path: "/root/shaarli-unpack/Shaarli", mode: "0755" }
+    - { path: "/root/shaarli-unpack/Shaarli", mode: "u=rwX,g=rX" }
     - { path: "/root/shaarli-unpack/Shaarli/data", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/tmp", mode: "0770" }
     - { path: "/root/shaarli-unpack/Shaarli/cache", mode: "0770" }
@@ -193,6 +193,35 @@
     owner: www-data
     group: shaarli
     mode: "0770"
+
+- name: ensure .htaccess is readable by Apache
+  file:
+    path: "{{ shaarli_install_dir }}/.htaccess"
+    mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set file permissions for configure_only
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('shaarli') }}"
+    mode: "{{ item.mode }}"
+    recurse: "{{ item.recurse | default(True) }}"
+  when: shaarli_action == 'configure_only'
+  ignore_errors: "{{ ansible_check_mode }}"
+  changed_when: no
+  with_items:
+    - path: "{{ shaarli_install_dir }}"
+      mode: "u=rwX,g=rX"
+    - path: "{{ shaarli_install_dir }}/data"
+      mode: "0770"
+    - path: "{{ shaarli_install_dir }}/tmp"
+      mode: "0770"
+    - path: "{{ shaarli_install_dir }}/cache"
+      mode: "0770"
+      owner: www-data
+    - path: "{{ shaarli_install_dir }}/pagecache"
+      mode: "0770"
 
 - name: remove old shaarli installation
   file:

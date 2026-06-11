@@ -22,3 +22,9 @@
     cmd: a2ensite jellyfin
     creates: "/etc/apache2/sites-enabled/jellyfin.conf"
   notify: reload apache
+
+- name: add jellyfin instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ jellyfin_fqdn }}" # noqa no-tabs

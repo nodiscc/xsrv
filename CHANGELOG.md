@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: add support for vision models, add global switch to enable/disable vision capabilities (`llamacpp_enable_vision`, default: false)
 * libvirt: `libvirt_port_forwards`: allow restricting DNAT rules to a specific source zone
 * common: re-introduce optional services/OS autorestart (`setup_needrestart`, `needrestart_autorestart_services`, `needrestart_autorestart_cron`)
+* llamacpp: add gemma4:12b model (12B, 13.6GB, vision + audio, omni-modal)
 
 **Changed:**
 * common: hide firewall warning messages from serial console
@@ -29,20 +30,27 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
 * nextcloud: disable maps app by default (not compatible with Nextcloud 32)
 * tt-rss: migrate source code mirror/archive to codeberg.org
-* nextcloud: updgrade to [v32.0.9](https://nextcloud.com/blog/nextcloud-hub25-autumn/)
+* nextcloud: upgrade to [v32.0.11](https://nextcloud.com/changelog/)
 * stirlingpdf: update to [v2.9.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * openldap: update LDAP-account-mnaager to [v9.5.2](https://github.com/LDAPAccountManager/lam/releases/tag/9.5.2)
 * gitea: update to [v1.26.2](https://github.com/go-gitea/gitea/releases)
 * gitea_act_runner: update to [v0.6.0](https://gitea.com/gitea/act_runner/releases)
+* shaarli: update to v0.16.3 [[1](https://github.com/shaarli/Shaarli/releases)
 * monitoring/grafana: update to [v12.4.3](https://github.com/grafana/grafana/releases)
 * owncast: update to [v0.2.5](https://github.com/owncast/owncast/releases)
 * llamacpp: refactor: remove aliases directory and symlink logic
 * llamacpp: update to latest version
 * matrix/element-web: update to latest version
+* searxng: decrease wiby search engine weight to 1.0
 * tests: disable jitsi role release tests
+
+**Removed:**
+* gitea: remove `gitea_disable_gravatar` - this setting has been removed upstream in Gitea
 
 **Fixed:**
 * owncast: fix incorrect tag on owncast facts copy tasks
+* shaarli: fix incorrect file permissions/403 error on first install
+* homepage,jellyfin,nextcloud,ttrss,transmission: add /etc/hosts entries for locally installed applications
 * stirlingpdf,owncast: fix podman image pull always returning changed/unnecessary restart on each deployment
 * monitoring/goaccess: fix 404 error when downloading geoip database
 * nextcloud: remove old PHP 7.x pool definitions

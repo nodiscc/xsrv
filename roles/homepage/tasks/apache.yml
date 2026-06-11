@@ -12,3 +12,9 @@
     cmd: a2ensite homepage
     creates: "/etc/apache2/sites-enabled/homepage.conf"
   notify: reload apache
+
+- name: add homepage instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ homepage_fqdn }}" # noqa no-tabs

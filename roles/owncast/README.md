@@ -60,4 +60,28 @@ owncast - setup owncast live streaming server
 
 ## References
 
-- https://stdout.root.sx/links/?searchterm=owncast
+- https://github.com/owncast/owncast
+- https://owncast.online/docs/
+- https://owncast.online/docs/chat/chat-authentication/
+- https://owncast.online/docs/chat/moderation/
+- https://owncast.online/docs/chat/emoji/
+- https://owncast.online/docs/configuration/
+- https://owncast.online/docs/website/
+- https://owncast.online/docs/video/
+- https://owncast.online/docs/storage/
+- https://owncast.online/docs/directory/
+- https://owncast.online/quickstart/installation/
+- https://owncast.online/quickstart/manual/
+- https://owncast.online/quickstart/container/
+- https://owncast.online/docs/resources-requirements/
+- https://owncast.online/docs/systemservice/
+- https://owncast.online/docs/social/
+- https://owncast.online/docs/stream-keys/
+- https://owncast.online/docs/metrics/
+- https://owncast.online/docs/codecs/
+- https://owncast.online/docs/scaling/
+- https://owncast.online/docs/backups/
+- https://owncast.online/docs/custom-javascript/
+- https://owncast.online/docs/appearance/
+- https://owncast.online/troubleshoot/
+- https://github.com/owncast/owncast/releases

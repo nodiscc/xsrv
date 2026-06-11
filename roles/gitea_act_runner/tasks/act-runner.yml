@@ -188,8 +188,8 @@
   become: yes
   become_user: gitea
   delegate_to: "{{ gitea_act_runner_gitea_instance_hostname | default(inventory_hostname) }}"
-  command:
-    cmd: gitea --config /etc/gitea/app.ini actions generate-runner-token
+  shell:
+    cmd: set +e; gitea --config /etc/gitea/app.ini actions generate-runner-token 2>/dev/null | tail -1
   register: gitea_actions_generate_runner_token
   when: not runner_registration_file.stat.exists
   changed_when: yes

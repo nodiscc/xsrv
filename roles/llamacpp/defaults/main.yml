@@ -1,5 +1,5 @@
 # llama.cpp version to install (commit hash or tag)
-llamacpp_version: b9254
+llamacpp_version: b9048
 # enable and start the LlamaCPP systemd service (true/false)
 llamacpp_enable_service: true
 # context size in tokens for llama.cpp (set to 0 to use model default)
@@ -34,6 +34,11 @@ llamacpp_models:
   # - name: gemma3:27b #27B, 16GB, vision
   #   url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/google_gemma-3-27b-it-qat-Q4_K_L.gguf
   #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/mmproj-google_gemma-3-27b-it-qat-f16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma4:12b # 12B, 13.6GB, vision + audio
+  #   url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/gemma-4-12b-it-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
   # - name: llama3.1:8b # 8B, 5GB, tools
