@@ -36,6 +36,11 @@ llamacpp_models:
   #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/mmproj-google_gemma-3-27b-it-qat-f16.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma4:12b # 12B, 13.6GB, vision + audio
+  #   url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/gemma-4-12b-it-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
   # - name: llama3.1:8b # 8B, 5GB, tools
   #   url: https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_L.gguf
   #   presets:

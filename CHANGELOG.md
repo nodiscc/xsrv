@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: add support for vision models, add global switch to enable/disable vision capabilities (`llamacpp_enable_vision`, default: false)
 * libvirt: `libvirt_port_forwards`: allow restricting DNAT rules to a specific source zone
 * common: re-introduce optional services/OS autorestart (`setup_needrestart`, `needrestart_autorestart_services`, `needrestart_autorestart_cron`)
+* llamacpp: add gemma4:12b model (12B, 13.6GB, vision + audio, omni-modal)
 
 **Changed:**
 * common: hide firewall warning messages from serial console
