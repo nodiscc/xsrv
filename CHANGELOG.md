@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: doc: remove duplicate presets, remove old models from examples, update comments
 * llamacpp: set the llamacpp user as system user
 * common: needrestart: cron job: when no reboot is required, just restart services with a pending restart
+* monitoring/exporters: enable monitoring of systemd .mount units
 
 **Fixed:**
 * fix deprecation warnings
