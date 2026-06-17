@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: set the llamacpp user as system user
 * common: needrestart: cron job: when no reboot is required, just restart services with a pending restart
 * monitoring/exporters: enable monitoring of systemd .mount units
+* monitoring/exporters: force HTTP probes to use IPv4
 
 **Fixed:**
 * fix deprecation warnings
