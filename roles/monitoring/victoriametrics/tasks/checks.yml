@@ -5,7 +5,6 @@
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/victoriametrics"
   loop:
     - victoriametrics_auto_check_http_limit | type_debug == "list"
-    - victoriametrics_http_checks | type_debug == "list"
     - victoriametrics_exporters_auth_password is not search('CHANGEME')
     - victoriametrics_alertmanager_smtp_host is not search('CHANGEME')
     - victoriametrics_alertmanager_smtp_port == victoriametrics_alertmanager_smtp_port | int

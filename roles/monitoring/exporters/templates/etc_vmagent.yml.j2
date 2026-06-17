@@ -76,3 +76,53 @@ scrape_configs:
       module:
         - postgres
 {% endif %}
+{% if exporters_blackbox_http_checks | length > 0 %}
+  - job_name: blackbox
+    authorization:
+      type: Bearer
+      credentials: '{{ monitoring_exporters_auth_password }}'
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    metrics_path: /proxy
+    params:
+      module:
+        - blackbox
+        - http
+    static_configs:
+      - targets:
+{% for url in exporters_blackbox_http_checks %}
+        - {{ url }}
+{% endfor %}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9999
+{% endif %}
+{% if exporters_blackbox_tcp_checks | length > 0 %}
+  - job_name: blackbox-tcp
+    authorization:
+      type: Bearer
+      credentials: '{{ monitoring_exporters_auth_password }}'
+    scrape_interval: 30s
+    scrape_timeout: 9s
+    metrics_path: /proxy
+    params:
+      module:
+        - blackbox
+        - tcp_connect
+    static_configs:
+      - targets:
+{% for target in exporters_blackbox_tcp_checks %}
+        - {{ target }}
+{% endfor %}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9999
+{% endif %}

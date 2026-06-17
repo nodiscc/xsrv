@@ -105,8 +105,6 @@
   loop:
     - src: etc_prometheus_blackbox-exporter_http-checks-xsrv.yml.j2
       dest: /etc/prometheus/blackbox-exporter/http-checks-xsrv.yml
-    - src: etc_prometheus_blackbox-exporter_http-checks.yml.j2
-      dest: /etc/prometheus/blackbox-exporter/http-checks.yml
   tags: victoriametrics-http-checks
   notify:
     - restart prometheus-blackbox-exporter

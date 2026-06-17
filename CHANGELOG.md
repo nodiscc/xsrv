@@ -8,9 +8,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 * Upgrade to v2.1.0 if not already done
+* rename `victoriametrics_http_checks` to `exporters_blackbox_http_checks` in your `host_vars`
 * `xsrv upgrade` to update roles to their latest version
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
+
+
+**Added:**
+* monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
 
 **Changed:**
 * llamacpp: update to latest version
@@ -21,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * common: needrestart: cron job: when no reboot is required, just restart services with a pending restart
 * monitoring/exporters: enable monitoring of systemd .mount units
 * monitoring/exporters: force HTTP probes to use IPv4
+* monitoring/exporters/victoriametrics: move HTTP checks to exporters role
 
 **Fixed:**
 * fix deprecation warnings
