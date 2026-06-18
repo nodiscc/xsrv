@@ -51,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 * postgresql: fix prometheus user creation always returning changed
+* tt_rss: add postgresql tag to distribution-specific vars include (fixes --tags postgresql)
 * owncast: fix incorrect tag on owncast facts copy tasks
 * shaarli: fix incorrect file permissions/403 error on first install
 * homepage,jellyfin,nextcloud,ttrss,transmission: add /etc/hosts entries for locally installed applications

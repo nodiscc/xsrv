@@ -11,6 +11,7 @@
   tags:
     - tt_rss
     - apache
+    - postgresql
 
 - name: import postgresql configuration tasks
   import_tasks: postgresql.yml
