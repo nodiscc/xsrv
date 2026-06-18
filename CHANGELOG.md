@@ -7,7 +7,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Upgrade procedure:**
 * Upgrade to v2.0.0 if not already done
-* nextcloud: if you have changed `nextcloud_applications` from the default value, disable the `maps` app
 * `xsrv upgrade` to update roles to their latest version
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
@@ -30,7 +29,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: clear HostDown alert after 10 minutes
 * apache: remove deprecated `X-XSS-Protection` HTTP header
 * podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
-* nextcloud: disable maps app by default (not compatible with Nextcloud 32)
 * tt-rss: migrate source code mirror/archive to codeberg.org
 * llamacpp: remove `instruct` presets (thinking disabled)
 * nextcloud: upgrade to [v32.0.11](https://nextcloud.com/changelog/)
