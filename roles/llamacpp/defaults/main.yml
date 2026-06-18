@@ -10,6 +10,11 @@ llamacpp_listen_address: 127.0.0.1
 llamacpp_sleep_idle_seconds: -1
 # Enable vision capabilities (false/true), (increases resource usage)
 llamacpp_enable_vision: false
+# firewall zones for the llamacpp service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+llamacpp_firewalld_zones:
+  - zone: internal
+    state: enabled
 
 # list of Large Language models to download and enable in llama.cpp
 # each entry requires the following parameters:

@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: allow automatically unloading models after a period of inactivity (`llamacpp_sleep_idle_seconds`)
 * llamacpp: add support for vision models, add global switch to enable/disable vision capabilities (`llamacpp_enable_vision`, default: false)
 * llamacpp: make listen address configurable (`llamacpp_listen_address`, default: 127.0.0.1)
+* llamacpp: add firewalld integration (`llamacpp_firewalld_zones`, default: internal zone enabled)
 * libvirt: `libvirt_port_forwards`: allow restricting DNAT rules to a specific source zone
 * common: re-introduce optional services/OS autorestart (`setup_needrestart`, `needrestart_autorestart_services`, `needrestart_autorestart_cron`)
 * llamacpp: add gemma4:12b model (12B, 13.6GB, vision + audio, omni-modal)
