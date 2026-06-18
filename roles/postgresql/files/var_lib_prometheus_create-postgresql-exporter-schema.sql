@@ -1,3 +1,5 @@
+ALTER ROLE prometheus SET search_path = prometheus, pg_catalog;
+
 CREATE SCHEMA prometheus AUTHORIZATION prometheus;
 
 CREATE FUNCTION prometheus.f_select_pg_stat_activity()

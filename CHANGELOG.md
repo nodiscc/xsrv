@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea: remove `gitea_disable_gravatar` - this setting has been removed upstream in Gitea
 
 **Fixed:**
+* postgresql: fix prometheus user creation always returning changed
 * owncast: fix incorrect tag on owncast facts copy tasks
 * shaarli: fix incorrect file permissions/403 error on first install
 * homepage,jellyfin,nextcloud,ttrss,transmission: add /etc/hosts entries for locally installed applications
