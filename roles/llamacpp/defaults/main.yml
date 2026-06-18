@@ -4,6 +4,8 @@ llamacpp_version: b9601
 llamacpp_enable_service: true
 # context size in tokens for llama.cpp (set to 0 to use model default)
 llamacpp_context_size: 60000
+# listen address for the llama.cpp server (IPv4 only, e.g. 127.0.0.1 for localhost, 0.0.0.0 for all interfaces)
+llamacpp_listen_address: 127.0.0.1
 # seconds before unloading idle/unused models from memory (set to -1 to disable)
 llamacpp_sleep_idle_seconds: -1
 # Enable vision capabilities (false/true), (increases resource usage)
