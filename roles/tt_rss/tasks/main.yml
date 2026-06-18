@@ -1,7 +1,7 @@
 - name: import variable checks tasks
   import_tasks: checks.yml
   tags:
-    - tt_rss
+    - tt-rss
     - postgresql
     - checks
 
@@ -9,7 +9,7 @@
   include_vars:
     file: "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_release }}.yml"
   tags:
-    - tt_rss
+    - tt-rss
     - apache
     - postgresql
 
@@ -17,14 +17,14 @@
   import_tasks: postgresql.yml
   become: yes
   tags:
-    - tt_rss
+    - tt-rss
     - postgresql
 
 - name: import tt-rss configuration tasks
   import_tasks: tt-rss.yml
   become: yes
   tags:
-    - tt_rss
+    - tt-rss
 
 - name: import self-signed certificates configuration tasks
   import_tasks: ssl-selfsigned.yml
@@ -32,7 +32,7 @@
   tags:
     - apache
     - ssl
-    - tt_rss
+    - tt-rss
   when:
     - tt_rss_https_mode == 'selfsigned'
     - ansible_local.apache.ansible_managed is defined
@@ -42,7 +42,7 @@
   import_tasks: apache.yml
   become: yes
   tags:
-    - tt_rss
+    - tt-rss
     - apache
   when:
     - ansible_local.apache.ansible_managed is defined
@@ -52,7 +52,7 @@
   import_tasks: fail2ban.yml
   become: yes
   tags:
-    - tt_rss
+    - tt-rss
     - fail2ban
   when:
     - ansible_local.fail2ban.ansible_managed is defined
@@ -61,8 +61,8 @@
 - name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
-  tags: tt_rss
+  tags: tt-rss
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
-  tags: tt_rss
+  tags: tt-rss

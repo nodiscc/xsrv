@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: add gemma4:12b model (12B, 13.6GB, vision + audio, omni-modal)
 
 **Changed:**
+* use hyphens instead of underscores in all ansible tags
 * common: hide firewall warning messages from serial console
 * monitoring/victoriametrics: increase metrics retention to 365 days instead of 1 month by default
 * monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showing in process lists
