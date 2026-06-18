@@ -89,3 +89,11 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: nextcloud
+
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: import nextcloud maintenance tasks
+  import_tasks: utils-nextcloud-maintenance.yml
+  tags:
+    - never
+    - utils-nextcloud-maintenance

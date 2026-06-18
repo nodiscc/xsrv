@@ -1,6 +1,7 @@
 # @tag nextcloud - setup nextcloud file sharing/collaboration platform
 # @tag nextcloud-applications - setup nextcloud applications
 # @tag nextcloud-config - setup main nextcloud configuration settings
+# @tag utils-nextcloud-maintenance - run nextcloud maintenance tasks (mimetype repair)
 
 galaxy_info:
   role_name: nextcloud

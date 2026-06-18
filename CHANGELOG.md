@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv deploy` apply changes
 
 **Added:**
+* nextcloud: add `utils-nextcloud-maintenance` tag to run mimetype maintenance repair (`occ maintenance:repair --include-expensive`)
 * monitoring/victoriametrics: add configurable retention period (`victoriametrics_retention_period`)
 * monitoring/victoriametrics: add configurable mute time intervals for alert notifications (`victoriametrics_notifications_mute_time_intervals`)
 * llamacpp: allow automatically unloading models after a period of inactivity (`llamacpp_sleep_idle_seconds`)
