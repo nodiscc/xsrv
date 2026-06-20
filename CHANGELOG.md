@@ -35,7 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: remove `instruct` presets (thinking disabled)
 * nextcloud: upgrade to [v32.0.11](https://nextcloud.com/changelog/)
 * stirlingpdf: update to [v2.13.1](https://github.com/Stirling-Tools/Stirling-PDF/releases)
-* openldap: update LDAP-account-mnaager to [v9.5.2](https://github.com/LDAPAccountManager/lam/releases/tag/9.5.2)
+* openldap: update LDAP-account-manager to [v9.6](https://github.com/LDAPAccountManager/lam/releases/tag/9.6)
 * gitea: update to [v1.26.2](https://github.com/go-gitea/gitea/releases)
 * gitea_act_runner: update to [v0.6.0](https://gitea.com/gitea/act_runner/releases)
 * shaarli: update to v0.16.3 [[1](https://github.com/shaarli/Shaarli/releases)
