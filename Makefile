@@ -1,7 +1,5 @@
 #!/usr/bin/env make
 SHELL := '/bin/bash'
-LAST_TAG := $(shell git describe --tags --abbrev=0)
-
 all: tests
 
 ##### AUTOMATIC (CI) TESTS #####
@@ -25,16 +23,6 @@ venv:
 	source .venv/bin/activate && \
 	pip3 install wheel && \
 	pip3 install isort ansible-lint==26.4.0 yamllint ansible==12.3.0
-
-.PHONY: build_collection # build the ansible collection tar.gz
-build_collection: venv
-	source .venv/bin/activate && \
-	ansible-galaxy collection build --force
-
-.PHONY: install_collection # prepare the test environment/install the collection
-install_collection: venv build_collection
-	source .venv/bin/activate && \
-	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
 
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
