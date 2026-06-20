@@ -1861,7 +1861,7 @@ shaarli_enable_service: yes
 # Fully Qualified Domain Name for the stirlingpdf instance
 stirlingpdf_fqdn: "pdf.CHANGEME.org"
 # the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
-stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:2.7.1"
+stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:2.13.1"
 # HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
