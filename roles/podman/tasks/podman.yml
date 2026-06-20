@@ -8,6 +8,7 @@
       - podman-docker
       - dbus-user-session
       - passt
+      - fuse-overlayfs
 
 - name: copy sysctl configuration (enable kernel.unprivileged_userns_clone)
   template:
@@ -21,3 +22,11 @@
 # apply sysctl configuration
 - name: apply configuration (flush handlers)
   meta: flush_handlers
+
+- name: configure podman storage driver
+  template:
+    src: 'etc_containers_storage.conf.j2'
+    dest: '/etc/containers/storage.conf'
+    owner: root
+    group: root
+    mode: "0644"

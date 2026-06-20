@@ -136,11 +136,11 @@ groups:
         expr: |
           lag(up{job="node"}[1d]) > 300
           and
-          lag(up{job="node"}[1d]) < 86400
+          lag(up{job="node"}[1d]) < 600
         for: 0m
         labels:
-          severity: critical
+          severity: info
         annotations:
-          summary: "Host {{ $labels.instance }} stopped sending metrics"
+          summary: "Host {{ $labels.instance }} stopped sending metrics. Was it shut down on purpose?"
           description: "No metrics received from {{ $labels.instance }} for more than 5 minutes."
 {% endraw %}

@@ -9,6 +9,16 @@
   become: true
   tags: llamacpp
 
+- name: import firewalld configuration tasks
+  import_tasks: firewalld.yml
+  become: yes
+  tags:
+    - llamacpp
+    - firewall
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed | bool
+
 - name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes

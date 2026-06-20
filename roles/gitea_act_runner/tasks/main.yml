@@ -2,7 +2,7 @@
   import_tasks: checks.yml
   tags:
     - gitea
-    - gitea_act_runner
+    - gitea-act-runner
     - checks
 
 - name: import act-runner configuration tasks
@@ -10,19 +10,19 @@
   become: yes
   tags:
     - gitea
-    - gitea_act_runner
+    - gitea-act-runner
 
 - name: import ansible facts configuration tasks
   import_tasks: fact.yml
   become: yes
   tags:
     - gitea
-    - gitea_act_runner
+    - gitea-act-runner
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags:
     - gitea
-    - gitea_act_runner
+    - gitea-act-runner
     - monitoring
     - fail2ban

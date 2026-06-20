@@ -15,7 +15,6 @@
     - gitea_db_type in ['postgres', 'mysql']
     - gitea_db_user is string
     - gitea_default_private in ['last', 'private', 'public']
-    - gitea_disable_gravatar in ['true', 'false']
     - gitea_disable_registration in ['true', 'false']
     - gitea_enable_api in ['true', 'false']
     - gitea_api_max_results == gitea_api_max_results|int

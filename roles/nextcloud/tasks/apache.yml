@@ -19,6 +19,15 @@
     - restart php-fpm (nextcloud)
     - restart prometheus-php-fpm-exporter
 
+- name: MIGRATION/3.0.0 - remove files from old version fo the role
+  file:
+    path: "{{ item }}"
+    state: absent
+  notify: restart prometheus-php-fpm-exporter
+  loop:
+    - /etc/php/7.3/fpm/pool.d/nextcloud.conf
+    - /etc/php/7.4/fpm/pool.d/nextcloud.conf
+
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_nextcloud.conf.j2
@@ -31,3 +40,9 @@
     cmd: a2ensite nextcloud
     creates: "/etc/apache2/sites-enabled/nextcloud.conf"
   notify: restart apache
+
+- name: add nextcloud instance domain name to hosts file
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1	{{ nextcloud_fqdn }}" # noqa no-tabs

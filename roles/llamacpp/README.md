@@ -22,7 +22,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 ## Usage
 
-Access the web interface at `http://127.0.0.1:8033` (local access only).
+Access the web interface at `http://{{ llamacpp_listen_address }}:8033` (default: localhost only, set `llamacpp_listen_address` to `0.0.0.0` for all interfaces).
 
 You can also use the command-line interface by SSHing (`xsrv shell`) to the server and running `llamacpp-download-models` to manage models.
 

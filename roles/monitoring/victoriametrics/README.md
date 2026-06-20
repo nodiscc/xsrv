@@ -40,6 +40,30 @@ Hosts running `vmagent` must be able to reach VictoriaMetrics on port 8428/tcp. 
 
 ## Usage
 
+Metrics sent by the [monitoring.exporters](../exporters) role to Victoriametrics, will be automatically displayed in grafana dashboards if the [monitoring.grafana](../grafana) role is deployed to the same host as victoriametrics.
+
+Alerts will be sent by mail to the recipient configurezd in `victoriametrics_alertmanager_email_to` (this requires a working SMTP relay and `victoriametrics_alertmanager_smtp_auth_username:/password` credentials)
+
+### List currently active alerts
+
+* access the Grafana alerts dashboard
+* You may also SSH to the host running victoriametrics and run:
+
+```bash
+# display active alerts in json format
+curl http://127.0.0.1:8880/api/v1/alerts
+```
+
+### Delete metrics for a specific host
+
+SSH to the host running victoriametrics and run:
+
+```bash
+password=$(sudo cat /etc/victoriametrics/exporters_auth_password)
+curl -v -u "vmagent:$password" --insecure -X POST https://127.0.0.1:8428/api/v1/admin/tsdb/delete_series -d 'match[]={instance="host.example.org"}'
+```
+
+
 ### Backups
 
 ## Tags
@@ -56,6 +80,10 @@ Hosts running `vmagent` must be able to reach VictoriaMetrics on port 8428/tcp. 
 
 ## References/Documentation
 
-- https://stdout.root.sx/links/?searchterm=prometheus
-- https://stdout.root.sx/links/?searchterm=victoriametrics
-- https://stdout.root.sx/links/?searchtags=monitoring
+- https://github.com/samber/awesome-prometheus-alerts
+- https://utcc.utoronto.ca/~cks/space/blog/sysadmin/PrometheusGrafanaSetup-2019
+- https://samber.github.io/awesome-prometheus-alerts/rules.html
+- https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/
+- https://docs.victoriametrics.com/vmalert.html
+- https://docs.victoriametrics.com/anomaly-detection/guides/guide-vmanomaly-vmalert/
+- https://docs.victoriametrics.com/victoriametrics/vmagent/

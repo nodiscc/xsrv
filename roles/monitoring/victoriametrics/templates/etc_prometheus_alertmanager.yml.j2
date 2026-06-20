@@ -11,6 +11,14 @@ route:
   group_interval: 10s
   repeat_interval: {{ victoriametrics_alertmanager_repeat_interval }}
   receiver: 'email-notifications'
+{% if victoriametrics_notifications_mute_time_intervals | length > 0 %}
+  routes:
+    - receiver: 'email-notifications'
+      mute_time_intervals:
+{% for interval in victoriametrics_notifications_mute_time_intervals %}
+        - {{ interval.name }}
+{% endfor %}
+{% endif %}
 
 receivers:
   - name: 'email-notifications'
@@ -30,3 +38,14 @@ receivers:
           {{ end }}
           <b>Alertmanager Instance:</b> {{ .ExternalURL }}
 {% endraw %}
+{% if victoriametrics_notifications_mute_time_intervals | length > 0 %}
+
+time_intervals:
+{% for interval in victoriametrics_notifications_mute_time_intervals %}
+  - name: {{ interval.name }}
+    time_intervals:
+      - times:
+          - start_time: '{{ interval.start_time }}'
+            end_time: '{{ interval.end_time }}'
+{% endfor %}
+{% endif %}

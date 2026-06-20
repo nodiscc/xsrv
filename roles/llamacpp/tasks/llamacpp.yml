@@ -52,13 +52,18 @@
     group: llamacpp
     mode: "0755"
 
-- name: Create aliases directory
+- name: Create mmproj directory
   file:
-    path: "/var/lib/llamacpp/aliases"
+    path: "/var/lib/llamacpp/mmproj"
     state: directory
     owner: llamacpp
     group: llamacpp
     mode: "0755"
+
+- name: MIGRATION/3.0.0 - remove files from old version of the role
+  file:
+    path: "/var/lib/llamacpp/aliases"
+    state: absent
 
 - name: Create model download script
   template:

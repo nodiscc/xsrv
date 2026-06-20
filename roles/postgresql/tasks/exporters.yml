@@ -8,9 +8,8 @@
   become: true
   community.postgresql.postgresql_user:
     name: prometheus
+    no_password_changes: true
     quote_configuration_values: false
-    configuration:
-      search_path: prometheus,pg_catalog
 
 - name: grant privileges to prometheus postgresql user
   become_user: postgres

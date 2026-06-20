@@ -22,6 +22,15 @@
 
 ##### PODMAN ####
 
+- name: MIGRATION/2.1.0 - migrate to overlayfs storage driver
+  become: yes
+  become_user: moodist
+  command:
+    cmd: podman system reset --force
+  changed_when: true
+  when: ansible_local.moodist.storage_driver_migrated is not defined
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: pull moodist image
   become: yes
   become_user: moodist

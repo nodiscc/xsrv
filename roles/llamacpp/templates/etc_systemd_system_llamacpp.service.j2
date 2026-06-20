@@ -9,22 +9,10 @@ Group=llamacpp
 Type=simple
 WorkingDirectory=/var/lib/llamacpp/
 ExecStart=/opt/llamacpp/llama-{{ llamacpp_version }}/llama-server \
-  --models-dir /var/lib/llamacpp/aliases \
   --models-preset /var/lib/llamacpp/presets.ini \
-  --jinja --ctx-size {{ llamacpp_context_size }} --host 127.0.0.1 --port 8033
+  --sleep-idle-seconds {{ llamacpp_sleep_idle_seconds }} \
+  --jinja --ctx-size {{ llamacpp_context_size }} --host {{ llamacpp_listen_address }} --port 8033
 
 [Install]
 WantedBy=multi-user.target
 
-# --verbose # enable (very) verbose logging
-# --ctx-size 32768 # context size, set to 0 to use the default value provided by the model, in server logs this is noted by "llama_context: n_ctx         = N". If this is set too large, errors will be logged: "ggml_aligned_malloc: insufficient memory (attempted to allocate N MB)"
-# --threads 8 ?
-# -ngl 99 ? too large for 16GB VRAM
-# --min-p 0.0 ?
-# --top-p 0.8 ?
-# --top-k 20 ?
-# --repeat-penalty 1.05 ?
-# --flash-attn ?
-# --cache-type-k q8_0
-# --cache-type-v q8_0
-# ggml_aligned_malloc: insufficient memory (attempted to allocate 61440.00 MB)

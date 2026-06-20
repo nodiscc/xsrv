@@ -3,6 +3,11 @@
     package: victoria-metrics
     state: present
 
+- name: add prometheus user to _victoria-metrics group
+  user:
+    name: prometheus
+    groups: _victoria-metrics
+
 - name: stop and disable victoria-metrics service (TSDB) on non-collector hosts
   systemd:
     name: victoria-metrics.service
@@ -20,8 +25,15 @@
     mode: "0644"
   notify: reload systemd unit files
 
-- name: apply configuration (flush handlers)
-  meta: flush_handlers
+- name: write exporters auth password to file for vmagent
+  template:
+    src: etc_vmagent_auth_password.j2
+    dest: /etc/prometheus/vmagent_auth_password
+    owner: root
+    group: prometheus
+    mode: "0640"
+  notify: restart vmagent
+  diff: no # contains sensitive values
 
 - name: create working directory for vmagent
   file:
@@ -51,6 +63,9 @@
       mode: "0640"
       diff: false
   notify: restart vmagent
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
 
 - name: start and enable vmagent service
   systemd:

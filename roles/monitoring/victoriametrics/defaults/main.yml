@@ -13,7 +13,17 @@ victoriametrics_auto_check_exclude: []
 #   - https://www.debian.org
 victoriametrics_http_checks: []
 # how long to wait before repeating the last notification
-victoriametrics_alertmanager_repeat_interval: "1h"
+victoriametrics_alertmanager_repeat_interval: "2h"
+# mute alertmanager notifications during these time intervals
+# Example:
+# victoriametrics_notifications_mute_time_intervals:
+#   - name: evening # unique name for the interval
+#     start_time: "19:00" # start time for the interval (HH:MM)
+#     end_time: "24:00" # end time for the interval
+#   - name: morning
+#     start_time: "00:00"
+#     end_time: "09:00"
+victoriametrics_notifications_mute_time_intervals: []
 # REQUIRED password to authenticate on exporters when scraping them
 victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
 # REQUIRED SMTP host/from address/username/password and recipient address for alertmaneger e-mail alerts
@@ -30,3 +40,5 @@ victoriametrics_firewalld_zones:
     state: enabled
   - zone: public
     state: enabled
+# retention period in days (default 365)
+victoriametrics_retention_period: 365

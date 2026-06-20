@@ -15,14 +15,14 @@
 # See journald.conf(5) for details.
 
 [Journal]
-Storage=volatile
+Storage=persistent
 #Compress=yes
 #Seal=yes
-#SplitMode=uid
+SplitMode=uid
 #SyncIntervalSec=5m
 #RateLimitIntervalSec=30s
 #RateLimitBurst=10000
-#SystemMaxUse=
+SystemMaxUse=50M
 #SystemKeepFree=
 #SystemMaxFileSize=
 #SystemMaxFiles=100

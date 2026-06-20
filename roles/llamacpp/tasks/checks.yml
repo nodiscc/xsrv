@@ -7,6 +7,10 @@
     - llamacpp_version is string
     - llamacpp_enable_service == llamacpp_enable_service | bool
     - llamacpp_context_size == llamacpp_context_size | int
+    - llamacpp_sleep_idle_seconds == llamacpp_sleep_idle_seconds | int
+    - llamacpp_enable_vision == llamacpp_enable_vision | bool
+    - llamacpp_listen_address == llamacpp_listen_address | ansible.utils.ipaddr('address')
+    - llamacpp_firewalld_zones | type_debug == "list"
     - llamacpp_models is defined
     - llamacpp_models | type_debug == "list"
     - llamacpp_models | length > 0

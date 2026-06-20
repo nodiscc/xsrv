@@ -50,7 +50,7 @@ wireguard_peers:
   - name: test
     state: absent
 ##### JITSI - https://github.com/nodiscc/xsrv/blob/master/roles/jitsi/defaults/main.yml
-jitsi_fqdn: "conference.example.test"
+# jitsi_fqdn: "conference.example.test" # temporarily disabled - jitsi role not compatible with debian 13
 ##### MATRIX - https://github.com/nodiscc/xsrv/blob/master/roles/matrix/defaults/main.yml
 matrix_synapse_fqdn: "matrix.example.test"
 matrix_element_fqdn: "chat.example.test"

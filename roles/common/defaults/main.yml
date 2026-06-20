@@ -402,6 +402,16 @@ packages_remove:
   # - nfs-common # not an NFS server
   # - exim4-base # use a smarthost/msmtp
 
+### NEEDRESTART ###
+# yes/no: install and configure needrestart (detect services/kernel requiring restart after upgrades)
+setup_needrestart: yes
+# yes/no: automatically restart services that require it after upgrades (yes=auto, no=list-only)
+needrestart_autorestart_services: yes
+# reboot the OS automatically if required after a Linux kernel upgrade
+# set to no to disable automatic reboot, or use cron syntax (https://crontab.guru/) to define the schedule
+# Example: needrestart_autorestart_cron: "00 5 * * *" # every day at 05:00
+needrestart_autorestart_cron: no
+
 ### DRIVES ###
 # standby mechanical/rotational hard drives after 1 hour of idle
 hdparm_auto_standby_drives: false

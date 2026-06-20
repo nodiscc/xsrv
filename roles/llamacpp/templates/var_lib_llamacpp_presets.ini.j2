@@ -3,6 +3,7 @@ version = 1
 {% for model in llamacpp_models %}
 {% for preset_name, preset_config in model.presets.items() %}
 {% set filename = model.url.split('/')[-1] %}
+{% set mmproj_filename = model.mmproj_url.split('/')[-1] if model.get('mmproj_url') else None %}
 {% set preset_key = model.name %}
 {% if preset_name != 'default' %}
 {% set preset_key = preset_key + ':' + preset_name %}
@@ -10,6 +11,9 @@ version = 1
 
 [{{ preset_key }}]
 model = /var/lib/llamacpp/models/{{ filename }}
+{% if model.get('mmproj_url') and llamacpp_enable_vision %}
+mmproj = /var/lib/llamacpp/mmproj/{{ filename.rsplit('.', 1)[0] }}/{{ mmproj_filename }}
+{% endif %}
 {% for key, value in preset_config.items() %}
 {{ key }} = {{ value }}
 {% endfor %}

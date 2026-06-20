@@ -59,6 +59,16 @@
 
 ##### CONFIGURATION #####
 
+- name: write exporters auth password to file
+  copy:
+    content: "{{ victoriametrics_exporters_auth_password }}\n"
+    dest: /etc/victoriametrics/exporters_auth_password
+    owner: root
+    group: _victoria-metrics
+    mode: "0640"
+  notify: restart victoriametrics
+  diff: no # contains sensitive values
+
 - name: create dynamic configuration directories
   file:
     state: directory
@@ -72,14 +82,18 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
-    group: root
-    mode: "0644"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
   notify: restart victoriametrics
   loop:
     - src: etc_victoriametrics.yml.j2
       dest: /etc/victoriametrics.yml
+      group: _victoria-metrics
+      mode: "0640"
     - src: etc_default_victoria-metrics.j2
       dest: /etc/default/victoria-metrics
+      group: root
+      mode: "0644"
 
 - name: configure victoriametrics http checks
   template:
@@ -135,7 +149,7 @@
     dest: /etc/systemd/system/vmalert.service
     owner: prometheus
     group: prometheus
-    mode: "0644"
+    mode: "0640"
   notify:
     - reload systemd unit files
     - reload vmalert
@@ -178,6 +192,7 @@
       dest: /etc/victoriametrics/vmalert/rules/phpfpm-alerts.yml
     - src: etc_victoriametrics_vmalert_rules_systemd-user-alerts.yml
       dest: /etc/victoriametrics/vmalert/rules/systemd-user-alerts.yml
+  tags: victoriametrics-vmalert-rules
 
 - name: install prometheus-alertmanager
   apt:

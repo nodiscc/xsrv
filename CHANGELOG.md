@@ -3,12 +3,76 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+#### [v2.1.0](https://github.com/nodiscc/xsrv/releases/tag/2.1.0) - UNRELEASED
+
+**Upgrade procedure:**
+* Upgrade to v2.0.0 if not already done
+* `xsrv upgrade` to update roles to their latest version
+* `xsrv check` (optional) simulate changes that will be applied
+* `xsrv deploy` apply changes
+
+**Added:**
+* nextcloud: add `utils-nextcloud-maintenance` tag to run mimetype maintenance repair (`occ maintenance:repair --include-expensive`)
+* monitoring/victoriametrics: add configurable retention period (`victoriametrics_retention_period`)
+* monitoring/victoriametrics: add configurable mute time intervals for alert notifications (`victoriametrics_notifications_mute_time_intervals`)
+* llamacpp: allow automatically unloading models after a period of inactivity (`llamacpp_sleep_idle_seconds`)
+* llamacpp: add support for vision models, add global switch to enable/disable vision capabilities (`llamacpp_enable_vision`, default: false)
+* llamacpp: make listen address configurable (`llamacpp_listen_address`, default: 127.0.0.1)
+* llamacpp: add firewalld integration (`llamacpp_firewalld_zones`, default: internal zone enabled)
+* libvirt: `libvirt_port_forwards`: allow restricting DNAT rules to a specific source zone
+* common: re-introduce optional services/OS autorestart (`setup_needrestart`, `needrestart_autorestart_services`, `needrestart_autorestart_cron`)
+* llamacpp: add gemma4:12b model (12B, 13.6GB, vision + audio, omni-modal)
+
+**Changed:**
+* use hyphens instead of underscores in all ansible tags
+* common: hide firewall warning messages from serial console
+* monitoring/victoriametrics: increase metrics retention to 365 days instead of 1 month by default
+* monitoring/exporters, monitoring/victoriametrics: prevent authentication passwords from showing in process lists
+* monitoring/victoriametrics: clear HostDown alert after 10 minutes
+* apache: remove deprecated `X-XSS-Protection` HTTP header
+* podman,moodist,owncast,searxng,stirlingpdf: switch to overlay storage driver, reduces disk space usage
+* tt-rss: migrate source code mirror/archive to codeberg.org
+* llamacpp: remove `instruct` presets (thinking disabled)
+* nextcloud: upgrade to [v32.0.11](https://nextcloud.com/changelog/)
+* stirlingpdf: update to [v2.13.1](https://github.com/Stirling-Tools/Stirling-PDF/releases)
+* openldap: update LDAP-account-manager to [v9.6](https://github.com/LDAPAccountManager/lam/releases/tag/9.6)
+* gitea: update to [v1.26.2](https://github.com/go-gitea/gitea/releases)
+* gitea_act_runner: update to [v0.6.0](https://gitea.com/gitea/act_runner/releases)
+* shaarli: update to v0.16.3 [[1](https://github.com/shaarli/Shaarli/releases)
+* monitoring/grafana: update to [v12.4.3](https://github.com/grafana/grafana/releases)
+* owncast: update to [v0.2.5](https://github.com/owncast/owncast/releases)
+* llamacpp: refactor: remove aliases directory and symlink logic
+* llamacpp: update to latest version
+* matrix/element-web: update to latest version
+* searxng: decrease wiby search engine weight to 1.0
+* tests: disable jitsi role release tests
+
+**Removed:**
+* gitea: remove `gitea_disable_gravatar` - this setting has been removed upstream in Gitea
+
+**Fixed:**
+* postgresql: fix prometheus user creation always returning changed
+* tt_rss: add postgresql tag to distribution-specific vars include (fixes --tags postgresql)
+* owncast: fix incorrect tag on owncast facts copy tasks
+* shaarli: fix incorrect file permissions/403 error on first install
+* homepage,jellyfin,nextcloud,ttrss,transmission: add /etc/hosts entries for locally installed applications
+* stirlingpdf,owncast: fix podman image pull always returning changed/unnecessary restart on each deployment
+* monitoring/goaccess: fix 404 error when downloading geoip database
+* nextcloud: remove old PHP 7.x pool definitions
+* apache: fix conflicting download location on the controller for `apache_reverseproxies` self-signed certificates
+* backup: don't run weekly/monthly backups when the required number of daily/weekly backup generations is not met
+* shaarli: backup cache/thumb/ (thumbnails) directory in addition to data/
+* monitoring/rsyslog: fix unprivileged users unabel to access logs/journals of their own --user systemd services
+
+[Full changes since v2.0.0](https://github.com/nodiscc/xsrv/compare/2.0.0...2.1.0)
+
+
 #### [v2.0.0](https://github.com/nodiscc/xsrv/releases/tag/2.0.0) - 2026-04-02
 
 > [!IMPORTANT]
 > The mirror at https://gitlab.com/nodiscc/xsrv will no longer be maintained after this release.
 > Please use https://github.com/nodiscc/xsrv or https://codeberg.org/nodiscc/xsrv instead
-> Issues ahve been moved to https://codeberg.org/nodiscc/xsrv/issues
+> Issues have been moved to https://codeberg.org/nodiscc/xsrv/issues
 
 **Upgrade procedure:** Follow these steps in order:
 
@@ -183,7 +247,7 @@ xsrv deploy   # apply changes
 - tt_rss: fix DB update error on first deployment
 - podman/owncast: fix `"pasta": executable file not found`
 
-[Full changes since v1.27.0](https://github.com/nodiscc/xsrv/compare/1.27.0...1.28.0)
+[Full changes since v1.27.0](https://github.com/nodiscc/xsrv/compare/1.27.0...2.0.0)
 
 ------------------
 
