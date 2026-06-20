@@ -242,6 +242,7 @@ $ sudo userdel --remove nextcloud
 nextcloud - setup nextcloud file sharing/collaboration platform
 nextcloud-applications - setup nextcloud applications
 nextcloud-config - setup main nextcloud configuration settings
+utils-nextcloud-maintenance - run nextcloud maintenance tasks (mimetype repair)
 ```
 <!--END TAGS LIST-->
 

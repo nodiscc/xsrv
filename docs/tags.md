@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v1.27.0
+  ╹ ╹┗━┛╹┗╸┗┛ v2.0.0
 [xsrv] INFO: list of tags in project xsrv-test
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
@@ -96,6 +96,7 @@ utils-firewalld-info - (manual) get firewall status informations
 utils-goaccess-update - (manual) update/regenerate goacess report immediately
 utils-jitsi-listusers - (manual) list jitsi (prosody) registered users
 utils-libvirt-setmem - (manual) update libvirt VMs current memory settings immediately
+utils-nextcloud-maintenance - run nextcloud maintenance tasks (mimetype repair)
 utils-pgmetrics - (manual) get postgresql server metrics
 utils-podman-uninstall - (manual) uninstall podman container engine
 utils-reboot - (manual) reboot the host
@@ -104,11 +105,20 @@ utils-shutdown - (manual) shut down the host
 victoriametrics - setup victoriametrics monitoring service and time-series database
 wireguard - setup wireguard
 OTHER TAGS:
+gitea_act_runner
+gitea-act-runner
+grafana-dashboards
 llamacpp
+monitoring_utils
+monitoring-utils
+needrestart
 never
 nmap
 readme_gen
+tt_rss
+tt-rss
 victoriametrics-http-checks
+victoriametrics-vmalert-rules
 victoriametrics_vmalert_rules
 vmagent
 

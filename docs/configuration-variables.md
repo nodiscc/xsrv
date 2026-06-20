@@ -534,6 +534,16 @@ packages_remove:
   # - nfs-common # not an NFS server
   # - exim4-base # use a smarthost/msmtp
 
+### NEEDRESTART ###
+# yes/no: install and configure needrestart (detect services/kernel requiring restart after upgrades)
+setup_needrestart: yes
+# yes/no: automatically restart services that require it after upgrades (yes=auto, no=list-only)
+needrestart_autorestart_services: yes
+# reboot the OS automatically if required after a Linux kernel upgrade
+# set to no to disable automatic reboot, or use cron syntax (https://crontab.guru/) to define the schedule
+# Example: needrestart_autorestart_cron: "00 5 * * *" # every day at 05:00
+needrestart_autorestart_cron: no
+
 ### DRIVES ###
 # standby mechanical/rotational hard drives after 1 hour of idle
 hdparm_auto_standby_drives: false
@@ -644,7 +654,7 @@ gitea_act_runner_labels:
 # prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
 gitea_act_runner_daily_podman_prune: no
 # act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
-gitea_act_runner_version: "0.2.12"
+gitea_act_runner_version: "0.6.0"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
 gitea_act_runner_enable_service: yes
 ```
@@ -684,7 +694,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.25.5"
+gitea_version: "1.26.2"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -703,8 +713,6 @@ gitea_register_email_confirm: "true"
 gitea_show_user_email: "false"
 # disable all third-party/external services/CDNs (true/false - QUOTED)
 gitea_offline_mode: "true"
-# disable third-party gravatar service (true/false - QUOTED)
-gitea_disable_gravatar: "true"
 # global limit of repositories per user, applied at creation time. -1 means no limit
 gitea_user_repo_limit: -1
 # number of issues that are displayed on one page
@@ -909,7 +917,10 @@ kiwix_fqdn: kiwix.CHANGEME.org
 # - https://download.kiwix.org/zim/wikipedia/wikipedia_en_all_nopic_2024-06.zim # english wikipedia without pictures
 # - https://download.kiwix.org/zim/wikipedia/wikipedia_fr_all_maxi_2024-05.zim # 37GB, full french wikipedia
 # - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB, french wikipedia without pictures
-# - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim #238MB, rationalwiki.org
+# - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim # 238MB, rationalwiki.org
+# - https://download.kiwix.org/zim/ifixit/ifixit_en_all_2025-12.zim # 3.33GB, english ifixit
+# - https://download.kiwix.org/zim/gutenberg/gutenberg_en_all_2025-11.zim # 206GB, English Project Gutenberg
+# - https://download.kiwix.org/zim/gutenberg/gutenberg_fr_all_2026-01.zim # 9.8GB, French Project Gutenberg
 kiwix_zim_urls:
   - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim # 238MB
   - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB
@@ -1001,6 +1012,9 @@ libvirt_parallel_shutdown_number: 3
 #       - host_port: 2456-2458 # port range, separated by -
 #         vm_port: 2456-2458
 #         protocol: udp
+#       - host_port: 8428 # restrict to specific firewall zone
+#         vm_port: 8428
+#         source_zone: known-public
 #   - vm_name: vm02.EXAMPLE.org
 #     vm_ip: 10.3.0.226
 #     vm_bridge: virbr3
@@ -1036,19 +1050,29 @@ libvirt_users:
 [roles/llamacpp/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/llamacpp/defaults/main.yml)
 
 ```yaml
-# LlamaCPP version to install (commit hash or tag)
-llamacpp_version: b8416
-
-# Whether to enable and start the LlamaCPP systemd service
+# llama.cpp version to install (commit hash or tag)
+llamacpp_version: b9680
+# enable and start the LlamaCPP systemd service (true/false)
 llamacpp_enable_service: true
-
-# Context size for llama.cpp (set to 0 to use model default)
+# context size in tokens for llama.cpp (set to 0 to use model default)
 llamacpp_context_size: 60000
+# listen address for the llama.cpp server (IPv4 only, e.g. 127.0.0.1 for localhost, 0.0.0.0 for all interfaces)
+llamacpp_listen_address: 127.0.0.1
+# seconds before unloading idle/unused models from memory (set to -1 to disable)
+llamacpp_sleep_idle_seconds: -1
+# Enable vision capabilities (false/true), (increases resource usage)
+llamacpp_enable_vision: false
+# firewall zones for the llamacpp service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
+# 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
+llamacpp_firewalld_zones:
+  - zone: internal
+    state: enabled
 
 # list of Large Language models to download and enable in llama.cpp
-# each entry requires the following parmeters:
+# each entry requires the following parameters:
 #   url: url of the model to download (GGUF format)
 #   name: the human-readable name displayed in the llama.cpp web interface and API
+#   mmproj_url: (optional) url of the multi-modal projector (mmproj) file for vision-capable models
 # The size of each model is (B = billion parameters) is roughly equivalent to the GB of memory required to run it
 # Fast GPU VRAM us preferred to run inference at acceptable speeds (tokens read or output per second, t/s)
 # The disk size of the downloaded model file is mentioned in comments
@@ -1058,14 +1082,22 @@ llamacpp_context_size: 60000
 llamacpp_models:
   - name: gemma3:4b # 4B, 3.2GB, vision
     url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/google_gemma-3-4b-it-Q6_K_L.gguf
+    mmproj_url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/mmproj-google_gemma-3-4b-it-f16.gguf
     presets:
       default: {temp: 1.0, top-k: 64, top-p: 0.95}
   # - name: gemma3:12b # 12B, 9.3GB, vision
   #   url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/google_gemma-3-12b-it-Q6_K_L.gguf
+  #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/mmproj-google_gemma-3-12b-it-f16.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
   # - name: gemma3:27b #27B, 16GB, vision
   #   url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/google_gemma-3-27b-it-qat-Q4_K_L.gguf
+  #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/mmproj-google_gemma-3-27b-it-qat-f16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma4:12b # 12B, 13.6GB, vision + audio
+  #   url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/gemma-4-12b-it-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
   # - name: llama3.1:8b # 8B, 5GB, tools
@@ -1078,6 +1110,7 @@ llamacpp_models:
   #     default: {temp: 1.0, top-p: 1.0, top-k: 40}
   # - name: qwen3-vl:8b #8B, 4.2GB, tools
   #   url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/Qwen_Qwen3-VL-8B-Instruct-Q3_K_L.gguf
+  #   mmproj_url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/mmproj-Qwen_Qwen3-VL-8B-Instruct-f16.gguf
   #   presets:
   #     default: {temp: 0.7, top-p: 0.8, top-k: 20}
   # - name: qwen2.5-coder:7b #7B, 7.6GB, tools + reasoning
@@ -1112,45 +1145,43 @@ llamacpp_models:
   #   url: https://huggingface.co/bartowski/DeepSeek-Coder-V2-Lite-Instruct-GGUF/resolve/main/DeepSeek-Coder-V2-Lite-Instruct-Q6_K_L.gguf
   #   presets:
   #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
-  # - name: phi3-mini-128k:4b # 4B, 3.1GB
-  #   url: https://huggingface.co/QuantFactory/Phi-3-mini-128k-instruct-GGUF/resolve/main/Phi-3-mini-128k-instruct.Q6_K.gguf
-  #   presets:
-  #     default: {temp: 0.9, top-p: 0.95, repeat-penalty: 1.05}
   # - name: qwen3.5:2b # 2B, 2.8GB, tools + vision
   #   url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
   #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   # - name: qwen3.5:4b # 4B, 6GB, tools + vision
   #   url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
   #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   # - name: qwen3.5:27b # 27B, 17.5GB, tools + vision
   #   url: https://huggingface.co/unsloth/Qwen3.5-27B-GGUF/resolve/main/Qwen3.5-27B-UD-Q4_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-27B-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
   #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   # - name: qwen3.5:35b-a3b # 35B + 3B MoE, 22GB, tools + vision
   #   url: https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/Qwen3.5-35B-A3B-UD-Q4_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     instruct: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.5, chat-template-kwargs: '{"enable_thinking":false}'}
   #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   # - name: ministral-3:8b # 8B, 9GB, reasoning + vision
   #   url: https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF/resolve/main/Ministral-3-8B-Instruct-2512-Q8_0.gguf
+  #   mmproj_url: https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF/resolve/main/Ministral-3-8B-Instruct-2512-BF16-mmproj.gguf
   #   presets:
   #     default: {temp: 0.1}
   #     creative: {temp: 0.6}
   # - name: glm4.6v-flash:9b # 9B, 8.9GB, reasoning + tools + vision
   #   url: https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF/resolve/main/GLM-4.6V-Flash-UD-Q4_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 0.8, top-p: 0.6, top-k: 2, repeat-penalty: 1.1}
   # - name: glm4.7-flash:30b # 30B, 18GB, reasoning + tools
@@ -1280,7 +1311,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.12.12"
+matrix_element_version: "1.12.20"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1380,7 +1411,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "31.0.13"
+nextcloud_version: "32.0.11"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1535,7 +1566,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "9.5.1"
+ldap_account_manager_version: "9.6"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1610,7 +1641,7 @@ self_service_password_php_upload_max_filesize: '2M'
 # Fully Qualified Domain Name for the owncast instance
 owncast_fqdn: "owncast.CHANGEME.org"
 # the owncast OCI image to pull (https://github.com/owncast/owncast/releases.atom)
-owncast_image: "docker.io/owncast/owncast:0.2.4"
+owncast_image: "docker.io/owncast/owncast:0.2.5"
 # password to access the admin interfaces at /admin (username admin)
 owncast_admin_password: "CHANGEME"
 # HTTPS and SSL/TLS certificate mode for the owncast webserver virtualhost
@@ -1830,7 +1861,7 @@ shaarli_setup_python_client: no
 # shaarli installation directory
 shaarli_install_dir: "/var/www/{{ shaarli_fqdn }}"
 # shaarli version to install - https://github.com/shaarli/Shaarli/releases.atom
-shaarli_version: 'v0.16.0'
+shaarli_version: 'v0.16.3'
 # list of IP addresses allowed to access shaarli (IP or IP/netmask format)
 # set to empty list [] to allow access from any IP address
 shaarli_allowed_hosts: []
@@ -2061,7 +2092,7 @@ goaccess_update_calendar_expression: "*:00:00"
 # (optional) only parse log lines containing this string
 # goaccess_filter: "mysite.CHANGEME.org"
 # IP to Country Lite GeoIP database version (https://db-ip.com/db/download/ip-to-country-lite)
-goaccess_geoip_db_version: "{{ ansible_date_time.year }}-02"
+goaccess_geoip_db_version: "{{ ansible_date_time.year }}-{{ ansible_date_time.month }}"
 # username/password used to access the HTML report
 goaccess_username: "CHANGEME"
 goaccess_password: "CHANGEME"
@@ -2092,7 +2123,7 @@ grafana_enable_service: yes
 # set to empty list [] to allow access from any IP address
 grafana_allowed_hosts: []
 # grafana version (https://github.com/grafana/grafana/releases.atom)
-grafana_version: "12.4.1"
+grafana_version: "12.4.3"
 # password to authenticate to VictoriaMetrics datasource
 grafana_victoriametrics_auth_password: "{{ monitoring_exporters_auth_password }}"
 ```
@@ -2176,7 +2207,17 @@ victoriametrics_auto_check_exclude: []
 #   - https://www.debian.org
 victoriametrics_http_checks: []
 # how long to wait before repeating the last notification
-victoriametrics_alertmanager_repeat_interval: "1h"
+victoriametrics_alertmanager_repeat_interval: "2h"
+# mute alertmanager notifications during these time intervals
+# Example:
+# victoriametrics_notifications_mute_time_intervals:
+#   - name: evening # unique name for the interval
+#     start_time: "19:00" # start time for the interval (HH:MM)
+#     end_time: "24:00" # end time for the interval
+#   - name: morning
+#     start_time: "00:00"
+#     end_time: "09:00"
+victoriametrics_notifications_mute_time_intervals: []
 # REQUIRED password to authenticate on exporters when scraping them
 victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
 # REQUIRED SMTP host/from address/username/password and recipient address for alertmaneger e-mail alerts
@@ -2193,5 +2234,7 @@ victoriametrics_firewalld_zones:
     state: enabled
   - zone: public
     state: enabled
+# retention period in days (default 365)
+victoriametrics_retention_period: 365
 ```
 <!--END ROLES LIST-->

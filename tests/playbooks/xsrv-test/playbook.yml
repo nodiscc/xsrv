@@ -24,7 +24,7 @@
     - nodiscc.xsrv.mumble # VoIP/voice chat server
     - nodiscc.xsrv.matrix # real-time secure communication server and web client
     - nodiscc.xsrv.jellyfin # media server
-    # - nodiscc.xsrv.jitsi # video conferencing solution
+    - nodiscc.xsrv.jitsi # video conferencing solution
     - nodiscc.xsrv.samba # file sharing server
     - nodiscc.xsrv.dnsmasq # lightweight DNS server
     - nodiscc.xsrv.wireguard # fast and modern VPN server
