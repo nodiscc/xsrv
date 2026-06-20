@@ -1,8 +1,7 @@
 - name: run nextcloud mimetype maintenance repair
   become: yes
   become_user: nextcloud
-  shell:
-    cmd: /usr/bin/php ./occ maintenance:repair --include-expensive
+  command: /usr/bin/php ./occ maintenance:repair --include-expensive
   args:
     chdir: "{{ nextcloud_install_dir }}"
   changed_when: yes
