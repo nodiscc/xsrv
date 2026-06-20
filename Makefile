@@ -94,11 +94,11 @@ test_fetch_backups:
 # - make test_init_vm_template test_init_vm test_check_mode test_idempotence test_fetch_backups SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
 # - check test environment logs for warning/errors: ssh -t deploy@my.example.test sudo lnav /var/log/syslog
 # - make clean
-# - make bump_versions update_todo new_tag=$new_tag
+# - make bump_versions update_todo new_tag=$new_tag # new_tag without leading v
 # - update release date in CHANGELOG.md, add and commit version bumps/changelog updates with message "release v$new_tag"
 # - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
-# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases and https://codeberg.org/nodiscc/xsrv/releases
+# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://codeberg.org/nodiscc/xsrv/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
 bump_versions: doc_md
