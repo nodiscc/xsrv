@@ -34,7 +34,7 @@
   become: yes
   become_user: postgres
   postgresql_privs:
-    db: synapse
+    login_db: synapse
     privs: ALL
     type: database
     role: synapse

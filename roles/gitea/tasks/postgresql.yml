@@ -39,7 +39,7 @@
   become: yes
   become_user: postgres
   postgresql_privs:
-    db: "{{ gitea_db_name }}"
+    login_db: "{{ gitea_db_name }}"
     privs: ALL
     type: database
     role: "{{ gitea_db_user }}"

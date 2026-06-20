@@ -39,7 +39,7 @@
   become: yes
   become_user: postgres
   postgresql_privs:
-    db: "{{ tt_rss_db_name }}"
+    login_db: "{{ tt_rss_db_name }}"
     privs: ALL
     type: database
     role: "{{ tt_rss_db_user }}"
