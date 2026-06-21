@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
 
+**Changed:**
+* llamacpp: update to latest version
+
 **Fixed:**
 * fix deprecation warnings
 * tests: remove dead code from Makefile
