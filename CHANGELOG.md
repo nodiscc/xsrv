@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: update to latest version
 * gitea-act-runner: update to [v1.0.8](https://gitea.com/gitea/runner/releases)
 * monitoring/grafana: update to [v12.4.5](https://github.com/grafana/grafana/releases)
+* update documentation, remove duplicate llamacpp presets
 
 **Fixed:**
 * fix deprecation warnings
