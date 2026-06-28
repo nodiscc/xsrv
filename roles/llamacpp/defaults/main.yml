@@ -137,3 +137,10 @@ llamacpp_models:
   #   presets:
   #     default: {temp: 1.0, top-p: 0.95, min-p: 0.01}
   #     coding: {temp: 0.7, top-p: 1.0, min-p: 0.01}
+  # - name: qwen3.6:35b-a3b # 35B/A3B, 22.4GB, tools + vision + reasoning, 2026/04
+  #   url: https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF/resolve/main/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf?download=true
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
