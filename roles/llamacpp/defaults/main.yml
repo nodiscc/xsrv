@@ -72,7 +72,7 @@ llamacpp_models:
   #   url: https://huggingface.co/bartowski/openai_gpt-oss-20b-GGUF/resolve/main/openai_gpt-oss-20b-MXFP4.gguf
   #   presets:
   #     default: {temp: 1.0, top-p: 1.0, top-k: 40}
-  # - name: qwen3-vl:8b #8B, 4.2GB, tools
+  # - name: qwen3-vl:8b #8B, 4.2GB, tools, 2025/10
   #   url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/Qwen_Qwen3-VL-8B-Instruct-Q3_K_L.gguf
   #   mmproj_url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/mmproj-Qwen_Qwen3-VL-8B-Instruct-f16.gguf
   #   presets:
@@ -81,7 +81,7 @@ llamacpp_models:
   #   url: https://huggingface.co/bartowski/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/Qwen2.5-Coder-7B-Instruct-Q8_0.gguf
   #   presets:
   #     default: {temp: 0.7, top-p: 0.8, top-k: 20, repeat-penalty: 1.05}
-  # - name: qwen3-instruct:4b # 4B, 3.6GB, tools
+  # - name: qwen3-instruct:4b # 4B, 3.6GB, tools, 2025/08
   #   url: https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/main/Qwen3-4B-Instruct-2507-UD-Q6_K_XL.gguf
   #   presets:
   #     default: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.0}
