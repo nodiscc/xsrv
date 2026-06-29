@@ -91,7 +91,7 @@
     minute: "30"
     hour: "05"
     day: "*"
-    job: podman volume prune --all --force | logger -t act-runner-podman-volume-prune
+    job: podman volume prune --force | logger -t act-runner-podman-volume-prune
 
 - name: configure nightly cleanup of unused podman containers
   cron:
@@ -101,7 +101,7 @@
     minute: "30"
     hour: "05"
     day: "*"
-    job: podman container prune --all --force | logger -t act-runner-podman-container-prune
+    job: podman container prune --force | logger -t act-runner-podman-container-prune
 
 
 ##### ACT-RUNNER #####

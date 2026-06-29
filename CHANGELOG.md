@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 * fix deprecation warnings
 * tests: remove dead code from Makefile
+* gitea_act_runner: fix `podman container/volume prune` cron jobs
 
 [Full changes since v2.1.0](https://github.com/nodiscc/xsrv/compare/2.1.0...2.2.0)
 
