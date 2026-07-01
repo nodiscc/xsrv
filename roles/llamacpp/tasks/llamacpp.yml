@@ -28,6 +28,8 @@
     comment: "llamacpp local LLM service"
     password: "*"
     home: "/var/lib/llamacpp"
+    system: true
+    create_home: true
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: add llamacpp to the render group
