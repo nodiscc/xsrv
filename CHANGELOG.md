@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/grafana: update to [v12.4.5](https://github.com/grafana/grafana/releases)
 * llamacpp: doc: remove duplicate presets, remove old models from examples, update comments
 * llamacpp: set the llamacpp user as system user
+* common: needrestart: cron job: when no reboot is required, just restart services with a pending restart
 
 **Fixed:**
 * fix deprecation warnings
