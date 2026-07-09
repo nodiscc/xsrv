@@ -95,6 +95,14 @@
       group: root
       mode: "0644"
 
+- name: MIGRATION/2.0.0 - remove legacy http-checks.yml (replaced by exporters_blackbox_http_checks)
+  file:
+    path: /etc/prometheus/blackbox-exporter/http-checks.yml
+    state: absent
+  notify:
+    - restart prometheus-blackbox-exporter
+    - restart victoriametrics
+
 - name: configure victoriametrics http checks
   template:
     src: "{{ item.src }}"
