@@ -64,9 +64,6 @@
       mode: "0640"
       diff: false
   notify: restart vmagent
-  tags:
-    - victoriametrics
-    - victoriametrics-http-checks
 
 - name: apply configuration (flush handlers)
   meta: flush_handlers
