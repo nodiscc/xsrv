@@ -37,5 +37,5 @@ victoriametrics_firewalld_zones:
     state: enabled
   - zone: public
     state: enabled
-# retention period in days (default 365)
+# metrics retention period in days
 victoriametrics_retention_period: 365
