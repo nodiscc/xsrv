@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters/victoriametrics: move HTTP checks to exporters role
 * monitoring/victoriametrics: allow setting timezone for `victoriametrics_notifications_mute_time_intervals`
 * monitoring/victoriametrics: set different icons in alertmanager mail subjects based on alert severity
+* monitoring/vcitoriametrics: lower systemd failed unit alert threshold to 30s
 * update documentation
 
 **Fixed:**
