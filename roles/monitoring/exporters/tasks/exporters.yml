@@ -137,5 +137,4 @@
     name: systemd-user-services-exporter.timer
     state: started
     enabled: true
-    daemon_reload: false
   ignore_errors: "{{ ansible_check_mode }}"
