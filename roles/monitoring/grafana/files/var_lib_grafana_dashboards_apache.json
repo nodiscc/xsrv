@@ -389,7 +389,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Current total apache accesses",
+      "title": "Apache requests per second",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -403,7 +403,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "reqps",
           "logBase": 1,
           "show": true
         },

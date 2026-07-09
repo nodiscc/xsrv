@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: set different icons in alertmanager mail subjects based on alert severity
 * monitoring/victoriametrics: lower systemd failed unit alert threshold to 30s
 * monitoring/grafana: hide unnecessary columns in alerts dashboard table
+* monitoring/grafana: clarify units in apache dashboard
 * update documentation
 
 **Fixed:**
