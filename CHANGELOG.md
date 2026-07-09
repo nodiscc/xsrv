@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters: force HTTP probes to use IPv4
 * monitoring/exporters/victoriametrics: move HTTP checks to exporters role
 * monitoring/victoriametrics: allow setting timezone for `victoriametrics_notifications_mute_time_intervals`
+* monitoring/victoriametrics: set different icons in alertmanager mail subjects based on alert severity
 * update documentation
 
 **Fixed:**
