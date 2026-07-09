@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * update documentation
 
 **Fixed:**
+* monitoring/grafana: fix datasource in postgresql dashboard
 * fix deprecation warnings
 * tests: remove dead code from Makefile
 * gitea_act_runner: fix `podman container/volume prune` cron jobs
