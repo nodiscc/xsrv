@@ -9,6 +9,7 @@ victoriametrics_auto_check_exclude: []
 # how long to wait before repeating the last notification
 victoriametrics_alertmanager_repeat_interval: "2h"
 # mute alertmanager notifications during these time intervals
+# set to [] to disable muting
 # Example:
 # victoriametrics_notifications_mute_time_intervals:
 #   - name: evening # unique name for the interval

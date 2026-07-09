@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters: enable monitoring of systemd .mount units
 * monitoring/exporters: force HTTP probes to use IPv4
 * monitoring/exporters/victoriametrics: move HTTP checks to exporters role
+* update documentation
 
 **Fixed:**
 * fix deprecation warnings
