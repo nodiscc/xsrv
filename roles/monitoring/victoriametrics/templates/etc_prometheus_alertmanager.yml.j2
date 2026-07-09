@@ -47,5 +47,8 @@ time_intervals:
       - times:
           - start_time: '{{ interval.start_time }}'
             end_time: '{{ interval.end_time }}'
+{% if interval.location is defined %}
+        location: '{{ interval.location }}'
+{% endif %}
 {% endfor %}
 {% endif %}

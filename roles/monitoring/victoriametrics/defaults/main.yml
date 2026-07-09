@@ -15,9 +15,11 @@ victoriametrics_alertmanager_repeat_interval: "2h"
 #   - name: evening # unique name for the interval
 #     start_time: "19:00" # start time for the interval (HH:MM)
 #     end_time: "24:00" # end time for the interval
+#     location: "Europe/Paris" # IANA timezone name (default UTC)
 #   - name: morning
 #     start_time: "00:00"
 #     end_time: "09:00"
+#     location: "Europe/Paris" # IANA timezone name (default UTC)
 victoriametrics_notifications_mute_time_intervals: []
 # REQUIRED password to authenticate on exporters when scraping them
 victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"

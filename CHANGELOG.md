@@ -13,7 +13,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
 
-
 **Added:**
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
 
@@ -27,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters: enable monitoring of systemd .mount units
 * monitoring/exporters: force HTTP probes to use IPv4
 * monitoring/exporters/victoriametrics: move HTTP checks to exporters role
+* monitoring/victoriametrics: allow setting timezone for `victoriametrics_notifications_mute_time_intervals`
 * update documentation
 
 **Fixed:**
