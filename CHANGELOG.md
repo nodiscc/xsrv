@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: lower systemd failed unit alert threshold to 30s
 * monitoring/grafana: hide unnecessary columns in alerts dashboard table
 * monitoring/grafana: clarify units in apache dashboard
+* monitoring/grafana: add an availability table in the HTTP checks dashboard
 * update documentation
 
 **Fixed:**

@@ -738,6 +738,171 @@
       }
     },
     {
+      "id": 10,
+      "type": "table",
+      "title": "HTTP Probe Availability",
+      "pluginVersion": "10.3.3",
+      "transparent": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "local_prometheus_victoriametrics"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg_over_time(probe_success{job=~\"$job\", instance=~\"$instance\"}[$__range]) * 100",
+          "format": "table",
+          "instant": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "local_prometheus_victoriametrics"
+          }
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "job": true,
+              "oncall 1": true,
+              "monitor 1": true,
+              "oncall 2": true,
+              "monitor 2": true,
+              "oncall 3": true,
+              "monitor 3": true,
+              "oncall 4": true,
+              "monitor 4": true,
+              "oncall 5": true,
+              "monitor 5": true,
+              "oncall 6": true,
+              "monitor 6": true,
+              "oncall 7": true,
+              "monitor 7": true,
+              "oncall": true,
+              "monitor": true,
+              "product": true,
+              "product 1": true,
+              "product 2": true,
+              "product 3": true,
+              "product 4": true,
+              "product 5": true,
+              "product 6": true,
+              "product 7": true
+            },
+            "renameByName": {
+              "instance": "Instance",
+              "Value": "Disponibilit\u00e9 (%)"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disponibilit\u00e9 (%)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "min",
+                "value": 0
+              },
+              {
+                "id": "max",
+                "value": 100
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 90
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 99
+                    },
+                    {
+                      "color": "green",
+                      "value": 99.9
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Availability (%)"
+          }
+        ],
+        "footer": {
+          "show": false,
+          "countRows": false
+        }
+      }
+    },
+    {
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
@@ -747,7 +912,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 27
       },
       "id": 8,
       "panels": [
@@ -773,7 +938,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 36
           },
           "hiddenSeries": false,
           "id": 6,
