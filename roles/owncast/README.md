@@ -39,6 +39,7 @@ Instructions for connecting a streaming client such as [OBS Studio](https://obsp
 
 Viewers only need to access `https://owncast.CHANGEME.org/` to display the live stream.
 
+**Streaming performance:** The default video streaming settings uses transcoding to convert the source video stream to a lower bitrate more suitable for live streaming. On low-end servers without hardware transcoding capabilities (e.g. VPS), this may cause excessive CPU usage, wich results in bad streaming performance (choppy stream, high frame drop in your streaming software). You can disable transcoding by going to `Configuration > Video` in the admin interface, then under `Stream output > Add new variant`, add a variant named `SOURCE`, and enable `Advanced Settings > Use video passthrough`. The video stream from your streaming software will be copied directly to the clients watching the stream, without transcoding on the server. All audio/video settings will be determined by your streaming software (bitrate, codec, ...), so make sure you select a widely supported video format like h.264 and a bitrate suitable for your server bandwidth.
 
 ### Backups
 
