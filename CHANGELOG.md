@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/grafana: clarify units in apache dashboard
 * monitoring/grafana: add an availability table in the HTTP checks dashboard
 * monitoring/grafana: enable CSP headers in grafana config
+* matrix/element-web: update to latest version
 * update documentation
 
 **Fixed:**
