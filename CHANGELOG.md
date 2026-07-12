@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)
 * monitoring/grafana: update to [v12.4.5](https://github.com/grafana/grafana/releases)
 * gitea: update to [v1.26.4](https://github.com/go-gitea/gitea/releases)
+* nextcloud: upgrade to [v32.0.12](https://nextcloud.com/changelog/)
 * llamacpp: doc: remove duplicate presets, remove old models from examples, update comments
 * llamacpp: set the llamacpp user as system user
 * common: needrestart: cron job: when no reboot is required, just restart services with a pending restart
