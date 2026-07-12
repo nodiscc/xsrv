@@ -22,7 +22,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==26.4.0 yamllint ansible==12.3.0
+	pip3 install isort ansible-lint==26.6.0 yamllint ansible==12.3.0
 
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
