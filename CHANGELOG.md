@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)
 * monitoring/grafana: update to [v12.4.5](https://github.com/grafana/grafana/releases)
+* gitea: update to [v1.26.4](https://github.com/go-gitea/gitea/releases)
 * llamacpp: doc: remove duplicate presets, remove old models from examples, update comments
 * llamacpp: set the llamacpp user as system user
 * common: needrestart: cron job: when no reboot is required, just restart services with a pending restart
