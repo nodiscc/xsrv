@@ -17,6 +17,7 @@
     - victoriametrics_auto_check_exclude | type_debug == "list"
     - victoriametrics_retention_period == victoriametrics_retention_period | int
     - victoriametrics_notifications_mute_time_intervals | type_debug == "list"
+    - victoriametrics_disable_iowait_hosts | type_debug == "list"
 
 - name: check that victoriametrics_notifications_mute_time_intervals items are correctly defined
   assert:

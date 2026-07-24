@@ -171,7 +171,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 # to see currently active alerts, run the promQL query ALERTS against your prometheus datasource in grafana
-- name: template vmalert alert definitions (node-alerts)
+- name: template vmalert alert definitions
   template:
     src: etc_victoriametrics_vmalert_rules_node-alerts.yml.j2
     dest: /etc/victoriametrics/vmalert/rules/node-alerts.yml

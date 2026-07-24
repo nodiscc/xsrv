@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * common: add `utils-debian12to13` task to upgrade Debian 12 (bookworm) to Debian 13 (trixie)
 * gitea-act-runner: add `gitea_act_runner_log_level` variable to configure log level
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
+* monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
 
 **Changed:**
 * llamacpp: update to latest version

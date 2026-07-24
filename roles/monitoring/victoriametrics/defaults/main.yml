@@ -39,3 +39,9 @@ victoriametrics_firewalld_zones:
     state: enabled
 # metrics retention period in days
 victoriametrics_retention_period: 365
+# hosts to exclude from HostUnusualDiskIO and HostCPUHighIOWait alerts
+# Example:
+# victoriametrics_disable_iowait_hosts:
+#   - host1.example.org
+#   - host99.example.org
+victoriametrics_disable_iowait_hosts: []

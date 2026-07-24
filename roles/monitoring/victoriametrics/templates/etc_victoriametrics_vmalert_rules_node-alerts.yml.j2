@@ -1,4 +1,3 @@
-{% raw %}
 groups:
   - name: node_systemd_alerts
     interval: 30s
@@ -9,9 +8,11 @@ groups:
         for: 30s
         labels:
           severity: critical
+{% raw %}
         annotations:
           summary: "Systemd service {{ $labels.name }} failed on {{ $labels.instance }}"
           description: "Service {{ $labels.name }} on node {{ $labels.instance }} is in failed state."
+{% endraw %}
 
   - name: node_apt_alerts
     interval: 1h
@@ -22,9 +23,11 @@ groups:
         for: 24h
         labels:
           severity: info
+{% raw %}
         annotations:
           summary: "APT updates pending on {{ $labels.instance }} for >24h"
           description: "Node {{ $labels.instance }} has {{ $value }} APT package updates available for more than 24 hours."
+{% endraw %}
 
   - name: node_memory_alerts
     interval: 30s
@@ -35,18 +38,22 @@ groups:
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "Low memory available on {{ $labels.instance }}"
           description: "Node {{ $labels.instance }} has only {{ $value | humanize }}% memory available (< 10% threshold)."
+{% endraw %}
       - alert: HostMemoryUnderPressure
         expr: |
           rate(node_vmstat_pgmajfault[5m]) > 1000
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "Host memory under pressure on {{ $labels.instance }}"
           description: "{{ $labels.instance }} is under heavy memory pressure. High rate of major page faults ({{ $value | humanize }}/s)."
+{% endraw %}
 
   - name: node_cpu_alerts
     interval: 30s
@@ -57,18 +64,26 @@ groups:
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "High CPU load on {{ $labels.instance }}"
           description: "{{ $labels.instance }} CPU usage is above 80% ({{ $value | humanizePercentage }})."
+{% endraw %}
       - alert: HostCPUHighIOWait
         expr: |
+{% if victoriametrics_disable_iowait_hosts %}
+          avg without (cpu) (rate(node_cpu_seconds_total{mode="iowait", instance!~"{{ victoriametrics_disable_iowait_hosts | join('|') }}"}[5m])) > 0.10
+{% else %}
           avg without (cpu) (rate(node_cpu_seconds_total{mode="iowait"}[5m])) > 0.10
+{% endif %}
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "High CPU iowait on {{ $labels.instance }}"
           description: "{{ $labels.instance }} CPU iowait is above 10% ({{ $value | humanizePercentage }}). CPU is idling waiting for storage."
+{% endraw %}
 
   - name: node_filesystem_prediction_alerts
     interval: 30s
@@ -81,22 +96,30 @@ groups:
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "Disk may fill in 24h on {{ $labels.instance }}:{{ $labels.mountpoint }}"
           description: "Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} is predicted to run out of space within 24 hours at current write rate."
+{% endraw %}
 
   - name: node_disk_alerts
     interval: 30s
     rules:
       - alert: HostUnusualDiskIO
         expr: |
+{% if victoriametrics_disable_iowait_hosts %}
+          rate(node_disk_io_time_seconds_total{instance!~"{{ victoriametrics_disable_iowait_hosts | join('|') }}"}[5m]) > 0.80
+{% else %}
           rate(node_disk_io_time_seconds_total[5m]) > 0.80
+{% endif %}
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "High disk IO on {{ $labels.instance }}:{{ $labels.device }}"
           description: "{{ $labels.instance }} disk {{ $labels.device }} IO utilization is above 80% ({{ $value | humanizePercentage }})."
+{% endraw %}
 
   - name: node_network_alerts
     interval: 30s
@@ -107,27 +130,33 @@ groups:
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "Network receive errors on {{ $labels.instance }}:{{ $labels.device }}"
           description: "{{ $labels.instance }} interface {{ $labels.device }} has a receive error rate above 1%."
+{% endraw %}
       - alert: HostNetworkTransmitErrors
         expr: |
           (rate(node_network_transmit_errs_total[2m]) / rate(node_network_transmit_packets_total[2m]) > 0.01)
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "Network transmit errors on {{ $labels.instance }}:{{ $labels.device }}"
           description: "{{ $labels.instance }} interface {{ $labels.device }} has a transmit error rate above 1%."
+{% endraw %}
       - alert: HostConntrackLimit
         expr: |
           (node_nf_conntrack_entries / node_nf_conntrack_entries_limit > 0.8)
         for: 5m
         labels:
           severity: warning
+{% raw %}
         annotations:
           summary: "Conntrack limit approaching on {{ $labels.instance }}"
           description: "{{ $labels.instance }} conntrack usage is at {{ $value | humanizePercentage }} of the limit."
+{% endraw %}
 
   - name: node_availability_alerts
     interval: 30s
@@ -140,6 +169,7 @@ groups:
         for: 0m
         labels:
           severity: info
+{% raw %}
         annotations:
           summary: "Host {{ $labels.instance }} stopped sending metrics. Was it shut down on purpose?"
           description: "No metrics received from {{ $labels.instance }} for more than 5 minutes."
