@@ -28,3 +28,5 @@ gitea_act_runner_daily_podman_prune: no
 gitea_act_runner_version: "2.0.1"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
 gitea_act_runner_enable_service: yes
+# log level for the gitea actions runner (trace/debug/info/warn/error/fatal)
+gitea_act_runner_log_level: info

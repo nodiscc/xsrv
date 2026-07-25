@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv deploy` apply changes
 
 **Added:**
+* gitea-act-runner: add `gitea_act_runner_log_level` variable to configure log level
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
 
 **Changed:**
