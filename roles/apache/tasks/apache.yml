@@ -84,6 +84,7 @@
     - 'php7.4' # conflicts with mpm_event
     - 'php8.1' # conflicts with mpm_event
     - 'php8.2' # conflicts with mpm_event
+    - 'php8.4' # conflicts with mpm_event (Debian 13 default)
     - 'mpm_prefork' # conflicts with mpm_event
   notify: restart apache
 
