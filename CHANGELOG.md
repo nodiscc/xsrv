@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv deploy` apply changes
 
 **Added:**
+* common: add `utils-debian12to13` task to upgrade Debian 12 (bookworm) to Debian 13 (trixie)
 * gitea-act-runner: add `gitea_act_runner_log_level` variable to configure log level
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
 
@@ -22,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)
 * monitoring/grafana: update to [v12.4.6](https://github.com/grafana/grafana/releases)
-* gitea: update to [v1.26.4](https://github.com/go-gitea/gitea/releases)
+* gitea: update to [v1.27.1](https://github.com/go-gitea/gitea/releases)
 * nextcloud: upgrade to [v33.0.7](https://nextcloud.com/changelog/)
 * llamacpp: doc: remove duplicate presets, remove old models from examples, update comments
 * llamacpp: set the llamacpp user as system user
