@@ -15,7 +15,7 @@ This role will configure a basic Debian-based server:
 - [fail2ban](tasks/fail2ban.yml) intrusion/bruteforce prevention system
 - [outgoing mail](tasks/mail.yml) (forwarding through an external mail relay)
 - streamlining/removal of unwanted [packages](tasks/packages.yml), installation of basic system utilities/diagnostic tools
-- automated procedures to upgrade hosts from [Debian 10 to 11](tasks/utils-debian10to11.yml), [Debian 11 to 12](tasks/utils-debian11to12.yml)
+- automated procedures to upgrade hosts from [Debian 10 to 11](tasks/utils-debian10to11.yml), [Debian 11 to 12](tasks/utils-debian11to12.yml), [Debian 12 to 13](tasks/utils-debian12to13.yml)
 
 All components can be disabled/enabled independently.
 
@@ -49,8 +49,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 - SFTP access: `sftp://user@my.CHANGEME.org`
   - Linux clients: [Thunar](http://docs.xfce.org/xfce/thunar/start), [Nautilus](https://wiki.gnome.org/action/show/Apps/Nautilus), [Dolphin](https://www.kde.org/applications/system/dolphin/), `sftp`, `rsync`, `scp`,
   - Windows clients: [WinSCP](https://winscp.net/eng/index.php)
-- Upgrade from Debian 10 to Debian 11: `TAGS=utils-debian10to11 xsrv deploy` or `ansible-playbook --tags utils-debian10to11 playbook.yml`
-- Upgrade from Debian 11 to Debian 12: `TAGS=utils-debian11to12 xsrv deploy` or `ansible-playbook --tags utils-debian11to12 playbook.yml`. Upgrading from one distribution version to another can take a while, and some services may become shortly unavailable during the operation. You can follow progress by watching `apt` logs on the host (or `/var/log/syslog` if the [`monitoring.rsyslog`](../monitoring/rsyslog) role is deployed).
+- Upgrade from Debian 12 to 13: `TAGS=utils-debian12to13 xsrv deploy` or `ansible-playbook --tags utils-debian12to13 playbook.yml`. Upgrading from one distribution version to another can take a while, and some services may become shortly unavailable during the operation. You can follow progress by watching `apt` logs on the host (or `/var/log/syslog` if the [`monitoring.rsyslog`](../monitoring/rsyslog) role is deployed). You may also use `utils-debian10to11` or `utils-debian11to12` to upgrade older distributions.
 - Upgrade all packages immediately, using unattended-upgrades: `TAGS=utils-apt-unattended-upgrade`. This allows upgrading immediately, without waiting for the daily unattended-upgrades timer to run. It respects the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting.
 - Upgrade all packages immediately: `TAGS=utils-apt-upgrade`. This will upgrade all upgradable packages, regardless of unattended-upgrades configuration (in particular the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting).
 - Get information about IP addresses banned by fail2ban: `TAGS=utils-fail2ban-get-banned xsrv deploy my.CHANGEME.org`
@@ -113,6 +112,7 @@ utils-apt-unattended-upgrade - (manual) run unattended-upgrade now
 utils-apt-upgrade - (manual) run apt upgrade now
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
+utils-debian12to13 - (manual) upgrade debian 12 hosts to debian 13
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
 utils-firewalld-info - (manual) get firewall status informations
 utils-shutdown - (manual) shut down the host

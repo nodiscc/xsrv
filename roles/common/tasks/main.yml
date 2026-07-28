@@ -165,6 +165,13 @@
     - never
     - utils-debian11to12
 
+- name: import debian 12->13 migration tasks
+  import_tasks: utils-debian12to13.yml
+  become: yes
+  tags:
+    - never
+    - utils-debian12to13
+
 - name: import fail2ban status report tasks
   import_tasks: utils-fail2ban-get-banned.yml
   become: yes

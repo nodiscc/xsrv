@@ -89,6 +89,7 @@ utils-backup-now - (manual) transfer latest daily backups from the host to the c
 utils-bonnie - (manual) run duc disk benchmarking tool and download the report on the controller
 utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
+utils-debian12to13 - (manual) upgrade debian 12 hosts to debian 13
 utils-dnsmasq-update-blocklist - update dnsmasq DNS blocklist immediately
 utils-duc - (manual) run duc disk usage analyzer and download the report on the controller
 utils-fail2ban-get-banned - (manual) download the list of banned IPs
