@@ -51,5 +51,5 @@
   become: yes
   become_user: postgres
   command: psql -d nextcloud -c "ALTER DATABASE nextcloud REFRESH COLLATION VERSION;"
-  when:
-    - not (ansible_local.nextcloud.postgresql_collation_refresh_done | default(false))
+  changed_when: tru # always returns changed but only runs once
+  when: not (ansible_local.nextcloud.postgresql_collation_refresh_done | default(false))
