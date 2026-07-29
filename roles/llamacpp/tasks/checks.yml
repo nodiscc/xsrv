@@ -40,3 +40,11 @@
       - item.presets | length > 0
       - '"default" in item.presets.keys()'
   loop: "{{ llamacpp_models }}"
+
+- name: check that llamacpp_auth_api_key is set when authentication is enabled
+  assert:
+    quiet: yes
+    that:
+      - llamacpp_auth_api_key is not search("CHANGEME")
+    fail_msg: "llamacpp_auth_api_key must be set to a non-default value when llamacpp_auth_enabled is true"
+  when: llamacpp_auth_enabled | bool

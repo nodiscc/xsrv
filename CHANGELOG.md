@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Added:**
 * common: add `utils-debian12to13` tag to upgrade Debian 12 (bookworm) to Debian 13 (trixie)
 * gitea-act-runner: add `gitea_act_runner_log_level` variable to configure log level
+* llamacpp: add optional API key authentication (`llamacpp_auth_enabled/llamacpp_auth_api_key`)
 * wireguard: add `utils-wireguard-download-configs` tag to download client configs to the controller
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
 * monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)

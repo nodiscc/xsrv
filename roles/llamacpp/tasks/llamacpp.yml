@@ -93,6 +93,16 @@
     mode: "0644"
   notify: restart llamacpp
 
+- name: create API key file
+  copy:
+    content: "{{ llamacpp_auth_api_key }}\n"
+    dest: /var/lib/llamacpp/api_key
+    owner: llamacpp
+    group: llamacpp
+    mode: "0600"
+  diff: false
+  notify: restart llamacpp
+
 ##### SYSTEMD
 
 - name: install llamacpp systemd service/unit file

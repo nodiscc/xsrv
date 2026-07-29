@@ -1,5 +1,9 @@
 # llama.cpp version to install (commit hash or tag)
 llamacpp_version: b9840
+# enable API key authentication for the llama.cpp server
+llamacpp_auth_enabled: false
+# API key for llama.cpp server authentication (used when llamacpp_auth_enabled is true)
+llamacpp_auth_api_key: "CHANGEME"
 # enable and start the LlamaCPP systemd service (true/false)
 llamacpp_enable_service: true
 # context size in tokens for llama.cpp (set to 0 to use model default)
