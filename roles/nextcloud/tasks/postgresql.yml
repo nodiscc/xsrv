@@ -46,3 +46,10 @@
     type: database
     role: "{{ nextcloud_db_user }}"
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: refresh PostgreSQL collation version for Nextcloud database
+  become: yes
+  become_user: postgres
+  command: psql -d nextcloud -c "ALTER DATABASE nextcloud REFRESH COLLATION VERSION;"
+  when:
+    - not (ansible_local.nextcloud.postgresql_collation_refresh_done | default(false))
