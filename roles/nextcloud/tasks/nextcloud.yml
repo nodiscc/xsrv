@@ -303,13 +303,38 @@
     chdir: "{{ nextcloud_install_dir }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: schedule nextcloud background tasks
-  cron:
-    user: nextcloud
-    cron_file: nextcloud
-    minute: "*/5"
-    job: "/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php >/dev/null"
-    name: "run nextcloud background tasks"
+- name: create nextcloud-cron systemd service
+  template:
+    src: etc_systemd_system_nextcloud-cron.service.j2
+    dest: /etc/systemd/system/nextcloud-cron.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: create nextcloud-cron systemd timer
+  template:
+    src: etc_systemd_system_nextcloud-cron.timer.j2
+    dest: /etc/systemd/system/nextcloud-cron.timer
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: apply configuration (flush handlers)
+  meta: flush_handlers
+
+- name: enable and start nextcloud-cron timer
+  systemd:
+    name: nextcloud-cron.timer
+    state: started
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: MIGRATION/2.2.0 - remove nextcloud backround tasks cron job
+  file:
+    path: /etc/cron.d/nextcloud
+    state: absent
 
 - name: add missing primary keys and indices to nextcloud database
   become: true

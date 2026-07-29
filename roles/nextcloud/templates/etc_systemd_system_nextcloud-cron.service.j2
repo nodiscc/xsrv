@@ -1,0 +1,12 @@
+[Unit]
+Description=Run Nextcloud background tasks
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php
+WorkingDirectory={{ nextcloud_install_dir }}
+SyslogIdentifier=nextcloud-cron
+User=nextcloud
+
+[Install]
+WantedBy=multi-user.target
