@@ -16,6 +16,12 @@
     - restart php-fpm (tt_rss)
     - restart prometheus-php-fpm-exporter
 
+- name: MIGRATION/3.0.0 - remove old php-fpm pool
+  file:
+    path: /etc/php/8.2/fpm/pool.d/tt-rss.conf
+    state: absent
+  notify: restart prometheus-php-fpm-exporter
+
 - name: enable tt-rss apache virtualhost configuration
   command:
     cmd: a2ensite tt-rss
