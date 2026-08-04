@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
 
 **Changed:**
+* wireguard: improve validation of `wireguard_peers[*].ip_address` variable
 * llamacpp: update to latest version
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)

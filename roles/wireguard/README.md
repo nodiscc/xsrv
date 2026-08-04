@@ -26,7 +26,7 @@ wireguard_server_public_ip: "CHANGEME"
 wireguard_peers:
   - name: client1
     public_key: Faz...4vEQ=
-    ip_address: "10.200.200.10/24"
+    ip_address: "10.200.200.10"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
