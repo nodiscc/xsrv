@@ -55,7 +55,7 @@ This method is preferred, since the private key never leaves the client (only th
 
 - add the client to `wireguard_peers:` using the `public_key` value received from the client (see example above)
 - deploy the wireguard role (`xsrv deploy`)
-- SSH to the wireguard server (`xsrv ssh`), run `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` and send the contents of this file to the client. It contains furter instructions to setup the VPN connection.
+- SSH to the wireguard server (`xsrv ssh`), run `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` and send the contents of this file to the client. The client must replace `CHANGEME` with the contents of their `wireguard.key` file.
 
 
 #### Automatic key generation on the server

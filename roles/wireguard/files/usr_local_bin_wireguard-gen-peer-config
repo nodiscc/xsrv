@@ -60,7 +60,7 @@ client_config="
 #   - Verify that the traffic is correctly routed through the VPN by visiting https://ifconfig.me/ or running ip route get DESTINATION_IP
 [Interface]
 Address = $peer_ip_address/32
-PrivateKey = $private_key
+PrivateKey = $private_key  # Replace with your private key if CHANGEME
 DNS = $server_private_ip
 
 [Peer]
