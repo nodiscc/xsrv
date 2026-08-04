@@ -103,6 +103,14 @@ apache_firewalld_zones:
 ```
 
 
+### Utilities
+
+Download all generated client configuration files to `data/wireguard/<hostname>/` on the controller:
+
+```bash
+TAGS=utils-wireguard-download-configs xsrv deploy
+```
+
 ### Debugging
 
 You can turn on debug logging at any time by running `echo module wireguard +p | sudo tee /sys/kernel/debug/dynamic_debug/control`. To disable debug logging: `echo module wireguard -p | sudo tee /sys/kernel/debug/dynamic_debug/control`. Debug logging will log events such as peers connecting/disconnecting and rejected connection attempts.

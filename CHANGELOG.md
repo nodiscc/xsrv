@@ -10,13 +10,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * Upgrade to v2.1.0 if not already done
 * rename `victoriametrics_http_checks` to `exporters_blackbox_http_checks` in your `host_vars`
 * stirlingpdf: if you want to keep using the `stirlingpdf` role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` (`xsrv edit-playbook`) to use the archived [`nodiscc.toolbox.stirlingpdf`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
+* wireguard: if your configuration is under git version control, add `data/wireguard/*` to your `.gitignore` to avoid accidentally committing configs/private keys downloaded through `utils-wireguard-download-configs`
 * `xsrv upgrade` to update roles to their latest version
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
 
 **Added:**
-* common: add `utils-debian12to13` task to upgrade Debian 12 (bookworm) to Debian 13 (trixie)
+* common: add `utils-debian12to13` tag to upgrade Debian 12 (bookworm) to Debian 13 (trixie)
 * gitea-act-runner: add `gitea_act_runner_log_level` variable to configure log level
+* wireguard: add `utils-wireguard-download-configs` tag to download client configs to the controller
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
 * monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
 

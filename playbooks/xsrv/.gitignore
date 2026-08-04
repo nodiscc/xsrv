@@ -3,6 +3,7 @@ ansible.log
 .venv/
 cache/
 data/backups/*
+data/wireguard/*
 data/duc-*.db
 ansible_collections/*/*/FILES.json
 ansible_collections/*/*/MANIFEST.json
