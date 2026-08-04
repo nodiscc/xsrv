@@ -38,7 +38,7 @@ peer_config="
 [Peer]
 # Peer: $peer_name
 PublicKey = $public_key
-AllowedIPs = $peer_ip_address
+AllowedIPs = $peer_ip_address/32
 "
 
 echo "$peer_config" > "$peer_config_file"
