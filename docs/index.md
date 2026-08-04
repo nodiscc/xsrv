@@ -54,7 +54,6 @@ This project provides:
 - [samba](https://github.com/nodiscc/xsrv/tree/master/roles/samba) - cross-platform file sharing server
 - [searxng](https://github.com/nodiscc/xsrv/tree/master/roles/searxng) - metasearch engine
 - [shaarli](https://github.com/nodiscc/xsrv/tree/master/roles/shaarli) - bookmarking & link sharing web application
-- [stirlingpdf](https://github.com/nodiscc/xsrv/tree/master/roles/stirlingpdf) - PDF manipulation tools
 - [transmission](https://github.com/nodiscc/xsrv/tree/master/roles/transmission) - bittorrent client/web interface
 - [tt_rss](https://github.com/nodiscc/xsrv/tree/master/roles/tt_rss) - web-based news feed reader
 - [wireguard](https://github.com/nodiscc/xsrv/tree/master/roles/wireguard) - fast and modern VPN server

@@ -1884,27 +1884,6 @@ shaarli_enable_service: yes
 ```
 
 
-## stirlingpdf
-
-[roles/stirlingpdf/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/stirlingpdf/defaults/main.yml)
-
-```yaml
-# Fully Qualified Domain Name for the stirlingpdf instance
-stirlingpdf_fqdn: "pdf.CHANGEME.org"
-# the stirlingpdf OCI image to pull (https://github.com/Stirling-Tools/Stirling-PDF/releases.atom)
-stirlingpdf_image: "docker.io/stirlingtools/stirling-pdf:2.13.1"
-# HTTPS and SSL/TLS certificate mode for the stirlingpdf webserver virtualhost
-#   letsencrypt: acquire a certificate from letsencrypt.org
-#   selfsigned: generate a self-signed certificate
-stirlingpdf_https_mode: selfsigned
-# start/stop the stirlingpdf service, enable/disable it on boot (yes/no) (redirect users to maintenance page if disabled)
-stirlingpdf_enable_service: yes
-# IP addresses allowed to access the stirlingpdf web interface (IP or IP/netmask format)
-# set to empty list [] to allow access from any IP address
-stirlingpdf_allowed_hosts: []
-```
-
-
 ## transmission
 
 [roles/transmission/defaults/main.yml](https://github.com/nodiscc/xsrv/blob/master/roles/transmission/defaults/main.yml)

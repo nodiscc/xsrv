@@ -54,7 +54,6 @@ This project provides:
 - [samba](roles/samba) - cross-platform file sharing server
 - [searxng](roles/searxng) - metasearch engine
 - [shaarli](roles/shaarli) - bookmarking & link sharing web application
-- [stirlingpdf](roles/stirlingpdf) - PDF manipulation tools
 - [transmission](roles/transmission) - bittorrent client/web interface
 - [tt_rss](roles/tt_rss) - web-based news feed reader
 - [wireguard](roles/wireguard) - fast and modern VPN server
