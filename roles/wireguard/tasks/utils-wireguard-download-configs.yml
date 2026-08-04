@@ -7,6 +7,7 @@
     mode: "0755"
 
 - name: download wireguard peer client configs to the controller
+  become: true
   fetch:
     src: /etc/wireguard/peers/client-config/{{ item.name }}.conf
     dest: "{{ playbook_dir }}/data/wireguard/{{ inventory_hostname }}/{{ item.name }}.conf"
@@ -16,6 +17,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: download wireguard peer QR codes to the controller
+  become: true
   fetch:
     src: /etc/wireguard/peers/client-config/{{ item.name }}.qrcode
     dest: "{{ playbook_dir }}/data/wireguard/{{ inventory_hostname }}/{{ item.name }}.qrcode"
