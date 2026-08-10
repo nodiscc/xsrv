@@ -2,6 +2,7 @@
 Description=llamacpp local LLM service
 After=syslog.target
 After=network.target
+Conflicts=stable-diffusion-cpp-server.service
 
 [Service]
 User=llamacpp
