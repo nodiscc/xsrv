@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ gitea.ref }}
-      cancel-in-progress: ${{ gitea.ref_name == 'master' && false || true }}
+      cancel-in-progress: ${{ (gitea.ref_type == 'tag' || gitea.ref_name == 'master') && false || true }}
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
@@ -54,12 +54,12 @@ jobs:
       - name: create ~/.ssh/known_hosts and private SSH key
         run: mkdir -p ~/.ssh/ && cp -v .gitea/known_hosts ~/.ssh/known_hosts && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa
       - name: run playbook in check mode
-        if: ${{ gitea.ref_name == 'master' && env.ANSIBLE_CHECK_MODE_MASTER == 'true' || gitea.ref_name != 'master' && env.ANSIBLE_CHECK_MODE_PR == 'true' }}
-        run: xsrv check default ${{ gitea.ref_name == 'master' && env.ANSIBLE_CHECK_MODE_MASTER_LIMIT || env.ANSIBLE_CHECK_MODE_PR_LIMIT }}
+        if: ${{ (gitea.ref_type == 'tag' || gitea.ref_name == 'master') && env.ANSIBLE_CHECK_MODE_MASTER == 'true' || gitea.ref_type != 'tag' && gitea.ref_name != 'master' && env.ANSIBLE_CHECK_MODE_PR == 'true' }}
+        run: xsrv check default ${{ (gitea.ref_type == 'tag' || gitea.ref_name == 'master') && env.ANSIBLE_CHECK_MODE_MASTER_LIMIT || env.ANSIBLE_CHECK_MODE_PR_LIMIT }}
         env:
-          TAGS: ${{ gitea.ref_name == 'master' && env.ANSIBLE_TAGS_MASTER || env.ANSIBLE_TAGS_PR }}
+          TAGS: ${{ (gitea.ref_type == 'tag' || gitea.ref_name == 'master') && env.ANSIBLE_TAGS_MASTER || env.ANSIBLE_TAGS_PR }}
       - name: run playbook
-        if: ${{ gitea.ref_name == 'master' && env.ANSIBLE_DEPLOY_MASTER == 'true' || gitea.ref_name != 'master' &&  env.ANSIBLE_DEPLOY_PR == 'true' }}
-        run: xsrv deploy default ${{ gitea.ref_name == 'master' && env.ANSIBLE_DEPLOY_MASTER_LIMIT || env.ANSIBLE_DEPLOY_PR_LIMIT }}
+        if: ${{ (gitea.ref_type == 'tag' || gitea.ref_name == 'master') && env.ANSIBLE_DEPLOY_MASTER == 'true' || gitea.ref_type != 'tag' && gitea.ref_name != 'master' &&  env.ANSIBLE_DEPLOY_PR == 'true' }}
+        run: xsrv deploy default ${{ (gitea.ref_type == 'tag' || gitea.ref_name == 'master') && env.ANSIBLE_DEPLOY_MASTER_LIMIT || env.ANSIBLE_DEPLOY_PR_LIMIT }}
         env:
-          TAGS: ${{ gitea.ref_name == 'master' && env.ANSIBLE_TAGS_MASTER || env.ANSIBLE_TAGS_PR }}
+          TAGS: ${{ (gitea.ref_type == 'tag' || gitea.ref_name == 'master') && env.ANSIBLE_TAGS_MASTER || env.ANSIBLE_TAGS_PR }}
