@@ -55,3 +55,5 @@ shaarli_php_post_max_size: '8M'
 shaarli_php_upload_max_filesize: '2M'
 # enable/disable the shaarli php-fpm pool (redirect users to maintenance page if disabled)
 shaarli_enable_service: yes
+# Path to a local shaarli zip file for testing (empty = download from GitHub releases)
+shaarli_local_zip: ""

@@ -58,7 +58,24 @@
     - ansible_local.shaarli.installed.version is defined
     - ansible_local.shaarli.installed.version == shaarli_version
 
+- name: force upgrade when using local zip
+  set_fact:
+    shaarli_action: upgrade
+  when:
+    - shaarli_local_zip | length > 0
+
 ### SHAARLI INSTALLATION/UPGRADE ###
+
+- name: copy local shaarli zip
+  copy:
+    src: "{{ shaarli_local_zip }}"
+    dest: "/root/shaarli-local.zip"
+    owner: root
+    group: root
+    mode: "0640"
+  when:
+    - shaarli_local_zip | length > 0
+    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
 
 - name: download shaarli zip
   get_url:
@@ -67,7 +84,9 @@
     owner: root
     group: root
     mode: "0640"
-  when: (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
+  when:
+    - shaarli_local_zip | length == 0
+    - (shaarli_action == 'initial') or (shaarli_action == 'upgrade')
 
 - name: remove shaarli zip extraction directory
   file:
@@ -86,7 +105,7 @@
 
 - name: extract shaarli zip
   unarchive:
-    src: "/root/shaarli-{{ shaarli_version }}-full.zip"
+    src: "{{ shaarli_local_zip | default('/root/shaarli-' + shaarli_version + '-full.zip') }}"
     dest: "/root/shaarli-unpack"
     remote_src: yes
     mode: u=rwX
