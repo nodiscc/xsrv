@@ -6,7 +6,8 @@
 # - the public key id_rsa_gitea.pub must be allowed to access the ansible_user account on the target hosts beforehand (e.g. using linux_users[*].ssh_authorized_keys from the common role, or ssh-copy-id)
 name: CI
 on:
-  push: # run workflow automatically when commits are pusehd to gitea
+  push: # run workflow automatically when commits are pushed to gitea
+  # on.push.tags: ['*'] # alternative, only run workflow automatically on git tags
   workflow_dispatch: # allow running workflow manually from the 'Run workflow' button on the actions page
 
 env:
