@@ -53,17 +53,14 @@ llamacpp_models:
   #   mmproj_url: https://huggingface.co/unsloth/gemma-4-31B-it-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  #     instruct: {temp: 1.0, top-k: 64, top-p: 0.95, chat-template-kwargs: '{"enable_thinking":false}'}
   # - name: gemma4:4b-e4b # 4.5B effective, 5GB, vision + audio, 2026/06
   #   url: https://huggingface.co/unsloth/gemma-4-E4B-it-GGUF/resolve/main/gemma-4-E4B-it-Q4_K_M.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  #     instruct: {temp: 1.0, top-k: 64, top-p: 0.95, chat-template-kwargs: '{"enable_thinking":false}'}
   # - name: gemma4:26b-a4b # 26B total, 3.8B active, 17GB, vision, 2026/06
   #   url: https://huggingface.co/unsloth/gemma-4-26B-A4B-it-GGUF/resolve/main/gemma-4-26B-A4B-it-UD-Q4_K_M.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  #     instruct: {temp: 1.0, top-k: 64, top-p: 0.95, chat-template-kwargs: '{"enable_thinking":false}'}
   # - name: gpt-oss:20b # 20B, 12GB, tools + reasoning, 2025/08
   #   url: https://huggingface.co/bartowski/openai_gpt-oss-20b-GGUF/resolve/main/openai_gpt-oss-20b-MXFP4.gguf
   #   presets:
