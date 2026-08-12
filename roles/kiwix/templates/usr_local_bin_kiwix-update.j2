@@ -43,3 +43,15 @@ for url in {{ kiwix_zim_urls | join(' ') }}; do
     echo "[INFO] file updated: $library_file"
   fi
 done
+
+# Register local ZIM files (in-place)
+{% if kiwix_zim_local_files %}
+for local_file in {{ kiwix_zim_local_files | join(' ') }}; do
+  if [[ -f "$local_file" ]]; then
+    echo "[INFO] adding local file $local_file to library $library_file"
+    kiwix-manage /var/lib/kiwix/library.xml add "$local_file"
+  else
+    echo "[WARN] local file not found: $local_file"
+  fi
+done
+{% endif %}

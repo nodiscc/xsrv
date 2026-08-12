@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
 * monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
 * libvirt: add support for virtiofsd directory sharing between host and guests
+* kiwix: support adding local ZIM files to the library (`kiwix_zim_local_files`).
 
 **Removed:**
 * stirlingpdf: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
