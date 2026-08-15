@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * stirlingpdf: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 
 **Changed:**
+* searxng: decrease searchmysite and wiby search engine weight to 0.7
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable
 * llamacpp: update to latest version
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
