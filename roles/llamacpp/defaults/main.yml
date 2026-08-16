@@ -32,21 +32,6 @@ llamacpp_firewalld_zones:
 # Only a small model that can run on CPU/RAM is enabled by default, enable/experiment other models below if your hardware configuration allows
 # to delete a model from the llama.cpp server, access it over ssh (xsrv shell) and `sudo rm` the relevant files under `/var/lib/llamacpp/{aliases,models}/`, then `sudo systemctl restart llamacpp.service`
 llamacpp_models:
-  - name: gemma3:4b # 4B, 3.2GB, vision, 2025/03
-    url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/google_gemma-3-4b-it-Q6_K_L.gguf
-    mmproj_url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/mmproj-google_gemma-3-4b-it-f16.gguf
-    presets:
-      default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  # - name: gemma3:12b # 12B, 9.3GB, vision, 2025/03
-  #   url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/google_gemma-3-12b-it-Q6_K_L.gguf
-  #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/mmproj-google_gemma-3-12b-it-f16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  # - name: gemma3:27b #27B, 16GB, vision, 2025/03
-  #   url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/google_gemma-3-27b-it-qat-Q4_K_L.gguf
-  #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/mmproj-google_gemma-3-27b-it-qat-f16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
   # - name: gemma4:12b # 12B, 13.6GB, vision + audio, 2026/06
   #   url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/gemma-4-12b-it-UD-Q8_K_XL.gguf
   #   mmproj_url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/mmproj-F16.gguf
