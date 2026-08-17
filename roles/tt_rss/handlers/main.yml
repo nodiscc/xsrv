@@ -5,3 +5,11 @@
     enabled: yes
   become: yes
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: restart tt-rss update timer
+  become: yes
+  systemd:
+    name: tt-rss-update.timer
+    state: restarted
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"

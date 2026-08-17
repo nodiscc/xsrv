@@ -144,11 +144,35 @@
 
 ### SCHEDULING ###
 
-- name: setup tt-rss feed update cron job
-  cron:
-    user: tt-rss
-    cron_file: '/etc/cron.d/tt-rss'
-    name: ttrss_update
-    hour: '*'
-    minute: '0'
-    job: '/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet 2>&1 | logger -t tt-rss-update'
+- name: remove tt-rss cron file
+  file:
+    path: /etc/cron.d/tt-rss
+    state: absent
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure tt-rss feed update systemd service
+  template:
+    src: etc_systemd_system_tt-rss-update.service.j2
+    dest: /etc/systemd/system/tt-rss-update.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd unit files
+
+- name: configure tt-rss feed update systemd timer
+  template:
+    src: etc_systemd_system_tt-rss-update.timer.j2
+    dest: /etc/systemd/system/tt-rss-update.timer
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload systemd unit files
+    - restart tt-rss update timer
+
+- name: enable and start tt-rss feed update timer
+  systemd:
+    name: tt-rss-update.timer
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"

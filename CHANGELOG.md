@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
 * libvirt: add support for virtiofsd directory sharing between host and guests
 * kiwix: support adding local ZIM files to the library (`kiwix_zim_local_files`).
+* tt-rss: replace feed update cron job with systemd timer/service.
 
 **Removed:**
 * stirlingpdf: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
