@@ -38,7 +38,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 * searxng: decrease searchmysite and wiby search engine weight to 0.7
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable
+* apache: make role compatible with debian 13
+* dovecot: make the role compatible with debian 13
 * mail_dovecot: make role compatible with Debian 13
+* nextcloud: replace cron background tasks with systemd timer
+* nextcloud: add postgresql collation refresh migration for debian 13
+* nextcloud,openldap,shaarli,tt-rss: remove old php-fpm pools from debian 12
 * llamacpp: update to latest version
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)
@@ -65,8 +70,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 * monitoring/grafana: fix datasource in postgresql dashboard
 * fix deprecation warnings
+* shaarli: use versioned venv directory to handle Python version upgrade
 * tests: remove dead code from Makefile
 * gitea_act_runner: fix `podman container/volume prune` cron jobs
+* common: update apt-listbugs ignore list
 * wireguard: fix AllowedIPs in client config when routes not specified
 * libvirt: fix libvirt port forwarding rules disappearing when firewalld restarts
 
