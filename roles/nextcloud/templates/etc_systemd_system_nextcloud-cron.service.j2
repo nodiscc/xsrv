@@ -1,5 +1,6 @@
 [Unit]
 Description=Run Nextcloud background tasks
+After=php8.4-fpm.service php8.2-fpm.service postgresql@15.service postgresql@17.service
 
 [Service]
 Type=simple
