@@ -16,6 +16,17 @@
   with_items:
     - "/var/mail/vhosts"
 
+- name: deploy dovecot.conf for Debian 13 (Trixie)
+  template:
+    src: etc_dovecot_dovecot.conf.j2
+    dest: /etc/dovecot/dovecot.conf
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts.distribution_release == "trixie"
+  notify: restart dovecot
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: copy dovecot configuration
   template:
     src: "{{ item.src }}"
@@ -29,7 +40,50 @@
     - { src: etc_dovecot_conf.d_10-auth.conf.j2, dest: /etc/dovecot/conf.d/10-auth.conf }
     - { src: etc_dovecot_conf.d_10-logging.conf.j2, dest: /etc/dovecot/conf.d/10-logging.conf }
     - { src: etc_dovecot_conf.d_10-ssl.conf.j2, dest: /etc/dovecot/conf.d/10-ssl.conf }
-    - { src: etc_dovecot_dovecot-ldap.conf.ext.j2, dest: /etc/dovecot/dovecot-ldap.conf.ext, mode: "0600" }
+  notify: restart dovecot
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: deploy auth-ldap.conf.ext for Debian 13 (Trixie)
+  template:
+    src: etc_dovecot_conf.d_auth-ldap.conf.ext.j2
+    dest: /etc/dovecot/conf.d/auth-ldap.conf.ext
+    owner: root
+    group: dovecot
+    mode: "0640"
+  when: ansible_facts.distribution_release == "trixie"
+  notify: restart dovecot
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: deploy 90-acl.conf for Debian 13 (Trixie)
+  template:
+    src: etc_dovecot_conf.d_90-acl.conf.j2
+    dest: /etc/dovecot/conf.d/90-acl.conf
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts.distribution_release == "trixie"
+  notify: restart dovecot
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: deploy 90-quota.conf for Debian 13 (Trixie)
+  template:
+    src: etc_dovecot_conf.d_90-quota.conf.j2
+    dest: /etc/dovecot/conf.d/90-quota.conf
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts.distribution_release == "trixie"
+  notify: restart dovecot
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: deploy 90-fts.conf for Debian 13 (Trixie)
+  template:
+    src: etc_dovecot_conf.d_90-fts.conf.j2
+    dest: /etc/dovecot/conf.d/90-fts.conf
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts.distribution_release == "trixie"
   notify: restart dovecot
   ignore_errors: "{{ ansible_check_mode }}"
 

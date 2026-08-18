@@ -1,0 +1,26 @@
+##
+## Plugin settings
+##
+
+# All wanted plugins must be listed in mail_plugins setting before any of the
+# settings take effect. See <https://doc.dovecot.org/latest/> for list of plugins and
+# their configuration. Note that %{variable} expansion is done for all values.
+
+## See https://doc.dovecot.org/latest/core/plugins/fts.html for FTS information
+
+fts_autoindex = yes
+fts_autoindex_max_recent_msgs = 999
+fts_search_add_missing = yes
+
+## for attachment decoding
+
+#fts_decoder_driver = tika
+#fts_decoder_tika_url = http://localhost:9998/tika/
+
+## for solr
+#fts solr {
+#   url = http://localhost:8983/solr/dovecot/
+#}
+
+# See 90-fts-flatcurve.conf in the dovecot-flatcurve package for
+# settings specific to that driver

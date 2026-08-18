@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 * searxng: decrease searchmysite and wiby search engine weight to 0.7
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable
+* mail_dovecot: make role compatible with Debian 13
 * llamacpp: update to latest version
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)
