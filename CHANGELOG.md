@@ -61,6 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * tests: remove dead code from Makefile
 * gitea_act_runner: fix `podman container/volume prune` cron jobs
 * wireguard: fix AllowedIPs in client config when routes not specified
+* libvirt: fix libvirt port forwarding rules disappearing when firewalld restarts
 
 [Full changes since v2.1.0](https://github.com/nodiscc/xsrv/compare/2.1.0...2.2.0)
 

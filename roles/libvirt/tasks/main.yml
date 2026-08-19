@@ -9,6 +9,14 @@
   become: yes
   tags: libvirt
 
+##### FIREWALLD #####
+
+- name: import firewalld configuration tasks
+  import_tasks: firewalld.yml
+  when:
+    - ansible_local.firewalld.ansible_managed is defined
+    - ansible_local.firewalld.ansible_managed | bool
+
 - name: import metrics exporters configuration tasks
   import_tasks: exporters.yml
   become: yes
