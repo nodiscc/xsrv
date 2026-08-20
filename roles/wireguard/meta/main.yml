@@ -1,4 +1,5 @@
 # @tag wireguard - setup wireguard
+# @tag utils-wireguard-download-configs - download wireguard client configuration files to the controller
 
 galaxy_info:
   role_name: wireguard
