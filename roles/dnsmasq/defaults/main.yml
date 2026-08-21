@@ -41,7 +41,7 @@ dnsmasq_listen_interfaces: []
 dnsmasq_listen_addresses: []
 # use DNSSEC to validate answers to DNS queries (yes/no)
 # if enabled, dig @127.0.1.1 dnssec-failed.org should return SERVFAIL
-dnsmasq_dnssec: yes
+dnsmasq_dnssec: no
 # log DNS queries prcessed by dnsmasq (VERY verbose) (no/yes)
 dnsmasq_log_queries: no
 # URL of a DNS blocklist to download and load into dnsmasq
