@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * `xsrv upgrade` to update roles to their latest version
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
+* (optional) `TAGS=utils-debian12to13 xsrv deploy` to upgrade Debian 12 hosts to Debian 13, and `xsrv deploy` again
 
 **Added:**
 * common: add `utils-debian12to13` tag to upgrade Debian 12 (bookworm) to Debian 13 (trixie)
