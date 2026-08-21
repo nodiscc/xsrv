@@ -10,4 +10,6 @@ videobridge {
         domain = "{{ jitsi_fqdn }}:443"
         tls = true
     }
-}
+{% if jitsi_jvb_external_addresses %}
+    external-addresses = ["{{ jitsi_jvb_external_addresses }}"]
+{% endif %}

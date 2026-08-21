@@ -1,6 +1,10 @@
 ##### JITSI MEET VIDEO CONFERENCE PLATFORM #####
 # fully qualified domain name of the jitsi meet instance
 jitsi_fqdn: "conference.CHANGEME.org"
+# external IP address(es) the videobridge should advertise for media
+# (comma-separated, e.g. "10.0.10.223" or "10.0.10.223,192.168.1.10")
+# If not set, JVB will auto-detect, which may fail on multi-homed hosts
+jitsi_jvb_external_addresses: ""
 # random secret shared between the TURN and XMPP server
 jitsi_turn_secret: "CHANGEME"
 # random secret shared between jitsi/jicofo and the XMPP server
