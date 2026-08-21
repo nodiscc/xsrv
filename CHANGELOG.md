@@ -38,9 +38,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 * searxng: decrease searchmysite and wiby search engine weight to 0.7
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable
-* apache: make role compatible with debian 13
-* dovecot: make the role compatible with debian 13
-* mail_dovecot: make role compatible with Debian 13
 * nextcloud: replace cron background tasks with systemd timer
 * nextcloud: add postgresql collation refresh migration for debian 13
 * nextcloud,openldap,shaarli,tt-rss: remove old php-fpm pools from debian 12
@@ -246,7 +243,7 @@ xsrv deploy   # apply changes
 - backup: add [`rsnapshot_remote_backups[*].port`](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml) option (default 22, allows backups over different SSH port)
 - common/users: make the default system `umask` configurable
 - common/sysctl: make the value of `kernel.yama.ptrace_scope` configurable
-- add support for Debian 13 in all roles
+- make all roles compatible with Debian 13 (except jitsi)
 
 **Changed:**
 - rename `monitoring_utils` role to `monitoring.utils`
