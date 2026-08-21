@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * stirlingpdf: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 
 **Changed:**
+* monitoring/grafana: hide useless columns in alerts table
 * dnsmasq: no not enable DNSSEC validation by default
 * searxng: decrease searchmysite and wiby search engine weight to 0.7
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable

@@ -769,7 +769,9 @@
           "options": {
             "excludeByName": {
               "__name__": true,
-              "alertstate": true
+              "active": true,
+              "alertstate": true,
+              "exported_instance": true
             },
             "indexByName": {},
             "renameByName": {}
