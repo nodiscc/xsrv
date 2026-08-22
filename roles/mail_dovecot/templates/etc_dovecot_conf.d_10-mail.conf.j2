@@ -30,7 +30,7 @@
 {% if ansible_facts.distribution_release == "trixie" %}
 # Dovecot 2.4+ uses mail_driver/mail_home/mail_path instead of mail_location
 mail_driver = maildir
-mail_path = /var/mail/vhosts/%{d}/%{n}
+mail_path = /var/mail/vhosts/%{user|domain}/%{user|username}
 {% else %}
 mail_location = maildir:/var/mail/vhosts/%d/%n
 {% endif %}

@@ -4,13 +4,7 @@ passdb ldap {
   ldap_auth_dn_password = {{ dovecot_ldap_bind_password }}
   ldap_base = {{ dovecot_ldap_base }}
   ldap_filter = {{ dovecot_ldap_user_filter | replace('%u', '%{user}') | replace('%n', '%{user|username}') | replace('%d', '%{user|domain}') }}
-  fields {
-    user = %{ldap:uid}
-    password = %{ldap:userPassword}
-    home = %{ldap:homeDirectory}
-    uid = %{ldap:uidNumber}
-    gid = %{ldap:gidNumber}
-  }
+  passdb_ldap_bind = yes
 }
 
 userdb ldap {
@@ -19,4 +13,9 @@ userdb ldap {
   ldap_auth_dn_password = {{ dovecot_ldap_bind_password }}
   ldap_base = {{ dovecot_ldap_base }}
   ldap_filter = {{ dovecot_ldap_user_filter | replace('%u', '%{user}') | replace('%n', '%{user|username}') | replace('%d', '%{user|domain}') }}
+  fields {
+    home = %{ldap:homeDirectory}
+    uid = %{ldap:uidNumber}
+    gid = %{ldap:gidNumber}
+  }
 }
