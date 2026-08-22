@@ -16,6 +16,3 @@
   notify:
     - reload systemd unit files
     - restart firewalld
-  tags:
-    - libvirt
-    - libvirt-firewalld-hook

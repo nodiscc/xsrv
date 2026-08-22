@@ -16,12 +16,15 @@
   when:
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
+  tags:
+    - libvirt
+    - firewalld
 
 - name: import metrics exporters configuration tasks
   import_tasks: exporters.yml
   become: yes
   tags:
-    - apache
+    - libvirt
     - monitoring
     - exporters
   when:
