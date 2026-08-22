@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 15s
+  scrape_interval: {{ exporters_scrape_interval }}s
   external_labels:
     instance: '{{ inventory_hostname }}'
 
@@ -8,7 +8,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -17,7 +17,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -29,7 +29,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -42,7 +42,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -54,7 +54,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -67,7 +67,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -81,8 +81,8 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 10s
-    scrape_timeout: 9s
+    scrape_interval: {{ exporters_blackbox_http_check_interval }}s
+    scrape_timeout: {{ exporters_blackbox_http_check_interval - 1 }}s
     metrics_path: /proxy
     params:
       module:
@@ -106,8 +106,8 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 30s
-    scrape_timeout: 9s
+    scrape_interval: {{ exporters_blackbox_tcp_check_interval }}s
+    scrape_timeout: {{ exporters_blackbox_tcp_check_interval - 1 }}s
     metrics_path: /proxy
     params:
       module:

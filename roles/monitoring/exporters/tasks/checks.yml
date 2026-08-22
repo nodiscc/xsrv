@@ -8,5 +8,15 @@
     - monitoring_exporters_auth_password is not search('CHANGEME')
     - exporters_blackbox_log_level in ['info', 'debug', 'warn', 'error']
     - monitoring_victoriametrics_url is not search('CHANGEME')
+    - exporters_scrape_interval == exporters_scrape_interval | int
+    - exporters_scrape_interval > 0
     - exporters_blackbox_http_checks | type_debug == "list"
     - exporters_blackbox_tcp_checks | type_debug == "list"
+    - exporters_blackbox_http_check_interval == exporters_blackbox_http_check_interval | int
+    - exporters_blackbox_http_check_interval > 1
+    - exporters_blackbox_http_check_timeout == exporters_blackbox_http_check_timeout | int
+    - exporters_blackbox_http_check_timeout > 0
+    - exporters_blackbox_tcp_check_interval == exporters_blackbox_tcp_check_interval | int
+    - exporters_blackbox_tcp_check_interval > 1
+    - exporters_blackbox_tcp_check_timeout == exporters_blackbox_tcp_check_timeout | int
+    - exporters_blackbox_tcp_check_timeout > 0

@@ -21,6 +21,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: add optional API key authentication (`llamacpp_auth_enabled/llamacpp_auth_api_key`)
 * wireguard: add `utils-wireguard-download-configs` tag to download client configs to the controller
 * monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
+* monitoring/exporters: make local exporter scrape intervals configurable (`exporters_scrape_interval`, default 10s)
+* monitoring/exporters: make blackbox HTTP check interval configurable (`exporters_blackbox_http_check_interval`, default 10s)
+* monitoring/exporters: make blackbox HTTP probe timeout configurable (`exporters_blackbox_http_check_timeout`, default 5s)
+* monitoring/exporters: make blackbox TCP check interval configurable (`exporters_blackbox_tcp_check_interval`, default 10s)
+* monitoring/exporters: make blackbox TCP check timeout configurable (`exporters_blackbox_tcp_check_timeout`, default 3s)
+* monitoring/victoriametrics: make global scrape interval use `exporters_scrape_interval`
 * monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
 * libvirt: add support for virtiofsd directory sharing between host and guests
 * kiwix: support adding local ZIM files to the library (`kiwix_zim_local_files`).
