@@ -73,6 +73,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * fix deprecation warnings
 * shaarli: use versioned venv directory to handle Python version upgrade
 * tests: remove dead code from Makefile
+* openldap/ldap-account-manager: fix `userPassword` not set when changing passwords (required for dovecot LDAP authentication)
 * gitea_act_runner: fix `podman container/volume prune` cron jobs
 * common: update apt-listbugs ignore list
 * wireguard: fix AllowedIPs in client config when routes not specified
