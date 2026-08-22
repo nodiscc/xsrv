@@ -13,6 +13,7 @@
 
 - name: import firewalld configuration tasks
   import_tasks: firewalld.yml
+  become: yes
   when:
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
