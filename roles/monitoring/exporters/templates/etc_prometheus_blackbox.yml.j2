@@ -1,10 +1,10 @@
 modules:
   http:
     prober: http
+    timeout: {{ exporters_blackbox_http_check_timeout }}s
     http:
       valid_status_codes: [200, 401]
       preferred_ip_protocol: "ip4"
-      timeout: {{ exporters_blackbox_http_check_timeout }}s
       tls_config:
         insecure_skip_verify: true
   http_post:
