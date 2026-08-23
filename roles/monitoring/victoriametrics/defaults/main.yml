@@ -1,4 +1,5 @@
 # automatically create HTTP probes for xsrv roles deployed on these hosts
+# set to [] top disable all automatic HTTP probes
 victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
 # list of domains to exclude from automatic HTTP checks
 # Example:
