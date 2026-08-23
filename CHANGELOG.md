@@ -79,6 +79,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * libvirt: fix libvirt port forwarding rules disappearing when firewalld restarts
 * openldap: downgrade ldap-account-manager to v8.9 (config file format incompatible with v9.x)
 * tt_rss: add git `safe.directory` workaround for dubious ownership check
+* kiwix: fix path to directory to backup when `kiwix_backup_data: yes`
 
 [Full changes since v2.1.0](https://github.com/nodiscc/xsrv/compare/2.1.0...2.2.0)
 
