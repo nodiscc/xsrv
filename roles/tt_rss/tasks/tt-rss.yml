@@ -28,6 +28,13 @@
 
 ##### TT-RSS INSTALLATION #####
 
+- name: add tt-rss install dir to git safe.directory (workaround dubious ownership check)
+  community.general.git_config:
+    scope: global
+    name: safe.directory
+    value: '{{ tt_rss_install_dir }}'
+    add_mode: add
+
 - name: clone/upgrade tt-rss
   git:
     repo: https://codeberg.org/nodiscc/tt-rss
