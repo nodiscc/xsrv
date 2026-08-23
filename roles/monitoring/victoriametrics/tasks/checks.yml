@@ -16,6 +16,7 @@
     - victoriametrics_firewalld_zones | type_debug == "list"
     - victoriametrics_auto_check_exclude | type_debug == "list"
     - victoriametrics_retention_period == victoriametrics_retention_period | int
+    - victoriametrics_scrape_interval == victoriametrics_scrape_interval | int
     - victoriametrics_notifications_mute_time_intervals | type_debug == "list"
     - victoriametrics_disable_iowait_hosts | type_debug == "list"
 

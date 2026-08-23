@@ -27,7 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters: make blackbox HTTP probe timeout configurable (`exporters_blackbox_http_check_timeout`, default 5s)
 * monitoring/exporters: make blackbox TCP check interval configurable (`exporters_blackbox_tcp_check_interval`, default 10s)
 * monitoring/exporters: make blackbox TCP check timeout configurable (`exporters_blackbox_tcp_check_timeout`, default 3s)
-* monitoring/victoriametrics: make global scrape interval use `exporters_scrape_interval`
+* monitoring/victoriametrics: make scrape interval for automatic xsrv HTTP probes configurable (`victoriametrics_scrape_interval`, default 30s)
 * monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
 * libvirt: add support for virtiofsd directory sharing between host and guests
 * kiwix: support adding local ZIM files to the library (`kiwix_zim_local_files`).
