@@ -43,7 +43,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable
 * nextcloud: replace cron background tasks with systemd timer
 * nextcloud: add postgresql collation refresh migration for debian 13
-* nextcloud,openldap,shaarli,tt-rss: remove old php-fpm pools from debian 12
 * openldap: upgrade self-service-password to [v1.8.1](https://github.com/ltb-project/self-service-password/releases/tag/v1.8.1)
 * llamacpp: update to latest version
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
