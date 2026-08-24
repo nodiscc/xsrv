@@ -96,6 +96,12 @@ llamacpp_models:
   #   presets:
   #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
   #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  # - name: qwen3.5:9b # 9B, ~6GB, tools + vision, 2026/02
+  #   url: https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/resolve/main/Qwen3.5-9B-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
   # - name: nemotron-3.5-lightning:30b-a3b # 30B/3B, ~19GB, reasoning, 2026/08
   #   url: https://huggingface.co/ggml-org/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF/resolve/main/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q4_K_M.gguf
   #   presets:
