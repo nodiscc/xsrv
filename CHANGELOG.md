@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 * monitoring/grafana: hide useless columns in alerts table
 * dnsmasq: no not enable DNSSEC validation by default
+* searxng: enable mojeek search engine
 * searxng: decrease searchmysite and wiby search engine weight to 0.7
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable
 * nextcloud: replace cron background tasks with systemd timer
