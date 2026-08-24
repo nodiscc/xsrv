@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * nextcloud: replace cron background tasks with systemd timer
 * nextcloud: add postgresql collation refresh migration for debian 13
 * openldap: upgrade self-service-password to [v1.8.1](https://github.com/ltb-project/self-service-password/releases/tag/v1.8.1)
+* llamacpp: add --cache-reuse 16384 to enable KV cache chunk reuse across turns
 * llamacpp: update to latest version
 * stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
 * gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)

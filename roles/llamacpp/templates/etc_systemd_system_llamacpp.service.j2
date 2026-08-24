@@ -12,7 +12,7 @@ WorkingDirectory=/var/lib/llamacpp/
 ExecStart=/opt/llamacpp/llama-{{ llamacpp_version }}/llama-server \
   --models-preset /var/lib/llamacpp/presets.ini \
   --sleep-idle-seconds {{ llamacpp_sleep_idle_seconds }} \
-  --jinja --ctx-size {{ llamacpp_context_size }} --host {{ llamacpp_listen_address }} --port 8033{% if llamacpp_auth_enabled %} \
+  --jinja --ctx-size {{ llamacpp_context_size }} --cache-reuse 16384 --host {{ llamacpp_listen_address }} --port 8033{% if llamacpp_auth_enabled %} \
   --api-key-file /var/lib/llamacpp/api_key{% endif %}
 
 [Install]
