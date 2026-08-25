@@ -53,3 +53,4 @@
   command: psql -d nextcloud -c "ALTER DATABASE nextcloud REFRESH COLLATION VERSION;"
   changed_when: true # always returns changed but only runs once
   when: not (ansible_local.nextcloud.postgresql_collation_refresh_done | default(false))
+  ignore_errors: "{{ ansible_check_mode }}"

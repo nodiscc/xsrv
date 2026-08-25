@@ -34,6 +34,7 @@
     name: safe.directory
     value: '{{ tt_rss_install_dir }}'
     add_mode: add
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: clone/upgrade tt-rss
   git:
