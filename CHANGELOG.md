@@ -79,7 +79,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea_act_runner: fix `podman container/volume prune` cron jobs
 * common: update apt-listbugs ignore list
 * wireguard: fix AllowedIPs in client config when routes not specified
-* libvirt: fix libvirt port forwarding rules disappearing when firewalld restarts
 * openldap: downgrade ldap-account-manager to v8.9 (config file format incompatible with v9.x)
 * tt_rss: add git `safe.directory` workaround for dubious ownership check
 * kiwix: fix path to directory to backup when `kiwix_backup_data: yes`
