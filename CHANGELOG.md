@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 
-#### [v2.2.0](https://github.com/nodiscc/xsrv/releases/tag/2.2.0) - 2026/08/26
+#### [v2.2.0](https://github.com/nodiscc/xsrv/releases/tag/2.2.0) - 2026-08-26
 
 **Upgrade procedure:**
 * Upgrade to v2.1.0 if not already done
-* rename `victoriametrics_http_checks` to `exporters_blackbox_http_checks` in your `host_vars`
+* monitoring/victoriametrics: rename `victoriametrics_http_checks` to `exporters_blackbox_http_checks` in your `host_vars`
 * stirlingpdf: if you want to keep using the `stirlingpdf` role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` (`xsrv edit-playbook`) to use the archived [`nodiscc.toolbox.stirlingpdf`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 * wireguard: if your configuration is under git version control, add `data/wireguard/*` to your `.gitignore` to avoid accidentally committing configs/private keys downloaded through `utils-wireguard-download-configs`
 * openldap/ldap-account-manager: set `version` to `8.8` in `/etc/ansible/facts.d/ldap_account_manager.fact` on the host (this will allow donwgrading 9.x->8.9)
