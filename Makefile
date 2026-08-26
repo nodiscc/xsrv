@@ -1,7 +1,5 @@
 #!/usr/bin/env make
 SHELL := '/bin/bash'
-LAST_TAG := $(shell git describe --tags --abbrev=0)
-
 all: tests
 
 ##### AUTOMATIC (CI) TESTS #####
@@ -24,17 +22,7 @@ venv:
 	python3 -m venv .venv && \
 	source .venv/bin/activate && \
 	pip3 install wheel && \
-	pip3 install isort ansible-lint==26.4.0 yamllint ansible==12.3.0
-
-.PHONY: build_collection # build the ansible collection tar.gz
-build_collection: venv
-	source .venv/bin/activate && \
-	ansible-galaxy collection build --force
-
-.PHONY: install_collection # prepare the test environment/install the collection
-install_collection: venv build_collection
-	source .venv/bin/activate && \
-	ansible-galaxy  -vvv collection install --collections-path ./ nodiscc-xsrv-$(LAST_TAG).tar.gz
+	pip3 install isort ansible-lint==26.8.0 yamllint ansible==12.3.0
 
 .PHONY: test_ansible_lint # ansible syntax linter
 test_ansible_lint: venv
@@ -91,14 +79,14 @@ test_fetch_backups:
 	XSRV_PROJECTS_DIR="$$PWD/tests/playbooks" ./xsrv fetch-backups xsrv-test my.example.test
 
 ##### RELEASE PROCEDURE #####
-# - make test_init_vm_template test_init_vm test_check_mode test_idempotence test_fetch_backups SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
+# - make tests test_init_vm_template test_init_vm test_check_mode test_idempotence test_fetch_backups SUDO_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG ROOT_PASSWORD=cj5Bfvv5Bm5JYNJiEEOG NETWORK=default
 # - check test environment logs for warning/errors: ssh -t deploy@my.example.test sudo lnav /var/log/syslog
 # - make clean
-# - make bump_versions update_todo new_tag=$new_tag
+# - make bump_versions update_todo new_tag=$new_tag # new_tag without leading v
 # - update release date in CHANGELOG.md, add and commit version bumps/changelog updates with message "release v$new_tag"
 # - git tag $new_tag && git push && git push --tags
 # - git checkout release && git merge master && git push
-# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://gitlab.com/nodiscc/xsrv/-/releases and https://codeberg.org/nodiscc/xsrv/releases
+# - update release descriptions on https://github.com/nodiscc/xsrv/releases and https://codeberg.org/nodiscc/xsrv/releases
 
 .PHONY: bump_versions # manual - bump version numbers in repository files (new_tag=X.Y.Z required)
 bump_versions: doc_md

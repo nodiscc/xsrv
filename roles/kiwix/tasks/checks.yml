@@ -1,4 +1,4 @@
-- name: check that mandatory variables are correctly defined
+- name: check that mandatory variables are correctly defined (kiwix)
   assert:
     quiet: yes
     that: "{{ item }}"
@@ -10,3 +10,4 @@
     - kiwix_allowed_hosts | type_debug == 'list'
     - kiwix_https_mode in ['letsencrypt', 'selfsigned']
     - kiwix_backup_data == kiwix_backup_data | bool
+    - kiwix_zim_local_files | type_debug == 'list'

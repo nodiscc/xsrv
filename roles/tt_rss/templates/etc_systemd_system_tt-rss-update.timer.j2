@@ -1,0 +1,10 @@
+[Unit]
+Description=Run tt-rss feed update hourly
+
+[Install]
+WantedBy=timers.target
+
+[Timer]
+Unit=tt-rss-update.service
+Persistent=true
+OnCalendar=*-*-* *:00:00

@@ -1,0 +1,13 @@
+[Unit]
+Description=tt-rss feed update
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet
+WorkingDirectory={{ tt_rss_install_dir }}
+SyslogIdentifier=tt-rss-update
+User=tt-rss
+
+[Install]
+WantedBy=multi-user.target

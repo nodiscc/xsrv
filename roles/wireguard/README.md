@@ -26,7 +26,7 @@ wireguard_server_public_ip: "CHANGEME"
 wireguard_peers:
   - name: client1
     public_key: Faz...4vEQ=
-    ip_address: "10.200.200.10/24"
+    ip_address: "10.200.200.10"
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables.
@@ -55,7 +55,7 @@ This method is preferred, since the private key never leaves the client (only th
 
 - add the client to `wireguard_peers:` using the `public_key` value received from the client (see example above)
 - deploy the wireguard role (`xsrv deploy`)
-- SSH to the wireguard server (`xsrv ssh`), run `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` and send the contents of this file to the client. It contains furter instructions to setup the VPN connection.
+- SSH to the wireguard server (`xsrv ssh`), run `sudo cat /etc/wireguard/peers/client-config/$CLIENT_NAME.conf` and send the contents of this file to the client. The client must replace `CHANGEME` with the contents of their `wireguard.key` file.
 
 
 #### Automatic key generation on the server
@@ -103,6 +103,14 @@ apache_firewalld_zones:
 ```
 
 
+### Utilities
+
+Download all generated client configuration files to `data/wireguard/<hostname>/` on the controller:
+
+```bash
+TAGS=utils-wireguard-download-configs xsrv deploy
+```
+
 ### Debugging
 
 You can turn on debug logging at any time by running `echo module wireguard +p | sudo tee /sys/kernel/debug/dynamic_debug/control`. To disable debug logging: `echo module wireguard -p | sudo tee /sys/kernel/debug/dynamic_debug/control`. Debug logging will log events such as peers connecting/disconnecting and rejected connection attempts.
@@ -123,6 +131,7 @@ The server's private/public keys should be backed up. See the included [rsnapsho
 <!--BEGIN TAGS LIST-->
 ```
 wireguard - setup wireguard
+utils-wireguard-download-configs - download wireguard client configuration files to the controller
 ```
 <!--END TAGS LIST-->
 

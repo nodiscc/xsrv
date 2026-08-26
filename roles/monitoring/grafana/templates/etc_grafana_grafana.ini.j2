@@ -361,12 +361,12 @@ cookie_secure = true
 
 # Enable adding the Content-Security-Policy header to your requests.
 # CSP allows to control resources the user agent is allowed to load and helps prevent XSS attacks.
-;content_security_policy = false
+content_security_policy = true
 
 # Set Content Security Policy template used when adding the Content-Security-Policy header to your requests.
 # $NONCE in the template includes a random nonce.
 # $ROOT_PATH is server.root_url without the protocol.
-;content_security_policy_template = """script-src 'self' 'unsafe-eval' 'unsafe-inline' 'strict-dynamic' $NONCE;object-src 'none';font-src 'self';style-src 'self' 'unsafe-inline' blob:;img-src * data:;base-uri 'self';connect-src 'self' grafana.com ws://$ROOT_PATH wss://$ROOT_PATH;manifest-src 'self';media-src 'none';form-action 'self';"""
+content_security_policy_template = """script-src 'self' 'unsafe-eval' 'unsafe-inline' 'strict-dynamic' $NONCE;object-src 'none';font-src 'self';style-src 'self' 'unsafe-inline' blob:;img-src * data:;base-uri 'self';connect-src 'self' grafana.com ws://$ROOT_PATH wss://$ROOT_PATH;manifest-src 'self';media-src 'none';form-action 'self';"""
 
 # Enable adding the Content-Security-Policy-Report-Only header to your requests.
 # Allows you to monitor the effects of a policy without enforcing it.

@@ -13,10 +13,14 @@
     group: shaarli
     mode: "0770"
 
+- name: set shaarli-client virtualenv path
+  set_fact:
+    shaarli_client_venv: "/var/shaarli/.venv-{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}"
+
 - name: install python-shaarli-client in virtualenv
   pip:
     name: git+https://github.com/shaarli/python-shaarli-client
-    virtualenv: /var/shaarli/.venv
+    virtualenv: "{{ shaarli_client_venv }}"
     virtualenv_command: python3 -m venv
     extra_args: --force
 
@@ -36,6 +40,6 @@
     day: "*"
     hour: "*" # every hour
     minute: "0"
-    job: '/bin/bash -c "source /var/shaarli/.venv/bin/activate && shaarli {{ "--insecure " if shaarli_https_mode == "selfsigned" }}--config /var/shaarli/python-shaarli-client.ini --outfile /var/shaarli/shaarli.json get-links" 2>&1 | logger -t python-shaarli-client'
+    job: '/bin/bash -c "source {{ shaarli_client_venv }}/bin/activate && shaarli {{ "--insecure " if shaarli_https_mode == "selfsigned" }}--config /var/shaarli/python-shaarli-client.ini --outfile /var/shaarli/shaarli.json get-links" 2>&1 | logger -t python-shaarli-client'
     name: periodic export of shaarli data to file
     user: shaarli

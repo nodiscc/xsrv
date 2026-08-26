@@ -63,8 +63,6 @@ apache_reverseproxies:
 goaccess_fqdn: "goaccess.example.test"
 ##### OWNCAST - https://github.com/nodiscc/xsrv/blob/master/roles/owncast/defaults/main.yml
 owncast_fqdn: "livestream.example.test"
-##### STIRLING PDF - https://github.com/nodiscc/xsrv/blob/master/roles/stirlingpdf/defaults/main.yml
-stirlingpdf_fqdn: "pdf.example.test"
 ##### MOODIST - https://github.com/nodiscc/xsrv/blob/master/roles/moodist/defaults/main.yml
 moodist_fqdn: "moodist.example.test"
 ##### SEARXNG - https://github.com/nodiscc/xsrv/blob/master/roles/searxng/defaults/main.yml

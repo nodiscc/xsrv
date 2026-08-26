@@ -19,6 +19,7 @@
 # @tag utils-apt-upgrade - (manual) run apt upgrade now
 # @tag utils-debian10to11 - (manual) upgrade debian 10 hosts to debian 11
 # @tag utils-debian11to12 - (manual) upgrade debian 11 hosts to debian 12
+# @tag utils-debian12to13 - (manual) upgrade debian 12 hosts to debian 13
 # @tag utils-fail2ban-get-banned - (manual) download the list of banned IPs
 # @tag utils-firewalld-info - (manual) get firewall status informations
 # @tag utils-shutdown - (manual) shut down the host
@@ -38,6 +39,7 @@ galaxy_info:
       versions:
         - "11"
         - "12"
+        - "13"
   galaxy_tags:
     - hostname
     - kernel

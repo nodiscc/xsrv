@@ -66,6 +66,14 @@
     - src: etc_prometheus_blackbox.yml.j2
       dest: /etc/prometheus/blackbox.yml
 
+- name: start and enable blackbox exporter
+  systemd:
+    name: prometheus-blackbox-exporter.service
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+
 ##### PROCESS EXPORTER #####
 
 - name: configure process exporter
@@ -81,6 +89,13 @@
       dest: /etc/default/prometheus-process-exporter
     - src: etc_prometheus_process-exporter.yml.j2
       dest: /etc/prometheus/process-exporter.yml
+
+- name: start and enable process exporter
+  systemd:
+    name: prometheus-process-exporter.service
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
 
 ##### NODE EXPORTER #####
 
@@ -132,10 +147,12 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-- name: enable and start systemd user services exporter timer
+- name: enable and start node exporter and user services exporter timer/service
   systemd:
-    name: systemd-user-services-exporter.timer
+    name: "{{ item }}"
     state: started
     enabled: true
-    daemon_reload: false
   ignore_errors: "{{ ansible_check_mode }}"
+  loop:
+    - systemd-user-services-exporter.timer
+    - prometheus-node-exporter.service

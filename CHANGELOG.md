@@ -3,7 +3,94 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-#### [v2.1.0](https://github.com/nodiscc/xsrv/releases/tag/2.1.0) - UNRELEASED
+
+#### [v2.2.0](https://github.com/nodiscc/xsrv/releases/tag/2.2.0) - 2026/08/26
+
+**Upgrade procedure:**
+* Upgrade to v2.1.0 if not already done
+* rename `victoriametrics_http_checks` to `exporters_blackbox_http_checks` in your `host_vars`
+* stirlingpdf: if you want to keep using the `stirlingpdf` role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` (`xsrv edit-playbook`) to use the archived [`nodiscc.toolbox.stirlingpdf`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
+* wireguard: if your configuration is under git version control, add `data/wireguard/*` to your `.gitignore` to avoid accidentally committing configs/private keys downloaded through `utils-wireguard-download-configs`
+* openldap/ldap-account-manager: set `version` to `8.8` in `/etc/ansible/facts.d/ldap_account_manager.fact` on the host (this will allow donwgrading 9.x->8.9)
+* `xsrv upgrade` to update roles to their latest version
+* `xsrv check` (optional) simulate changes that will be applied
+* `xsrv deploy` apply changes
+* (optional) `TAGS=utils-debian12to13 xsrv deploy` to upgrade Debian 12 hosts to Debian 13, and `xsrv deploy` again
+
+**Added:**
+* common: add `utils-debian12to13` tag to upgrade Debian 12 (bookworm) to Debian 13 (trixie)
+* gitea-act-runner: add `gitea_act_runner_log_level` variable to configure log level
+* llamacpp: add optional API key authentication (`llamacpp_auth_enabled/llamacpp_auth_api_key`)
+* wireguard: add `utils-wireguard-download-configs` tag to download client configs to the controller
+* monitoring/exporters: allow configuring TCP port checks (`exporters_blackbox_tcp_checks`)
+* monitoring/exporters: make local exporter scrape intervals configurable (`exporters_scrape_interval`, default 10s)
+* monitoring/exporters: make blackbox HTTP check interval configurable (`exporters_blackbox_http_check_interval`, default 10s)
+* monitoring/exporters: make blackbox HTTP probe timeout configurable (`exporters_blackbox_http_check_timeout`, default 5s)
+* monitoring/exporters: make blackbox TCP check interval configurable (`exporters_blackbox_tcp_check_interval`, default 10s)
+* monitoring/exporters: make blackbox TCP check timeout configurable (`exporters_blackbox_tcp_check_timeout`, default 3s)
+* monitoring/victoriametrics: make scrape interval for automatic xsrv HTTP probes configurable (`victoriametrics_scrape_interval`, default 30s)
+* monitoring/victoriametrics: allow disabling HostUnusualDiskIO and HostCPUHighIOWait alerts for specific hosts (`victoriametrics_disable_iowait_hosts`)
+* libvirt: add support for virtiofsd directory sharing between host and guests
+* kiwix: support adding local ZIM files to the library (`kiwix_zim_local_files`).
+* tt-rss: replace feed update cron job with systemd timer/service.
+* monitoring/victoriametrics: add PostgresqlTooManyConnections alert
+
+**Removed:**
+* stirlingpdf: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
+
+**Changed:**
+* searxng: sync engines configuration with latest upstream
+* monitoring/grafana: hide useless columns in alerts table
+* dnsmasq: no not enable DNSSEC validation by default
+* searxng: enable mojeek search engine
+* searxng: decrease searchmysite and wiby search engine weight to 0.7
+* wireguard: improve validation of `wireguard_peers[*].ip_address` variable
+* nextcloud: replace cron background tasks with systemd timer
+* nextcloud: add postgresql collation refresh migration for debian 13
+* openldap: upgrade self-service-password to [v1.8.1](https://github.com/ltb-project/self-service-password/releases/tag/v1.8.1)
+* llamacpp: only download/enable `gemma4:4b-e4b` model by default
+* llamacpp: add `--cache-reuse 16384` to enable KV cache chunk reuse across turns
+* llamacpp: enable `--metrics` to expose Prometheus-compatible cache hit/miss metrics
+* llamacpp: update to latest version
+* stirlingpdf: update to [v2.14.2](https://github.com/Stirling-Tools/Stirling-PDF/releases)
+* gitea-act-runner: update to [v2.0.1](https://gitea.com/gitea/runner/releases)
+* monitoring/grafana: update to [v12.4.9](https://github.com/grafana/grafana/releases)
+* gitea: update to [v1.27.1](https://github.com/go-gitea/gitea/releases)
+* nextcloud: upgrade to [v33.0.8](https://nextcloud.com/changelog/)
+* llamacpp: doc: remove duplicate presets, remove old models from examples, update comments
+* llamacpp: set the llamacpp user as system user
+* common: needrestart: cron job: when no reboot is required, just restart services with a pending restart
+* monitoring/exporters: enable monitoring of systemd .mount units
+* monitoring/exporters: force HTTP probes to use IPv4
+* monitoring/exporters/victoriametrics: move HTTP checks to exporters role
+* monitoring/victoriametrics: allow setting timezone for `victoriametrics_notifications_mute_time_intervals`
+* monitoring/victoriametrics: set different icons in alertmanager mail subjects based on alert severity
+* monitoring/victoriametrics: lower systemd failed unit alert threshold to 30s
+* monitoring/grafana: hide unnecessary columns in alerts dashboard table
+* monitoring/grafana: clarify units in apache dashboard
+* monitoring/grafana: add an availability table in the HTTP checks dashboard
+* monitoring/grafana: enable CSP headers in grafana config
+* monitoring/exporters: ensure blackbox/process/user-services exporters are started and enabled
+* matrix/element-web: update to latest version
+* update documentation
+
+**Fixed:**
+* monitoring/grafana: fix datasource in postgresql dashboard
+* fix deprecation warnings
+* shaarli: use versioned venv directory to handle Python version upgrade
+* tests: remove dead code from Makefile
+* gitea_act_runner: fix `podman container/volume prune` cron jobs
+* common: update apt-listbugs ignore list
+* wireguard: fix AllowedIPs in client config when routes not specified
+* openldap: downgrade ldap-account-manager to v8.9 (config file format incompatible with v9.x)
+* tt_rss: add git `safe.directory` workaround for dubious ownership check
+* kiwix: fix path to directory to backup when `kiwix_backup_data: yes`
+
+[Full changes since v2.1.0](https://github.com/nodiscc/xsrv/compare/2.1.0...2.2.0)
+
+------
+
+#### [v2.1.0](https://github.com/nodiscc/xsrv/releases/tag/2.1.0) - 2026-06-20
 
 **Upgrade procedure:**
 * Upgrade to v2.0.0 if not already done
@@ -66,6 +153,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 [Full changes since v2.0.0](https://github.com/nodiscc/xsrv/compare/2.0.0...2.1.0)
 
+------
 
 #### [v2.0.0](https://github.com/nodiscc/xsrv/releases/tag/2.0.0) - 2026-04-02
 
@@ -166,7 +254,7 @@ xsrv deploy   # apply changes
 - backup: add [`rsnapshot_remote_backups[*].port`](https://github.com/nodiscc/xsrv/blob/master/roles/backup/defaults/main.yml) option (default 22, allows backups over different SSH port)
 - common/users: make the default system `umask` configurable
 - common/sysctl: make the value of `kernel.yama.ptrace_scope` configurable
-- add support for Debian 13 in all roles
+- make all roles compatible with Debian 13 (except jitsi)
 
 **Changed:**
 - rename `monitoring_utils` role to `monitoring.utils`

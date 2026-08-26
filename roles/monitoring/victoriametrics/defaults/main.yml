@@ -1,4 +1,5 @@
 # automatically create HTTP probes for xsrv roles deployed on these hosts
+# set to [] top disable all automatic HTTP probes
 victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
 # list of domains to exclude from automatic HTTP checks
 # Example:
@@ -6,23 +7,20 @@ victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
 #   - gitea.example.org
 #   - media.example.org
 victoriametrics_auto_check_exclude: []
-# list of URLs to monitor with victoriametrics/blackbox-exporter HTTP probes
-# Example:
-# victoriametrics_http_checks:
-#   - https://prometheus.io
-#   - https://www.debian.org
-victoriametrics_http_checks: []
 # how long to wait before repeating the last notification
 victoriametrics_alertmanager_repeat_interval: "2h"
 # mute alertmanager notifications during these time intervals
+# set to [] to disable muting
 # Example:
 # victoriametrics_notifications_mute_time_intervals:
 #   - name: evening # unique name for the interval
 #     start_time: "19:00" # start time for the interval (HH:MM)
 #     end_time: "24:00" # end time for the interval
+#     location: "Europe/Paris" # IANA timezone name (default UTC)
 #   - name: morning
 #     start_time: "00:00"
 #     end_time: "09:00"
+#     location: "Europe/Paris" # IANA timezone name (default UTC)
 victoriametrics_notifications_mute_time_intervals: []
 # REQUIRED password to authenticate on exporters when scraping them
 victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
@@ -33,6 +31,8 @@ victoriametrics_alertmanager_smtp_from: "{{ xsrv_admin_email }}"
 victoriametrics_alertmanager_email_to: "{{ xsrv_admin_email }}"
 victoriametrics_alertmanager_smtp_auth_username: "{{ msmtp_username | default('CHANGEME') }}"
 victoriametrics_alertmanager_smtp_auth_password: "{{ msmtp_password | default('CHANGEME') }}"
+# interval at which victoriametrics scrapes local exporters (only used for automatic xsrv HTTP probes)
+victoriametrics_scrape_interval: 30
 # firewall zones from which to allow remote write (zone, state)
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule
 victoriametrics_firewalld_zones:
@@ -40,5 +40,11 @@ victoriametrics_firewalld_zones:
     state: enabled
   - zone: public
     state: enabled
-# retention period in days (default 365)
+# metrics retention period in days
 victoriametrics_retention_period: 365
+# hosts to exclude from HostUnusualDiskIO and HostCPUHighIOWait alerts
+# Example:
+# victoriametrics_disable_iowait_hosts:
+#   - host1.example.org
+#   - host99.example.org
+victoriametrics_disable_iowait_hosts: []

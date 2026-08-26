@@ -57,7 +57,7 @@
 
 - name: extract geoIP database tarball
   shell:
-    cmd: "gunzip -c /root/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb.gz > /usr/local/share/geoip/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb"
+    cmd: "gunzip -c /root/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb.gz > /usr/local/share/geoip/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb && chmod 0644 /usr/local/share/geoip/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb"
   ignore_errors: "{{ ansible_check_mode }}"
   args:
     creates: /usr/local/share/geoip/dbip-country-lite-{{ goaccess_geoip_db_version }}.mmdb

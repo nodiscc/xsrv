@@ -2,4 +2,4 @@
 # Due to shell escaping, to pass backslashes for regexes, you need to double
 # them (\\d for \d). If running under systemd, you need to double them again
 # (\\\\d to mean \d), and escape newlines too.
-ARGS="--collector.textfile.directory=/var/lib/node_exporter/textfile_collector"
+ARGS="--collector.textfile.directory=/var/lib/node_exporter/textfile_collector --collector.systemd.unit-exclude=.+\\.(automount|device|scope|slice)"

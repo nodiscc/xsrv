@@ -1,4 +1,11 @@
-- name: check that mandatory variables are correctly defined
+- name: check that target system is Debian 12 Bookworm
+  assert:
+    that:
+      - ansible_distribution_release == "bookworm"
+    fail_msg: "This role only supports Debian 12 Bookworm. Current system is {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}."
+    success_msg: "Target system is Debian 12 Bookworm"
+
+- name: check that mandatory variables are correctly defined (jitsi)
   assert:
     quiet: yes
     that: "{{ item }}"
@@ -15,13 +22,6 @@
     - jitsi_secure_domain == jitsi_secure_domain | bool
     - jitsi_enable_recent_list == jitsi_enable_recent_list | bool
     - jitsi_allowed_hosts | type_debug == "list"
-
-- name: check that target system is Debian 12 Bookworm
-  assert:
-    that:
-      - ansible_distribution_release == "bookworm"
-    fail_msg: "This role only supports Debian 12 Bookworm. Current system is {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}."
-    success_msg: "Target system is Debian 12 Bookworm"
 
 - name: check that variables are correctly defined (jitsi_users)
   assert:

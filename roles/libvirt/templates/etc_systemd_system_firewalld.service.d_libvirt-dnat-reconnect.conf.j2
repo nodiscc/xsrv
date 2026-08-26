@@ -1,0 +1,2 @@
+#[Service]
+#ExecStartPost=/bin/bash -c 'for vm in $(virsh list --state-running --name 2>/dev/null); do /etc/libvirt/hooks/qemu "$vm" reconnect 2>/dev/null; done'

@@ -117,7 +117,16 @@ apt_listbugs_ignore_list:
   - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
   - 935182 # https://bugs.debian.org/935182 - reason: only affects files on samba shares in specific setups
   - 928963 # https://bugs.debian.org/928963 - reason: only affects sparc64, powerpc64, and s390x architectures
-  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 1136618 # https://bugs.debian.org/1136618 - reason: edge case
+  - 1081014 # https://bugs.debian.org/1081014 - reason: packaging bug
+  - 1099655 # https://bugs.debian.org/1099655 - reason: initramfs bug, can still boot from recovery or old kernel
+  - 1142266 # https://bugs.debian.org/1142266 - reason: minor
+  - 1118638 # https://bugs.debian.org/1118638 - reason: minor
+  - 1140029 # https://bugs.debian.org/1140029 - reason: packaging bug
+  - 1126894 # https://bugs.debian.org/1126894 - reason: timeuuid, unused
+  - 1140045 # https://bugs.debian.org/1140045 - reason: packaging bug
+  - 1099801 # https://bugs.debian.org/1099801 - reason: packaging bug
+  - 1103478 # https://bugs.debian.org/1103478 - reason: only affects non-Debian kernel configs (CONFIG_MODULE_DECOMPRESS=n), fixed in kmod 34.2-2
   - 918012 # https://bugs.debian.org/918012 - reason: only affects debian 9
   - 969072 # https://bugs.debian.org/969072 - reason: only happens during groff build, not when running the command
   - 987570 # https://bugs.debian.org/987570 - reason: packaging bug, no impact

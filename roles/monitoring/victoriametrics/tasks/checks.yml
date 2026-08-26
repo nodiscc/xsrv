@@ -1,11 +1,10 @@
-- name: check that mandatory variables are correctly defined
+- name: check that mandatory variables are correctly defined (victoriametrics)
   assert:
     quiet: yes
     that: "{{ item }}"
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/victoriametrics"
   loop:
     - victoriametrics_auto_check_http_limit | type_debug == "list"
-    - victoriametrics_http_checks | type_debug == "list"
     - victoriametrics_exporters_auth_password is not search('CHANGEME')
     - victoriametrics_alertmanager_smtp_host is not search('CHANGEME')
     - victoriametrics_alertmanager_smtp_port == victoriametrics_alertmanager_smtp_port | int
@@ -17,7 +16,9 @@
     - victoriametrics_firewalld_zones | type_debug == "list"
     - victoriametrics_auto_check_exclude | type_debug == "list"
     - victoriametrics_retention_period == victoriametrics_retention_period | int
+    - victoriametrics_scrape_interval == victoriametrics_scrape_interval | int
     - victoriametrics_notifications_mute_time_intervals | type_debug == "list"
+    - victoriametrics_disable_iowait_hosts | type_debug == "list"
 
 - name: check that victoriametrics_notifications_mute_time_intervals items are correctly defined
   assert:
@@ -26,6 +27,7 @@
       - item.name is string
       - item.start_time is match('^[0-2][0-9]:[0-5][0-9]$')
       - item.end_time is match('^[0-2][0-9]:[0-5][0-9]$')
+      - item.location is not defined or item.location is string
     fail_msg: "One or more variables are not correctly defined. Check role documentation: https://github.com/nodiscc/xsrv/tree/master/roles/victoriametrics"
   loop: "{{ victoriametrics_notifications_mute_time_intervals }}"
   when: victoriametrics_notifications_mute_time_intervals | length > 0

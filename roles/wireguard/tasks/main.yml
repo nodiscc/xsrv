@@ -34,6 +34,12 @@
     - ansible_local.firewalld.ansible_managed is defined
     - ansible_local.firewalld.ansible_managed | bool
 
+- name: import utils download configs tasks
+  import_tasks: utils-wireguard-download-configs.yml
+  tags:
+    - never
+    - utils-wireguard-download-configs
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags:

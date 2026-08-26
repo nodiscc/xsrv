@@ -11,5 +11,6 @@ if [[ "$needrestart_ksta" == "3" ]]; then
     echo "NEEDRESTART-KSTA: 3, reboot required, rebooting"
     /usr/sbin/reboot
 else
-    echo "No reboot required."
+    echo "No reboot required, restarting services..."
+    needrestart -r a
 fi

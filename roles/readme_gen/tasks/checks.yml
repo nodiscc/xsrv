@@ -1,4 +1,4 @@
-- name: check that mandatory variables are correctly defined
+- name: check that mandatory variables are correctly defined (readme_gen)
   assert:
     quiet: yes
     that: "{{ item }}"

@@ -101,31 +101,48 @@ VM XML definitions follow the [libvirt domain XML format](https://libvirt.org/fo
 Note: changing VM resources (RAM/CPU) in the XML definition, and applying the role will not affect **running** VMs until they are stopped and restarted. To force the current memory values defined in XML definitions to be applied immediately, without stopping/restarting VMs, use the tag `utils-libvirt-setmem` (or SSH to the hypervisor and use [`virsh setmem --live`](https://manpages.debian.org/trixie/libvirt-clients/virsh.1.en.html#setmem) directly). The maximum memory allocation for the VM (`<memory>` XML tag ) must already be greater than the requested/current memory (`<currentMemory>` XML tag).
 
 
-#### Share a directory from the hypervisor/host to the VM/guest
+#### Share a directory from the hypervisor/host to the VM/guest (virtiofs)
 
-**Using virt-manager GUI:**
-
-- Access VM settings in `virt-manager`
-- Click `Add hardware > Filesystem`
-  - Mode: `Mapped`
-  - Source path: `/path/to/the/directory/to/share` (on the hypervisor)
-  - Target path: `/dev/9p-name-of-share` (in the VM)
-- Inside the VM run `sudo apt install 9mount, mount -t 9p /dev/p9-name-of-share /mnt/example-share`
-- The shared filesystem will be available in `/mnt/example-share`
+virtiofs provides near-native filesystem performance and is the recommended method for sharing directories with guests.
 
 **Using XML definition:**
 
-Add a filesystem entry to the VM XML:
+Add a `<memoryBacking>` element and a `<filesystem>` entry to the VM XML:
 
 ```xml
-<filesystem type='mount' accessmode='mapped'>
-  <source dir='/path/to/the/directory/to/share'/><!--directory on the hypervisor-->
-  <target dir='/dev/9p-name-of-share'/> <!--device name in the VM -->
-  <readonly/> <!--optional-->
-</filesystem>
+<domain>
+  ...
+  <!-- Required for vhost-user devices like virtiofs -->
+  <memoryBacking>
+    <source type='memfd'/>
+    <access mode='shared'/>
+  </memoryBacking>
+  ...
+  <devices>
+    ...
+    <filesystem type='mount' accessmode='passthrough'>
+      <driver type='virtiofs' queue='1024'/>
+      <binary path='/usr/libexec/virtiofsd' xattr='on'>
+        <!-- Map guest UID/GID 9999 to host UID/GID 1000 (bidirectional 1:1) -->
+        <translate-uid type='map' source='9999' target='1000' count='1'/>
+        <translate-gid type='map' source='9999' target='1000' count='1'/>
+      </binary>
+      <source dir='/path/to/the/directory/to/share'/><!--directory on the hypervisor-->
+      <target dir='name-of-share'/> <!--mount tag used in the guest-->
+    </filesystem>
+  </devices>
+</domain>
 ```
 
-And deploy the `libvirt` tag/role.
+Then deploy the `libvirt` tag/role.
+
+**Inside the VM:**
+
+```bash
+sudo mount -t virtiofs name-of-share /mnt/example-share
+```
+
+No additional packages are needed in the guest — the kernel driver is built into Linux 5.4+.
 
 ### Limitations
 

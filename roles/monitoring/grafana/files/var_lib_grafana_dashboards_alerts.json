@@ -763,6 +763,21 @@
         }
       ],
       "title": "Table - Firing Alerts ",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "__name__": true,
+              "active": true,
+              "alertstate": true,
+              "exported_instance": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
       "type": "table"
     },
     {

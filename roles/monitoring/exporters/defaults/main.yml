@@ -8,3 +8,19 @@ exporters_blackbox_log_level: warn
 # URL of the central VictoriaMetrics instance for remote write
 # Example: https://monitoring.example.com:8428
 monitoring_victoriametrics_url: "CHANGEME"
+# scrape interval for local exporter jobs (seconds)
+exporters_scrape_interval: 10
+# list of URLs to probe via blackbox-exporter HTTP checks from this host
+# Example: [https://example.com, https://other.com]
+exporters_blackbox_http_checks: []
+# scrape interval for blackbox HTTP checks (seconds)
+exporters_blackbox_http_check_interval: 10
+# probe timeout for blackbox HTTP checks (seconds)
+exporters_blackbox_http_check_timeout: 5
+# list of host:port targets to probe via blackbox-exporter TCP checks (tcp_connect module) from this host
+# Example: [ldap.example.org:636, ldap.example.org:389]
+exporters_blackbox_tcp_checks: []
+# scrape interval for blackbox TCP checks (seconds)
+exporters_blackbox_tcp_check_interval: 10
+# probe timeout for blackbox TCP checks (seconds)
+exporters_blackbox_tcp_check_timeout: 3

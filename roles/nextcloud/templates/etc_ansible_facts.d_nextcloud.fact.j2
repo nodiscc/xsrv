@@ -4,5 +4,8 @@
         "version": "{{ nextcloud_version }}"
     },
     "data_directory_owner_migrated": true,
+{% if ansible_facts.distribution_release == "trixie" %}
+    "postgresql_collation_refresh_done": true,
+{% endif %}
     "fqdn": "{{ nextcloud_fqdn }}"
 }

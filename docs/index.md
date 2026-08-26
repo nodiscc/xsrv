@@ -8,7 +8,7 @@
 
 [![](https://github.com/nodiscc/xsrv/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/nodiscc/xsrv/actions)
 [![](https://bestpractices.coreinfrastructure.org/projects/3647/badge)](https://bestpractices.coreinfrastructure.org/projects/3647)
-[![](https://img.shields.io/badge/latest%20release-2.1.0-blue)](https://github.com/nodiscc/xsrv/releases)
+[![](https://img.shields.io/badge/latest%20release-2.2.0-blue)](https://github.com/nodiscc/xsrv/releases)
 [![](https://img.shields.io/badge/docs-readthedocs-%232980B9)](https://xsrv.readthedocs.io)
 
 **Install, manage and run self-hosted network services and applications on your own server(s).**
@@ -54,7 +54,6 @@ This project provides:
 - [samba](https://github.com/nodiscc/xsrv/tree/master/roles/samba) - cross-platform file sharing server
 - [searxng](https://github.com/nodiscc/xsrv/tree/master/roles/searxng) - metasearch engine
 - [shaarli](https://github.com/nodiscc/xsrv/tree/master/roles/shaarli) - bookmarking & link sharing web application
-- [stirlingpdf](https://github.com/nodiscc/xsrv/tree/master/roles/stirlingpdf) - PDF manipulation tools
 - [transmission](https://github.com/nodiscc/xsrv/tree/master/roles/transmission) - bittorrent client/web interface
 - [tt_rss](https://github.com/nodiscc/xsrv/tree/master/roles/tt_rss) - web-based news feed reader
 - [wireguard](https://github.com/nodiscc/xsrv/tree/master/roles/wireguard) - fast and modern VPN server

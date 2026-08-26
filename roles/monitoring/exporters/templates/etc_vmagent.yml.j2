@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 15s
+  scrape_interval: {{ exporters_scrape_interval }}s
   external_labels:
     instance: '{{ inventory_hostname }}'
 
@@ -8,7 +8,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -17,7 +17,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -29,7 +29,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -42,7 +42,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -54,7 +54,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -67,7 +67,7 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: 5s
+    scrape_interval: {{ exporters_scrape_interval }}s
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
@@ -75,4 +75,54 @@ scrape_configs:
     params:
       module:
         - postgres
+{% endif %}
+{% if exporters_blackbox_http_checks | length > 0 %}
+  - job_name: blackbox
+    authorization:
+      type: Bearer
+      credentials: '{{ monitoring_exporters_auth_password }}'
+    scrape_interval: {{ exporters_blackbox_http_check_interval }}s
+    scrape_timeout: {{ exporters_blackbox_http_check_interval - 1 }}s
+    metrics_path: /proxy
+    params:
+      module:
+        - blackbox
+        - http
+    static_configs:
+      - targets:
+{% for url in exporters_blackbox_http_checks %}
+        - {{ url }}
+{% endfor %}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9999
+{% endif %}
+{% if exporters_blackbox_tcp_checks | length > 0 %}
+  - job_name: blackbox-tcp
+    authorization:
+      type: Bearer
+      credentials: '{{ monitoring_exporters_auth_password }}'
+    scrape_interval: {{ exporters_blackbox_tcp_check_interval }}s
+    scrape_timeout: {{ exporters_blackbox_tcp_check_interval - 1 }}s
+    metrics_path: /proxy
+    params:
+      module:
+        - blackbox
+        - tcp_connect
+    static_configs:
+      - targets:
+{% for target in exporters_blackbox_tcp_checks %}
+        - {{ target }}
+{% endfor %}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9999
 {% endif %}

@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 15s
+  scrape_interval: {{ victoriametrics_scrape_interval }}s
   external_labels:
     monitor: 'example'
 
@@ -10,8 +10,8 @@ scrape_configs:
     authorization:
       type: Bearer
       credentials_file: '/etc/victoriametrics/exporters_auth_password'
-    scrape_interval: 10s
-    scrape_timeout: 9s
+    scrape_interval: {{ victoriametrics_scrape_interval }}s
+    scrape_timeout: {{ victoriametrics_scrape_interval - 1 }}s
     metrics_path: /proxy
     params:
       module:

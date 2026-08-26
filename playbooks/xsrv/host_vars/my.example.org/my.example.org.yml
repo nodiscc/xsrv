@@ -70,9 +70,6 @@ owncast_fqdn: "livestream.CHANGEME.org"
 ##### SEARXNG - https://github.com/nodiscc/xsrv/blob/master/roles/searxng/defaults/main.yml
 searxng_fqdn: "search.CHANGEME.org"
 
-##### STIRLING PDF - https://github.com/nodiscc/xsrv/blob/master/roles/stirlingpdf/defaults/main.yml
-stirlingpdf_fqdn: "pdf.CHANGEME.org"
-
 ##### MOODIST - https://github.com/nodiscc/xsrv/blob/master/roles/moodist/defaults/main.yml
 moodist_fqdn: "moodist.CHANGEME.org"
 

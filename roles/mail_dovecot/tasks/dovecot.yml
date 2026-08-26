@@ -16,12 +16,12 @@
   with_items:
     - "/var/mail/vhosts"
 
-- name: copy dovecot configuration
+- name: deploy dovecot configuration
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: root
-    group: root
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   with_items:
     - { src: etc_dovecot_conf.d_10-mail.conf.j2, dest: /etc/dovecot/conf.d/10-mail.conf }
@@ -29,7 +29,12 @@
     - { src: etc_dovecot_conf.d_10-auth.conf.j2, dest: /etc/dovecot/conf.d/10-auth.conf }
     - { src: etc_dovecot_conf.d_10-logging.conf.j2, dest: /etc/dovecot/conf.d/10-logging.conf }
     - { src: etc_dovecot_conf.d_10-ssl.conf.j2, dest: /etc/dovecot/conf.d/10-ssl.conf }
-    - { src: etc_dovecot_dovecot-ldap.conf.ext.j2, dest: /etc/dovecot/dovecot-ldap.conf.ext, mode: "0600" }
+    - { src: etc_dovecot_dovecot.conf.j2, dest: /etc/dovecot/dovecot.conf }
+    - { src: etc_dovecot_conf.d_auth-ldap.conf.ext.j2, dest: /etc/dovecot/conf.d/auth-ldap.conf.ext, owner: dovecot, group: dovecot, mode: "0640" }
+    - { src: etc_dovecot_conf.d_90-acl.conf.j2, dest: /etc/dovecot/conf.d/90-acl.conf }
+    - { src: etc_dovecot_conf.d_90-quota.conf.j2, dest: /etc/dovecot/conf.d/90-quota.conf }
+    - { src: etc_dovecot_conf.d_90-fts.conf.j2, dest: /etc/dovecot/conf.d/90-fts.conf }
+  when: ansible_facts.distribution_release == "trixie"
   notify: restart dovecot
   ignore_errors: "{{ ansible_check_mode }}"
 

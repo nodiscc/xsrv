@@ -1,17 +1,27 @@
 ####### gitea issues: xsrv/xsrv
+- #1457 - dummy-mailer: add dummy SMTP server and configure alertmanager to use it - **`2.4.0`** `tools`
+- #1456 - tests: ensure that roles can be deployed independently/loose coupling - **`-`** `enhancement`
+- #1455 - monitor llamacpp with victoriametrics - **`2.3.0`** `enhancement,monitoring`
+- #1454 - cleanup: remove old php-fpm pools - **`2.3.0`** `enhancement,performance`
+- #1453 - ldap-account-manager: upgrade to v9.6 - **`2.3.0`** `maintenance`
+- #1451 - jitsi: add jitsi_jvb_external_addresses variable to fix 'No valid IP addresses available for harvesting' - **`-`** `bug`
+- #1450 - llamacpp: implement model thinking effort options? - **`-`** `enhancement`
+- #1447 - llama.cpp: add shieldstral 1.0 3B - **`-`** ``
+- #1446 - llama.cpp: add Qwen3.8 27B - **`2.3.0`** `enhancement`
+- #1444 - feat(shaarli): allow installing from a local zip file for testing - **`2.3.0`** `enhancement`
+- #1439 - install lm-sensors - **`-`** `enhancement,monitoring`
+- #1437 - llamacpp: support MTP (speculative decoding) - **`2.3.0`** `enhancement`
 - #1436 - llama.cpp: implement speculative decoding - **`-`** `enhancement,performance`
-- #1434 - gitea_act_runner: update to v1.0.3 - **`2.2.0`** `maintenance`
-- #1433 - gitea_act_runner: document usage of concurrency syntax - **`2.2.0`** `documentation,easy`
+- #1433 - gitea_act_runner: document usage of concurrency syntax - **`2.3.0`** `documentation,easy`
 - #1432 - gitea_act_runner: add prometheus monitoring - **`-`** `enhancement,monitoring`
 - #1431 - llama.cpp: MCP server support? - **`-`** `feature`
-- #1430 - monitoring/victoriametrics: add PostgresqlTooManyConnections alert - **`2.2.0`** `enhancement,monitoring,performance`
 - #1428 - wazuh role? - **`-`** `feature,question,security`
 - #1423 - jellyfin: add optional youtube-metadata-plugin - **`-`** `enhancement`
-- #1419 - searxng: make hostnames plugin configurable through host_vars - **`2.2.0`** `enhancement`
-- #1418 - victoriametrics: add backups documentation - **`2.2.0`** `backups,documentation,enhancement`
+- #1419 - searxng: make hostnames plugin configurable through host_vars - **`2.4.0`** `enhancement`
+- #1418 - victoriametrics: add backups documentation - **`2.3.0`** `backups,documentation,enhancement`
 - #1412 - llama.cpp: performance improvements and additional models - **`-`** `enhancement,performance`
 - #1409 - llama.cpp: add qwen3.5:9b - **`-`** `easy,enhancement`
-- #1408 - grafana: database backups - **`2.2.0`** `backups,monitoring`
+- #1408 - grafana: database backups - **`2.3.0`** `backups,monitoring`
 - #1407 - victoriametrics: metrics downsampling? - **`-`** `monitoring,performance,question`
 - #1403 - common: provide a way to configure crypttab - **`-`** `feature`
 - #1399 - victoriametrics: tune exporter poll intervals (5s is too frequent) - **`-`** `enhancement,monitoring,performance`
@@ -43,10 +53,10 @@
 - #1342 - xsrv: allow passing a relative path as playbook name? - **`-`** `enhancement,question`
 - #1338 - xsrv init-vm/init-vm-template: mount filesystems with noatime,nodiratime options - **`-`** `easy,enhancement,performance`
 - #1335 - searxng: enable container autoupdates? - **`-`** `maintenance,question`
-- #1328 - searxng: make hostnames plugin configurable through host_vars - **`2.2.0`** `enhancement`
+- #1328 - searxng: make hostnames plugin configurable through host_vars - **`2.4.0`** `enhancement`
 - #1325 - Searxng: add new engines - **`-`** `feature,question`
 - #1324 - it-tools role - **`-`** `easy,feature`
-- #1323 - xsrv init-vm: allow specifying disk size - **`2.2.0`** `enhancement`
+- #1323 - xsrv init-vm: allow specifying disk size - **`2.3.0`** `enhancement`
 - #1307 - Webmail client - **`-`** `feature`
 - #1298 - IRC web client + bouncer - **`-`** `feature`
 - #1291 - debsecan: per-host dashboard? - **`-`** `enhancement,monitoring,question,security`
@@ -58,18 +68,17 @@
 - #1269 - document getting ansible-vault-password from keepassxc - **`3.0.0`** `documentation,enhancement,security,upstream`
 - #1268 - backup: allow automatic discovery of paths to backup/commands to run for each host - **`-`** `backups,enhancement`
 - #1256 - wireguard: web interface? - **`-`** `enhancement,question`
-- #1251 - WIP: xsrv: don't require sudo during xsrv init-vm-template - **`2.2.0`** `difficult,enhancement`
+- #1251 - WIP: xsrv: don't require sudo during xsrv init-vm-template - **`2.4.0`** `difficult,enhancement`
 - #1245 - gitea: use unix socket instead of HTTP socket? - **`-`** `enhancement,question,security`
 - #1235 - gitea_act_runner: do not log job output to syslog by default - **`-`** `enhancement,monitoring,upstream`
 - #1230 - podman: add docker-compose? - **`-`** `enhancement,question`
 - #1226 - postgresql: allow enabling pg_stat_statements extension - **`-`** `enhancement,monitoring,performance`
-- #1215 - WIP: tests: add tests for deploying individual roles to a host - **`3.0.0`** `tools`
 - #1214 - nextcloud: enable machine learning (AI) related features? - **`-`** `feature,question`
 - #1212 - nextcloud: allow enabling/disabling file locking? - **`-`** `enhancement,question`
 - #1211 - nextcloud: warning about opcache incorrect configuration - **`-`** `enhancement,performance`
 - #1209 - gitea_act_runner: allow limiting the scope of runners to instance/owner/user/repo - **`-`** `enhancement,security`
 - #1202 - kexec? - **`-`** `enhancement,question`
-- #1201 - WIP: xsrv: init-vm-template: add a video output and spice display device to newly created VM templates - **`2.2.0`** `difficult,enhancement`
+- #1201 - WIP: xsrv: init-vm-template: add a video output and spice display device to newly created VM templates - **`2.3.0`** `difficult,enhancement`
 - #1144 - automate roles uninstallation procedures? - **`-`** `enhancement,question`
 - #1143 - nextcloud: upload speed improvements? - **`-`** `configuration,enhancement,performance,question`
 - #1134 - Lemmy role? - **`-`** `feature,question`
@@ -120,7 +129,7 @@
 - #778 - systemd-nspawn/systemd-machined role? - **`-`** `feature,question`
 - #768 - add ldap-client role (LDAP PAM/SSH authentication)? - **`-`** `feature,question`
 - #751 - monitoring_utils: add scripts to measure disk usage by type/extension/path? - **`-`** `easy,enhancement,monitoring,question`
-- #734 - nextcloud: add whiteboard app? - **`2.2.0`** `easy`
+- #734 - nextcloud: add whiteboard app? - **`2.4.0`** `feature`
 - #723 - Automate DNS scans with dnsspy.io? - **`-`** `feature,question,security`
 - #722 - Allow hdparm/disk spindown time configuration? - **`-`** `feature,question`
 - #717 - transmission: configuration templating task always returns changed (cleartext/hashed password) - **`3.0.0`** `enhancement,maintenance,upstream`
@@ -146,7 +155,7 @@
 - #405 - xsrv: replace environment variable-based settings with options, arguments or configuration from file? - **`-`** `enhancement,maintenance,question`
 - #379 - setup IPV6 support (sysctl, firewall, applications...)? - **`-`** `question`
 - #366 - nextcloud: setup redis memcache backend? - **`-`** `configuration,performance,question`
-- #356 - nextcloud: add nextcloud talk app? - **`2.2.0`** `enhancement,question`
+- #356 - nextcloud: add nextcloud talk app? - **`2.3.0`** `enhancement,question`
 - #348 - ldap-account-manager: Unable to set locale - **`-`** `bug`
 - #344 - nextcloud: replace onlyoffice integration with collabora/nextcloud office? - **`-`** `feature,question`
 - #322 - Frontail role? - **`-`** `feature,monitoring,question`
@@ -179,9 +188,9 @@
 - #97 - openshift/openstack role? - **`-`** `question`
 - #93 - VNC/other remote desktop server role? - **`-`** `feature,question`
 - #86 - Peertube role? - **`-`** `feature,question`
-- #78 - Adminer role - **`2.2.0`** `feature`
+- #78 - Adminer role - **`2.4.0`** `feature`
 - #70 - common: ssh: allow setting up endlessh? - **`-`** `feature,question,security`
-- #69 - IDS/IPS role? - **`2.2.0`** `question,security`
+- #69 - IDS/IPS role? - **`2.3.0`** `question,security`
 - #64 - RAID role? - **`-`** `feature,question`
 - #63 - pfSense role? - **`-`** `feature,question,wontfix`
 - #61 - GDPR compliance? - **`-`** `feature,question`
@@ -195,7 +204,6 @@
 - #44 - jellyfin: document DLNA/UPnP usage - **`-`** `configuration,documentation,feature,question`
 - #43 - OSM routing service role? - **`-`** `feature,question`
 - #42 - OpenStreetMap/maps tileserver role? - **`-`** `feature,question`
-- #41 - network scanner (SANE) server role? - **`2.2.0`** `feature,question`
 - #39 - wallabag role? - **`-`** `feature,question`
 - #37 - Replace `ntp` with `chrony`? - **`3.0.0`** `question`
 - #35 - simple git server role? - **`-`** `feature,question,wontfix`

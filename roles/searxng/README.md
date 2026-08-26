@@ -48,3 +48,8 @@ searxng - setup SearXNG metasearch engine
 ## License
 
 [GNU GPLv3](../../LICENSE)
+
+## References
+
+- https://docs.searxng.org/
+- https://github.com/searxng/searxng

@@ -340,8 +340,14 @@ engines:
 
   - name: annas archive
     engine: annas_archive
+    base_url:
+      - https://annas-archive.gl
+      - https://annas-archive.vg
+      - https://annas-archive.pk
+      - https://annas-archive.gd
     disabled: true
     shortcut: aa
+    timeout: 5
 
   # - name: annas articles
   #   engine: annas_archive
@@ -391,11 +397,6 @@ engines:
     engine: arxiv
     shortcut: arx
     timeout: 4.0
-
-  - name: ask
-    engine: ask
-    shortcut: ask
-    disabled: true
 
   # tmp suspended:  dh key too small
   # - name: base
@@ -1407,10 +1408,6 @@ engines:
       # image proxy of https://pixiv.perennialte.ch
       # - https://pximg.perennialte.ch
 
-  - name: podcastindex
-    engine: podcastindex
-    shortcut: podcast
-
   # Required dependency: psychopg2
   #  - name: postgresql
   #    engine: postgresql
@@ -1420,41 +1417,6 @@ engines:
   #    limit: 10
   #    query_str: 'SELECT * from my_table WHERE my_column = %(query)s'
   #    shortcut : psql
-
-  - name: presearch
-    engine: presearch
-    search_type: search
-    categories: [general, web]
-    shortcut: ps
-    timeout: 4.0
-    disabled: true
-
-  - name: presearch images
-    engine: presearch
-    network: presearch
-    search_type: images
-    categories: [images, web]
-    timeout: 4.0
-    shortcut: psimg
-    disabled: true
-
-  - name: presearch videos
-    engine: presearch
-    network: presearch
-    search_type: videos
-    categories: [general, web]
-    timeout: 4.0
-    shortcut: psvid
-    disabled: true
-
-  - name: presearch news
-    engine: presearch
-    network: presearch
-    search_type: news
-    categories: [news, web]
-    timeout: 4.0
-    shortcut: psnews
-    disabled: true
 
   - name: pub.dev
     engine: xpath
@@ -1597,7 +1559,7 @@ engines:
     title_xpath: .//span[contains(@class,'result-title-txt')]/text()
     content_xpath: ./p[@id='result-hightlight']
     disabled: false
-    weight: 1.0
+    weight: 0.7
     about:
       website: https://searchmysite.net
 
@@ -1847,7 +1809,7 @@ engines:
     categories: [general, web]
     shortcut: wib
     disabled: false
-    weight: 1.0
+    weight: 0.7
     about:
       website: https://wiby.me/
 
@@ -2059,7 +2021,6 @@ engines:
     shortcut: mjk
     engine: mojeek
     categories: [general, web]
-    disabled: true
 
   - name: mojeek images
     shortcut: mjkimg
@@ -2067,7 +2028,6 @@ engines:
     categories: [images, web]
     search_type: images
     paging: false
-    disabled: true
 
   - name: mojeek news
     shortcut: mjknews
@@ -2075,7 +2035,6 @@ engines:
     categories: [news, web]
     search_type: news
     paging: false
-    disabled: true
 
   - name: moviepilot
     engine: moviepilot

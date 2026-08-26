@@ -1,4 +1,4 @@
-- name: stop and disable netdata service
+- name: MIGRATION/3.0.0 - stop and disable netdata service
   systemd:
     name: netdata.service
     state: stopped
@@ -8,7 +8,7 @@
     - netdata_stop_service.failed
     - '"Could not find the requested service netdata.service: host" not in netdata_stop_service.msg'
 
-- name: remove netdata packages
+- name: MIGRATION/3.0.0 - remove netdata packages
   apt:
     state: absent
     package:
@@ -24,7 +24,7 @@
       - netdata-plugin-pythond
       - netdata-plugin-slabinfo
 
-- name: remove netdata configuration/data directories
+- name: MIGRATION/3.0.0 - remove netdata configuration/data directories
   file:
     state: absent
     path: "{{ item }}"
