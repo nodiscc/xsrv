@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 
+#### [v2.3.0](https://github.com/nodiscc/xsrv/releases/tag/2.3.0) - UNRELEASED
+
+**Changed:**
+* apache: remove unused modules (autoindex, negotiation, fcgid) and package (libapache2-mod-fcgid)
+
+[Full changes since v2.2.0](https://github.com/nodiscc/xsrv/compare/2.2.0...2.3.0)
+
+------
+
 #### [v2.2.0](https://github.com/nodiscc/xsrv/releases/tag/2.2.0) - 2026-08-26
 
 **Upgrade procedure:**

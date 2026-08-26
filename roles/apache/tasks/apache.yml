@@ -5,7 +5,6 @@
     state: present
     package:
       - apache2
-      - libapache2-mod-fcgid
       - php{{ apache_php_fpm_version }}-apcu
       - php{{ apache_php_fpm_version }}
       - php{{ apache_php_fpm_version }}-fpm
@@ -77,7 +76,10 @@
   args:
     removes: /etc/apache2/mods-enabled/{{ item }}.load
   with_items:
+    - 'autoindex'
     - 'cgi'
+    - 'fcgid'
+    - 'negotiation'
     - 'php7.0' # conflicts with mpm_event
     - 'php7.2' # conflicts with mpm_event
     - 'php7.3' # conflicts with mpm_event
