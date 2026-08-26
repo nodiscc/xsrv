@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * rename `victoriametrics_http_checks` to `exporters_blackbox_http_checks` in your `host_vars`
 * stirlingpdf: if you want to keep using the `stirlingpdf` role, update `requirements.yml` (`xsrv edit-requirements`) and `playbook.yml` (`xsrv edit-playbook`) to use the archived [`nodiscc.toolbox.stirlingpdf`](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) role instead.
 * wireguard: if your configuration is under git version control, add `data/wireguard/*` to your `.gitignore` to avoid accidentally committing configs/private keys downloaded through `utils-wireguard-download-configs`
+* openldap/ldap-account-manager: set `version` to `8.8` in `/etc/ansible/facts.d/ldap_account_manager.fact` on the host (this will allow donwgrading 9.x->8.9)
 * `xsrv upgrade` to update roles to their latest version
 * `xsrv check` (optional) simulate changes that will be applied
 * `xsrv deploy` apply changes
