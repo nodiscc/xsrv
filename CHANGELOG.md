@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * stirlingpdf: remove role, [archive](https://github.com/nodiscc/toolbox/tree/master/ARCHIVE/ANSIBLE-COLLECTION) it to separate repository
 
 **Changed:**
+* searxng: sync engines configuration with latest upstream
 * monitoring/grafana: hide useless columns in alerts table
 * dnsmasq: no not enable DNSSEC validation by default
 * searxng: enable mojeek search engine
