@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 
-#### [v2.2.0](https://github.com/nodiscc/xsrv/releases/tag/2.2.0) - UNRELEASED
+#### [v2.2.0](https://github.com/nodiscc/xsrv/releases/tag/2.2.0) - 2026/08/26
 
 **Upgrade procedure:**
 * Upgrade to v2.1.0 if not already done

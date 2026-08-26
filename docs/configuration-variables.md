@@ -249,7 +249,16 @@ apt_listbugs_ignore_list:
   - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
   - 935182 # https://bugs.debian.org/935182 - reason: only affects files on samba shares in specific setups
   - 928963 # https://bugs.debian.org/928963 - reason: only affects sparc64, powerpc64, and s390x architectures
-  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 1136618 # https://bugs.debian.org/1136618 - reason: edge case
+  - 1081014 # https://bugs.debian.org/1081014 - reason: packaging bug
+  - 1099655 # https://bugs.debian.org/1099655 - reason: initramfs bug, can still boot from recovery or old kernel
+  - 1142266 # https://bugs.debian.org/1142266 - reason: minor
+  - 1118638 # https://bugs.debian.org/1118638 - reason: minor
+  - 1140029 # https://bugs.debian.org/1140029 - reason: packaging bug
+  - 1126894 # https://bugs.debian.org/1126894 - reason: timeuuid, unused
+  - 1140045 # https://bugs.debian.org/1140045 - reason: packaging bug
+  - 1099801 # https://bugs.debian.org/1099801 - reason: packaging bug
+  - 1103478 # https://bugs.debian.org/1103478 - reason: only affects non-Debian kernel configs (CONFIG_MODULE_DECOMPRESS=n), fixed in kmod 34.2-2
   - 918012 # https://bugs.debian.org/918012 - reason: only affects debian 9
   - 969072 # https://bugs.debian.org/969072 - reason: only happens during groff build, not when running the command
   - 987570 # https://bugs.debian.org/987570 - reason: packaging bug, no impact
@@ -598,7 +607,7 @@ dnsmasq_listen_interfaces: []
 dnsmasq_listen_addresses: []
 # use DNSSEC to validate answers to DNS queries (yes/no)
 # if enabled, dig @127.0.1.1 dnssec-failed.org should return SERVFAIL
-dnsmasq_dnssec: yes
+dnsmasq_dnssec: no
 # log DNS queries prcessed by dnsmasq (VERY verbose) (no/yes)
 dnsmasq_log_queries: no
 # URL of a DNS blocklist to download and load into dnsmasq
@@ -653,10 +662,12 @@ gitea_act_runner_labels:
   - "ubuntu-18.04:docker://node:16-buster"
 # prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
 gitea_act_runner_daily_podman_prune: no
-# act-runner version (https://gitea.com/gitea/act_runner/releases, remove leading v)
-gitea_act_runner_version: "0.6.0"
+# act-runner version (https://gitea.com/gitea/runner/releases, remove leading v)
+gitea_act_runner_version: "2.0.1"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
 gitea_act_runner_enable_service: yes
+# log level for the gitea actions runner (trace/debug/info/warn/error/fatal)
+gitea_act_runner_log_level: info
 ```
 
 
@@ -694,7 +705,7 @@ gitea_db_host: "/run/postgresql/" # /run/postgresql/ for a local postgresql data
 gitea_db_password: "" # leave empty for local postgresql database/peer authentication
 gitea_db_port: 5432 # usually 5432 for PostgreSQL, 3306 for MySQL
 # gitea version to install - https://github.com/go-gitea/gitea/releases.atom; remove leading v
-gitea_version: "1.26.2"
+gitea_version: "1.27.1"
 # HTTPS and SSL/TLS certificate mode for the gitea webserver virtualhost
 #   letsencrypt: acquire a certificate from letsencrypt.org
 #   selfsigned: generate a self-signed certificate
@@ -924,6 +935,8 @@ kiwix_fqdn: kiwix.CHANGEME.org
 kiwix_zim_urls:
   - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim # 238MB
   - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB
+# list of local ZIM file paths to register in the kiwix library (in-place)
+kiwix_zim_local_files: []
 # yes/no: enable/disable kiwix server service, start it at boot
 kiwix_enable_service: yes
 # list of IP addresses allowed to access the kiwix web interface (IP or IP/netmask format)
@@ -1051,7 +1064,11 @@ libvirt_users:
 
 ```yaml
 # llama.cpp version to install (commit hash or tag)
-llamacpp_version: b9680
+llamacpp_version: b9840
+# enable API key authentication for the llama.cpp server
+llamacpp_auth_enabled: false
+# API key for llama.cpp server authentication (used when llamacpp_auth_enabled is true)
+llamacpp_auth_api_key: "CHANGEME"
 # enable and start the LlamaCPP systemd service (true/false)
 llamacpp_enable_service: true
 # context size in tokens for llama.cpp (set to 0 to use model default)
@@ -1080,115 +1097,88 @@ llamacpp_firewalld_zones:
 # Only a small model that can run on CPU/RAM is enabled by default, enable/experiment other models below if your hardware configuration allows
 # to delete a model from the llama.cpp server, access it over ssh (xsrv shell) and `sudo rm` the relevant files under `/var/lib/llamacpp/{aliases,models}/`, then `sudo systemctl restart llamacpp.service`
 llamacpp_models:
-  - name: gemma3:4b # 4B, 3.2GB, vision
-    url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/google_gemma-3-4b-it-Q6_K_L.gguf
-    mmproj_url: https://huggingface.co/bartowski/google_gemma-3-4b-it-GGUF/resolve/main/mmproj-google_gemma-3-4b-it-f16.gguf
+  - name: gemma4:4b-e4b # 4.5B effective, 5GB, vision + audio, 2026/06
+    url: https://huggingface.co/unsloth/gemma-4-E4B-it-GGUF/resolve/main/gemma-4-E4B-it-Q4_K_M.gguf
+    mmproj_url: https://huggingface.co/unsloth/gemma-4-E4B-it-GGUF/resolve/main/mmproj-F16.gguf
     presets:
       default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  # - name: gemma3:12b # 12B, 9.3GB, vision
-  #   url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/google_gemma-3-12b-it-Q6_K_L.gguf
-  #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-12b-it-GGUF/resolve/main/mmproj-google_gemma-3-12b-it-f16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  # - name: gemma3:27b #27B, 16GB, vision
-  #   url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/google_gemma-3-27b-it-qat-Q4_K_L.gguf
-  #   mmproj_url: https://huggingface.co/bartowski/google_gemma-3-27b-it-qat-GGUF/resolve/main/mmproj-google_gemma-3-27b-it-qat-f16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  # - name: gemma4:12b # 12B, 13.6GB, vision + audio
+  # - name: gemma4:12b # 12B, 13.6GB, vision + audio, 2026/06
   #   url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/gemma-4-12b-it-UD-Q8_K_XL.gguf
   #   mmproj_url: https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
-  # - name: llama3.1:8b # 8B, 5GB, tools
-  #   url: https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_L.gguf
+  # - name: gemma4:31b # 31B, 18GB, vision + reasoning, 2026/06
+  #   url: https://huggingface.co/unsloth/gemma-4-31B-it-GGUF/resolve/main/gemma-4-31B-it-Q4_K_M.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/gemma-4-31B-it-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
-  #     default: {temp: 1.0}
-  # - name: gpt-oss:20b # 20B, 12GB, tools + reasoning
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gemma4:26b-a4b # 26B total, 3.8B active, 17GB, vision, 2026/06
+  #   url: https://huggingface.co/unsloth/gemma-4-26B-A4B-it-GGUF/resolve/main/gemma-4-26B-A4B-it-UD-Q4_K_M.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/gemma-4-26B-A4B-it-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-k: 64, top-p: 0.95}
+  # - name: gpt-oss:20b # 20B, 12GB, tools + reasoning, 2025/08
   #   url: https://huggingface.co/bartowski/openai_gpt-oss-20b-GGUF/resolve/main/openai_gpt-oss-20b-MXFP4.gguf
   #   presets:
   #     default: {temp: 1.0, top-p: 1.0, top-k: 40}
-  # - name: qwen3-vl:8b #8B, 4.2GB, tools
-  #   url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/Qwen_Qwen3-VL-8B-Instruct-Q3_K_L.gguf
-  #   mmproj_url: https://huggingface.co/bartowski/Qwen_Qwen3-VL-8B-Instruct-GGUF/resolve/main/mmproj-Qwen_Qwen3-VL-8B-Instruct-f16.gguf
-  #   presets:
-  #     default: {temp: 0.7, top-p: 0.8, top-k: 20}
-  # - name: qwen2.5-coder:7b #7B, 7.6GB, tools + reasoning
-  #   url: https://huggingface.co/bartowski/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/Qwen2.5-Coder-7B-Instruct-Q8_0.gguf
-  #   presets:
-  #     default: {temp: 0.7, top-p: 0.8, top-k: 20, repeat-penalty: 1.05}
-  # - name: qwen3-instruct:4b # 4B, 3.6GB, tools
-  #   url: https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/main/Qwen3-4B-Instruct-2507-UD-Q6_K_XL.gguf
-  #   presets:
-  #     default: {temp: 0.7, top-p: 0.8, top-k: 20, min-p: 0, presence-penalty: 1.0}
-  # - name: qwen3:14b #14B, 8.4GB, tools
-  #   url: https://huggingface.co/Qwen/Qwen3-14B-GGUF/resolve/main/Qwen3-14B-Q4_K_M.gguf
-  #   presets:
-  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5}
-  # - name: qwen3-coder:30b # 30B, 21GB, tools + reasoning
-  #   url: https://huggingface.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF/resolve/main/Qwen3-Coder-30B-A3B-Instruct-UD-Q5_K_XL.gguf
-  #   presets:
-  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
-  # - name: nemotron-nano:12b # 12B, 7.5GB
+  # - name: nemotron-nano:12b # 12B, 7.5GB, 2025/08
   #   url: https://huggingface.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-12B-v2-GGUF/resolve/main/nvidia_NVIDIA-Nemotron-Nano-12B-v2-Q4_K_L.gguf
   #   presets:
   #     default: {temp: 0.6, top-p: 0.95}
-  # - name: devstral-small:24b #24B, 14GB, tools
+  # - name: devstral-small:24b #24B, 14GB, tools, 2025/12
   #   url: https://huggingface.co/bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF/resolve/main/mistralai_Devstral-Small-2-24B-Instruct-2512-Q4_K_L.gguf
   #   presets:
   #     default: {temp: 0.15, min-p: 0.01}
-  # - name: deepseek-r1:14b #14B, 9.8GB, reasoning
-  #   url: https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF/resolve/main/DeepSeek-R1-Distill-Qwen-14B-Q5_K_M.gguf
-  #   presets:
-  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 1.5}
-  # - name: deepseek-coder-v2:16b #16B, 14GB, tools + reasoning
-  #   url: https://huggingface.co/bartowski/DeepSeek-Coder-V2-Lite-Instruct-GGUF/resolve/main/DeepSeek-Coder-V2-Lite-Instruct-Q6_K_L.gguf
-  #   presets:
-  #     default: {temp: 0.6, top-p: 0.95, top-k: 20, presence-penalty: 0.0}
-  # - name: qwen3.5:2b # 2B, 2.8GB, tools + vision
-  #   url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-UD-Q8_K_XL.gguf
-  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/mmproj-F16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  # - name: qwen3.5:4b # 4B, 6GB, tools + vision
-  #   url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-UD-Q8_K_XL.gguf
-  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/mmproj-F16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  # - name: qwen3.5:27b # 27B, 17.5GB, tools + vision
-  #   url: https://huggingface.co/unsloth/Qwen3.5-27B-GGUF/resolve/main/Qwen3.5-27B-UD-Q4_K_XL.gguf
-  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-27B-GGUF/resolve/main/mmproj-F16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  # - name: qwen3.5:35b-a3b # 35B + 3B MoE, 22GB, tools + vision
-  #   url: https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/Qwen3.5-35B-A3B-UD-Q4_K_XL.gguf
-  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF/resolve/main/mmproj-F16.gguf
-  #   presets:
-  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
-  #     reasoning: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
-  # - name: ministral-3:8b # 8B, 9GB, reasoning + vision
+  # - name: ministral-3:8b # 8B, 9GB, reasoning + vision, 2025/10
   #   url: https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF/resolve/main/Ministral-3-8B-Instruct-2512-Q8_0.gguf
   #   mmproj_url: https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF/resolve/main/Ministral-3-8B-Instruct-2512-BF16-mmproj.gguf
   #   presets:
   #     default: {temp: 0.1}
   #     creative: {temp: 0.6}
-  # - name: glm4.6v-flash:9b # 9B, 8.9GB, reasoning + tools + vision
+  # - name: glm4.6v-flash:9b # 9B, 8.9GB, reasoning + tools + vision, 2025/12
   #   url: https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF/resolve/main/GLM-4.6V-Flash-UD-Q4_K_XL.gguf
   #   mmproj_url: https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF/resolve/main/mmproj-F16.gguf
   #   presets:
   #     default: {temp: 0.8, top-p: 0.6, top-k: 2, repeat-penalty: 1.1}
-  # - name: glm4.7-flash:30b # 30B, 18GB, reasoning + tools
+  # - name: glm4.7-flash:30b # 30B, 18GB, reasoning + tools, 2026/01
   #   url: https://huggingface.co/unsloth/GLM-4.7-Flash-GGUF/resolve/main/GLM-4.7-Flash-UD-Q4_K_XL.gguf
   #   presets:
   #     default: {temp: 1.0, top-p: 0.95, min-p: 0.01}
   #     coding: {temp: 0.7, top-p: 1.0, min-p: 0.01}
+  # - name: qwen3.6:35b-a3b # 35B/A3B, 22.4GB, tools + vision + reasoning, 2026/04
+  #   url: https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF/resolve/main/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  # - name: qwen3.6:27b # 27B, ~16GB, tools + vision + reasoning, 2026/04
+  #   url: https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-UD-Q4_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  # - name: qwen3.5:2b # 2B, 2.8GB, tools + vision, 2026/02
+  #   url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  # - name: qwen3.5:9b # 9B, ~6GB, tools + vision, 2026/02
+  #   url: https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/resolve/main/Qwen3.5-9B-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  # - name: qwen3.5:4b # 4B, 5.5GB, tools + vision, 2026/02
+  #   url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-UD-Q8_K_XL.gguf
+  #   mmproj_url: https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/mmproj-F16.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 1.5, repeat-penalty: 1.0}
+  #     coding: {temp: 0.6, top-p: 0.95, top-k: 20, min-p: 0, presence-penalty: 0.0, repeat-penalty: 1.0}
+  # - name: nemotron-3.5-lightning:30b-a3b # 30B/3B, ~19GB, reasoning, 2026/08
+  #   url: https://huggingface.co/ggml-org/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF/resolve/main/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q4_K_M.gguf
+  #   presets:
+  #     default: {temp: 1.0, top-p: 0.95}
 ```
 
 
@@ -1311,7 +1301,7 @@ matrix_element_jitsi_preferred_domain: "meet.element.io"
 # when matrix_element_video_rooms_mode = 'element_call', domain of the Element Call instance to use for video calls
 matrix_element_call_domain: "call.element.io"
 # matrix element web client version (https://github.com/vector-im/element-web/releases)
-matrix_element_version: "1.12.20"
+matrix_element_version: "1.12.25"
 # element installation directory
 element_install_dir: "/var/www/{{ matrix_element_fqdn }}"
 # HTTPS and SSL/TLS certificate mode for the matrix-element webserver virtualhost
@@ -1411,7 +1401,7 @@ nextcloud_install_dir: "/var/www/{{ nextcloud_fqdn }}"
 # full public URL of your nextcloud installation (update this if you changed the install location to a subdirectory)
 nextcloud_full_url: "https://{{ nextcloud_fqdn }}/"
 # nextcloud version to install
-nextcloud_version: "32.0.11"
+nextcloud_version: "33.0.8"
 # base folder for shared files from other users
 nextcloud_share_folder: '/SHARED/'
 # default app to open on login. You can use comma-separated list of app names, so if the first  app is not enabled for a user then Nextcloud will try the second one, and so on.
@@ -1566,7 +1556,7 @@ ldap_account_manager_allowed_hosts: "10.*,192.168.*,172.16.*,172.17.*,172.18.*,1
 # installation directory for ldap-account-manager
 ldap_account_manager_install_dir: "/var/www/{{ ldap_account_manager_fqdn }}"
 # LDAP Account Manager version (https://github.com/LDAPAccountManager/lam/releases)
-ldap_account_manager_version: "9.6"
+ldap_account_manager_version: "8.9"
 # ldap-account-manager installation method (tar.bz2, apt...)
 # currently only tar.bz2 is supported (ldap-account-manager not available in debian 10 repositories)
 ldap_account_manager_install_method: "tar.bz2"
@@ -1611,7 +1601,7 @@ self_service_password_debug: no
 # installation directory for Self Service Password
 self_service_password_install_dir: "/var/www/{{ self_service_password_fqdn }}"
 # LDAP Self-Service Password version (https://github.com/ltb-project/self-service-password/releases)
-self_service_password_version: "1.7.3"
+self_service_password_version: "1.8.1"
 # LDAP server URI for Self Service Password (e.g. ldap://localhost:389 or ldap://ldap.CHANGEME.org:686)
 self_service_password_ldap_url: "ldap://{{ openldap_fqdn }}:389"
 # HTTPS/SSL/TLS certificate mode for the Self Service Password webserver virtualhost
@@ -2046,6 +2036,22 @@ exporters_blackbox_log_level: warn
 # URL of the central VictoriaMetrics instance for remote write
 # Example: https://monitoring.example.com:8428
 monitoring_victoriametrics_url: "CHANGEME"
+# scrape interval for local exporter jobs (seconds)
+exporters_scrape_interval: 10
+# list of URLs to probe via blackbox-exporter HTTP checks from this host
+# Example: [https://example.com, https://other.com]
+exporters_blackbox_http_checks: []
+# scrape interval for blackbox HTTP checks (seconds)
+exporters_blackbox_http_check_interval: 10
+# probe timeout for blackbox HTTP checks (seconds)
+exporters_blackbox_http_check_timeout: 5
+# list of host:port targets to probe via blackbox-exporter TCP checks (tcp_connect module) from this host
+# Example: [ldap.example.org:636, ldap.example.org:389]
+exporters_blackbox_tcp_checks: []
+# scrape interval for blackbox TCP checks (seconds)
+exporters_blackbox_tcp_check_interval: 10
+# probe timeout for blackbox TCP checks (seconds)
+exporters_blackbox_tcp_check_timeout: 3
 ```
 
 
@@ -2102,7 +2108,7 @@ grafana_enable_service: yes
 # set to empty list [] to allow access from any IP address
 grafana_allowed_hosts: []
 # grafana version (https://github.com/grafana/grafana/releases.atom)
-grafana_version: "12.4.3"
+grafana_version: "12.4.9"
 # password to authenticate to VictoriaMetrics datasource
 grafana_victoriametrics_auth_password: "{{ monitoring_exporters_auth_password }}"
 ```
@@ -2172,6 +2178,7 @@ bonnie_benchmark_paths:
 
 ```yaml
 # automatically create HTTP probes for xsrv roles deployed on these hosts
+# set to [] top disable all automatic HTTP probes
 victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
 # list of domains to exclude from automatic HTTP checks
 # Example:
@@ -2179,23 +2186,20 @@ victoriametrics_auto_check_http_limit: "{{ groups['all'] }}"
 #   - gitea.example.org
 #   - media.example.org
 victoriametrics_auto_check_exclude: []
-# list of URLs to monitor with victoriametrics/blackbox-exporter HTTP probes
-# Example:
-# victoriametrics_http_checks:
-#   - https://prometheus.io
-#   - https://www.debian.org
-victoriametrics_http_checks: []
 # how long to wait before repeating the last notification
 victoriametrics_alertmanager_repeat_interval: "2h"
 # mute alertmanager notifications during these time intervals
+# set to [] to disable muting
 # Example:
 # victoriametrics_notifications_mute_time_intervals:
 #   - name: evening # unique name for the interval
 #     start_time: "19:00" # start time for the interval (HH:MM)
 #     end_time: "24:00" # end time for the interval
+#     location: "Europe/Paris" # IANA timezone name (default UTC)
 #   - name: morning
 #     start_time: "00:00"
 #     end_time: "09:00"
+#     location: "Europe/Paris" # IANA timezone name (default UTC)
 victoriametrics_notifications_mute_time_intervals: []
 # REQUIRED password to authenticate on exporters when scraping them
 victoriametrics_exporters_auth_password: "{{ monitoring_exporters_auth_password }}"
@@ -2206,6 +2210,8 @@ victoriametrics_alertmanager_smtp_from: "{{ xsrv_admin_email }}"
 victoriametrics_alertmanager_email_to: "{{ xsrv_admin_email }}"
 victoriametrics_alertmanager_smtp_auth_username: "{{ msmtp_username | default('CHANGEME') }}"
 victoriametrics_alertmanager_smtp_auth_password: "{{ msmtp_password | default('CHANGEME') }}"
+# interval at which victoriametrics scrapes local exporters (only used for automatic xsrv HTTP probes)
+victoriametrics_scrape_interval: 30
 # firewall zones from which to allow remote write (zone, state)
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule
 victoriametrics_firewalld_zones:
@@ -2213,7 +2219,13 @@ victoriametrics_firewalld_zones:
     state: enabled
   - zone: public
     state: enabled
-# retention period in days (default 365)
+# metrics retention period in days
 victoriametrics_retention_period: 365
+# hosts to exclude from HostUnusualDiskIO and HostCPUHighIOWait alerts
+# Example:
+# victoriametrics_disable_iowait_hosts:
+#   - host1.example.org
+#   - host99.example.org
+victoriametrics_disable_iowait_hosts: []
 ```
 <!--END ROLES LIST-->

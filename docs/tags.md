@@ -3,7 +3,7 @@
 ```
   ╻ ╻┏━┓┏━┓╻ ╻
 ░░╺╋╸┗━┓┣┳┛┃┏┛
-  ╹ ╹┗━┛╹┗╸┗┛ v2.0.0
+  ╹ ╹┗━┛╹┗╸┗┛ v2.1.0
 [xsrv] INFO: list of tags in project xsrv-test
 [xsrv] USAGE: TAGS=tag1,tag2,tag3 xsrv deploy xsrv-test
 TAGS:
@@ -76,7 +76,6 @@ shaarli - setup shaarli bookmark service
 ssh-authorized-keys - setup ssh authorized keys
 ssh - setup SSH server
 ssl - setup SSL certificates and configuration
-stirlingpdf - setup Stirling PDF PDF manipulation tools
 synapse-admin - setup synapse-admin matrix administration web interface
 synapse - setup synapse (matrix) chat server
 sysctl - setup sysctl kernel configuration
@@ -103,9 +102,11 @@ utils-podman-uninstall - (manual) uninstall podman container engine
 utils-reboot - (manual) reboot the host
 utils-samba-listusers - (manual) list samba users
 utils-shutdown - (manual) shut down the host
+utils-wireguard-download-configs - download wireguard client configuration files to the controller
 victoriametrics - setup victoriametrics monitoring service and time-series database
 wireguard - setup wireguard
 OTHER TAGS:
+firewalld
 gitea_act_runner
 gitea-act-runner
 grafana-dashboards

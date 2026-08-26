@@ -131,6 +131,7 @@ The server's private/public keys should be backed up. See the included [rsnapsho
 <!--BEGIN TAGS LIST-->
 ```
 wireguard - setup wireguard
+utils-wireguard-download-configs - download wireguard client configuration files to the controller
 ```
 <!--END TAGS LIST-->
 
