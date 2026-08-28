@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 * apache: remove unused modules (autoindex, negotiation, fcgid) and package (libapache2-mod-fcgid)
 * gitea: update to [v1.27.2](https://github.com/go-gitea/gitea/releases)
+* rsyslog: enable aggregation of `/var/log/apt/dpkg.log` to syslog
 
 [Full changes since v2.2.0](https://github.com/nodiscc/xsrv/compare/2.2.0...2.3.0)
 
