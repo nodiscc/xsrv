@@ -79,7 +79,6 @@
     - 'autoindex'
     - 'cgi'
     - 'fcgid'
-    - 'negotiation'
     - 'php7.0' # conflicts with mpm_event
     - 'php7.2' # conflicts with mpm_event
     - 'php7.3' # conflicts with mpm_event
