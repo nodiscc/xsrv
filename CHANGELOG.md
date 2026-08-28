@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea: update to [v1.27.2](https://github.com/go-gitea/gitea/releases)
 * rsyslog: enable aggregation of `/var/log/apt/dpkg.log` to syslog
 
+**Fixed:**
+* dovecot: fix failure to start when `dovecot_disable_plaintext_auth: false`
+
 [Full changes since v2.2.0](https://github.com/nodiscc/xsrv/compare/2.2.0...2.3.0)
 
 ------
