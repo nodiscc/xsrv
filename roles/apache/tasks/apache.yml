@@ -72,7 +72,7 @@
     - restart php-fpm (apache)
 
 - name: disable unnecessary apache modules
-  command: a2dismod {{ item }}
+  command: a2dismod -f {{ item }}
   args:
     removes: /etc/apache2/mods-enabled/{{ item }}.load
   with_items:
