@@ -8,8 +8,6 @@
 # connection is considered secure and plaintext authentication is allowed.
 # See also ssl=required setting.
 {% if ansible_facts.distribution_release == "trixie" %}
-auth_allow_cleartext={{ 'no' if dovecot_disable_plaintext_auth else 'yes' }}
-ssl={{ 'required' if dovecot_disable_plaintext_auth else 'no' }}
 {% else %}
 disable_plaintext_auth={{ 'yes' if dovecot_disable_plaintext_auth else 'no' }}
 {% endif %}

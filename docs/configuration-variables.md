@@ -1206,10 +1206,6 @@ dovecot_ldap_pass_attrs: "mail=user,userPassword=password"
 dovecot_auth_debug: no
 # allow unencrypted IMAP on port 143/tcp (yes/no)
 dovecot_listen_imap: no
-# require SSL (yes/no)
-dovecot_ssl_required: yes
-# disable plaintext authentication when SSL is not used (yes/no)
-dovecot_disable_plaintext_auth: yes
 # start/stop the dovecot service, enable/disable it on boot (yes/no)
 dovecot_enable_service: yes
 # firewall zones for the IMAPS service, if nodiscc.xsrv.common/firewalld role is deployed

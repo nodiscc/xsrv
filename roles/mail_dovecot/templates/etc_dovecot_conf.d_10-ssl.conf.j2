@@ -4,7 +4,6 @@
 
 # SSL/TLS support: yes, no, required. <doc/wiki/SSL.txt>
 ssl = required
-ssl = {{ 'required' if dovecot_ssl_required else 'yes' }}
 
 # PEM encoded X.509 SSL/TLS certificate and private key. They're opened before
 # dropping root privileges, so keep the key file unreadable by anyone but
