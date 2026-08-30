@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)
 * gitea: update to [v1.27.2](https://github.com/go-gitea/gitea/releases)
 * rsyslog: enable aggregation of `/var/log/apt/dpkg.log` to syslog
+* jellyfin: update opensubtitles plugin to latest version
 
 **Removed:**
 * dovecot: remove `dovecot_ssl_required/dovecot_disable_plaintext_auth` variables, always require TLS
