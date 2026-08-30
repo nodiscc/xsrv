@@ -140,7 +140,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * openldap: update LDAP-account-manager to [v9.6](https://github.com/LDAPAccountManager/lam/releases/tag/9.6)
 * gitea: update to [v1.26.2](https://github.com/go-gitea/gitea/releases)
 * gitea_act_runner: update to [v0.6.0](https://gitea.com/gitea/act_runner/releases)
-* shaarli: update to v0.16.3 [[1](https://github.com/shaarli/Shaarli/releases)
+* shaarli: update to v0.16.5 [[1](https://github.com/shaarli/Shaarli/releases/tag/v0.16.5)
 * monitoring/grafana: update to [v12.4.3](https://github.com/grafana/grafana/releases)
 * owncast: update to [v0.2.5](https://github.com/owncast/owncast/releases)
 * llamacpp: refactor: remove aliases directory and symlink logic
