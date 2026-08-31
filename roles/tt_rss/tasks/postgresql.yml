@@ -44,3 +44,11 @@
     type: database
     role: "{{ tt_rss_db_user }}"
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: refresh PostgreSQL collation version for tt-rss database
+  become: yes
+  become_user: postgres
+  command: psql -d ttrss -c "ALTER DATABASE ttrss REFRESH COLLATION VERSION;"
+  changed_when: true # always returns changed but only runs once
+  when: not (ansible_local.tt_rss.postgresql_collation_refresh_done | default(false))
+  ignore_errors: "{{ ansible_check_mode }}"

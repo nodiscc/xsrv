@@ -3,5 +3,8 @@
     "general": {
         "db_imported": true
     },
+{% if ansible_facts.distribution_release == "trixie" %}
+    "postgresql_collation_refresh_done": true,
+{% endif %}
     "fqdn": "{{ tt_rss_fqdn }}"
 }
