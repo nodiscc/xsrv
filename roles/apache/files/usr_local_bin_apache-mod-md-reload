@@ -13,8 +13,8 @@ if [[ "$command" == "request" ]]; then
     mdomain="$3"
     case "$reason" in
         "renewing") echo "$mdomain: starting certificate renewal" ;;
-        "renewed") echo "$mdomain: certificate renewed" ;;
-        "installed") touch /var/lib/apache2/md/mod-md-reload-required && echo "$mdomain: certificate installed, reload requested" ;;
+        "renewed") touch /var/lib/apache2/md/mod-md-reload-required && echo "$mdomain: certificate renewed, reload requested" ;;
+        "installed") echo "$mdomain: certificate installed (activated at next reload)" ;;
         "expiring") echo "$mdomain: certificate will expire soon" ;;
         "errored") echo "$mdomain: errors were encountered during certificate renewal" ;;
         *) echo "$mdomain: $reason"

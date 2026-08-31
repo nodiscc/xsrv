@@ -16,6 +16,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Removed:**
 * dovecot: remove `dovecot_ssl_required/dovecot_disable_plaintext_auth` variables, always require TLS
 
+**Fixed:**
+* apache: fix mod_md certificates not automatically loaded after renewal/initial creation
+
 [Full changes since v2.2.0](https://github.com/nodiscc/xsrv/compare/2.2.0...2.3.0)
 
 ------
