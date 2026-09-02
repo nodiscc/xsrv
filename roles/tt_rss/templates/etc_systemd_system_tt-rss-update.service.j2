@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet
+ExecStart=/bin/sh -c '/usr/bin/php {{ tt_rss_install_dir }}/update.php --feeds --quiet || true'
 WorkingDirectory={{ tt_rss_install_dir }}
 SyslogIdentifier=tt-rss-update
 User=tt-rss

@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Fixed:**
 * apache: fix mod_md certificates not automatically loaded after renewal/initial creation
+* tt-rss: prevent simple feed update errors from failing `tt-rss-update.service`
 
 [Full changes since v2.2.0](https://github.com/nodiscc/xsrv/compare/2.2.0...2.3.0)
 
