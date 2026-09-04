@@ -9,6 +9,12 @@
     home: /var/nextcloud
     create_home: yes
 
+- name: add www-data to nextcloud group
+  user:
+    name: www-data
+    groups: nextcloud
+    append: yes
+
 - name: add nextcloud user to msmtp group
   user:
     name: nextcloud
