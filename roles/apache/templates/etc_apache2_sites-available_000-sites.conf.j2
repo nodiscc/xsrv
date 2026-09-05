@@ -53,6 +53,11 @@ MDRequireHttps permanent
   # Inform the upstream server that the original request was done over HTTPS
   RequestHeader set X-Forwarded-Proto https
   RequestHeader set X-Forwarded-Ssl on
+{% if item.websocket | default(false) | bool %}
+  # Allow WebSocket upgrade passthrough
+  RequestHeader setifempty "Connection" "upgrade"
+  RequestHeader setifempty "Upgrade" "websocket"
+{% endif %}
   SSLProxyEngine on
   SSLProxyCheckPeerCN off
   SSLProxyCheckPeerName off

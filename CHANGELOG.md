@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### [v2.3.0](https://github.com/nodiscc/xsrv/releases/tag/2.3.0) - UNRELEASED
 
+**Added:**
+* apache: add support for `apache_reverseproxies[*].websocket: true` (WebSocket passthrough)
+
 **Changed:**
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)
 * gitea: update to [v1.27.3](https://github.com/go-gitea/gitea/releases/tag/v1.27.3)
