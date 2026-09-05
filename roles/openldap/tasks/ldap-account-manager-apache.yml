@@ -7,6 +7,13 @@
     - restart php-fpm (openldap)
     - restart prometheus-php-fpm-exporter
 
+- name: MIGRATION/3.0.0 - remove old php-fpm pool
+  file:
+    path: /etc/php/8.2/fpm/pool.d/ldap-account-manager.conf
+    state: absent
+  notify: restart prometheus-php-fpm-exporter
+  when: ansible_distribution_release != "bookworm"
+
 - name: copy apache2 virtualhost configuration
   template:
     src: etc_apache2_sites-available_ldap-account-manager.conf.j2

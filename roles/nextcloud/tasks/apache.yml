@@ -27,6 +27,8 @@
   loop:
     - /etc/php/7.3/fpm/pool.d/nextcloud.conf
     - /etc/php/7.4/fpm/pool.d/nextcloud.conf
+    - /etc/php/8.2/fpm/pool.d/nextcloud.conf
+  when: ansible_distribution_release != "bookworm"
 
 - name: copy apache2 virtualhost configuration
   template:

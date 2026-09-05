@@ -7,6 +7,13 @@
     mode: "0644"
   notify: reload apache
 
+- name: MIGRATION/3.0.0 - remove old php-fpm pool
+  file:
+    path: /etc/php/8.2/fpm/pool.d/tt-rss.conf
+    state: absent
+  notify: restart prometheus-php-fpm-exporter
+  when: ansible_distribution_release != "bookworm"
+
 - name: copy php-fpm configuration
   template:
     src: etc_php_PHPVERSION_fpm_pool.d_tt-rss.conf.j2

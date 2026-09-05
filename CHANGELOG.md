@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Fixed:**
 * apache: fix mod_md certificates not automatically loaded after renewal/initial creation
 * nextcloud: add www-data to nextcloud group (fixes 403 errors on third-party app assets)
+* nextcloud,openldap,shaarli,tt-rss: remove stale php8.2 FPM pool definitions on Debian 13 hosts
 * tt-rss: prevent simple feed update errors from failing `tt-rss-update.service`
 
 [Full changes since v2.2.0](https://github.com/nodiscc/xsrv/compare/2.2.0...2.3.0)
