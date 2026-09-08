@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea: update to [v1.27.3](https://github.com/go-gitea/gitea/releases/tag/v1.27.3)
 * rsyslog: enable aggregation of `/var/log/apt/dpkg.log` to syslog
 * jellyfin: update opensubtitles plugin to latest version
+* jellyfin: upgrade ffmpeg to latest version
 * tt-rss: add postgresql collation refresh migration for debian 13
 
 **Removed:**

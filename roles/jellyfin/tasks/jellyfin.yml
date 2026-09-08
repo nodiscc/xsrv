@@ -34,7 +34,7 @@
     state: present
     package:
       - jellyfin
-      - jellyfin-ffmpeg7
+      - jellyfin-ffmpeg8
   notify: display jellyfin first run message
   ignore_errors: "{{ ansible_check_mode }}"
 
