@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea: update to [v1.27.3](https://github.com/go-gitea/gitea/releases/tag/v1.27.3)
 * monitoring/grafana: update to [v12.4.10](https://github.com/grafana/grafana/releases)
 * nextcloud: upgrade to [v33.0.9](https://nextcloud.com/changelog/)
+* jellyfin: update opensubtitles plugin to [v25](https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases)
 * rsyslog: enable aggregation of `/var/log/apt/dpkg.log` to syslog
 * jellyfin: update opensubtitles plugin to latest version
 * jellyfin: upgrade ffmpeg to latest version
