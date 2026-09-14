@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/grafana: update to [v12.4.10](https://github.com/grafana/grafana/releases)
 * nextcloud: upgrade to [v33.0.9](https://nextcloud.com/changelog/)
 * jellyfin: update opensubtitles plugin to [v25](https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases)
+* owncast: update to [v0.3.0](https://github.com/owncast/owncast/releases)
 * rsyslog: enable aggregation of `/var/log/apt/dpkg.log` to syslog
 * jellyfin: update opensubtitles plugin to latest version
 * jellyfin: upgrade ffmpeg to latest version
