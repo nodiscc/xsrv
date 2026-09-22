@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * apache: add support for `apache_reverseproxies[*].websocket: true` (WebSocket passthrough)
 
 **Changed:**
+* nextcloud: harden nextcloud-cron systemd service
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)
 * gitea: update to [v1.27.3](https://github.com/go-gitea/gitea/releases/tag/v1.27.3)
 * monitoring/grafana: update to [v12.4.11](https://github.com/grafana/grafana/releases)

@@ -4,10 +4,35 @@ After=php8.4-fpm.service php8.2-fpm.service postgresql@15.service postgresql@17.
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php
-WorkingDirectory={{ nextcloud_install_dir }}
-SyslogIdentifier=nextcloud-cron
 User=nextcloud
+Group=nextcloud
+WorkingDirectory={{ nextcloud_install_dir }}
+ExecStart=/usr/bin/php -f {{ nextcloud_install_dir }}/cron.php
+SyslogIdentifier=nextcloud-cron
+# Hardening directives
+CapabilityBoundingSet=
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateMounts=yes
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectClock=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectProc=invisible
+ProtectSystem=strict
+ReadWritePaths={{ nextcloud_install_dir }} {{ nextcloud_data_dir }}
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
