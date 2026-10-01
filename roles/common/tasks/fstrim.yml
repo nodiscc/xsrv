@@ -1,0 +1,4 @@
+- name: enable fstrim.timer for periodic filesystem trim
+  systemd:
+    name: fstrim.timer
+    enabled: yes

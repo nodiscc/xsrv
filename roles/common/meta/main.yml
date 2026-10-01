@@ -27,6 +27,7 @@
 # @tag cron - configure cron task scheduler
 # @tag apt-listbugs - configure apt-listbugs bug prevention tool
 # @tag hdparm - configure hdparm hard drive standby settings
+# @tag fstrim - enable periodic fstrim for ext4 filesystems
 
 galaxy_info:
   role_name: common
