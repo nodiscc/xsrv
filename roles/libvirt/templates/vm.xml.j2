@@ -3,7 +3,7 @@
   <memory unit='MiB'>{{ item.mem_mb }}</memory>
   <vcpu placement='static'>{{ item.vcpu }}</vcpu>
   <os>
-    <type arch='x86_64' machine='pc-i440fx-2.8'>hvm</type>
+    <type arch='x86_64' machine='q35'>hvm</type>
     <boot dev='hd'/>
   </os>
   <features>
@@ -27,7 +27,7 @@
     <emulator>/usr/bin/kvm</emulator>
 {% for disk in item.disks %}
     <disk type='file' device='disk'>
-      <driver name='qemu' type='{{ disk.type | default('qcow2') }}'/>
+      <driver name='qemu' type='{{ disk.type | default('qcow2') }}' discard='unmap'/>
       <source file='{{ disk.source_file }}'/>
       <target dev='{{ disk.target_dev }}' bus='{{ disk.target_bus | default('virtio') }}'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
@@ -54,7 +54,7 @@
       <master startport='4'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x2'/>
     </controller>
-    <controller type='pci' index='0' model='pci-root'/>
+    <controller type='pci' index='0' model='pcie-root'/>
     <controller type='ide' index='0'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
     </controller>
