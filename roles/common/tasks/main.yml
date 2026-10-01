@@ -145,6 +145,13 @@
     - common
     - needrestart
 
+- name: import fstrim configuration tasks
+  import_tasks: fstrim.yml
+  become: yes
+  tags:
+    - common
+    - fstrim
+
 - name: apply configuration (flush handlers)
   meta: flush_handlers
   tags: common
