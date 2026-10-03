@@ -80,7 +80,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * wireguard: improve validation of `wireguard_peers[*].ip_address` variable
 * nextcloud: replace cron background tasks with systemd timer
 * nextcloud: add postgresql collation refresh migration for debian 13
-* openldap: upgrade self-service-password to [v1.8.1](https://github.com/ltb-project/self-service-password/releases/tag/v1.8.1)
+* openldap: upgrade self-service-password to [v1.8.2](https://github.com/ltb-project/self-service-password/releases/tag/v1.8.2)
 * llamacpp: only download/enable `gemma4:4b-e4b` model by default
 * llamacpp: add `--cache-reuse 16384` to enable KV cache chunk reuse across turns
 * llamacpp: enable `--metrics` to expose Prometheus-compatible cache hit/miss metrics
