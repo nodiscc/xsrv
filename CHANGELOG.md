@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 **Changed:**
 * nextcloud: harden nextcloud-cron systemd service
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)
-* gitea: update to [v1.27.3](https://github.com/go-gitea/gitea/releases/tag/v1.27.3)
+* gitea: update to [v28.0.0](https://github.com/go-gitea/gitea/releases/tag/v28.0.0)
 * monitoring/grafana: update to [v12.4.11](https://github.com/grafana/grafana/releases)
 * nextcloud: upgrade to [v33.0.9](https://nextcloud.com/changelog/)
 * jellyfin: update opensubtitles plugin to [v25](https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases)
