@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)
 * xsrv: update trivy security scanner to [v0.75.0](https://github.com/aquasecurity/trivy/releases)
 * gitea: update to [v28.0.0](https://github.com/go-gitea/gitea/releases/tag/v28.0.0)
+* matrix/element-web: update to [v1.12.30](https://github.com/element-hq/element-web/releases/tag/v1.12.30)
 * monitoring/grafana: update to [v12.4.11](https://github.com/grafana/grafana/releases)
 * nextcloud: upgrade to [v33.0.9](https://nextcloud.com/changelog/)
 * jellyfin: update opensubtitles plugin to [v25](https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases)
