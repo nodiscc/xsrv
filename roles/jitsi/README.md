@@ -13,7 +13,6 @@ This role will install [Jitsi Meet](https://jitsi.org/jitsi-meet/), a fully encr
 - See [meta/main.yml](meta/main.yml)
 - See [Jitsi documentation](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-requirements) on hardware and network requirements for acceptable performance.
 
-> Note: This role only supports Debian 12 Bookworm. Jitsi cannot currently be installed on Debian 13 due to known compatibility issues (https://github.com/jitsi/jitsi-meet/issues/16798) with the JDK version.
 
 
 ```yaml

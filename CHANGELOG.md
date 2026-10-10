@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * rsyslog: enable aggregation of `/var/log/apt/dpkg.log` to syslog
 * jellyfin: update opensubtitles plugin to latest version
 * jellyfin: upgrade ffmpeg to latest version
+* jitsi: add Debian 13 Trixie support
 * tt-rss: add postgresql collation refresh migration for debian 13
 
 **Removed:**

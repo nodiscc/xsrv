@@ -12,6 +12,7 @@ galaxy_info:
     - name: Debian
       versions:
         - "12"
+        - "13"
   galaxy_tags:
     - jitsi
     - video
