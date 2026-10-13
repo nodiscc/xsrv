@@ -215,3 +215,9 @@
     group: prometheus
     mode: "0640"
   notify: restart prometheus-alertmanager
+
+- name: start and enable prometheus-alertmanager
+  systemd:
+    name: preometheus-alertmanager.service
+    state: started
+    enabled: true
