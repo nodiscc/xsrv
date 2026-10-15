@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * jellyfin: upgrade ffmpeg to latest version
 * jitsi: add Debian 13 Trixie support
 * tt-rss: add postgresql collation refresh migration for debian 13
+* kiwix/doc: kiwix also supports offline maps
 
 **Removed:**
 * dovecot: remove `dovecot_ssl_required/dovecot_disable_plaintext_auth` variables, always require TLS

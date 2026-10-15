@@ -13,6 +13,7 @@ kiwix_fqdn: kiwix.CHANGEME.org
 # - https://download.kiwix.org/zim/ifixit/ifixit_en_all_2025-12.zim # 3.33GB, english ifixit
 # - https://download.kiwix.org/zim/gutenberg/gutenberg_en_all_2025-11.zim # 206GB, English Project Gutenberg
 # - https://download.kiwix.org/zim/gutenberg/gutenberg_fr_all_2026-01.zim # 9.8GB, French Project Gutenberg
+# - https://download.kiwix.org/zim/maps/maps_en_france_2026-06.zim # 5.4GB, France OpenstreetMap
 kiwix_zim_urls:
   - https://download.kiwix.org/zim/other/rationalwiki_en_all_maxi_2025-05.zim # 238MB
   - https://download.kiwix.org/zim/other/ekopedia_fr_all_maxi_2021-03.zim # 17MB

@@ -1,6 +1,6 @@
 # xsrv.kiwix
 
-This role will install [kiwix](https://kiwix.org/), allowing you to serve a local copy of Wikipedia or other wikis from your server.
+This role will install [kiwix](https://kiwix.org/), allowing you to serve a local copy of Wikipedia or other wikis or maps from your server.
 
 A demo instance of kiwix can be found at https://library.kiwix.org/
 
