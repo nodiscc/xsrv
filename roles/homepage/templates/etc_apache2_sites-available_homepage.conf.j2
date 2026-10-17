@@ -33,6 +33,13 @@ MDomain {{ homepage_fqdn }}
   RewriteRule ^.*$ - [R=503,L]
 {% else %}
   DocumentRoot /var/www/{{ homepage_fqdn }}
+  # Cache static assets (icons, CSS) for 1 hour
+  <Location /res/>
+    Header set Cache-Control "public, max-age=3600"
+  </Location>
+  <FilesMatch "\.(png|svg|css|js|gif|jpg|jpeg|webp)$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
 {% endif %}
 {% if homepage_allowed_hosts %}
   <Location />

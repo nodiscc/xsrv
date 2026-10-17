@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * common: always enable periodic fstrim on all ext4 filesystems
 * monitoring/exporters: install `lm-sensors`
 * nextcloud: enable previewgenerator app
+* homepage: add Cache-Control headers for static assets (1h)
 
 **Changed:**
 * nextcloud: harden nextcloud-cron systemd service
