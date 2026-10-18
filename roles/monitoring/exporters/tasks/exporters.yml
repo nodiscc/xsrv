@@ -1,6 +1,7 @@
 - name: install basic prometheus exporters
   apt:
     package:
+      - lm-sensors
       - prometheus-exporter-exporter
       - prometheus-node-exporter
       - prometheus-node-exporter-collectors
