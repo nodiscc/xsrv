@@ -85,6 +85,7 @@ nextcloud_apps:
   - { state: "disable", app: "passwords" } # https://apps.nextcloud.com/apps/passwords
   - { state: "enable", app: "polls" } # https://apps.nextcloud.com/apps/polls
   - { state: "enable", app: "forms" } # https://apps.nextcloud.com/apps/forms
+  - { state: "enable", app: "previewgenerator" } # https://apps.nextcloud.com/apps/previewgenerator
   - { state: "disable", app: "apporder" } # https://apps.nextcloud.com/apps/apporder
   - { state: "disable", app: "keeporsweep" } # https://apps.nextcloud.com/apps/keeporsweep
   - { state: "disable", app: "jitsi" } # https://apps.nextcloud.com/apps/jitsi

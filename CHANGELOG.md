@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * apache: add support for `apache_reverseproxies[*].websocket: true` (WebSocket passthrough)
 * common: always enable periodic fstrim on all ext4 filesystems
 * monitoring/exporters: install `lm-sensors`
+* nextcloud: enable previewgenerator app
 
 **Changed:**
 * nextcloud: harden nextcloud-cron systemd service
