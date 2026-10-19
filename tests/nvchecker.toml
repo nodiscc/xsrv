@@ -1,0 +1,12 @@
+[ansible]
+source = "pypi"
+pypi = "ansible"
+
+[ansible-lint]
+source = "pypi"
+pypi = "ansible-lint"
+
+[grafana]
+source = "github"
+github = "grafana/grafana"
+use_latest_release = true
