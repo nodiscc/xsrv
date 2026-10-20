@@ -66,6 +66,23 @@ curl -v -u "vmagent:$password" --insecure -X POST https://127.0.0.1:8428/api/v1/
 
 ### Backups
 
+No automatic backups of metrics stored in vicotirametrics are implemented. If needed, use `vmbackup` (part of the `victoria-metrics` package) to take consistent point-in-time backups. It uses the snapshot API so the service keeps running.
+
+```bash
+# full backup (first run)
+sudo vmbackup -storageDataPath=/var/lib/victoria-metrics -dst=/var/backups/victoria-metrics/full
+# incremental (subsequent runs, only changed data is copied)
+sudo vmbackup -storageDataPath=/var/lib/victoria-metrics -dst=/var/backups/victoria-metrics/full
+# prune old backups (keep last 7 days)
+find /var/backups/victoria-metrics/full -maxdepth 1 -mindepth 1 -mtime +7 -exec rm -rf {} +
+# restore a backup
+sudo vmrestore -storageDataPath=/var/lib/victoria-metrics -src=/var/backups/victoria-metrics/full
+sudo systemctl restart victoria-metrics
+```
+
+For S3, GCS, Azure Blob, and advanced options, see `vmbackup --help`.
+
+
 ## Tags
 
 <!--BEGIN TAGS LIST-->
