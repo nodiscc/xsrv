@@ -1,5 +1,6 @@
 - name: run apt upgrade now
   apt:
+    update_cache: true
     upgrade: safe
 
 - name: list and display upgradable packages

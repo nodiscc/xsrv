@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)
 * libvirt/vm-template: allow the host to reclaim freed qcow2 blocks when guests run fstrim
 * monitoring/victoriametrics: ensure prometheus-alertmanager is always started and enabled on boot
+* common/utils-apt-upgrade: update APT cache before performaing upgrades
 * xsrv: update trivy security scanner to [v0.75.0](https://github.com/aquasecurity/trivy/releases)
 * gitea-act-runner: update to [v5.0.0](https://gitea.com/gitea/runner/releases/tag/v5.0.0)
 * gitea: update to [v28.2.0](https://github.com/go-gitea/gitea/releases/tag/v28.2.0)
