@@ -26,7 +26,7 @@ Access the web interface at `http://{{ llamacpp_listen_address }}:8033` (default
 
 You can also use the command-line interface by SSHing (`xsrv shell`) to the server and running `llamacpp-download-models` to manage models.
 
-**Check that llamacpp is running on GPU:** Larger models require a GPU to provide acceptable quality/speeds (measured in tokens/second). Deploy the role to a bare-metal server equipped with a GPU with a proper ROCM (AMD) or CUDA (NVIDIA) setup, or if running in a VM, setup GPU passthrough from the host to the VM. How to set up ROCM/CUDA is out of scope for this role.
+**Check that llamacpp is running on GPU:** Larger models require a GPU to provide acceptable quality/speeds (measured in tokens/second). Deploy the role to a bare-metal server equipped with a GPU with a proper ROCM (AMD) or CUDA (NVIDIA) setup, or if running in a VM, setup GPU pass-through from the host to the VM. How to set up ROCM/CUDA is out of scope for this role.
 
 **Note:** This role currently does not integrate with the reverse proxy functionality of xsrv (Apache). The role has only been tested locally on desktop hardware with a 16GB VRAM GPU. Such hardware is likely to only be available on desktop machines, not headless servers. Reverse proxy integration might be added later.
 

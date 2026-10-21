@@ -1,4 +1,4 @@
-# @tag mumble - setup mumble voip server
+# @tag mumble - setup mumble VoIP server
 
 galaxy_info:
   role_name: mumble

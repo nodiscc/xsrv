@@ -1,9 +1,9 @@
-# @tag searxng - setup SearXNG metasearch engine
+# @tag searxng - setup SearXNG meta-search engine
 
 galaxy_info:
   role_name: searxng
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "metasearch engine"
+  description: "meta-search engine"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

@@ -1,6 +1,6 @@
 # xsrv.homepage
 
-This role will setup a simple webserver homepage/dashboard:
+This role will setup a simple web server homepage/dashboard:
 - Links to services installed on the host (if managed by xsrv [roles](https://xsrv.readthedocs.io/en/latest/#roles))
 - [Custom links](#adding-custom-links)
 

@@ -1,10 +1,10 @@
 # xsrv.apache
 
-This role will install and configure the [Apache](https://en.wikipedia.org/wiki/Apache_HTTP_Server) webserver:
+This role will install and configure the [Apache](https://en.wikipedia.org/wiki/Apache_HTTP_Server) web server:
 
 - [mod_md](https://httpd.apache.org/docs/2.4/mod/mod_md.html) for [Let's Encrypt](https://en.wikipedia.org/wiki/Let's_Encrypt) SSL/TLS certificate management, hardened ([A+](https://www.ssllabs.com/ssltest/)) SSL/TLS configuration
 - [php-fpm](https://php-fpm.org/) PHP interpreter
-- (optional) basic authentication login form brutefore prevention with [fail2ban](tasks/fail2ban.yml)
+- (optional) basic authentication login form brute-force prevention with [fail2ban](tasks/fail2ban.yml)
 - (optional) aggregation of apache log files to [syslog](tasks/rsyslog.yml)
 - (optional) [php-fpm-exporter](https://github.com/hipages/php-fpm_exporter) monitoring metrics exporter for [prometheus/victoriametrics](../monitoring/victoriametrics/)
 
@@ -12,7 +12,7 @@ This role will install and configure the [Apache](https://en.wikipedia.org/wiki/
 ## Requirements/dependencies/example playbook
 
 - See [meta/main.yml](meta/main.yml)
-- For Let's Encrypt certificates, ports tcp/80 and tcp/443 must be reachable from the Internet, and the each virtualhost's FQDN (ServerName) must have a A or CNAME record in the public DNS system.
+- For Let's Encrypt certificates, ports TCP/80 and TCP/443 must be reachable from the Internet, and the each virtualhost's FQDN (ServerName) must have a A or CNAME record in the public DNS system.
 
 
 ```yaml

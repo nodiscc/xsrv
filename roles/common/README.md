@@ -12,7 +12,7 @@ This role will configure a basic Debian-based server:
 - [cron task scheduler](tasks/cron.yml) (hardening, logging)
 - [SSH server](tasks/ssh.yml) (hardening, chrooted SFTP accounts)
 - [firewall](tasks/firewalld.yml) ([`firewalld`](https://en.wikipedia.org/wiki/Firewalld))
-- [fail2ban](tasks/fail2ban.yml) intrusion/bruteforce prevention system
+- [fail2ban](tasks/fail2ban.yml) intrusion/brute-force prevention system
 - [outgoing mail](tasks/mail.yml) (forwarding through an external mail relay)
 - streamlining/removal of unwanted [packages](tasks/packages.yml), installation of basic system utilities/diagnostic tools
 - automated procedures to upgrade hosts from [Debian 10 to 11](tasks/utils-debian10to11.yml), [Debian 11 to 12](tasks/utils-debian11to12.yml), [Debian 12 to 13](tasks/utils-debian12to13.yml)
@@ -51,7 +51,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
   - Windows clients: [WinSCP](https://winscp.net/eng/index.php)
 - Upgrade from Debian 12 to 13: `TAGS=utils-debian12to13 xsrv deploy` or `ansible-playbook --tags utils-debian12to13 playbook.yml`. Upgrading from one distribution version to another can take a while, and some services may become shortly unavailable during the operation. You can follow progress by watching `apt` logs on the host (or `/var/log/syslog` if the [`monitoring.rsyslog`](../monitoring/rsyslog) role is deployed). You may also use `utils-debian10to11` or `utils-debian11to12` to upgrade older distributions.
 - Upgrade all packages immediately, using unattended-upgrades: `TAGS=utils-apt-unattended-upgrade`. This allows upgrading immediately, without waiting for the daily unattended-upgrades timer to run. It respects the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting.
-- Upgrade all packages immediately: `TAGS=utils-apt-upgrade`. This will upgrade all upgradable packages, regardless of unattended-upgrades configuration (in particular the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting).
+- Upgrade all packages immediately: `TAGS=utils-apt-upgrade`. This will upgrade all upgradeable packages, regardless of unattended-upgrades configuration (in particular the `apt_unattended_upgrades_origins_patterns` variable/`Origins-Pattern` setting).
 - Get information about IP addresses banned by fail2ban: `TAGS=utils-fail2ban-get-banned xsrv deploy my.CHANGEME.org`
 - Get information about firewalld status: `TAGS=utils-firewalld-info xsrv deploy my.CHANGEME.org`
 - Reboot the host immediately: `TAGS=utils-reboot xsrv deploy default my.CHANGEME.org`

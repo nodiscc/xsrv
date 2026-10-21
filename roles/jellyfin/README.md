@@ -51,7 +51,7 @@ After initial installation, open https://media.CHANGEME.org in a web browser, an
 
 - Upload media files over [SFTP](../common#usage) to `~/MEDIA/` (symbolic link to `/var/lib/jellyfin/media/`)
 - If the [samba](../samba) role is enabled and [`jellyfin_samba_share_enabled: yes` and a list of valid users](defaults/main.yml) are specified, upload files to the `smb://my.CHANGEME.org/jellyfin` samba share
-- Download files from bittorrent using [transmission](../transmission)
+- Download files from BitTorrent using [transmission](../transmission)
 - If the [nextcloud](../nextcloud) role is enabled, you may mount jellyfin's media directory as an [External Storage](../nextcloud/README.md#jellyfin)
 
 
@@ -90,11 +90,11 @@ To allow logins to Jellyfin using LDAP user accounts (for example from [openldap
   - LDAP port: `636` (SSL/TLS) or `389`
   - LDAP attributes: `uid, cn, mail`
   - LDAP Name Attribute: `uid`
-  - LDAP User Filter: set to `(objectClass=inetOrgPerson)` if your LDAP server does not support the `memberOf` overlay (all LDAP users will be allowed to access Jellyfin). Otherwise set `memberOf=GROUPNAME` to the LDAP group name allowed to access Jellyfin (eg. `access_jellyfin`)
+  - LDAP User Filter: set to `(objectClass=inetOrgPerson)` if your LDAP server does not support the `memberOf` overlay (all LDAP users will be allowed to access Jellyfin). Otherwise set `memberOf=GROUPNAME` to the LDAP group name allowed to access Jellyfin (e.g.. `access_jellyfin`)
   - LDAP Admin Filter: users matching this filter will be given Jellyfin administrator privileges:
     - Set to `(enabledService=JellyfinAdministrator)` (default): if a LDAP user has the `jellyfinAdministrator` objectClass, it will automatically be set as Jellyfin administrator.
     - Set to `(objectClass=inetOrgPerson)` to give all users administrator rights by default. Administrators can still be managed manually from the web admin interface.
-    - Use a `memberOf` filter looking for a specific group (eg. `(memberOf=cn=jellyfin_admins,ou=groups,dc=CHANGEME,dc=org)`) if your server supports `memberOf`, and add admin users to the LDAP group `jellyfin_admins`.
+    - Use a `memberOf` filter looking for a specific group (e.g.. `(memberOf=cn=jellyfin_admins,ou=groups,dc=CHANGEME,dc=org)`) if your server supports `memberOf`, and add admin users to the LDAP group `jellyfin_admins`.
   - LDAP Bind User: `cn=bind,ou=system,dc=CHANGEME,dc=org`
   - LDAP Bind User Password: the value of `{{ openldap_bind_password }}`
   - [x] Enable User Creation
@@ -136,7 +136,7 @@ You will then be able to use right-click > `Edit subtitles` on any video from yo
 
 ### Metadata
 
-The [Youtube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) can be used to automatically set metadata for videos downloaded using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
+The [YouTube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) can be used to automatically set metadata for videos downloaded using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 ### Thumbnails on seek bar
 
@@ -144,7 +144,7 @@ Go to `Administration > Dashboard > Libraries > Your Library` > `Manage Library`
 - Check `Enable chapter image extraction` to display thumbnails for each chapter while hovering the seek bar.
 - Check `Enable trickplay image extraction` to display thumbnails for every keyframe while hovering the seek bar.
 
-Thumbnails/chapter/trickplay image extraction is a CPU-intensive operation. This can negatively affect performance, and take a long time on low-power servers aith large libraries. Trickplay image extraction runs nightly from a scheduled task (`Administration > Dashboard`) which can also be triggered manually, or at library scan if you checked the relevant box `Extract trickplay images during the library scan` in the library options.
+Thumbnails/chapter/trickplay image extraction is a CPU-intensive operation. This can negatively affect performance, and take a long time on low-power servers with large libraries. Trickplay image extraction runs nightly from a scheduled task (`Administration > Dashboard`) which can also be triggered manually, or at library scan if you checked the relevant box `Extract trickplay images during the library scan` in the library options.
 
 
 ### Security

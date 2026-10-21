@@ -1,9 +1,9 @@
-# @tag transmission - setup transmission bittorrent client
+# @tag transmission - setup transmission BitTorrent client
 
 galaxy_info:
   role_name: transmission
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "bittorrent client/web interface"
+  description: "BitTorrent client/web interface"
   license: GPL-3.0
   min_ansible_version: "2.12"
   platforms:

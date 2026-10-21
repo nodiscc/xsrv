@@ -3,7 +3,7 @@
 galaxy_info:
   role_name: kiwix
   author: "nodiscc <nodiscc@gmail.com>"
-  description: "mirror wikipedia or other wikis locally"
+  description: "mirror Wikipedia or other wikis locally"
   license: "GPL-3.0"
   min_ansible_version: "2.12"
   platforms:

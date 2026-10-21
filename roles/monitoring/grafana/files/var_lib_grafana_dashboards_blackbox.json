@@ -800,7 +800,7 @@
             },
             "renameByName": {
               "instance": "Instance",
-              "Value": "Disponibilit\u00e9 (%)"
+              "Value": "Availability (%)"
             }
           }
         }
@@ -833,7 +833,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Disponibilit\u00e9 (%)"
+              "options": "Availability (%)"
             },
             "properties": [
               {

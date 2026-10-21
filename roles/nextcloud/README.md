@@ -5,14 +5,14 @@ This role will install [Nextcloud](https://en.wikipedia.org/wiki/Nextcloud), a p
 Nextcloud is an alternative to services such as Dropbox, Google Drive/Agenda... See the [comparison page](https://nextcloud.com/compare/). Features:
 - Uploading, viewing, editing, downloading and sharing files from a web interface
 - [Clients](#clients) for PC or mobile devices
-- Realtime file synchronization
+- Real-time file synchronization
 - Can be extended to a full personal cloud/collaborative suite/groupware solution by more than 200 [applications](https://apps.nextcloud.com/)
 - LDAP authentication
 
 Default installed/enabled applications include:
 
 - [Calendar](https://apps.nextcloud.com/apps/calendar): Manage calendar events with search, alarms, invitation management, contacts integration, sharing and synchronization across devices (CalDAV/ICS)
-- [Contacts](https://apps.nextcloud.com/apps/contacts):E dit, view, share address books and synchronize them across devices (CardDav)
+- [Contacts](https://apps.nextcloud.com/apps/contacts):E Edit, view, share address books and synchronize them across devices (CardDav)
 - [Tasks](https://apps.nextcloud.com/apps/tasks): Task/todo-list management (supports due dates, reminders, priorities, comments, tasks sharing, sub-tasks), and synchronize them across devices (CalDAV)
 - [Photos](https://github.com/nextcloud/photos#readme): Media gallery with previews for all media types
 - [Notes](https://apps.nextcloud.com/apps/notes): Note taking app with markdown support, notes are saved as files in your Nextcloud so you can view and edit them from anywhere.
@@ -87,7 +87,7 @@ Other:
 
 - Clear nextcloud previews cache: `ssh -t my.example.org sudo find /var/nextcloud/data/appdata_ocasr47zovdz/ -type d -name "previews" -exec rm -rv '{}' \;`
 - Empty nextcloud trashes: `ssh -y my.example.org sudo -u www-data /usr/bin/php /var/www/nextcloud/occ trashbin:cleanup --all-users`
-- Clear nextcloud filecaches: `ssh -y my.example.org sudo -u www-data /usr/bin/php /var/www/nextcloud/occ files:cleanup`
+- Clear nextcloud file caches: `ssh -y my.example.org sudo -u www-data /usr/bin/php /var/www/nextcloud/occ files:cleanup`
 
 ### Backups
 
@@ -147,11 +147,11 @@ Changing the database password is not supported by the role at this time. To cha
 
 #### LDAP authentication
 
-- Create a group (eg. `posixGroup: access_nextcloud`) in your LDAP directory and add users that should be able to access Nextcloud to this group
+- Create a group (e.g.. `posixGroup: access_nextcloud`) in your LDAP directory and add users that should be able to access Nextcloud to this group
 - Access your Nextcloud LDAP settings (https://cloud.CHANGEME.org/index.php/settings/admin/ldap):
   - `Server > Host: ldap.CHANGEME.org` or `ldaps://ldap.CHANGEME.org`
   - click `Detect port`
-  - `Server > User DN: cn=bind,ou=system,dc=CHANGEME,dc=org` the DN for your unprivilegied/bind LDAP user
+  - `Server > User DN: cn=bind,ou=system,dc=CHANGEME,dc=org` the DN for your unprivileged/bind LDAP user
   - `Server > Password:` the password for your bind LDAP user
   - `Server > Base DN: ou=users,dc=CHANGEME,dc=org` the base DN for the LDAP directory (or click `Detect base DN`)
   - click `Test base DN`
@@ -185,7 +185,7 @@ sudo systemctl restart php8.2-fpm
 
 ##### Transmission
 
-Example configuration to access files from the [transmission](../transmission/) bittorrent service running on the same host.
+Example configuration to access files from the [transmission](../transmission/) BitTorrent service running on the same host.
 
 Under `Settings > Administration > External storage`, add a new storage:
 - Folder name: `TORRENTS`
@@ -211,7 +211,7 @@ Under `Settings > Administration > External storage`, add a new storage:
 
 #### Troubleshooting
 
-**Nextcloud upgrade fails with `Nextcloud is not installed - only a limited number of commands are available`:** This error is under investigation, it is probably caused by `cron.php` running concurrently with the upgrade process. It is usually sufficient to restore the old nextcloud installation directory, and run the upgrdae process again:
+**Nextcloud upgrade fails with `Nextcloud is not installed - only a limited number of commands are available`:** This error is under investigation, it is probably caused by `cron.php` running concurrently with the upgrade process. It is usually sufficient to restore the old nextcloud installation directory, and run the upgrade process again:
 
 ```bash
 # on the server

@@ -2,7 +2,7 @@
 
 This role will install [Tiny Tiny RSS](https://tt-rss.org/), a web-based [News feed reader](https://en.wikipedia.org/wiki/News_aggregator) and aggregator.
 
-A feed reader allows subscribing to many blogs/websites updates (using the [RSS](https://en.wikipedia.org/wiki/RSS)/ATOM standard), and access all articles in a single, unified application. It comes with extensive fiiltering/sorting/searching/presentation options, and plugins to improve integration of content from subscribed pages.
+A feed reader allows subscribing to many blogs/websites updates (using the [RSS](https://en.wikipedia.org/wiki/RSS)/ATOM standard), and access all articles in a single, unified application. It comes with extensive filtering/sorting/searching/presentation options, and plugins to improve integration of content from subscribed pages.
 
 * **[Homepage/features](https://tt-rss.org/)**
 * **[Community/forums](https://discourse.tt-rss.org/)**

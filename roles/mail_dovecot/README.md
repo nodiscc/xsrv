@@ -3,7 +3,7 @@
 This role will install and configure [dovecot](https://en.wikipedia.org/wiki/Dovecot_(software)), an [IMAP](https://en.wikipedia.org/wiki/Internet_Message_Access_Protocol) mailbox server and [Mail Delivery agent](https://en.wikipedia.org/wiki/Message_delivery_agent), including:
 - LDAP authentication
 - SSL/TLS certificates (self-signed)
-- (optional) login bruteforce protection with [fail2ban](../common)
+- (optional) login brute-force protection with [fail2ban](../common)
 - setup default mailbox virtual folders (All, Flagged, Sent, Junk, Drafts, Trash)
 
 

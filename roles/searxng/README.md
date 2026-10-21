@@ -1,6 +1,6 @@
 # xsrv.searxng
 
-This role will setup [SearXNG](https://docs.searxng.org/), a free internet metasearch engine which aggregates results from more than 70 search services.
+This role will setup [SearXNG](https://docs.searxng.org/), a free internet meta-search engine which aggregates results from more than 70 search services.
 
 searxng will be deployed as a rootless [podman](../podman) container managed by a systemd service.
 
@@ -34,7 +34,7 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables
 
 ### Troubleshooting
 
-Due to the "rolling release" development model of SearXNG, tha `latest` OCI image is pulled every time the role is deployed, so deployments may not yield the same results (idempotence) depending on the time at which they were ran.
+Due to the "rolling release" development model of SearXNG, the `latest` OCI image is pulled every time the role is deployed, so deployments may not yield the same results (idempotence) depending on the time at which they were ran.
 
 
 ## Tags

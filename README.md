@@ -31,7 +31,7 @@ This project provides:
 - [homepage](roles/homepage) - simple webserver homepage/dashboard
 - [jellyfin](roles/jellyfin) - media server
 - [jitsi](roles/jitsi) - video conferencing solution
-- [kiwix](roles/kiwix) - mirror wikipedia or other wikis locally
+- [kiwix](roles/kiwix) - mirror Wikipedia or other wikis locally
 - [libvirt](roles/libvirt) - virtualization toolkit
 - [llamacpp](roles/llamacpp) - llamacpp local LLM service
 - [mail_dovecot](roles/mail_dovecot) - IMAP mailbox server
@@ -52,9 +52,9 @@ This project provides:
 - [postgresql](roles/postgresql) - database engine
 - [readme_gen](roles/readme_gen) - automatic README.md generator for ansible-based projects
 - [samba](roles/samba) - cross-platform file sharing server
-- [searxng](roles/searxng) - metasearch engine
+- [searxng](roles/searxng) - meta-search engine
 - [shaarli](roles/shaarli) - bookmarking & link sharing web application
-- [transmission](roles/transmission) - bittorrent client/web interface
+- [transmission](roles/transmission) - BitTorrent client/web interface
 - [tt_rss](roles/tt_rss) - web-based news feed reader
 - [wireguard](roles/wireguard) - fast and modern VPN server
 <!--END ROLES LIST-->

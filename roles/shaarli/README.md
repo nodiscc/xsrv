@@ -1,9 +1,9 @@
 # xsrv.shaarli
 
 This role will install [Shaarli](https://shaarli.readthedocs.io/en/master/), a minimalist bookmark manager and link sharing service, and optionally:
-- [apache](tasks/apache.yml) webserver configuration and SSL/TLS certificates
+- [apache](tasks/apache.yml) web server configuration and SSL/TLS certificates
 - automatic local [backups](tasks/backup.yml)
-- [fail2ban](tasks/fail2ban.yml) login bruteforce prevention
+- [fail2ban](tasks/fail2ban.yml) login brute-force prevention
 - log aggregation through [rsyslog](tasks/rsyslog.yml)
 - [python client for the Shaarli API](https://github.com/shaarli/python-shaarli-client/)
 - [stack](https://github.com/RolandTi/shaarli-stack) theme/template
