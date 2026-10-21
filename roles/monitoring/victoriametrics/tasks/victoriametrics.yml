@@ -218,6 +218,6 @@
 
 - name: start and enable prometheus-alertmanager
   systemd:
-    name: preometheus-alertmanager.service
+    name: prometheus-alertmanager.service
     state: started
     enabled: true
