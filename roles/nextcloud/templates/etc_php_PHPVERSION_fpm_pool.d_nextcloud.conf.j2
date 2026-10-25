@@ -44,6 +44,7 @@ php_admin_value[upload_max_filesize] = {{ nextcloud_php_upload_max_filesize }}
 php_admin_value[mbstring.func_overload] = 0
 php_admin_value[default_charset] = 'UTF-8'
 php_admin_value[output_buffering] = 0
+php_admin_value[opcache.interned_strings_buffer] = 16
 {% else %}
 ; this pool is disabled
 {% endif %}
