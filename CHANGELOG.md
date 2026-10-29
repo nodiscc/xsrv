@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 * nextcloud: harden nextcloud-cron systemd service
+* nextcloud: disable Maps app by default
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)
 * libvirt/vm-template: allow the host to reclaim freed qcow2 blocks when guests run fstrim
 * monitoring/victoriametrics: ensure prometheus-alertmanager is always started and enabled on boot
