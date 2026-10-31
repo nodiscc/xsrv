@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/victoriametrics: ensure prometheus-alertmanager is always started and enabled on boot
 * common/utils-apt-upgrade: update APT cache before performaing upgrades
 * xsrv: update trivy security scanner to [v0.76.1](https://github.com/aquasecurity/trivy/releases)
-* gitea-act-runner: update to [v5.0.0](https://gitea.com/gitea/runner/releases/tag/v5.0.0)
+* gitea-act-runner: update to [v5.2.4](https://gitea.com/gitea/runner/releases/tag/v5.2.4)
 * gitea: update to [v28.2.0](https://github.com/go-gitea/gitea/releases/tag/v28.2.0)
 * matrix/element-web: update to [v1.12.32](https://github.com/element-hq/element-web/releases/tag/v1.12.32)
 * monitoring/grafana: update to [v12.4.13](https://github.com/grafana/grafana/releases)
