@@ -56,6 +56,9 @@ See [defaults/main.yml](defaults/main.yml) for all configuration variables.
 
 The matrix server can be used from the Element Web client which will be deployed at `https://{{ matrix_element_fqdn }}`, or any of the mobile or desktop [Matrix clients](https://matrix.org/clients/). Element is also available as an Android, iOS, Windows, Linux, MacOS application [here](https://element.io/download).
 
+Alternative web/mobile clients:
+* [Sable](https://docs.sable.moe/installation/)
+
 ### User accounts management
 
 An admin user (`matrix_synapse_admin_user`) is created during deployment. Public registration of new users is disabled by default, but server admins can create/deactivate and manage user accounts from the synapse-admin administration web interface at `https://{{ matrix_synapse_fqdn }}`.
