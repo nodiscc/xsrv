@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JavaScript Challenge</title>
+<style>
+body{font-family:sans-serif;text-align:center;margin-top:30vh;background:#f5f5f5;color:#333}
+#status{font-size:1.1em}
+</style>
+</head>
+<body>
+<div id="status">Verifying your browser...</div>
+<form method="post" id="challengeForm" style="display:none">
+<input type="hidden" name="challenge" id="challengeInput">
+<input type="hidden" name="nonce" id="nonceInput">
+<input type="hidden" name="redirect" id="redirectInput">
+</form>
+<noscript>JavaScript is required. Please enable JavaScript and reload.</noscript>
+<script>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var challenge=params.get("challenge");
+  var diff=parseInt(params.get("diff"),10)||1;
+  var redirect=params.get("redirect");
+  var status=document.getElementById("status");
+  if(!challenge||!redirect){status.textContent="Invalid challenge parameters.";return;}
+  status.textContent="Solving challenge...";
+  var te=new TextEncoder();
+  (async function(){
+    var tries=0;
+    for(;tries<10000000;tries++){
+      var msg=challenge+";"+tries;
+      var buf=await crypto.subtle.digest("SHA-256",te.encode(msg));
+      var bytes=new Uint8Array(buf);
+      var valid=true;
+      for(var j=0;j<diff;j++){if(bytes[j]!==0){valid=false;break;}}
+      if(valid){
+        document.getElementById("challengeInput").value=challenge;
+        document.getElementById("nonceInput").value=tries;
+        document.getElementById("redirectInput").value=redirect;
+        status.textContent="Verified! Redirecting...";
+        document.getElementById("challengeForm").submit();
+        return;
+      }
+    }
+    status.textContent="Challenge failed. Please reload.";
+  })();
+})();
+</script>
+</body>
+</html>

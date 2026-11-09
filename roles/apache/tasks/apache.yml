@@ -156,6 +156,42 @@
 - name: apply apache configuration (flush handlers)
   meta: flush_handlers
 
+##### JAVASCRIPT CHALLENGE #####
+
+- name: enable mod_cgi for JavaScript challenge
+  command: a2enmod cgi
+  creates: "/etc/apache2/mods-enabled/cgi.load"
+  notify: restart apache
+  when: apache_javascript_challenge_difficulty | int > 0
+
+- name: copy JavaScript challenge CGI script
+  copy:
+    src: usr_lib_cgi-bin_xsrv-challenge
+    dest: /usr/lib/cgi-bin/xsrv-challenge
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: copy JavaScript challenge HTML page
+  copy:
+    src: var_www_challenge.html
+    dest: /var/www/challenge.html
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: deploy JavaScript challenge Apache config snippet
+  template:
+    src: xsrv-challenge.conf.j2
+    dest: /etc/apache2/conf-available/xsrv-challenge.conf
+    mode: "0644"
+
+- name: enable JavaScript challenge config snippet
+  command: a2enconf xsrv-challenge
+  creates: "/etc/apache2/conf-enabled/xsrv-challenge.conf"
+  notify: reload apache
+  when: apache_javascript_challenge_difficulty | int > 0
+
 ##### MOD_MD #####
 
 - name: create work directory for mod_md automatic reload script

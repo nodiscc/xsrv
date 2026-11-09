@@ -50,6 +50,9 @@ MDRequireHttps permanent
   SSLCertificateFile /etc/ssl/certs/{{ item.servername }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ item.servername }}.key
 {% endif %}
+{% if item.servername in apache_javascript_challenge_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% endif %}
   # Inform the upstream server that the original request was done over HTTPS
   RequestHeader set X-Forwarded-Proto https
   RequestHeader set X-Forwarded-Ssl on

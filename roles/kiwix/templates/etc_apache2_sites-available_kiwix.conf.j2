@@ -17,6 +17,9 @@ MDomain {{ kiwix_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ kiwix_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ kiwix_fqdn }}.key
 {% endif %}
+{% if kiwix_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% endif %}
 {% if not kiwix_enable_service %}
   DocumentRoot /var/www/maintenance/
   ErrorDocument 503 /maintenance.html

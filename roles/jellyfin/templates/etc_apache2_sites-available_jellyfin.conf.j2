@@ -19,6 +19,9 @@ MDomain {{ jellyfin_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ jellyfin_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ jellyfin_fqdn }}.key
 {% endif %}
+{% if jellyfin_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% endif %}
 {% if not jellyfin_enable_service %}
   DocumentRoot /var/www/maintenance/
   ErrorDocument 503 /maintenance.html

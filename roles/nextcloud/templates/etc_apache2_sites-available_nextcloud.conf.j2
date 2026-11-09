@@ -23,6 +23,9 @@ MDomain {{ nextcloud_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ nextcloud_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ nextcloud_fqdn }}.key
 {% endif %}
+{% if nextcloud_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% endif %}
 {% if not nextcloud_enable_service %}
   DocumentRoot /var/www/maintenance/
   ErrorDocument 503 /maintenance.html

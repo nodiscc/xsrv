@@ -33,6 +33,16 @@ apache_firewalld_zones:
   - zone: internal
     state: enabled
 
+##### JAVASCRIPT CHALLENGE #####
+# SHA-256 Proof-of-Work challenge difficulty (number of leading zero bytes)
+# 0 = no challenge, 1 = ~256 tries, 2 = ~65K tries, 3 = ~16M tries, 4 = ~4.3B tries
+# Default: 1 (light protection against non-JS bots)
+apache_javascript_challenge_difficulty: 1
+# List of FQDNs protected by the JavaScript challenge
+apache_javascript_challenge_protected_domains: []
+# HMAC secret (32-char hex string, e.g. $(openssl rand -hex 16))
+apache_javascript_challenge_secret: CHANGEME
+
 ##### PHP-FPM INTERPRETER #####
 # yes/no: enable/disable the default php-fpm pool (www)
 # starting php-fpm without any pool defined will cause the service to fail

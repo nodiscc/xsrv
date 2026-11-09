@@ -13,6 +13,16 @@
     - apache_firewalld_zones | type_debug == "list"
     - apache_reverseproxies | type_debug == "list"
     - apache_letsencrypt_enable_hsts == apache_letsencrypt_enable_hsts | bool
+    - apache_javascript_challenge_difficulty | int >= 0
+    - apache_javascript_challenge_difficulty | int <= 16
+
+- name: check JavaScript challenge secret
+  assert:
+    quiet: yes
+    that:
+      - apache_javascript_challenge_secret | length == 32
+    fail_msg: "apache_javascript_challenge_secret must be exactly 32 characters"
+  when: apache_javascript_challenge_protected_domains | length > 0
 
 - name: check that variables are correctly defined (apache_reverseproxies)
   assert:

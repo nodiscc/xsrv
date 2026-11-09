@@ -11,6 +11,9 @@ Listen 8448
   SSLCertificateFile /etc/ssl/certs/{{ matrix_synapse_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ matrix_synapse_fqdn }}.key
 {% endif %}
+{% if matrix_synapse_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% endif %}
 {% if not matrix_synapse_enable_service %}
   DocumentRoot /var/www/maintenance/
   ErrorDocument 503 /maintenance.html

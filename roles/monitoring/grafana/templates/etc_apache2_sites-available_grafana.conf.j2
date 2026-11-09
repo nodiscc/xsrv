@@ -19,6 +19,9 @@ MDomain {{ grafana_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ grafana_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ grafana_fqdn }}.key
 {% endif %}
+{% if grafana_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% endif %}
 {% if not grafana_enable_service %}
   DocumentRoot /var/www/maintenance/
   ErrorDocument 503 /maintenance.html
