@@ -17,8 +17,8 @@ MDomain {{ kiwix_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ kiwix_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ kiwix_fqdn }}.key
 {% endif %}
-{% if kiwix_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
-  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% if kiwix_fqdn in apache_anubis_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-anubis.conf
 {% endif %}
 {% if not kiwix_enable_service %}
   DocumentRoot /var/www/maintenance/

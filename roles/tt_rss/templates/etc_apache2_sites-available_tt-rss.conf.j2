@@ -20,8 +20,8 @@ MDomain {{ tt_rss_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ tt_rss_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ tt_rss_fqdn }}.key
 {% endif %}
-{% if tt_rss_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
-  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% if tt_rss_fqdn in apache_anubis_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-anubis.conf
 {% endif %}
 {% if not tt_rss_enable_service %}
   DocumentRoot /var/www/maintenance/

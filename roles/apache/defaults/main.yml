@@ -33,15 +33,15 @@ apache_firewalld_zones:
   - zone: internal
     state: enabled
 
-##### JAVASCRIPT CHALLENGE #####
-# SHA-256 Proof-of-Work challenge difficulty (number of leading zero bytes)
-# 0 = no challenge, 1 = ~256 tries, 2 = ~65K tries, 3 = ~16M tries, 4 = ~4.3B tries
-# Default: 1 (light protection against non-JS bots)
-apache_javascript_challenge_difficulty: 1
-# List of FQDNs protected by the JavaScript challenge
-apache_javascript_challenge_protected_domains: []
-# HMAC secret (32-char hex string, e.g. $(openssl rand -hex 16))
-apache_javascript_challenge_secret: CHANGEME
+##### ANUBIS CHALLENGE #####
+# List of FQDNs protected by Anubis challenge
+apache_anubis_protected_domains: []
+# Anubis service URL (internal, e.g. http://127.0.0.1:8923)
+apache_anubis_service_url: "http://127.0.0.1:8923"
+# Challenge difficulty (2-6 recommended; 4 is Anubis default)
+apache_anubis_challenge_difficulty: 4
+# Anubis cookie prefix (for multi-instance support)
+apache_anubis_cookie_prefix: "techaro.lol-anubis"
 
 ##### PHP-FPM INTERPRETER #####
 # yes/no: enable/disable the default php-fpm pool (www)

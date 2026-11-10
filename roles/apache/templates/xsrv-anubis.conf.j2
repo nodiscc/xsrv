@@ -1,0 +1,12 @@
+# Anubis auth_request challenge configuration
+AuthRequest /check
+AuthRequestSet X-Forwarded-Proto expr=%{REQUEST_SCHEME}
+AuthRequestSet X-Forwarded-For {REMOTE_ADDR}e
+AuthRequestSet X-Real-IP {REMOTE_ADDR}e
+AuthRequestSet Cookie {HTTP_COOKIE}e
+AuthRequestSet X-Forwarded-Host {HTTP_HOST}e
+
+# Strip cookies from upstream requests (Anubis cookie not needed by backend)
+<LocationMatch "^/(?!(\.well-known|\.anubis))">
+  RequestHeader unset Cookie
+</LocationMatch>

@@ -19,8 +19,8 @@ MDomain {{ owncast_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ owncast_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ owncast_fqdn }}.key
 {% endif %}
-{% if owncast_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
-  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% if owncast_fqdn in apache_anubis_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-anubis.conf
 {% endif %}
 {% if not owncast_enable_service %}
   DocumentRoot /var/www/maintenance/

@@ -19,8 +19,8 @@ MDomain {{ goaccess_fqdn }}
   SSLCertificateFile /etc/ssl/certs/{{ goaccess_fqdn }}.crt
   SSLCertificateKeyFile /etc/ssl/private/{{ goaccess_fqdn }}.key
 {% endif %}
-{% if goaccess_fqdn in apache_javascript_challenge_protected_domains | default([]) %}
-  Include /etc/apache2/conf-available/xsrv-challenge.conf
+{% if goaccess_fqdn in apache_anubis_protected_domains | default([]) %}
+  Include /etc/apache2/conf-available/xsrv-anubis.conf
 {% endif %}
 {% if not goaccess_enable_service %}
   DocumentRoot /var/www/maintenance/
