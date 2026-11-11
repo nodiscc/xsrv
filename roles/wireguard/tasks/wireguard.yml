@@ -138,6 +138,13 @@
   loop: "{{ wireguard_peers }}"
   when: (item.state is defined) and (item.state == 'absent')
 
+- name: delete wireguard peers client QR codes
+  file:
+    state: absent
+    path: "/etc/wireguard/peers/client-config/{{ item.name }}.qrcode"
+  loop: "{{ wireguard_peers }}"
+  when: (item.state is defined) and (item.state == 'absent')
+
 - name: show information about sending configuration files to clients
   debug:
     msg: "Please provide VPN clients with their client configuration files which were generated in /etc/wireguard/peers/client-config/ on the server"
