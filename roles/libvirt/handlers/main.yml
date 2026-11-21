@@ -3,14 +3,28 @@
     name: "{{ item.name }}"
     command: destroy
   with_items: "{{ libvirt_networks }}"
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: restart libvirt networks (start)
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    command: create
+  with_items: "{{ libvirt_networks }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart libvirt storage pools
   community.libvirt.virt_pool:
     name: "{{ item.name }}"
     command: destroy
   with_items: "{{ libvirt_storage_pools }}"
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: restart libvirt storage pools (start)
+  community.libvirt.virt_pool:
+    name: "{{ item.name }}"
+    command: create
+  with_items: "{{ libvirt_storage_pools }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: reset ssh connection
   meta: reset_connection
