@@ -1,2 +1,16 @@
+- name: restart libvirt networks
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    command: destroy
+  with_items: "{{ libvirt_networks }}"
+  ignore_errors: true
+
+- name: restart libvirt storage pools
+  community.libvirt.virt_pool:
+    name: "{{ item.name }}"
+    command: destroy
+  with_items: "{{ libvirt_storage_pools }}"
+  ignore_errors: true
+
 - name: reset ssh connection
   meta: reset_connection
