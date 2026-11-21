@@ -1,4 +1,4 @@
-- name: restart libvirt networks
+- name: restart libvirt networks (stop)
   community.libvirt.virt_net:
     name: "{{ item.name }}"
     command: destroy
@@ -14,7 +14,7 @@
   when: (item.state is not defined) or (item.state in ['active', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: restart libvirt storage pools
+- name: restart libvirt storage pools (stop)
   community.libvirt.virt_pool:
     name: "{{ item.name }}"
     command: destroy

@@ -100,7 +100,9 @@
   with_items: "{{ libvirt_networks }}"
   when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
-  notify: restart libvirt networks
+  notify:
+    - restart libvirt networks (stop)
+    - restart libvirt networks (start)
   tags: libvirt-networks
 
 - name: start/stop libvirt networks
@@ -153,7 +155,9 @@
   with_items: "{{ libvirt_storage_pools }}"
   when: (item.state is not defined) or (item.state in ['active', 'inactive', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
-  notify: restart libvirt storage pools
+  notify:
+    - restart libvirt storage pools (stop)
+    - restart libvirt storage pools (start)
   tags: libvirt-storage
 
 - name: start/stop libvirt storage pools
