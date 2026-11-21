@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 #### [v2.3.0](https://github.com/nodiscc/xsrv/releases/tag/2.3.0) - UNRELEASED
 
 **Added:**
+* llamacpp: add `llamacpp_parallel` variable to configure the number of inference slots (`--parallel`)
 * common: always enable periodic fstrim on all ext4 filesystems
 * monitoring/exporters: install `lm-sensors`
 * nextcloud: enable previewgenerator app

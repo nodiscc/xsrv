@@ -12,6 +12,9 @@ llamacpp_context_size: 60000
 llamacpp_listen_address: 127.0.0.1
 # seconds before unloading idle/unused models from memory (set to -1 to disable)
 llamacpp_sleep_idle_seconds: -1
+# number of parallel inference slots for the llama.cpp server
+# set to 1 to serialize requests on a single GPU, increase to allow concurrent inference
+llamacpp_parallel: 1
 # Enable vision capabilities (false/true), (increases resource usage)
 llamacpp_enable_vision: false
 # firewall zones for the llamacpp service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
