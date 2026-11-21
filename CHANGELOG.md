@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * tt-rss: prevent simple feed update errors from failing `tt-rss-update.service`
 * nextcloud: set `opcache.interned_strings_buffer` to 16 to fix settings warning
 * wireguard: delete peer QR code files when setting a client state to absent 
+* searxng: remove search engines that are no longer available from the config file
 
 [Full changes since v2.2.0](https://github.com/nodiscc/xsrv/compare/2.2.0...2.3.0)
 
