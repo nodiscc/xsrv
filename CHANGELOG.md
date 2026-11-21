@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * dovecot: remove `dovecot_ssl_required/dovecot_disable_plaintext_auth` variables, always require TLS
 
 **Fixed:**
+* searxng: disable brave-web engine (URL cloaking, searxng#6967)
 * apache/php: fix inconsistent process count error in prometheus-php-fpm-exporter
 * apache: fix mod_md certificates not automatically loaded after renewal/initial creation
 * nextcloud: add www-data to nextcloud group (fixes 403 errors on third-party app assets)
