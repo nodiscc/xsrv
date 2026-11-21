@@ -233,6 +233,19 @@
 # occ doesn't report changed status, not idempotent, always returns changed
 # Note: if this fails the install will be left in a broken state, the working copy is still at /var/www/{{ nextcloud_fqdn }}.old/config/config.php
 # Some possible additional settings are documented here. See https://github.com/nextcloud/server/blob/master/config/config.sample.php for all available configuration settings
+
+- name: set nextcloud kvstore JSON config
+  set_fact:
+    nextcloud_kvstore_json: >-
+      {{ {
+        'server': ({
+          'unix_socket': nextcloud_redis_socket
+        } | combine(
+          {'password': nextcloud_filelocking_password} if nextcloud_filelocking_password else {}
+        ))
+      } | to_json }}
+  when: nextcloud_use_filelocking
+
 - name: set nextcloud config.php values (always returns changed)
   become: true
   become_user: nextcloud
@@ -256,6 +269,9 @@
     - { key: "loglevel", value: "{{ nextcloud_loglevel }}", type: "integer" }
     - { key: "trashbin_retention_obligation", value: "auto" }
     - { key: "memcache.local", value: '\\OC\\Memcache\\APCu' }
+    - { key: "memcache.distributed", value: '\\OC\\Memcache\\KeyValueCache', when: nextcloud_use_filelocking }
+    - { key: "memcache.locking", value: '\\OC\\Memcache\\KeyValueCache', when: nextcloud_use_filelocking }
+    - { key: "memcache.kvstore", value: "{{ nextcloud_kvstore_json }}", type: "string", no_log: true, when: nextcloud_use_filelocking }
     - { key: "share_folder", value: '{{ nextcloud_share_folder }}' }
     - { key: "defaultapp", value: "{{ nextcloud_defaultapp }}" }
     - { key: "upgrade.disable-web", value: "true", type: "boolean" }
@@ -295,8 +311,7 @@
     # - { key: "session_keepalive", value: "true", type: "boolean" }
     # - { key: "hide_login_form", value: "false", type: "boolean" }
     # - { key: "logo_url", value: "https://www.example.org" }
-    # - { key: "filelocking.enabled", value: "true", type: "boolean" }
-    # - { key: "filelocking.ttl", value: "3600", type: "integer" }
+
   no_log: "{{ item.no_log | default(False) }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: nextcloud-config

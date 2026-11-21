@@ -127,3 +127,7 @@ nextcloud_php_pm_min_spare_servers: 2
 nextcloud_php_pm_max_max_spare_servers: 4
 # enable/disable the nextcloud php-fpm pool (redirect users to maintenance page if disabled)
 nextcloud_enable_service: yes
+# Transactional file locking (requires Redis/Valkey with Unix socket)
+nextcloud_use_filelocking: false          # opt-in, disabled by default
+nextcloud_filelocking_password: ""        # Redis auth password (required even for localhost)
+nextcloud_redis_socket: "/run/redis/redis.sock"   # Redis/Valkey Unix socket
