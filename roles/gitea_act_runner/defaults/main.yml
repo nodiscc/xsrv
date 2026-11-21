@@ -24,6 +24,10 @@ gitea_act_runner_labels:
   - "ubuntu-18.04:docker://node:16-buster"
 # prune act-runner's podman downloaded images/stopped containers nightly at 03:30 to save disk space (no/yes)
 gitea_act_runner_daily_podman_prune: no
+# Scope the runner token to a specific owner or owner/repo (empty = global)
+# Examples: "myorg" for all repos under myorg, "myorg/myrepo" for a single repo
+# Changing scope on an existing runner requires deleting /var/lib/act-runner/.runner and redeploying
+gitea_act_runner_scope: ""
 # act-runner version (https://gitea.com/gitea/runner/releases, remove leading v)
 gitea_act_runner_version: "5.2.4"
 # start/stop the gitea actions runner service, enable/disable it on boot (yes/no)
