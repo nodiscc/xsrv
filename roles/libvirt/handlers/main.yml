@@ -3,6 +3,7 @@
     name: "{{ item.name }}"
     command: destroy
   with_items: "{{ libvirt_networks }}"
+  when: (item.state is not defined) or (item.state in ['active', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart libvirt networks (start)
@@ -10,6 +11,7 @@
     name: "{{ item.name }}"
     command: create
   with_items: "{{ libvirt_networks }}"
+  when: (item.state is not defined) or (item.state in ['active', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart libvirt storage pools
@@ -17,6 +19,7 @@
     name: "{{ item.name }}"
     command: destroy
   with_items: "{{ libvirt_storage_pools }}"
+  when: (item.state is not defined) or (item.state in ['active', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: restart libvirt storage pools (start)
@@ -24,6 +27,7 @@
     name: "{{ item.name }}"
     command: create
   with_items: "{{ libvirt_storage_pools }}"
+  when: (item.state is not defined) or (item.state in ['active', 'present'])
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: reset ssh connection
