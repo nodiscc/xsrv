@@ -25,7 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * gitea: update to [v28.3.0](https://github.com/go-gitea/gitea/releases/tag/v28.2.0)
 * matrix/element-web: update to [v1.12.32](https://github.com/element-hq/element-web/releases/tag/v1.12.32)
 * monitoring/grafana: update to [v12.4.15](https://github.com/grafana/grafana/releases)
-* nextcloud: upgrade to [v33.0.10](https://nextcloud.com/changelog/)
+* nextcloud: upgrade to [v33.0.11](https://nextcloud.com/changelog/)
 * jellyfin: update opensubtitles plugin to [v25](https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases)
 * owncast: update to [v0.3.0](https://github.com/owncast/owncast/releases)
 * shaarli: update to v0.16.9 [[1](https://github.com/shaarli/Shaarli/releases)
