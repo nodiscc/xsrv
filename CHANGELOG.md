@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * xsrv: update trivy security scanner to [v0.76.1](https://github.com/aquasecurity/trivy/releases)
 * gitea-act-runner: update to [v5.2.4](https://gitea.com/gitea/runner/releases/tag/v5.2.4)
 * gitea: update to [v28.3.0](https://github.com/go-gitea/gitea/releases/tag/v28.2.0)
-* matrix/element-web: update to [v1.12.32](https://github.com/element-hq/element-web/releases/tag/v1.12.32)
+* matrix/element-web: update to [v1.12.35](https://github.com/element-hq/element-web/releases/tag/v1.12.35)
 * monitoring/grafana: update to [v12.4.15](https://github.com/grafana/grafana/releases)
 * nextcloud: upgrade to [v33.0.11](https://nextcloud.com/changelog/)
 * jellyfin: update opensubtitles plugin to [v25](https://github.com/jellyfin/jellyfin-plugin-opensubtitles/releases)
