@@ -6,7 +6,7 @@ version = 1
 {% set mmproj_filename = model.mmproj_url.split('/')[-1] if model.get('mmproj_url') else None %}
 {% set preset_key = model.name %}
 {% if preset_name != 'default' %}
-{% set preset_key = preset_key + ':' + preset_name %}
+{% set preset_key = preset_key + '-' + preset_name %}
 {% endif %}
 
 [{{ preset_key }}]
