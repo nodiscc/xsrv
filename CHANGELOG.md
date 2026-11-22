@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Changed:**
 * **BREAKING** llamacpp: use - as preset suffix separator (e.g. `qwen3.6:35b-a3b-coding` instead of `qwen3.6:35b-a3b:coding`) to avoid llama.cpp b9842+ preset name uppercasing bug
+* llamacpp: update to latest version
 * nextcloud: harden nextcloud-cron systemd service
 * nextcloud: disable Maps app by default
 * apache: remove unused modules (autoindex, fcgid) and package (libapache2-mod-fcgid)

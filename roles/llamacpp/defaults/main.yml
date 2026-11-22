@@ -1,5 +1,5 @@
 # llama.cpp version to install (commit hash or tag)
-llamacpp_version: b9840
+llamacpp_version: b12431
 # enable API key authentication for the llama.cpp server
 llamacpp_auth_enabled: false
 # API key for llama.cpp server authentication (used when llamacpp_auth_enabled is true)
