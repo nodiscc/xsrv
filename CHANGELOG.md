@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * monitoring/exporters: install `lm-sensors`
 * nextcloud: enable previewgenerator app
 * homepage: add Cache-Control headers for static assets (1h)
+* llamacpp: add `llamacpp_reasoning_preserve` option (auto/true/false)
 
 **Changed:**
 * nextcloud: harden nextcloud-cron systemd service

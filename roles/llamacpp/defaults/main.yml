@@ -17,6 +17,10 @@ llamacpp_sleep_idle_seconds: -1
 llamacpp_parallel: 1
 # Enable vision capabilities (false/true), (increases resource usage)
 llamacpp_enable_vision: false
+# Preserve reasoning trace in conversation history (auto/true/false).
+# 'auto' lets the model's GGUF template decide, 'true' forces it on,
+# 'false' forces it off (use --no-reasoning-preserve to save KV cache).
+llamacpp_reasoning_preserve: auto
 # firewall zones for the llamacpp service (zone, state), if nodiscc.xsrv.common/firewalld role is deployed
 # 'zone:' is one of firewalld zones, set 'state:' to 'disabled' to remove the rule (the default is state: enabled)
 llamacpp_firewalld_zones:
