@@ -23,3 +23,14 @@
   import_tasks: fact.yml
   become: yes
   tags: llamacpp
+
+- name: import metrics exporters configuration tasks
+  import_tasks: exporters.yml
+  become: yes
+  tags:
+    - llamacpp
+    - monitoring
+    - exporters
+  when:
+    - ansible_local.exporters.ansible_managed is defined
+    - ansible_local.exporters.ansible_managed | bool

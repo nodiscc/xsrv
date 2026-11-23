@@ -76,6 +76,20 @@ scrape_configs:
       module:
         - postgres
 {% endif %}
+{% if ansible_local.llamacpp.ansible_managed is defined and ansible_local.llamacpp.ansible_managed %}
+  - job_name: llamacpp
+    authorization:
+      type: Bearer
+      credentials: '{{ monitoring_exporters_auth_password }}'
+    scrape_interval: {{ exporters_scrape_interval }}s
+    scrape_timeout: 5s
+    static_configs:
+      - targets: ['localhost:9999']
+    metrics_path: /proxy
+    params:
+      module:
+        - llamacpp
+{% endif %}
 {% if exporters_blackbox_http_checks | length > 0 %}
   - job_name: blackbox
     authorization:

@@ -1,0 +1,10 @@
+##### EXPORTER-EXPORTER #####
+
+- name: add llamacpp exporter to exporter-exporter configuration
+  template:
+    src: etc_prometheus_exporter-exporter_llamacpp.yaml.j2
+    dest: /etc/prometheus/exporter-exporter/llamacpp.yaml
+    owner: root
+    group: prometheus
+    mode: "0640"
+  notify: restart prometheus-exporter-exporter
