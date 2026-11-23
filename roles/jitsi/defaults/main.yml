@@ -7,6 +7,8 @@ jitsi_turn_secret: "CHANGEME"
 jitsi_prosody_password: "CHANGEME"
 # random secret shared between jitsi/videobridge and the XMPP server
 jitsi_jvb_prosody_password: "CHANGEME"
+# MUC nickname for the videobridge (unique per deployment)
+jitsi_videobridge_muc_nickname: "{{ ansible_random_uuid() }}"
 # only allow registered users to create rooms (yes/no)
 # if yes, whenever a new room is about to be created, Jitsi Meet will prompt for a user name and password. After the room is created, guests will be able to join without authentication.
 jitsi_secure_domain: yes
