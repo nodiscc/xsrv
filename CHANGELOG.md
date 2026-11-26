@@ -17,6 +17,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * nextcloud: enable previewgenerator app
 * homepage: add Cache-Control headers for static assets (1h)
 * llamacpp: add `llamacpp_reasoning_preserve` option (auto/true/false)
+* llamacpp/exporters: monitor llama.cpp metrics
+* monitoring/grafana: add llamacpp metrics dashboard
 
 **Changed:**
 * **BREAKING** llamacpp: use - as preset separator (e.g. `qwen3.6:35b-a3b-coding` instead of `qwen3.6-35b-a3b:coding`)
@@ -42,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * jitsi: add Debian 13 Trixie support
 * tt-rss: add postgresql collation refresh migration for debian 13
 * kiwix/doc: kiwix also supports offline maps
+* doc/monitoring/exporters: remove unused commented module references from exporter-exporter config
 
 **Removed:**
 * dovecot: remove `dovecot_ssl_required/dovecot_disable_plaintext_auth` variables, always require TLS
