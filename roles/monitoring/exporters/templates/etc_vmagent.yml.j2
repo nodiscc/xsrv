@@ -4,14 +4,15 @@ global:
     instance: '{{ inventory_hostname }}'
 
 scrape_configs:
-  - job_name: exporter-exporter
-    authorization:
-      type: Bearer
-      credentials: '{{ monitoring_exporters_auth_password }}'
-    scrape_interval: {{ exporters_scrape_interval }}s
-    scrape_timeout: 5s
-    static_configs:
-      - targets: ['localhost:9999']
+  # exporter-exporter internal metrics (request counts, error rates, active modules)
+  # - job_name: exporter-exporter
+  #   authorization:
+  #     type: Bearer
+  #     credentials: '{{ monitoring_exporters_auth_password }}'
+  #   scrape_interval: {{ exporters_scrape_interval }}s
+  #   scrape_timeout: 5s
+  #   static_configs:
+  #     - targets: ['localhost:9999']
 {% if exporters_scrape_apache and ansible_local.apache.ansible_managed is defined and ansible_local.apache.ansible_managed %}
   - job_name: apache
     authorization:
