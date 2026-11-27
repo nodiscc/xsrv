@@ -10,6 +10,13 @@ exporters_blackbox_log_level: warn
 monitoring_victoriametrics_url: "CHANGEME"
 # scrape interval for local exporter jobs (seconds)
 exporters_scrape_interval: 10
+# per-module scrape control (set to false to disable a module and its systemd service)
+exporters_scrape_node: true
+exporters_scrape_process: true
+exporters_scrape_blackbox: true
+exporters_scrape_apache: true
+exporters_scrape_phpfpm: true
+exporters_scrape_postgres: true
 # list of URLs to probe via blackbox-exporter HTTP checks from this host
 # Example: [https://example.com, https://other.com]
 exporters_blackbox_http_checks: []

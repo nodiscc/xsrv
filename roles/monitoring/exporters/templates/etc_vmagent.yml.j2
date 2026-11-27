@@ -12,7 +12,7 @@ scrape_configs:
     scrape_timeout: 5s
     static_configs:
       - targets: ['localhost:9999']
-{% if ansible_local.apache.ansible_managed is defined and ansible_local.apache.ansible_managed %}
+{% if exporters_scrape_apache and ansible_local.apache.ansible_managed is defined and ansible_local.apache.ansible_managed %}
   - job_name: apache
     authorization:
       type: Bearer
@@ -38,6 +38,7 @@ scrape_configs:
       module:
         - php-fpm
 {% endif %}
+{% if exporters_scrape_node %}
   - job_name: node
     authorization:
       type: Bearer
@@ -50,6 +51,8 @@ scrape_configs:
     params:
       module:
         - node
+{% endif %}
+{% if exporters_scrape_process %}
   - job_name: process
     authorization:
       type: Bearer
@@ -62,7 +65,8 @@ scrape_configs:
     params:
       module:
         - process
-{% if ansible_local.postgresql.ansible_managed is defined and ansible_local.postgresql.ansible_managed %}
+{% endif %}
+{% if exporters_scrape_postgres and ansible_local.postgresql.ansible_managed is defined and ansible_local.postgresql.ansible_managed %}
   - job_name: postgres
     authorization:
       type: Bearer
@@ -90,7 +94,7 @@ scrape_configs:
       module:
         - llamacpp
 {% endif %}
-{% if exporters_blackbox_http_checks | length > 0 %}
+{% if exporters_scrape_blackbox and exporters_blackbox_http_checks | length > 0 %}
   - job_name: blackbox
     authorization:
       type: Bearer
@@ -115,7 +119,7 @@ scrape_configs:
       - target_label: __address__
         replacement: 127.0.0.1:9999
 {% endif %}
-{% if exporters_blackbox_tcp_checks | length > 0 %}
+{% if exporters_scrape_blackbox and exporters_blackbox_tcp_checks | length > 0 %}
   - job_name: blackbox-tcp
     authorization:
       type: Bearer

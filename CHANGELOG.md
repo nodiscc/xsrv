@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * llamacpp: add `llamacpp_reasoning_preserve` option (auto/true/false)
 * llamacpp/exporters: monitor llama.cpp metrics
 * monitoring/grafana: add llamacpp metrics dashboard
+* monitoring/exporters: add per-module scrape control variables (`exporters_scrape_node`, `exporters_scrape_process`, `exporters_scrape_blackbox`, `exporters_scrape_apache`, `exporters_scrape_phpfpm`, `exporters_scrape_postgres`)
 
 **Changed:**
 * **BREAKING** llamacpp: use - as preset separator (e.g. `qwen3.6:35b-a3b-coding` instead of `qwen3.6-35b-a3b:coding`)

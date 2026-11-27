@@ -67,11 +67,11 @@
     - src: etc_prometheus_blackbox.yml.j2
       dest: /etc/prometheus/blackbox.yml
 
-- name: start and enable blackbox exporter
+- name: enable/disable start/stop blackbox exporter service
   systemd:
     name: prometheus-blackbox-exporter.service
-    state: started
-    enabled: true
+    enabled: "{{ exporters_scrape_blackbox }}"
+    state: "{{ 'started' if exporters_scrape_blackbox else 'stopped' }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 
@@ -91,11 +91,11 @@
     - src: etc_prometheus_process-exporter.yml.j2
       dest: /etc/prometheus/process-exporter.yml
 
-- name: start and enable process exporter
+- name: enable/disable start/stop process exporter service
   systemd:
     name: prometheus-process-exporter.service
-    state: started
-    enabled: true
+    enabled: "{{ exporters_scrape_process }}"
+    state: "{{ 'started' if exporters_scrape_process else 'stopped' }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 ##### NODE EXPORTER #####
@@ -148,11 +148,11 @@
 - name: apply configuration (flush handlers)
   meta: flush_handlers
 
-- name: enable and start node exporter and user services exporter timer/service
+- name: enable/disable start/stop node exporter and user services exporter timer/service
   systemd:
     name: "{{ item }}"
-    state: started
-    enabled: true
+    enabled: "{{ exporters_scrape_node }}"
+    state: "{{ 'started' if exporters_scrape_node else 'stopped' }}"
   ignore_errors: "{{ ansible_check_mode }}"
   loop:
     - systemd-user-services-exporter.timer

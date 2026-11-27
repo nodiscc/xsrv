@@ -79,6 +79,7 @@
     name: prometheus-blackbox-exporter.service
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
+  when: exporters_scrape_blackbox | bool
 
 - name: restart prometheus-php-fpm-exporter
   become: true
@@ -93,6 +94,7 @@
     name: prometheus-blackbox-exporter.service
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
+  when: exporters_scrape_blackbox | bool
 
 - name: restart prometheus-process-exporter
   become: true
@@ -100,6 +102,7 @@
     name: prometheus-process-exporter.service
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
+  when: exporters_scrape_process | bool
 
 - name: restart prometheus-node-exporter
   become: true
@@ -107,6 +110,7 @@
     name: prometheus-node-exporter.service
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
+  when: exporters_scrape_node | bool
 
 ### BACKUP/RSNAPSHOT ###
 

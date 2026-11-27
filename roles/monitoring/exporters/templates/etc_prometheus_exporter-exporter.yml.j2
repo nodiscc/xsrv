@@ -1,18 +1,22 @@
 modules:
   # Additional modules are loaded automatically from /etc/prometheus/exporter-exporter/*.yaml
+{% if exporters_scrape_node %}
   node:
     method: http
     http:
       port: 9100
-
+{% endif %}
+{% if exporters_scrape_process %}
   process:
     method: http
     http:
       port: 9256
-
+{% endif %}
+{% if exporters_scrape_blackbox %}
   blackbox:
     method: http
     http:
        port: 9115
        path: /probe
+{% endif %}
 
